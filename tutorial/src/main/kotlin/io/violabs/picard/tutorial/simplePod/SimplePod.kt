@@ -25,11 +25,32 @@ object SimplePodFactory {
             )
         )
 
-        return buildPodYaml(config)
+        return buildPodYamlContent(config)
     }
 
     fun buildSimplePodDsl(): String {
-        return ""
+        val config = pod {
+            apiVersion = Pod.Version.V1
+            kind = Kind.POD
+            metadata {
+                name = "nginx"
+            }
+            spec {
+                containers {
+                    container {
+                        name = "nginx"
+                        image = "nginx:1.14.2"
+                        ports {
+                            port {
+                                containerPort = 80
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return buildPodYamlContent(config)
     }
 }
 

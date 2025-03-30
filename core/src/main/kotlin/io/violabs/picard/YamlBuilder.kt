@@ -86,3 +86,21 @@ fun buildYaml(block: YamlBuilder.() -> Unit): String {
     builder.block()
     return builder.build()
 }
+
+fun buildPodYamlContent(pod: Pod): String = buildYaml {
+    property("apiVersion", pod.apiVersion)
+    property("kind", pod.kind)
+    property("metadata") {
+        property("name", pod.metadata.name)
+    }
+    property("spec") {
+        properties("containers") {
+            val firstContainer = pod.spec.containers!!.first()
+            listItem("name", firstContainer.name, listDelimiter = true)
+            listItem("image", firstContainer.image)
+            properties("ports") {
+                listItem("containerPort", firstContainer.ports!!.first().containerPort, listDelimiter = true)
+            }
+        }
+    }
+}

@@ -3,21 +3,15 @@ package io.violabs.picard.cmd
 import io.violabs.picard.cmd.dsl.Kubectl
 import io.violabs.picard.cmd.dsl.kubectl
 
-//# Filter pods by label
-//kubectl get pods -l app=nginx
-//
-//# Filter pods by namespace
-//kubectl get pods -n <namespace-name>
-//
-//# Sort pods by creation time
-//kubectl get pods --sort-by=.metadata.creationTimestamp
+private const val USE_EXAMPLE = false
+
 fun main(vararg args: String) = kubectl {
-
-//    examples(Example.LABEL_FILTER)
-
-    getPods {
-        sortBy = ".metadata.creationTimestamp"
+    if (USE_EXAMPLE) {
+        examples(Example.LABEL_FILTER)
+        return@kubectl
     }
+
+
 }
 
 private fun Kubectl.examples(example: Example) {

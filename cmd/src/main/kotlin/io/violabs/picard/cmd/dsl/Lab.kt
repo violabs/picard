@@ -102,23 +102,31 @@ class GetPodsTask : Task {
     fun processFilterIfApplied() {
         if (filter == null) return
 
+        val foundFilter = filter ?: return
+
         with(cmdParts) {
-            filter!!.labels?.forEach {
+            foundFilter.labels?.also {
                 add("-l")
                 add("${it.key}=${it.value}")
+            }
+
+            foundFilter.namespace?.also {
+                add("-n")
+                add(it)
             }
         }
     }
 
     inner class Filter {
-        internal var labels: MutableList<Label>? = null
+        internal var labels: Label? = null
+        internal var namespace: String? = null
 
         fun byLabel(key: String, value: String) {
-            if (labels == null) {
-                labels = mutableListOf(Label(key, value))
-            } else {
-                labels!!.add(Label(key, value))
-            }
+            labels = Label(key, value)
+        }
+
+        fun byNamespace(namespace: String) {
+            this.namespace = namespace
         }
     }
 

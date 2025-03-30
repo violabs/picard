@@ -16,8 +16,9 @@ fun main(vararg args: String) = kubectl {
 //    examples(Example.LABEL_FILTER)
 
     getPods {
-        allNameSpaces()
-        wide()
+        filter {
+            byNamespace("default")
+        }
     }
 }
 
@@ -33,6 +34,13 @@ private fun Kubectl.examples(example: Example) {
             getPods {
                 filter {
                     byLabel("app", "nginx")
+                }
+            }
+        }
+        Example.NAMESPACE_FILTER -> {
+            getPods {
+                filter {
+                    byNamespace("kube-system")
                 }
             }
         }
@@ -52,6 +60,7 @@ private fun Kubectl.examples(example: Example) {
 enum class Example {
     WIDE_ALL_NAME_SPACES,
     LABEL_FILTER,
+    NAMESPACE_FILTER,
     APPLY_SIMPLE_POD,
     DELETE_SIMPLE_POD,
 }

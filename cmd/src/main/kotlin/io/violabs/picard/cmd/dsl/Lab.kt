@@ -63,6 +63,7 @@ class GetPodsTask : Task {
     private var output: Output? = null
     private var filter: Filter? = null
     private val cmdParts: MutableList<String> = requiredCmdArgs()
+    var sortBy: String? = null
 
     fun allNameSpaces() {
         allNameSpaces = true

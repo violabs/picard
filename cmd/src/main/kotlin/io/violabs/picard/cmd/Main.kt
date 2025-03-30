@@ -16,14 +16,17 @@ fun main(vararg args: String) = kubectl {
 //    examples(Example.LABEL_FILTER)
 
     getPods {
-        filter {
-            byNamespace("default")
-        }
+        sortBy = ".metadata.creationTimestamp"
     }
 }
 
 private fun Kubectl.examples(example: Example) {
     when(example) {
+        Example.APPLY_SIMPLE_POD -> {
+            applyPod {
+                fileLocation = "tutorial/basic/simple-pod.yml"
+            }
+        }
         Example.WIDE_ALL_NAME_SPACES -> {
             getPods {
                 allNameSpaces()
@@ -44,9 +47,9 @@ private fun Kubectl.examples(example: Example) {
                 }
             }
         }
-        Example.APPLY_SIMPLE_POD -> {
-            applyPod {
-                fileLocation = "tutorial/basic/simple-pod.yml"
+        Example.SORT_BY_CREATION_TIMESTAMP -> {
+            getPods {
+                sortBy = ".metadata.creationTimestamp"
             }
         }
         Example.DELETE_SIMPLE_POD -> {
@@ -58,9 +61,10 @@ private fun Kubectl.examples(example: Example) {
 }
 
 enum class Example {
+    APPLY_SIMPLE_POD,
     WIDE_ALL_NAME_SPACES,
     LABEL_FILTER,
     NAMESPACE_FILTER,
-    APPLY_SIMPLE_POD,
+    SORT_BY_CREATION_TIMESTAMP,
     DELETE_SIMPLE_POD,
 }

@@ -5,10 +5,20 @@ import io.violabs.picard.cmd.dsl.kubectl
 
 private const val USE_EXAMPLE = false
 
+private const val GENERATED_DIR = "tutorial/src/main/resources/generated"
+
 fun main(vararg args: String) = kubectl {
     if (USE_EXAMPLE) {
-        examples(Example.LABEL_FILTER)
+        examples(Example.DELETE_SIMPLE_POD)
         return@kubectl
+    }
+
+    applyPod {
+        fileLocation = "$GENERATED_DIR/pod-template-dsl.yaml"
+    }
+
+    getPods {
+        allNameSpaces()
     }
 }
 

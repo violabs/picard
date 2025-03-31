@@ -15,6 +15,8 @@ object Logging {
     const val LOGO = "${Colors.GREEN}picard${Colors.RESET}"
     const val DELIMITER = "${Colors.PURPLE}*${Colors.CYAN}>>${Colors.RESET}"
     const val ID_TEMPLATE = "${Colors.CYAN}[${Colors.RESET}%s${Colors.CYAN}]${Colors.RESET}"
+    const val INFO = "${Colors.CYAN}INFO ${Colors.RESET}"
+    const val ERROR = "${Colors.RED}ERROR${Colors.RESET}"
 
     const val CMD = "CMD"
     const val TUTORIAL = "TUTORIAL"
@@ -22,8 +24,13 @@ object Logging {
 
 class Logger(private val logId: String) {
 
-    fun log(message: String) {
+    fun info(message: String) {
         val id = Logging.ID_TEMPLATE.format(logId)
-        println("${Logging.LOGO} $id ${Logging.DELIMITER} $message")
+        println("${Logging.LOGO} ${Logging.INFO} $id ${Logging.DELIMITER} $message")
+    }
+
+    fun error(message: String) {
+        val id = Logging.ID_TEMPLATE.format(logId)
+        println("${Logging.LOGO} ${Logging.ERROR} $id ${Logging.DELIMITER} ${Colors.RED}$message${Colors.RESET}")
     }
 }

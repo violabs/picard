@@ -20,7 +20,7 @@ object PodTemplateFactory {
                                 command = listOf("sh", "-c", "echo 'Hello, Kubernetes!' && sleep 3600")
                             }
                         }
-                        restartPolicy = RestartPolicy.OnFailure
+                        restartPolicy = RestartPolicy.ON_FAILURE
                     }
                 }
             }

@@ -36,12 +36,26 @@ class Kubectl {
     }
 
     private fun processTask(task: Task) {
-        logger.log("Executing command: ${task.cmd().joinToString(" ")}")
-        ProcessBuilder(*task.cmd())
-            .start()
-            .inputReader()
-            .forEachLine(logger::log)
+        logger.info("Executing command: ${task.cmd().joinToString(" ")}")
+        try {
+            val process = ProcessBuilder(*task.cmd())
+                .redirectErrorStream(true)  // Merge stderr with stdout
+                .start()
 
+            val lines = process.inputReader().readLines().toMutableList()
+
+            // Check process exit code
+            val exitCode = process.waitFor()
+            if (exitCode != 0) {
+                lines.forEach { logger.error(it) }
+            } else {
+                lines.forEach { logger.info(it) }
+            }
+        } catch (e: Exception) {
+            logger.info("Error executing command: ${task.cmd().joinToString(" ")}")
+            logger.info("Exception: ${e.message}")
+            throw e
+        }
     }
 }
 

@@ -33,5 +33,5 @@ private fun addFile(label: String, fileName: String, content: String) {
     val file = File(fileName)
     file.writeText(content)
 
-    logger.log("$label\n$content\n")
+    logger.info("$label\n$content\n")
 }

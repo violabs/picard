@@ -110,6 +110,10 @@ fun buildPodYamlContent(pod: Pod): String = buildYaml {
             property("template") {
                 property("spec") {
                     containers(template.spec?.containers)
+                    println(template)
+                    template.spec?.restartPolicy?.let { restartPolicy ->
+                        property("restartPolicy", restartPolicy)
+                    }
                 }
             }
         }
@@ -121,11 +125,14 @@ fun YamlBuilder.containers(containers: List<Container>?) {
         containers?.forEach {
             listItem("name", it.name, listDelimiter = true)
             listItem("image", it.image)
-            properties("ports") {
-                it.ports?.forEach { port ->
-                    listItem("containerPort", port.containerPort, listDelimiter = true)
+            it.ports?.let { ports ->
+                properties("ports") {
+                    ports.forEach { port ->
+                        listItem("containerPort", port.containerPort, listDelimiter = true)
+                    }
                 }
             }
+
             it.command?.let { command -> properties("command", command) }
         }
     }

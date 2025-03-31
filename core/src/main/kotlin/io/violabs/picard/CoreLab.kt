@@ -1,6 +1,6 @@
 package io.violabs.picard
 
-class Pod(
+data class Pod(
     val apiVersion: Version,
     val kind: Kind,
     val metadata: Metadata,
@@ -14,40 +14,30 @@ class Pod(
     }
 }
 
-class Metadata(
+data class Metadata(
     val name: String
 )
 
-class Spec(
+data class Spec(
     val containers: List<Container>? = null,
     val restartPolicy: RestartPolicy? = null,
     val template: PodTemplate? = null
 )
 
-class PodTemplate(
+data class PodTemplate(
     val spec: Spec? = null
 )
 
-class Container(
+data class Container(
     val name: String,
     val image: String,
     val command: List<String>? = null,
     val ports: List<Port>? = null
 ) {
 
-    fun toYaml(): String {
-        return """
-        |- name: $name
-        |  image: $image
-        |  
-        """.trimMargin("|")
-    }
-
-    class Port(
+    data class Port(
         val containerPort: Int
-    ) {
-        fun toYaml(): String = "- containerPort: $containerPort"
-    }
+    )
 }
 
 enum class Kind {
@@ -59,10 +49,12 @@ enum class Kind {
         .replaceFirstChar(Char::uppercase)
 }
 
-enum class RestartPolicy {
+enum class RestartPolicy(val ref: String) {
     //        Always,
 //        Never,
-    OnFailure
+    ON_FAILURE("OnFailure");
+
+    override fun toString(): String = ref
 }
 
 class PodBuilder : Builder<Pod> {

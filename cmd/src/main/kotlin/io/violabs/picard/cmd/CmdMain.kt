@@ -13,12 +13,32 @@ fun main(vararg args: String) = kubectl {
         return@kubectl
     }
 
+    val fileName = "$GENERATED_DIR/pod-sidecar.yaml"
+
     applyPod {
-        fileLocation = "$GENERATED_DIR/pod-template-dsl.yaml"
+        fileLocation = fileName
+        enabled = true
     }
 
     getPods {
         allNameSpaces()
+        enabled = false
+    }
+
+    describePod {
+        fileLocation = fileName
+        enabled = false
+    }
+
+    deletePod {
+        name = "myapp-pod"
+        enabled = false
+    }
+
+    logs {
+        name = "myapp-pod"
+        container = "init-mydb"
+        enabled = false
     }
 }
 

@@ -1,7 +1,7 @@
 
 
 application {
-    mainClass.set("io.violabs.picard.cmd.MainKt")
+    mainClass.set("io.violabs.picard.cmd.CmdMainKt")
 }
 
 dependencies {

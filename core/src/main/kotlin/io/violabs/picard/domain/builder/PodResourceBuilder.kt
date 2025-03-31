@@ -1,22 +1,21 @@
 package io.violabs.picard.domain.builder
 
-import io.violabs.picard.domain.Kind
-import io.violabs.picard.domain.Pod
-import io.violabs.picard.domain.Spec
-import io.violabs.picard.domain.Metadata
+import io.violabs.picard.domain.*
 
-class PodBuilder : Builder<Pod> {
-    var apiVersion: Pod.Version = Pod.Version.V1
+class PodResourceBuilder : Builder<PodResource> {
+    var apiVersion: PodResource.Version = PodResource.Version.V1
     var kind: Kind? = null
     private var metadata: Metadata? = null
     var spec: Spec? = null
+    var status: PodStatus? = null
 
-    override fun build(): Pod {
-        return Pod(
+    override fun build(): PodResource {
+        return PodResource(
             apiVersion = apiVersion,
             kind = requireNotNull(kind) { "Please provide a kind. ${Kind.entries}" },
             metadata = requireNotNull(metadata) { "Please provide a metadata" },
-            spec = requireNotNull(spec) { "Please provide a spec" }
+            spec = requireNotNull(spec) { "Please provide a spec" },
+            status = status
         )
     }
 
@@ -26,5 +25,9 @@ class PodBuilder : Builder<Pod> {
 
     fun spec(scope: SpecBuilder.() -> Unit) {
         spec = scopedBuild(::SpecBuilder, scope)
+    }
+
+    fun status(scope: PodStatusBuilder.() -> Unit) {
+        status = scopedBuild(::PodStatusBuilder, scope)
     }
 }

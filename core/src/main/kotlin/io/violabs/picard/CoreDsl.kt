@@ -1,12 +1,12 @@
 package io.violabs.picard
 
 import io.violabs.picard.domain.KubeletConfiguration
-import io.violabs.picard.domain.Pod
+import io.violabs.picard.domain.Manifest
 import io.violabs.picard.domain.builder.KubeletConfigurationBuilder
-import io.violabs.picard.domain.builder.PodBuilder
+import io.violabs.picard.domain.builder.ManifestBuilder
 import io.violabs.picard.domain.builder.scopedBuild
 
-fun buildPod(scope: PodBuilder.() -> Unit): Pod = scopedBuild(::PodBuilder, scope)
+fun buildManifest(scope: ManifestBuilder.() -> Unit): Manifest = scopedBuild(::ManifestBuilder, scope)
 
 fun buildKubeletConfiguration(
     scope: KubeletConfigurationBuilder.() -> Unit

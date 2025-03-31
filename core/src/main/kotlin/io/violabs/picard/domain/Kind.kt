@@ -1,9 +1,11 @@
 package io.violabs.picard.domain
 
 enum class Kind {
+    DEPLOYMENT,
     JOB,
     KUBELET_CONFIGURATION,
-    POD;
+    POD,
+    SERVICE;
 
     override fun toString(): String = name
         .split("_")

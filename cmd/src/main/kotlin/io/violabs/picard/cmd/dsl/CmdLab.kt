@@ -2,9 +2,11 @@ package io.violabs.picard.cmd.dsl
 
 import io.violabs.picard.cmd.KubectlConstants.APPLY
 import io.violabs.picard.cmd.KubectlConstants.DELETE
+import io.violabs.picard.cmd.KubectlConstants.DESCRIBE
 import io.violabs.picard.cmd.KubectlConstants.FILE_FLAG
 import io.violabs.picard.cmd.KubectlConstants.GET
 import io.violabs.picard.cmd.KubectlConstants.KUBECTL
+import io.violabs.picard.cmd.KubectlConstants.LOGS
 import io.violabs.picard.cmd.KubectlConstants.POD
 import io.violabs.picard.cmd.KubectlConstants.PODS
 import io.violabs.picard.common.Logger
@@ -17,28 +19,44 @@ fun kubectl(scope: Kubectl.() -> Unit) {
 }
 
 class Kubectl {
-    fun getPods(scope: GetPodsTask.() -> Unit) {
-        val task = GetPodsTask().apply(scope)
+    fun applyPod(scope: ApplyPodKubeTask.() -> Unit) {
+        val task = ApplyPodKubeTask().apply(scope)
 
         processTask(task)
     }
 
-    fun applyPod(scope: ApplyTask.() -> Unit) {
-        val task = ApplyTask().apply(scope)
+    fun describePod(scope: DescribePodKubeTask.() -> Unit) {
+        val task = DescribePodKubeTask().apply(scope)
+        processTask(task)
+    }
+
+    fun deletePod(scope: DeletePodKubeTask.() -> Unit) {
+        val task = DeletePodKubeTask().apply(scope)
 
         processTask(task)
     }
 
-    fun deletePod(scope: DeletePodTask.() -> Unit) {
-        val task = DeletePodTask().apply(scope)
+    fun getPods(scope: GetPodsKubeTask.() -> Unit) {
+        val task = GetPodsKubeTask().apply(scope)
 
         processTask(task)
     }
 
-    private fun processTask(task: Task) {
-        logger.info("Executing command: ${task.cmd().joinToString(" ")}")
+    fun logs(scope: LogsKubeTask.() -> Unit) {
+        val task = LogsKubeTask().apply(scope)
+
+        processTask(task)
+    }
+
+    private fun processTask(kubeTask: KubeTask) {
+        if (!kubeTask.enabled) {
+            logger.info("Task is disabled, skipping execution. command: ${kubeTask.cmd().joinToString(" ")}")
+            return
+        }
+
+        logger.info("Executing command: ${kubeTask.cmd().joinToString(" ")}")
         try {
-            val process = ProcessBuilder(*task.cmd())
+            val process = ProcessBuilder(*kubeTask.cmd())
                 .redirectErrorStream(true)  // Merge stderr with stdout
                 .start()
 
@@ -52,14 +70,14 @@ class Kubectl {
                 lines.forEach { logger.info(it) }
             }
         } catch (e: Exception) {
-            logger.info("Error executing command: ${task.cmd().joinToString(" ")}")
+            logger.info("Error executing command: ${kubeTask.cmd().joinToString(" ")}")
             logger.info("Exception: ${e.message}")
             throw e
         }
     }
 }
 
-class GetPodsTask : Task {
+class GetPodsKubeTask : KubeTask() {
     private var allNameSpaces: Boolean = false
     private var output: Output? = null
     private var filter: Filter? = null
@@ -148,7 +166,7 @@ class Label(
     val value: String
 )
 
-class DeletePodTask : Task {
+class DeletePodKubeTask : KubeTask() {
     var name: String? = null
 
     override fun cmd(): Array<String> {
@@ -156,7 +174,7 @@ class DeletePodTask : Task {
     }
 }
 
-class ApplyTask : Task {
+class ApplyPodKubeTask : KubeTask() {
     var fileLocation: String? = null
 
     override fun cmd(): Array<String> {
@@ -165,9 +183,51 @@ class ApplyTask : Task {
     }
 }
 
-interface Task {
-    fun cmd(): Array<String>
+class DescribePodKubeTask : KubeTask() {
+    var fileLocation: String? = null
+    var namespace: String? = null
+
+    override fun cmd(): Array<String> {
+        val loc = requireNotNull(fileLocation) { "file location must be provided" }
+        val cmd = mutableListOf(KUBECTL, DESCRIBE, FILE_FLAG, loc)
+
+        if (namespace != null) {
+            cmd.add("-n")
+            cmd.add(namespace!!)
+        }
+
+        return cmd.toTypedArray()
+    }
 }
+
+//kubectl logs myapp-pod -c init-myservice
+class LogsKubeTask : KubeTask() {
+    var name: String? = null
+    var container: String? = null
+    var follow: Boolean = false
+
+    override fun cmd(): Array<String> {
+        val cmdParts = mutableListOf(KUBECTL, LOGS, name!!)
+        if (container != null) {
+            cmdParts.add("-c")
+            cmdParts.add(container!!)
+        }
+        if (follow) {
+            cmdParts.add("-f")
+        }
+        return cmdParts.toTypedArray()
+    }
+}
+
+abstract class KubeTask {
+    var enabled: Boolean = true
+    abstract fun cmd(): Array<String>
+
+    fun disable() {
+        enabled = false
+    }
+}
+
 
 enum class Phase {
     PENDING,

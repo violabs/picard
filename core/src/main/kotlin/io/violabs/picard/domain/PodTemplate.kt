@@ -1,5 +1,6 @@
 package io.violabs.picard.domain
 
 data class PodTemplate(
-    val spec: Spec? = null
+    val spec: Spec,
+    val metadata: Metadata? = null
 )

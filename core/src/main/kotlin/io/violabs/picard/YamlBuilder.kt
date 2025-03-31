@@ -47,12 +47,20 @@ class YamlBuilder {
         }
     }
 
+    fun properties(key: String, items: List<String>?) {
+        property(key, items)
+    }
+
     private fun formatValue(value: Any?): String {
         return when (value) {
             null -> ""
             is String -> if (value.contains("\n")) "|\n${
                 value.lines().joinToString("\n") { " ".repeat(indentation + 2) + it }
             }" else value
+            is List<*> -> value.joinToString(", ", "[", "]") {
+                val item = it.toString().replace("\'", "\"")
+                "'$item'"
+            }
 
             else -> value.toString()
         }
@@ -94,13 +102,31 @@ fun buildPodYamlContent(pod: Pod): String = buildYaml {
         property("name", pod.metadata.name)
     }
     property("spec") {
-        properties("containers") {
-            val firstContainer = pod.spec.containers!!.first()
-            listItem("name", firstContainer.name, listDelimiter = true)
-            listItem("image", firstContainer.image)
-            properties("ports") {
-                listItem("containerPort", firstContainer.ports!!.first().containerPort, listDelimiter = true)
+        pod.spec.containers?.let { containers ->
+            containers(pod.spec.containers)
+        }
+
+        pod.spec.template?.let { template ->
+            property("template") {
+                property("spec") {
+                    containers(template.spec?.containers)
+                }
             }
+        }
+    }
+}
+
+fun YamlBuilder.containers(containers: List<Container>?) {
+    properties("containers") {
+        containers?.forEach {
+            listItem("name", it.name, listDelimiter = true)
+            listItem("image", it.image)
+            properties("ports") {
+                it.ports?.forEach { port ->
+                    listItem("containerPort", port.containerPort, listDelimiter = true)
+                }
+            }
+            it.command?.let { command -> properties("command", command) }
         }
     }
 }

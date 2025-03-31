@@ -29,7 +29,7 @@ object SimplePodFactory {
     }
 
     fun buildSimplePodDsl(): String {
-        val config = pod {
+        val config = buildPod {
             apiVersion = Pod.Version.V1
             kind = Kind.POD
             metadata {

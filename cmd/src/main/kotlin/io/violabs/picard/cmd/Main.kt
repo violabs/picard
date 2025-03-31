@@ -10,8 +10,6 @@ fun main(vararg args: String) = kubectl {
         examples(Example.LABEL_FILTER)
         return@kubectl
     }
-
-
 }
 
 private fun Kubectl.examples(example: Example) {

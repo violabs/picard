@@ -7,7 +7,10 @@ import io.violabs.picard.cmd.KubectlConstants.GET
 import io.violabs.picard.cmd.KubectlConstants.KUBECTL
 import io.violabs.picard.cmd.KubectlConstants.POD
 import io.violabs.picard.cmd.KubectlConstants.PODS
-import io.violabs.picard.cmd.log
+import io.violabs.picard.common.Logger
+import io.violabs.picard.common.Logging
+
+val logger = Logger(Logging.CMD)
 
 fun kubectl(scope: Kubectl.() -> Unit) {
     Kubectl().apply(scope)
@@ -33,31 +36,15 @@ class Kubectl {
     }
 
     private fun processTask(task: Task) {
-        log("Executing command: ${task.cmd().joinToString(" ")}")
+        logger.log("Executing command: ${task.cmd().joinToString(" ")}")
         ProcessBuilder(*task.cmd())
             .start()
             .inputReader()
-            .forEachLine(::log)
+            .forEachLine(logger::log)
 
     }
 }
 
-// BASIC
-//# List all pods in the current namespace
-//kubectl get pods
-//
-//# List all pods in all namespaces
-//kubectl get pods --all-namespaces
-//# or the shorter version
-//kubectl get pods -A
-//
-//# Get more details about the pods
-//kubectl get pods -o wide
-//
-//# Get details about a specific pod
-//kubectl get pod <pod-name>
-//# Filter pods by label
-//kubectl get pods -l app=nginx
 class GetPodsTask : Task {
     private var allNameSpaces: Boolean = false
     private var output: Output? = null

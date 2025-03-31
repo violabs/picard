@@ -1,27 +1,37 @@
 package io.violabs.picard.tutorial
 
+import io.violabs.picard.common.Logger
+import io.violabs.picard.common.Logging
+import io.violabs.picard.tutorial.podTemplate.PodTemplateFactory.buildPodTemplateDsl
 import io.violabs.picard.tutorial.simplePod.SimplePodFactory.buildSimplePod
 import io.violabs.picard.tutorial.simplePod.SimplePodFactory.buildSimplePodDsl
 import java.io.File
 
+private val logger = Logger(Logging.TUTORIAL)
+
 fun main(vararg args: String) {
-    println("Creating a simple pod\n")
-//    println(YAML_EXAMPLE)
-    val simplePodFile = buildSimplePod()
+    addFile(
+        "Simple pod",
+        "./tutorial/src/main/resources/generated/simple-pod.yaml",
+        buildSimplePod()
+    )
 
-    val file1 = File("./tutorial/src/main/resources/generated/simple-pod.yaml")
+    addFile(
+        "Simple pod DSL",
+        "./tutorial/src/main/resources/generated/simple-pod-dsl.yaml",
+        buildSimplePodDsl()
+    )
 
-    file1.writeText(simplePodFile)
+    addFile(
+        "Pod template DSL",
+        "./tutorial/src/main/resources/generated/pod-template-dsl.yaml",
+        buildPodTemplateDsl()
+    )
+}
 
-    println("Object based")
-    println(simplePodFile)
+private fun addFile(label: String, fileName: String, content: String) {
+    val file = File(fileName)
+    file.writeText(content)
 
-    val simplePodDslFile = buildSimplePodDsl()
-
-    val file2 = File("./tutorial/src/main/resources/generated/simple-pod-dsl.yaml")
-
-    file2.writeText(simplePodDslFile)
-
-    println("\nDSL")
-    println(simplePodDslFile)
+    logger.log("$label\n$content\n")
 }

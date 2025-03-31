@@ -6,10 +6,11 @@ class Pod(
     val metadata: Metadata,
     val spec: Spec
 ) {
-    enum class Version {
+    enum class Version(private val ref: String? = null) {
+        BATCH_V1("batch/v1"),
         V1;
 
-        override fun toString(): String = name.lowercase()
+        override fun toString(): String = ref ?: name.lowercase()
     }
 }
 
@@ -20,7 +21,11 @@ class Metadata(
 class Spec(
     val containers: List<Container>? = null,
     val restartPolicy: RestartPolicy? = null,
-    val template: Spec? = null
+    val template: PodTemplate? = null
+)
+
+class PodTemplate(
+    val spec: Spec? = null
 )
 
 class Container(
@@ -95,7 +100,7 @@ class MetadataBuilder : Builder<Metadata> {
 class SpecBuilder : Builder<Spec> {
     private var containers: List<Container>? = null
     var restartPolicy: RestartPolicy? = null
-    var template: Spec? = null
+    var template: PodTemplate? = null
 
     override fun build(): Spec {
         if (containers == null && template == null) {
@@ -111,6 +116,10 @@ class SpecBuilder : Builder<Spec> {
 
     fun containers(scope: ContainersBuilder.() -> Unit) {
         containers = scopedBuild(::ContainersBuilder, scope)
+    }
+
+    fun template(scope: PodTemplateBuilder.() -> Unit) {
+        template = scopedBuild(::PodTemplateBuilder, scope)
     }
 }
 
@@ -160,7 +169,19 @@ class PortBuilder : Builder<Container.Port> {
     )
 }
 
-fun pod(scope: PodBuilder.() -> Unit): Pod = scopedBuild(::PodBuilder, scope)
+class PodTemplateBuilder : Builder<PodTemplate> {
+    var spec: Spec? = null
+
+    override fun build(): PodTemplate = PodTemplate(
+        spec = spec
+    )
+
+    fun spec(scope: SpecBuilder.() -> Unit) {
+        spec = scopedBuild(::SpecBuilder, scope)
+    }
+}
+
+fun buildPod(scope: PodBuilder.() -> Unit): Pod = scopedBuild(::PodBuilder, scope)
 
 fun <T : Builder<R>, R> scopedBuild(emptyConstructor: () -> T, scope: T.() -> Unit): R {
     val builder = emptyConstructor()

@@ -1,6 +1,9 @@
 package io.violabs.picard.tutorial.podTemplate
 
 import io.violabs.picard.*
+import io.violabs.picard.domain.Kind
+import io.violabs.picard.domain.Pod
+import io.violabs.picard.domain.RestartPolicy
 
 object PodTemplateFactory {
     fun buildPodTemplateDsl(): String {

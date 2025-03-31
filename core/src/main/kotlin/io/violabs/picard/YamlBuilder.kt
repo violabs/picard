@@ -1,5 +1,8 @@
 package io.violabs.picard
 
+import io.violabs.picard.domain.Container
+import io.violabs.picard.domain.Pod
+
 class YamlBuilder {
     private val content = StringBuilder()
     private var indentation = 0
@@ -110,7 +113,7 @@ fun buildPodYamlContent(pod: Pod): String = buildYaml {
             property("template") {
                 property("spec") {
                     containers(template.spec?.containers)
-                    println(template)
+
                     template.spec?.restartPolicy?.let { restartPolicy ->
                         property("restartPolicy", restartPolicy)
                     }

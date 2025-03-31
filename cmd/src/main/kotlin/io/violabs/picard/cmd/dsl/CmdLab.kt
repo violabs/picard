@@ -168,3 +168,21 @@ class ApplyTask : Task {
 interface Task {
     fun cmd(): Array<String>
 }
+
+enum class Phase {
+    PENDING,
+    RUNNING,
+    SUCCEEDED,
+    FAILED,
+    UNKNOWN;
+
+    override fun toString(): String = name.lowercase().replaceFirstChar { it.uppercase() }
+}
+
+enum class ContainerState {
+    WAITING,
+    RUNNING,
+    TERMINATED;
+
+    override fun toString(): String = name.lowercase().replaceFirstChar { it.uppercase() }
+}

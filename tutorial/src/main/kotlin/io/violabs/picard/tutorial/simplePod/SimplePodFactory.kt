@@ -1,6 +1,7 @@
 package io.violabs.picard.tutorial.simplePod
 
 import io.violabs.picard.*
+import io.violabs.picard.domain.*
 
 object SimplePodFactory {
     fun buildSimplePod(): String {

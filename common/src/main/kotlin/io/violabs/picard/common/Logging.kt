@@ -2,7 +2,6 @@ package io.violabs.picard.common
 
 import kotlin.reflect.KClass
 
-
 private object Colors {
     const val RESET = "\u001B[0m"
     const val RED = "\u001B[31m"
@@ -25,47 +24,64 @@ object Logging {
     const val TUTORIAL = "TUTORIAL"
 }
 
+// Fixed padding length to ensure consistent log formatting
+private const val FIXED_PADDING_LENGTH = 15
+private val FRONT_LOADED_SPACES = System.getProperty("frontLoadedSpaces")?.toBoolean() ?: true
+private const val PADDING_CHAR = '·' // Simple middle dot for padding
+
 class Logger(private val logId: String) {
     private var isDebugEnabled = false
-    var logName: String = logId
+
+    // Apply fixed padding to ensure consistent log formatting
+    private val formattedName: String = if (logId.length < FIXED_PADDING_LENGTH) {
+        var padding = PADDING_CHAR.toString().repeat(FIXED_PADDING_LENGTH - logId.length)
+        padding = "${Colors.PURPLE}$padding${Colors.RESET}"
+        if (FRONT_LOADED_SPACES) "$padding$logId" else "$logId$padding"
+    } else {
+        logId
+    }
 
     fun enableDebug() {
         isDebugEnabled = true
     }
 
     fun info(message: Any) {
-        val id = Logging.ID_TEMPLATE.format(logName)
+        val id = Logging.ID_TEMPLATE.format(formattedName)
         println("${Logging.LOGO} ${Logging.INFO} $id ${Logging.DELIMITER} $message")
     }
 
     fun debug(message: Any) {
         if (!isDebugEnabled) return
-        val id = Logging.ID_TEMPLATE.format(logName)
+        val id = Logging.ID_TEMPLATE.format(formattedName)
         println("${Logging.LOGO} ${Logging.DEBUG} $id ${Logging.DELIMITER} $message")
     }
 
     fun error(message: Any) {
-        val id = Logging.ID_TEMPLATE.format(logName)
+        val id = Logging.ID_TEMPLATE.format(formattedName)
         println("${Logging.LOGO} ${Logging.ERROR} $id ${Logging.DELIMITER} ${Colors.RED}$message${Colors.RESET}")
     }
-}
 
-private val LOG_MAP = mutableMapOf<String, Logger>()
+    // For multi-line logging with consistent indentation
+    fun infoMultiline(message: String) {
+        val lines = message.split("\n")
 
-private fun adjustLogNames() {
-    val longestKey = LOG_MAP.keys.maxByOrNull { it.length }?.length ?: 0
+        if (lines.isEmpty()) return
 
-    LOG_MAP.forEach { (key, logger) ->
+        // Log the first line normally
+        info(lines.first())
 
-        if (key.length < longestKey) {
-            val padding = " ".repeat(longestKey - key.length)
-            logger.logName = if (FRONT_LOADED_SPACES) "$padding$key" else "$key$padding"
+        // For subsequent lines, maintain proper indentation
+        val id = Logging.ID_TEMPLATE.format(formattedName)
+        val prefix = "${Logging.LOGO} ${Logging.INFO} $id ${Logging.DELIMITER}   | "
+
+        lines.drop(1).forEach { line ->
+            println("$prefix$line")
         }
     }
 }
 
+private val LOG_MAP = mutableMapOf<String, Logger>()
 private val DEBUG_ENABLED = System.getProperty("debug")?.toBoolean() ?: false
-private val FRONT_LOADED_SPACES = System.getProperty("frontLoadedSpaces")?.toBoolean() ?: true
 
 interface VLoggable {
     fun logId(): String? = null
@@ -75,12 +91,8 @@ interface VLoggable {
 
             return LOG_MAP.getOrPut(name) {
                 val logger = Logger(name)
-
                 if (DEBUG_ENABLED) logger.enableDebug()
-
                 logger
-            }.also {
-                adjustLogNames()
             }
         }
 }
@@ -89,6 +101,7 @@ abstract class DefaultLogger(private val logId: String) : VLoggable {
     constructor(klass: KClass<*>) : this(klass.simpleName ?: "DefaultLogger")
 
     override fun logId(): String = logId
+
     init {
         register()
     }
@@ -96,13 +109,8 @@ abstract class DefaultLogger(private val logId: String) : VLoggable {
     private fun register() {
         if (LOG_MAP.containsKey(logId())) return
 
-        val name = logId()
-        val logger = Logger(name)
-
+        val logger = Logger(logId())
         if (DEBUG_ENABLED) logger.enableDebug()
-
-        LOG_MAP[name] = logger
-
-        adjustLogNames()
+        LOG_MAP[logId()] = logger
     }
 }

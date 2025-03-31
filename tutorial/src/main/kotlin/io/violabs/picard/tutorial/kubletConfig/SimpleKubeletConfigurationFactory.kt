@@ -28,6 +28,9 @@ object SimpleKubeletConfigurationFactory {
                     iNodesFree = "5%"
                 }
             }
+            crashLoopBackOff {
+                maxContainerRestartPeriod = "100s"
+            }
         }
 
         return buildKubeletConfigYamlContent(config)

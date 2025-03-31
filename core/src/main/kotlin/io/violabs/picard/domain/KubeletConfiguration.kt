@@ -6,7 +6,8 @@ data class KubeletConfiguration(
     val address: String,
     val port: Int,
     val serializeImagePulls: Boolean,
-    val evictionHard: EvictionHard? = null
+    val evictionHard: EvictionHard? = null,
+    val crashLoopBackOff: CrashLoopBackOff? = null
 ) {
     enum class DefinedVersion(val ref: String) {
         V1_BETA1("kubelet.config.k8s.io/v1beta1");

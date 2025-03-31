@@ -147,6 +147,11 @@ fun YamlBuilder.containers(containers: List<Container>?) {
 fun buildKubeletConfigYamlContent(config: KubeletConfiguration): String = buildYaml {
     property("apiVersion", config.apiVersion)
     property("kind", config.kind)
+    config.crashLoopBackOff?.let { clbo ->
+        property("crashLoopBackOff") {
+            property("maxContainerRestartPeriod", clbo.maxContainerRestartPeriod.wrap())
+        }
+    }
     property("address", config.address.wrap())
     property("port", config.port)
     property("serializeImagePulls", config.serializeImagePulls)

@@ -1,7 +1,6 @@
 package io.violabs.picard.domain.builder
 
 import io.violabs.picard.domain.Container
-import io.violabs.picard.scopedBuild
 
 class ContainerBuilder : Builder<Container> {
     var name: String? = null

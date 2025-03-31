@@ -4,7 +4,6 @@ import io.violabs.picard.domain.Container
 import io.violabs.picard.domain.PodTemplate
 import io.violabs.picard.domain.RestartPolicy
 import io.violabs.picard.domain.Spec
-import io.violabs.picard.scopedBuild
 
 class SpecBuilder : Builder<Spec> {
     private var containers: List<Container>? = null

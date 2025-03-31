@@ -1,6 +1,7 @@
 package io.violabs.picard
 
 import io.violabs.picard.domain.Container
+import io.violabs.picard.domain.KubeletConfiguration
 import io.violabs.picard.domain.Pod
 
 class YamlBuilder {
@@ -68,6 +69,8 @@ class YamlBuilder {
             else -> value.toString()
         }
     }
+
+    fun String.wrap(): String = "\"$this\""
 
     fun build(): String = content.toString()
 
@@ -138,5 +141,23 @@ fun YamlBuilder.containers(containers: List<Container>?) {
 
             it.command?.let { command -> properties("command", command) }
         }
+    }
+}
+
+fun buildKubeletConfigYamlContent(config: KubeletConfiguration): String = buildYaml {
+    property("apiVersion", config.apiVersion)
+    property("kind", config.kind)
+    property("address", config.address.wrap())
+    property("port", config.port)
+    property("serializeImagePulls", config.serializeImagePulls)
+    property("evictionHard") {
+        val evictionHard = config.evictionHard
+        property("memory.available", evictionHard?.memory?.available?.wrap())
+        val nodeFs = evictionHard?.nodefs
+        property("nodefs.available", nodeFs?.available?.wrap())
+        property("nodefs.inodesFree", nodeFs?.inodesFree?.wrap())
+        val imageFs = evictionHard?.imagefs
+        property("imagefs.available", imageFs?.available?.wrap())
+        property("imagefs.inodesFree", imageFs?.inodesFree?.wrap())
     }
 }

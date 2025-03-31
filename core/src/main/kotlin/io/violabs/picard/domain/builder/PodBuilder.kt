@@ -3,7 +3,6 @@ package io.violabs.picard.domain.builder
 import io.violabs.picard.domain.Kind
 import io.violabs.picard.domain.Pod
 import io.violabs.picard.domain.Spec
-import io.violabs.picard.scopedBuild
 import io.violabs.picard.domain.Metadata
 
 class PodBuilder : Builder<Pod> {

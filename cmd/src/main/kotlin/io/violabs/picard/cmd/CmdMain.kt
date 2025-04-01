@@ -17,7 +17,7 @@ fun main(vararg args: String) = kubectl {
 
     applyPod {
         fileLocation = fileName
-        enabled = true
+        enabled = false
     }
 
     getPods {
@@ -30,13 +30,19 @@ fun main(vararg args: String) = kubectl {
         enabled = false
     }
 
+    deleteDeployment {
+        name = "myapp"
+        namespace = "default"
+        enabled = false
+    }
+
     deletePod {
-        name = "myapp-pod"
+        name = "myapp-55d976bcf9-74qk8"
         enabled = false
     }
 
     logs {
-        name = "myapp-pod"
+        name = "myapp-76b5b85cf-cbwp7"
         container = "init-mydb"
         enabled = false
     }

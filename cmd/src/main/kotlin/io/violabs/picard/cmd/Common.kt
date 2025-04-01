@@ -12,6 +12,7 @@ object KubectlConstants {
 
     const val FILE_FLAG = "-f"
 
+    const val DEPLOYMENT = "deployment"
     const val PODS = "pods"
     const val POD = "pod"
 }

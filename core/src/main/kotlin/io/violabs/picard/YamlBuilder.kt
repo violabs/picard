@@ -244,7 +244,7 @@ fun YamlBuilder.renderPorts(ports: List<ServicePortConfig>) {
 fun YamlBuilder.renderContainers(containers: List<Container>?, key: String = "containers") {
     property(key) {
         // This creates an indentation level for the containers list
-        containers?.forEachIndexed { i, container ->
+        containers?.forEach { container ->
             // Convert the container's properties to YAML format with proper indentation
             val containerName = " ".repeat(indentation) + "- name: " + container.name
             content.append(containerName).append("\n")
@@ -253,6 +253,12 @@ fun YamlBuilder.renderContainers(containers: List<Container>?, key: String = "co
             val imageIndent = indentation + 2  // Add 2 spaces for list item properties
             val imageProperty = " ".repeat(imageIndent) + "image: " + container.image
             content.append(imageProperty).append("\n")
+
+            container.restartPolicy?.let { restartPolicy ->
+                val restartPolicyIndent = indentation + 2
+                val restartPolicyProperty = " ".repeat(restartPolicyIndent) + "restartPolicy: " + restartPolicy
+                content.append(restartPolicyProperty).append("\n")
+            }
 
             container.command?.let { command ->
                 val commandIndent = indentation + 2

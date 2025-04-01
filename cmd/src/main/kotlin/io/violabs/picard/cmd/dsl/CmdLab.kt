@@ -2,6 +2,7 @@ package io.violabs.picard.cmd.dsl
 
 import io.violabs.picard.cmd.KubectlConstants.APPLY
 import io.violabs.picard.cmd.KubectlConstants.DELETE
+import io.violabs.picard.cmd.KubectlConstants.DEPLOYMENT
 import io.violabs.picard.cmd.KubectlConstants.DESCRIBE
 import io.violabs.picard.cmd.KubectlConstants.FILE_FLAG
 import io.violabs.picard.cmd.KubectlConstants.GET
@@ -30,8 +31,15 @@ class Kubectl {
         processTask(task)
     }
 
+    //kubectl delete deployment <deployment-name> -n <namespace>
     fun deletePod(scope: DeletePodKubeTask.() -> Unit) {
         val task = DeletePodKubeTask().apply(scope)
+
+        processTask(task)
+    }
+
+    fun deleteDeployment(scope: DeleteDeploymentKubeTask.() -> Unit) {
+        val task = DeleteDeploymentKubeTask().apply(scope)
 
         processTask(task)
     }
@@ -165,12 +173,26 @@ class Label(
     val key: String,
     val value: String
 )
-
+//kubectl delete deployment <deployment-name> -n <namespace>
 class DeletePodKubeTask : KubeTask() {
     var name: String? = null
 
     override fun cmd(): Array<String> {
         return arrayOf(KUBECTL, DELETE, POD, name!!)
+    }
+}
+
+class DeleteDeploymentKubeTask : KubeTask() {
+    var name: String? = null
+    var namespace: String? = null
+
+    override fun cmd(): Array<String> {
+        val cmd = mutableListOf(KUBECTL, DELETE, DEPLOYMENT, name!!)
+        if (namespace != null) {
+            cmd.add("-n")
+            cmd.add(namespace!!)
+        }
+        return cmd.toTypedArray()
     }
 }
 

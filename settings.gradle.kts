@@ -1,4 +1,4 @@
 
 include(
-    "sandbox", "tutorial", "core", "cmd"
+    "sandbox", "tutorial", "core", "cmd", "common"
 )

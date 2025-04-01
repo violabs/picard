@@ -1,9 +1,15 @@
 
 
 application {
-    mainClass.set("io.violabs.picard.cmd.MainKt")
+    mainClass.set("io.violabs.picard.cmd.CmdMainKt")
 }
 
+dependencies {
+    implementation(project(":common"))
+}
+
+
+//region REVISIT
 tasks.register<Exec>("runPod") {
     val podFilePath = project
         .findProperty("pod-file-path") as String?
@@ -12,20 +18,6 @@ tasks.register<Exec>("runPod") {
     commandLine("kubectl", "apply", "-f", podFilePath)
 }
 
-// BASIC
-//# List all pods in the current namespace
-//kubectl get pods
-//
-//# List all pods in all namespaces
-//kubectl get pods --all-namespaces
-//# or the shorter version
-//kubectl get pods -A
-//
-//# Get more details about the pods
-//kubectl get pods -o wide
-//
-//# Get details about a specific pod
-//kubectl get pod <pod-name>
 tasks.register("listPods") {
     val allNamespaces: Boolean = derive(false,  "search-all-namespaces", "all-namespaces", "A")
     val wide: Boolean = derive(false, "wide")
@@ -72,3 +64,4 @@ open class TestTask : DefaultTask() {
 }
 
 tasks.register<TestTask>("runTest")
+//endregion REVISIT

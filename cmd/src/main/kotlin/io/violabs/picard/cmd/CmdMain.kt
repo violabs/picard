@@ -3,20 +3,42 @@ package io.violabs.picard.cmd
 import io.violabs.picard.cmd.dsl.Kubectl
 import io.violabs.picard.cmd.dsl.kubectl
 
-//# Filter pods by label
-//kubectl get pods -l app=nginx
-//
-//# Filter pods by namespace
-//kubectl get pods -n <namespace-name>
-//
-//# Sort pods by creation time
-//kubectl get pods --sort-by=.metadata.creationTimestamp
-fun main(vararg args: String) = kubectl {
+private const val USE_EXAMPLE = false
 
-//    examples(Example.LABEL_FILTER)
+private const val GENERATED_DIR = "tutorial/src/main/resources/generated"
+
+fun main(vararg args: String) = kubectl {
+    if (USE_EXAMPLE) {
+        examples(Example.DELETE_SIMPLE_POD)
+        return@kubectl
+    }
+
+    val fileName = "$GENERATED_DIR/pod-sidecar.yaml"
+
+    applyPod {
+        fileLocation = fileName
+        enabled = true
+    }
 
     getPods {
-        sortBy = ".metadata.creationTimestamp"
+        allNameSpaces()
+        enabled = false
+    }
+
+    describePod {
+        fileLocation = fileName
+        enabled = false
+    }
+
+    deletePod {
+        name = "myapp-pod"
+        enabled = false
+    }
+
+    logs {
+        name = "myapp-pod"
+        container = "init-mydb"
+        enabled = false
     }
 }
 

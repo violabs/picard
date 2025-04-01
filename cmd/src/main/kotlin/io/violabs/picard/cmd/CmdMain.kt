@@ -22,7 +22,7 @@ fun main(vararg args: String) = kubectl {
 
     getPods {
         allNameSpaces()
-        enabled = true
+        enabled = false
     }
 
     describePod {
@@ -30,14 +30,14 @@ fun main(vararg args: String) = kubectl {
         enabled = false
     }
 
-    deletePod {
-        name = "myapp-76b5b85cf-cbwp7"
-        enabled = false
-    }
-
     deleteDeployment {
         name = "myapp"
         namespace = "default"
+        enabled = false
+    }
+
+    deletePod {
+        name = "myapp-55d976bcf9-74qk8"
         enabled = false
     }
 

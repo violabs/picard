@@ -17,12 +17,12 @@ fun main(vararg args: String) = kubectl {
 
     applyPod {
         fileLocation = fileName
-        enabled = true
+        enabled = false
     }
 
     getPods {
         allNameSpaces()
-        enabled = false
+        enabled = true
     }
 
     describePod {
@@ -31,12 +31,18 @@ fun main(vararg args: String) = kubectl {
     }
 
     deletePod {
-        name = "myapp-pod"
+        name = "myapp-76b5b85cf-cbwp7"
+        enabled = false
+    }
+
+    deleteDeployment {
+        name = "myapp"
+        namespace = "default"
         enabled = false
     }
 
     logs {
-        name = "myapp-pod"
+        name = "myapp-76b5b85cf-cbwp7"
         container = "init-mydb"
         enabled = false
     }

@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.builder
 
-import io.violabs.picard.domain.KubeletConfiguration
+import io.violabs.picard.domain.k8sResources.KubeletConfiguration
 
 class EvictionHardBuilder : Builder<KubeletConfiguration.EvictionHard> {
     private var memory: KubeletConfiguration.EvictionHard.Memory? = null

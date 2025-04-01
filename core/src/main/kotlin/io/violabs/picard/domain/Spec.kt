@@ -12,5 +12,6 @@ data class Spec(
     val ports: List<ServicePortConfig>? = null,
     val volumes: List<Volume>? = null,
     val replicas: Int? = null,
-    val selector: Selector? = null
+    val selector: Selector? = null,
+    val strategy: Strategy? = null
 )

@@ -1,4 +1,7 @@
-package io.violabs.picard.domain
+package io.violabs.picard.domain.k8sResources
+
+import io.violabs.picard.domain.CrashLoopBackOff
+import io.violabs.picard.domain.Kind
 
 data class KubeletConfiguration(
     val apiVersion: String,

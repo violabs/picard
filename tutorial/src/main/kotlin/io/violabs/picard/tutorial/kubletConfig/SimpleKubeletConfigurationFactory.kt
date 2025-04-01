@@ -3,7 +3,7 @@ package io.violabs.picard.tutorial.kubletConfig
 import io.violabs.picard.buildKubeletConfigYamlContent
 import io.violabs.picard.buildKubeletConfiguration
 import io.violabs.picard.domain.Kind
-import io.violabs.picard.domain.KubeletConfiguration
+import io.violabs.picard.domain.k8sResources.KubeletConfiguration
 
 object SimpleKubeletConfigurationFactory {
     fun buildFromDsl(): String {

@@ -12,6 +12,7 @@ class SpecBuilder : Builder<Spec> {
     private var ports: List<ServicePortConfig>? = null
     private var volumes: List<Volume>? = null
     private var selector: Selector? = null
+    private var strategy: Strategy? = null
 
     override fun build(): Spec {
         if (containers == null && template == null && ports == null) {
@@ -27,7 +28,8 @@ class SpecBuilder : Builder<Spec> {
             ports = ports,
             volumes = volumes,
             replicas = replicas,
-            selector = selector
+            selector = selector,
+            strategy = strategy
         )
     }
 
@@ -57,5 +59,9 @@ class SpecBuilder : Builder<Spec> {
 
     fun selector(scope: SelectorBuilder.() -> Unit) {
         selector = scopedBuild(::SelectorBuilder, scope)
+    }
+
+    fun strategy(scope: StrategyBuilder.() -> Unit) {
+        strategy = scopedBuild(::StrategyBuilder, scope)
     }
 }

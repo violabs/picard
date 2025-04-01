@@ -1,16 +1,14 @@
 package io.violabs.picard.tutorial
 
 import io.violabs.picard.common.DefaultLogger
-import io.violabs.picard.common.Logger
-import io.violabs.picard.common.Logging
-import io.violabs.picard.common.VLoggable
 import io.violabs.picard.tutorial.job.JobFactory
 import io.violabs.picard.tutorial.kubletConfig.SimpleKubeletConfigurationFactory
 import io.violabs.picard.tutorial.pod.ComplexPodFactory
-import io.violabs.picard.tutorial.podTemplate.PodTemplateFactory.buildPodTemplateDsl
 import io.violabs.picard.tutorial.pod.SimplePodFactory.buildSimplePod
 import io.violabs.picard.tutorial.pod.SimplePodFactory.buildSimplePodDsl
+import io.violabs.picard.tutorial.podTemplate.PodTemplateFactory.buildPodTemplateDsl
 import io.violabs.picard.tutorial.workload.DeploymentFactory
+import io.violabs.picard.tutorial.workload.ReplicaSetFactory
 import java.io.File
 
 fun main(vararg args: String) = with(FileManager()) {
@@ -61,6 +59,30 @@ fun main(vararg args: String) = with(FileManager()) {
         "Simple deployment",
         "./tutorial/src/main/resources/generated/simple-deployment.yaml",
         DeploymentFactory.buildSimpleDeployment()
+    )
+
+    addFile(
+        "Rolling update deployment max unavailable",
+        "./tutorial/src/main/resources/generated/rolling-update-deployment-max-unavailable.yaml",
+        DeploymentFactory.buildMaxUnavailableStrategy()
+    )
+
+    addFile(
+        "Rolling update deployment max surge",
+        "./tutorial/src/main/resources/generated/rolling-update-deployment-max-surge.yaml",
+        DeploymentFactory.buildMaxSurgeStrategy()
+    )
+
+    addFile(
+        "Rolling update deployment hybrid",
+        "./tutorial/src/main/resources/generated/rolling-update-deployment-hybrid.yaml",
+        DeploymentFactory.buildHybridStrategy()
+    )
+
+    addFile(
+        "Simple replica set",
+        "./tutorial/src/main/resources/generated/simple-replica-set.yaml",
+        ReplicaSetFactory.buildSimpleReplicaSet()
     )
 }
 

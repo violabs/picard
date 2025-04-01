@@ -2,9 +2,9 @@ package io.violabs.picard.domain.builder
 
 import io.violabs.picard.common.DefaultLogger
 import io.violabs.picard.domain.Label
-import io.violabs.picard.domain.Metadata
+import io.violabs.picard.domain.ObjectMetadata
 
-class MetadataBuilder : Builder<Metadata>, DefaultLogger(MetadataBuilder::class) {
+class MetadataBuilder : Builder<ObjectMetadata>, DefaultLogger(MetadataBuilder::class) {
     var name: String? = null
         set(value) {
             field = value
@@ -12,8 +12,8 @@ class MetadataBuilder : Builder<Metadata>, DefaultLogger(MetadataBuilder::class)
         }
     private var labels: List<Label>? = null
 
-    override fun build(): Metadata {
-        return Metadata(
+    override fun build(): ObjectMetadata {
+        return ObjectMetadata(
             name = name,
             labels = labels
         )

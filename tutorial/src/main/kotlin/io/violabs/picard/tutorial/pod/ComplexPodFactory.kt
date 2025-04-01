@@ -115,7 +115,7 @@ object ComplexPodFactory {
                         }
                     }
                     template {
-                        templateMetadata {
+                        metadata {
                             labels {
                                 // as example
                                 label(labelKey, appName)

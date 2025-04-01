@@ -11,7 +11,7 @@ object SimplePodFactory {
         val config = PodResource(
             apiVersion = PodResource.Version.V1,
             kind = Kind.POD,
-            metadata = Metadata(
+            metadata = ObjectMetadata(
                 name = "nginx"
             ),
             spec = Spec(

@@ -3,10 +3,17 @@ package io.violabs.picard
 import io.violabs.picard.common.DefaultLogger
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.builder.ManifestBuilder
+import io.violabs.picard.domain.k8sResources.KubeletConfiguration
 
 class YamlBuilder : DefaultLogger(YamlBuilder::class) {
     internal val content = StringBuilder()
     internal var indentation = 0
+
+    fun propertyIfNotNull(name: String, value: Any?) {
+        if (value != null) {
+            property(name, value)
+        }
+    }
 
     fun property(key: String, value: Any? = null, listItem: Boolean = false, skipIndent: Boolean = false) {
         val prefix = if (listItem) "- " else ""
@@ -108,9 +115,7 @@ fun buildPodYamlContent(resource: PodResource): String = buildYaml {
     property("metadata") {
         val metadata = resource.metadata
 
-        metadata.name?.let {
-            property("name", it)
-        }
+        propertyIfNotNull("name", metadata.name)
 
         metadata.labels?.let { labels ->
             property("labels") {
@@ -169,13 +174,8 @@ fun buildPodYamlContent(resource: PodResource): String = buildYaml {
 }
 
 fun YamlBuilder.renderSpec(spec: Spec, scope: Spec.() -> Unit = {}) {
-    spec.restartPolicy?.let { restartPolicy ->
-        property("restartPolicy", restartPolicy)
-    }
-
-    spec.replicas?.let { replicas ->
-        property("replicas", replicas)
-    }
+    propertyIfNotNull("restartPolicy", spec.restartPolicy)
+    propertyIfNotNull("replicas", spec.replicas)
 
     spec.selector?.let { selector ->
         property("selector") {
@@ -215,6 +215,22 @@ fun YamlBuilder.renderSpec(spec: Spec, scope: Spec.() -> Unit = {}) {
             volumes.forEach { volume ->
                 property("- name", volume.name)
                 property("  emptyDir", volume.emptyDir)
+            }
+        }
+    }
+
+    spec.strategy?.let { strategy ->
+        property("strategy") {
+            property("type", strategy.type)
+            strategy.rollingUpdate?.let { rollingUpdate ->
+                property("rollingUpdate") {
+                    propertyIfNotNull("maxUnavailable", rollingUpdate.maxUnavailable)
+                    propertyIfNotNull("maxSurge", rollingUpdate.maxSurge)
+                    propertyIfNotNull("progressDeadlineSeconds", rollingUpdate.progressDeadlineSeconds)
+                    propertyIfNotNull("minReadySeconds", rollingUpdate.minReadySeconds)
+                    propertyIfNotNull("revisionHistoryLimit", rollingUpdate.revisionHistoryLimit)
+                    propertyIfNotNull("paused", rollingUpdate.paused)
+                }
             }
         }
     }

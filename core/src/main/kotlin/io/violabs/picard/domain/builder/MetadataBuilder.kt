@@ -6,12 +6,18 @@ import io.violabs.picard.domain.Metadata
 
 class MetadataBuilder : Builder<Metadata>, DefaultLogger(MetadataBuilder::class) {
     var name: String? = null
+        set(value) {
+            field = value
+            log.debug("name: $value")
+        }
     private var labels: List<Label>? = null
 
-    override fun build(): Metadata = Metadata(
-        name = name,
-        labels = labels
-    )
+    override fun build(): Metadata {
+        return Metadata(
+            name = name,
+            labels = labels
+        )
+    }
 
     fun labels(block: LabelsBuilder.() -> Unit) {
         labels = scopedBuild(::LabelsBuilder, block)

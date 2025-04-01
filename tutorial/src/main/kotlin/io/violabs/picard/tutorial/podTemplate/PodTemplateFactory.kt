@@ -31,6 +31,6 @@ object PodTemplateFactory {
             }
         }
 
-        return buildPodYamlContent(config)
+        return buildManifestContent(config)
     }
 }

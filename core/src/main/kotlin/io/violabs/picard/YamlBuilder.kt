@@ -2,6 +2,7 @@ package io.violabs.picard
 
 import io.violabs.picard.common.DefaultLogger
 import io.violabs.picard.domain.*
+import io.violabs.picard.domain.builder.ManifestBuilder
 
 class YamlBuilder : DefaultLogger(YamlBuilder::class) {
     internal val content = StringBuilder()
@@ -90,8 +91,15 @@ fun buildYaml(block: YamlBuilder.() -> Unit): String {
     return builder.build()
 }
 
-fun buildPodYamlContent(manifest: Manifest): String {
+fun buildManifestContent(manifest: Manifest): String {
     return manifest.resources.joinToString("\n---\n") { buildPodYamlContent(it) }
+}
+
+fun buildManifestContent(manifestSupplier: ManifestBuilder.() -> Unit): String {
+    val config = buildManifest {
+        manifestSupplier(this)
+    }
+    return buildManifestContent(config)
 }
 
 fun buildPodYamlContent(resource: PodResource): String = buildYaml {

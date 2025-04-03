@@ -3,9 +3,9 @@ package io.violabs.picard.domain.builder
 import io.violabs.picard.domain.*
 
 class PodResourceBuilder : Builder<PodResource> {
-    var apiVersion: PodResource.Version = PodResource.Version.V1
+    var apiVersion: APIVersion = PodResource.Version.V1
     var kind: Kind? = null
-    private var metadata: Metadata? = null
+    private var metadata: ObjectMetadata? = null
     var spec: Spec? = null
     var status: PodStatus? = null
 

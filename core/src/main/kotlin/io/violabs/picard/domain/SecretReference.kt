@@ -1,6 +1,6 @@
 package io.violabs.picard.domain
 
-data class Metadata(
+data class SecretReference(
     val name: String? = null,
-    val labels: List<Label>? = null
+    val namespace: String? = null
 )

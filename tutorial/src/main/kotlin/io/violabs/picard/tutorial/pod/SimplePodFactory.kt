@@ -2,6 +2,7 @@ package io.violabs.picard.tutorial.pod
 
 import io.violabs.picard.buildManifest
 import io.violabs.picard.buildPodYamlContent
+import io.violabs.picard.buildManifestContent
 import io.violabs.picard.domain.*
 import java.time.LocalDateTime
 
@@ -10,7 +11,7 @@ object SimplePodFactory {
         val config = PodResource(
             apiVersion = PodResource.Version.V1,
             kind = Kind.POD,
-            metadata = Metadata(
+            metadata = ObjectMetadata(
                 name = "nginx"
             ),
             spec = Spec(
@@ -55,7 +56,7 @@ object SimplePodFactory {
             }
         }
 
-        return buildPodYamlContent(config)
+        return buildManifestContent(config)
     }
 
     fun buildSimpleStatus(): String {
@@ -94,7 +95,7 @@ object SimplePodFactory {
             }
         }
 
-        return buildPodYamlContent(config)
+        return buildManifestContent(config)
     }
 }
 

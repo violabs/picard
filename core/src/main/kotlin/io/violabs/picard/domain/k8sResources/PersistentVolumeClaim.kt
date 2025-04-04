@@ -58,4 +58,9 @@ data class PersistentVolumeClaim(
         class InProgress : ModifyVolumeStatus("InProgress")
         class Infeasible : ModifyVolumeStatus("Infeasible")
     }
+
+    class VolumeSource(
+        val claimName: String,
+        val readOnly: Boolean? = null
+    )
 }

@@ -18,7 +18,11 @@ enum class Kind : K8sEnum {
     REPLICA_SET,
     SECRET,
     SECRET_LIST,
-    SERVICE;
+    SERVICE,
+    STORAGE_CLASS,
+    STORAGE_CLASS_LIST,
+    STORAGE_VERSION_MIGRATION,
+    STORAGE_VERSION_MIGRATION_LIST;
 
     override fun toString(): String = properCase()
 }

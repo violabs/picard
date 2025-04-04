@@ -19,4 +19,17 @@ data class ConfigMap(
         V1;
         override fun toString(): String = refString()
     }
+
+    data class VolumeSource(
+        val name: String,
+        val optional: Boolean? = null,
+        val defaultMode: Int? = null,
+        val items: List<KeyToPath>? = null
+    )
+
+    data class Projection(
+        val name: String? = null,
+        val optional: Boolean? = null,
+        val items: List<KeyToPath>? = null
+    )
 }

@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.k8sResources.pod.action
+package io.violabs.picard.domain.k8sResources.workload.pod.action
 
 data class TCPSocketAction(
     val portNum: Int? = null,

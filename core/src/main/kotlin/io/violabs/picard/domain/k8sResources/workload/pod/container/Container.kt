@@ -1,10 +1,10 @@
-package io.violabs.picard.domain.k8sResources.pod.container
+package io.violabs.picard.domain.k8sResources.workload.pod.container
 
 import io.violabs.picard.domain.RestartPolicy
 import io.violabs.picard.domain.k8sResources.Quantity
-import io.violabs.picard.domain.k8sResources.pod.*
-import io.violabs.picard.domain.k8sResources.pod.volume.VolumeDevice
-import io.violabs.picard.domain.k8sResources.pod.volume.VolumeMount
+import io.violabs.picard.domain.k8sResources.workload.pod.*
+import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeDevice
+import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeMount
 import java.time.LocalDateTime
 
 data class Container(
@@ -68,8 +68,8 @@ data class Container(
     )
 
     data class Lifecycle(
-        val postStart: LifecycleHandler? = null,
-        val preStop: LifecycleHandler? = null,
+        val postStart: io.violabs.picard.domain.k8sResources.workload.pod.LifecycleHandler? = null,
+        val preStop: io.violabs.picard.domain.k8sResources.workload.pod.LifecycleHandler? = null,
     )
 
     data class Status(

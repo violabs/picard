@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.k8sResources.pod.security
+package io.violabs.picard.domain.k8sResources.workload.pod.security
 
 import io.violabs.picard.domain.K8sEnum
 

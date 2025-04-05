@@ -1,9 +1,9 @@
-package io.violabs.picard.domain.k8sResources.pod
+package io.violabs.picard.domain.k8sResources.workload.pod
 
-import io.violabs.picard.domain.k8sResources.pod.action.ExecAction
-import io.violabs.picard.domain.k8sResources.pod.action.GRPCAction
-import io.violabs.picard.domain.k8sResources.pod.action.HTTPGetAction
-import io.violabs.picard.domain.k8sResources.pod.action.TCPSocketAction
+import io.violabs.picard.domain.k8sResources.workload.pod.action.ExecAction
+import io.violabs.picard.domain.k8sResources.workload.pod.action.GRPCAction
+import io.violabs.picard.domain.k8sResources.workload.pod.action.HTTPGetAction
+import io.violabs.picard.domain.k8sResources.workload.pod.action.TCPSocketAction
 
 data class Probe(
     val exec: ExecAction? = null,

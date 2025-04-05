@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.k8sResources.pod.security
+package io.violabs.picard.domain.k8sResources.workload.pod.security
 
 data class SELinuxOptions(
     val level: String? = null,

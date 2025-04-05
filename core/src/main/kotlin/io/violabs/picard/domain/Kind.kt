@@ -16,6 +16,8 @@ enum class Kind : K8sEnum {
     PERSISTENT_VOLUME_CLAIM_LIST,
     POD,
     POD_LIST,
+    POD_TEMPLATE,
+    POD_TEMPLATE_LIST,
     REPLICA_SET,
     SECRET,
     SECRET_LIST,

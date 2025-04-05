@@ -1,16 +1,16 @@
-package io.violabs.picard.domain.k8sResources.pod.container
+package io.violabs.picard.domain.k8sResources.workload.pod.container
 
 import io.violabs.picard.domain.ObjectFieldSelector
 import io.violabs.picard.domain.ResourceFieldSelector
 import io.violabs.picard.domain.RestartPolicy
 import io.violabs.picard.domain.k8sResources.ConfigMap
 import io.violabs.picard.domain.k8sResources.Secret
-import io.violabs.picard.domain.k8sResources.pod.volume.VolumeDevice
-import io.violabs.picard.domain.k8sResources.pod.volume.VolumeMount
-import io.violabs.picard.domain.k8sResources.pod.security.AppArmorProfile
-import io.violabs.picard.domain.k8sResources.pod.security.SELinuxOptions
-import io.violabs.picard.domain.k8sResources.pod.security.SeccompProfile
-import io.violabs.picard.domain.k8sResources.pod.security.WindowsSecurityContextOptions
+import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeDevice
+import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeMount
+import io.violabs.picard.domain.k8sResources.workload.pod.security.AppArmorProfile
+import io.violabs.picard.domain.k8sResources.workload.pod.security.SELinuxOptions
+import io.violabs.picard.domain.k8sResources.workload.pod.security.SeccompProfile
+import io.violabs.picard.domain.k8sResources.workload.pod.security.WindowsSecurityContextOptions
 
 interface BaseContainer {
     val name: String

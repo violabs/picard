@@ -155,7 +155,7 @@ data class Pod(
         val reason: String? = null,
         val podIP: String? = null,
         val podIPs: List<PodIP>? = null,
-        val conditions: List<PodCondition>? = null,
+        val conditions: List<Condition>? = null,
         val qosClass: String? = null,
         val initContainerStatuses: List<Container.Status>? = null,
         val containerStatuses: List<Container.Status>? = null,

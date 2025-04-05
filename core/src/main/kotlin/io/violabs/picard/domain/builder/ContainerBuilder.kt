@@ -1,8 +1,8 @@
 package io.violabs.picard.domain.builder
 
-import io.violabs.picard.domain.k8sResources.pod.Container
+import io.violabs.picard.domain.k8sResources.pod.container.Container
 import io.violabs.picard.domain.RestartPolicy
-import io.violabs.picard.domain.k8sResources.pod.VolumeMount
+import io.violabs.picard.domain.k8sResources.pod.volume.VolumeMount
 
 class ContainerBuilder : Builder<Container> {
     var name: String? = null

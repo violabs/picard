@@ -3,6 +3,8 @@ package io.violabs.picard.domain.k8sResources.pod
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.Quantity
+import io.violabs.picard.domain.k8sResources.pod.container.Container
+import io.violabs.picard.domain.k8sResources.pod.container.EphemeralContainer
 import io.violabs.picard.domain.k8sResources.pod.security.*
 import java.time.LocalDateTime
 

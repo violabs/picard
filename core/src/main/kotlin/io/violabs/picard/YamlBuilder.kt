@@ -4,7 +4,7 @@ import io.violabs.picard.common.DefaultLogger
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.builder.ManifestBuilder
 import io.violabs.picard.domain.k8sResources.KubeletConfiguration
-import io.violabs.picard.domain.k8sResources.pod.Container
+import io.violabs.picard.domain.k8sResources.pod.container.Container
 
 class YamlBuilder : DefaultLogger(YamlBuilder::class) {
     internal val content = StringBuilder()

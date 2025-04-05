@@ -1,6 +1,8 @@
-package io.violabs.picard.domain.k8sResources.pod
+package io.violabs.picard.domain.k8sResources.pod.container
 
 import io.violabs.picard.domain.RestartPolicy
+import io.violabs.picard.domain.k8sResources.pod.volume.VolumeDevice
+import io.violabs.picard.domain.k8sResources.pod.volume.VolumeMount
 
 data class EphemeralContainer(
     override val name: String,

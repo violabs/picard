@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.k8sResources.pod
+package io.violabs.picard.domain.k8sResources.pod.volume
 
 data class VolumeMount(
     val name: String,

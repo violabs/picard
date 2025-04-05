@@ -1,6 +1,6 @@
 package io.violabs.picard.domain
 
-import io.violabs.picard.domain.k8sResources.pod.Container
+import io.violabs.picard.domain.k8sResources.pod.container.Container
 import io.violabs.picard.domain.k8sResources.pod.ReadinessGate
 
 /**

@@ -1,6 +1,8 @@
 package io.violabs.picard.domain.builder
 
 import io.violabs.picard.domain.*
+import io.violabs.picard.domain.k8sResources.pod.Container
+import io.violabs.picard.domain.k8sResources.pod.ReadinessGate
 
 class SpecBuilder : Builder<Spec> {
     var restartPolicy: RestartPolicy? = null

@@ -16,6 +16,17 @@ data class Secret(
 ) : K8sResource<Secret.Version> {
     override val kind: Kind = Kind.SECRET
 
+    class KeySelector(
+        val key: String,
+        val name: String? = null,
+        val optional: Boolean? = null
+    )
+
+    data class EnvSource(
+        val name: String? = null,
+        val optional: Boolean? = null
+    )
+
     enum class Version(override val ref: String? = null) : APIVersion {
         V1;
 

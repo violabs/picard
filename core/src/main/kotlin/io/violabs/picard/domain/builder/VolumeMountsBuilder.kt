@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.builder
 
-import io.violabs.picard.domain.VolumeMount
+import io.violabs.picard.domain.k8sResources.pod.VolumeMount
 
 class VolumeMountsBuilder : Builder<List<VolumeMount>> {
     private val volumeMounts: MutableList<VolumeMount> = mutableListOf()

@@ -4,6 +4,7 @@ import io.violabs.picard.buildManifest
 import io.violabs.picard.buildPodYamlContent
 import io.violabs.picard.buildManifestContent
 import io.violabs.picard.domain.*
+import io.violabs.picard.domain.k8sResources.pod.Container
 import java.time.LocalDateTime
 
 object SimplePodFactory {
@@ -20,7 +21,7 @@ object SimplePodFactory {
                         name = "nginx",
                         image = "nginx:1.14.2",
                         ports = listOf(
-                            Container.PortConfig(
+                            Container.Port(
                                 containerPort = 80
                             )
                         )

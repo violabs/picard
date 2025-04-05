@@ -1,5 +1,8 @@
 package io.violabs.picard.domain
 
+import io.violabs.picard.domain.k8sResources.pod.Container
+import io.violabs.picard.domain.k8sResources.pod.ReadinessGate
+
 /**
  * @property restartPolicy defaults to Always if not specified when run by kubectl
  */

@@ -32,4 +32,15 @@ data class ConfigMap(
         val optional: Boolean? = null,
         val items: List<KeyToPath>? = null
     )
+
+    data class KeySelector(
+        val key: String,
+        val name: String? = null,
+        val optional: Boolean? = null
+    )
+
+    data class EnvSource(
+        val name: String? = null,
+        val optional: Boolean? = null
+    )
 }

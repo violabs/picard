@@ -3,6 +3,7 @@ package io.violabs.picard.tutorial.pod
 import io.violabs.picard.buildManifest
 import io.violabs.picard.buildManifestContent
 import io.violabs.picard.domain.*
+import io.violabs.picard.domain.k8sResources.pod.VolumeMount
 
 object ComplexPodFactory {
 

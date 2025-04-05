@@ -5,7 +5,7 @@ import io.violabs.picard.buildManifestContent
 import io.violabs.picard.domain.Kind
 import io.violabs.picard.domain.PodResource
 import io.violabs.picard.domain.RestartPolicy
-import io.violabs.picard.domain.VolumeMount
+import io.violabs.picard.domain.k8sResources.pod.VolumeMount
 
 object JobFactory {
 

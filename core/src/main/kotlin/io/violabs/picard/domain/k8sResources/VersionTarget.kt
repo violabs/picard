@@ -6,5 +6,6 @@ import kotlin.reflect.KClass
 @Target(AnnotationTarget.VALUE_PARAMETER)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class VersionTarget<T : APIVersion>(
-    val version: KClass<T>
+    val version: KClass<T>,
+    val required: Boolean = false
 )

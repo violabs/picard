@@ -32,12 +32,22 @@ import io.violabs.picard.domain.k8sResources.workload.job.Job
 import io.violabs.picard.domain.k8sResources.workload.job.JobList
 import io.violabs.picard.domain.k8sResources.workload.pod.Pod
 import io.violabs.picard.domain.k8sResources.workload.pod.PodList
+import io.violabs.picard.domain.k8sResources.workload.podSchedulingContext.PodSchedulingContext
+import io.violabs.picard.domain.k8sResources.workload.podSchedulingContext.PodSchedulingContextList
 import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplateList
+import io.violabs.picard.domain.k8sResources.workload.priorityClass.PriorityClass
+import io.violabs.picard.domain.k8sResources.workload.priorityClass.PriorityClassList
 import io.violabs.picard.domain.k8sResources.workload.replicaSet.ReplicaSet
 import io.violabs.picard.domain.k8sResources.workload.replicaSet.ReplicaSetList
 import io.violabs.picard.domain.k8sResources.workload.replicationController.ReplicationController
 import io.violabs.picard.domain.k8sResources.workload.replicationController.ReplicationControllerList
+import io.violabs.picard.domain.k8sResources.workload.resourceClaim.ResourceClaim
+import io.violabs.picard.domain.k8sResources.workload.resourceClaim.ResourceClaimList
+import io.violabs.picard.domain.k8sResources.workload.resourceClaimTemplate.ResourceClaimTemplate
+import io.violabs.picard.domain.k8sResources.workload.resourceClaimTemplate.ResourceClaimTemplateList
+import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourceSlice
+import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourceSliceList
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSet
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSetList
 
@@ -94,6 +104,28 @@ open class KAPIVersion(
         CronJobList.Version,
         Job.Version,
         JobList.Version
+
+    object ResourceV1Alpha3 : KAPIVersion("resource.k8s.io/v1alpha3"),
+        PodSchedulingContext.Version,
+        PodSchedulingContextList.Version,
+        ResourceClaim.Version,
+        ResourceClaimList.Version,
+        ResourceClaimTemplate.Version,
+        ResourceClaimTemplateList.Version,
+        ResourceSlice.Version,
+        ResourceSliceList.Version
+
+    object ResourceV1Beta1 : KAPIVersion(),
+        ResourceClaim.Version,
+        ResourceClaimList.Version,
+        ResourceClaimTemplate.Version,
+        ResourceClaimTemplateList.Version,
+        ResourceSlice.Version,
+        ResourceSliceList.Version
+
+    object SchedulingV1 : KAPIVersion("scheduling.k8s.io/v1"),
+        PriorityClass.Version,
+        PriorityClassList.Version
 
     object StorageV1 : KAPIVersion("storage.k8s.io/v1"),
         CSIDriver.Version,

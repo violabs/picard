@@ -5,10 +5,7 @@ import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.Quantity
-import io.violabs.picard.domain.k8sResources.workload.BaseNodeAffinity
-import io.violabs.picard.domain.k8sResources.workload.BaseNodeSelector
-import io.violabs.picard.domain.k8sResources.workload.BaseSpec
-import io.violabs.picard.domain.k8sResources.workload.BaseStatus
+import io.violabs.picard.domain.k8sResources.workload.*
 import java.time.LocalDateTime
 
 /**
@@ -46,13 +43,4 @@ data class PersistentVolume(
     data class VolumeNodeAffinity(
         val required: NodeSelector? = null,
     ) : BaseNodeAffinity
-
-    data class NodeSelector(
-        val nodeSelectorTerms: List<Term>
-    ) : BaseNodeSelector {
-        data class Term(
-            val matchExpression: List<NodeSelectorRequirement>? = null,
-            val matchFields: List<NodeSelectorRequirement>? = null
-        )
-    }
 }

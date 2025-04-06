@@ -18,6 +18,16 @@ import io.violabs.picard.domain.k8sResources.storage.csi.csiDriver.CSIDriverList
 import io.violabs.picard.domain.k8sResources.storage.csi.csiDriver.CSIDriver
 import io.violabs.picard.domain.k8sResources.config.configMap.ConfigMap
 import io.violabs.picard.domain.k8sResources.config.configMap.ConfigMapList
+import io.violabs.picard.domain.k8sResources.service.endpoints.Endpoints
+import io.violabs.picard.domain.k8sResources.service.endpoints.EndpointsList
+import io.violabs.picard.domain.k8sResources.service.Service
+import io.violabs.picard.domain.k8sResources.service.ServiceList
+import io.violabs.picard.domain.k8sResources.service.endpointSlice.EndpointSlice
+import io.violabs.picard.domain.k8sResources.service.endpointSlice.EndpointSliceList
+import io.violabs.picard.domain.k8sResources.service.ingress.Ingress
+import io.violabs.picard.domain.k8sResources.service.ingress.IngressList
+import io.violabs.picard.domain.k8sResources.service.ingressClass.IngressClass
+import io.violabs.picard.domain.k8sResources.service.ingressClass.IngressClassList
 import io.violabs.picard.domain.k8sResources.workload.controllerRevision.ControllerRevision
 import io.violabs.picard.domain.k8sResources.workload.controllerRevision.ControllerRevisionList
 import io.violabs.picard.domain.k8sResources.workload.cronJob.CronJob
@@ -66,6 +76,8 @@ open class KAPIVersion(
     object V1 : KAPIVersion(),
         ConfigMap.Version,
         ConfigMapList.Version,
+        Endpoints.Version,
+        EndpointsList.Version,
         PersistentVolume.Version,
         PersistentVolumeList.Version,
         PersistentVolumeClaim.Version,
@@ -77,9 +89,11 @@ open class KAPIVersion(
         ReplicationController.Version,
         ReplicationControllerList.Version,
         Secret.Version,
-        SecretList.Version
+        SecretList.Version,
+        Service.Version,
+        ServiceList.Version
 
-    object AppsV1 : KAPIVersion(),
+    object AppsV1 : KAPIVersion("apps/v1"),
         ControllerRevision.Version,
         ControllerRevisionList.Version,
         DaemonSet.Version,
@@ -91,19 +105,29 @@ open class KAPIVersion(
         StatefulSet.Version,
         StatefulSetList.Version
 
-    object AutoscalingV1 : KAPIVersion(),
+    object AutoscalingV1 : KAPIVersion("autoscaling/v1"),
         HorizontalPodAutoscaler.Version,
         HorizontalPodAutoscalerList.Version
 
-    object AutoscalingV2 : KAPIVersion(),
+    object AutoscalingV2 : KAPIVersion("autoscaling/v2"),
         HorizontalPodAutoscaler.Version,
         HorizontalPodAutoscalerList.Version
 
-    object BatchV1 : KAPIVersion(),
+    object BatchV1 : KAPIVersion("batch/v1"),
         CronJob.Version,
         CronJobList.Version,
         Job.Version,
         JobList.Version
+
+    object DiscoveryV1 : KAPIVersion("discovery.k8s.io/v1"),
+        EndpointSlice.Version,
+        EndpointSliceList.Version
+
+    object NetworkingV1 : KAPIVersion("networking.k8s.io/v1"),
+        Ingress.Version,
+        IngressList.Version,
+        IngressClass.Version,
+        IngressClassList.Version
 
     object ResourceV1Alpha3 : KAPIVersion("resource.k8s.io/v1alpha3"),
         PodSchedulingContext.Version,
@@ -115,7 +139,7 @@ open class KAPIVersion(
         ResourceSlice.Version,
         ResourceSliceList.Version
 
-    object ResourceV1Beta1 : KAPIVersion(),
+    object ResourceV1Beta1 : KAPIVersion("resource.k8s.io/v1beta1"),
         ResourceClaim.Version,
         ResourceClaimList.Version,
         ResourceClaimTemplate.Version,

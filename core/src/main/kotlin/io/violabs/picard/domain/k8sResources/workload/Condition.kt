@@ -19,3 +19,12 @@ data class JobCondition(
     override val message: String? = null,
     override val reason: String? = null
 ) : BaseCondition
+
+data class ServiceCondition(
+    override val status: BooleanType,
+    override val type: String,
+    override val lastTransitionTime: LocalDateTime? = null,
+    override val message: String? = null,
+    override val reason: String? = null,
+    val observedGeneration: Long? = null
+) : BaseCondition

@@ -23,9 +23,13 @@ interface BaseEnvSource : BaseK8s {
 
 interface BaseKeySelector : BaseK8s
 
+interface BaseLoadBalancerIngress : BaseK8s
+
 interface BaseNodeAffinity : BaseK8s
 
 interface BaseNodeSelector : BaseK8s
+
+interface BasePort : BaseK8s
 
 interface BaseResourceClaim : BaseK8s
 

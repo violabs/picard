@@ -20,11 +20,16 @@ import io.violabs.picard.domain.k8sResources.config.configMap.ConfigMap
 import io.violabs.picard.domain.k8sResources.config.configMap.ConfigMapList
 import io.violabs.picard.domain.k8sResources.workload.controllerRevision.ControllerRevision
 import io.violabs.picard.domain.k8sResources.workload.controllerRevision.ControllerRevisionList
+import io.violabs.picard.domain.k8sResources.workload.cronJob.CronJob
+import io.violabs.picard.domain.k8sResources.workload.cronJob.CronJobList
 import io.violabs.picard.domain.k8sResources.workload.daemonSet.DaemonSet
 import io.violabs.picard.domain.k8sResources.workload.daemonSet.DaemonSetList
 import io.violabs.picard.domain.k8sResources.workload.deployment.Deployment
 import io.violabs.picard.domain.k8sResources.workload.deployment.DeploymentList
+import io.violabs.picard.domain.k8sResources.workload.horizontalPodAutoscaler.HorizontalPodAutoscaler
+import io.violabs.picard.domain.k8sResources.workload.horizontalPodAutoscaler.HorizontalPodAutoscalerList
 import io.violabs.picard.domain.k8sResources.workload.job.Job
+import io.violabs.picard.domain.k8sResources.workload.job.JobList
 import io.violabs.picard.domain.k8sResources.workload.pod.Pod
 import io.violabs.picard.domain.k8sResources.workload.pod.PodList
 import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
@@ -76,7 +81,19 @@ open class KAPIVersion(
         StatefulSet.Version,
         StatefulSetList.Version
 
-    object BatchV1 : KAPIVersion(), Job.Version
+    object AutoscalingV1 : KAPIVersion(),
+        HorizontalPodAutoscaler.Version,
+        HorizontalPodAutoscalerList.Version
+
+    object AutoscalingV2 : KAPIVersion(),
+        HorizontalPodAutoscaler.Version,
+        HorizontalPodAutoscalerList.Version
+
+    object BatchV1 : KAPIVersion(),
+        CronJob.Version,
+        CronJobList.Version,
+        Job.Version,
+        JobList.Version
 
     object StorageV1 : KAPIVersion("storage.k8s.io/v1"),
         CSIDriver.Version,

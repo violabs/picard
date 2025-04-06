@@ -4,9 +4,18 @@ import io.violabs.picard.domain.BooleanType
 import java.time.LocalDateTime
 
 data class Condition(
-    val status: BooleanType,
-    val type: String,
-    val lastTransitionTime: LocalDateTime? = null,
-    val message: String? = null,
-    val reason: String? = null
-)
+    override val status: BooleanType,
+    override val type: String,
+    override val lastTransitionTime: LocalDateTime? = null,
+    override val message: String? = null,
+    override val reason: String? = null
+) : BaseCondition
+
+data class JobCondition(
+    override val status: BooleanType,
+    override val type: String,
+    val lastProbeTime: LocalDateTime? = null,
+    override val lastTransitionTime: LocalDateTime? = null,
+    override val message: String? = null,
+    override val reason: String? = null
+) : BaseCondition

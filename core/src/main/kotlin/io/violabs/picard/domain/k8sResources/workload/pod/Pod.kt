@@ -157,4 +157,46 @@ data class Pod(
         data class HostIP(val ip: String)
         data class PodIP(val ip: String)
     }
+
+    data class FailurePolicy(val rules: List<Rule>) {
+        data class Rule(
+            val action: Action,
+            val onExitCods: OnExitCodesRequirement? = null,
+            val onPodConditions: List<OnPodConditionsPattern>? = null
+        ) {
+            enum class Action : K8sEnum {
+                COUNT,
+                FAIL_INDEX,
+                FAIL_JOB,
+                IGNORE
+            }
+        }
+
+        data class OnExitCodesRequirement(
+            val operator: Operator,
+            val values: List<Int>,
+            val containerName: String? = null
+        ) {
+            enum class Operator : K8sEnum {
+                IN,
+                NOT_IN;
+
+                override fun toString() = properCase()
+            }
+        }
+
+        data class OnPodConditionsPattern(
+            val status: BooleanType,
+            val type: String
+        )
+    }
+
+    data class SuccessPolicy(
+        val rules: List<Rule>? = null
+    ) {
+        data class Rule(
+            val succeededCount: Int? = null,
+            val succeededIndexes: String? = null
+        )
+    }
 }

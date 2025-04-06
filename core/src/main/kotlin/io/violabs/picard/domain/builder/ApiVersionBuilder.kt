@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.builder
 
-import io.violabs.picard.domain.k8sResources.KubeletConfiguration
+import io.violabs.picard.domain.KubeletConfiguration
 
 class ApiVersionBuilder(
     var definedVersion: KubeletConfiguration.DefinedVersion? = null,

@@ -2,7 +2,7 @@ package io.violabs.picard.domain.builder
 
 import io.violabs.picard.domain.CrashLoopBackOff
 import io.violabs.picard.domain.Kind
-import io.violabs.picard.domain.k8sResources.KubeletConfiguration
+import io.violabs.picard.domain.KubeletConfiguration
 
 class KubeletConfigurationBuilder : Builder<KubeletConfiguration> {
     var kind: Kind? = null

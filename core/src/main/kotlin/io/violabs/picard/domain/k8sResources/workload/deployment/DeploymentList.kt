@@ -1,20 +1,15 @@
 package io.violabs.picard.domain.k8sResources.workload.deployment
 
-import io.violabs.picard.domain.APIVersion
-import io.violabs.picard.domain.Kind
+import io.violabs.picard.domain.k8sResources.APIVersion
+import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.ListMeta
-import io.violabs.picard.domain.k8sResources.K8sResource
+import io.violabs.picard.domain.k8sResources.K8sListResource
 
 data class DeploymentList(
-    override val apiVersion: Version = Version.V1,
-    val items: List<Deployment>,
-    val metadata: ListMeta? = null
-) : K8sResource<DeploymentList.Version> {
-    override val kind: Kind = Kind.DEPLOYMENT_LIST
+    override val apiVersion: Version = KAPIVersion.AppsV1,
+    override val items: List<Deployment>,
+    override val metadata: ListMeta? = null
+) : K8sListResource<DeploymentList.Version, Deployment> {
 
-    enum class Version(override val ref: String? = null) : APIVersion {
-        V1;
-
-        override fun toString(): String = refString()
-    }
+    interface Version : APIVersion
 }

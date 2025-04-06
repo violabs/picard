@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.builder
 
-import io.violabs.picard.domain.k8sResources.pod.volume.VolumeMount
+import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeMount
 
 class VolumeMountBuilder : Builder<VolumeMount> {
     var name: String? = null

@@ -68,8 +68,8 @@ data class Container(
     )
 
     data class Lifecycle(
-        val postStart: io.violabs.picard.domain.k8sResources.workload.pod.LifecycleHandler? = null,
-        val preStop: io.violabs.picard.domain.k8sResources.workload.pod.LifecycleHandler? = null,
+        val postStart: LifecycleHandler? = null,
+        val preStop: LifecycleHandler? = null,
     )
 
     data class Status(

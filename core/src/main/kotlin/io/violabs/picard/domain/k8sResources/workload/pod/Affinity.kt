@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.pod
 
 import io.violabs.picard.domain.LabelSelector
-import io.violabs.picard.domain.k8sResources.PersistentVolume
+import io.violabs.picard.domain.k8sResources.storage.volume.persistentVolume.PersistentVolume
 import io.violabs.picard.domain.k8sResources.workload.pod.PodAffinity.Term
 
 data class Affinity(
@@ -12,7 +12,7 @@ data class Affinity(
 
 data class NodeAffinity(val preferredDuringSchedulingIgnoredDuringExecution: List<io.violabs.picard.domain.k8sResources.workload.pod.NodeAffinity.PreferredSchedulingTerm>? = null) {
     data class PreferredSchedulingTerm(
-        val preference: PersistentVolume.NodeSelectorTerm,
+        val preference: PersistentVolume.NodeSelector.Term,
         val weight: Int
     )
 }

@@ -1,7 +1,7 @@
 package io.violabs.picard.domain
 
-import io.violabs.picard.domain.k8sResources.ConfigMap
-import io.violabs.picard.domain.k8sResources.PersistentVolumeClaim
+import io.violabs.picard.domain.k8sResources.config.configMap.ConfigMap
+import io.violabs.picard.domain.k8sResources.storage.volume.persistentVolumeClaim.PersistentVolumeClaim
 
 data class Volume(
     val name: String,

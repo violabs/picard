@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.builder
 
-import io.violabs.picard.domain.k8sResources.pod.container.Container
+import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
 
 class ContainerPortsBuilder : Builder<List<Container.Port>> {
     private val ports = mutableListOf<Container.Port>()

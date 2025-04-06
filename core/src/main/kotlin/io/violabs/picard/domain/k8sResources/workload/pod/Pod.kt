@@ -1,26 +1,24 @@
 package io.violabs.picard.domain.k8sResources.workload.pod
 
 import io.violabs.picard.domain.*
+import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sResource
+import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.Quantity
+import io.violabs.picard.domain.k8sResources.workload.*
 import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
 import io.violabs.picard.domain.k8sResources.workload.pod.container.EphemeralContainer
 import io.violabs.picard.domain.k8sResources.workload.pod.security.*
 import java.time.LocalDateTime
 
 data class Pod(
-    override val apiVersion: io.violabs.picard.domain.k8sResources.workload.pod.Pod.Version,
-    val metadata: ObjectMetadata? = null,
-    val spec: io.violabs.picard.domain.k8sResources.workload.pod.Pod.Spec? = null,
-    val status: io.violabs.picard.domain.k8sResources.workload.pod.Pod.Status? = null
-) : K8sResource<io.violabs.picard.domain.k8sResources.workload.pod.Pod.Version> {
-    override val kind: Kind = Kind.POD
+    override val apiVersion: Version = KAPIVersion.V1,
+    override val metadata: ObjectMetadata? = null,
+    val spec: Spec? = null,
+    val status: Status? = null
+) : K8sResource<Pod.Version> {
 
-    enum class Version(override val ref: String? = null) : APIVersion {
-        V1;
-
-        override fun toString(): String = refString()
-    }
+    interface Version  : APIVersion
 
     data class Spec(
         // Containers
@@ -29,32 +27,32 @@ data class Pod(
         val ephemeralContainers: List<EphemeralContainer>? = null,
         val imagePullSecrets: List<LocalObjectReference>? = null,
         val enableServiceLinks: Boolean? = null,
-        val os: _root_ide_package_.io.violabs.picard.domain.k8sResources.workload.pod.Pod.OS? = null,
+        val os: OS? = null,
         // Volumes
         val volumes: List<Volume>? = null,
         // Scheduling
         val nodeSelector: Map<String, String>? = null,
         val nodeName: String? = null,
-        val affinity: _root_ide_package_.io.violabs.picard.domain.k8sResources.workload.pod.Affinity? = null,
-        val tolerations: List<_root_ide_package_.io.violabs.picard.domain.k8sResources.workload.pod.Pod.Toleration>? = null,
+        val affinity: Affinity? = null,
+        val tolerations: List<Toleration>? = null,
         val schedulerName: String? = null,
         val runtimeClassName: String? = null,
         val priorityClassName: String? = null,
         val priority: Int? = null,
         val preemptionPolicy: String? = null,
-        val topologySpreadConstraints: List<_root_ide_package_.io.violabs.picard.domain.k8sResources.workload.pod.Pod.TopologySpreadConstraint>? = null,
+        val topologySpreadConstraints: List<TopologySpreadConstraint>? = null,
         val overhead: Map<String, Quantity>? = null,
         // Lifecycle
         val restartPolicy: RestartPolicy? = null,
         val terminationGracePeriodSeconds: Long? = null,
         val activeDeadlineSeconds: Long? = null,
-        val readinessGates: List<_root_ide_package_.io.violabs.picard.domain.k8sResources.workload.pod.ReadinessGate>? = null,
+        val readinessGates: List<ReadinessGate>? = null,
         // Hostname and Name Resolution
         val hostname: String? = null,
         val setHostnameAsFQDN: Boolean? = null,
         val subdomain: String? = null,
-        val hostAliases: List<_root_ide_package_.io.violabs.picard.domain.k8sResources.workload.pod.Pod.HostAlias>? = null,
-        val dnsConfig: _root_ide_package_.io.violabs.picard.domain.k8sResources.workload.pod.Pod.DNSConfig? = null,
+        val hostAliases: List<HostAlias>? = null,
+        val dnsConfig: DNSConfig? = null,
         // Hosts Namespaces
         val hostNetwork: Boolean? = null,
         val hostPID: Boolean? = null,
@@ -64,19 +62,12 @@ data class Pod(
         val serviceAccountName: String? = null,
         val automountServiceAccountToken: Boolean? = null,
         // Security Context
-        val securityContext: _root_ide_package_.io.violabs.picard.domain.k8sResources.workload.pod.Pod.SecurityContext? = null,
+        val securityContext: SecurityContext? = null,
         // Alpha Level
         val hostUsers: Boolean? = null,
-        val resourceClaims: List<_root_ide_package_.io.violabs.picard.domain.k8sResources.workload.pod.Pod.ResourceClaim>? = null,
-        val schedulingGates: List<_root_ide_package_.io.violabs.picard.domain.k8sResources.workload.pod.Pod.SchedulingGates>? = null,
-
-        //>>
-        val template: PodTemplate? = null,
-        val ports: List<ServicePortConfig>? = null,
-        val replicas: Int? = null,
-        val selector: Selector? = null,
-        val strategy: Strategy? = null
-    )
+        val resourceClaims: List<ResourceClaim>? = null,
+        val schedulingGates: List<SchedulingGates>? = null,
+    ) : BaseSpec
 
     data class OS(
         val name: String
@@ -105,7 +96,7 @@ data class Pod(
 
     data class DNSConfig(
         val nameservers: List<String>? = null,
-        val options: List<_root_ide_package_.io.violabs.picard.domain.k8sResources.workload.pod.Pod.DNSConfig.Option>? = null,
+        val options: List<Option>? = null,
         val searches: List<String>? = null,
         val dnsPolicy: String? = null
     ) {
@@ -116,7 +107,7 @@ data class Pod(
         val name: String,
         val resourceClaimName: String? = null,
         val resourceClaimTemplateName: String? = null
-    ) {
+    ) : BaseResourceClaim {
         data class Status(
             val name: String,
             val resourceClaimName: String? = null
@@ -136,9 +127,9 @@ data class Pod(
         val seLinuxOptions: SELinuxOptions? = null,
         val supplementalGroups: List<Long>? = null,
         val supplementalGroupsPolicy: String? = null,
-        val sysctls: List<_root_ide_package_.io.violabs.picard.domain.k8sResources.workload.pod.Pod.SecurityContext.Sysctl>? = null,
+        val sysctls: List<Sysctl>? = null,
         val windowsOptions: WindowsSecurityContextOptions? = null
-    ) {
+    ) : BaseSecurityContext {
         data class Sysctl(
             val name: String,
             val value: String
@@ -148,39 +139,22 @@ data class Pod(
     data class Status(
         val nominatedNodeName: String? = null,
         val hostIP: String? = null,
-        val hostIPs: List<_root_ide_package_.io.violabs.picard.domain.k8sResources.workload.pod.Pod.Status.HostIP>? = null,
+        val hostIPs: List<HostIP>? = null,
         val startTime: LocalDateTime? = null,
         val phase: String? = null,
         val message: String? = null,
         val reason: String? = null,
         val podIP: String? = null,
-        val podIPs: List<_root_ide_package_.io.violabs.picard.domain.k8sResources.workload.pod.Pod.Status.PodIP>? = null,
-        val conditions: List<_root_ide_package_.io.violabs.picard.domain.k8sResources.workload.pod.Pod.Condition>? = null,
+        val podIPs: List<PodIP>? = null,
+        val conditions: List<Condition>? = null,
         val qosClass: String? = null,
         val initContainerStatuses: List<Container.Status>? = null,
         val containerStatuses: List<Container.Status>? = null,
         val ephemeralContainerStatuses: List<Container.Status>? = null,
-        val resourceClaimStatuses: List<_root_ide_package_.io.violabs.picard.domain.k8sResources.workload.pod.Pod.ResourceClaim.Status>? = null,
+        val resourceClaimStatuses: List<ResourceClaim.Status>? = null,
         val resize: String? = null
-    ) {
+    ) : BaseStatus {
         data class HostIP(val ip: String)
         data class PodIP(val ip: String)
-    }
-
-    data class Condition(
-        val status: _root_ide_package_.io.violabs.picard.domain.k8sResources.workload.pod.Pod.Condition.Status,
-        val type: String,
-        val lastProbeTime: LocalDateTime? = null,
-        val lastTransitionTime: LocalDateTime? = null,
-        val message: String? = null,
-        val reason: String? = null
-    ) {
-        enum class Status : K8sEnum {
-            TRUE,
-            FALSE,
-            UNKNOWN;
-
-            override fun toString(): String = properCase()
-        }
     }
 }

@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.k8sResources.storage.volume.persistentVolume
+package io.violabs.picard.domain.k8sResources.storage.persistentVolume.persistentVolume
 
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.APIVersion

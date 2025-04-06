@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.k8sResources.storage.volume
+package io.violabs.picard.domain.k8sResources.storage.persistentVolume
 
 sealed class ModifyVolumeStatus(
     val status: String

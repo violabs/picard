@@ -6,10 +6,10 @@ import io.violabs.picard.domain.k8sResources.storage.storageClass.StorageClassLi
 import io.violabs.picard.domain.k8sResources.storage.storageClass.StorageClass
 import io.violabs.picard.domain.k8sResources.config.secret.SecretList
 import io.violabs.picard.domain.k8sResources.config.secret.Secret
-import io.violabs.picard.domain.k8sResources.storage.volume.persistentVolume.PersistentVolumeList
-import io.violabs.picard.domain.k8sResources.storage.volume.persistentVolumeClaim.PersistentVolumeClaimList
-import io.violabs.picard.domain.k8sResources.storage.volume.persistentVolumeClaim.PersistentVolumeClaim
-import io.violabs.picard.domain.k8sResources.storage.volume.persistentVolume.PersistentVolume
+import io.violabs.picard.domain.k8sResources.storage.persistentVolume.persistentVolume.PersistentVolumeList
+import io.violabs.picard.domain.k8sResources.storage.persistentVolume.persistentVolumeClaim.PersistentVolumeClaimList
+import io.violabs.picard.domain.k8sResources.storage.persistentVolume.persistentVolumeClaim.PersistentVolumeClaim
+import io.violabs.picard.domain.k8sResources.storage.persistentVolume.persistentVolume.PersistentVolume
 import io.violabs.picard.domain.k8sResources.storage.csi.csiStorageCapacity.CSIStorageCapacity
 import io.violabs.picard.domain.k8sResources.storage.csi.csiStorageCapacity.CSIStorageCapacityList
 import io.violabs.picard.domain.k8sResources.storage.csi.csiNode.CSINodeList
@@ -28,6 +28,10 @@ import io.violabs.picard.domain.k8sResources.service.ingress.Ingress
 import io.violabs.picard.domain.k8sResources.service.ingress.IngressList
 import io.violabs.picard.domain.k8sResources.service.ingressClass.IngressClass
 import io.violabs.picard.domain.k8sResources.service.ingressClass.IngressClassList
+import io.violabs.picard.domain.k8sResources.storage.VolumeAttachment
+import io.violabs.picard.domain.k8sResources.storage.VolumeAttachmentList
+import io.violabs.picard.domain.k8sResources.storage.VolumeAttributeClassList
+import io.violabs.picard.domain.k8sResources.storage.VolumeAttributesClass
 import io.violabs.picard.domain.k8sResources.workload.controllerRevision.ControllerRevision
 import io.violabs.picard.domain.k8sResources.workload.controllerRevision.ControllerRevisionList
 import io.violabs.picard.domain.k8sResources.workload.cronJob.CronJob
@@ -93,6 +97,12 @@ open class KAPIVersion(
         Service.Version,
         ServiceList.Version
 
+    object AdmissionRegistrationV1 : KAPIVersion("admissionregistration.k8s.io/v1")
+
+    object APIExtensionsV1 : KAPIVersion("apiextensions.k8s.io/v1")
+
+    object APIRegistrationV1 : KAPIVersion("apiregistration.k8s.io/v1")
+
     object AppsV1 : KAPIVersion("apps/v1"),
         ControllerRevision.Version,
         ControllerRevisionList.Version,
@@ -104,6 +114,10 @@ open class KAPIVersion(
         ReplicaSetList.Version,
         StatefulSet.Version,
         StatefulSetList.Version
+
+    object AuthenticationV1 : KAPIVersion("authentication.k8s.io/v1")
+
+    object AuthorizationV1 : KAPIVersion("authorization.k8s.io/v1")
 
     object AutoscalingV1 : KAPIVersion("autoscaling/v1"),
         HorizontalPodAutoscaler.Version,
@@ -119,15 +133,33 @@ open class KAPIVersion(
         Job.Version,
         JobList.Version
 
+    object CertificatesV1 : KAPIVersion("certificates.k8s.io/v1")
+
+    object CoordinationV1 : KAPIVersion("coordination.k8s.io/v1")
+
+    object CoordinationV1Alpha1 : KAPIVersion("coordination.k8s.io/v1alpha1"),
+
     object DiscoveryV1 : KAPIVersion("discovery.k8s.io/v1"),
         EndpointSlice.Version,
         EndpointSliceList.Version
+
+    object EventsV1 : KAPIVersion("events.k8s.io/v1")
+
+    object FlowControlApiServerV1 : KAPIVersion("flowcontrol.apiserver.k8s.io/v1")
 
     object NetworkingV1 : KAPIVersion("networking.k8s.io/v1"),
         Ingress.Version,
         IngressList.Version,
         IngressClass.Version,
         IngressClassList.Version
+
+    object NetworkingV1Beta1 : KAPIVersion("networking.k8s.io/v1")
+
+    object NodeV1 : KAPIVersion("node.k8s.io/v1")
+
+    object PolicyV1 : KAPIVersion("policy/v1")
+
+    object RBACAuthorizationV1 : KAPIVersion("rbac.authorization.k8s.io/v1")
 
     object ResourceV1Alpha3 : KAPIVersion("resource.k8s.io/v1alpha3"),
         PodSchedulingContext.Version,
@@ -159,7 +191,13 @@ open class KAPIVersion(
         CSIStorageCapacity.Version,
         CSIStorageCapacityList.Version,
         StorageClass.Version,
-        StorageClassList.Version
+        StorageClassList.Version,
+        VolumeAttachment.Version,
+        VolumeAttachmentList.Version
+
+    object StorageV1Beta1 : KAPIVersion("storage.k8s.io/v1beta1"),
+        VolumeAttributesClass.Version,
+        VolumeAttributeClassList.Version
 
     object StorageMigrationV1Alpha1 : KAPIVersion("storagemigration.k8s.io/v1alpha1"),
         StorageVersionMigration.Version,

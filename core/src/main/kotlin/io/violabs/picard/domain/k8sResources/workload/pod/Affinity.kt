@@ -1,7 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod
 
 import io.violabs.picard.domain.LabelSelector
-import io.violabs.picard.domain.k8sResources.storage.volume.persistentVolume.PersistentVolume
 import io.violabs.picard.domain.k8sResources.workload.NodeSelector
 import io.violabs.picard.domain.k8sResources.workload.pod.PodAffinity.Term
 

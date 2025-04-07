@@ -1,14 +1,14 @@
-package io.violabs.picard.domain.k8sResources.policy
+package io.violabs.picard.domain.k8sResources.policy.flowSchema
 
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.k8sResources.K8sListResource
 
-data class NetworkPolicyList(
-    override val apiVersion: Version = KAPIVersion.NetworkingV1,
-    override val items: List<NetworkPolicy>,
+data class FlowSchemaList(
+    override val apiVersion: Version = KAPIVersion.FlowControlApiServerV1,
+    override val items: List<FlowSchema>,
     override val metadata: ListMeta? = null
-) : K8sListResource<NetworkPolicyList.Version, NetworkPolicy> {
+) : K8sListResource<FlowSchemaList.Version, FlowSchema> {
     interface Version : APIVersion
 }

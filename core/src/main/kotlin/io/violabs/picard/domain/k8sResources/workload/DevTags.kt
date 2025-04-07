@@ -33,4 +33,6 @@ interface BaseSpec : BaseK8s
 
 interface BaseStatus : BaseK8s
 
+interface BaseSubject : BaseK8s
+
 interface BaseWebhook : BaseK8s

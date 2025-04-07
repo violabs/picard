@@ -69,6 +69,22 @@ import io.violabs.picard.domain.k8sResources.extend.deviceClass.DeviceClass
 import io.violabs.picard.domain.k8sResources.extend.deviceClass.DeviceClassList
 import io.violabs.picard.domain.k8sResources.extend.customResource.customResourceDefinition.CustomResourceDefinition
 import io.violabs.picard.domain.k8sResources.extend.customResource.customResourceDefinition.CustomResourceDefinitionList
+import io.violabs.picard.domain.k8sResources.policy.validatingAdmissionPolicy.binding.ValidatingAdmissionPolicyBinding
+import io.violabs.picard.domain.k8sResources.policy.validatingAdmissionPolicy.binding.ValidatingAdmissionPolicyBindingList
+import io.violabs.picard.domain.k8sResources.policy.validatingAdmissionPolicy.ValidatingAdmissionPolicy
+import io.violabs.picard.domain.k8sResources.policy.validatingAdmissionPolicy.ValidatingAdmissionPolicyList
+import io.violabs.picard.domain.k8sResources.policy.priorityLevelConfig.PriorityLevelConfiguration
+import io.violabs.picard.domain.k8sResources.policy.priorityLevelConfig.PriorityLevelConfigurationList
+import io.violabs.picard.domain.k8sResources.policy.podDisruptionBudget.PodDisruptionBudget
+import io.violabs.picard.domain.k8sResources.policy.podDisruptionBudget.PodDisruptionBudgetList
+import io.violabs.picard.domain.k8sResources.policy.networkPolicy.NetworkPolicy
+import io.violabs.picard.domain.k8sResources.policy.networkPolicy.NetworkPolicyList
+import io.violabs.picard.domain.k8sResources.policy.resourceQuota.ResourceQuota
+import io.violabs.picard.domain.k8sResources.policy.resourceQuota.ResourceQuotaList
+import io.violabs.picard.domain.k8sResources.policy.limitRange.LimitRange
+import io.violabs.picard.domain.k8sResources.policy.limitRange.LimitRangeList
+import io.violabs.picard.domain.k8sResources.policy.flowSchema.FlowSchema
+import io.violabs.picard.domain.k8sResources.policy.flowSchema.FlowSchemaList
 import io.violabs.picard.domain.k8sResources.service.endpoints.Endpoints
 import io.violabs.picard.domain.k8sResources.service.endpoints.EndpointsList
 import io.violabs.picard.domain.k8sResources.service.Service
@@ -135,6 +151,8 @@ open class KAPIVersion(
         ConfigMapList.Version,
         Endpoints.Version,
         EndpointsList.Version,
+        LimitRange.Version,
+        LimitRangeList.Version,
         Namespace.Version,
         NamespaceList.Version,
         Node.Version,
@@ -149,6 +167,8 @@ open class KAPIVersion(
         PodTemplateList.Version,
         ReplicationController.Version,
         ReplicationControllerList.Version,
+        ResourceQuota.Version,
+        ResourceQuotaList.Version,
         Secret.Version,
         SecretList.Version,
         Service.Version,
@@ -159,6 +179,10 @@ open class KAPIVersion(
     object AdmissionRegistrationV1 : KAPIVersion("admissionregistration.k8s.io/v1"),
         MutatingWebhookConfiguration.Version,
         MutatingWebhookConfigurationList.Version,
+        ValidatingAdmissionPolicy.Version,
+        ValidatingAdmissionPolicyList.Version,
+        ValidatingAdmissionPolicyBinding.Version,
+        ValidatingAdmissionPolicyBindingList.Version,
         ValidatingWebhookConfiguration.Version,
         ValidatingWebhookConfigurationList.Version
 
@@ -233,13 +257,19 @@ open class KAPIVersion(
         Event.Version,
         EventList.Version
 
-    object FlowControlApiServerV1 : KAPIVersion("flowcontrol.apiserver.k8s.io/v1")
+    object FlowControlApiServerV1 : KAPIVersion("flowcontrol.apiserver.k8s.io/v1"),
+        FlowSchema.Version,
+        FlowSchemaList.Version,
+        PriorityLevelConfiguration.Version,
+        PriorityLevelConfigurationList.Version
 
     object NetworkingV1 : KAPIVersion("networking.k8s.io/v1"),
         Ingress.Version,
         IngressList.Version,
         IngressClass.Version,
-        IngressClassList.Version
+        IngressClassList.Version,
+        NetworkPolicy.Version,
+        NetworkPolicyList.Version
 
     object NetworkingV1Beta1 : KAPIVersion("networking.k8s.io/v1"),
         IPAddress.Version,
@@ -251,7 +281,9 @@ open class KAPIVersion(
         RuntimeClass.Version,
         RuntimeClassList.Version
 
-    object PolicyV1 : KAPIVersion("policy/v1")
+    object PolicyV1 : KAPIVersion("policy/v1"),
+        PodDisruptionBudget.Version,
+        PodDisruptionBudgetList.Version
 
     object RBACAuthorizationV1 : KAPIVersion("rbac.authorization.k8s.io/v1"),
         ClusterRole.Version,

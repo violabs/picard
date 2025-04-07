@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.k8sResources.policy
+package io.violabs.picard.domain.k8sResources.policy.podDisruptionBudget
 
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion

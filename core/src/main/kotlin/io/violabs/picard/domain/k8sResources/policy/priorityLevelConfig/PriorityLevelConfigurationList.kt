@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.k8sResources.policy
+package io.violabs.picard.domain.k8sResources.policy.priorityLevelConfig
 
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion

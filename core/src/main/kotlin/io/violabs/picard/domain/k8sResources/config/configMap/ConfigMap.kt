@@ -39,7 +39,7 @@ data class ConfigMap(
     )
 
     data class EnvSource(
-        override val name: String? = null,
-        override val optional: Boolean? = null
+        val name: String? = null,
+        val optional: Boolean? = null
     ) : BaseEnvSource
 }

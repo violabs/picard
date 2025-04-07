@@ -82,13 +82,13 @@ interface BaseContainer {
 
     data class ResourceMetricSource(
         val container: String,
-        override val name: String,
-        override val target: Metric.Target? = null
+        val name: String,
+        val target: Metric.Target? = null
     ) : BaseResourceMetricSource
 
     data class ResourceMetricStatus(
         val container: String,
-        override val current: Metric.ValueStatus,
-        override val name: String
+        val current: Metric.ValueStatus,
+        val name: String
     ) : BaseResourceMetricStatus
 }

@@ -6,5 +6,6 @@ include(
     "cmd",
     "common",
     "dsl",
-    "generationTest"
+    "generation-test",
+    "core-test"
 )

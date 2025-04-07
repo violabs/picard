@@ -28,8 +28,8 @@ data class Secret(
     ) : BaseKeySelector
 
     data class EnvSource(
-        override val name: String? = null,
-        override val optional: Boolean? = null
+        val name: String? = null,
+        val optional: Boolean? = null
     ) : BaseEnvSource
 
     enum class Type(private val ref: String) {

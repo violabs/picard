@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
+import io.violabs.picard.domain.DslBuilder
 import io.violabs.picard.domain.RestartPolicy
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.workload.pod.*
@@ -124,4 +125,14 @@ data class Container(
         val names: List<String>? = null,
         val sizeBytes: Long? = null
     )
+
+    class Builder : DslBuilder<Container> {
+        var name: String? = null
+
+        override fun build(): Container {
+            return Container(
+                requireNotNull(name) { "Container name must not be null" },
+            )
+        }
+    }
 }

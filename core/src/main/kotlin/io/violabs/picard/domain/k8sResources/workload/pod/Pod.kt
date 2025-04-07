@@ -12,7 +12,7 @@ data class Pod(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : K8sResource<Pod.Version> {
+) : K8sResource<Pod.Version>, Kind {
 
     interface Version  : APIVersion
 
@@ -179,5 +179,11 @@ data class Pod(
             val succeededCount: Int? = null,
             val succeededIndexes: String? = null
         )
+    }
+
+    class Builder() : DslBuilder<Pod> {
+        override fun build(): Pod {
+            TODO("Not yet implemented")
+        }
     }
 }

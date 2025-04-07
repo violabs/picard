@@ -165,14 +165,7 @@ data class Pod(
             val operator: Operator,
             val values: List<Int>,
             val containerName: String? = null
-        ) {
-            enum class Operator : K8sEnum {
-                IN,
-                NOT_IN;
-
-                override fun toString() = properCase()
-            }
-        }
+        )
 
         data class OnPodConditionsPattern(
             val status: BooleanType,

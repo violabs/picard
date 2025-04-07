@@ -1,14 +1,14 @@
-package io.violabs.picard.domain.k8sResources.authorization
+package io.violabs.picard.domain.k8sResources.authorization.role
 
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.k8sResources.K8sListResource
 
-data class ClusterRoleList(
+data class RoleList(
     override val apiVersion: Version = KAPIVersion.RBACAuthorizationV1,
-    override val items: List<ClusterRole>,
+    override val items: List<Role>,
     override val metadata: ListMeta? = null
-) : K8sListResource<ClusterRoleList.Version, ClusterRole> {
+) : K8sListResource<RoleList.Version, Role> {
     interface Version : APIVersion
 }

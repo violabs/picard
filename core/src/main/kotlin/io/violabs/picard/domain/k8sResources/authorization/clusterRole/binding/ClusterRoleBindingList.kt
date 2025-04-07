@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.k8sResources.authorization
+package io.violabs.picard.domain.k8sResources.authorization.clusterRole.binding
 
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion

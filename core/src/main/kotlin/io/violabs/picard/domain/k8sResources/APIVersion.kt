@@ -11,6 +11,18 @@ import io.violabs.picard.domain.k8sResources.authentication.tokenRequest.TokenRe
 import io.violabs.picard.domain.k8sResources.authentication.tokenRequest.TokenRequestList
 import io.violabs.picard.domain.k8sResources.authentication.serviceAccount.ServiceAccount
 import io.violabs.picard.domain.k8sResources.authentication.serviceAccount.ServiceAccountList
+import io.violabs.picard.domain.k8sResources.authorization.role.binding.RoleBinding
+import io.violabs.picard.domain.k8sResources.authorization.role.binding.RoleBindingList
+import io.violabs.picard.domain.k8sResources.authorization.role.Role
+import io.violabs.picard.domain.k8sResources.authorization.role.RoleList
+import io.violabs.picard.domain.k8sResources.authorization.clusterRole.binding.ClusterRoleBinding
+import io.violabs.picard.domain.k8sResources.authorization.clusterRole.binding.ClusterRoleBindingList
+import io.violabs.picard.domain.k8sResources.authorization.clusterRole.ClusterRole
+import io.violabs.picard.domain.k8sResources.authorization.clusterRole.ClusterRoleList
+import io.violabs.picard.domain.k8sResources.authorization.accessReview.SelfSubjectRulesReview
+import io.violabs.picard.domain.k8sResources.authorization.accessReview.LocalSubjectAccessReview
+import io.violabs.picard.domain.k8sResources.authorization.accessReview.SelfSubjectAccessReview
+import io.violabs.picard.domain.k8sResources.authorization.accessReview.SubjectAccessReview
 import io.violabs.picard.domain.k8sResources.cluster.node.Node
 import io.violabs.picard.domain.k8sResources.cluster.node.NodeList
 import io.violabs.picard.domain.k8sResources.cluster.serviceCIDR.ServiceCIDR
@@ -163,7 +175,11 @@ open class KAPIVersion(
         TokenReviewList.Version,
         SelfSubjectReview.Version
 
-    object AuthorizationV1 : KAPIVersion("authorization.k8s.io/v1")
+    object AuthorizationV1 : KAPIVersion("authorization.k8s.io/v1"),
+        LocalSubjectAccessReview.Version,
+        SelfSubjectAccessReview.Version,
+        SelfSubjectRulesReview.Version,
+        SubjectAccessReview.Version
 
     object AutoscalingV1 : KAPIVersion("autoscaling/v1"),
         HorizontalPodAutoscaler.Version,
@@ -223,7 +239,15 @@ open class KAPIVersion(
 
     object PolicyV1 : KAPIVersion("policy/v1")
 
-    object RBACAuthorizationV1 : KAPIVersion("rbac.authorization.k8s.io/v1")
+    object RBACAuthorizationV1 : KAPIVersion("rbac.authorization.k8s.io/v1"),
+        ClusterRole.Version,
+        ClusterRoleList.Version,
+        ClusterRoleBinding.Version,
+        ClusterRoleBindingList.Version,
+        Role.Version,
+        RoleList.Version,
+        RoleBinding.Version,
+        RoleBindingList.Version
 
     object ResourceV1Alpha3 : KAPIVersion("resource.k8s.io/v1alpha3"),
         PodSchedulingContext.Version,

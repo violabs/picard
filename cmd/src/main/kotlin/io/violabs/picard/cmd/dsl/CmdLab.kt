@@ -13,6 +13,8 @@ import io.violabs.picard.cmd.KubectlConstants.PODS
 import io.violabs.picard.common.Logger
 import io.violabs.picard.common.Logging
 
+//kubectl get pods frontend-gbgfx -o yaml
+
 val logger = Logger(Logging.CMD)
 
 fun kubectl(scope: Kubectl.() -> Unit) {

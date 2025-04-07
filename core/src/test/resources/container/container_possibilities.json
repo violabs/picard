@@ -1,0 +1,15 @@
+{
+  "scenarios": [
+    {
+      "id": "single level",
+      "description": "single level of optionals. if a child optional has required, it is skipped.",
+      "targetFields": [],
+      "skippedFields": [],
+      "content": {
+        "name": "test-1",
+        "image": "test/image:latest",
+        "imagePolicy": "Always"
+      }
+    }
+  ]
+}

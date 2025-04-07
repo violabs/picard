@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.k8sResources.authentication
+package io.violabs.picard.domain.k8sResources.authentication.certificateSigningRequest
 
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion

@@ -6,9 +6,9 @@ import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.extend.webhook.MatchCondition
 import io.violabs.picard.domain.k8sResources.policy.*
-import io.violabs.picard.domain.k8sResources.workload.BaseSpec
-import io.violabs.picard.domain.k8sResources.workload.BaseStatus
-import io.violabs.picard.domain.k8sResources.workload.ServiceCondition
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.BaseStatus
+import io.violabs.picard.domain.ServiceCondition
 
 class ValidatingAdmissionPolicy(
     override val apiVersion: Version = KAPIVersion.AdmissionRegistrationV1,

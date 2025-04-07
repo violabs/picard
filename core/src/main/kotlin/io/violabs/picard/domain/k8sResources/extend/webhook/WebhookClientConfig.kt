@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.extend.webhook
 
-import io.violabs.picard.domain.k8sResources.workload.BaseServiceReference
+import io.violabs.picard.domain.BaseServiceReference
 
 data class WebhookClientConfig(
     val caBundle: List<Byte>? = null,

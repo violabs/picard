@@ -1,6 +1,8 @@
 package io.violabs.picard.domain.k8sResources.workload.horizontalPodAutoscaler
 
-import io.violabs.picard.domain.K8sEnum
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.BaseStatus
+import io.violabs.picard.domain.Condition
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sResource

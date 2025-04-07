@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload
 
+import io.violabs.picard.domain.BaseNodeSelector
 import io.violabs.picard.domain.NodeSelectorRequirement
 
 data class NodeSelector(

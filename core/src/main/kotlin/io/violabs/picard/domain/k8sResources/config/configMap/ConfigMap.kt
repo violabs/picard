@@ -4,7 +4,7 @@ import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
-import io.violabs.picard.domain.k8sResources.workload.BaseEnvSource
+import io.violabs.picard.domain.BaseEnvSource
 
 //todo: binary and text data should not share the same key - refactor
 /**

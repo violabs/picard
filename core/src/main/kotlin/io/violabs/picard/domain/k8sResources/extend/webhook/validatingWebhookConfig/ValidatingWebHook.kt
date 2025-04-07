@@ -4,7 +4,7 @@ import io.violabs.picard.domain.LabelSelector
 import io.violabs.picard.domain.k8sResources.extend.webhook.MatchCondition
 import io.violabs.picard.domain.k8sResources.extend.webhook.RuleWithOperations
 import io.violabs.picard.domain.k8sResources.extend.webhook.WebhookClientConfig
-import io.violabs.picard.domain.k8sResources.workload.BaseWebhook
+import io.violabs.picard.domain.BaseWebhook
 
 data class ValidatingWebHook(
     val admissionReviewVersions: List<String>,

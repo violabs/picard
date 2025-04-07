@@ -5,8 +5,8 @@ import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.authentication.BoundObjectReference
-import io.violabs.picard.domain.k8sResources.workload.BaseSpec
-import io.violabs.picard.domain.k8sResources.workload.BaseStatus
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.BaseStatus
 import java.time.LocalDateTime
 
 class TokenRequest(

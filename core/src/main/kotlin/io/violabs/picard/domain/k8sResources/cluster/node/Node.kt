@@ -8,9 +8,9 @@ import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.cluster.DaemonEndpoint
 import io.violabs.picard.domain.k8sResources.storage.VolumeAttachment
-import io.violabs.picard.domain.k8sResources.workload.BaseSpec
-import io.violabs.picard.domain.k8sResources.workload.BaseStatus
-import io.violabs.picard.domain.k8sResources.workload.NodeCondition
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.BaseStatus
+import io.violabs.picard.domain.NodeCondition
 import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
 
 class Node(

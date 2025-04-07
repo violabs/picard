@@ -6,7 +6,7 @@ import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.authorization.NonResourceAttributes
 import io.violabs.picard.domain.k8sResources.authorization.ResourceAttributes
-import io.violabs.picard.domain.k8sResources.workload.BaseSpec
+import io.violabs.picard.domain.BaseSpec
 
 class SelfSubjectAccessReview(
     override val apiVersion: Version = KAPIVersion.AuthorizationV1,

@@ -5,10 +5,10 @@ import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.Protocol
-import io.violabs.picard.domain.k8sResources.workload.BaseLoadBalancerIngress
-import io.violabs.picard.domain.k8sResources.workload.BasePort
-import io.violabs.picard.domain.k8sResources.workload.BaseSpec
-import io.violabs.picard.domain.k8sResources.workload.BaseStatus
+import io.violabs.picard.domain.BaseLoadBalancerIngress
+import io.violabs.picard.domain.BasePort
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.BaseStatus
 
 
 data class Ingress(

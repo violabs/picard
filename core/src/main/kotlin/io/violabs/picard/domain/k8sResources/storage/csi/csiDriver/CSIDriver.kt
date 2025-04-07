@@ -4,7 +4,7 @@ import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
-import io.violabs.picard.domain.k8sResources.workload.BaseSpec
+import io.violabs.picard.domain.BaseSpec
 
 data class CSIDriver(
     override val apiVersion: Version = KAPIVersion.StorageV1,

@@ -4,9 +4,7 @@ import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
-import io.violabs.picard.domain.k8sResources.Protocol
 import io.violabs.picard.domain.k8sResources.service.Endpoint
-import io.violabs.picard.domain.k8sResources.workload.BasePort
 
 
 data class Endpoints(

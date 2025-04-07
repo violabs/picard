@@ -4,8 +4,8 @@ import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
-import io.violabs.picard.domain.k8sResources.workload.BaseSpec
-import io.violabs.picard.domain.k8sResources.workload.BaseStatus
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.BaseStatus
 
 class PodSchedulingContext(
     override val apiVersion: Version = KAPIVersion.ResourceV1Alpha3,

@@ -6,7 +6,7 @@ import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.policy.MatchResources
 import io.violabs.picard.domain.k8sResources.policy.ParamRef
-import io.violabs.picard.domain.k8sResources.workload.BaseSpec
+import io.violabs.picard.domain.BaseSpec
 
 class ValidatingAdmissionPolicyBinding(
     override val apiVersion: Version = KAPIVersion.AdmissionRegistrationV1,

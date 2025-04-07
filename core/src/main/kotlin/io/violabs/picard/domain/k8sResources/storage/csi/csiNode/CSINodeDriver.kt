@@ -1,4 +1,4 @@
-package io.violabs.picard.domain
+package io.violabs.picard.domain.k8sResources.storage.csi.csiNode
 
 data class CSINodeDriver(
     val name: String,

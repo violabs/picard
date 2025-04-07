@@ -2,7 +2,6 @@ package io.violabs.picard.domain.k8sResources.workload.pod
 
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.*
-import io.violabs.picard.domain.k8sResources.workload.*
 import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
 import io.violabs.picard.domain.k8sResources.workload.pod.container.EphemeralContainer
 import io.violabs.picard.domain.k8sResources.workload.pod.security.*

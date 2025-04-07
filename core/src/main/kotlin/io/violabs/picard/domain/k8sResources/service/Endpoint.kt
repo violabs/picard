@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.service
 
 import io.violabs.picard.domain.ObjectReference
 import io.violabs.picard.domain.k8sResources.Protocol
-import io.violabs.picard.domain.k8sResources.workload.BasePort
+import io.violabs.picard.domain.BasePort
 
 
 data class Endpoint(

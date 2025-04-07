@@ -7,8 +7,8 @@ import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.policy.FlowDistinguisherMethod
 import io.violabs.picard.domain.k8sResources.policy.PolicyRulesWithSubjects
 import io.violabs.picard.domain.k8sResources.policy.priorityLevelConfig.PriorityLevelConfigurationReference
-import io.violabs.picard.domain.k8sResources.workload.BaseSpec
-import io.violabs.picard.domain.k8sResources.workload.Condition
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.Condition
 
 class FlowSchema(
     override val apiVersion: Version = KAPIVersion.FlowControlApiServerV1,

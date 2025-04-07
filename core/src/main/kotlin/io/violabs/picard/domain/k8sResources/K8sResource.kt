@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources
 
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.ObjectMetadata
-import io.violabs.picard.domain.k8sResources.workload.BaseK8s
+import io.violabs.picard.domain.BaseK8s
 
 interface K8sAPIResource<T : APIVersion> : BaseK8s {
     val apiVersion: T

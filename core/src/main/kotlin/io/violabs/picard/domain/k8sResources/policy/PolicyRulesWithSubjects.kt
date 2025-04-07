@@ -5,7 +5,7 @@ import io.violabs.picard.domain.k8sResources.policy.rule.ResourcePolicyRule
 import io.violabs.picard.domain.k8sResources.policy.subject.GroupSubject
 import io.violabs.picard.domain.k8sResources.policy.subject.ServiceAccountSubject
 import io.violabs.picard.domain.k8sResources.policy.subject.UserSubject
-import io.violabs.picard.domain.k8sResources.workload.BaseSubject
+import io.violabs.picard.domain.BaseSubject
 
 data class PolicyRulesWithSubjects(
     val subjects: List<Subject>,

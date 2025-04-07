@@ -1,6 +1,5 @@
-package io.violabs.picard.domain.k8sResources.workload
+package io.violabs.picard.domain
 
-import io.violabs.picard.domain.BooleanType
 import java.time.LocalDateTime
 
 data class Condition(

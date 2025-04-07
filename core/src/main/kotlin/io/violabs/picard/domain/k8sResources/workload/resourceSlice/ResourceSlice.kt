@@ -5,8 +5,6 @@ import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.workload.*
-import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
-import io.violabs.picard.domain.k8sResources.workload.resourceClaim.ResourceClaim
 
 data class ResourceSlice(
     override val apiVersion: Version = KAPIVersion.ResourceV1Beta1,

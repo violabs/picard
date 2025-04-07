@@ -3,11 +3,10 @@ package io.violabs.picard.domain.k8sResources.workload.pod.container
 import io.violabs.picard.domain.ObjectFieldSelector
 import io.violabs.picard.domain.ResourceFieldSelector
 import io.violabs.picard.domain.RestartPolicy
-import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.config.configMap.ConfigMap
 import io.violabs.picard.domain.k8sResources.config.secret.Secret
-import io.violabs.picard.domain.k8sResources.workload.BaseResourceMetricSource
-import io.violabs.picard.domain.k8sResources.workload.BaseResourceMetricStatus
+import io.violabs.picard.domain.BaseResourceMetricSource
+import io.violabs.picard.domain.BaseResourceMetricStatus
 import io.violabs.picard.domain.k8sResources.workload.Metric
 import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeDevice
 import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeMount

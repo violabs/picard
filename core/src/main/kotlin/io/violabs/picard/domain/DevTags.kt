@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.k8sResources.workload
+package io.violabs.picard.domain
 
 /**
  * These are basically just label to track useage

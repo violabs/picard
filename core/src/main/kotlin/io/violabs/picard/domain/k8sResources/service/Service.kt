@@ -2,10 +2,10 @@ package io.violabs.picard.domain.k8sResources.service
 
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.*
-import io.violabs.picard.domain.k8sResources.workload.BaseLoadBalancerIngress
-import io.violabs.picard.domain.k8sResources.workload.BasePort
-import io.violabs.picard.domain.k8sResources.workload.BaseSpec
-import io.violabs.picard.domain.k8sResources.workload.BaseStatus
+import io.violabs.picard.domain.BaseLoadBalancerIngress
+import io.violabs.picard.domain.BasePort
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.BaseStatus
 
 data class Service(
     override val apiVersion: Version = KAPIVersion.V1,

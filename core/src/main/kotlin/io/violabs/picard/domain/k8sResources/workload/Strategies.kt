@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload
 
+import io.violabs.picard.domain.BaseK8s
 import io.violabs.picard.domain.K8sEnum
 
 data class UpdateStrategy(

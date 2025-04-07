@@ -6,8 +6,8 @@ import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
-import io.violabs.picard.domain.k8sResources.workload.BaseSpec
-import io.violabs.picard.domain.k8sResources.workload.ServiceCondition
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.ServiceCondition
 import java.time.LocalDateTime
 
 class PodDisruptionBudget(

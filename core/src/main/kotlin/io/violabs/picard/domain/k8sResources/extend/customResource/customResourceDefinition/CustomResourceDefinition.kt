@@ -7,8 +7,8 @@ import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.extend.customResource.CustomResourceConversion
 import io.violabs.picard.domain.k8sResources.extend.customResource.CustomResourceDefinitionNames
 import io.violabs.picard.domain.k8sResources.extend.customResource.CustomResourceDefinitionVersion
-import io.violabs.picard.domain.k8sResources.workload.BaseSpec
-import io.violabs.picard.domain.k8sResources.workload.Condition
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.Condition
 
 class CustomResourceDefinition(
     override val apiVersion: Version = KAPIVersion.APIExtensionsV1,

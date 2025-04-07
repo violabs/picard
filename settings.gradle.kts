@@ -1,4 +1,10 @@
 
 include(
-    "sandbox", "tutorial", "core", "cmd", "common"
+    "sandbox",
+    "tutorial",
+    "core",
+    "cmd",
+    "common",
+    "dsl",
+    "generationTest"
 )

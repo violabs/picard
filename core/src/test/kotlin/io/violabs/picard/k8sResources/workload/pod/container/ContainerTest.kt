@@ -1,11 +1,10 @@
 package io.violabs.picard.k8sResources.workload.pod.container
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
-import io.violabs.picard.TestScenarioSet
+import io.violabs.picard.domain.ImagePullPolicy
 import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
+import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestTemplate
@@ -43,27 +42,64 @@ class ContainerTest : UnitSim() {
     }
 
     @TestTemplate
-    fun `build varied happy path - #scenario`(json: Any) = test<Unit> {
-        println(json)
+    fun `build varied happy path - #scenario`(builder: Container.Builder, container: Container) = test {
+        given {
+            expect { container }
+
+            whenever { builder.build() }
+        }
     }
 
     companion object {
-        private val SIMULATION_GROUP = SimulationGroup
-            .vars("scenario", "json")
+        private val SIMULATION_GROUP = SimulationGroup.vars("scenario", "builder", "container")
 
         @JvmStatic
         @BeforeAll
         fun setup() {
-            val resource = getTestFile("container/container_possibilities.json")
-            val om = ObjectMapper()
-            val scenarioSet = om.readValue<TestScenarioSet>(resource)
-            scenarioSet.scenarios.forEach {
-                SIMULATION_GROUP.with(it.id, it.content)
+            SUCCESS_POSSIBILITIES.scenarios.forEach {
+                SIMULATION_GROUP.with(it.id, it.given, it.expected)
             }
 
             setup<ContainerTest>(
                 SIMULATION_GROUP to { this::`build varied happy path - #scenario` }
             )
         }
+    }
+}
+
+private val SUCCESS_POSSIBILITIES = possibilities<Container, Container.Builder> {
+    scenario {
+        id = "single level"
+        description = "single level of optionals. if a child optional has required, it is skipped."
+        given(Container.Builder()) {
+            name = "test"
+            image = "test/image:latest"
+            imagePullPolicy = ImagePullPolicy.Always
+            command = listOf("echo", "hello")
+            args = listOf("hello", "universe")
+            workingDir = "/home/test"
+        }
+        expected = Container(
+            name = "test",
+            image = "test/image:latest",
+            imagePullPolicy = ImagePullPolicy.Always,
+            command = listOf("echo", "hello"),
+            args = listOf("hello", "universe"),
+            workingDir = "/home/test"
+        )
+    }
+
+    scenario {
+        id = "ports minimum happy path"
+    }
+
+    scenario {
+        id = "ports full happy path"
+    }
+}
+
+private val EXCEPTION_POSSIBILITIES = possibilities<Container, Container.Builder> {
+    scenario {
+        id = "ports exception"
     }
 }

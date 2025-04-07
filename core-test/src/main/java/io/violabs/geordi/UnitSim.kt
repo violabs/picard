@@ -4,7 +4,6 @@ import io.mockk.confirmVerified
 import io.mockk.mockkClass
 import io.mockk.spyk
 import io.mockk.verify
-import io.violabs.geordi.UnitSim.TestSlice.ProviderPair
 import io.violabs.geordi.debug.DebugLogging
 import io.violabs.geordi.exceptions.NotFoundException
 import kotlinx.serialization.json.Json
@@ -42,6 +41,7 @@ abstract class UnitSim(
 
     fun getTestFile(filename: String): File {
         val fullFilename = filename.takeIf { testResourceFolder.isEmpty() } ?: "$testResourceFolder/$filename"
+
         val uri = this::class.java.classLoader
             .getResource(fullFilename)
             ?.toURI() ?: throw NotFoundException.File(filename)
@@ -104,12 +104,7 @@ abstract class UnitSim(
      * @param spec The TestSlice instance containing the definitions for each test phase.
      */
     internal fun processTestFlow(spec: TestSlice<*>) {
-        spec.setupCall()       // Sets up the test environment.
-        spec.expectCall()      // Defines the expected outcome.
-        spec.mockSetupCall()   // Configures mocks for the test.
-        spec.wheneverCall()    // Specifies the action under test.
-        spec.thenCall()        // Asserts the outcomes of the test.
-        spec.tearDownCall()    // Cleans up after the test.
+        spec.execute()
     }
 
     /**
@@ -154,221 +149,36 @@ abstract class UnitSim(
         val json: Json?,
         val useHorizontalLogs: Boolean = false
     ) {
-
         private var expected: T? = null  // The expected result of the test.
         private var actual: T? = null    // The actual result obtained from the test.
 
         // Function placeholders for different test phases.
-        internal var setupCall: () -> Unit = {}                         // Setup phase.
-        internal var expectCall: () -> Unit = {}                        // Expectation definition phase.
-        internal var mockSetupCall: () -> Unit? = ::processMocks    // Mock setup phase.
-        var wheneverCall: () -> Unit = {}                               // Action under test.
-        internal var thenCall: () -> Unit = ::defaultThenEquals     // Assertion phase.
-        internal var tearDownCall: () -> Unit = {}                      // Teardown phase.
+        var givenBuilder: GivenBuilder = GivenBuilder()                         // Setup phase.
 
         val objectProvider: DynamicProperties<T> = DynamicProperties()  // Provider for dynamic properties.
+
+        fun execute() {
+            givenBuilder.execute()
+        }
 
         /**
          * Sets up a test environment using the provided setup function.
          *
          * @param setupFn A lambda function that operates on a map of dynamic properties.
          */
-        fun setup(setupFn: MutableMap<String, Any?>.() -> Unit) {
+        fun setup(setupFn: GivenBuilder.() -> Unit) {
             // Assigns a lambda that executes 'setupFn' with the properties from 'objectProvider'.
-            this.setupCall = { setupFn(objectProvider.assign()) }
+            givenBuilder.apply(setupFn)
         }
 
         /**
-         * Similar to 'setup', it prepares the test environment.
-         *
-         * 'given' is an alternative naming for 'setup', providing better readability in certain contexts.
+         * Sets up a test environment using the provided setup function.
          *
          * @param setupFn A lambda function that operates on a map of dynamic properties.
          */
-        fun given(setupFn: MutableMap<String, Any?>.() -> Unit) {
+        fun given(setupFn: GivenBuilder.() -> Unit) {
             // Assigns a lambda that executes 'setupFn' with the properties from 'objectProvider'.
-            this.setupCall = { setupFn(objectProvider.assign()) }
-        }
-
-        /**
-         * Sets the expected result for a test.
-         *
-         * @param givenFn A lambda that takes 'DynamicProperties<T>' and returns the expected result of type
-         * T (or null).
-         */
-        fun expect(givenFn: (props: DynamicProperties<T>) -> T?) {
-            // Assigns a lambda that sets 'expected' based on the execution of 'givenFn'.
-            expectCall = {
-                expected = givenFn(objectProvider)
-                objectProvider.expected = expected
-            }
-        }
-
-        /**
-         * Sets the expected result for a test, using the content of a file.
-         *
-         * @param filename The name of the file whose content is to be used.
-         * @param givenFn A lambda that takes a 'ProviderPair<String>' representing the file content and returns
-         * the expected result.
-         */
-        fun expectFromFileContent(filename: String, givenFn: (fileContentProvider: ProviderPair<String>) -> T?) {
-            val content = getTestFile(filename).readText()
-
-            // Sets up the 'expect' function using the file content.
-            this.expect { givenFn(ProviderPair(content)) }
-        }
-
-        /**
-         * Sets up the expectation for a null result.
-         */
-        fun expectNull() = expect { null }
-
-        /**
-         * Extension function to set the expected result as the receiver object.
-         */
-        fun T.expect() = expect { this }
-
-        /**
-         * Sets up mocks for the test.
-         *
-         * @param mockSetupFn A lambda function for setting up mocks using dynamic properties.
-         */
-        fun setupMocks(mockSetupFn: (props: DynamicProperties<T>) -> Unit) {
-            // Assigns a lambda that executes 'mockSetupFn' and then processes the mocks.
-            mockSetupCall = {
-                mockSetupFn(objectProvider)
-                processMocks()
-            }
-        }
-
-        /**
-         * Defines a 'whenever' function to set up the test action.
-         *
-         * @param whenFn A lambda that takes 'DynamicProperties<T>' and returns a value of type T (or null).
-         */
-        fun whenever(whenFn: (props: DynamicProperties<T>) -> T?) {
-            // Assigns a lambda that executes 'whenFn' with 'objectProvider' and stores the result in 'actual'.
-            wheneverCall = { actual = whenFn(objectProvider) }
-        }
-
-        /**
-         * Sets up a 'whenever' function that includes a file in its execution.
-         *
-         * @param filename The name of the file to be used in the test.
-         * @param whenFn A lambda that takes a 'ProviderPair<File>' and returns a value of type T (or null).
-         */
-        fun wheneverWithFile(filename: String, whenFn: (fileProvider: ProviderPair<File>) -> T?) {
-            val file = getTestFile(filename)
-
-            // Sets up the 'whenever' function using the file.
-            this.whenever { whenFn(ProviderPair(file)) }
-        }
-
-        /**
-         * Sets up a 'whenever' function that expects a specific exception to be thrown.
-         *
-         * @param U The type of the expected throwable.
-         * @param whenFn A lambda that takes 'DynamicProperties<T>' and is expected to throw an exception of type U.
-         */
-        inline fun <reified U : Throwable> wheneverThrows(crossinline scope: ExceptionBuilder<T, U>.() -> Unit) {
-            // Assigns a lambda that asserts an exception of type U is thrown during the execution of 'whenFn'.
-            wheneverCall = {
-                val exceptionBuilder = ExceptionBuilder<T, U>().apply(scope)
-                val ex = assertFailsWith<U> { exceptionBuilder.whenFn?.invoke(objectProvider) }
-                exceptionBuilder.result?.invoke(ex)
-            }
-        }
-
-        fun <R> assertOrLog(expected: R?, actual: R?, assertion: Boolean = expected == actual, message: String? = null) {
-            assert(assertion) {
-                debugLogging.logAssertion(expected, actual, message, useHorizontalLogs = useHorizontalLogs)
-            }
-        }
-
-        /**
-         * Defines a custom 'then' function to handle assertions.
-         *
-         * @param thenFn A lambda that takes two parameters of type T (or null) and performs an
-         *               action, typically an assertion.
-         */
-        fun then(thenFn: (expected: T?, actual: T?) -> Unit) {
-            // Assigns a lambda that executes 'thenFn' with 'expected' and 'actual' as arguments.
-            thenCall = {
-                thenFn(expected, actual)
-            }
-        }
-
-        /**
-         * Sets up an equality check with a custom message and an optional pre-assertion action.
-         *
-         * @param message The message to be displayed if the assertion fails.
-         * @param runnable An optional lambda that takes [DynamicProperties] and performs an
-         *                 action before the assertion.
-         */
-        fun thenEquals(message: String, runnable: ((props: DynamicProperties<T>) -> Unit)? = null) {
-            // Assigns a lambda that optionally executes 'runnable' and then asserts equality
-            // between 'expected' and 'actual'.
-            thenCall = {
-                runnable?.invoke(objectProvider)
-
-                assertOrLog(expected, actual, expected == actual, message)
-            }
-        }
-
-        /**
-         * Sets up an equality check with a custom message and an optional pre-assertion action.
-         *
-         * @param message The message to be displayed if the assertion fails.
-         * @param mappingFn A lambda that takes a value of type T and returns a value of type R.
-         */
-        fun <R> mapEquals(message: String? = "", mappingFn: (T?) -> R?) {
-            thenCall = {
-                val mappedActual = mappingFn(actual)
-                val mappedExpected = mappingFn(expected)
-
-                assertOrLog<R>(mappedExpected, mappedActual, mappedExpected == mappedActual, message)
-            }
-        }
-
-        /**
-         * Sets up a default equality check between 'expected' and 'actual'.
-         *
-         * This function asserts that 'expected' and 'actual' are equal, logging the details of the assertion.
-         */
-        fun defaultThenEquals() {
-            // Asserts equality between 'expected' and 'actual', with logging on failure.
-            assertOrLog(expected, actual, expected == actual)
-        }
-
-        /**
-         * Defines a teardown function to be executed after test completion.
-         *
-         * @param tearDownFn A lambda that operates on a map of dynamic properties.
-         */
-        fun teardown(tearDownFn: MutableMap<String, Any?>.() -> Unit) {
-            // Assigns a lambda that executes 'tearDownFn' with the properties assigned in 'objectProvider'.
-            this.tearDownCall = { tearDownFn(objectProvider.assign()) }
-        }
-
-
-        /**
-         * Processes mock calls and logs the results.
-         *
-         * This function partitions mock calls into throwables and runnables, then logs different counts
-         * (thrown, called, null returned, and value returned) for each category.
-         */
-        private fun processMocks() = debugLogging.takeIf { mockCalls.isNotEmpty() }?.logDebugMocks {
-            // Partition mock calls into those with throwables and those without (runnables).
-            val (throwables, runnables) = mockCalls.partition { it.throwable != null }
-
-            // Process and log throwable mock calls.
-            throwables.onEach { mockkEvery { it.mockCall.invoke() } throws it.throwable!! }.logThrownCount()
-
-            // Process and log runnable mock calls.
-            val (callOnly, returnable) = runnables.partition { it.returnedItem == null }
-            runnables.logCalledCount()
-            callOnly.onEach { mockkEvery { it.mockCall.invoke() } returns Unit }.logNullCount()
-            returnable.onEach { mockkEvery { it.mockCall.invoke() } returns it.returnedItem!! }.logReturnedCount()
+            givenBuilder.apply(setupFn)
         }
 
         /**
@@ -412,11 +222,223 @@ abstract class UnitSim(
             operator fun component2(): DynamicProperties<*> = objectProvider
         }
 
-
         inner class ExceptionBuilder<T, U>(
             var whenFn: ((props: TestSlice<T>.DynamicProperties<T>) -> T)? = null,
             var result: ((itemProvider: U) -> Unit)? = null
         )
+
+        fun <R> assertOrLog(
+            expected: R?,
+            actual: R?,
+            assertion: Boolean = expected == actual,
+            message: String? = null
+        ) {
+            assert(assertion) {
+                debugLogging.logAssertion(expected, actual, message, useHorizontalLogs = useHorizontalLogs)
+            }
+        }
+
+        /**
+         * Sets up a default equality check between 'expected' and 'actual'.
+         *
+         * This function asserts that 'expected' and 'actual' are equal, logging the details of the assertion.
+         */
+        fun defaultThenEquals() {
+            // Asserts equality between 'expected' and 'actual', with logging on failure.
+            assertOrLog(expected, actual, expected == actual)
+        }
+
+        open inner class GivenBuilder {
+            internal var expectCall: () -> Unit = {}                        // Expectation definition phase.
+            internal var mockSetupCall: () -> Unit? = ::processMocks    // Mock setup phase.
+            val wheneverBuilder: WheneverBuilder = WheneverBuilder()
+            internal var tearDownCall: () -> Unit = {}                      // Teardown phase.
+
+            fun execute() {
+                expectCall()
+                mockSetupCall()
+                wheneverBuilder.execute()
+                tearDownCall()
+            }
+
+            /**
+             * Sets the expected result for a test.
+             *
+             * @param givenFn A lambda that takes 'DynamicProperties<T>' and returns the expected result of type
+             * T (or null).
+             */
+            fun expect(givenFn: (props: DynamicProperties<T>) -> T?) {
+                // Assigns a lambda that sets 'expected' based on the execution of 'givenFn'.
+                expectCall = {
+                    expected = givenFn(objectProvider)
+                    objectProvider.expected = expected
+                }
+            }
+
+            /**
+             * Sets the expected result for a test, using the content of a file.
+             *
+             * @param filename The name of the file whose content is to be used.
+             * @param givenFn A lambda that takes a 'ProviderPair<String>' representing the file content and returns
+             * the expected result.
+             */
+            fun expectFromFileContent(filename: String, givenFn: (fileContentProvider: ProviderPair<String>) -> T?) {
+                val content = getTestFile(filename).readText()
+
+                // Sets up the 'expect' function using the file content.
+                this.expect { givenFn(ProviderPair(content)) }
+            }
+
+            /**
+             * Sets up the expectation for a null result.
+             */
+            fun expectNull() = expect { null }
+
+            /**
+             * Extension function to set the expected result as the receiver object.
+             */
+            fun T.expect() = expect { this }
+
+            /**
+             * Sets up mocks for the test.
+             *
+             * @param mockSetupFn A lambda function for setting up mocks using dynamic properties.
+             */
+            fun setupMocks(mockSetupFn: (props: DynamicProperties<T>) -> Unit) {
+                // Assigns a lambda that executes 'mockSetupFn' and then processes the mocks.
+                mockSetupCall = {
+                    mockSetupFn(objectProvider)
+                    processMocks()
+                }
+            }
+
+            /**
+             * Defines a 'whenever' function to set up the test action.
+             *
+             * @param whenFn A lambda that takes 'DynamicProperties<T>' and returns a value of type T (or null).
+             */
+            fun whenever(whenFn: (props: DynamicProperties<T>) -> T?) {
+                // Assigns a lambda that executes 'whenFn' with 'objectProvider' and stores the result in 'actual'.
+                wheneverBuilder.wheneverCall = { actual = whenFn(objectProvider) }
+            }
+
+            /**
+             * Sets up a 'whenever' function that includes a file in its execution.
+             *
+             * @param filename The name of the file to be used in the test.
+             * @param whenFn A lambda that takes a 'ProviderPair<File>' and returns a value of type T (or null).
+             */
+            fun wheneverWithFile(filename: String, whenFn: (fileProvider: ProviderPair<File>) -> T?) {
+                val file = getTestFile(filename)
+
+                // Sets up the 'whenever' function using the file.
+                this.whenever { whenFn(ProviderPair(file)) }
+            }
+
+
+            /**
+             * Sets up a 'whenever' function that expects a specific exception to be thrown.
+             *
+             * @param U The type of the expected throwable.
+             * @param whenFn A lambda that takes 'DynamicProperties<T>' and is expected to throw an exception of type U.
+             */
+            inline fun <reified U : Throwable> wheneverThrows(crossinline scope: ExceptionBuilder<T, U>.() -> Unit) {
+                // Assigns a lambda that asserts an exception of type U is thrown during the execution of 'whenFn'.
+                wheneverBuilder.wheneverCall = {
+                    val exceptionBuilder = ExceptionBuilder<T, U>().apply(scope)
+                    val ex = assertFailsWith<U> { exceptionBuilder.whenFn?.invoke(objectProvider) }
+                    exceptionBuilder.result?.invoke(ex)
+                }
+            }
+
+
+            /**
+             * Defines a teardown function to be executed after test completion.
+             *
+             * @param tearDownFn A lambda that operates on a map of dynamic properties.
+             */
+            fun teardown(tearDownFn: MutableMap<String, Any?>.() -> Unit) {
+                // Assigns a lambda that executes 'tearDownFn' with the properties assigned in 'objectProvider'.
+                this.tearDownCall = { tearDownFn(objectProvider.assign()) }
+            }
+
+
+            /**
+             * Processes mock calls and logs the results.
+             *
+             * This function partitions mock calls into throwables and runnables, then logs different counts
+             * (thrown, called, null returned, and value returned) for each category.
+             */
+            private fun processMocks() = debugLogging.takeIf { mockCalls.isNotEmpty() }?.logDebugMocks {
+                // Partition mock calls into those with throwables and those without (runnables).
+                val (throwables, runnables) = mockCalls.partition { it.throwable != null }
+
+                // Process and log throwable mock calls.
+                throwables.onEach { mockkEvery { it.mockCall.invoke() } throws it.throwable!! }.logThrownCount()
+
+                // Process and log runnable mock calls.
+                val (callOnly, returnable) = runnables.partition { it.returnedItem == null }
+                runnables.logCalledCount()
+                callOnly.onEach { mockkEvery { it.mockCall.invoke() } returns Unit }.logNullCount()
+                returnable.onEach { mockkEvery { it.mockCall.invoke() } returns it.returnedItem!! }.logReturnedCount()
+            }
+        }
+
+        open inner class WheneverBuilder {
+            var wheneverCall: () -> Unit = {}                  // Action under test.
+            var thenCall: () -> Unit = ::defaultThenEquals     // Assertion phase.
+
+            fun execute() {
+                wheneverCall()
+                thenCall()
+            }
+
+            /**
+             * Defines a custom 'then' function to handle assertions.
+             *
+             * @param thenFn A lambda that takes two parameters of type T (or null) and performs an
+             *               action, typically an assertion.
+             */
+            fun then(thenFn: (expected: T?, actual: T?) -> Unit) {
+                // Assigns a lambda that executes 'thenFn' with 'expected' and 'actual' as arguments.
+                thenCall = {
+                    thenFn(expected, actual)
+                }
+            }
+
+            /**
+             * Sets up an equality check with a custom message and an optional pre-assertion action.
+             *
+             * @param message The message to be displayed if the assertion fails.
+             * @param runnable An optional lambda that takes [DynamicProperties] and performs an
+             *                 action before the assertion.
+             */
+            fun thenEquals(message: String, runnable: ((props: DynamicProperties<T>) -> Unit)? = null) {
+                // Assigns a lambda that optionally executes 'runnable' and then asserts equality
+                // between 'expected' and 'actual'.
+                thenCall = {
+                    runnable?.invoke(objectProvider)
+
+                    assertOrLog(expected, actual, expected == actual, message)
+                }
+            }
+
+            /**
+             * Sets up an equality check with a custom message and an optional pre-assertion action.
+             *
+             * @param message The message to be displayed if the assertion fails.
+             * @param mappingFn A lambda that takes a value of type T and returns a value of type R.
+             */
+            fun <R> mapEquals(message: String? = "", mappingFn: (T?) -> R?) {
+                thenCall = {
+                    val mappedActual = mappingFn(actual)
+                    val mappedExpected = mappingFn(expected)
+
+                    assertOrLog<R>(mappedExpected, mappedActual, mappedExpected == mappedActual, message)
+                }
+            }
+        }
+
     }
 
 
@@ -425,6 +447,17 @@ abstract class UnitSim(
      * Provides utility functions for setting up test scenarios with associated methods.
      */
     companion object {
+        fun getTestFile(filename: String, testResourceFolder: String = "resources/test"): File {
+            val fullFilename = "$testResourceFolder/$filename"
+
+            val uri = this::class.java.classLoader
+                .getResource(".")
+                ?.toURI()
+                ?.resolve("../../../$fullFilename")
+                ?: throw NotFoundException.File(filename)
+
+            return File(uri)
+        }
 
         /**
          * Sets up test scenarios by creating instances of the specified class and associating

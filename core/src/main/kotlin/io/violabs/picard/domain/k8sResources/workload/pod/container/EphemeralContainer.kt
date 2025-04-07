@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
+import io.violabs.picard.domain.ImagePullPolicy
 import io.violabs.picard.domain.RestartPolicy
 import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeDevice
 import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeMount
@@ -9,7 +10,7 @@ data class EphemeralContainer(
     val targetContainerName: String? = null,
     // Image
     override val image: String? = null,
-    override val imagePullPolicy: String? = null,
+    override val imagePullPolicy: ImagePullPolicy? = null,
     // Entrypoint
     override val command: List<String>? = null,
     override val args: List<String>? = null,

@@ -1,6 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
 import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.ImagePullPolicy
 import io.violabs.picard.domain.RestartPolicy
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.workload.pod.*
@@ -8,11 +9,19 @@ import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeDevice
 import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeMount
 import java.time.LocalDateTime
 
+/**
+ * @property name DNS_LABEL. must be unique.
+ * @property image container image name.
+ * @property imagePullPolicy defaults to [ImagePullPolicy.Always].
+ * @property command entrypoint array. default container image ENTRYPOINT.
+ * @property args arguments to the entrypoint. default container image CMD.
+ * @property workingDir containers working directory. default is container runtime's default
+ */
 data class Container(
     override val name: String,
     // Image
     override val image: String? = null,
-    override val imagePullPolicy: String? = null,
+    override val imagePullPolicy: ImagePullPolicy? = null,
     // Entrypoint
     override val command: List<String>? = null,
     override val args: List<String>? = null,

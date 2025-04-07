@@ -8,7 +8,6 @@ import io.violabs.picard.domain.ObjectReference
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.workload.BaseSpec
 import io.violabs.picard.domain.k8sResources.workload.BaseStatus
-import io.violabs.picard.domain.k8sResources.workload.JobCondition
 import io.violabs.picard.domain.k8sResources.workload.job.JobTemplate
 import java.time.LocalDateTime
 

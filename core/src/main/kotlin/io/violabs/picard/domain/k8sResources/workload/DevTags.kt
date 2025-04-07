@@ -1,25 +1,13 @@
 package io.violabs.picard.domain.k8sResources.workload
 
-import io.violabs.picard.domain.BooleanType
-import java.time.LocalDateTime
-
 /**
  * These are basically just label to track useage
  */
 interface BaseK8s
 
-interface BaseCondition : BaseK8s {
-    val status: BooleanType
-    val type: String
-    val lastTransitionTime: LocalDateTime?
-    val message: String?
-    val reason: String?
-}
+interface BaseCondition : BaseK8s
 
-interface BaseEnvSource : BaseK8s {
-    val name: String?
-    val optional: Boolean?
-}
+interface BaseEnvSource : BaseK8s
 
 interface BaseKeySelector : BaseK8s
 
@@ -33,15 +21,9 @@ interface BasePort : BaseK8s
 
 interface BaseResourceClaim : BaseK8s
 
-interface BaseResourceMetricSource : BaseK8s {
-    val name: String
-    val target: Metric.Target?
-}
+interface BaseResourceMetricSource : BaseK8s
 
-interface BaseResourceMetricStatus : BaseK8s {
-    val current: Metric.ValueStatus
-    val name: String
-}
+interface BaseResourceMetricStatus : BaseK8s
 
 interface BaseSecurityContext : BaseK8s
 

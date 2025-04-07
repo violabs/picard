@@ -1,14 +1,14 @@
-package io.violabs.picard.domain.k8sResources.cluster
+package io.violabs.picard.domain.k8sResources.cluster.lease
 
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.k8sResources.K8sListResource
 
-data class LeaseCandidateList(
-    override val apiVersion: Version = KAPIVersion.CoordinationV1Alpha1,
-    override val items: List<LeaseCandidate>,
+data class LeaseList(
+    override val apiVersion: Version = KAPIVersion.CoordinationV1,
+    override val items: List<Lease>,
     override val metadata: ListMeta? = null
-) : K8sListResource<LeaseCandidateList.Version, LeaseCandidate> {
+) : K8sListResource<LeaseList.Version, Lease> {
     interface Version : APIVersion
 }

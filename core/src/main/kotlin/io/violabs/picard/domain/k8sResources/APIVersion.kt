@@ -1,5 +1,25 @@
 package io.violabs.picard.domain.k8sResources
 
+import io.violabs.picard.domain.k8sResources.cluster.node.Node
+import io.violabs.picard.domain.k8sResources.cluster.node.NodeList
+import io.violabs.picard.domain.k8sResources.cluster.serviceCIDR.ServiceCIDR
+import io.violabs.picard.domain.k8sResources.cluster.serviceCIDR.ServiceCIDRList
+import io.violabs.picard.domain.k8sResources.cluster.runtimeClass.RuntimeClass
+import io.violabs.picard.domain.k8sResources.cluster.runtimeClass.RuntimeClassList
+import io.violabs.picard.domain.k8sResources.cluster.namespace.Namespace
+import io.violabs.picard.domain.k8sResources.cluster.namespace.NamespaceList
+import io.violabs.picard.domain.k8sResources.cluster.lease.candidate.LeaseCandidate
+import io.violabs.picard.domain.k8sResources.cluster.lease.candidate.LeaseCandidateList
+import io.violabs.picard.domain.k8sResources.cluster.lease.Lease
+import io.violabs.picard.domain.k8sResources.cluster.lease.LeaseList
+import io.violabs.picard.domain.k8sResources.cluster.ipAddress.IPAddress
+import io.violabs.picard.domain.k8sResources.cluster.ipAddress.IPAddressList
+import io.violabs.picard.domain.k8sResources.cluster.apiService.APIService
+import io.violabs.picard.domain.k8sResources.cluster.apiService.APIServiceList
+import io.violabs.picard.domain.k8sResources.cluster.componentStatus.ComponentStatus
+import io.violabs.picard.domain.k8sResources.cluster.componentStatus.ComponentStatusList
+import io.violabs.picard.domain.k8sResources.cluster.event.Event
+import io.violabs.picard.domain.k8sResources.cluster.event.EventList
 import io.violabs.picard.domain.k8sResources.storage.storageVersionMigration.StorageVersionMigrationList
 import io.violabs.picard.domain.k8sResources.storage.storageVersionMigration.StorageVersionMigration
 import io.violabs.picard.domain.k8sResources.storage.storageClass.StorageClassList
@@ -78,10 +98,16 @@ open class KAPIVersion(
 
     //apiVersion: storage.k8s.io/v1
     object V1 : KAPIVersion(),
+        ComponentStatus.Version,
+        ComponentStatusList.Version,
         ConfigMap.Version,
         ConfigMapList.Version,
         Endpoints.Version,
         EndpointsList.Version,
+        Namespace.Version,
+        NamespaceList.Version,
+        Node.Version,
+        NodeList.Version,
         PersistentVolume.Version,
         PersistentVolumeList.Version,
         PersistentVolumeClaim.Version,
@@ -101,7 +127,9 @@ open class KAPIVersion(
 
     object APIExtensionsV1 : KAPIVersion("apiextensions.k8s.io/v1")
 
-    object APIRegistrationV1 : KAPIVersion("apiregistration.k8s.io/v1")
+    object APIRegistrationV1 : KAPIVersion("apiregistration.k8s.io/v1"),
+        APIService.Version,
+        APIServiceList.Version
 
     object AppsV1 : KAPIVersion("apps/v1"),
         ControllerRevision.Version,
@@ -135,15 +163,21 @@ open class KAPIVersion(
 
     object CertificatesV1 : KAPIVersion("certificates.k8s.io/v1")
 
-    object CoordinationV1 : KAPIVersion("coordination.k8s.io/v1")
+    object CoordinationV1 : KAPIVersion("coordination.k8s.io/v1"),
+        Lease.Version,
+        LeaseList.Version
 
     object CoordinationV1Alpha1 : KAPIVersion("coordination.k8s.io/v1alpha1"),
+        LeaseCandidate.Version,
+        LeaseCandidateList.Version
 
     object DiscoveryV1 : KAPIVersion("discovery.k8s.io/v1"),
         EndpointSlice.Version,
         EndpointSliceList.Version
 
-    object EventsV1 : KAPIVersion("events.k8s.io/v1")
+    object EventsV1 : KAPIVersion("events.k8s.io/v1"),
+        Event.Version,
+        EventList.Version
 
     object FlowControlApiServerV1 : KAPIVersion("flowcontrol.apiserver.k8s.io/v1")
 
@@ -153,9 +187,15 @@ open class KAPIVersion(
         IngressClass.Version,
         IngressClassList.Version
 
-    object NetworkingV1Beta1 : KAPIVersion("networking.k8s.io/v1")
+    object NetworkingV1Beta1 : KAPIVersion("networking.k8s.io/v1"),
+        IPAddress.Version,
+        IPAddressList.Version,
+        ServiceCIDR.Version,
+        ServiceCIDRList.Version
 
-    object NodeV1 : KAPIVersion("node.k8s.io/v1")
+    object NodeV1 : KAPIVersion("node.k8s.io/v1"),
+        RuntimeClass.Version,
+        RuntimeClassList.Version
 
     object PolicyV1 : KAPIVersion("policy/v1")
 

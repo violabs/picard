@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.k8sResources.cluster
+package io.violabs.picard.domain.k8sResources.cluster.namespace
 
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion

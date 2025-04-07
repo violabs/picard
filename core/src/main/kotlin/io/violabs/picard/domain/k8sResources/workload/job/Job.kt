@@ -8,8 +8,7 @@ import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.workload.BaseSpec
 import io.violabs.picard.domain.k8sResources.workload.BaseStatus
-import io.violabs.picard.domain.k8sResources.workload.Condition
-import io.violabs.picard.domain.k8sResources.workload.JobCondition
+import io.violabs.picard.domain.k8sResources.workload.NodeCondition
 import io.violabs.picard.domain.k8sResources.workload.pod.Pod
 import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import java.time.LocalDateTime
@@ -60,7 +59,7 @@ class Job(
         val failed: Int? = null,
         val succeeded: Int? = null,
         val completedIndexes: String? = null,
-        val conditions: List<JobCondition>? = null,
+        val conditions: List<NodeCondition>? = null,
         val uncountedTerminatedPods: UncountedTerminatedPods? = null,
         // Beta level
         val ready: Int? = null,

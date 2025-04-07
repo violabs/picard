@@ -119,4 +119,9 @@ data class Container(
         val uid: Long,
         val supplementalGroups: List<Long>? = null
     )
+
+    data class Image(
+        val names: List<String>? = null,
+        val sizeBytes: Long? = null
+    )
 }

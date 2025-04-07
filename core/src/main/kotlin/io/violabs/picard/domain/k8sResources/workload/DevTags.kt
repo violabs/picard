@@ -27,6 +27,10 @@ interface BaseResourceMetricStatus : BaseK8s
 
 interface BaseSecurityContext : BaseK8s
 
+interface BaseServiceReference : BaseK8s
+
 interface BaseSpec : BaseK8s
 
 interface BaseStatus : BaseK8s
+
+interface BaseWebhook : BaseK8s

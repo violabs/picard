@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.k8sResources.extend
+package io.violabs.picard.domain.k8sResources.extend.deviceClass
 
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion

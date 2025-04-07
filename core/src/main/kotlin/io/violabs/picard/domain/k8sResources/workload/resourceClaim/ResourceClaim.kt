@@ -1,7 +1,9 @@
 package io.violabs.picard.domain.k8sResources.workload.resourceClaim
 
+import io.violabs.picard.domain.DeviceSelector
 import io.violabs.picard.domain.K8sEnum
 import io.violabs.picard.domain.ObjectMetadata
+import io.violabs.picard.domain.OpaqueDeviceConfiguration
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
@@ -56,11 +58,6 @@ class ResourceClaim(
         )
     }
 
-    data class OpaqueDeviceConfiguration(
-        val driver: String,
-        val parameters: Any
-    )
-
     data class DeviceConstraint(
         val matchAttribute: String? = null,
         val requests: List<String>? = null
@@ -87,14 +84,6 @@ class ResourceClaim(
 
             override fun toString(): String = properCase()
         }
-    }
-
-    data class DeviceSelector(
-        val cel: CEL? = null
-    ) {
-        data class CEL(
-            val expression: String
-        )
     }
 
     data class ConsumerReference(

@@ -61,6 +61,14 @@ import io.violabs.picard.domain.k8sResources.storage.csi.csiDriver.CSIDriverList
 import io.violabs.picard.domain.k8sResources.storage.csi.csiDriver.CSIDriver
 import io.violabs.picard.domain.k8sResources.config.configMap.ConfigMap
 import io.violabs.picard.domain.k8sResources.config.configMap.ConfigMapList
+import io.violabs.picard.domain.k8sResources.extend.webhook.validatingWebhookConfig.ValidatingWebhookConfiguration
+import io.violabs.picard.domain.k8sResources.extend.webhook.validatingWebhookConfig.ValidatingWebhookConfigurationList
+import io.violabs.picard.domain.k8sResources.extend.webhook.mutatingWebhookConfig.MutatingWebhookConfiguration
+import io.violabs.picard.domain.k8sResources.extend.webhook.mutatingWebhookConfig.MutatingWebhookConfigurationList
+import io.violabs.picard.domain.k8sResources.extend.deviceClass.DeviceClass
+import io.violabs.picard.domain.k8sResources.extend.deviceClass.DeviceClassList
+import io.violabs.picard.domain.k8sResources.extend.customResource.customResourceDefinition.CustomResourceDefinition
+import io.violabs.picard.domain.k8sResources.extend.customResource.customResourceDefinition.CustomResourceDefinitionList
 import io.violabs.picard.domain.k8sResources.service.endpoints.Endpoints
 import io.violabs.picard.domain.k8sResources.service.endpoints.EndpointsList
 import io.violabs.picard.domain.k8sResources.service.Service
@@ -148,9 +156,15 @@ open class KAPIVersion(
         ServiceAccount.Version,
         ServiceAccountList.Version
 
-    object AdmissionRegistrationV1 : KAPIVersion("admissionregistration.k8s.io/v1")
+    object AdmissionRegistrationV1 : KAPIVersion("admissionregistration.k8s.io/v1"),
+        MutatingWebhookConfiguration.Version,
+        MutatingWebhookConfigurationList.Version,
+        ValidatingWebhookConfiguration.Version,
+        ValidatingWebhookConfigurationList.Version
 
-    object APIExtensionsV1 : KAPIVersion("apiextensions.k8s.io/v1")
+    object APIExtensionsV1 : KAPIVersion("apiextensions.k8s.io/v1"),
+        CustomResourceDefinition.Version,
+        CustomResourceDefinitionList.Version
 
     object APIRegistrationV1 : KAPIVersion("apiregistration.k8s.io/v1"),
         APIService.Version,
@@ -250,6 +264,8 @@ open class KAPIVersion(
         RoleBindingList.Version
 
     object ResourceV1Alpha3 : KAPIVersion("resource.k8s.io/v1alpha3"),
+        DeviceClass.Version,
+        DeviceClassList.Version,
         PodSchedulingContext.Version,
         PodSchedulingContextList.Version,
         ResourceClaim.Version,
@@ -260,6 +276,8 @@ open class KAPIVersion(
         ResourceSliceList.Version
 
     object ResourceV1Beta1 : KAPIVersion("resource.k8s.io/v1beta1"),
+        DeviceClass.Version,
+        DeviceClassList.Version,
         ResourceClaim.Version,
         ResourceClaimList.Version,
         ResourceClaimTemplate.Version,

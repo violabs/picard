@@ -18,28 +18,4 @@ data class ConfigMap(
     val immutable: Boolean? = null
 ) : K8sResource<ConfigMap.Version> {
     interface Version : APIVersion
-
-    data class VolumeSource(
-        val name: String,
-        val optional: Boolean? = null,
-        val defaultMode: Int? = null,
-        val items: List<KeyToPath>? = null
-    )
-
-    data class Projection(
-        val name: String? = null,
-        val optional: Boolean? = null,
-        val items: List<KeyToPath>? = null
-    )
-
-    data class KeySelector(
-        val key: String,
-        val name: String? = null,
-        val optional: Boolean? = null
-    )
-
-    data class EnvSource(
-        val name: String? = null,
-        val optional: Boolean? = null
-    ) : BaseEnvSource
 }

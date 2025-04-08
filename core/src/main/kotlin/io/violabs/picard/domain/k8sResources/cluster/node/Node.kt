@@ -12,6 +12,7 @@ import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
 import io.violabs.picard.domain.NodeCondition
 import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
+import io.violabs.picard.domain.k8sResources.workload.pod.container.ContainerImage
 
 class Node(
     override val apiVersion: Version = KAPIVersion.V1,
@@ -38,7 +39,7 @@ class Node(
         val config: ConfigStatus? = null,
         val daemonEndpoints: DaemonEndpoints? = null,
         val features: Features? = null,
-        val images: List<Container.Image>? = null,
+        val images: List<ContainerImage>? = null,
         val nodeInfo: SystemInfo? = null,
         val phase: String? = null,
         val runtimeHandlers: List<RuntimeHandler>? = null,

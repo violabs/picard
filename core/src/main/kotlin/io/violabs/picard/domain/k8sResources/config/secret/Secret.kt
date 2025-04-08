@@ -21,17 +21,6 @@ data class Secret(
 ) : K8sResource<Secret.Version> {
     interface Version : APIVersion
 
-    class KeySelector(
-        val key: String,
-        val name: String? = null,
-        val optional: Boolean? = null
-    ) : BaseKeySelector
-
-    data class EnvSource(
-        val name: String? = null,
-        val optional: Boolean? = null
-    ) : BaseEnvSource
-
     enum class Type(private val ref: String) {
         OPAQUE("Opaque"),
         SERVICE_ACCOUNT_TOKEN("kubernetes.io/service-account-token"),

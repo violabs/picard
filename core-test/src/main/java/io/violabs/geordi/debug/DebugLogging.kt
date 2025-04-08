@@ -259,6 +259,7 @@ internal class DefaultDebugLogging(
         } else {
             logger.log("EXPECT: $expected")
             logger.log("ACTUAL: $actual")
+            logDifferences(expected, actual)
         }
     }
 

@@ -3,6 +3,7 @@ package io.violabs.picard.domain.k8sResources.workload.pod
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.*
 import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
+import io.violabs.picard.domain.k8sResources.workload.pod.container.ContainerStatus
 import io.violabs.picard.domain.k8sResources.workload.pod.container.EphemeralContainer
 import io.violabs.picard.domain.k8sResources.workload.pod.security.*
 import java.time.LocalDateTime
@@ -136,9 +137,9 @@ data class Pod(
         val podIPs: List<PodIP>? = null,
         val conditions: List<Condition>? = null,
         val qosClass: String? = null,
-        val initContainerStatuses: List<Container.Status>? = null,
-        val containerStatuses: List<Container.Status>? = null,
-        val ephemeralContainerStatuses: List<Container.Status>? = null,
+        val initContainerStatuses: List<ContainerStatus>? = null,
+        val containerStatuses: List<ContainerStatus>? = null,
+        val ephemeralContainerStatuses: List<ContainerStatus>? = null,
         val resourceClaimStatuses: List<ResourceClaim.Status>? = null,
         val resize: String? = null
     ) : BaseStatus {

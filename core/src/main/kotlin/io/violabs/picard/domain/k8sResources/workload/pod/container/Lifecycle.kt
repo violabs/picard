@@ -8,8 +8,17 @@ data class Lifecycle(
     val preStop: LifecycleHandler? = null,
     ) {
         class Builder : DslBuilder<Lifecycle> {
-            var postStart: LifecycleHandler? = null
-            var preStop: LifecycleHandler? = null
+            private var postStart: LifecycleHandler? = null
+            private var preStop: LifecycleHandler? = null
+
+            fun postStart(scope: LifecycleHandler.Builder.() -> Unit) {
+                postStart = LifecycleHandler.Builder().apply(scope).build()
+            }
+
+            fun preStop(scope: LifecycleHandler.Builder.() -> Unit) {
+                preStop = LifecycleHandler.Builder().apply(scope).build()
+            }
+
             override fun build(): Lifecycle {
                 return Lifecycle(
                     postStart,

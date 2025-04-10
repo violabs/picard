@@ -16,8 +16,8 @@ data class EphemeralContainer(
     override val args: List<String>? = null,
     override val workingDir: String? = null,
     // Environment Variables
-    override val env: List<BaseContainer.EnvVar>? = null,
-    override val envFrom: List<BaseContainer.EnvFromSource>? = null,
+    override val env: List<EnvVar>? = null,
+    override val envFrom: List<EnvFromSource>? = null,
     // Volumes
     override val volumeMounts: List<VolumeMount>? = null,
     override val volumeDevices: List<VolumeDevice>? = null,
@@ -26,7 +26,7 @@ data class EphemeralContainer(
     override val terminationMessagePolicy: String? = null,
     override val restartPolicy: RestartPolicy? = null,
     // Security Context
-    override val securityContext: BaseContainer.SecurityContext? = null,
+    override val securityContext: ContainerSecurityContext? = null,
     // Debugging
     override val stdin: Boolean? = null,
     override val stdinOnce: Boolean? = null,

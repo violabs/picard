@@ -1,33 +1,36 @@
 package io.violabs.picard
 
-data class TestScenario<T, U>(
+data class TestScenario<T, BUILDER>(
     var id: String = "",
     var description: String = "",
     var targetFields: List<String> = emptyList(),
     var skippedFields: List<String> = emptyList(),
-    var given: U? = null,
+    var given: BUILDER? = null,
     var expected: T? = null,
     var exceptionMessage: ExceptionMessage? = null
 ) {
-    fun given(obj: U, scope: U.() -> Unit = {}) {
+    fun given(obj: BUILDER, scope: BUILDER.() -> Unit = {}) {
         given = obj.apply(scope)
     }
 }
 
-data class TestScenarioSet<T, U>(
-    val scenarios: MutableList<TestScenario<T, U>> = mutableListOf(),
+data class TestScenarioSet<T, BUILDER>(
+    val scenarios: MutableList<TestScenario<T, BUILDER>> = mutableListOf(),
     val exceptionTemplate: String = "%s must not be null"
 ) {
 
-    fun scenario(scope: TestScenario<T, U>.() -> Unit) {
-        scenarios += TestScenario<T, U>().apply(scope)
+    fun scenario(scope: TestScenario<T, BUILDER>.() -> Unit) {
+        scenarios += TestScenario<T, BUILDER>().apply(scope)
     }
 
     fun withTemplate(messagePart: String): ExceptionMessage = ExceptionMessage(exceptionTemplate.format(messagePart))
 }
 
-fun <T, U> possibilities(template: String? = null, scope: TestScenarioSet<T, U>.() -> Unit): TestScenarioSet<T, U> {
-    val set = template?.let { TestScenarioSet<T, U>(exceptionTemplate = it) } ?: TestScenarioSet()
+fun <T, BUILDER> possibilities(
+    template: String? = null,
+    scope: TestScenarioSet<T, BUILDER>.() -> Unit
+): TestScenarioSet<T, BUILDER> {
+    val set = template?.let { TestScenarioSet<T, BUILDER>(exceptionTemplate = it) } ?: TestScenarioSet()
 
     return set.also(scope)
 }

@@ -31,4 +31,31 @@ data class EphemeralContainer(
     override val stdin: Boolean? = null,
     override val stdinOnce: Boolean? = null,
     override val tty: Boolean? = null,
-) : BaseContainer
+) : BaseContainer {
+    class Builder : BaseContainer.Builder<EphemeralContainer>() {
+        var targetContainerName: String? = null
+
+        override fun build(): EphemeralContainer {
+            return EphemeralContainer(
+                requireNotNull(name) { "name must not be null" },
+                targetContainerName,
+                image,
+                imagePullPolicy,
+                command,
+                args,
+                workingDir,
+                env,
+                envFrom,
+                volumeMounts,
+                volumeDevices,
+                terminationMessagePath,
+                terminationMessagePolicy,
+                restartPolicy,
+                securityContext,
+                stdin,
+                stdinOnce,
+                tty
+            )
+        }
+    }
+}

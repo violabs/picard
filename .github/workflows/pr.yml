@@ -33,7 +33,7 @@ jobs:
 
       - name: Upload Unit Test Results
         if: success()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: unit-test-results
           path: build/reports/kover

@@ -24,7 +24,7 @@ data class ContainerResourceRequirements(
                 limits = mutableMapOf()
             }
 
-            limits?.apply(scope)
+            limits!!.apply(scope)
         }
 
         fun requests(scope: MutableMap<String, Quantity>.() -> Unit) {
@@ -32,7 +32,7 @@ data class ContainerResourceRequirements(
                 requests = mutableMapOf()
             }
 
-            requests?.apply(scope)
+            requests!!.apply(scope)
         }
 
         fun resizePolicy(scope: ResizePolicyGroup.() -> Unit) {

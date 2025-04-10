@@ -1,15 +1,8 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
 import io.violabs.picard.domain.*
-import io.violabs.picard.domain.k8sResources.config.configMap.ConfigMap
-import io.violabs.picard.domain.k8sResources.config.secret.Secret
-import io.violabs.picard.domain.k8sResources.workload.Metric
 import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeDevice
 import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeMount
-import io.violabs.picard.domain.k8sResources.workload.pod.security.AppArmorProfile
-import io.violabs.picard.domain.k8sResources.workload.pod.security.SELinuxOptions
-import io.violabs.picard.domain.k8sResources.workload.pod.security.SeccompProfile
-import io.violabs.picard.domain.k8sResources.workload.pod.security.WindowsSecurityContextOptions
 
 interface BaseContainer {
     val name: String
@@ -30,7 +23,7 @@ interface BaseContainer {
     val terminationMessagePolicy: String?
     val restartPolicy: RestartPolicy?
     // Security Context
-    val securityContext: SecurityContext?
+    val securityContext: ContainerSecurityContext?
     // Debugging
     val stdin: Boolean?
     val stdinOnce: Boolean?

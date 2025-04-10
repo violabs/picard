@@ -3,12 +3,9 @@ package io.violabs.picard.domain.k8sResources.workload.pod.container
 import io.violabs.picard.domain.DslBuilder
 import io.violabs.picard.domain.ImagePullPolicy
 import io.violabs.picard.domain.RestartPolicy
-import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.workload.pod.Probe
-import io.violabs.picard.domain.k8sResources.workload.pod.Resource
 import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeDevice
 import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeMount
-import java.time.LocalDateTime
 
 /**
  * @property name DNS_LABEL. must be unique.
@@ -47,7 +44,7 @@ data class Container(
     val startupProbe: Probe? = null,
     override val restartPolicy: RestartPolicy? = null,
     // Security Context
-    override val securityContext: SecurityContext? = null,
+    override val securityContext: ContainerSecurityContext? = null,
     // Debugging
     override val stdin: Boolean? = null,
     override val stdinOnce: Boolean? = null,
@@ -58,8 +55,8 @@ data class Container(
         var name: String? = null
         var image: String? = null
         var imagePullPolicy: ImagePullPolicy? = null
-        var command: List<String>? = null
-        var args: List<String>? = null
+        private var command: List<String>? = null
+        private var args: List<String>? = null
         var workingDir: String? = null
         private var ports: List<ContainerPort>? = null
         private var env: List<EnvVar>? = null
@@ -74,7 +71,7 @@ data class Container(
         private var readinessProbe: Probe? = null
         private var startupProbe: Probe? = null
         var restartPolicy: RestartPolicy? = null
-        private var securityContext: SecurityContext? = null
+        private var securityContext: ContainerSecurityContext? = null
         var stdin: Boolean? = null
         var stdinOnce: Boolean? = null
         var tty: Boolean? = null
@@ -127,13 +124,25 @@ data class Container(
             startupProbe = Probe.Builder().apply(scope).build()
         }
 
-        fun securityContext(scope: SecurityContext.Builder.() -> Unit) {
-            securityContext = SecurityContext.Builder().apply(scope).build()
+        fun securityContext(scope: ContainerSecurityContext.Builder.() -> Unit) {
+            securityContext = ContainerSecurityContext.Builder().apply(scope).build()
+        }
+
+        fun stdin() {
+            stdin = true
+        }
+
+        fun stdinOnce() {
+            stdinOnce = true
+        }
+
+        fun tty() {
+            tty = true
         }
 
         override fun build(): Container {
             return Container(
-                requireNotNull(name) { "Container name must not be null" },
+                requireNotNull(name) { "name must not be null" },
                 image,
                 imagePullPolicy,
                 command,

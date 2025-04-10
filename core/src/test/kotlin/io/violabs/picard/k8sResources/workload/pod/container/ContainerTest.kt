@@ -18,9 +18,12 @@ import io.violabs.picard.domain.k8sResources.workload.pod.LifecycleHandler
 import io.violabs.picard.domain.k8sResources.workload.pod.Probe
 import io.violabs.picard.domain.k8sResources.workload.pod.action.*
 import io.violabs.picard.domain.k8sResources.workload.pod.container.*
+import io.violabs.picard.domain.k8sResources.workload.pod.security.*
 import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeDevice
 import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeMount
 import io.violabs.picard.possibilities
+import io.violabs.picard.verifyHappyPath
+import io.violabs.picard.verifyRequiredField
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestTemplate
@@ -28,56 +31,28 @@ import org.junit.jupiter.api.TestTemplate
 class ContainerTest : UnitSim() {
 
     @Test
-    fun `build minimum exception`() = test<Unit> {
-        given {
-            val builder = Container.Builder()
-
-            wheneverThrows<IllegalArgumentException> {
-                whenFn = { builder.build() }
-                result = {
-                    assertOrLog(
-                        it.message,
-                        "Container name must not be null"
-                    )
-                }
-            }
-        }
-    }
-
-    @Test
-    fun `build minimum happy path`() = test {
-        given {
-            val builder = Container.Builder().apply {
-                name = "test"
-            }
-
-            expect { Container(name = "test") }
-
-            whenever { builder.build() }
-        }
-    }
+    fun `build minimum exception`() = verifyRequiredField(
+        "name",
+        Container.Builder(),
+    )
 
     @TestTemplate
-    fun `build varied happy path - #scenario`(builder: Container.Builder, container: Container) = test {
-        given {
-            expect { container }
-
-            whenever { builder.build() }
-        }
-    }
+    fun `build happy path - #scenario`(builder: Container.Builder, container: Container) = verifyHappyPath(
+        builder, container
+    )
 
     companion object {
-        private val SIMULATION_GROUP = SimulationGroup.vars("scenario", "builder", "container")
+        private val SUCCESS_SIMULATION_GROUP = SimulationGroup.vars("scenario", "builder", "container")
 
         @JvmStatic
         @BeforeAll
         fun setup() {
             SUCCESS_POSSIBILITIES.scenarios.forEach {
-                SIMULATION_GROUP.with(it.id, it.given, it.expected)
+                SUCCESS_SIMULATION_GROUP.with(it.id, it.given, it.expected)
             }
 
             setup<ContainerTest>(
-                SIMULATION_GROUP to { this::`build varied happy path - #scenario` }
+                SUCCESS_SIMULATION_GROUP to { this::`build happy path - #scenario` }
             )
         }
     }
@@ -86,7 +61,9 @@ class ContainerTest : UnitSim() {
 private val CONTAINER_PORT = ContainerPort(
     name = "http",
     protocol = Protocol.TCP,
-    containerPort = 8080
+    containerPort = 8080,
+    hostIp = "0.0.0.0",
+    hostPort = 8080
 )
 
 private val CONFIG_MAP_KEY_SELECTOR = ConfigMapKeySelector(
@@ -226,8 +203,51 @@ private val PROBE = Probe(
     failureThreshold = 3
 )
 
+private val SECURITY_CONTEXT = ContainerSecurityContext(
+    allowPrivilegeEscalation = true,
+    appArmorProfile = AppArmorProfile(
+        type = SecurityProfileType.LOCALHOST,
+        localHostProfile = "test-profile"
+    ),
+    capabilities = ContainerSecurityContext.Capabilities(
+        add = listOf("NET_ADMIN"),
+        drop = listOf("ALL")
+    ),
+    procMount = "procMount",
+    privileged = true,
+    readOnlyRootFilesystem = true,
+    runAsUser = 1000,
+    runAsGroup = 1000,
+    runAsNonRoot = true,
+    seLinuxOptions = SELinuxOptions(
+        level = "s0",
+        role = "role",
+        type = "type",
+        user = "user"
+    ),
+    seccompProfile = SeccompProfile(
+        localhostProfile = "test-profile",
+        type = SecurityProfileType.LOCALHOST
+    ),
+    windowsOptions = WindowsSecurityContextOptions(
+        gmsaCredentialSpec = "gmsaCredentialSpec",
+        gmsaCredentialSpecName = "gmsaCredentialSpecName",
+        runAsUserName = "runAsUserName",
+        hostProcess = true
+    )
+)
+
 private val SUCCESS_POSSIBILITIES = possibilities<Container, Container.Builder> {
     val containerName = "test"
+
+    scenario {
+        id = "minimum"
+        description = "least required fields"
+        given(Container.Builder()) {
+            name = containerName
+        }
+        expected = Container(containerName)
+    }
 
     scenario {
         id = "full"
@@ -244,6 +264,8 @@ private val SUCCESS_POSSIBILITIES = possibilities<Container, Container.Builder> 
                     name = "http"
                     protocol = Protocol.TCP
                     containerPort = 8080
+                    hostIp = "0.0.0.0"
+                    hostPort = 8080
                 }
             }
             env {
@@ -482,6 +504,49 @@ private val SUCCESS_POSSIBILITIES = possibilities<Container, Container.Builder> 
             }
 
             restartPolicy = RestartPolicy.ALWAYS
+
+            securityContext {
+                allowPrivilegeEscalation()
+                appArmorProfile {
+                    type = SecurityProfileType.LOCALHOST
+                    localHostProfile = "test-profile"
+                }
+
+                capabilities {
+                    add("NET_ADMIN")
+                    drop("ALL")
+                }
+
+                procMount = "procMount"
+                priveleged()
+                readOnlyRootFilesystem()
+                runAsUser = 1000
+                runAsGroup = 1000
+                runAsNonRoot()
+
+                seLinuxOptions {
+                    level = "s0"
+                    role = "role"
+                    type = "type"
+                    user = "user"
+                }
+
+                seccompProfile {
+                    type = SecurityProfileType.LOCALHOST
+                    localhostProfile = "test-profile"
+                }
+
+                windowsOptions {
+                    gmsaCredentialSpec = "gmsaCredentialSpec"
+                    gmsaCredentialSpecName = "gmsaCredentialSpecName"
+                    runAsUserName = "runAsUserName"
+                    hostProcess()
+                }
+            }
+
+            stdin()
+            stdinOnce()
+            tty()
         }
         expected = Container(
             name = containerName,
@@ -502,43 +567,28 @@ private val SUCCESS_POSSIBILITIES = possibilities<Container, Container.Builder> 
             livenessProbe = PROBE,
             readinessProbe = PROBE,
             startupProbe = PROBE,
-            restartPolicy = RestartPolicy.ALWAYS
+            restartPolicy = RestartPolicy.ALWAYS,
+            securityContext = SECURITY_CONTEXT,
+            stdin = true,
+            stdinOnce = true,
+            tty = true,
         )
     }
 
     scenario {
-        id = "ports minimum happy path"
+        id = "false booleans"
+        description = "we can manually set the booleans to false"
         given(Container.Builder()) {
             name = containerName
+            stdin = false
+            stdinOnce = false
+            tty = false
         }
         expected = Container(
-            name = containerName
+            name = containerName,
+            stdin = false,
+            stdinOnce = false,
+            tty = false
         )
-    }
-
-    scenario {
-        id = "env var minimum happy path"
-        given(Container.Builder()) {
-            name = containerName
-        }
-        expected = Container(
-            name = containerName
-        )
-    }
-
-//    scenario {
-//        id = "env var full happy path"
-//        given(Container.Builder()) {
-//            name = containerName
-//        }
-//        expected = Container(
-//            name = containerName
-//        )
-//    }
-}
-
-private val EXCEPTION_POSSIBILITIES = possibilities<Container, Container.Builder> {
-    scenario {
-        id = "ports exception"
     }
 }

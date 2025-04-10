@@ -7,8 +7,13 @@ data class ContainerImage(
     val sizeBytes: Long? = null
 ) {
     class Builder : DslBuilder<ContainerImage> {
-        var names: List<String>? = null
+        private var names: List<String>? = null
         var sizeBytes: Long? = null
+
+        fun names(vararg names: String) {
+            this.names = names.toList()
+        }
+
         override fun build(): ContainerImage {
             return ContainerImage(
                 names = names,

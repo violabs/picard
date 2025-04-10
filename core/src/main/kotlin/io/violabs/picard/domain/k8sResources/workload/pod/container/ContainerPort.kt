@@ -22,7 +22,7 @@ data class ContainerPort(
 
         override fun build(): ContainerPort {
             return ContainerPort(
-                requireNotNull(containerPort) { "Container port must not be null" },
+                requireNotNull(containerPort) { "containerPort must not be null" },
                 hostIp,
                 hostPort,
                 name,

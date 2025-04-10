@@ -11,7 +11,7 @@ data class ContainerResourceClaim(
         var request: String? = null
         override fun build(): ContainerResourceClaim {
             return ContainerResourceClaim(
-                requireNotNull(name) { "Name must not be null" },
+                requireNotNull(name) { "name must not be null" },
                 request
             )
         }

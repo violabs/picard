@@ -18,7 +18,7 @@ data class EnvVar(
 
         override fun build(): EnvVar {
             return EnvVar(
-                name = name ?: error("name is required"),
+                name = requireNotNull(name) { "name must not be null" },
                 value = value,
                 valueFrom = valueFrom
             )

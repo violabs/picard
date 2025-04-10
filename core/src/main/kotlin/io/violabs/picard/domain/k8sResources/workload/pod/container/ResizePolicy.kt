@@ -12,7 +12,7 @@ data class ResizePolicy(
 
         override fun build(): ResizePolicy {
             return ResizePolicy(
-                requireNotNull(resourceName) { "name must not be null" },
+                requireNotNull(resourceName) { "resourceName must not be null" },
                 requireNotNull(restartPolicy) { "restartPolicy must not be null" }
             )
         }

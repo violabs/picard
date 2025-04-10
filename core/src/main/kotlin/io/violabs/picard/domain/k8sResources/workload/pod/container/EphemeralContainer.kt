@@ -26,7 +26,7 @@ data class EphemeralContainer(
     override val terminationMessagePolicy: String? = null,
     override val restartPolicy: RestartPolicy? = null,
     // Security Context
-    override val securityContext: SecurityContext? = null,
+    override val securityContext: ContainerSecurityContext? = null,
     // Debugging
     override val stdin: Boolean? = null,
     override val stdinOnce: Boolean? = null,

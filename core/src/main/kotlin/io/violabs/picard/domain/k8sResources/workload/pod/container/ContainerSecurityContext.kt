@@ -6,7 +6,7 @@ import io.violabs.picard.domain.k8sResources.workload.pod.security.SELinuxOption
 import io.violabs.picard.domain.k8sResources.workload.pod.security.SeccompProfile
 import io.violabs.picard.domain.k8sResources.workload.pod.security.WindowsSecurityContextOptions
 
-data class SecurityContext(
+data class ContainerSecurityContext(
     val allowPrivilegeEscalation: Boolean? = null,
     val appArmorProfile: AppArmorProfile? = null,
     val capabilities: Capabilities? = null,
@@ -14,8 +14,8 @@ data class SecurityContext(
     val privileged: Boolean? = null,
     val readOnlyRootFilesystem: Boolean? = null,
     val runAsUser: Long? = null,
-    val runAsNonRoot: Boolean? = null,
     val runAsGroup: Long? = null,
+    val runAsNonRoot: Boolean? = null,
     val seLinuxOptions: SELinuxOptions? = null,
     val seccompProfile: SeccompProfile? = null,
     val windowsOptions: WindowsSecurityContextOptions? = null
@@ -27,6 +27,15 @@ data class SecurityContext(
         class Builder : DslBuilder<Capabilities> {
             private var add: List<String>? = null
             private var drop: List<String>? = null
+
+            fun add(vararg add: String) {
+                this.add = add.toList()
+            }
+
+            fun drop(vararg drop: String) {
+                this.drop = drop.toList()
+            }
+
             override fun build(): Capabilities {
                 return Capabilities(
                     add = add,
@@ -36,22 +45,58 @@ data class SecurityContext(
         }
     }
 
-    class Builder : DslBuilder<SecurityContext> {
-        private var allowPrivilegeEscalation: Boolean? = null
+    class Builder : DslBuilder<ContainerSecurityContext> {
+        var allowPrivilegeEscalation: Boolean? = null
         private var appArmorProfile: AppArmorProfile? = null
         private var capabilities: Capabilities? = null
-        private var procMount: String? = null
-        private var privileged: Boolean? = null
-        private var readOnlyRootFilesystem: Boolean? = null
-        private var runAsUser: Long? = null
-        private var runAsNonRoot: Boolean? = null
-        private var runAsGroup: Long? = null
+        var procMount: String? = null
+        var privileged: Boolean? = null
+        var readOnlyRootFilesystem: Boolean? = null
+        var runAsUser: Long? = null
+        var runAsNonRoot: Boolean? = null
+        var runAsGroup: Long? = null
         private var seLinuxOptions: SELinuxOptions? = null
         private var seccompProfile: SeccompProfile? = null
         private var windowsOptions: WindowsSecurityContextOptions? = null
 
-        override fun build(): SecurityContext {
-            return SecurityContext(
+        fun allowPrivilegeEscalation() {
+            this.allowPrivilegeEscalation = true
+        }
+
+        fun appArmorProfile(scope: AppArmorProfile.Builder.() -> Unit) {
+            appArmorProfile = AppArmorProfile.Builder().apply(scope).build()
+        }
+
+        fun capabilities(scope: Capabilities.Builder.() -> Unit) {
+            capabilities = Capabilities.Builder().apply(scope).build()
+        }
+
+        fun priveleged() {
+            this.privileged = true
+        }
+
+        fun readOnlyRootFilesystem() {
+            this.readOnlyRootFilesystem = true
+        }
+
+        fun runAsNonRoot() {
+            this.runAsNonRoot = true
+        }
+
+        fun seLinuxOptions(scope: SELinuxOptions.Builder.() -> Unit) {
+            seLinuxOptions = SELinuxOptions.Builder().apply(scope).build()
+        }
+
+        fun seccompProfile(scope: SeccompProfile.Builder.() -> Unit) {
+            seccompProfile = SeccompProfile.Builder().apply(scope).build()
+        }
+
+        fun windowsOptions(scope: WindowsSecurityContextOptions.Builder.() -> Unit) {
+            windowsOptions = WindowsSecurityContextOptions.Builder().apply(scope).build()
+        }
+
+        override fun build(): ContainerSecurityContext {
+            return ContainerSecurityContext(
                 allowPrivilegeEscalation = allowPrivilegeEscalation,
                 appArmorProfile = appArmorProfile,
                 capabilities = capabilities,

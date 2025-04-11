@@ -1,48 +1,19 @@
-package io.violabs.picard.k8sResources.workload.pod.container
+package io.violabs.picard.domain.k8sResources.workload.pod.container
 
-import io.violabs.geordi.SimulationGroup
-import io.violabs.geordi.UnitSim
 import io.violabs.picard.domain.ImagePullPolicy
 import io.violabs.picard.domain.RestartPolicy
-import io.violabs.picard.domain.k8sResources.workload.pod.container.EphemeralContainer
-import io.violabs.picard.k8sResources.workload.pod.container.common.*
-import io.violabs.picard.k8sResources.workload.pod.container.common.ContainerSim.Companion.fullScenario
+import io.violabs.picard.domain.k8sResources.workload.pod.container.common.*
+import io.violabs.picard.domain.k8sResources.workload.pod.container.common.ContainerSim.Companion.fullScenario
 import io.violabs.picard.possibilities
-import io.violabs.picard.verifyHappyPath
-import io.violabs.picard.verifyRequiredField
 import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestTemplate
 
-class EphemeralContainerTest : UnitSim() {
-
-    @Test
-    fun `build minimum exception`() = verifyRequiredField(
-        "name",
-        EphemeralContainer.Builder(),
-    )
-
-    @TestTemplate
-    fun `build happy path - #scenario`(builder: EphemeralContainer.Builder, container: EphemeralContainer) =
-        verifyHappyPath(
-            builder, container
-        )
-
+class EphemeralContainerTest :
+    ContainerSim<EphemeralContainer, EphemeralContainer.Builder>(EphemeralContainer.Builder()) {
     companion object {
-        private val SUCCESS_SIMULATION_GROUP = SimulationGroup.vars("scenario", "builder", "container")
-
         @JvmStatic
         @BeforeAll
         fun setup() {
-            SUCCESS_POSSIBILITIES.scenarios.forEach {
-                SUCCESS_SIMULATION_GROUP.with(it.id, it.given, it.expected)
-            }
-
-            ContainerSim.Companion
-
-            setup<EphemeralContainerTest>(
-                SUCCESS_SIMULATION_GROUP to { this::`build happy path - #scenario` }
-            )
+            containerSetup(EphemeralContainerTest::class, SUCCESS_POSSIBILITIES)
         }
     }
 }
@@ -63,7 +34,7 @@ private val FULL_CONTAINER = EphemeralContainer(
     volumeDevices = listOf(VOLUME_DEVICE),
     terminationMessagePath = "/dev/termination-log",
     terminationMessagePolicy = "FallbackToLogsOnError",
-    restartPolicy = RestartPolicy.ALWAYS,
+    restartPolicy = RestartPolicy.Always,
     securityContext = SECURITY_CONTEXT,
     stdin = true,
     stdinOnce = true,

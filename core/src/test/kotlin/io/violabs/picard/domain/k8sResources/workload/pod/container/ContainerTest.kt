@@ -1,39 +1,21 @@
-package io.violabs.picard.k8sResources.workload.pod.container
+package io.violabs.picard.domain.k8sResources.workload.pod.container
 
-import io.violabs.geordi.UnitSim
 import io.violabs.picard.domain.ImagePullPolicy
 import io.violabs.picard.domain.RestartPolicy
 import io.violabs.picard.domain.k8sResources.Protocol
 import io.violabs.picard.domain.k8sResources.Quantity
-import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
+import io.violabs.picard.domain.k8sResources.workload.pod.container.common.*
+import io.violabs.picard.domain.k8sResources.workload.pod.container.common.ContainerSim.Companion.fullScenario
 import io.violabs.picard.domain.k8sResources.workload.pod.security.SecurityProfileType
-import io.violabs.picard.k8sResources.workload.pod.container.common.*
-import io.violabs.picard.k8sResources.workload.pod.container.common.ContainerSim.Companion.fullScenario
 import io.violabs.picard.possibilities
-import io.violabs.picard.verifyHappyPath
-import io.violabs.picard.verifyRequiredField
 import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestTemplate
 
-class ContainerTest : UnitSim() {
-
-    @Test
-    fun `build minimum exception`() = verifyRequiredField(
-        "name",
-        Container.Builder(),
-    )
-
-    @TestTemplate
-    fun `build happy path - #scenario`(builder: Container.Builder, container: Container) = verifyHappyPath(
-        builder, container
-    )
-
+class ContainerTest : ContainerSim<Container, Container.Builder>(Container.Builder()) {
     companion object {
         @JvmStatic
         @BeforeAll
         fun setup() {
-            ContainerSim.containerSetup(SUCCESS_POSSIBILITIES)
+            containerSetup(ContainerTest::class, SUCCESS_POSSIBILITIES)
         }
     }
 }
@@ -59,7 +41,7 @@ private val FULL_CONTAINER = Container(
     livenessProbe = PROBE,
     readinessProbe = PROBE,
     startupProbe = PROBE,
-    restartPolicy = RestartPolicy.ALWAYS,
+    restartPolicy = RestartPolicy.Always,
     securityContext = SECURITY_CONTEXT,
     stdin = true,
     stdinOnce = true,
@@ -265,12 +247,12 @@ private val SUCCESS_POSSIBILITIES = possibilities<Container, Container.Builder> 
             failureThreshold = 3
         }
 
-        restartPolicy = RestartPolicy.ALWAYS
+        restartPolicy = RestartPolicy.Always
 
         securityContext {
             allowPrivilegeEscalation()
             appArmorProfile {
-                type = SecurityProfileType.LOCALHOST
+                type = SecurityProfileType.Localhost
                 localHostProfile = "test-profile"
             }
 
@@ -294,7 +276,7 @@ private val SUCCESS_POSSIBILITIES = possibilities<Container, Container.Builder> 
             }
 
             seccompProfile {
-                type = SecurityProfileType.LOCALHOST
+                type = SecurityProfileType.Localhost
                 localhostProfile = "test-profile"
             }
 

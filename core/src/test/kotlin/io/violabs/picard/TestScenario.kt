@@ -12,15 +12,26 @@ data class TestScenario<T, BUILDER>(
     fun given(obj: BUILDER, scope: BUILDER.() -> Unit = {}) {
         given = obj.apply(scope)
     }
+
+    fun idForFalseBooleanValues() {
+        id = "false boolean values"
+    }
 }
 
 data class TestScenarioSet<T, BUILDER>(
     val scenarios: MutableList<TestScenario<T, BUILDER>> = mutableListOf(),
-    val exceptionTemplate: String = "%s must not be null"
+    val exceptionTemplate: String = "%s is required"
 ) {
 
     fun scenario(scope: TestScenario<T, BUILDER>.() -> Unit) {
         scenarios += TestScenario<T, BUILDER>().apply(scope)
+    }
+
+    fun requireScenario(fieldName: String, scope: TestScenario<T, BUILDER>.() -> Unit) {
+        scenarios += TestScenario<T, BUILDER>().apply(scope).apply {
+            id = "missing $fieldName"
+            exceptionMessage = withTemplate(fieldName)
+        }
     }
 
     fun withTemplate(messagePart: String): ExceptionMessage = ExceptionMessage(exceptionTemplate.format(messagePart))

@@ -2,7 +2,7 @@
 plugins {
     kotlin("jvm") version "2.0.20"
     id("org.jetbrains.dokka") version "1.9.20" apply false
-    id("org.jetbrains.kotlinx.kover") version "0.7.6"
+    id("org.jetbrains.kotlinx.kover") version "0.9.1"
     application
 }
 

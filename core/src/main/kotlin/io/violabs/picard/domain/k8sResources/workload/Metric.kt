@@ -1,6 +1,5 @@
 package io.violabs.picard.domain.k8sResources.workload
 
-import io.violabs.picard.domain.K8sEnum
 import io.violabs.picard.domain.LabelSelector
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.workload.pod.PodsMetricSource
@@ -16,12 +15,10 @@ object Metric {
         val averageValue: Quantity? = null,
         val value: Quantity? = null
     ) {
-        enum class Type : K8sEnum {
-            UTILIZATION,
-            VALUE,
-            AVERAGE_VALUE;
-
-            override fun toString(): String = properCase()
+        enum class Type {
+            Utilization,
+            Value,
+            AverageValue
         }
     }
 
@@ -57,14 +54,12 @@ object Metric {
         val value: Quantity? = null
     )
 
-    enum class Type : K8sEnum {
-        CONTAINER_RESOURCE,
-        EXTERNAL,
-        OBJECT,
-        PODS,
-        RESOURCE;
-
-        override fun toString(): String = properCase()
+    enum class Type {
+        ContainerResource,
+        External,
+        Object,
+        Pods,
+        Resource
     }
 }
 

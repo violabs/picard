@@ -1,6 +1,5 @@
 package io.violabs.picard.domain.k8sResources.cluster.event
 
-import io.violabs.picard.domain.K8sEnum
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.ObjectReference
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -29,10 +28,8 @@ class Event(
 ) : K8sResource<Event.Version> {
     interface Version : APIVersion
 
-    enum class Type : K8sEnum {
-        NORMAL,
-        WARNING;
-
-        override fun toString(): String = properCase()
+    enum class Type {
+        Normal,
+        Warning;
     }
 }

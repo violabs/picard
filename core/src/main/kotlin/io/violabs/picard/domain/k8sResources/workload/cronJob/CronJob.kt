@@ -1,6 +1,5 @@
 package io.violabs.picard.domain.k8sResources.workload.cronJob
 
-import io.violabs.picard.domain.K8sEnum
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.ObjectMetadata
@@ -29,12 +28,10 @@ class CronJob(
         val successfulJobsHistoryLimit: Int? = null,
         val failedJobsHistoryLimit: Int? = null
     ) : BaseSpec {
-        enum class ConcurrencyPolicy : K8sEnum {
-            ALLOW,
-            FORBID,
-            REPLACE;
-
-            override fun toString(): String = properCase()
+        enum class ConcurrencyPolicy {
+            Allow,
+            Forbid,
+            Replace
         }
     }
 

@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.security
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DslBuilder
 
 data class SeccompProfile(
@@ -12,7 +13,7 @@ data class SeccompProfile(
 
         override fun build(): SeccompProfile  {
             return SeccompProfile(
-                type = requireNotNull(type) { "type cannot be null" },
+                type = vRequireNotNull(this::type),
                 localhostProfile = localhostProfile
             )
         }

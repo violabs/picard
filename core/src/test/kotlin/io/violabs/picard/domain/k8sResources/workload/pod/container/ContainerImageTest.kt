@@ -1,4 +1,4 @@
-package io.violabs.picard.k8sResources.workload.pod.container
+package io.violabs.picard.domain.k8sResources.workload.pod.container
 
 import io.violabs.geordi.UnitSim
 

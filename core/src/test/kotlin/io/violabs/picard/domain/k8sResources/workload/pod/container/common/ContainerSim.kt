@@ -1,12 +1,9 @@
-package io.violabs.picard.k8sResources.workload.pod.container.common
+package io.violabs.picard.domain.k8sResources.workload.pod.container.common
 
 import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
-import io.violabs.picard.TestScenarioSet
-import io.violabs.picard.domain.ImagePullPolicy
-import io.violabs.picard.domain.ObjectFieldSelector
-import io.violabs.picard.domain.ResourceFieldSelector
-import io.violabs.picard.domain.RestartPolicy
+import io.violabs.picard.*
+import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.Protocol
@@ -22,21 +19,24 @@ import io.violabs.picard.domain.k8sResources.workload.pod.container.*
 import io.violabs.picard.domain.k8sResources.workload.pod.security.*
 import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeDevice
 import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeMount
-import io.violabs.picard.k8sResources.workload.pod.container.ContainerTest
+import io.violabs.picard.domain.k8sResources.workload.pod.container.ContainerTest
+import org.junit.jupiter.api.Test
+import kotlin.reflect.KClass
 
-abstract class ContainerSim : UnitSim() {
+abstract class ContainerSim<T : BaseContainer, B : DslBuilder<T>>(
+    private val exceptionBuilder: B
+) : SuccessBuildSim<T, B>() {
+    @Test
+    fun `build minimum exception`() = verifyRequiredField(
+        "name",
+        exceptionBuilder,
+    )
 
     companion object {
-        private val SUCCESS_SIMULATION_GROUP = SimulationGroup.vars("scenario", "builder", "container")
-
-        fun containerSetup(scenariosSet: TestScenarioSet<*, *>) {
-            scenariosSet.scenarios.forEach {
-                SUCCESS_SIMULATION_GROUP.with(it.id, it.given, it.expected)
-            }
-
-            setup<ContainerTest>(
-                SUCCESS_SIMULATION_GROUP to { this::`build happy path - #scenario` }
-            )
+        fun <S : ContainerSim<T, B>, T : BaseContainer, B : DslBuilder<T>> containerSetup(
+            klass: KClass<S>, scenariosSet: TestScenarioSet<T, B>
+        ) {
+            buildSetup(klass, scenariosSet)
         }
 
         fun <T : BaseContainer, BUILDER : BaseContainer.Builder<T>> fullScenario(
@@ -121,12 +121,12 @@ abstract class ContainerSim : UnitSim() {
                     terminationMessagePath = "/dev/termination-log"
                     terminationMessagePolicy = "FallbackToLogsOnError"
 
-                    restartPolicy = RestartPolicy.ALWAYS
+                    restartPolicy = RestartPolicy.Always
 
                     securityContext {
                         allowPrivilegeEscalation()
                         appArmorProfile {
-                            type = SecurityProfileType.LOCALHOST
+                            type = SecurityProfileType.Localhost
                             localHostProfile = "test-profile"
                         }
 
@@ -150,7 +150,7 @@ abstract class ContainerSim : UnitSim() {
                         }
 
                         seccompProfile {
-                            type = SecurityProfileType.LOCALHOST
+                            type = SecurityProfileType.Localhost
                             localhostProfile = "test-profile"
                         }
 
@@ -322,7 +322,7 @@ val PROBE = Probe(
 val SECURITY_CONTEXT = ContainerSecurityContext(
     allowPrivilegeEscalation = true,
     appArmorProfile = AppArmorProfile(
-        type = SecurityProfileType.LOCALHOST,
+        type = SecurityProfileType.Localhost,
         localHostProfile = "test-profile"
     ),
     capabilities = ContainerSecurityContext.Capabilities(
@@ -343,7 +343,7 @@ val SECURITY_CONTEXT = ContainerSecurityContext(
     ),
     seccompProfile = SeccompProfile(
         localhostProfile = "test-profile",
-        type = SecurityProfileType.LOCALHOST
+        type = SecurityProfileType.Localhost
     ),
     windowsOptions = WindowsSecurityContextOptions(
         gmsaCredentialSpec = "gmsaCredentialSpec",

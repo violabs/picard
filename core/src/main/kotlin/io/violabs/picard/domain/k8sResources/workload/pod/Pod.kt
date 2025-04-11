@@ -153,11 +153,11 @@ data class Pod(
             val onExitCods: OnExitCodesRequirement? = null,
             val onPodConditions: List<OnPodConditionsPattern>? = null
         ) {
-            enum class Action : K8sEnum {
-                COUNT,
-                FAIL_INDEX,
-                FAIL_JOB,
-                IGNORE
+            enum class Action {
+                Count,
+                FailIndex,
+                FailJob,
+                Ignore
             }
         }
 

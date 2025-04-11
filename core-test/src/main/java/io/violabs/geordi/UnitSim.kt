@@ -9,6 +9,7 @@ import io.violabs.geordi.exceptions.NotFoundException
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.extension.ExtendWith
 import java.io.File
+import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.KProperty
 import kotlin.test.assertFailsWith
@@ -502,6 +503,20 @@ abstract class UnitSim(
         inline fun <reified T> setup(vararg methodPairs: Pair<SimulationGroup, T.() -> KFunction<*>>) {
             // Create a new instance of the specified class.
             val refInstance: T = T::class.java.getDeclaredConstructor().newInstance()
+
+            // Iterate over each pair in the methodPairs.
+            methodPairs.forEach { (scenarios, nameFetcher) ->
+                // Apply the lambda to the instance to retrieve the method name.
+                val methodName = nameFetcher(refInstance).name
+
+                // Associate the scenarios with the method name in the scenario store.
+                WarpDriveEngine.SCENARIO_STORE[methodName] = scenarios
+            }
+        }
+
+        fun <T : Any> setup(klass: KClass<T>, vararg methodPairs: Pair<SimulationGroup, T.() -> KFunction<*>>) {
+            // Create a new instance of the specified class.
+            val refInstance: T = klass.java.getDeclaredConstructor().newInstance()
 
             // Iterate over each pair in the methodPairs.
             methodPairs.forEach { (scenarios, nameFetcher) ->

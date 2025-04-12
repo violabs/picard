@@ -7,8 +7,8 @@ data class Sysctl(
     val value: String
 ) {
     class Builder : DslBuilder<Sysctl> {
-        val name: String? = null
-        val value: String? = null
+        var name: String? = null
+        var value: String? = null
 
         override fun build(): Sysctl {
             return Sysctl(

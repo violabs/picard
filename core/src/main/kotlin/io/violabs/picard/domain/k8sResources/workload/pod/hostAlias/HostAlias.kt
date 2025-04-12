@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.workload.pod.hostAlias
 
 import io.violabs.picard.domain.DslBuilder
 
-class HostAlias(
+data class HostAlias(
     val ip: String,
     val hostnames: List<String>? = null
 ) {

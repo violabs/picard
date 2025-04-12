@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.k8sResources.workload.pod
+package io.violabs.picard.domain.k8sResources.workload.pod.resource
 
 import io.violabs.picard.domain.BaseResourceClaim
 import io.violabs.picard.domain.DslBuilder

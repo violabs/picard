@@ -1,11 +1,7 @@
-package io.violabs.picard.domain.k8sResources.workload.pod
+package io.violabs.picard.domain.k8sResources.workload.pod.security
 
 import io.violabs.picard.domain.BaseSecurityContext
 import io.violabs.picard.domain.DslBuilder
-import io.violabs.picard.domain.k8sResources.workload.pod.security.AppArmorProfile
-import io.violabs.picard.domain.k8sResources.workload.pod.security.SELinuxOptions
-import io.violabs.picard.domain.k8sResources.workload.pod.security.SeccompProfile
-import io.violabs.picard.domain.k8sResources.workload.pod.security.WindowsSecurityContextOptions
 
 data class PodSecurityContext(
     val appArmorProfile: AppArmorProfile? = null,

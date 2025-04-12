@@ -8,6 +8,16 @@ import io.violabs.picard.domain.k8sResources.workload.pod.container.BaseContaine
 import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
 import io.violabs.picard.domain.k8sResources.workload.pod.container.ContainerStatus
 import io.violabs.picard.domain.k8sResources.workload.pod.container.EphemeralContainer
+import io.violabs.picard.domain.k8sResources.workload.pod.dnsConfig.DNSConfig
+import io.violabs.picard.domain.k8sResources.workload.pod.gate.ReadinessGate
+import io.violabs.picard.domain.k8sResources.workload.pod.gate.ReadinessGateGroup
+import io.violabs.picard.domain.k8sResources.workload.pod.gate.SchedulingGate
+import io.violabs.picard.domain.k8sResources.workload.pod.gate.SchedulingGateGroup
+import io.violabs.picard.domain.k8sResources.workload.pod.hostAlias.HostAlias
+import io.violabs.picard.domain.k8sResources.workload.pod.hostAlias.HostAliasGroup
+import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceClaim
+import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceClaimGroup
+import io.violabs.picard.domain.k8sResources.workload.pod.security.PodSecurityContext
 import java.time.LocalDateTime
 
 data class Pod(
@@ -220,6 +230,35 @@ data class Pod(
                     os = os,
                     volumes = _volumes,
                     nodeSelector = _nodeSelector,
+                    nodeName = nodeName,
+                    affinity = _affinity,
+                    tolerations = _tolerations,
+                    schedulerName = schedulerName,
+                    runtimeClassName = runtimeClassName,
+                    priorityClassName = priorityClassName,
+                    priority = priority,
+                    preemptionPolicy = preemptionPolicy,
+                    topologySpreadConstraints = _topologySpreadConstraints,
+                    overhead = _overhead,
+                    restartPolicy = restartPolicy,
+                    terminationGracePeriodSeconds = terminationGracePeriodSeconds,
+                    activeDeadlineSeconds = activeDeadlineSeconds,
+                    readinessGates = _readinessGates,
+                    hostname = hostname,
+                    setHostnameAsFQDN = setHostnameAsFQDN,
+                    subdomain = subdomain,
+                    hostAliases = _hostAliases,
+                    dnsConfig = _dnsConfig,
+                    hostNetwork = hostNetwork,
+                    hostPID = hostPID,
+                    hostIPC = hostIPC,
+                    shareProcessNamespace = shareProcessNamespace,
+                    serviceAccountName = serviceAccountName,
+                    automountServiceAccountToken = automountServiceAccountToken,
+                    securityContext = _securityContext,
+                    hostUsers = hostUsers,
+                    resourceClaims = _resourceClaims,
+                    schedulingGates = _schedulingGates
                 )
             }
         }

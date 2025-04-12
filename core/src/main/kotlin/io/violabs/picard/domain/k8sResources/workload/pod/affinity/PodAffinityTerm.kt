@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.affinity
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseAffinityTerm
 import io.violabs.picard.domain.DslBuilder
 import io.violabs.picard.domain.LabelSelector
@@ -42,7 +43,7 @@ data class PodAffinityTerm(
 
         override fun build(): PodAffinityTerm {
             return PodAffinityTerm(
-                topologyKey = requireNotNull(topologyKey),
+                topologyKey = vRequireNotNull(this::topologyKey),
                 labelSelector = labelSelector,
                 matchLabelKeys = matchLabelKeys,
                 mismatchLabelKeys = mismatchLabelKeys,

@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.k8sResources.workload.pod
+package io.violabs.picard.domain.k8sResources.workload.pod.metric
 
 import io.violabs.picard.domain.k8sResources.workload.Metric
 

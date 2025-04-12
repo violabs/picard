@@ -12,7 +12,7 @@ data class NodeSelectorTerm(
         private var _matchExpression: List<NodeSelectorRequirement>? = null
         private var _matchFields: List<NodeSelectorRequirement>? = null
 
-        fun matchExpression(scope: NodeSelectorRequirementGroup.() -> Unit) {
+        fun matchExpressions(scope: NodeSelectorRequirementGroup.() -> Unit) {
             _matchExpression = NodeSelectorRequirementGroup().apply(scope).requirements()
         }
 

@@ -2,8 +2,7 @@ package io.violabs.picard.domain.k8sResources.workload.pod.container
 
 import io.violabs.picard.domain.DslBuilder
 import io.violabs.picard.domain.k8sResources.Quantity
-import io.violabs.picard.domain.k8sResources.workload.pod.Resource
-import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeMount
+import io.violabs.picard.domain.k8sResources.workload.pod.resource.ResourceStatus
 import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeMountStatus
 
 data class ContainerStatus(
@@ -12,7 +11,7 @@ data class ContainerStatus(
     val name: String,
     val ready: Boolean,
     val allocatedResources: Map<String, Quantity>? = null,
-    val allocatedResourceStatus: List<Resource.Status>? = null,
+    val allocatedResourceStatus: List<ResourceStatus>? = null,
     val containerID: String? = null,
     val lastState: ContainerState? = null,
     val resources: ContainerResourceRequirements? = null,
@@ -28,7 +27,7 @@ data class ContainerStatus(
         var name: String? = null
         var ready: Boolean? = null
         var allocatedResources: Map<String, Quantity>? = null
-        var allocatedResourceStatus: List<Resource.Status>? = null
+        var allocatedResourceStatus: List<ResourceStatus>? = null
         var containerID: String? = null
         var lastState: ContainerState? = null
         var resources: ContainerResourceRequirements? = null

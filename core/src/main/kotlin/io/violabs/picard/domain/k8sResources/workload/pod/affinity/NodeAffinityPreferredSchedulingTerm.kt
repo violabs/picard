@@ -9,13 +9,11 @@ data class NodeAffinityPreferredSchedulingTerm(
     val weight: Int
 ) {
     class Builder : DslBuilder<NodeAffinityPreferredSchedulingTerm> {
-        private var _preference: NodeSelectorTerm? = null
+        private var preference: NodeSelectorTerm? = null
         var weight: Int? = null
 
-        fun preference(): NodeSelectorTerm? = _preference
-
         fun preference(init: NodeSelectorTerm.Builder.() -> Unit) {
-            _preference = NodeSelectorTerm.Builder().apply(init).build()
+            preference = NodeSelectorTerm.Builder().apply(init).build()
         }
 
         override fun build(): NodeAffinityPreferredSchedulingTerm {

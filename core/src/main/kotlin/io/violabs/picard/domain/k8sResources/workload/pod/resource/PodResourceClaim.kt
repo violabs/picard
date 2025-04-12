@@ -1,5 +1,6 @@
-package io.violabs.picard.domain.k8sResources.workload.pod
+package io.violabs.picard.domain.k8sResources.workload.pod.resource
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseResourceClaim
 import io.violabs.picard.domain.DslBuilder
 
@@ -8,10 +9,6 @@ data class PodResourceClaim(
     val resourceClaimName: String? = null,
     val resourceClaimTemplateName: String? = null
 ) : BaseResourceClaim {
-    data class Status(
-        val name: String,
-        val resourceClaimName: String? = null
-    )
 
     class Builder : DslBuilder<PodResourceClaim> {
         var name: String? = null
@@ -20,7 +17,7 @@ data class PodResourceClaim(
 
         override fun build(): PodResourceClaim {
             return PodResourceClaim(
-                name = requireNotNull(name),
+                name = vRequireNotNull(this::name),
                 resourceClaimName = resourceClaimName,
                 resourceClaimTemplateName = resourceClaimTemplateName
             )

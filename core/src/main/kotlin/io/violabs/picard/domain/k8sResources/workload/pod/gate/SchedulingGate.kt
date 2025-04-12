@@ -1,5 +1,6 @@
-package io.violabs.picard.domain.k8sResources.workload.pod
+package io.violabs.picard.domain.k8sResources.workload.pod.gate
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DslBuilder
 
 data class SchedulingGate(val name: String) {
@@ -8,7 +9,7 @@ data class SchedulingGate(val name: String) {
 
         override fun build(): SchedulingGate {
             return SchedulingGate(
-                name = requireNotNull(name)
+                name = vRequireNotNull(this::name)
             )
         }
     }

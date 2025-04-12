@@ -2,9 +2,8 @@ package io.violabs.picard.domain.k8sResources.workload
 
 import io.violabs.picard.domain.LabelSelector
 import io.violabs.picard.domain.k8sResources.Quantity
-import io.violabs.picard.domain.k8sResources.workload.pod.PodsMetricSource
-import io.violabs.picard.domain.k8sResources.workload.pod.PodsMetricStatus
-import io.violabs.picard.domain.k8sResources.workload.pod.container.BaseContainer
+import io.violabs.picard.domain.k8sResources.workload.pod.metric.PodsMetricSource
+import io.violabs.picard.domain.k8sResources.workload.pod.metric.PodsMetricStatus
 import io.violabs.picard.domain.k8sResources.workload.pod.container.ContainerResourceMetricSource
 import io.violabs.picard.domain.k8sResources.workload.pod.container.ContainerResourceMetricStatus
 

@@ -1,11 +1,7 @@
-package io.violabs.picard.domain.k8sResources.workload.pod
+package io.violabs.picard.domain.k8sResources.workload.pod.security
 
 import io.violabs.picard.domain.BaseSecurityContext
 import io.violabs.picard.domain.DslBuilder
-import io.violabs.picard.domain.k8sResources.workload.pod.security.AppArmorProfile
-import io.violabs.picard.domain.k8sResources.workload.pod.security.SELinuxOptions
-import io.violabs.picard.domain.k8sResources.workload.pod.security.SeccompProfile
-import io.violabs.picard.domain.k8sResources.workload.pod.security.WindowsSecurityContextOptions
 
 data class PodSecurityContext(
     val appArmorProfile: AppArmorProfile? = null,
@@ -26,7 +22,7 @@ data class PodSecurityContext(
         var fsGroup: Long? = null
         var fsGroupChangePolicy: String? = null
         var runAsUser: Long? = null
-        var runAsNonRoot: Boolean? = null
+        private var runAsNonRoot: Boolean? = null
         var runAsGroup: Long? = null
         private var seccompProfile: SeccompProfile? = null
         private var seLinuxOptions: SELinuxOptions? = null
@@ -39,8 +35,8 @@ data class PodSecurityContext(
             appArmorProfile = AppArmorProfile.Builder().apply(scope).build()
         }
 
-        fun runAsNonRoot() {
-            this.runAsNonRoot = true
+        fun runAsNonRoot(value: Boolean = true) {
+            this.runAsNonRoot = value
         }
 
         fun seccompProfile(scope: SeccompProfile.Builder.() -> Unit) {

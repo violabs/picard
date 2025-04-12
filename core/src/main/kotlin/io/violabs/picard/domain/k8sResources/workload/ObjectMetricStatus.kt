@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload
 
-import io.violabs.picard.domain.k8sResources.workload.pod.PodsMetricSource
+import io.violabs.picard.domain.k8sResources.workload.pod.metric.PodsMetricSource
 
 data class ObjectMetricStatus(
     val current: Metric.ValueStatus,

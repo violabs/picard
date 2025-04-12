@@ -12,20 +12,18 @@ data class HTTPGetAction(
     val scheme: String? = null
 ) {
     class Builder() : DslBuilder<HTTPGetAction> {
-        private var _port: IntOrString? = null
+        private var port: IntOrString? = null
         private var httpHeaders: MutableList<HttpHeader>? = null
         var host: String? = null
         var path: String? = null
         var scheme: String? = null
 
-        fun port(): IntOrString? = _port
-
         fun port(port: Int) {
-            this._port = IntOrString(port)
+            this.port = IntOrString(port)
         }
 
         fun port(port: String) {
-            this._port = IntOrString(str = port)
+            this.port = IntOrString(str = port)
         }
 
         fun httpHeaders(scope: HttpHeaderGroup.() -> Unit) {

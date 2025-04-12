@@ -4,6 +4,7 @@ import io.violabs.picard.domain.DslBuilder
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.workload.pod.Resource
 import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeMount
+import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeMountStatus
 
 data class ContainerStatus(
     val imageID: String,
@@ -19,7 +20,7 @@ data class ContainerStatus(
     val started: Boolean? = null,
     val state: ContainerState? = null,
     val user: ContainerUser? = null,
-    val volumeMounts: VolumeMount.Status? = null
+    val volumeMounts: VolumeMountStatus? = null
 ) {
     class Builder : DslBuilder<ContainerStatus> {
         var imageID: String? = null
@@ -35,7 +36,7 @@ data class ContainerStatus(
         var started: Boolean? = null
         var state: ContainerState? = null
         var user: ContainerUser? = null
-        var volumeMounts: VolumeMount.Status? = null
+        var volumeMounts: VolumeMountStatus? = null
 
         override fun build(): ContainerStatus {
             return ContainerStatus(

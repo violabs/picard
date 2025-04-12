@@ -1,6 +1,5 @@
 package io.violabs.picard.domain.k8sResources.workload.job
 
-import io.violabs.picard.domain.K8sEnum
 import io.violabs.picard.domain.LabelSelector
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
@@ -44,11 +43,9 @@ class Job(
         val maxFailedIndexes: Int? = null,
         val podReplacementPolicy: String? = null
     ) : BaseSpec {
-        enum class CompletionMode : K8sEnum {
-            INDEXED,
-            NON_INDEXED;
-
-            override fun toString(): String = properCase()
+        enum class CompletionMode {
+            Indexed,
+            NonIndexed
         }
     }
 

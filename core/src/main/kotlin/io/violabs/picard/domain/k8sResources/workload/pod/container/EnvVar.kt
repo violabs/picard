@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DslBuilder
 
 data class EnvVar(
@@ -18,7 +19,7 @@ data class EnvVar(
 
         override fun build(): EnvVar {
             return EnvVar(
-                name = requireNotNull(name) { "name must not be null" },
+                name = vRequireNotNull(this::name),
                 value = value,
                 valueFrom = valueFrom
             )

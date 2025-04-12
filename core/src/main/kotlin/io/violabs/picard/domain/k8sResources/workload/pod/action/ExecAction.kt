@@ -6,7 +6,7 @@ data class ExecAction(
     val command: List<String>? = null
 ) {
     class Builder : DslBuilder<ExecAction> {
-        var command: List<String>? = null
+        private var command: List<String>? = null
 
         fun command(vararg commandParts: String) {
             command = commandParts.toList()

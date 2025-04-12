@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DslBuilder
 import io.violabs.picard.domain.k8sResources.Protocol
 import io.violabs.picard.validation.RangeLimit
@@ -22,7 +23,7 @@ data class ContainerPort(
 
         override fun build(): ContainerPort {
             return ContainerPort(
-                requireNotNull(containerPort) { "containerPort must not be null" },
+                vRequireNotNull(this::containerPort),
                 hostIp,
                 hostPort,
                 name,

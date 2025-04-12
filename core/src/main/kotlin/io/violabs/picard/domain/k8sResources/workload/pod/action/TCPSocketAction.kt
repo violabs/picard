@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.action
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DslBuilder
 import io.violabs.picard.domain.k8sResources.IntOrString
 
@@ -8,20 +9,22 @@ data class TCPSocketAction(
     val host: String? = null
 ) {
     class Builder : DslBuilder<TCPSocketAction> {
-        private var port: IntOrString? = null
+        private var internalPort: IntOrString? = null
         var host: String? = null
 
+        fun port(): IntOrString? = internalPort
+
         fun port(port: Int) {
-            this.port = IntOrString(port)
+            this.internalPort = IntOrString(port)
         }
 
         fun port(port: String) {
-            this.port = IntOrString(str = port)
+            this.internalPort = IntOrString(str = port)
         }
 
         override fun build(): TCPSocketAction {
             return TCPSocketAction(
-                port = requireNotNull(port) { "Port must be specified" },
+                port = vRequireNotNull(this::port),
                 host
             )
         }

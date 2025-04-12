@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.security
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DslBuilder
 
 data class AppArmorProfile(
@@ -12,7 +13,7 @@ data class AppArmorProfile(
 
         override fun build(): AppArmorProfile {
             return AppArmorProfile(
-                type = requireNotNull(type) { "type must not be null" },
+                type = vRequireNotNull(this::type),
                 localHostProfile = localHostProfile
             )
         }

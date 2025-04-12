@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.action
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DslBuilder
 import io.violabs.picard.domain.k8sResources.IntOrString
 
@@ -11,18 +12,20 @@ data class HTTPGetAction(
     val scheme: String? = null
 ) {
     class Builder() : DslBuilder<HTTPGetAction> {
-        private var port: IntOrString? = null
+        private var _port: IntOrString? = null
+        private var httpHeaders: MutableList<HttpHeader>? = null
         var host: String? = null
-        private var httpHeaders: List<HttpHeader>? = null
         var path: String? = null
         var scheme: String? = null
 
+        fun port(): IntOrString? = _port
+
         fun port(port: Int) {
-            this.port = IntOrString(port)
+            this._port = IntOrString(port)
         }
 
         fun port(port: String) {
-            this.port = IntOrString(str = port)
+            this._port = IntOrString(str = port)
         }
 
         fun httpHeaders(scope: HttpHeaderGroup.() -> Unit) {
@@ -31,7 +34,7 @@ data class HTTPGetAction(
 
         override fun build(): HTTPGetAction {
             return HTTPGetAction(
-                requireNotNull(port) { "Port must be specified" },
+                vRequireNotNull(this::port),
                 host,
                 httpHeaders,
                 path,
@@ -40,18 +43,14 @@ data class HTTPGetAction(
         }
 
         class HttpHeaderGroup {
-            private var httpHeaders: MutableList<HttpHeader>? = null
+            private var httpHeaders: MutableList<HttpHeader> = mutableListOf()
 
-            fun headers(): List<HttpHeader>? {
+            fun headers(): MutableList<HttpHeader>? {
                 return httpHeaders
             }
 
             fun header(name: String, value: String) {
-                if (httpHeaders == null) {
-                    httpHeaders = mutableListOf()
-                }
-
-                httpHeaders!!.add(HttpHeader(name, value))
+                httpHeaders.add(HttpHeader(name, value))
             }
         }
     }

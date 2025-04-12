@@ -5,6 +5,10 @@ package io.violabs.picard.domain
  */
 interface BaseK8s
 
+interface BaseAffinity : BaseK8s
+
+interface BaseAffinityTerm : BaseK8s
+
 interface BaseCondition : BaseK8s
 
 interface BaseEnvSource : BaseK8s

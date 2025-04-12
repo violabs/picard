@@ -1,7 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.resourceClaim
 
 import io.violabs.picard.domain.DeviceSelector
-import io.violabs.picard.domain.K8sEnum
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.OpaqueDeviceConfiguration
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -78,11 +77,9 @@ class ResourceClaim(
             val request: String
         )
 
-        enum class AllocationMode : K8sEnum {
-            EXACT_COUNT,
-            ALL;
-
-            override fun toString(): String = properCase()
+        enum class AllocationMode {
+            ExactCount,
+            All
         }
     }
 

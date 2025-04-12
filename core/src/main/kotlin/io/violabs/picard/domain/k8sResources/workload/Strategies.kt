@@ -1,7 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload
 
 import io.violabs.picard.domain.BaseK8s
-import io.violabs.picard.domain.K8sEnum
 
 data class UpdateStrategy(
     override val type: BaseStrategy.Type? = null,
@@ -17,11 +16,9 @@ interface BaseStrategy : BaseK8s {
     val type: Type?
     val rollingUpdate: RollingUpdate?
 
-    enum class Type : K8sEnum {
-        RECREATE,
-        ROLLING_UPDATE;
-
-        override fun toString(): String = properCase()
+    enum class Type {
+        Recreate,
+        RollingUpdate
     }
 
     class RollingUpdate private constructor(

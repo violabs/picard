@@ -1,6 +1,6 @@
 package io.violabs.picard.domain
 
-enum class ImagePullPolicy : K8sEnum {
+enum class ImagePullPolicy {
     Always,
     Never,
     IfNotPresent;

@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DslBuilder
 
 data class ResizePolicy(
@@ -12,8 +13,8 @@ data class ResizePolicy(
 
         override fun build(): ResizePolicy {
             return ResizePolicy(
-                requireNotNull(resourceName) { "resourceName must not be null" },
-                requireNotNull(restartPolicy) { "restartPolicy must not be null" }
+                vRequireNotNull(this::resourceName),
+                vRequireNotNull(this::restartPolicy)
             )
         }
     }

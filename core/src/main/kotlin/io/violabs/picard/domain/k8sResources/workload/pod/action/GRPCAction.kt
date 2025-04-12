@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.action
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DslBuilder
 
 data class GRPCAction(
@@ -12,7 +13,7 @@ data class GRPCAction(
 
         override fun build(): GRPCAction {
             return GRPCAction(
-                port = requireNotNull(port) { "port is required" },
+                port = vRequireNotNull(this::port),
                 service = service
             )
         }

@@ -1,6 +1,5 @@
 package io.violabs.picard.domain.k8sResources.policy.priorityLevelConfig
 
-import io.violabs.picard.domain.K8sEnum
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sResource
@@ -26,10 +25,8 @@ class PriorityLevelConfiguration(
         val conditions: List<Condition>? = null
     ) : BaseSpec
 
-    enum class Type : K8sEnum {
-        EXEMPT,
-        LIMITED;
-
-        override fun toString(): String = properCase()
+    enum class Type {
+        Exempt,
+        Limited
     }
 }

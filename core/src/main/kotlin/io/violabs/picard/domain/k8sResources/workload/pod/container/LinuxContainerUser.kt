@@ -10,7 +10,11 @@ data class LinuxContainerUser(
     class Builder : DslBuilder<LinuxContainerUser> {
         var gid: Long? = null
         var uid: Long? = null
-        var supplementalGroups: List<Long>? = null
+        private var supplementalGroups: List<Long>? = null
+
+        fun supplementalGroups(vararg groups: Long) {
+            supplementalGroups = groups.toList()
+        }
 
         override fun build(): LinuxContainerUser {
             return LinuxContainerUser(

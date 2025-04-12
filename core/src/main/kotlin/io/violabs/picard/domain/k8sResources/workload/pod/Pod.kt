@@ -4,10 +4,7 @@ import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.*
 import io.violabs.picard.domain.k8sResources.workload.pod.affinity.Affinity
-import io.violabs.picard.domain.k8sResources.workload.pod.container.BaseContainer
-import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
-import io.violabs.picard.domain.k8sResources.workload.pod.container.ContainerStatus
-import io.violabs.picard.domain.k8sResources.workload.pod.container.EphemeralContainer
+import io.violabs.picard.domain.k8sResources.workload.pod.container.*
 import io.violabs.picard.domain.k8sResources.workload.pod.dnsConfig.DNSConfig
 import io.violabs.picard.domain.k8sResources.workload.pod.gate.ReadinessGate
 import io.violabs.picard.domain.k8sResources.workload.pod.gate.ReadinessGateGroup
@@ -18,6 +15,7 @@ import io.violabs.picard.domain.k8sResources.workload.pod.hostAlias.HostAliasGro
 import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceClaim
 import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceClaimGroup
 import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceClaimStatus
+import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceClaimStatusGroup
 import io.violabs.picard.domain.k8sResources.workload.pod.security.PodSecurityContext
 import java.time.LocalDateTime
 
@@ -316,43 +314,74 @@ data class Pod(
         val resourceClaimStatuses: List<PodResourceClaimStatus>? = null,
         val resize: String? = null
     ) : BaseStatus {
-        data class HostIP(val ip: String)
-        data class PodIP(val ip: String)
-    }
 
-    data class FailurePolicy(val rules: List<Rule>) {
-        data class Rule(
-            val action: Action,
-            val onExitCods: OnExitCodesRequirement? = null,
-            val onPodConditions: List<OnPodConditionsPattern>? = null
-        ) {
-            enum class Action {
-                Count,
-                FailIndex,
-                FailJob,
-                Ignore
+        class Builder : DslBuilder<Status> {
+            var nominatedNodeName: String? = null
+            var hostIP: String? = null
+            private var hostIPs: List<HostIP>? = null
+            var startTime: LocalDateTime? = null
+            var phase: String? = null
+            var message: String? = null
+            var reason: String? = null
+            var podIP: String? = null
+            private var podIPs: List<PodIP>? = null
+            private var conditions: List<Condition>? = null
+            var qosClass: String? = null
+            private var initContainerStatuses: List<ContainerStatus>? = null
+            private var containerStatuses: List<ContainerStatus>? = null
+            private var ephemeralContainerStatuses: List<ContainerStatus>? = null
+            private var resourceClaimStatuses: List<PodResourceClaimStatus>? = null
+            var resize: String? = null
+
+            fun hostIPs(scope: IPGroup<HostIP>.() -> Unit) {
+                hostIPs = IPGroup(::HostIP).apply(scope).ips()
+            }
+
+            fun podIPs(scope: IPGroup<PodIP>.() -> Unit) {
+                podIPs = IPGroup(::PodIP).apply(scope).ips()
+            }
+
+            fun conditions(scope: ConditionGroup<Condition, Condition.Builder>.() -> Unit) {
+                conditions = ConditionGroup(Condition.Builder()).apply(scope).conditions()
+            }
+
+            fun initContainerStatuses(scope: ContainerStatusGroup.() -> Unit) {
+                initContainerStatuses = ContainerStatusGroup().apply(scope).statuses()
+            }
+
+            fun containerStatuses(scope: ContainerStatusGroup.() -> Unit) {
+                containerStatuses = ContainerStatusGroup().apply(scope).statuses()
+            }
+
+            fun ephemeralContainerStatuses(scope: ContainerStatusGroup.() -> Unit) {
+                ephemeralContainerStatuses = ContainerStatusGroup().apply(scope).statuses()
+            }
+
+            fun resourceClaimStatuses(scope: PodResourceClaimStatusGroup.() -> Unit) {
+                resourceClaimStatuses = PodResourceClaimStatusGroup().apply(scope).statuses()
+            }
+
+            override fun build(): Status {
+                return Status(
+                    nominatedNodeName = nominatedNodeName,
+                    hostIP = hostIP,
+                    hostIPs = hostIPs,
+                    startTime = startTime,
+                    phase = phase,
+                    message = message,
+                    reason = reason,
+                    podIP = podIP,
+                    podIPs = podIPs,
+                    conditions = conditions,
+                    qosClass = qosClass,
+                    initContainerStatuses = initContainerStatuses,
+                    containerStatuses = containerStatuses,
+                    ephemeralContainerStatuses = ephemeralContainerStatuses,
+                    resourceClaimStatuses = resourceClaimStatuses,
+                    resize = resize
+                )
             }
         }
-
-        data class OnExitCodesRequirement(
-            val operator: Operator,
-            val values: List<Int>,
-            val containerName: String? = null
-        )
-
-        data class OnPodConditionsPattern(
-            val status: BooleanType,
-            val type: String
-        )
-    }
-
-    data class SuccessPolicy(
-        val rules: List<Rule>? = null
-    ) {
-        data class Rule(
-            val succeededCount: Int? = null,
-            val succeededIndexes: String? = null
-        )
     }
 
     class Builder : DslBuilder<Pod> {

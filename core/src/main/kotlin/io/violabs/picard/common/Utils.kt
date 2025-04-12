@@ -1,5 +1,6 @@
 package io.violabs.picard.common
 
+import io.violabs.picard.domain.k8sResources.Quantity
 import kotlin.reflect.KFunction
 import kotlin.reflect.KProperty
 import kotlin.reflect.jvm.isAccessible
@@ -38,3 +39,5 @@ internal fun <T> vRequireNotEmpty(accessor: KFunction<List<T>?>): List<T> {
 
     return requireNotNull(returnedValue) { "${accessor.name} is required and cannot be empty" }
 }
+
+fun String.quantity(): Quantity = Quantity(this)

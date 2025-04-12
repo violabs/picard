@@ -3,6 +3,7 @@ package io.violabs.picard.domain.k8sResources.workload.pod.container
 import io.violabs.picard.domain.DslBuilder
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.workload.pod.resource.ResourceStatus
+import io.violabs.picard.domain.k8sResources.workload.pod.resource.ResourceStatusGroup
 import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeMountStatus
 
 data class ContainerStatus(
@@ -25,24 +26,60 @@ data class ContainerStatus(
         var imageID: String? = null
         var image: String? = null
         var name: String? = null
-        var ready: Boolean? = null
-        var allocatedResources: Map<String, Quantity>? = null
-        var allocatedResourceStatus: List<ResourceStatus>? = null
+        private var ready: Boolean? = null
+        private var allocatedResources: MutableMap<String, Quantity>? = null
+        private var allocatedResourceStatus: MutableList<ResourceStatus>? = null
         var containerID: String? = null
-        var lastState: ContainerState? = null
-        var resources: ContainerResourceRequirements? = null
+        private var lastState: ContainerState? = null
+        private var resources: ContainerResourceRequirements? = null
         var restartCount: Int? = null
-        var started: Boolean? = null
-        var state: ContainerState? = null
-        var user: ContainerUser? = null
-        var volumeMounts: VolumeMountStatus? = null
+        private var started: Boolean? = null
+        private var state: ContainerState? = null
+        private var user: ContainerUser? = null
+        private var volumeMounts: VolumeMountStatus? = null
+
+        fun ready(value: Boolean = true) {
+            ready = value
+        }
+
+        fun allocatedResources(scope: MutableMap<String, Quantity>.() -> Unit) {
+            this.allocatedResources = mutableMapOf<String, Quantity>().apply(scope)
+        }
+
+        fun allocatedResourceStatus(scope: ResourceStatusGroup.() -> Unit) {
+            this.allocatedResourceStatus = ResourceStatusGroup().apply(scope).statuses()
+        }
+
+        fun lastState(scope: ContainerState.Builder.() -> Unit) {
+            this.lastState = ContainerState.Builder().apply(scope).build()
+        }
+
+        fun resources(scope: ContainerResourceRequirements.Builder.() -> Unit) {
+            this.resources = ContainerResourceRequirements.Builder().apply(scope).build()
+        }
+
+        fun started(value: Boolean = true) {
+            started = value
+        }
+
+        fun state(scope: ContainerState.Builder.() -> Unit) {
+            this.state = ContainerState.Builder().apply(scope).build()
+        }
+
+        fun user(scope: ContainerUser.Builder.() -> Unit) {
+            this.user = ContainerUser.Builder().apply(scope).build()
+        }
+
+        fun volumeMounts(scope: VolumeMountStatus.Builder.() -> Unit) {
+            this.volumeMounts = VolumeMountStatus.Builder().apply(scope).build()
+        }
 
         override fun build(): ContainerStatus {
             return ContainerStatus(
-                requireNotNull(imageID) { "image ID must not be null" },
-                requireNotNull(image) { "image must not be null" },
-                requireNotNull(name) { "name must not be null" },
-                requireNotNull(ready) { "ready must not be null" },
+                requireNotNull(imageID),
+                requireNotNull(image),
+                requireNotNull(name),
+                requireNotNull(ready),
                 allocatedResources,
                 allocatedResourceStatus,
                 containerID,

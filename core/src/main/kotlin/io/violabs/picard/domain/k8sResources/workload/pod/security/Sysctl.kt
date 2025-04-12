@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.security
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DslBuilder
 
 data class Sysctl(
@@ -12,8 +13,8 @@ data class Sysctl(
 
         override fun build(): Sysctl {
             return Sysctl(
-                name = requireNotNull(name),
-                value = requireNotNull(value)
+                name = vRequireNotNull(this::name),
+                value = vRequireNotNull(this::value)
             )
         }
     }

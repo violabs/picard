@@ -9,17 +9,15 @@ data class TCPSocketAction(
     val host: String? = null
 ) {
     class Builder : DslBuilder<TCPSocketAction> {
-        private var internalPort: IntOrString? = null
+        private var port: IntOrString? = null
         var host: String? = null
 
-        fun port(): IntOrString? = internalPort
-
         fun port(port: Int) {
-            this.internalPort = IntOrString(port)
+            this.port = IntOrString(port)
         }
 
         fun port(port: String) {
-            this.internalPort = IntOrString(str = port)
+            this.port = IntOrString(str = port)
         }
 
         override fun build(): TCPSocketAction {

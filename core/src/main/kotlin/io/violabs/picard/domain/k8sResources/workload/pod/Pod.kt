@@ -17,6 +17,7 @@ import io.violabs.picard.domain.k8sResources.workload.pod.hostAlias.HostAlias
 import io.violabs.picard.domain.k8sResources.workload.pod.hostAlias.HostAliasGroup
 import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceClaim
 import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceClaimGroup
+import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceClaimStatus
 import io.violabs.picard.domain.k8sResources.workload.pod.security.PodSecurityContext
 import java.time.LocalDateTime
 
@@ -312,7 +313,7 @@ data class Pod(
         val initContainerStatuses: List<ContainerStatus>? = null,
         val containerStatuses: List<ContainerStatus>? = null,
         val ephemeralContainerStatuses: List<ContainerStatus>? = null,
-        val resourceClaimStatuses: List<PodResourceClaim.Status>? = null,
+        val resourceClaimStatuses: List<PodResourceClaimStatus>? = null,
         val resize: String? = null
     ) : BaseStatus {
         data class HostIP(val ip: String)

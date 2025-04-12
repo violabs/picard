@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.gate
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DslBuilder
 
 data class ReadinessGate(val conditionType: String) {
@@ -7,7 +8,7 @@ data class ReadinessGate(val conditionType: String) {
         var conditionType: String? = null
         override fun build(): ReadinessGate {
             return ReadinessGate(
-                conditionType = requireNotNull(conditionType)
+                conditionType = vRequireNotNull(this::conditionType)
             )
         }
     }

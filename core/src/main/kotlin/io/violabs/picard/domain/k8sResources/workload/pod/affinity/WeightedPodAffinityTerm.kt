@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.affinity
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseAffinityTerm
 import io.violabs.picard.domain.DslBuilder
 
@@ -8,19 +9,17 @@ data class WeightedPodAffinityTerm(
     val weight: Int
 ) : BaseAffinityTerm {
     class Builder : DslBuilder<WeightedPodAffinityTerm> {
-        private var _podAffinityTerm: PodAffinityTerm? = null
+        private var podAffinityTerm: PodAffinityTerm? = null
         var weight: Int? = null
 
-        fun podAffinityTerm(): PodAffinityTerm? = _podAffinityTerm
-
         fun podAffinityTerm(init: PodAffinityTerm.Builder.() -> Unit) {
-            _podAffinityTerm = PodAffinityTerm.Builder().apply(init).build()
+            podAffinityTerm = PodAffinityTerm.Builder().apply(init).build()
         }
 
         override fun build(): WeightedPodAffinityTerm {
             return WeightedPodAffinityTerm(
-                podAffinityTerm = requireNotNull(_podAffinityTerm),
-                weight = requireNotNull(weight)
+                podAffinityTerm = vRequireNotNull(this::podAffinityTerm),
+                weight = vRequireNotNull(this::weight)
             )
         }
     }

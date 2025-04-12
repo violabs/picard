@@ -90,7 +90,8 @@ private val POD_AFFINITY = PodAffinity(
 )
 
 private val POD_ANTI_AFFINITY = PodAntiAffinity(
-    preferredDuringSchedulingIgnoredDuringExecution = listOf(WEIGHTED_POD_AFFINITY_TERM)
+    preferredDuringSchedulingIgnoredDuringExecution = listOf(WEIGHTED_POD_AFFINITY_TERM),
+    requiredDuringSchedulingIgnoredDuringExecution = listOf(POD_AFFINITY_TERM)
 )
 
 private val AFFINITY = Affinity(
@@ -325,6 +326,10 @@ private val SUCCESS_POSSIBILITIES = possibilities<Pod.Spec, Pod.Spec.Builder> {
                             podAffinityTerm { sharedTerm() }
                         }
                     }
+
+                    requiredDuringSchedulingIgnoredDuringExecution {
+                        term { sharedTerm() }
+                    }
                 }
             }
 
@@ -428,7 +433,7 @@ private val SUCCESS_POSSIBILITIES = possibilities<Pod.Spec, Pod.Spec.Builder> {
                 supplementalGroups(100, 200)
                 supplementalGroupsPolicy = "groupPolicy"
                 sysctls {
-                    add {
+                    sysctl {
                         name = "test"
                         value = "sysctl"
                     }

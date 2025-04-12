@@ -1,13 +1,12 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.affinity
 
-class NodeAffinityPreferredSchedulingTermGroup {
-    private var preferredDuringSchedulingIgnoredDuringExecution: MutableList<NodeAffinityPreferredSchedulingTerm> = mutableListOf()
+import io.violabs.picard.domain.BuilderGroup
 
-    fun executions(): List<NodeAffinityPreferredSchedulingTerm>? {
-        return preferredDuringSchedulingIgnoredDuringExecution.takeIf { it.isNotEmpty() }
-    }
+class NodeAffinityPreferredSchedulingTermGroup :
+    BuilderGroup<NodeAffinityPreferredSchedulingTerm, NodeAffinityPreferredSchedulingTerm.Builder>(
+        NodeAffinityPreferredSchedulingTerm.Builder()
+    ) {
+    fun executions(): List<NodeAffinityPreferredSchedulingTerm>? = items()
 
-    fun term(scope: NodeAffinityPreferredSchedulingTerm.Builder.() -> Unit) {
-        preferredDuringSchedulingIgnoredDuringExecution.add(NodeAffinityPreferredSchedulingTerm.Builder().apply(scope).build())
-    }
+    fun term(scope: NodeAffinityPreferredSchedulingTerm.Builder.() -> Unit) = add(scope)
 }

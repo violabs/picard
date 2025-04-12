@@ -1,0 +1,12 @@
+package io.violabs.picard.domain.k8sResources.workload.pod
+
+
+import io.violabs.picard.domain.BuilderGroup
+
+class SchedulingGateGroup : BuilderGroup<SchedulingGate, SchedulingGate.Builder>(SchedulingGate.Builder()) {
+    fun schedulingGates(): MutableList<SchedulingGate>? = items()
+
+    fun schedulingGate(scope: SchedulingGate.Builder.() -> Unit) {
+        add(scope)
+    }
+}

@@ -1,13 +1,18 @@
 package io.violabs.picard.domain.k8sResources.workload
 
 import io.violabs.picard.domain.BaseNodeSelector
-import io.violabs.picard.domain.NodeSelectorRequirement
+import io.violabs.picard.domain.DslBuilder
 
 data class NodeSelector(
-    val nodeSelectorTerms: List<Term>
+    val nodeSelectorTerms: List<NodeSelectorTerm>
 ) : BaseNodeSelector {
-    data class Term(
-        val matchExpression: List<NodeSelectorRequirement>? = null,
-        val matchFields: List<NodeSelectorRequirement>? = null
-    )
+
+    class Builder : DslBuilder<NodeSelector> {
+        private var _nodeSelectorTerms: List<NodeSelectorTerm>? = null
+        override fun build(): NodeSelector {
+            return NodeSelector(
+                nodeSelectorTerms = requireNotNull(_nodeSelectorTerms)
+            )
+        }
+    }
 }

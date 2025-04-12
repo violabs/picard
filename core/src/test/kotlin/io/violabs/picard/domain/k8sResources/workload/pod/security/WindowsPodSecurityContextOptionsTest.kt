@@ -4,7 +4,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class WindowsSecurityContextOptionsTest :
+class WindowsPodSecurityContextOptionsTest :
     SuccessBuildSim<WindowsSecurityContextOptions, WindowsSecurityContextOptions.Builder>() {
 
     companion object {
@@ -12,7 +12,7 @@ class WindowsSecurityContextOptionsTest :
         @BeforeAll
         fun setup() {
             buildSetup(
-                WindowsSecurityContextOptionsTest::class,
+                WindowsPodSecurityContextOptionsTest::class,
                 SUCCESS_POSSIBILITIES
             )
         }

@@ -15,4 +15,42 @@ data class ObjectMetadata(
     val namespace: String? = null,
     val labels: List<Label>? = null,
     val annotations: List<K8sAnnotation>? = null
-)
+) {
+    class Builder : DslBuilder<ObjectMetadata> {
+        var name: String? = null
+        var generatedName: String? = null
+        var namespace: String? = null
+        private var labels: List<Label>? = null
+        private var annotations: List<K8sAnnotation>? = null
+
+        fun labels(scope: LabelGroup.() -> Unit) {
+            labels = LabelGroup().apply(scope).labels()
+        }
+
+        fun annotations(scope: AnnotationGroup.() -> Unit) {
+            annotations = AnnotationGroup().apply(scope).annotations()
+        }
+
+        override fun build(): ObjectMetadata {
+            return ObjectMetadata(
+                name,
+                generatedName,
+                namespace,
+                labels,
+                annotations
+            )
+        }
+    }
+
+    class AnnotationGroup {
+        private var annotations: MutableList<K8sAnnotation> = mutableListOf()
+
+        fun annotations(): MutableList<K8sAnnotation>? {
+            return annotations
+        }
+
+        fun annotations(key: String, value: String) {
+            annotations.add(K8sAnnotation(key, value))
+        }
+    }
+}

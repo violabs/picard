@@ -4,13 +4,13 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ContainerSecurityContextTest : SuccessBuildSim<ContainerSecurityContext, ContainerSecurityContext.Builder>() {
+class ContainerPodSecurityContextTest : SuccessBuildSim<ContainerSecurityContext, ContainerSecurityContext.Builder>() {
     companion object {
         @JvmStatic
         @BeforeAll
         fun setup() {
             buildSetup(
-                ContainerSecurityContextTest::class,
+                ContainerPodSecurityContextTest::class,
                 SUCCESS_POSSIBILITIES
             )
         }

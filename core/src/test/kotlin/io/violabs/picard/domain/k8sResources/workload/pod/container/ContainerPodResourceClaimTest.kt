@@ -4,7 +4,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ContainerResourceClaimTest : FailureBuildSim<ContainerResourceClaim, ContainerResourceClaim.Builder>() {
+class ContainerPodResourceClaimTest : FailureBuildSim<ContainerResourceClaim, ContainerResourceClaim.Builder>() {
     companion object {
         @JvmStatic
         @BeforeAll

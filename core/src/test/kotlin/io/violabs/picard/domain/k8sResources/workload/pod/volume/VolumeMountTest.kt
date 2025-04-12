@@ -22,10 +22,12 @@ private val SUCCESS_POSSIBILITIES = possibilities<VolumeMount, VolumeMount.Build
         given(VolumeMount.Builder()) {
             name = "cool-volume"
             mountPath = "/cool-path"
+            readOnly = false
         }
         expected = VolumeMount(
             "cool-volume",
-            "/cool-path"
+            "/cool-path",
+            readOnly = false
         )
     }
 }

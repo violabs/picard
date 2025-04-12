@@ -34,6 +34,13 @@ data class TestScenarioSet<T, BUILDER>(
         }
     }
 
+    fun requireNotEmptyScenario(fieldName: String, scope: TestScenario<T, BUILDER>.() -> Unit) {
+        scenarios += TestScenario<T, BUILDER>().apply(scope).apply {
+            id = "missing or empty $fieldName"
+            exceptionMessage = ExceptionMessage("$fieldName is required and cannot be empty")
+        }
+    }
+
     fun withTemplate(messagePart: String): ExceptionMessage = ExceptionMessage(exceptionTemplate.format(messagePart))
 }
 

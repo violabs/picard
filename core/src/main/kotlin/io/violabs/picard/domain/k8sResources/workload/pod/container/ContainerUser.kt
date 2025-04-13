@@ -6,7 +6,11 @@ data class ContainerUser(
     val linux: LinuxContainerUser? = null
 ) {
     class Builder : DslBuilder<ContainerUser> {
-        var linux: LinuxContainerUser? = null
+        private var linux: LinuxContainerUser? = null
+
+        fun linux(scope: LinuxContainerUser.Builder.() -> Unit) {
+            linux = LinuxContainerUser.Builder().apply(scope).build()
+        }
 
         override fun build(): ContainerUser {
             return ContainerUser(linux)

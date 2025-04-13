@@ -8,7 +8,6 @@ import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
 import io.violabs.picard.domain.NodeCondition
-import io.violabs.picard.domain.k8sResources.workload.pod.Pod
 import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import java.time.LocalDateTime
 
@@ -35,8 +34,8 @@ class Job(
         val selector: LabelSelector? = null,
         val manualSelector: Boolean? = null,
         // Beta level
-        val podFailurePolicy: Pod.FailurePolicy? = null,
-        val successPolicy: Pod.SuccessPolicy? = null,
+        val podFailurePolicy: PodFailurePolicy? = null,
+        val successPolicy: PodSuccessPolicy? = null,
         // Alpha level
         val backoffLimitPerIndex: Int? = null,
         val managedBy: String? = null,

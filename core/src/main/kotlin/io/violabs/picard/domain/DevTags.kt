@@ -13,6 +13,8 @@ interface BaseCondition : BaseK8s
 
 interface BaseEnvSource : BaseK8s
 
+interface BaseIP : BaseK8s
+
 interface BaseKeySelector : BaseK8s
 
 interface BaseLoadBalancerIngress : BaseK8s

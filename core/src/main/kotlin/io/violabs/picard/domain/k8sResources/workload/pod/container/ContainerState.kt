@@ -68,9 +68,21 @@ data class ContainerState(
     }
 
     class Builder : DslBuilder<ContainerState> {
-        var running: Running? = null
-        var terminated: Terminated? = null
-        var waiting: Waiting? = null
+        private var running: Running? = null
+        private var terminated: Terminated? = null
+        private var waiting: Waiting? = null
+
+        fun running(scope: Running.Builder.() -> Unit) {
+            running = Running.Builder().apply(scope).build()
+        }
+
+        fun terminated(scope: Terminated.Builder.() -> Unit) {
+            terminated = Terminated.Builder().apply(scope).build()
+        }
+
+        fun waiting(scope: Waiting.Builder.() -> Unit) {
+            waiting = Waiting.Builder().apply(scope).build()
+        }
 
         override fun build(): ContainerState {
             return ContainerState(

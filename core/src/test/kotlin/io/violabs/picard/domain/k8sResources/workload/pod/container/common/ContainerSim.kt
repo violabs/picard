@@ -11,8 +11,8 @@ import io.violabs.picard.domain.k8sResources.config.configMap.ConfigMapEnvSource
 import io.violabs.picard.domain.k8sResources.config.configMap.ConfigMapKeySelector
 import io.violabs.picard.domain.k8sResources.config.secret.SecretEnvSource
 import io.violabs.picard.domain.k8sResources.config.secret.SecretKeySelector
-import io.violabs.picard.domain.k8sResources.workload.pod.LifecycleHandler
-import io.violabs.picard.domain.k8sResources.workload.pod.Probe
+import io.violabs.picard.domain.k8sResources.workload.pod.container.LifecycleHandler
+import io.violabs.picard.domain.k8sResources.workload.pod.container.Probe
 import io.violabs.picard.domain.k8sResources.workload.pod.action.*
 import io.violabs.picard.domain.k8sResources.workload.pod.container.*
 import io.violabs.picard.domain.k8sResources.workload.pod.security.*

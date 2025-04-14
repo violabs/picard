@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DslBuilder
 import io.violabs.picard.domain.LabelSelector
 
@@ -33,9 +34,9 @@ data class TopologySpreadConstraint(
 
         override fun build(): TopologySpreadConstraint  {
             return TopologySpreadConstraint(
-                maxSkew = requireNotNull(maxSkew),
-                topologyKey = requireNotNull(topologyKey),
-                whenUnsatisfiable = requireNotNull(whenUnsatisfiable),
+                maxSkew = vRequireNotNull(this::maxSkew),
+                topologyKey = vRequireNotNull(this::topologyKey),
+                whenUnsatisfiable = vRequireNotNull(this::whenUnsatisfiable),
                 labelSelector = labelSelector,
                 matchLabelKeys = matchLabelKeys,
                 minDomains = minDomains,

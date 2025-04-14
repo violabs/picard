@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.workload.pod.affinity
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DslBuilder
-import io.violabs.picard.domain.k8sResources.workload.NodeSelectorTerm
+import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelectorTerm
 
 data class NodeAffinityPreferredSchedulingTerm(
     val preference: NodeSelectorTerm,

@@ -11,4 +11,18 @@ data class ListMeta(
     val resourceVersion: String? = null
 ) {
     val `continue`: String? by lazy { continueGather }
+
+    class Builder : DslBuilder<ListMeta> {
+        var continueGather: String? = null
+        var remainingItemCount: Long? = null
+        var resourceVersion: String? = null
+
+        override fun build(): ListMeta {
+            return ListMeta(
+                continueGather,
+                remainingItemCount,
+                resourceVersion
+            )
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.k8sResources.workload.pod.container
+package io.violabs.picard.domain.k8sResources.cluster.node
 
 import io.violabs.picard.domain.DslBuilder
 

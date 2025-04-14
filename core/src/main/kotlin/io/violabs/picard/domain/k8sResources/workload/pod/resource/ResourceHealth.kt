@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.resource
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DslBuilder
 
 data class ResourceHealth(
@@ -18,7 +19,7 @@ data class ResourceHealth(
 
         override fun build(): ResourceHealth {
             return ResourceHealth(
-                resourceID = requireNotNull(resourceID),
+                resourceID = vRequireNotNull(this::resourceID),
                 health = health
             )
         }

@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.volume
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DslBuilder
 
 data class VolumeMountStatus(
@@ -11,17 +12,17 @@ data class VolumeMountStatus(
     class Builder : DslBuilder<VolumeMountStatus> {
         var mountPath: String? = null
         var name: String? = null
-        var readOnly: Boolean? = null
+        private var readOnly: Boolean? = null
         var recursiveReadOnly: String? = null
 
-        fun readOnly() {
-            readOnly = true
+        fun readOnly(value: Boolean = true) {
+            readOnly = value
         }
 
         override fun build(): VolumeMountStatus {
             return VolumeMountStatus(
-                requireNotNull(mountPath) { "mountPath is required" },
-                requireNotNull(name) { "name is required" },
+                vRequireNotNull(this::mountPath),
+                vRequireNotNull(this::name),
                 readOnly,
                 recursiveReadOnly
             )

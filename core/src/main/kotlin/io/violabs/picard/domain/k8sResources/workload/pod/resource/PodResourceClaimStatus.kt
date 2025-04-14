@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.resource
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DslBuilder
 
 data class PodResourceClaimStatus(
@@ -11,7 +12,7 @@ data class PodResourceClaimStatus(
         var resourceClaimName: String? = null
         override fun build(): PodResourceClaimStatus  {
             return PodResourceClaimStatus(
-                name = requireNotNull(name),
+                name = vRequireNotNull(this::name),
                 resourceClaimName = resourceClaimName
             )
         }

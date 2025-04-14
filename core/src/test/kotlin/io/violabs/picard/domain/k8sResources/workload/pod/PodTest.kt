@@ -5,6 +5,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.K8sAnnotation
 import io.violabs.picard.domain.Label
 import io.violabs.picard.domain.ObjectMetadata
+import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
@@ -35,7 +36,8 @@ private val SUCCESS_POSSIBILITIES = possibilities<Pod, Pod.Builder> {
     }
 
     scenario {
-        id = "full"
+        id = "full metadata"
+        description = "full metadata with placeholders for minimum Spec and Status"
         given(Pod.Builder()) {
             metadata {
                 name = "test"
@@ -48,9 +50,21 @@ private val SUCCESS_POSSIBILITIES = possibilities<Pod, Pod.Builder> {
                     annotations("test-run", "example")
                 }
             }
+
+            spec {
+                containers {
+                    container { name = "test" }
+                }
+            }
+
+            status {  }
         }
         expected = Pod(
-            metadata = METADATA
+            metadata = METADATA,
+            spec = Pod.Spec(
+                containers = listOf(Container("test"))
+            ),
+            status = Pod.Status()
         )
     }
 }

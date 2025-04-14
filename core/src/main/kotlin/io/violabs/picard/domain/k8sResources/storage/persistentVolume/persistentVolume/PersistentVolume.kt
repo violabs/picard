@@ -5,7 +5,7 @@ import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.Quantity
-import io.violabs.picard.domain.k8sResources.workload.*
+import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelector
 import java.time.LocalDateTime
 
 /**

@@ -1,11 +1,7 @@
-package io.violabs.picard.domain.k8sResources.workload
+package io.violabs.picard.domain.k8sResources.workload.metric
 
 import io.violabs.picard.domain.LabelSelector
 import io.violabs.picard.domain.k8sResources.Quantity
-import io.violabs.picard.domain.k8sResources.workload.pod.metric.PodsMetricSource
-import io.violabs.picard.domain.k8sResources.workload.pod.metric.PodsMetricStatus
-import io.violabs.picard.domain.k8sResources.workload.pod.container.ContainerResourceMetricSource
-import io.violabs.picard.domain.k8sResources.workload.pod.container.ContainerResourceMetricStatus
 
 object Metric {
     data class Target(

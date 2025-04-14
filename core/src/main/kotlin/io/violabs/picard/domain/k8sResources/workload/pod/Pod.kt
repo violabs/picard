@@ -81,7 +81,7 @@ data class Pod(
             private var _initContainers: MutableList<Container>? = null
             private var _ephemeralContainers: MutableList<EphemeralContainer>? = null
             private var _imagePullSecrets: MutableList<LocalObjectReference>? = null
-            var enableServiceLinks: Boolean? = null
+            private var enableServiceLinks: Boolean? = null
             private var os: PodOS? = null
             private var _volumes: MutableList<Volume>? = null
             private var _nodeSelector: MutableMap<String, String>? = null
@@ -100,18 +100,18 @@ data class Pod(
             var activeDeadlineSeconds: Long? = null
             private var _readinessGates: MutableList<ReadinessGate>? = null
             var hostname: String? = null
-            var setHostnameAsFQDN: Boolean? = null
+            private var setHostnameAsFQDN: Boolean? = null
             var subdomain: String? = null
             private var _hostAliases: MutableList<HostAlias>? = null
             private var _dnsConfig: DNSConfig? = null
-            var hostNetwork: Boolean? = null
-            var hostPID: Boolean? = null
-            var hostIPC: Boolean? = null
-            var shareProcessNamespace: Boolean? = null
+            private var hostNetwork: Boolean? = null
+            private var hostPID: Boolean? = null
+            private var hostIPC: Boolean? = null
+            private var shareProcessNamespace: Boolean? = null
             var serviceAccountName: String? = null
-            var automountServiceAccountToken: Boolean? = null
+            private var automountServiceAccountToken: Boolean? = null
             private var _securityContext: PodSecurityContext? = null
-            var hostUsers: Boolean? = null
+            private var hostUsers: Boolean? = null
             private var _resourceClaims: MutableList<PodResourceClaim>? = null
             private var _schedulingGates: MutableList<SchedulingGate>? = null
 
@@ -135,8 +135,8 @@ data class Pod(
                 _imagePullSecrets = LocalObjectReferenceGroup().apply(scope).references()
             }
 
-            fun enableServiceLinks() {
-                enableServiceLinks = true
+            fun enableServiceLinks(value: Boolean = true) {
+                enableServiceLinks = value
             }
 
             fun os(name: String) {
@@ -171,8 +171,8 @@ data class Pod(
                 _readinessGates = ReadinessGateGroup().apply(scope).readinessGates()
             }
 
-            fun setHostnameAsFQDN() {
-                setHostnameAsFQDN = true
+            fun setHostnameAsFQDN(value: Boolean = true) {
+                setHostnameAsFQDN = value
             }
 
             fun hostAliases(scope: HostAliasGroup.() -> Unit) {
@@ -183,32 +183,32 @@ data class Pod(
                 _dnsConfig = DNSConfig.Builder().apply(scope).build()
             }
 
-            fun hostNetwork() {
-                hostNetwork = true
+            fun hostNetwork(value: Boolean = true) {
+                hostNetwork = value
             }
 
-            fun hostPID() {
-                hostPID = true
+            fun hostPID(value: Boolean = true) {
+                hostPID = value
             }
 
-            fun hostIPC() {
-                hostIPC = true
+            fun hostIPC(value: Boolean = true) {
+                hostIPC = value
             }
 
-            fun shareProcessNamespace() {
-                shareProcessNamespace = true
+            fun shareProcessNamespace(value: Boolean = true) {
+                shareProcessNamespace = value
             }
 
-            fun automountServiceAccountToken() {
-                automountServiceAccountToken = true
+            fun automountServiceAccountToken(value: Boolean = true) {
+                automountServiceAccountToken = value
             }
 
             fun securityContext(scope: PodSecurityContext.Builder.() -> Unit) {
                 _securityContext = PodSecurityContext.Builder().apply(scope).build()
             }
 
-            fun hostUsers() {
-                hostUsers = true
+            fun hostUsers(value: Boolean = true) {
+                hostUsers = value
             }
 
             fun resourceClaims(scope: PodResourceClaimGroup.() -> Unit) {
@@ -387,6 +387,7 @@ data class Pod(
     class Builder : DslBuilder<Pod> {
         private var metadata: ObjectMetadata? = null
         private var spec: Spec? = null
+        private var status: Status? = null
 
         fun metadata(init: ObjectMetadata.Builder.() -> Unit) {
             metadata = ObjectMetadata.Builder().apply(init).build()
@@ -396,10 +397,15 @@ data class Pod(
             spec = Spec.Builder().apply(init).build()
         }
 
+        fun status(scope: Status.Builder.() -> Unit) {
+            this.status = Status.Builder().apply(scope).build()
+        }
+
         override fun build(): Pod {
             return Pod(
                 metadata = metadata,
                 spec = spec,
+                status = status
             )
         }
     }

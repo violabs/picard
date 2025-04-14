@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.k8sResources.workload
+package io.violabs.picard.domain.k8sResources.workload.metric
 
 import io.violabs.picard.domain.BaseResourceMetricStatus
 

@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DslBuilder
 
 data class LinuxContainerUser(
@@ -18,8 +19,8 @@ data class LinuxContainerUser(
 
         override fun build(): LinuxContainerUser {
             return LinuxContainerUser(
-                requireNotNull(gid) { "gid must not be null" },
-                requireNotNull(uid) { "uid must not be null" },
+                vRequireNotNull(this::gid),
+                vRequireNotNull(this::uid),
                 supplementalGroups
             )
         }

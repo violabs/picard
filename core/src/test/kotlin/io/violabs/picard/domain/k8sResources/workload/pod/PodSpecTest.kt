@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.Toleration
-import io.violabs.picard.domain.k8sResources.workload.NodeSelectorTerm
+import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelectorTerm
 import io.violabs.picard.domain.k8sResources.workload.pod.affinity.*
 import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
 import io.violabs.picard.domain.k8sResources.workload.pod.container.EphemeralContainer
@@ -473,7 +473,7 @@ private val SUCCESS_POSSIBILITIES = possibilities<Pod.Spec, Pod.Spec.Builder> {
                     name = "standard"
                 }
             }
-            enableServiceLinks = false
+            enableServiceLinks(false)
         }
         expected = Pod.Spec(
             containers = listOf(STANDARD_CONTAINER),

@@ -9,6 +9,7 @@ import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.VersionTarget
 import io.violabs.picard.domain.k8sResources.workload.*
+import io.violabs.picard.domain.k8sResources.workload.metric.Metric
 import java.time.LocalDateTime
 
 data class HorizontalPodAutoscaler(

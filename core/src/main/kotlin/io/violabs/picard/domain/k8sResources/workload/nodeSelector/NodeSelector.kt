@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.k8sResources.workload
+package io.violabs.picard.domain.k8sResources.workload.nodeSelector
 
 import io.violabs.picard.domain.BaseNodeSelector
 import io.violabs.picard.domain.DslBuilder

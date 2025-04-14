@@ -11,8 +11,6 @@ import io.violabs.picard.domain.k8sResources.storage.VolumeAttachment
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
 import io.violabs.picard.domain.NodeCondition
-import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
-import io.violabs.picard.domain.k8sResources.workload.pod.container.ContainerImage
 
 class Node(
     override val apiVersion: Version = KAPIVersion.V1,

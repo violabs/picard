@@ -1,8 +1,7 @@
-package io.violabs.picard.domain.k8sResources.workload.pod.container
+package io.violabs.picard.domain.k8sResources.workload.metric
 
 import io.violabs.picard.domain.BaseResourceMetricSource
 import io.violabs.picard.domain.DslBuilder
-import io.violabs.picard.domain.k8sResources.workload.Metric
 
 data class ContainerResourceMetricSource(
     val container: String,

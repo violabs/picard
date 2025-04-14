@@ -8,7 +8,7 @@ import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
-import io.violabs.picard.domain.k8sResources.workload.NodeSelector
+import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelector
 
 class ResourceClaim(
     override val apiVersion: Version = KAPIVersion.ResourceV1Beta1,

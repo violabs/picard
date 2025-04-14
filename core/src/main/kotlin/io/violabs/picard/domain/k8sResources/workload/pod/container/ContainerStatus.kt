@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DslBuilder
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.workload.pod.resource.ResourceStatus
@@ -76,10 +77,10 @@ data class ContainerStatus(
 
         override fun build(): ContainerStatus {
             return ContainerStatus(
-                requireNotNull(imageID),
-                requireNotNull(image),
-                requireNotNull(name),
-                requireNotNull(ready),
+                vRequireNotNull(this::imageID),
+                vRequireNotNull(this::image),
+                vRequireNotNull(this::name),
+                vRequireNotNull(this::ready),
                 allocatedResources,
                 allocatedResourceStatus,
                 containerID,

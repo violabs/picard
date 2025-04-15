@@ -1,11 +1,11 @@
 package io.violabs.picard.domain.k8sResources.authentication.certificateSigningRequest
 
 import io.violabs.picard.common.vRequireNotEmpty
-import io.violabs.picard.domain.DSLBuilder
-import io.violabs.picard.domain.k8sResources.APIVersion
-import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.ListMeta
+import io.violabs.picard.domain.ResourceListDSLBuilder
+import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.k8sResources.KAPIVersion
 
 data class CertificateSigningRequestList(
     override val apiVersion: Version = KAPIVersion.CertificatesV1,
@@ -14,17 +14,12 @@ data class CertificateSigningRequestList(
 ) : K8sListResource<CertificateSigningRequestList.Version, CertificateSigningRequest> {
     interface Version : APIVersion
 
-    class Builder : DSLBuilder<CertificateSigningRequestList> {
-        private var items: List<CertificateSigningRequest>? = null
-        private var metadata: ListMeta? = null
-
-        fun items(scope: CertificateSigningRequest.Group.() -> Unit) {
-            items = CertificateSigningRequest.Group().apply(scope).listItems()
-        }
-
-        fun metadata(scope: ListMeta.Builder.() -> Unit) {
-            metadata = ListMeta.Builder().apply(scope).build()
-        }
+    class Builder : ResourceListDSLBuilder<
+        CertificateSigningRequest,
+        CertificateSigningRequest.Builder,
+        CertificateSigningRequest.Group,
+        CertificateSigningRequestList
+        >(CertificateSigningRequest.Group()) {
 
         override fun build(): CertificateSigningRequestList {
             return CertificateSigningRequestList(

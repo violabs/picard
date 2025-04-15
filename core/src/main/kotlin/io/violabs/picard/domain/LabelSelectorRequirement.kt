@@ -22,4 +22,12 @@ data class LabelSelectorRequirement(
             )
         }
     }
+
+    class Group : BuilderGroup<LabelSelectorRequirement, Builder>(Builder()) {
+        fun requirements(): List<LabelSelectorRequirement>? = items()
+
+        fun requirement(scope: Builder.() -> Unit) {
+            add(scope)
+        }
+    }
 }

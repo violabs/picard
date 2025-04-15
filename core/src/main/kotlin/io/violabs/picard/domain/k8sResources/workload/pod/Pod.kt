@@ -380,22 +380,13 @@ data class Pod(
         }
     }
 
-    class Builder : DSLBuilder<Pod> {
-        private var metadata: ObjectMetadata? = null
-        private var spec: Spec? = null
-        private var status: Status? = null
-
-        fun metadata(init: ObjectMetadata.Builder.() -> Unit) {
-            metadata = ObjectMetadata.Builder().apply(init).build()
-        }
-
-        fun spec(init: Spec.Builder.() -> Unit) {
-            spec = Spec.Builder().apply(init).build()
-        }
-
-        fun status(scope: Status.Builder.() -> Unit) {
-            this.status = Status.Builder().apply(scope).build()
-        }
+    class Builder : ResourceSpecStatusDSLBuilder<
+        Pod,
+        Spec,
+        Spec.Builder,
+        Status,
+        Status.Builder
+        >(Spec.Builder(), Status.Builder()) {
 
         override fun build(): Pod {
             return Pod(
@@ -403,6 +394,12 @@ data class Pod(
                 spec = spec,
                 status = status
             )
+        }
+    }
+
+    class Group : K8sListResource.ItemGroup<Pod, Builder>(Builder()) {
+        fun pod(scope: Builder.() -> Unit) {
+            add(scope)
         }
     }
 }

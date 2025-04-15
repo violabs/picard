@@ -1,5 +1,8 @@
 package io.violabs.picard.domain
 
+import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.k8sResources.K8sResource
+
 interface DSLBuilder<T> {
 
     fun build(): T
@@ -53,5 +56,23 @@ abstract class ResourceDSLBuilder<T> : DSLBuilder<T> {
 
     fun metadata(scope: ObjectMetadata.Builder.() -> Unit) {
         metadata = ObjectMetadata.Builder().apply(scope).build()
+    }
+}
+
+abstract class ResourceListDSLBuilder<
+    T : K8sResource<*>,
+    B : DSLBuilder<T>,
+    G : K8sListResource.ItemGroup<T, B>,
+    L : K8sListResource<*, T>
+    >(private val groupBuilder: G) : DSLBuilder<L> {
+    protected var metadata: ListMeta? = null
+    protected var items: List<T>? = null
+
+    fun items(scope: G.() -> Unit) {
+        items = groupBuilder.apply(scope).listItems()
+    }
+
+    fun metadata(scope: ListMeta.Builder.() -> Unit) {
+        metadata = ListMeta.Builder().apply(scope).build()
     }
 }

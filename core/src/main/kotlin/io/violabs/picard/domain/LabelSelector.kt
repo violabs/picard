@@ -13,8 +13,8 @@ data class LabelSelector(
         private var matchExpressions: List<LabelSelectorRequirement>? = null
         private var matchLabels: List<Label>? = null
 
-        fun matchExpressions(scope: LabelSelectorRequirementGroup.() -> Unit) {
-            matchExpressions = LabelSelectorRequirementGroup().apply(scope).requirements()
+        fun matchExpressions(scope: LabelSelectorRequirement.Group.() -> Unit) {
+            matchExpressions = LabelSelectorRequirement.Group().apply(scope).requirements()
         }
 
         fun matchLabels(scope: LabelGroup.() -> Unit) {
@@ -26,6 +26,14 @@ data class LabelSelector(
                 matchExpressions,
                 matchLabels
             )
+        }
+    }
+
+    class Group : BuilderGroup<LabelSelector, Builder>(Builder()) {
+        fun selectors(): List<LabelSelector>? = items()
+
+        fun selector(scope: Builder.() -> Unit) {
+            add(scope)
         }
     }
 }

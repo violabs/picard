@@ -3,6 +3,7 @@ package io.violabs.picard
 import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
 import io.violabs.picard.domain.*
+import io.violabs.picard.domain.k8sResources.K8sListResource
 import org.junit.jupiter.api.TestTemplate
 import java.time.LocalDateTime
 import kotlin.reflect.KClass
@@ -90,12 +91,26 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
             }
         }
 
+        fun <T, L : K8sListResource<*, T>, B : ResourceListDSLBuilder<T, *, *, L>> B.sharedMetadata() {
+            metadata {
+                continueGather = PLACEHOLDER
+                remainingItemCount = 1
+                resourceVersion = PLACEHOLDER
+            }
+        }
+
         val METADATA = ObjectMetadata(
             name = PLACEHOLDER,
             generatedName = PLACEHOLDER,
             namespace = PLACEHOLDER,
             labels = listOf(Label(PLACEHOLDER, PLACEHOLDER)),
             annotations = listOf(K8sAnnotation(PLACEHOLDER, PLACEHOLDER))
+        )
+
+        val LIST_METADATA = ListMeta(
+            continueGather = PLACEHOLDER,
+            remainingItemCount = 1,
+            resourceVersion = PLACEHOLDER
         )
     }
 }

@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.config.configMap
 
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 
 data class ConfigMapKeySelector(
     val key: String,
     val name: String? = null,
     val optional: Boolean? = null
 ) {
-    class Builder : DslBuilder<ConfigMapKeySelector> {
+    class Builder : DSLBuilder<ConfigMapKeySelector> {
         var key: String? = null
         var name: String? = null
         var optional: Boolean? = null

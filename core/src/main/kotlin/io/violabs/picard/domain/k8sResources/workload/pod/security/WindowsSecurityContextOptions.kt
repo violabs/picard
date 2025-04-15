@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.security
 
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 
 data class WindowsSecurityContextOptions(
     val gmsaCredentialSpec: String? = null,
@@ -8,7 +8,7 @@ data class WindowsSecurityContextOptions(
     val hostProcess: Boolean? = null,
     val runAsUserName: String? = null
 ) {
-    class Builder() : DslBuilder<WindowsSecurityContextOptions> {
+    class Builder() : DSLBuilder<WindowsSecurityContextOptions> {
         var gmsaCredentialSpec: String? = null
         var gmsaCredentialSpecName: String? = null
         var hostProcess: Boolean? = null

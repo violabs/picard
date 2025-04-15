@@ -9,7 +9,7 @@ data class LabelSelector(
     val matchLabels: List<Label>? = null
 ) {
 
-    class Builder : DslBuilder<LabelSelector> {
+    class Builder : DSLBuilder<LabelSelector> {
         private var matchExpressions: List<LabelSelectorRequirement>? = null
         private var matchLabels: List<Label>? = null
 

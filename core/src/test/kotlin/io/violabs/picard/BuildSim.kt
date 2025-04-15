@@ -2,25 +2,26 @@ package io.violabs.picard
 
 import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.*
 import org.junit.jupiter.api.TestTemplate
+import java.time.LocalDateTime
 import kotlin.reflect.KClass
 
-abstract class SuccessBuildSim<T, B : DslBuilder<T>> : BuildSim<T, B>() {
+abstract class SuccessBuildSim<T, B : DSLBuilder<T>> : BuildSim<T, B>() {
     @TestTemplate
     override fun `build happy path - #scenario`(builder: B, result: T) {
         verifyHappyPath(builder, result)
     }
 }
 
-abstract class FailureBuildSim<T, B : DslBuilder<T>> : BuildSim<T, B>() {
+abstract class FailureBuildSim<T, B : DSLBuilder<T>> : BuildSim<T, B>() {
     @TestTemplate
     override fun `build failure path - #scenario`(builder: B, exceptionMessage: ExceptionMessage) {
         verifyRequiredField(builder, exceptionMessage)
     }
 }
 
-abstract class FullBuildSim<T, B : DslBuilder<T>> : BuildSim<T, B>() {
+abstract class FullBuildSim<T, B : DSLBuilder<T>> : BuildSim<T, B>() {
     @TestTemplate
     override fun `build happy path - #scenario`(builder: B, result: T) {
         verifyHappyPath(builder, result)
@@ -37,7 +38,7 @@ abstract class FullBuildSim<T, B : DslBuilder<T>> : BuildSim<T, B>() {
  * If the functions are overridden they will run based on the [TestTemplate]
  * Use the [BuildSim.buildSetup] function to set up the simulations.
  */
-abstract class BuildSim<T, B : DslBuilder<T>> : UnitSim() {
+abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
     open fun `build happy path - #scenario`(builder: B, result: T) {
 
     }
@@ -47,7 +48,7 @@ abstract class BuildSim<T, B : DslBuilder<T>> : UnitSim() {
     }
 
     companion object {
-        fun <S : BuildSim<T, B>, T, B : DslBuilder<T>> buildSetup(
+        fun <S : BuildSim<T, B>, T, B : DSLBuilder<T>> buildSetup(
             klass: KClass<S>,
             successScenariosSet: TestScenarioSet<T, B>? = null,
             failureScenariosSet: TestScenarioSet<T, B>? = null
@@ -69,5 +70,32 @@ abstract class BuildSim<T, B : DslBuilder<T>> : UnitSim() {
                 failureSimulationGroup to { this::`build failure path - #scenario` }
             )
         }
+
+        const val PLACEHOLDER = "test_placeholder"
+        val NOW = LocalDateTime.now()
+        val BYTES: List<Byte> = listOf(0b1, 0b01)
+
+        fun <T, B : ResourceDSLBuilder<T>> B.sharedMetadata() {
+            metadata {
+                name = PLACEHOLDER
+                generatedName = PLACEHOLDER
+                namespace = PLACEHOLDER
+                labels {
+                    label(PLACEHOLDER, PLACEHOLDER)
+                }
+
+                annotations {
+                    annotations(PLACEHOLDER, PLACEHOLDER)
+                }
+            }
+        }
+
+        val METADATA = ObjectMetadata(
+            name = PLACEHOLDER,
+            generatedName = PLACEHOLDER,
+            namespace = PLACEHOLDER,
+            labels = listOf(Label(PLACEHOLDER, PLACEHOLDER)),
+            annotations = listOf(K8sAnnotation(PLACEHOLDER, PLACEHOLDER))
+        )
     }
 }

@@ -7,7 +7,7 @@ data class NodeSelectorRequirement(
     val operator: String,
     val values: List<String>? = null
 ) {
-    class Builder : DslBuilder<NodeSelectorRequirement> {
+    class Builder : DSLBuilder<NodeSelectorRequirement> {
         var key: String? = null
         var operator: String? = null
         private var _values: List<String>? = null

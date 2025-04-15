@@ -1,11 +1,11 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.action
 
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 
 data class ExecAction(
     val command: List<String>? = null
 ) {
-    class Builder : DslBuilder<ExecAction> {
+    class Builder : DSLBuilder<ExecAction> {
         private var command: List<String>? = null
 
         fun command(vararg commandParts: String) {

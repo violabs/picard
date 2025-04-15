@@ -1,8 +1,6 @@
 package io.violabs.picard.domain.k8sResources
 
-import io.violabs.picard.domain.ListMeta
-import io.violabs.picard.domain.ObjectMetadata
-import io.violabs.picard.domain.BaseK8s
+import io.violabs.picard.domain.*
 
 interface K8sAPIResource<T : APIVersion> : BaseK8s {
     val apiVersion: T
@@ -18,4 +16,12 @@ interface K8sResource<T : APIVersion> : K8sAPIResource<T> {
 interface K8sListResource<T : APIVersion, E> : K8sAPIResource<T> {
     val items: List<E>
     val metadata: ListMeta?
+
+    open class ItemGroup<E, B : DSLBuilder<E>>(builder: B) : BuilderGroup<E, B>(builder) {
+        fun listItems(): List<E>? = items()
+
+        fun item(scope: B.() -> Unit) {
+            add(scope)
+        }
+    }
 }

@@ -1,8 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.pod
 
 import io.violabs.picard.common.vRequireNotEmpty
-import io.violabs.picard.domain.BuilderGroup
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.ListMeta
@@ -15,14 +14,14 @@ data class PodList(
 ) : K8sListResource<PodList.Version, Pod> {
     interface Version : APIVersion
 
-    class Builder : DslBuilder<PodList> {
+    class Builder : DSLBuilder<PodList> {
         private var _items: List<Pod>? = null
         private var metadata: ListMeta? = null
 
         fun items(): List<Pod>? = _items
 
-        fun items(scope: PodGroup.() -> Unit) {
-            _items = PodGroup().apply(scope).pods()
+        fun items(scope: Group.() -> Unit) {
+            _items = Group().apply(scope).listItems()
         }
 
         fun metadata(scope: ListMeta.Builder.() -> Unit) {
@@ -37,9 +36,7 @@ data class PodList(
         }
     }
 
-    class PodGroup : BuilderGroup<Pod, Pod.Builder>(Pod.Builder()) {
-        fun pods(): List<Pod>? = items()
-
+    class Group : K8sListResource.ItemGroup<Pod, Pod.Builder>(Pod.Builder()) {
         fun pod(scope: Pod.Builder.() -> Unit) {
             add(scope)
         }

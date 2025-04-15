@@ -12,7 +12,7 @@ data class ListMeta(
 ) {
     val `continue`: String? by lazy { continueGather }
 
-    class Builder : DslBuilder<ListMeta> {
+    class Builder : DSLBuilder<ListMeta> {
         var continueGather: String? = null
         var remainingItemCount: Long? = null
         var resourceVersion: String? = null

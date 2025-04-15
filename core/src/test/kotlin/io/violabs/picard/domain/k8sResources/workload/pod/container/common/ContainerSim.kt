@@ -22,7 +22,7 @@ import io.violabs.picard.verifyRequiredField
 import org.junit.jupiter.api.Test
 import kotlin.reflect.KClass
 
-abstract class ContainerSim<T : BaseContainer, B : DslBuilder<T>>(
+abstract class ContainerSim<T : BaseContainer, B : DSLBuilder<T>>(
     private val exceptionBuilder: B
 ) : SuccessBuildSim<T, B>() {
     @Test
@@ -32,7 +32,7 @@ abstract class ContainerSim<T : BaseContainer, B : DslBuilder<T>>(
     )
 
     companion object {
-        fun <S : ContainerSim<T, B>, T : BaseContainer, B : DslBuilder<T>> containerSetup(
+        fun <S : ContainerSim<T, B>, T : BaseContainer, B : DSLBuilder<T>> containerSetup(
             klass: KClass<S>, scenariosSet: TestScenarioSet<T, B>
         ) {
             buildSetup(klass, scenariosSet)

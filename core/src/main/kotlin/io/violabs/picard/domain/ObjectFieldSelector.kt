@@ -6,7 +6,7 @@ data class ObjectFieldSelector(
     val fieldPath: String,
     val apiVersion: APIVersion? = null
 ) {
-    class Builder : DslBuilder<ObjectFieldSelector> {
+    class Builder : DSLBuilder<ObjectFieldSelector> {
         var fieldPath: String? = null
         var apiVersion: APIVersion? = null
         override fun build(): ObjectFieldSelector {

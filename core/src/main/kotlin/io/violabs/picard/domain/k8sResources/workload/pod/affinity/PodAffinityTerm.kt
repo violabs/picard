@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.workload.pod.affinity
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseAffinityTerm
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 import io.violabs.picard.domain.LabelSelector
 
 data class PodAffinityTerm(
@@ -13,7 +13,7 @@ data class PodAffinityTerm(
     val namespaceSelector: LabelSelector? = null,
     val namespaces: List<String>? = null
 ) : BaseAffinityTerm {
-    class Builder : DslBuilder<PodAffinityTerm> {
+    class Builder : DSLBuilder<PodAffinityTerm> {
         var topologyKey: String? = null
         private var labelSelector: LabelSelector? = null
         private var matchLabelKeys: List<String>? = null

@@ -1,12 +1,12 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 
 data class Lifecycle(
     val postStart: LifecycleHandler? = null,
     val preStop: LifecycleHandler? = null,
     ) {
-        class Builder : DslBuilder<Lifecycle> {
+        class Builder : DSLBuilder<Lifecycle> {
             private var postStart: LifecycleHandler? = null
             private var preStop: LifecycleHandler? = null
 

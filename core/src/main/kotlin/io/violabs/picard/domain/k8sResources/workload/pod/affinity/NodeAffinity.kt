@@ -1,12 +1,12 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.affinity
 
 import io.violabs.picard.domain.BaseAffinity
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 
 data class NodeAffinity(
     val preferredDuringSchedulingIgnoredDuringExecution: List<NodeAffinityPreferredSchedulingTerm>? = null
 ) : BaseAffinity {
-    class Builder : DslBuilder<NodeAffinity> {
+    class Builder : DSLBuilder<NodeAffinity> {
         private var preferredDuringSchedulingIgnoredDuringExecution: List<NodeAffinityPreferredSchedulingTerm>? = null
 
         fun preferredDuringSchedulingIgnoredDuringExecution(scope: NodeAffinityPreferredSchedulingTermGroup.() -> Unit) {

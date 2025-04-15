@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.workload.pod.resource
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseResourceClaim
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 
 data class PodResourceClaim(
     val name: String,
@@ -10,7 +10,7 @@ data class PodResourceClaim(
     val resourceClaimTemplateName: String? = null
 ) : BaseResourceClaim {
 
-    class Builder : DslBuilder<PodResourceClaim> {
+    class Builder : DSLBuilder<PodResourceClaim> {
         var name: String? = null
         var resourceClaimName: String? = null
         var resourceClaimTemplateName: String? = null

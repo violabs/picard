@@ -76,63 +76,59 @@ data class Pod(
         val resourceClaims: List<PodResourceClaim>? = null,
         val schedulingGates: List<SchedulingGate>? = null,
     ) : BaseSpec {
-        class Builder : DslBuilder<Spec> {
-            private var _containers: MutableList<Container>? = null
-            private var _initContainers: MutableList<Container>? = null
-            private var _ephemeralContainers: MutableList<EphemeralContainer>? = null
-            private var _imagePullSecrets: MutableList<LocalObjectReference>? = null
+        class Builder : DSLBuilder<Spec> {
+            private var containers: List<Container>? = null
+            private var initContainers: List<Container>? = null
+            private var ephemeralContainers: List<EphemeralContainer>? = null
+            private var imagePullSecrets: List<LocalObjectReference>? = null
             private var enableServiceLinks: Boolean? = null
             private var os: PodOS? = null
-            private var _volumes: MutableList<Volume>? = null
-            private var _nodeSelector: MutableMap<String, String>? = null
+            private var volumes: List<Volume>? = null
+            private var nodeSelector: MutableMap<String, String>? = null
             var nodeName: String? = null
-            private var _affinity: Affinity? = null
-            private var _tolerations: MutableList<Toleration>? = null
+            private var affinity: Affinity? = null
+            private var tolerations: List<Toleration>? = null
             var schedulerName: String? = null
             var runtimeClassName: String? = null
             var priorityClassName: String? = null
             var priority: Int? = null
             var preemptionPolicy: String? = null
-            private var _topologySpreadConstraints: MutableList<TopologySpreadConstraint>? = null
-            private var _overhead: MutableMap<String, Quantity>? = null
+            private var topologySpreadConstraints: List<TopologySpreadConstraint>? = null
+            private var overhead: MutableMap<String, Quantity>? = null
             var restartPolicy: RestartPolicy? = null
             var terminationGracePeriodSeconds: Long? = null
             var activeDeadlineSeconds: Long? = null
-            private var _readinessGates: MutableList<ReadinessGate>? = null
+            private var readinessGates: List<ReadinessGate>? = null
             var hostname: String? = null
             private var setHostnameAsFQDN: Boolean? = null
             var subdomain: String? = null
-            private var _hostAliases: MutableList<HostAlias>? = null
-            private var _dnsConfig: DNSConfig? = null
+            private var hostAliases: List<HostAlias>? = null
+            private var dnsConfig: DNSConfig? = null
             private var hostNetwork: Boolean? = null
             private var hostPID: Boolean? = null
             private var hostIPC: Boolean? = null
             private var shareProcessNamespace: Boolean? = null
             var serviceAccountName: String? = null
             private var automountServiceAccountToken: Boolean? = null
-            private var _securityContext: PodSecurityContext? = null
+            private var securityContext: PodSecurityContext? = null
             private var hostUsers: Boolean? = null
-            private var _resourceClaims: MutableList<PodResourceClaim>? = null
-            private var _schedulingGates: MutableList<SchedulingGate>? = null
-
-            fun containers(): MutableList<Container>? {
-                return _containers
-            }
+            private var resourceClaims: List<PodResourceClaim>? = null
+            private var schedulingGates: List<SchedulingGate>? = null
 
             fun containers(scope: BaseContainerGroup<Container, Container.Builder>.() -> Unit) {
-                _containers = BaseContainerGroup(Container.Builder()).apply(scope).containers()
+                containers = BaseContainerGroup(Container.Builder()).apply(scope).containers()
             }
 
             fun initContainers(scope: BaseContainerGroup<Container, Container.Builder>.() -> Unit) {
-                _initContainers = BaseContainerGroup(Container.Builder()).apply(scope).containers()
+                initContainers = BaseContainerGroup(Container.Builder()).apply(scope).containers()
             }
 
             fun ephemeralContainers(scope: BaseContainerGroup<EphemeralContainer, EphemeralContainer.Builder>.() -> Unit) {
-                _ephemeralContainers = BaseContainerGroup(EphemeralContainer.Builder()).apply(scope).containers()
+                ephemeralContainers = BaseContainerGroup(EphemeralContainer.Builder()).apply(scope).containers()
             }
 
-            fun imagePullSecrets(scope: LocalObjectReferenceGroup.() -> Unit) {
-                _imagePullSecrets = LocalObjectReferenceGroup().apply(scope).references()
+            fun imagePullSecrets(scope: LocalObjectReference.Group.() -> Unit) {
+                imagePullSecrets = LocalObjectReference.Group().apply(scope).references()
             }
 
             fun enableServiceLinks(value: Boolean = true) {
@@ -144,31 +140,31 @@ data class Pod(
             }
 
             fun volumes(scope: VolumeGroup.() -> Unit) {
-                _volumes = VolumeGroup().apply(scope).volumes()
+                volumes = VolumeGroup().apply(scope).volumes()
             }
 
             fun nodeSelector(scope: MutableMap<String, String>.() -> Unit) {
-                _nodeSelector = mutableMapOf<String, String>().apply(scope)
+                nodeSelector = mutableMapOf<String, String>().apply(scope)
             }
 
             fun affinity(scope: Affinity.Builder.() -> Unit) {
-                _affinity = Affinity.Builder().apply(scope).build()
+                affinity = Affinity.Builder().apply(scope).build()
             }
 
             fun tolerations(scope: TolerationGroup.() -> Unit) {
-                _tolerations = TolerationGroup().apply(scope).tolerations()
+                tolerations = TolerationGroup().apply(scope).tolerations()
             }
 
             fun topologySpreadConstraints(scope: TopologySpreadConstraintGroup.() -> Unit) {
-                _topologySpreadConstraints = TopologySpreadConstraintGroup().apply(scope).constraints()
+                topologySpreadConstraints = TopologySpreadConstraintGroup().apply(scope).constraints()
             }
 
             fun overhead(scope: MutableMap<String, Quantity>.() -> Unit) {
-                _overhead = mutableMapOf<String, Quantity>().apply(scope)
+                overhead = mutableMapOf<String, Quantity>().apply(scope)
             }
 
             fun readinessGates(scope: ReadinessGateGroup.() -> Unit) {
-                _readinessGates = ReadinessGateGroup().apply(scope).readinessGates()
+                readinessGates = ReadinessGateGroup().apply(scope).readinessGates()
             }
 
             fun setHostnameAsFQDN(value: Boolean = true) {
@@ -176,11 +172,11 @@ data class Pod(
             }
 
             fun hostAliases(scope: HostAliasGroup.() -> Unit) {
-                _hostAliases = HostAliasGroup().apply(scope).hostAliases()
+                hostAliases = HostAliasGroup().apply(scope).hostAliases()
             }
 
             fun dnsConfig(scope: DNSConfig.Builder.() -> Unit) {
-                _dnsConfig = DNSConfig.Builder().apply(scope).build()
+                dnsConfig = DNSConfig.Builder().apply(scope).build()
             }
 
             fun hostNetwork(value: Boolean = true) {
@@ -204,7 +200,7 @@ data class Pod(
             }
 
             fun securityContext(scope: PodSecurityContext.Builder.() -> Unit) {
-                _securityContext = PodSecurityContext.Builder().apply(scope).build()
+                securityContext = PodSecurityContext.Builder().apply(scope).build()
             }
 
             fun hostUsers(value: Boolean = true) {
@@ -212,57 +208,57 @@ data class Pod(
             }
 
             fun resourceClaims(scope: PodResourceClaimGroup.() -> Unit) {
-                _resourceClaims = PodResourceClaimGroup().apply(scope).resourceClaims()
+                resourceClaims = PodResourceClaimGroup().apply(scope).resourceClaims()
             }
 
             fun schedulingGates(scope: SchedulingGateGroup.() -> Unit) {
-                _schedulingGates = SchedulingGateGroup().apply(scope).schedulingGates()
+                schedulingGates = SchedulingGateGroup().apply(scope).schedulingGates()
             }
 
             override fun build(): Spec {
                 return Spec(
                     vRequireNotEmpty(this::containers),
-                    initContainers = _initContainers,
-                    ephemeralContainers = _ephemeralContainers,
-                    imagePullSecrets = _imagePullSecrets,
+                    initContainers = initContainers,
+                    ephemeralContainers = ephemeralContainers,
+                    imagePullSecrets = imagePullSecrets,
                     enableServiceLinks = enableServiceLinks,
                     os = os,
-                    volumes = _volumes,
-                    nodeSelector = _nodeSelector,
+                    volumes = volumes,
+                    nodeSelector = nodeSelector,
                     nodeName = nodeName,
-                    affinity = _affinity,
-                    tolerations = _tolerations,
+                    affinity = affinity,
+                    tolerations = tolerations,
                     schedulerName = schedulerName,
                     runtimeClassName = runtimeClassName,
                     priorityClassName = priorityClassName,
                     priority = priority,
                     preemptionPolicy = preemptionPolicy,
-                    topologySpreadConstraints = _topologySpreadConstraints,
-                    overhead = _overhead,
+                    topologySpreadConstraints = topologySpreadConstraints,
+                    overhead = overhead,
                     restartPolicy = restartPolicy,
                     terminationGracePeriodSeconds = terminationGracePeriodSeconds,
                     activeDeadlineSeconds = activeDeadlineSeconds,
-                    readinessGates = _readinessGates,
+                    readinessGates = readinessGates,
                     hostname = hostname,
                     setHostnameAsFQDN = setHostnameAsFQDN,
                     subdomain = subdomain,
-                    hostAliases = _hostAliases,
-                    dnsConfig = _dnsConfig,
+                    hostAliases = hostAliases,
+                    dnsConfig = dnsConfig,
                     hostNetwork = hostNetwork,
                     hostPID = hostPID,
                     hostIPC = hostIPC,
                     shareProcessNamespace = shareProcessNamespace,
                     serviceAccountName = serviceAccountName,
                     automountServiceAccountToken = automountServiceAccountToken,
-                    securityContext = _securityContext,
+                    securityContext = securityContext,
                     hostUsers = hostUsers,
-                    resourceClaims = _resourceClaims,
-                    schedulingGates = _schedulingGates
+                    resourceClaims = resourceClaims,
+                    schedulingGates = schedulingGates
                 )
             }
         }
 
-        class BaseContainerGroup<T : BaseContainer, B : DslBuilder<T>>(private val builder: B) {
+        class BaseContainerGroup<T : BaseContainer, B : DSLBuilder<T>>(private val builder: B) {
             private var containers: MutableList<T> = mutableListOf()
 
             fun containers(): MutableList<T> {
@@ -315,7 +311,7 @@ data class Pod(
         val resize: String? = null
     ) : BaseStatus {
 
-        class Builder : DslBuilder<Status> {
+        class Builder : DSLBuilder<Status> {
             var nominatedNodeName: String? = null
             var hostIP: String? = null
             private var hostIPs: List<HostIP>? = null
@@ -384,7 +380,7 @@ data class Pod(
         }
     }
 
-    class Builder : DslBuilder<Pod> {
+    class Builder : DSLBuilder<Pod> {
         private var metadata: ObjectMetadata? = null
         private var spec: Spec? = null
         private var status: Status? = null

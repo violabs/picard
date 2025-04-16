@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.authorization
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DSLBuilder
 
 data class RoleRef(
@@ -13,9 +14,9 @@ data class RoleRef(
         var name: String? = null
         override fun build(): RoleRef {
             return RoleRef(
-                apiGroup = requireNotNull(apiGroup),
-                kind = requireNotNull(kind),
-                name = requireNotNull(name)
+                apiGroup = vRequireNotNull(this::apiGroup),
+                kind = vRequireNotNull(this::kind),
+                name = vRequireNotNull(this::name)
             )
         }
     }

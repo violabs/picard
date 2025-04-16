@@ -1,5 +1,7 @@
 package io.violabs.picard.domain.k8sResources.authorization
 
+import io.violabs.picard.common.vRequireNotEmpty
+import io.violabs.picard.domain.BuilderGroup
 import io.violabs.picard.domain.DSLBuilder
 
 data class PolicyRule(
@@ -38,12 +40,20 @@ data class PolicyRule(
 
         override fun build(): PolicyRule {
             return PolicyRule(
-                verbs = requireNotNull(verbs),
+                verbs = vRequireNotEmpty(this::verbs),
                 apiGroups = apiGroups,
                 resources = resources,
                 resourceNames = resourceNames,
                 nonResourceURLs = nonResourceURLs
             )
+        }
+    }
+
+    class Group : BuilderGroup<PolicyRule, Builder>(Builder()) {
+        fun rules(): List<PolicyRule>? = items()
+
+        fun rule(scope: Builder.() -> Unit) {
+            add(scope)
         }
     }
 }

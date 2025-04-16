@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.authorization
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BuilderGroup
 import io.violabs.picard.domain.DSLBuilder
 
@@ -19,8 +20,8 @@ data class FieldSelectorRequirement(
 
         override fun build(): FieldSelectorRequirement {
             return FieldSelectorRequirement(
-                key = requireNotNull(key),
-                requirements = requireNotNull(requirements),
+                key = vRequireNotNull(this::key),
+                requirements = vRequireNotNull(this::requirements),
                 values = values
             )
         }

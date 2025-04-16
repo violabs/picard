@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.authorization
 
+import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.BuilderGroup
 import io.violabs.picard.domain.DSLBuilder
 import io.violabs.picard.domain.HTTPVerb
@@ -18,7 +19,7 @@ data class NonResourceRule(
 
         override fun build(): NonResourceRule {
             return NonResourceRule(
-                verbs = requireNotNull(verbs),
+                verbs = vRequireNotEmpty(this::verbs),
                 nonResourceURLs = nonResourceURLs
             )
         }

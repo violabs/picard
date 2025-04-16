@@ -5,7 +5,7 @@ data class LabelSelectorRequirement(
     val operator: String,
     val values: List<String>? = null
 ) {
-    class Builder : DslBuilder<LabelSelectorRequirement> {
+    class Builder : DSLBuilder<LabelSelectorRequirement> {
         var key: String? = null
         var operator: String? = null
         private var values: List<String>? = null
@@ -20,6 +20,14 @@ data class LabelSelectorRequirement(
                 operator = requireNotNull(operator),
                 values = values
             )
+        }
+    }
+
+    class Group : BuilderGroup<LabelSelectorRequirement, Builder>(Builder()) {
+        fun requirements(): List<LabelSelectorRequirement>? = items()
+
+        fun requirement(scope: Builder.() -> Unit) {
+            add(scope)
         }
     }
 }

@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.affinity
 
 import io.violabs.picard.domain.BaseAffinity
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 
 data class PodAntiAffinity(
     val preferredDuringSchedulingIgnoredDuringExecution: List<WeightedPodAffinityTerm>? = null,
     val requiredDuringSchedulingIgnoredDuringExecution: List<PodAffinityTerm>? = null,
 ) : BaseAffinity {
-    class Builder : DslBuilder<PodAntiAffinity> {
+    class Builder : DSLBuilder<PodAntiAffinity> {
         private var preferredDuringSchedulingIgnoredDuringExecution: MutableList<WeightedPodAffinityTerm>? = null
         private var requiredDuringSchedulingIgnoredDuringExecution: MutableList<PodAffinityTerm>? = null
 

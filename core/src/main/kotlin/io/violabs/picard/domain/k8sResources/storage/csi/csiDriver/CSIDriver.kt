@@ -5,6 +5,7 @@ import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.k8sResources.authentication.tokenRequest.TokenRequest
 
 data class CSIDriver(
     override val apiVersion: Version = KAPIVersion.StorageV1,

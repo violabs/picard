@@ -1,14 +1,14 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.affinity
 
 import io.violabs.picard.domain.BaseAffinity
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 
 data class Affinity(
     val nodeAffinity: NodeAffinity? = null,
     val podAffinity: PodAffinity? = null,
     val podAntiAffinity: PodAntiAffinity? = null
 ) : BaseAffinity {
-    class Builder : DslBuilder<Affinity> {
+    class Builder : DSLBuilder<Affinity> {
         private var nodeAffinity: NodeAffinity? = null
         private var podAffinity: PodAffinity? = null
         private var podAntiAffinity: PodAntiAffinity? = null

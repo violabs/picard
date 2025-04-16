@@ -1,12 +1,12 @@
 package io.violabs.picard.domain.k8sResources.cluster.node
 
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 
 data class ContainerImage(
     val names: List<String>? = null,
     val sizeBytes: Long? = null
 ) {
-    class Builder : DslBuilder<ContainerImage> {
+    class Builder : DSLBuilder<ContainerImage> {
         private var names: List<String>? = null
         var sizeBytes: Long? = null
 

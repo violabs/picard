@@ -7,7 +7,7 @@ data class ResourceFieldSelector(
     val containerName: String,
     val divisor: Quantity? = null
 ) {
-    class Builder : DslBuilder<ResourceFieldSelector> {
+    class Builder : DSLBuilder<ResourceFieldSelector> {
         var resource: String? = null
         var containerName: String? = null
         private var divisor: Quantity? = null

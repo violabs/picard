@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.security
 
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 
 data class SELinuxOptions(
     val level: String? = null,
@@ -8,7 +8,7 @@ data class SELinuxOptions(
     val type: String? = null,
     val user: String? = null
 ) {
-    class Builder() : DslBuilder<SELinuxOptions> {
+    class Builder() : DSLBuilder<SELinuxOptions> {
         var level: String? = null
         var role: String? = null
         var type: String? = null

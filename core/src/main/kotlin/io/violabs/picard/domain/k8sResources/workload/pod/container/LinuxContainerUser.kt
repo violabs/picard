@@ -1,14 +1,14 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 
 data class LinuxContainerUser(
     val gid: Long,
     val uid: Long,
     val supplementalGroups: List<Long>? = null
 ) {
-    class Builder : DslBuilder<LinuxContainerUser> {
+    class Builder : DSLBuilder<LinuxContainerUser> {
         var gid: Long? = null
         var uid: Long? = null
         private var supplementalGroups: List<Long>? = null

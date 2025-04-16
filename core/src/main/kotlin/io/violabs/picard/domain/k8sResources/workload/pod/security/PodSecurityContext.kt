@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.security
 
 import io.violabs.picard.domain.BaseSecurityContext
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 
 data class PodSecurityContext(
     val appArmorProfile: AppArmorProfile? = null,
@@ -17,7 +17,7 @@ data class PodSecurityContext(
     val sysctls: List<Sysctl>? = null,
     val windowsOptions: WindowsSecurityContextOptions? = null
 ) : BaseSecurityContext {
-    class Builder : DslBuilder<PodSecurityContext> {
+    class Builder : DSLBuilder<PodSecurityContext> {
         private var appArmorProfile: AppArmorProfile? = null
         var fsGroup: Long? = null
         var fsGroupChangePolicy: String? = null

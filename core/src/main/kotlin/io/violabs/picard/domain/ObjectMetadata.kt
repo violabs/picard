@@ -16,7 +16,7 @@ data class ObjectMetadata(
     val labels: List<Label>? = null,
     val annotations: List<K8sAnnotation>? = null
 ) {
-    class Builder : DslBuilder<ObjectMetadata> {
+    class Builder : DSLBuilder<ObjectMetadata> {
         var name: String? = null
         var generatedName: String? = null
         var namespace: String? = null

@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.pod
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 import io.violabs.picard.domain.LabelSelector
 
 data class TopologySpreadConstraint(
@@ -14,7 +14,7 @@ data class TopologySpreadConstraint(
     val nodeAffinityPolicy: String? = null,
     val nodeTaintsPolicy: String? = null
 ) {
-    class Builder : DslBuilder<TopologySpreadConstraint> {
+    class Builder : DSLBuilder<TopologySpreadConstraint> {
         var maxSkew: Int? = null
         var topologyKey: String? = null
         var whenUnsatisfiable: String? = null

@@ -20,6 +20,7 @@ internal fun <T> vRequireNotNull(accessor: KProperty<T?>): T {
  * You may find problems using with nested class functions.
  */
 internal fun <T> vRequireNotEmpty(accessor: KProperty<List<T>?>): List<T> {
+    accessor.isAccessible = true
     val accessorValue: List<T>? = accessor.call()
 
     val returnedValue = if (accessorValue?.isEmpty() != false) null else accessorValue
@@ -33,6 +34,7 @@ internal fun <T> vRequireNotEmpty(accessor: KProperty<List<T>?>): List<T> {
  * You may find problems using with nested class functions.
  */
 internal fun <T> vRequireNotEmpty(accessor: KFunction<List<T>?>): List<T> {
+    accessor.isAccessible = true
     val accessorValue: List<T>? = accessor.call()
 
     val returnedValue = if (accessorValue?.isEmpty() != false) null else accessorValue

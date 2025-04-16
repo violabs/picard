@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.action
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 import io.violabs.picard.domain.k8sResources.IntOrString
 
 data class HTTPGetAction(
@@ -11,7 +11,7 @@ data class HTTPGetAction(
     val path: String? = null,
     val scheme: String? = null
 ) {
-    class Builder() : DslBuilder<HTTPGetAction> {
+    class Builder() : DSLBuilder<HTTPGetAction> {
         private var port: IntOrString? = null
         private var httpHeaders: MutableList<HttpHeader>? = null
         var host: String? = null

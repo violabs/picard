@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.dnsConfig
 
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 
 data class DNSConfig(
     val nameservers: List<String>? = null,
@@ -9,7 +9,7 @@ data class DNSConfig(
     val dnsPolicy: String? = null
 ) {
 
-    class Builder : DslBuilder<DNSConfig> {
+    class Builder : DSLBuilder<DNSConfig> {
         private var nameservers: List<String>? = null
         private var options: List<DNSConfigOption>? = null
         private var searches: List<String>? = null

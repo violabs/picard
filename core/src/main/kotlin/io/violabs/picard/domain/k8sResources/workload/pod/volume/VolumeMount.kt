@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.volume
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 
 data class VolumeMount(
     val name: String,
@@ -12,7 +12,7 @@ data class VolumeMount(
     val subPath: String? = null,
     val subPathExpr: String? = null
 ) {
-    class Builder : DslBuilder<VolumeMount> {
+    class Builder : DSLBuilder<VolumeMount> {
         var name: String? = null
         var mountPath: String? = null
         var mountPropagation: String? = null

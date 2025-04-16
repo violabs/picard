@@ -1,6 +1,6 @@
 package io.violabs.picard.domain
 
-abstract class Group<T> {
+abstract class DefaultGroup<T> {
     private val items: MutableList<T> = mutableListOf()
 
     protected fun items(): MutableList<T>? {

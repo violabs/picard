@@ -10,4 +10,34 @@ data class ObjectReference(
     val namespace: String? = null,
     val resourceVersion: String? = null,
     val uid: String? = null
-)
+) {
+    class Builder : DSLBuilder<ObjectReference> {
+        var apiVersion: APIVersion? = null
+        var fieldPath: String? = null
+        var kind: String? = null
+        var name: String? = null
+        var namespace: String? = null
+        var resourceVersion: String? = null
+        var uid: String? = null
+
+        override fun build(): ObjectReference {
+            return ObjectReference(
+                apiVersion = apiVersion,
+                fieldPath = fieldPath,
+                kind = kind,
+                name = name,
+                namespace = namespace,
+                resourceVersion = resourceVersion,
+                uid = uid
+            )
+        }
+    }
+
+    class Group : BuilderGroup<ObjectReference, Builder>(Builder()) {
+        fun references(): List<ObjectReference>? = items()
+
+        fun reference(scope: Builder.() -> Unit) {
+            add(scope)
+        }
+    }
+}

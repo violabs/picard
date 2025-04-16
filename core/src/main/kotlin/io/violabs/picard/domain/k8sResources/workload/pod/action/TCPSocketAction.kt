@@ -1,14 +1,14 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.action
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 import io.violabs.picard.domain.k8sResources.IntOrString
 
 data class TCPSocketAction(
     val port: IntOrString,
     val host: String? = null
 ) {
-    class Builder : DslBuilder<TCPSocketAction> {
+    class Builder : DSLBuilder<TCPSocketAction> {
         private var port: IntOrString? = null
         var host: String? = null
 

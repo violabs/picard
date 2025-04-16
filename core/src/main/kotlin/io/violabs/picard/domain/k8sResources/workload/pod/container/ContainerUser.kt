@@ -1,11 +1,11 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 
 data class ContainerUser(
     val linux: LinuxContainerUser? = null
 ) {
-    class Builder : DslBuilder<ContainerUser> {
+    class Builder : DSLBuilder<ContainerUser> {
         private var linux: LinuxContainerUser? = null
 
         fun linux(scope: LinuxContainerUser.Builder.() -> Unit) {

@@ -31,6 +31,10 @@ interface BaseResourceMetricSource : BaseK8s
 
 interface BaseResourceMetricStatus : BaseK8s
 
+interface BaseRole : BaseK8s
+
+interface BaseRoleBinding : BaseK8s
+
 interface BaseSecurityContext : BaseK8s
 
 interface BaseServiceReference : BaseK8s

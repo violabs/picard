@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources
 
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 
 data class Toleration(
     val key: String? = null,
@@ -9,7 +9,7 @@ data class Toleration(
     val effect: String? = null,
     val tolerationSeconds: Long? = null
 ) {
-    class Builder : DslBuilder<Toleration> {
+    class Builder : DSLBuilder<Toleration> {
         var key: String? = null
         var operator: String? = null
         var value: String? = null

@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
-import io.violabs.picard.domain.DslBuilder
+import io.violabs.picard.domain.DSLBuilder
 import io.violabs.picard.domain.k8sResources.workload.pod.security.AppArmorProfile
 import io.violabs.picard.domain.k8sResources.workload.pod.security.SELinuxOptions
 import io.violabs.picard.domain.k8sResources.workload.pod.security.SeccompProfile
@@ -24,7 +24,7 @@ data class ContainerSecurityContext(
         val add: List<String>? = null,
         val drop: List<String>? = null
     ) {
-        class Builder : DslBuilder<Capabilities> {
+        class Builder : DSLBuilder<Capabilities> {
             private var add: List<String>? = null
             private var drop: List<String>? = null
 
@@ -45,7 +45,7 @@ data class ContainerSecurityContext(
         }
     }
 
-    class Builder : DslBuilder<ContainerSecurityContext> {
+    class Builder : DSLBuilder<ContainerSecurityContext> {
         var allowPrivilegeEscalation: Boolean? = null
         private var appArmorProfile: AppArmorProfile? = null
         private var capabilities: Capabilities? = null

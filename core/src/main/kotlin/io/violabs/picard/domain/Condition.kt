@@ -9,7 +9,7 @@ data class Condition(
     val message: String? = null,
     val reason: String? = null
 ) : BaseCondition {
-    class Builder : DslBuilder<Condition> {
+    class Builder : DSLBuilder<Condition> {
         var status: BooleanType? = null
         var type: String? = null
         var lastTransitionTime: LocalDateTime? = null
@@ -35,7 +35,7 @@ data class NodeCondition(
     val message: String? = null,
     val reason: String? = null
 ) : BaseCondition {
-    class Builder : DslBuilder<NodeCondition> {
+    class Builder : DSLBuilder<NodeCondition> {
         var status: BooleanType? = null
         var type: String? = null
         var lastProbeTime: LocalDateTime? = null
@@ -63,7 +63,7 @@ data class ServiceCondition(
     val reason: String? = null,
     val observedGeneration: Long? = null
 ) : BaseCondition {
-    class Builder : DslBuilder<ServiceCondition> {
+    class Builder : DSLBuilder<ServiceCondition> {
         var status: BooleanType? = null
         var type: String? = null
         var lastTransitionTime: LocalDateTime? = null
@@ -89,7 +89,7 @@ data class ComponentCondition(
     val message: String? = null,
     val reason: String? = null
 ) : BaseCondition {
-    class Builder : DslBuilder<ComponentCondition> {
+    class Builder : DSLBuilder<ComponentCondition> {
         var status: BooleanType? = null
         var type: String? = null
         var message: String? = null
@@ -112,8 +112,8 @@ data class SigningRequestCondition(
     val lastUpdateTime: LocalDateTime? = null,
     val message: String? = null,
     val reason: String? = null
-) {
-    class Builder : DslBuilder<SigningRequestCondition> {
+) : BaseCondition {
+    class Builder : DSLBuilder<SigningRequestCondition> {
         var status: BooleanType? = null
         var type: String? = null
         var lastTransitionTime: LocalDateTime? = null

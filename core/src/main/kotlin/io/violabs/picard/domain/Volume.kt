@@ -6,7 +6,7 @@ data class Volume(
     val name: String,
     val emptyDir: String? = null
 ) {
-    class Builder : DslBuilder<Volume> {
+    class Builder : DSLBuilder<Volume> {
         var name: String? = null
         var emptyDir: String? = null
 

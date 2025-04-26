@@ -4,10 +4,13 @@ import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.k8sResources.KAPIVersion
+import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.authorization.K8sSubject
 import io.violabs.picard.domain.k8sResources.authorization.PolicyRule
 import io.violabs.picard.domain.k8sResources.authorization.RoleRef
 import org.junit.jupiter.api.TestTemplate
+import java.time.Instant
 import java.time.LocalDateTime
 import kotlin.reflect.KClass
 
@@ -77,7 +80,12 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
 
         const val PLACEHOLDER = "test_placeholder"
         val NOW = LocalDateTime.now()
-        val BYTES: List<Byte> = listOf(0b1, 0b01)
+        val TIMESTAMP = Instant.now()
+        val BYTE_1: Byte = 0b1
+        val BYTE_2: Byte = 0b01
+        val BYTES: List<Byte> = listOf(BYTE_1, BYTE_2)
+        val PORT_NUMBER = 8080
+        val QUANTITY = Quantity("1")
 
         fun <T, B : ResourceDSLBuilder<T>> B.sharedMetadata() {
             metadata {
@@ -195,6 +203,48 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
                 apiGroup = PLACEHOLDER
                 namespace = PLACEHOLDER
             }
+        }
+
+        @JvmStatic
+        protected val CONDITION = Condition(
+            status = BooleanType.True,
+            type = PLACEHOLDER,
+            lastTransitionTime = NOW,
+            message = PLACEHOLDER,
+            reason = PLACEHOLDER
+        )
+
+        @JvmStatic
+        protected fun ConditionGroup<Condition, Condition.Builder>.sharedCondition() {
+            condition {
+                status = BooleanType.True
+                type = PLACEHOLDER
+                lastTransitionTime = NOW
+                message = PLACEHOLDER
+                reason = PLACEHOLDER
+            }
+        }
+
+        @JvmStatic
+        protected val OBJECT_REFERENCE = ObjectReference(
+            apiVersion = KAPIVersion.APIRegistrationV1,
+            fieldPath = PLACEHOLDER,
+            kind = PLACEHOLDER,
+            name = PLACEHOLDER,
+            namespace = PLACEHOLDER,
+            resourceVersion = PLACEHOLDER,
+            uid = PLACEHOLDER
+        )
+
+        @JvmStatic
+        protected fun ObjectReference.Builder.sharedObjectReference() {
+            apiVersion = KAPIVersion.APIRegistrationV1
+            fieldPath = PLACEHOLDER
+            kind = PLACEHOLDER
+            name = PLACEHOLDER
+            namespace = PLACEHOLDER
+            resourceVersion = PLACEHOLDER
+            uid = PLACEHOLDER
         }
     }
 }

@@ -1,21 +1,45 @@
 package io.violabs.picard.domain.k8sResources.cluster.runtimeClass
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.ObjectMetadata
+import io.violabs.picard.domain.ResourceDSLBuilder
 import io.violabs.picard.domain.k8sResources.*
 
-class RuntimeClass(
+data class RuntimeClass(
     override val apiVersion: Version = KAPIVersion.NodeV1,
-    override val metadata: ObjectMetadata? = null,
     val handler: String,
-    val overhead: Overhead? = null,
-
+    override val metadata: ObjectMetadata? = null,
+    val overhead: RuntimeClassOverhead? = null,
+    val scheduling: RuntimeClassScheduling? = null
     ) : K8sResource<RuntimeClass.Version> {
     interface Version : APIVersion
 
-    data class Overhead(val podFixed: Map<String, Quantity>? = null)
+    class Builder : ResourceDSLBuilder<RuntimeClass>() {
+        var handler: String? = null
+        private var overhead: RuntimeClassOverhead? = null
+        private var scheduling: RuntimeClassScheduling? = null
 
-    data class Scheduling(
-        val nodeSelector: Map<String, String>? = null,
-        val tolerations: List<Toleration>? = null
-    )
+        fun overhead(scope: RuntimeClassOverhead.Builder.() -> Unit) {
+            overhead = RuntimeClassOverhead.Builder().apply(scope).build()
+        }
+
+        fun scheduling(scope: RuntimeClassScheduling.Builder.() -> Unit) {
+            scheduling = RuntimeClassScheduling.Builder().apply(scope).build()
+        }
+
+        override fun build(): RuntimeClass {
+            return RuntimeClass(
+                metadata = metadata,
+                handler = vRequireNotNull(this::handler),
+                overhead = overhead,
+                scheduling = scheduling
+            )
+        }
+    }
+
+    class Group : K8sListResource.ItemGroup<RuntimeClass, Builder>(Builder()) {
+        fun runtime(scope: Builder.() -> Unit) {
+            item(scope)
+        }
+    }
 }

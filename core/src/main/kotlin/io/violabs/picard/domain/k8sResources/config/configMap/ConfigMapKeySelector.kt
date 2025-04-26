@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.config.configMap
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DSLBuilder
 
 data class ConfigMapKeySelector(
@@ -10,15 +11,15 @@ data class ConfigMapKeySelector(
     class Builder : DSLBuilder<ConfigMapKeySelector> {
         var key: String? = null
         var name: String? = null
-        var optional: Boolean? = null
+        private var optional: Boolean? = null
 
-        fun optional() {
-            optional = true
+        fun optional(value: Boolean = true) {
+            optional = value
         }
 
         override fun build(): ConfigMapKeySelector {
             return ConfigMapKeySelector(
-                key = requireNotNull(key) { "key is required" },
+                key = vRequireNotNull(this::key),
                 name = name,
                 optional = optional
             )

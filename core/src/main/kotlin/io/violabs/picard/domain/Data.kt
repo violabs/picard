@@ -3,15 +3,19 @@ package io.violabs.picard.domain
 /**
  * Non-UTF-8 encoded binary data
  */
-class BinaryData : Data<List<Byte>>()
+data class BinaryData(
+    override val content: MutableMap<String, List<Byte>> = mutableMapOf()
+) : Data<List<Byte>>()
 
 /**
  * UTF-8 encoded string
  */
-class TextData : Data<String>()
+data class TextData(
+    override val content: MutableMap<String, String> = mutableMapOf()
+) : Data<String>()
 
 abstract class Data<V> {
-    private val content: MutableMap<String, V> = mutableMapOf()
+    open val content: MutableMap<String, V> = mutableMapOf()
 
     fun add(key: String, value: V) {
         checkKey(key)
@@ -23,6 +27,4 @@ abstract class Data<V> {
             throw IllegalArgumentException("Invalid key. Can only contain alphanumeric, '.', '-', '_' - key: $key")
         }
     }
-
-    override fun toString(): String = content.toString()
 }

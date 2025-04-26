@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.config.secret
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseKeySelector
 import io.violabs.picard.domain.DSLBuilder
 
@@ -11,15 +12,15 @@ data class SecretKeySelector(
     class Builder : DSLBuilder<SecretKeySelector> {
         var key: String? = null
         var name: String? = null
-        var optional: Boolean? = null
+        private var optional: Boolean? = null
 
-        fun optional() {
-            optional = true
+        fun optional(value: Boolean = true) {
+            optional = value
         }
 
         override fun build(): SecretKeySelector {
             return SecretKeySelector(
-                requireNotNull(key) { "key is required" },
+                vRequireNotNull(this::key),
                 name,
                 optional
             )

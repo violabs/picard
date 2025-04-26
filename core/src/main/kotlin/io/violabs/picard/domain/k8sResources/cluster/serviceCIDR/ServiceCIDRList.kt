@@ -1,8 +1,10 @@
 package io.violabs.picard.domain.k8sResources.cluster.serviceCIDR
 
+import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.ListMeta
+import io.violabs.picard.domain.ResourceListDSLBuilder
 import io.violabs.picard.domain.k8sResources.K8sListResource
 
 data class ServiceCIDRList(
@@ -11,4 +13,19 @@ data class ServiceCIDRList(
     override val metadata: ListMeta? = null
 ) : K8sListResource<ServiceCIDRList.Version, ServiceCIDR> {
     interface Version : APIVersion
+
+    class Builder : ResourceListDSLBuilder<
+        ServiceCIDR,
+        ServiceCIDR.Builder,
+        ServiceCIDR.Group,
+        ServiceCIDRList
+        >(ServiceCIDR.Group()) {
+
+        override fun build(): ServiceCIDRList {
+            return ServiceCIDRList(
+                items = vRequireNotEmpty(this::items),
+                metadata = metadata
+            )
+        }
+    }
 }

@@ -3,8 +3,6 @@ package io.violabs.picard.domain.k8sResources.authentication.serviceAccount
 
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.LocalObjectReference
-import io.violabs.picard.domain.ObjectReference
-import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
@@ -28,15 +26,7 @@ class ServiceAccountTest : SuccessBuildSim<ServiceAccount, ServiceAccount.Builde
                     }
 
                     secrets {
-                        reference {
-                            apiVersion = KAPIVersion.APIRegistrationV1
-                            fieldPath = PLACEHOLDER
-                            kind = PLACEHOLDER
-                            name = PLACEHOLDER
-                            namespace = PLACEHOLDER
-                            resourceVersion = PLACEHOLDER
-                            uid = PLACEHOLDER
-                        }
+                        reference { sharedObjectReference() }
                     }
                 }
                 expected = ServiceAccount(
@@ -44,17 +34,7 @@ class ServiceAccountTest : SuccessBuildSim<ServiceAccount, ServiceAccount.Builde
                     imagePullSecrets = listOf(
                         LocalObjectReference(name = PLACEHOLDER)
                     ),
-                    secrets = listOf(
-                        ObjectReference(
-                            apiVersion = KAPIVersion.APIRegistrationV1,
-                            fieldPath = PLACEHOLDER,
-                            kind = PLACEHOLDER,
-                            name = PLACEHOLDER,
-                            namespace = PLACEHOLDER,
-                            resourceVersion = PLACEHOLDER,
-                            uid = PLACEHOLDER
-                        )
-                    )
+                    secrets = listOf(OBJECT_REFERENCE)
                 )
             }
         }

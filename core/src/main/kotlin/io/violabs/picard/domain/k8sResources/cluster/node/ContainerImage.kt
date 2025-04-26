@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.cluster.node
 
+import io.violabs.picard.domain.BuilderGroup
 import io.violabs.picard.domain.DSLBuilder
 
 data class ContainerImage(
@@ -19,6 +20,14 @@ data class ContainerImage(
                 names = names,
                 sizeBytes = sizeBytes
             )
+        }
+    }
+
+    class Group : BuilderGroup<ContainerImage, Builder>(Builder()) {
+        fun images(): List<ContainerImage>? = items()
+
+        fun image(scope: Builder.() -> Unit) {
+            add(scope)
         }
     }
 }

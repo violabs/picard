@@ -1,6 +1,7 @@
 package io.violabs.picard.domain.k8sResources.storage
 
 import io.violabs.picard.domain.ObjectMetadata
+import io.violabs.picard.domain.ResourceDSLBuilder
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
@@ -11,4 +12,12 @@ class VolumeAttachment(
 ) : K8sResource<VolumeAttachment.Version> {
 
     interface Version : APIVersion
+
+    class Builder : ResourceDSLBuilder<VolumeAttachment>() {
+        override fun build(): VolumeAttachment {
+            return VolumeAttachment(
+                metadata = metadata
+            )
+        }
+    }
 }

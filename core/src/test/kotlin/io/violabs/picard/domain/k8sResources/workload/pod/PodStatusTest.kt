@@ -3,8 +3,6 @@ package io.violabs.picard.domain.k8sResources.workload.pod
 
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.common.quantity
-import io.violabs.picard.domain.BooleanType
-import io.violabs.picard.domain.Condition
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.workload.pod.container.*
 import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceClaimStatus
@@ -127,13 +125,7 @@ class PodStatusTest : SuccessBuildSim<Pod.Status, Pod.Status.Builder>() {
                     podIP = "127.0.0.1"
                     podIPs { ip("0.0.0.0") }
                     conditions {
-                        condition {
-                            status = BooleanType.True
-                            type = "test_condition"
-                            lastTransitionTime = NOW
-                            message = "test_message"
-                            reason = "test_reason"
-                        }
+                        sharedCondition()
                     }
                     qosClass = "test_qos_class"
                     initContainerStatuses { sharedContainerStatus() }
@@ -161,15 +153,7 @@ class PodStatusTest : SuccessBuildSim<Pod.Status, Pod.Status.Builder>() {
                     podIPs = listOf(
                         PodIP("0.0.0.0")
                     ),
-                    conditions = listOf(
-                        Condition(
-                            status = BooleanType.True,
-                            type = "test_condition",
-                            lastTransitionTime = NOW,
-                            message = "test_message",
-                            reason = "test_reason"
-                        )
-                    ),
+                    conditions = listOf(CONDITION),
                     qosClass = "test_qos_class",
                     initContainerStatuses = listOf(CONTAINER_STATUS),
                     containerStatuses = listOf(CONTAINER_STATUS),

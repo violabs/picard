@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources
 
+import io.violabs.picard.domain.BuilderGroup
 import io.violabs.picard.domain.DSLBuilder
 
 data class Toleration(
@@ -23,6 +24,14 @@ data class Toleration(
                 effect = effect,
                 tolerationSeconds = tolerationSeconds
             )
+        }
+    }
+
+    class Group : BuilderGroup<Toleration, Builder>(Builder()) {
+        fun tolerations(): List<Toleration>? = items()
+
+        fun toleration(scope: Builder.() -> Unit) {
+            add(scope)
         }
     }
 }

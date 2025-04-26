@@ -1,16 +1,21 @@
 package io.violabs.picard.domain.k8sResources.cluster.lease.candidate
 
+import io.violabs.picard.common.vRequireNotEmpty
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.domain.ResourceSpecDSLBuilder
+import io.violabs.picard.domain.k8sResources.K8sListResource
 import java.time.Instant
 
-class LeaseCandidate(
+data class LeaseCandidate(
     override val apiVersion: Version = KAPIVersion.CoordinationV1Alpha1,
-    override val metadata: ObjectMetadata? = null,
-    val spec: Spec
+    val spec: Spec,
+    override val metadata: ObjectMetadata? = null
 ) : K8sResource<LeaseCandidate.Version> {
     interface Version : APIVersion
 
@@ -21,5 +26,44 @@ class LeaseCandidate(
         val emulationVersion: String? = null,
         val pingTime: Instant? = null,
         val renewTime: Instant? = null
-    ) : BaseSpec
+    ) : BaseSpec {
+        class Builder : DSLBuilder<Spec> {
+            var leaseName: String? = null
+            private var preferredStrategies: List<String>? = null
+            var binaryVersion: String? = null
+            var emulationVersion: String? = null
+            var pingTime: Instant? = null
+            var renewTime: Instant? = null
+
+            fun preferredStrategies(vararg strategies: String) {
+                this.preferredStrategies = strategies.toList()
+            }
+
+            override fun build(): Spec {
+                return Spec(
+                    leaseName = vRequireNotNull(this::leaseName),
+                    preferredStrategies = vRequireNotEmpty(this::preferredStrategies),
+                    binaryVersion = binaryVersion,
+                    emulationVersion = emulationVersion,
+                    pingTime = pingTime,
+                    renewTime = renewTime,
+                )
+            }
+        }
+    }
+
+    class Builder : ResourceSpecDSLBuilder<LeaseCandidate, Spec, Spec.Builder>(Spec.Builder()) {
+        override fun build(): LeaseCandidate {
+            return LeaseCandidate(
+                spec = vRequireNotNull(this::spec),
+                metadata = metadata
+            )
+        }
+    }
+
+    class Group : K8sListResource.ItemGroup<LeaseCandidate, Builder>(Builder()) {
+        fun candidate(scope: Builder.() -> Unit) {
+            item(scope)
+        }
+    }
 }

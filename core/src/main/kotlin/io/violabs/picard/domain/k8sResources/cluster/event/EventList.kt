@@ -1,8 +1,10 @@
 package io.violabs.picard.domain.k8sResources.cluster.event
 
+import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.ListMeta
+import io.violabs.picard.domain.ResourceListDSLBuilder
 import io.violabs.picard.domain.k8sResources.K8sListResource
 
 data class EventList(
@@ -11,4 +13,18 @@ data class EventList(
     override val metadata: ListMeta? = null
 ) : K8sListResource<EventList.Version, Event> {
     interface Version : APIVersion
+
+    class Builder : ResourceListDSLBuilder<
+        Event,
+        Event.Builder,
+        Event.Group,
+        EventList
+        >(Event.Group()) {
+        override fun build(): EventList {
+            return EventList(
+                items = vRequireNotEmpty(this::items),
+                metadata = metadata
+            )
+        }
+    }
 }

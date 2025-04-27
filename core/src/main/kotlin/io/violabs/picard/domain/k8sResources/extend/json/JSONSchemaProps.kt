@@ -250,7 +250,7 @@ data class JSONSchemaProps(
         fun props(): List<JSONSchemaProps>? = items()
 
         fun props(scope: Builder.() -> Unit) {
-            props(scope)
+            add(scope)
         }
     }
 

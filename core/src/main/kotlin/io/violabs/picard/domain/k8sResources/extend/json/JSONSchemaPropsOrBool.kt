@@ -12,8 +12,8 @@ data class JSONSchemaPropsOrBool(
             this.props = JSONSchemaProps.Builder().apply(block).build()
         }
 
-        fun bool(bool: Boolean) {
-            this.bool = bool
+        fun bool(value: Boolean = true) {
+            this.bool = value
         }
 
         fun build(): JSONSchemaPropsOrBool {

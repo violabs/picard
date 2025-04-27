@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.extend.json
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BuilderGroup
 import io.violabs.picard.domain.DSLBuilder
 
@@ -25,7 +26,7 @@ data class ValidationRule(
 
         override fun build(): ValidationRule {
             return ValidationRule(
-                rule = requireNotNull(rule),
+                rule = vRequireNotNull(this::rule),
                 fieldPath = fieldPath,
                 message = message,
                 messageExpression = messageExpression,

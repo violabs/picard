@@ -1,10 +1,13 @@
 package io.violabs.picard.domain.k8sResources.config.configMap
 
-import io.violabs.picard.domain.*
+import io.violabs.picard.domain.BinaryData
+import io.violabs.picard.domain.ObjectMetadata
+import io.violabs.picard.domain.ResourceDSLBuilder
+import io.violabs.picard.domain.TextData
 import io.violabs.picard.domain.k8sResources.APIVersion
+import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
-import io.violabs.picard.domain.BaseEnvSource
 
 //todo: binary and text data should not share the same key - refactor
 /**
@@ -18,4 +21,37 @@ data class ConfigMap(
     val immutable: Boolean? = null
 ) : K8sResource<ConfigMap.Version> {
     interface Version : APIVersion
+
+    class Builder : ResourceDSLBuilder<ConfigMap>() {
+        private var binaryData: BinaryData? = null
+        private var data: TextData? = null
+        private var immutable: Boolean? = null
+
+        fun binaryData(vararg bytes: Pair<String, List<Byte>>) {
+            binaryData = BinaryData(bytes.toMap().toMutableMap())
+        }
+
+        fun data(vararg strings: Pair<String, String>) {
+            data = TextData(strings.toMap().toMutableMap())
+        }
+
+        fun immutable(value: Boolean = true) {
+            immutable = value
+        }
+
+        override fun build(): ConfigMap {
+            return ConfigMap(
+                metadata = metadata,
+                binaryData = binaryData,
+                data = data,
+                immutable = immutable
+            )
+        }
+    }
+
+    class Group : K8sListResource.ItemGroup<ConfigMap, Builder>(Builder()) {
+        fun map(scope: Builder.() -> Unit) {
+            item(scope)
+        }
+    }
 }

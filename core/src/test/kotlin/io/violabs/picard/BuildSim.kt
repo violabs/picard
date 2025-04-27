@@ -88,6 +88,8 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
         val BYTES: List<Byte> = listOf(BYTE_1, BYTE_2)
         val PORT_NUMBER = 8080
         val QUANTITY = Quantity("1")
+        val QUANTITY_MAP = mapOf(PLACEHOLDER to QUANTITY)
+        val QUANTITY_PAIR = PLACEHOLDER to QUANTITY
 
         fun <T, B : ResourceDSLBuilder<T>> B.sharedMetadata() {
             metadata {

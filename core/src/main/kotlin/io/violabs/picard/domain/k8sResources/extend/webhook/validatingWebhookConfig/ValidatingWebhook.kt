@@ -1,14 +1,14 @@
-package io.violabs.picard.domain.k8sResources.extend.webhook.mutatingWebhookConfig
+package io.violabs.picard.domain.k8sResources.extend.webhook.validatingWebhookConfig
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.BaseWebhook
 import io.violabs.picard.domain.LabelSelector
 import io.violabs.picard.domain.k8sResources.extend.webhook.MatchCondition
 import io.violabs.picard.domain.k8sResources.extend.webhook.RuleWithOperations
-import io.violabs.picard.domain.k8sResources.extend.webhook.Webhook
 import io.violabs.picard.domain.k8sResources.extend.webhook.WebhookClientConfig
+import io.violabs.picard.domain.BaseWebhook
+import io.violabs.picard.domain.k8sResources.extend.webhook.Webhook
 
-data class MutatingWebhook(
+data class ValidatingWebhook(
     override val admissionReviewVersions: List<String>,
     override val clientConfig: WebhookClientConfig,
     override val name: String,
@@ -18,15 +18,13 @@ data class MutatingWebhook(
     override val matchPolicy: String? = null,
     override val namespaceSelector: LabelSelector? = null,
     override val objectSelector: LabelSelector? = null,
-    val reinvocationPolicy: String? = null,
     override val rules: List<RuleWithOperations>? = null,
     override val timeoutSeconds: Int? = null
 ) : BaseWebhook, Webhook {
-    class Builder : Webhook.Builder<MutatingWebhook>() {
-        var reinvocationPolicy: String? = null
+    class Builder : Webhook.Builder<ValidatingWebhook>() {
 
-        override fun build(): MutatingWebhook {
-            return MutatingWebhook(
+        override fun build(): ValidatingWebhook {
+            return ValidatingWebhook(
                 admissionReviewVersions = vRequireNotNull(this::admissionReviewVersions),
                 clientConfig = vRequireNotNull(this::clientConfig),
                 name = vRequireNotNull(this::name),
@@ -36,12 +34,11 @@ data class MutatingWebhook(
                 matchPolicy = matchPolicy,
                 namespaceSelector = namespaceSelector,
                 objectSelector = objectSelector,
-                reinvocationPolicy = reinvocationPolicy,
                 rules = rules,
                 timeoutSeconds = timeoutSeconds
             )
         }
     }
 
-    class Group : Webhook.Group<MutatingWebhook, Builder>(Builder())
+    class Group : Webhook.Group<ValidatingWebhook, Builder>(Builder())
 }

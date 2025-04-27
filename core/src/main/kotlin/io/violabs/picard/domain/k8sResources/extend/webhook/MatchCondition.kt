@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.extend.webhook
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BuilderGroup
 import io.violabs.picard.domain.DSLBuilder
 
@@ -13,8 +14,8 @@ data class MatchCondition(
 
         override fun build(): MatchCondition {
             return MatchCondition(
-                expression = requireNotNull(expression),
-                name = requireNotNull(name)
+                expression = vRequireNotNull(this::expression),
+                name = vRequireNotNull(this::name)
             )
         }
     }

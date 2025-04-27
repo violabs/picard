@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.extend.webhook
 
+import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.DSLBuilder
 
 data class WebhookConversion(
@@ -20,7 +21,7 @@ data class WebhookConversion(
 
         override fun build(): WebhookConversion {
             return WebhookConversion(
-                conversionReviewVersions = requireNotNull(conversionReviewVersions),
+                conversionReviewVersions = vRequireNotEmpty(this::conversionReviewVersions),
                 clientConfig = clientConfig
             )
         }

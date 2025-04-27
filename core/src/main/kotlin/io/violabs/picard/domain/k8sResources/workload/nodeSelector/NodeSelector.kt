@@ -8,10 +8,15 @@ data class NodeSelector(
 ) : BaseNodeSelector {
 
     class Builder : DSLBuilder<NodeSelector> {
-        private var _nodeSelectorTerms: List<NodeSelectorTerm>? = null
+        private var nodeSelectorTerms: List<NodeSelectorTerm>? = null
+
+        fun terms(scope: NodeSelectorTerm.Group.() -> Unit) {
+            this.nodeSelectorTerms = NodeSelectorTerm.Group().apply(scope).terms()
+        }
+
         override fun build(): NodeSelector {
             return NodeSelector(
-                nodeSelectorTerms = requireNotNull(_nodeSelectorTerms)
+                nodeSelectorTerms = requireNotNull(nodeSelectorTerms)
             )
         }
     }

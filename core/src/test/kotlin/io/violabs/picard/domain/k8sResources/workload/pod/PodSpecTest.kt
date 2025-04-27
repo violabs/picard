@@ -2,10 +2,11 @@ package io.violabs.picard.domain.k8sResources.workload.pod
 
 
 import io.violabs.picard.FullBuildSim
-import io.violabs.picard.domain.*
+import io.violabs.picard.domain.LocalObjectReference
+import io.violabs.picard.domain.RestartPolicy
+import io.violabs.picard.domain.Volume
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.Toleration
-import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelectorTerm
 import io.violabs.picard.domain.k8sResources.workload.pod.affinity.*
 import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
 import io.violabs.picard.domain.k8sResources.workload.pod.container.EphemeralContainer
@@ -35,22 +36,7 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
             preferredDuringSchedulingIgnoredDuringExecution = listOf(
                 NodeAffinityPreferredSchedulingTerm(
                     weight = 1,
-                    preference = NodeSelectorTerm(
-                        matchExpression = listOf(
-                            NodeSelectorRequirement(
-                                key = "first",
-                                operator = "In",
-                                values = listOf("value1")
-                            )
-                        ),
-                        matchFields = listOf(
-                            NodeSelectorRequirement(
-                                key = "second",
-                                operator = "NotIn",
-                                values = listOf("value2")
-                            )
-                        )
-                    )
+                    preference = NODE_SELECTOR_TERM
                 )
             )
         )
@@ -272,20 +258,7 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
                                 term {
                                     weight = 1
                                     preference {
-                                        matchExpressions {
-                                            requirement {
-                                                key = "first"
-                                                operator = "In"
-                                                values("value1")
-                                            }
-                                        }
-                                        matchFields {
-                                            requirement {
-                                                key = "second"
-                                                operator = "NotIn"
-                                                values("value2")
-                                            }
-                                        }
+                                        sharedNodeSelectorTerm()
                                     }
                                 }
                             }

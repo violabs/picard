@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.nodeSelector
 
+import io.violabs.picard.domain.BuilderGroup
 import io.violabs.picard.domain.DSLBuilder
 import io.violabs.picard.domain.NodeSelectorRequirement
 import io.violabs.picard.domain.NodeSelectorRequirementGroup
@@ -25,6 +26,14 @@ data class NodeSelectorTerm(
                 matchExpression = _matchExpression,
                 matchFields = _matchFields
             )
+        }
+    }
+
+    class Group : BuilderGroup<NodeSelectorTerm, Builder>(Builder()) {
+        fun terms(): List<NodeSelectorTerm>? = items()
+
+        fun term(scope: Builder.() -> Unit) {
+            add(scope)
         }
     }
 }

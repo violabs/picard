@@ -9,6 +9,7 @@ import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.authorization.K8sSubject
 import io.violabs.picard.domain.k8sResources.authorization.PolicyRule
 import io.violabs.picard.domain.k8sResources.authorization.RoleRef
+import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelectorTerm
 import org.junit.jupiter.api.TestTemplate
 import java.time.Instant
 import java.time.LocalDateTime
@@ -79,6 +80,7 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
         }
 
         const val PLACEHOLDER = "test_placeholder"
+        val PLACEHOLDER_LIST: List<String> = listOf(PLACEHOLDER)
         val NOW = LocalDateTime.now()
         val TIMESTAMP = Instant.now()
         val BYTE_1: Byte = 0b1
@@ -245,6 +247,38 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
             namespace = PLACEHOLDER
             resourceVersion = PLACEHOLDER
             uid = PLACEHOLDER
+        }
+
+        @JvmStatic
+        protected val NODE_SELECTOR_REQUIREMENT = NodeSelectorRequirement(
+            key = PLACEHOLDER,
+            operator = PLACEHOLDER,
+            values = PLACEHOLDER_LIST
+        )
+
+        @JvmStatic
+        protected val NODE_SELECTOR_TERM = NodeSelectorTerm(
+            matchExpression = listOf(NODE_SELECTOR_REQUIREMENT),
+            matchFields = listOf(NODE_SELECTOR_REQUIREMENT)
+        )
+
+        @JvmStatic
+        protected fun NodeSelectorTerm.Builder.sharedNodeSelectorTerm() {
+            matchExpressions {
+                requirement {
+                    key = PLACEHOLDER
+                    operator = PLACEHOLDER
+                    values(PLACEHOLDER)
+                }
+            }
+
+            matchFields {
+                requirement {
+                    key = PLACEHOLDER
+                    operator = PLACEHOLDER
+                    values(PLACEHOLDER)
+                }
+            }
         }
     }
 }

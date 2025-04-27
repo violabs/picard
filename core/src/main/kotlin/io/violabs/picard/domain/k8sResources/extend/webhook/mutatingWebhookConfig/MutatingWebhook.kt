@@ -1,22 +1,47 @@
 package io.violabs.picard.domain.k8sResources.extend.webhook.mutatingWebhookConfig
 
+import io.violabs.picard.common.vRequireNotNull
+import io.violabs.picard.domain.BaseWebhook
 import io.violabs.picard.domain.LabelSelector
 import io.violabs.picard.domain.k8sResources.extend.webhook.MatchCondition
 import io.violabs.picard.domain.k8sResources.extend.webhook.RuleWithOperations
+import io.violabs.picard.domain.k8sResources.extend.webhook.Webhook
 import io.violabs.picard.domain.k8sResources.extend.webhook.WebhookClientConfig
-import io.violabs.picard.domain.BaseWebhook
 
 data class MutatingWebhook(
-    val admissionReviewVersions: List<String>,
-    val clientConfig: WebhookClientConfig,
-    val name: String,
-    val sideEffects: String,
-    val failurePolicy: String? = null,
-    val matchConditions: List<MatchCondition>? = null,
-    val matchPolicy: String? = null,
-    val namespaceSelector: LabelSelector? = null,
-    val objectSelector: LabelSelector? = null,
+    override val admissionReviewVersions: List<String>,
+    override val clientConfig: WebhookClientConfig,
+    override val name: String,
+    override val sideEffects: String,
+    override val failurePolicy: String? = null,
+    override val matchConditions: List<MatchCondition>? = null,
+    override val matchPolicy: String? = null,
+    override val namespaceSelector: LabelSelector? = null,
+    override val objectSelector: LabelSelector? = null,
     val reinvocationPolicy: String? = null,
-    val rules: List<RuleWithOperations>? = null,
-    val timeoutSeconds: Int? = null
-) : BaseWebhook
+    override val rules: List<RuleWithOperations>? = null,
+    override val timeoutSeconds: Int? = null
+) : BaseWebhook, Webhook {
+    class Builder : Webhook.Builder<MutatingWebhook>() {
+        var reinvocationPolicy: String? = null
+
+        override fun build(): MutatingWebhook {
+            return MutatingWebhook(
+                admissionReviewVersions = vRequireNotNull(this::admissionReviewVersions),
+                clientConfig = vRequireNotNull(this::clientConfig),
+                name = vRequireNotNull(this::name),
+                sideEffects = vRequireNotNull(this::sideEffects),
+                failurePolicy = failurePolicy,
+                matchConditions = matchConditions,
+                matchPolicy = matchPolicy,
+                namespaceSelector = namespaceSelector,
+                objectSelector = objectSelector,
+                reinvocationPolicy = reinvocationPolicy,
+                rules = rules,
+                timeoutSeconds = timeoutSeconds
+            )
+        }
+    }
+
+    class Group : Webhook.Group<MutatingWebhook, Builder>(Builder())
+}

@@ -6,4 +6,26 @@ data class DeviceSelector(
     data class CEL(
         val expression: String
     )
+
+    class Builder : DSLBuilder<DeviceSelector> {
+        private var cel: CEL? = null
+
+        fun cel(expression: String) {
+            this.cel = CEL(expression)
+        }
+
+        override fun build(): DeviceSelector {
+            return DeviceSelector(
+                cel = cel
+            )
+        }
+    }
+
+    class Group : BuilderGroup<DeviceSelector, Builder>(Builder()) {
+        fun selectors(): List<DeviceSelector>? = items()
+
+        fun selector(scope: Builder.() -> Unit) {
+            add(scope)
+        }
+    }
 }

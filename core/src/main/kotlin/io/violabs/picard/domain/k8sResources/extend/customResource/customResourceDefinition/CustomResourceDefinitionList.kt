@@ -1,8 +1,10 @@
 package io.violabs.picard.domain.k8sResources.extend.customResource.customResourceDefinition
 
+import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.ListMeta
+import io.violabs.picard.domain.ResourceListDSLBuilder
 import io.violabs.picard.domain.k8sResources.K8sListResource
 
 data class CustomResourceDefinitionList(
@@ -11,4 +13,19 @@ data class CustomResourceDefinitionList(
     override val metadata: ListMeta? = null
 ) : K8sListResource<CustomResourceDefinitionList.Version, CustomResourceDefinition> {
     interface Version : APIVersion
+
+    class Builder : ResourceListDSLBuilder<
+        CustomResourceDefinition,
+        CustomResourceDefinition.Builder,
+        CustomResourceDefinition.Group,
+        CustomResourceDefinitionList
+        >(CustomResourceDefinition.Group()) {
+
+        override fun build(): CustomResourceDefinitionList {
+            return CustomResourceDefinitionList(
+                items = vRequireNotEmpty(this::items),
+                metadata = metadata
+            )
+        }
+    }
 }

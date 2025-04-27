@@ -79,6 +79,7 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
         }
 
         const val PLACEHOLDER = "test_placeholder"
+        val PLACEHOLDER_LIST: List<String> = listOf(PLACEHOLDER)
         val NOW = LocalDateTime.now()
         val TIMESTAMP = Instant.now()
         val BYTE_1: Byte = 0b1

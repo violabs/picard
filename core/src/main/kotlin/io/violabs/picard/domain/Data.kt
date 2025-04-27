@@ -3,16 +3,18 @@ package io.violabs.picard.domain
 /**
  * Non-UTF-8 encoded binary data
  */
-class BinaryData : Data<List<Byte>>()
+data class BinaryData(
+    override val content: MutableMap<String, List<Byte>> = mutableMapOf()
+) : Data<List<Byte>>(content)
 
 /**
  * UTF-8 encoded string
  */
-class TextData : Data<String>()
+data class TextData(
+    override val content: MutableMap<String, String> = mutableMapOf()
+) : Data<String>(content)
 
-abstract class Data<V> {
-    private val content: MutableMap<String, V> = mutableMapOf()
-
+abstract class Data<V>(open val content: MutableMap<String, V> = mutableMapOf()) {
     fun add(key: String, value: V) {
         checkKey(key)
         content[key] = value

@@ -3,6 +3,7 @@ package io.violabs.picard
 import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
 import io.violabs.picard.domain.*
+import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.Quantity
@@ -90,6 +91,8 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
         val QUANTITY = Quantity("1")
         val QUANTITY_MAP = mapOf(PLACEHOLDER to QUANTITY)
         val QUANTITY_PAIR = PLACEHOLDER to QUANTITY
+        val INT_OR_STRING_1 = IntOrString(1)
+        val INT_OR_STRING_2 = IntOrString(str = "1")
 
         fun <T, B : ResourceDSLBuilder<T>> B.sharedMetadata() {
             metadata {

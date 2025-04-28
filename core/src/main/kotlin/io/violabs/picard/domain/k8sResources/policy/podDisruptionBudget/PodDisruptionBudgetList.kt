@@ -1,8 +1,10 @@
 package io.violabs.picard.domain.k8sResources.policy.podDisruptionBudget
 
+import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.ListMeta
+import io.violabs.picard.domain.ResourceListDSLBuilder
 import io.violabs.picard.domain.k8sResources.K8sListResource
 
 data class PodDisruptionBudgetList(
@@ -11,4 +13,19 @@ data class PodDisruptionBudgetList(
     override val metadata: ListMeta? = null
 ) : K8sListResource<PodDisruptionBudgetList.Version, PodDisruptionBudget> {
     interface Version : APIVersion
+
+    class Builder : ResourceListDSLBuilder<
+        PodDisruptionBudget,
+        PodDisruptionBudget.Builder,
+        PodDisruptionBudget.Group,
+        PodDisruptionBudgetList
+        >(PodDisruptionBudget.Group()) {
+
+        override fun build(): PodDisruptionBudgetList {
+            return PodDisruptionBudgetList(
+                items = vRequireNotEmpty(this::items),
+                metadata = metadata
+            )
+        }
+    }
 }

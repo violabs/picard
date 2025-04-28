@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.policy
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DSLBuilder
 
 data class LimitResponse(
@@ -21,7 +22,7 @@ data class LimitResponse(
 
         override fun build(): LimitResponse {
             return LimitResponse(
-                type = requireNotNull(type),
+                type = vRequireNotNull(this::type),
                 queuing = queuing
             )
         }

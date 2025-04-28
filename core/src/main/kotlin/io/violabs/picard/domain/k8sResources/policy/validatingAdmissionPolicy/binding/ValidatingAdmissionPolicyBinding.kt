@@ -7,8 +7,11 @@ import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.policy.MatchResources
 import io.violabs.picard.domain.k8sResources.policy.ParamRef
 import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.domain.ResourceSpecDSLBuilder
+import io.violabs.picard.domain.k8sResources.K8sListResource
 
-class ValidatingAdmissionPolicyBinding(
+data class ValidatingAdmissionPolicyBinding(
     override val apiVersion: Version = KAPIVersion.AdmissionRegistrationV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null
@@ -18,5 +21,40 @@ class ValidatingAdmissionPolicyBinding(
     data class Spec(
         val matchResources: MatchResources? = null,
         val paramRef: ParamRef? = null
-    ) : BaseSpec
+    ) : BaseSpec {
+        class Builder : DSLBuilder<Spec> {
+            private var matchResources: MatchResources? = null
+            private var paramRef: ParamRef? = null
+
+            fun matchResources(scope: MatchResources.Builder.() -> Unit) {
+                matchResources = MatchResources.Builder().apply(scope).build()
+            }
+
+            fun paramRef(scope: ParamRef.Builder.() -> Unit) {
+                paramRef = ParamRef.Builder().apply(scope).build()
+            }
+
+            override fun build(): Spec {
+                return Spec(
+                    matchResources = matchResources,
+                    paramRef = paramRef
+                )
+            }
+        }
+    }
+
+    class Builder : ResourceSpecDSLBuilder<ValidatingAdmissionPolicyBinding, Spec, Spec.Builder>(Spec.Builder()) {
+        override fun build(): ValidatingAdmissionPolicyBinding {
+            return ValidatingAdmissionPolicyBinding(
+                metadata = metadata,
+                spec = spec
+            )
+        }
+    }
+
+    class Group : K8sListResource.ItemGroup<ValidatingAdmissionPolicyBinding, Builder>(Builder()) {
+        fun binding(scope: Builder.() -> Unit) {
+            item(scope)
+        }
+    }
 }

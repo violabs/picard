@@ -10,6 +10,8 @@ import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.authorization.K8sSubject
 import io.violabs.picard.domain.k8sResources.authorization.PolicyRule
 import io.violabs.picard.domain.k8sResources.authorization.RoleRef
+import io.violabs.picard.domain.k8sResources.policy.MatchResources
+import io.violabs.picard.domain.k8sResources.policy.NamedRuleWithOperations
 import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelectorTerm
 import org.junit.jupiter.api.TestTemplate
 import java.time.Instant
@@ -282,6 +284,59 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
                     key = PLACEHOLDER
                     operator = PLACEHOLDER
                     values(PLACEHOLDER)
+                }
+            }
+        }
+
+        private val NAMED_RULE = NamedRuleWithOperations(
+            apiGroups = PLACEHOLDER_LIST,
+            apiVersions = PLACEHOLDER_LIST,
+            operations = PLACEHOLDER_LIST,
+            resources = PLACEHOLDER_LIST,
+            scope = PLACEHOLDER,
+            resourceNames = PLACEHOLDER_LIST
+        )
+
+        @JvmStatic
+        protected val MATCH_RESOURCES = MatchResources(
+            excludeResourceRules = listOf(NAMED_RULE),
+            matchPolicy = PLACEHOLDER,
+            namespaceSelector = LABEL_SELECTOR,
+            objectSelector = LABEL_SELECTOR,
+            resourceRules = listOf(NAMED_RULE)
+        )
+
+        @JvmStatic
+        protected fun MatchResources.Builder.sharedMatchResources() {
+            excludeResourceRules {
+                rule {
+                    apiGroups(PLACEHOLDER)
+                    apiVersions(PLACEHOLDER)
+                    operations(PLACEHOLDER)
+                    resources(PLACEHOLDER)
+                    scope = PLACEHOLDER
+                    resourceNames(PLACEHOLDER)
+                }
+            }
+
+            matchPolicy = PLACEHOLDER
+
+            namespaceSelector {
+                sharedSelector()
+            }
+
+            objectSelector {
+                sharedSelector()
+            }
+
+            resourceRules {
+                rule {
+                    apiGroups(PLACEHOLDER)
+                    apiVersions(PLACEHOLDER)
+                    operations(PLACEHOLDER)
+                    resources(PLACEHOLDER)
+                    scope = PLACEHOLDER
+                    resourceNames(PLACEHOLDER)
                 }
             }
         }

@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.policy.rule
 
+import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.BuilderGroup
 import io.violabs.picard.domain.DSLBuilder
 
@@ -21,8 +22,8 @@ data class NonResourcePolicyRule(
 
         override fun build(): NonResourcePolicyRule {
             return NonResourcePolicyRule(
-                nonResourceURLs = requireNotNull(nonResourceURLs),
-                verbs = requireNotNull(verbs)
+                nonResourceURLs = vRequireNotEmpty(this::nonResourceURLs),
+                verbs = vRequireNotEmpty(this::verbs)
             )
         }
     }

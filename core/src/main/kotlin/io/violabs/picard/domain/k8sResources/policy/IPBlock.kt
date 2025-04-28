@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.policy
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DSLBuilder
 
 data class IPBlock(
@@ -16,7 +17,7 @@ data class IPBlock(
 
         override fun build(): IPBlock {
             return IPBlock(
-                cidr = requireNotNull(cidr),
+                cidr = vRequireNotNull(this::cidr),
                 except = except
             )
         }

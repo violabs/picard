@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.policy
 
+import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.BuilderGroup
 import io.violabs.picard.domain.DSLBuilder
 import io.violabs.picard.domain.k8sResources.policy.rule.NonResourcePolicyRule
@@ -29,7 +30,7 @@ data class PolicyRulesWithSubjects(
 
         override fun build(): PolicyRulesWithSubjects {
             return PolicyRulesWithSubjects(
-                subjects = requireNotNull(subjects),
+                subjects = vRequireNotEmpty(this::subjects),
                 nonResourceRules = nonResourceRules,
                 resourceRules = resourceRules
             )

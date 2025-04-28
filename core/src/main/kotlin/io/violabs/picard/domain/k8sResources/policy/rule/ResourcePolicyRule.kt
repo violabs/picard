@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.policy.rule
 
+import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.BuilderGroup
 import io.violabs.picard.domain.DSLBuilder
 
@@ -39,9 +40,9 @@ data class ResourcePolicyRule(
 
         override fun build(): ResourcePolicyRule {
             return ResourcePolicyRule(
-                apiGroups = requireNotNull(apiGroups),
-                resources = requireNotNull(resources),
-                verbs = requireNotNull(verbs),
+                apiGroups = vRequireNotEmpty(this::apiGroups),
+                resources = vRequireNotEmpty(this::resources),
+                verbs = vRequireNotEmpty(this::verbs),
                 clusterScope = clusterScope,
                 namespaces = namespaces
             )

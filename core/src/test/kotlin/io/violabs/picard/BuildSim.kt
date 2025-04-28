@@ -3,12 +3,15 @@ package io.violabs.picard
 import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
 import io.violabs.picard.domain.*
+import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.authorization.K8sSubject
 import io.violabs.picard.domain.k8sResources.authorization.PolicyRule
 import io.violabs.picard.domain.k8sResources.authorization.RoleRef
+import io.violabs.picard.domain.k8sResources.policy.MatchResources
+import io.violabs.picard.domain.k8sResources.policy.NamedRuleWithOperations
 import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelectorTerm
 import org.junit.jupiter.api.TestTemplate
 import java.time.Instant
@@ -88,6 +91,10 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
         val BYTES: List<Byte> = listOf(BYTE_1, BYTE_2)
         val PORT_NUMBER = 8080
         val QUANTITY = Quantity("1")
+        val QUANTITY_MAP = mapOf(PLACEHOLDER to QUANTITY)
+        val QUANTITY_PAIR = PLACEHOLDER to QUANTITY
+        val INT_OR_STRING_1 = IntOrString(1)
+        val INT_OR_STRING_2 = IntOrString(str = "1")
 
         fun <T, B : ResourceDSLBuilder<T>> B.sharedMetadata() {
             metadata {
@@ -277,6 +284,59 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
                     key = PLACEHOLDER
                     operator = PLACEHOLDER
                     values(PLACEHOLDER)
+                }
+            }
+        }
+
+        private val NAMED_RULE = NamedRuleWithOperations(
+            apiGroups = PLACEHOLDER_LIST,
+            apiVersions = PLACEHOLDER_LIST,
+            operations = PLACEHOLDER_LIST,
+            resources = PLACEHOLDER_LIST,
+            scope = PLACEHOLDER,
+            resourceNames = PLACEHOLDER_LIST
+        )
+
+        @JvmStatic
+        protected val MATCH_RESOURCES = MatchResources(
+            excludeResourceRules = listOf(NAMED_RULE),
+            matchPolicy = PLACEHOLDER,
+            namespaceSelector = LABEL_SELECTOR,
+            objectSelector = LABEL_SELECTOR,
+            resourceRules = listOf(NAMED_RULE)
+        )
+
+        @JvmStatic
+        protected fun MatchResources.Builder.sharedMatchResources() {
+            excludeResourceRules {
+                rule {
+                    apiGroups(PLACEHOLDER)
+                    apiVersions(PLACEHOLDER)
+                    operations(PLACEHOLDER)
+                    resources(PLACEHOLDER)
+                    scope = PLACEHOLDER
+                    resourceNames(PLACEHOLDER)
+                }
+            }
+
+            matchPolicy = PLACEHOLDER
+
+            namespaceSelector {
+                sharedSelector()
+            }
+
+            objectSelector {
+                sharedSelector()
+            }
+
+            resourceRules {
+                rule {
+                    apiGroups(PLACEHOLDER)
+                    apiVersions(PLACEHOLDER)
+                    operations(PLACEHOLDER)
+                    resources(PLACEHOLDER)
+                    scope = PLACEHOLDER
+                    resourceNames(PLACEHOLDER)
                 }
             }
         }

@@ -1,16 +1,11 @@
 package io.violabs.picard.domain.k8sResources.policy.podDisruptionBudget
 
-import io.violabs.picard.domain.LabelSelector
-import io.violabs.picard.domain.ObjectMetadata
-import io.violabs.picard.domain.k8sResources.APIVersion
-import io.violabs.picard.domain.k8sResources.IntOrString
-import io.violabs.picard.domain.k8sResources.K8sResource
-import io.violabs.picard.domain.k8sResources.KAPIVersion
-import io.violabs.picard.domain.BaseSpec
-import io.violabs.picard.domain.ServiceCondition
+import io.violabs.picard.common.vRequireNotNull
+import io.violabs.picard.domain.*
+import io.violabs.picard.domain.k8sResources.*
 import java.time.LocalDateTime
 
-class PodDisruptionBudget(
+data class PodDisruptionBudget(
     override val apiVersion: Version = KAPIVersion.PolicyV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
@@ -23,8 +18,43 @@ class PodDisruptionBudget(
         val minAvailable: IntOrString? = null,
         val selector: LabelSelector? = null,
         val unhealthyPodEvictionPolicy: String? = null,
+    ) : BaseSpec {
+        class Builder : DSLBuilder<Spec> {
+            private var maxUnavailable: IntOrString? = null
+            private var minAvailable: IntOrString? = null
+            private var selector: LabelSelector? = null
+            var unhealthyPodEvictionPolicy: String? = null
 
-    ) : BaseSpec
+            fun maxUnavailable(amount: Int) {
+                this.maxUnavailable = IntOrString(amount)
+            }
+
+            fun maxUnavailable(amount: String) {
+                this.maxUnavailable = IntOrString(str = amount)
+            }
+
+            fun minAvailable(amount: Int) {
+                this.minAvailable = IntOrString(amount)
+            }
+
+            fun minAvailable(amount: String) {
+                this.minAvailable = IntOrString(str = amount)
+            }
+
+            fun selector(scope: LabelSelector.Builder.() -> Unit) {
+                this.selector = LabelSelector.Builder().apply(scope).build()
+            }
+
+            override fun build(): Spec {
+                return Spec(
+                    maxUnavailable = maxUnavailable,
+                    minAvailable = minAvailable,
+                    selector = selector,
+                    unhealthyPodEvictionPolicy = unhealthyPodEvictionPolicy
+                )
+            }
+        }
+    }
 
     data class Status(
         val currentHealthy: Int,
@@ -34,5 +64,56 @@ class PodDisruptionBudget(
         val conditions: List<ServiceCondition>? = null,
         val disruptedPods: Map<String, LocalDateTime>? = null,
         val observedGeneration: Long? = null
-    ) : BaseSpec
+    ) : BaseStatus {
+        class Builder : DSLBuilder<Status> {
+            var currentHealthy: Int? = null
+            var desiredHealthy: Int? = null
+            var disruptionsAllowed: Int? = null
+            var expectedPods: Int? = null
+            private var conditions: List<ServiceCondition>? = null
+            private var disruptedPods: Map<String, LocalDateTime>? = null
+            var observedGeneration: Long? = null
+
+            fun conditions(scope: ConditionGroup<ServiceCondition, ServiceCondition.Builder>.() -> Unit) {
+                this.conditions = ConditionGroup(ServiceCondition.Builder()).apply(scope).conditions()
+            }
+
+            fun disruptedPods(vararg pairs: Pair<String, LocalDateTime>) {
+                this.disruptedPods = pairs.toMap()
+            }
+
+            override fun build(): Status {
+                return Status(
+                    currentHealthy = vRequireNotNull(this::currentHealthy),
+                    desiredHealthy = vRequireNotNull(this::desiredHealthy),
+                    disruptionsAllowed = vRequireNotNull(this::disruptionsAllowed),
+                    expectedPods = vRequireNotNull(this::expectedPods),
+                    conditions = conditions,
+                    disruptedPods = disruptedPods,
+                    observedGeneration = observedGeneration
+                )
+            }
+        }
+    }
+
+    class Builder : ResourceSpecStatusDSLBuilder<
+        PodDisruptionBudget,
+        Spec,
+        Spec.Builder,
+        Status,
+        Status.Builder>(Spec.Builder(), Status.Builder()) {
+        override fun build(): PodDisruptionBudget {
+            return PodDisruptionBudget(
+                metadata = metadata,
+                spec = spec,
+                status = status
+            )
+        }
+    }
+    
+    class Group : K8sListResource.ItemGroup<PodDisruptionBudget, Builder>(Builder()) {
+        fun budget(scope: Builder.() -> Unit) {
+            item(scope)
+        }
+    }
 }

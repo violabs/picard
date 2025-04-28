@@ -1,14 +1,10 @@
 package io.violabs.picard.domain.k8sResources.policy.resourceQuota
 
-import io.violabs.picard.domain.ObjectMetadata
-import io.violabs.picard.domain.k8sResources.APIVersion
-import io.violabs.picard.domain.k8sResources.K8sResource
-import io.violabs.picard.domain.k8sResources.KAPIVersion
-import io.violabs.picard.domain.k8sResources.Quantity
+import io.violabs.picard.domain.*
+import io.violabs.picard.domain.k8sResources.*
 import io.violabs.picard.domain.k8sResources.policy.ScopeSelector
-import io.violabs.picard.domain.BaseSpec
 
-class ResourceQuota(
+data class ResourceQuota(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
@@ -20,10 +16,78 @@ class ResourceQuota(
         val hard: Map<String, Quantity>? = null,
         val scopeSelector: ScopeSelector? = null,
         val scopes: List<String>? = null
-    ) : BaseSpec
+    ) : BaseSpec {
+        class Builder : DSLBuilder<Spec> {
+            private var hard: Map<String, Quantity>? = null
+            private var scopeSelector: ScopeSelector? = null
+            private var scopes: List<String>? = null
+
+            fun hard(vararg hard: Pair<String, Quantity>) {
+                this.hard = hard.toMap()
+            }
+
+            fun scopeSelector(scope: ScopeSelector.Builder.() -> Unit) {
+                this.scopeSelector = ScopeSelector.Builder().apply(scope).build()
+            }
+
+            fun scopes(vararg scopes: String) {
+                this.scopes = scopes.toList()
+            }
+
+            override fun build(): Spec {
+                return Spec(
+                    hard = hard,
+                    scopeSelector = scopeSelector,
+                    scopes = scopes
+                )
+            }
+        }
+    }
     
     data class Status(
         val hard: Map<String, Quantity>? = null,
         val used: Map<String, Quantity>? = null
-    ) : BaseSpec
+    ) : BaseStatus {
+        class Builder : DSLBuilder<Status> {
+            private var hard: Map<String, Quantity>? = null
+            private var used: Map<String, Quantity>? = null
+
+            fun hard(vararg hard: Pair<String, Quantity>) {
+                this.hard = hard.toMap()
+            }
+
+            fun used(vararg used: Pair<String, Quantity>) {
+                this.used = used.toMap()
+            }
+
+            override fun build(): Status {
+                return Status(
+                    hard = hard,
+                    used = used
+                )
+            }
+        }
+    }
+
+    class Builder : ResourceSpecStatusDSLBuilder<
+        ResourceQuota,
+        Spec,
+        Spec.Builder,
+        Status,
+        Status.Builder>(Spec.Builder(), Status.Builder()) {
+
+        override fun build(): ResourceQuota {
+            return ResourceQuota(
+                metadata = metadata,
+                spec = spec,
+                status = status
+            )
+        }
+    }
+
+    class Group : K8sListResource.ItemGroup<ResourceQuota, Builder>(Builder()) {
+        fun quota(scope: Builder.() -> Unit) {
+            item(scope)
+        }
+    }
 }

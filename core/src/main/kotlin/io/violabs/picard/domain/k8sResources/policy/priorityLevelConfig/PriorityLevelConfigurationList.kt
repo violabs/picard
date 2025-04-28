@@ -1,8 +1,10 @@
 package io.violabs.picard.domain.k8sResources.policy.priorityLevelConfig
 
+import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.ListMeta
+import io.violabs.picard.domain.ResourceListDSLBuilder
 import io.violabs.picard.domain.k8sResources.K8sListResource
 
 data class PriorityLevelConfigurationList(
@@ -11,4 +13,19 @@ data class PriorityLevelConfigurationList(
     override val metadata: ListMeta? = null
 ) : K8sListResource<PriorityLevelConfigurationList.Version, PriorityLevelConfiguration> {
     interface Version : APIVersion
+
+    class Builder : ResourceListDSLBuilder<
+        PriorityLevelConfiguration,
+        PriorityLevelConfiguration.Builder,
+        PriorityLevelConfiguration.Group,
+        PriorityLevelConfigurationList
+        >(PriorityLevelConfiguration.Group()) {
+
+        override fun build(): PriorityLevelConfigurationList {
+            return PriorityLevelConfigurationList(
+                items = vRequireNotEmpty(this::items),
+                metadata = metadata
+            )
+        }
+    }
 }

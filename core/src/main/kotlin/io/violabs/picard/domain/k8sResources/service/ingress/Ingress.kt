@@ -4,11 +4,9 @@ import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
-import io.violabs.picard.domain.k8sResources.Protocol
-import io.violabs.picard.domain.BaseLoadBalancerIngress
-import io.violabs.picard.domain.BasePort
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
+import io.violabs.picard.domain.k8sResources.K8sListResource
 
 
 data class Ingress(
@@ -20,66 +18,77 @@ data class Ingress(
     interface Version : APIVersion
 
     data class Spec(
-        val defaultBackend: Backend? = null,
+        val defaultBackend: IngressBackend? = null,
         val ingressClassName: String? = null,
-        val rules: List<Rule>? = null,
-        val tls: List<TLS>? = null
-    ) : BaseSpec
+        val rules: List<IngressRule>? = null,
+        val tls: List<IngressTLS>? = null
+    ) : BaseSpec {
+        class Builder : DSLBuilder<Spec> {
+            private var defaultBackend: IngressBackend? = null
+            var ingressClassName: String? = null
+            private var rules: List<IngressRule>? = null
+            private var tls: List<IngressTLS>? = null
 
-    data class Status(
-        val loadBalancer: LoadBalancerIngress? = null
-    ) : BaseStatus
+            fun defaultBackend(scope: IngressBackend.Builder.() -> Unit) {
+                defaultBackend = IngressBackend.Builder().apply(scope).build()
+            }
 
-    data class Backend(
-        val resource: TypedLocalObjectReference? = null,
-        val service: ServiceBackend? = null
-    )
+            fun rules(block: IngressRule.Group.() -> Unit) {
+                rules = IngressRule.Group().apply(block).rules()
+            }
 
-    data class ServiceBackend(
-        val name: String,
-        val port: Port? = null
-    ) {
-        data class Port(
-            val name: String? = null,
-            val number: Int? = null
-        ) : BasePort
+            fun tlsList(block: IngressTLS.Group.() -> Unit) {
+                tls = IngressTLS.Group().apply(block).tlsList()
+            }
+
+            override fun build(): Spec {
+                return Spec(
+                    defaultBackend = defaultBackend,
+                    ingressClassName = ingressClassName,
+                    rules = rules,
+                    tls = tls
+                )
+            }
+        }
     }
 
-    data class Rule(
-        val host: String? = null,
-        val http: HTTPIngressRuleValue? = null
-    )
+    data class Status(
+        val loadBalancer: IngressLoadBalancerIngress? = null
+    ) : BaseStatus {
+        class Builder : DSLBuilder<Status> {
+            private var loadBalancer: IngressLoadBalancerIngress? = null
 
-    data class HTTPIngressRuleValue(
-        val paths: List<HTTPIngressPath>
-    )
+            fun loadBalancer(scope: IngressLoadBalancerIngress.Builder.() -> Unit) {
+                loadBalancer = IngressLoadBalancerIngress.Builder().apply(scope).build()
+            }
 
-    data class HTTPIngressPath(
-        val backend: Backend,
-        val pathType: String,
-        val path: String? = null
-    )
+            override fun build(): Status {
+                return Status(
+                    loadBalancer = loadBalancer
+                )
+            }
+        }
+    }
 
-    data class TLS(
-        val hosts: List<String>? = null,
-        val secretName: String? = null
-    )
+    class Builder : ResourceSpecStatusDSLBuilder<
+        Ingress,
+        Spec,
+        Spec.Builder,
+        Status,
+        Status.Builder>(Spec.Builder(), Status.Builder()) {
+        override fun build(): Ingress {
+            return Ingress(
+                metadata = metadata,
+                spec = spec,
+                status = status
+            )
+        }
+    }
 
-    data class LoadBalancerIngress(
-        val hostname: String? = null,
-        val ip: String? = null,
-        val ports: List<PortStatus>? = null
-    ) : BaseLoadBalancerIngress
-
-    data class PortStatus(
-        val port: Int? = null,
-        val protocol: Protocol? = null,
-        val error: String? = null
-    )
+    class Group : K8sListResource.ItemGroup<Ingress, Builder>(Builder()) {
+        fun ingress(scope: Builder.() -> Unit) {
+            item(scope)
+        }
+    }
 }
 
-data class TypedLocalObjectReference(
-    val kind: String,
-    val name: String,
-    val apiGroup: String? = null
-)

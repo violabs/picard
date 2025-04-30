@@ -1,8 +1,10 @@
 package io.violabs.picard.domain.k8sResources.service.ingressClass
 
+import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.ListMeta
+import io.violabs.picard.domain.ResourceListDSLBuilder
 import io.violabs.picard.domain.k8sResources.K8sListResource
 
 data class IngressClassList(
@@ -11,4 +13,19 @@ data class IngressClassList(
     override val metadata: ListMeta? = null
 ) : K8sListResource<IngressClassList.Version, IngressClass> {
     interface Version : APIVersion
+
+    class Builder : ResourceListDSLBuilder<
+        IngressClass,
+        IngressClass.Builder,
+        IngressClass.Group,
+        IngressClassList
+        >(IngressClass.Group()) {
+
+        override fun build(): IngressClassList {
+            return IngressClassList(
+                items = vRequireNotEmpty(this::items),
+                metadata = metadata
+            )
+        }
+    }
 }

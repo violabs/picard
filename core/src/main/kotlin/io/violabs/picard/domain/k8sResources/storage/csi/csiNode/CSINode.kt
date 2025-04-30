@@ -1,10 +1,12 @@
 package io.violabs.picard.domain.k8sResources.storage.csi.csiNode
 
+import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.k8sResources.K8sListResource
 
 data class CSINode(
     override val apiVersion: Version = KAPIVersion.StorageV1,
@@ -13,7 +15,36 @@ data class CSINode(
 ) : K8sResource<CSINode.Version> {
     interface Version : APIVersion
 
-    class Spec(
+    data class Spec(
         val drivers: List<CSINodeDriver>
-    ) : BaseSpec
+    ) : BaseSpec {
+        class Builder : DSLBuilder<Spec> {
+            private var drivers: List<CSINodeDriver>? = null
+
+            fun drivers(scope: CSINodeDriver.Group.() -> Unit) {
+                drivers = CSINodeDriver.Group().apply(scope).drivers()
+            }
+
+            override fun build(): Spec {
+                return Spec(
+                    drivers = vRequireNotEmpty(this::drivers)
+                )
+            }
+        }
+    }
+
+    class Builder : ResourceSpecDSLBuilder<CSINode, Spec, Spec.Builder>(Spec.Builder()) {
+        override fun build(): CSINode {
+            return CSINode(
+                metadata = metadata,
+                spec = spec
+            )
+        }
+    }
+
+    class Group : K8sListResource.ItemGroup<CSINode, Builder>(Builder()) {
+        fun node(scope: Builder.() -> Unit) {
+            item(scope)
+        }
+    }
 }

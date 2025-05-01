@@ -2,8 +2,6 @@ package io.violabs.picard.domain.k8sResources.service.endpoints
 
 
 import io.violabs.picard.SuccessBuildSim
-import io.violabs.picard.domain.ObjectReference
-import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.Protocol
 import io.violabs.picard.domain.k8sResources.service.endpoint.EndpointAddress
 import io.violabs.picard.domain.k8sResources.service.endpoint.EndpointPort
@@ -20,21 +18,11 @@ class EndpointsTest : SuccessBuildSim<Endpoints, Endpoints.Builder>() {
             SUCCESS_POSSIBILITIES
         )
 
-        private val OBJECT_REF = ObjectReference(
-            apiVersion = KAPIVersion.V1,
-            fieldPath = PLACEHOLDER,
-            kind = PLACEHOLDER,
-            name = PLACEHOLDER,
-            namespace = PLACEHOLDER,
-            resourceVersion = PLACEHOLDER,
-            uid = PLACEHOLDER
-        )
-
         private val ADDRESS = EndpointAddress(
             ip = PLACEHOLDER,
             hostname = PLACEHOLDER,
             nodeName = PLACEHOLDER,
-            targetRef = OBJECT_REF
+            targetRef = OBJECT_REFERENCE
         )
 
         private val PORT = EndpointPort(
@@ -54,14 +42,8 @@ class EndpointsTest : SuccessBuildSim<Endpoints, Endpoints.Builder>() {
             ip = PLACEHOLDER
             hostname = PLACEHOLDER
             nodeName = PLACEHOLDER
-            targetRef  {
-                apiVersion = KAPIVersion.V1
-                fieldPath = PLACEHOLDER
-                kind = PLACEHOLDER
-                name = PLACEHOLDER
-                namespace = PLACEHOLDER
-                resourceVersion = PLACEHOLDER
-                uid = PLACEHOLDER
+            targetRef {
+                sharedObjectReference()
             }
         }
 

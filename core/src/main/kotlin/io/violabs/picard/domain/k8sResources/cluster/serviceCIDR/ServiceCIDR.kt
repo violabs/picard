@@ -34,8 +34,8 @@ data class ServiceCIDR(
         class Builder : DSLBuilder<Status> {
             private var conditions: List<ServiceCondition>? = null
 
-            fun conditions(scope: ConditionGroup<ServiceCondition, ServiceCondition.Builder>.() -> Unit) {
-                conditions = ConditionGroup(ServiceCondition.Builder()).apply(scope).conditions()
+            fun conditions(scope: ServiceConditionGroup.() -> Unit) {
+                conditions = ServiceCondition.group(scope)
             }
 
             override fun build(): Status {

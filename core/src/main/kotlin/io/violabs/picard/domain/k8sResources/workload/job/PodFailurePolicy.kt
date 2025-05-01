@@ -1,30 +1,19 @@
 package io.violabs.picard.domain.k8sResources.workload.job
 
-import io.violabs.picard.domain.BooleanType
-import io.violabs.picard.domain.Operator
+import io.violabs.picard.domain.DSLBuilder
 
-data class PodFailurePolicy(val rules: List<Rule>) {
-    data class Rule(
-        val action: Action,
-        val onExitCods: OnExitCodesRequirement? = null,
-        val onPodConditions: List<OnPodConditionsPattern>? = null
-    ) {
-        enum class Action {
-            Count,
-            FailIndex,
-            FailJob,
-            Ignore
+data class PodFailurePolicy(val rules: List<PodFailurePolicyRule>) {
+    class Builder : DSLBuilder<PodFailurePolicy> {
+        private var rules: List<PodFailurePolicyRule>? = null
+
+        fun rules(block: PodFailurePolicyRule.Group.() -> Unit) {
+            rules = PodFailurePolicyRule.Group().apply(block).rules()
+        }
+
+        override fun build(): PodFailurePolicy {
+            return PodFailurePolicy(
+                rules = requireNotNull(rules)
+            )
         }
     }
-
-    data class OnExitCodesRequirement(
-        val operator: Operator,
-        val values: List<Int>,
-        val containerName: String? = null
-    )
-
-    data class OnPodConditionsPattern(
-        val status: BooleanType,
-        val type: String
-    )
 }

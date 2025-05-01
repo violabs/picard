@@ -38,8 +38,8 @@ data class Namespace(
             private var conditions: List<Condition>? = null
             var phase: String? = null
 
-            fun conditions(scope: ConditionGroup<Condition, Condition.Builder>.() -> Unit) {
-                conditions = ConditionGroup(Condition.Builder()).apply(scope).conditions()
+            fun conditions(scope: StandardConditionGroup.() -> Unit) {
+                conditions = Condition.group(scope)
             }
 
             override fun build(): Status {

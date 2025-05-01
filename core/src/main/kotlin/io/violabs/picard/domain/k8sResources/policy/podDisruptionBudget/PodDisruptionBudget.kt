@@ -74,8 +74,8 @@ data class PodDisruptionBudget(
             private var disruptedPods: Map<String, LocalDateTime>? = null
             var observedGeneration: Long? = null
 
-            fun conditions(scope: ConditionGroup<ServiceCondition, ServiceCondition.Builder>.() -> Unit) {
-                this.conditions = ConditionGroup(ServiceCondition.Builder()).apply(scope).conditions()
+            fun conditions(scope: ServiceConditionGroup.() -> Unit) {
+                this.conditions = ServiceCondition.group(scope)
             }
 
             fun disruptedPods(vararg pairs: Pair<String, LocalDateTime>) {

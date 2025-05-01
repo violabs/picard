@@ -49,10 +49,10 @@ import io.violabs.picard.domain.k8sResources.storage.storageClass.StorageClassLi
 import io.violabs.picard.domain.k8sResources.storage.storageClass.StorageClass
 import io.violabs.picard.domain.k8sResources.config.secret.SecretList
 import io.violabs.picard.domain.k8sResources.config.secret.Secret
-import io.violabs.picard.domain.k8sResources.storage.persistentVolume.persistentVolume.PersistentVolumeList
-import io.violabs.picard.domain.k8sResources.storage.persistentVolume.persistentVolumeClaim.PersistentVolumeClaimList
-import io.violabs.picard.domain.k8sResources.storage.persistentVolume.persistentVolumeClaim.PersistentVolumeClaim
-import io.violabs.picard.domain.k8sResources.storage.persistentVolume.persistentVolume.PersistentVolume
+import io.violabs.picard.domain.k8sResources.storage.persistentVolume.PersistentVolumeList
+import io.violabs.picard.domain.k8sResources.storage.persistentVolume.claim.PersistentVolumeClaimList
+import io.violabs.picard.domain.k8sResources.storage.persistentVolume.claim.PersistentVolumeClaim
+import io.violabs.picard.domain.k8sResources.storage.persistentVolume.PersistentVolume
 import io.violabs.picard.domain.k8sResources.storage.csi.csiStorageCapacity.CSIStorageCapacity
 import io.violabs.picard.domain.k8sResources.storage.csi.csiStorageCapacity.CSIStorageCapacityList
 import io.violabs.picard.domain.k8sResources.storage.csi.csiNode.CSINodeList
@@ -95,10 +95,10 @@ import io.violabs.picard.domain.k8sResources.service.ingress.Ingress
 import io.violabs.picard.domain.k8sResources.service.ingress.IngressList
 import io.violabs.picard.domain.k8sResources.service.ingressClass.IngressClass
 import io.violabs.picard.domain.k8sResources.service.ingressClass.IngressClassList
-import io.violabs.picard.domain.k8sResources.storage.VolumeAttachment
-import io.violabs.picard.domain.k8sResources.storage.VolumeAttachmentList
-import io.violabs.picard.domain.k8sResources.storage.VolumeAttributeClassList
-import io.violabs.picard.domain.k8sResources.storage.VolumeAttributesClass
+import io.violabs.picard.domain.k8sResources.storage.volumeAttachment.VolumeAttachment
+import io.violabs.picard.domain.k8sResources.storage.volumeAttachment.VolumeAttachmentList
+import io.violabs.picard.domain.k8sResources.storage.volumeAttributesClass.VolumeAttributesClassList
+import io.violabs.picard.domain.k8sResources.storage.volumeAttributesClass.VolumeAttributesClass
 import io.violabs.picard.domain.k8sResources.workload.controllerRevision.ControllerRevision
 import io.violabs.picard.domain.k8sResources.workload.controllerRevision.ControllerRevisionList
 import io.violabs.picard.domain.k8sResources.workload.cronJob.CronJob
@@ -335,7 +335,7 @@ open class KAPIVersion(
 
     object StorageV1Beta1 : KAPIVersion("storage.k8s.io/v1beta1"),
         VolumeAttributesClass.Version,
-        VolumeAttributeClassList.Version
+        VolumeAttributesClassList.Version
 
     object StorageMigrationV1Alpha1 : KAPIVersion("storagemigration.k8s.io/v1alpha1"),
         StorageVersionMigration.Version,

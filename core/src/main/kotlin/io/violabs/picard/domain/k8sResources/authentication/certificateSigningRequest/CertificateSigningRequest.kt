@@ -81,10 +81,8 @@ data class CertificateSigningRequest(
                 this.certificate = certificate.toList()
             }
 
-            fun conditions(scope: ConditionGroup<SigningRequestCondition, SigningRequestCondition.Builder>.() -> Unit) {
-                conditions = ConditionGroup(SigningRequestCondition.Builder())
-                    .apply(scope)
-                    .conditions()
+            fun conditions(scope: SigningRequestConditionGroup.() -> Unit) {
+                conditions = SigningRequestCondition.group(scope)
             }
 
             override fun build(): Status {

@@ -17,8 +17,8 @@ data class ComponentStatus(
     class Builder : ResourceDSLBuilder<ComponentStatus>() {
         private var conditions: List<ComponentCondition>? = null
 
-        fun conditions(scope: ConditionGroup<ComponentCondition, ComponentCondition.Builder>.() -> Unit) {
-            conditions = ConditionGroup(ComponentCondition.Builder()).apply(scope).conditions()
+        fun conditions(scope: ComponentConditionGroup.() -> Unit) {
+            conditions = ComponentCondition.group(scope)
         }
 
         override fun build(): ComponentStatus {

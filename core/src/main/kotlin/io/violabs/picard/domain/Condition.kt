@@ -2,6 +2,8 @@ package io.violabs.picard.domain
 
 import java.time.LocalDateTime
 
+typealias StandardConditionGroup = ConditionGroup<Condition, Condition.Builder>
+
 data class Condition(
     val status: BooleanType,
     val type: String,
@@ -25,7 +27,15 @@ data class Condition(
             )
         }
     }
+
+    companion object {
+        fun group(scope: StandardConditionGroup.() -> Unit): List<Condition>? {
+            return StandardConditionGroup(Builder()).apply(scope).conditions()
+        }
+    }
 }
+
+typealias NodeConditionGroup = ConditionGroup<NodeCondition, NodeCondition.Builder>
 
 data class NodeCondition(
     val status: BooleanType,
@@ -53,7 +63,15 @@ data class NodeCondition(
             )
         }
     }
+
+    companion object {
+        fun group(scope: NodeConditionGroup.() -> Unit): List<NodeCondition>? {
+            return NodeConditionGroup(Builder()).apply(scope).conditions()
+        }
+    }
 }
+
+typealias ServiceConditionGroup = ConditionGroup<ServiceCondition, ServiceCondition.Builder>
 
 data class ServiceCondition(
     val status: BooleanType,
@@ -81,7 +99,15 @@ data class ServiceCondition(
             )
         }
     }
+
+    companion object {
+        fun group(scope: ServiceConditionGroup.() -> Unit): List<ServiceCondition>? {
+            return ServiceConditionGroup(Builder()).apply(scope).conditions()
+        }
+    }
 }
+
+typealias ComponentConditionGroup = ConditionGroup<ComponentCondition, ComponentCondition.Builder>
 
 data class ComponentCondition(
     val status: BooleanType,
@@ -103,7 +129,15 @@ data class ComponentCondition(
             )
         }
     }
+
+    companion object {
+        fun group(scope: ComponentConditionGroup.() -> Unit): List<ComponentCondition>? {
+            return ComponentConditionGroup(Builder()).apply(scope).conditions()
+        }
+    }
 }
+
+typealias SigningRequestConditionGroup = ConditionGroup<SigningRequestCondition, SigningRequestCondition.Builder>
 
 data class SigningRequestCondition(
     val status: BooleanType,
@@ -129,6 +163,12 @@ data class SigningRequestCondition(
                 message = message,
                 reason = reason
             )
+        }
+    }
+
+    companion object {
+        fun group(scope: SigningRequestConditionGroup.() -> Unit): List<SigningRequestCondition>? {
+            return SigningRequestConditionGroup(Builder()).apply(scope).conditions()
         }
     }
 }

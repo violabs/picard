@@ -4,7 +4,7 @@ import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
-import io.violabs.picard.domain.k8sResources.storage.persistentVolume.persistentVolumeClaim.PersistentVolumeClaim
+import io.violabs.picard.domain.k8sResources.storage.persistentVolume.claim.PersistentVolumeClaim
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
 import io.violabs.picard.domain.Condition

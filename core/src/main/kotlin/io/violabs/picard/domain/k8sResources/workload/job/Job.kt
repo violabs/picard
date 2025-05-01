@@ -7,7 +7,11 @@ import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
+import io.violabs.picard.domain.DSLBuilder
 import io.violabs.picard.domain.NodeCondition
+import io.violabs.picard.domain.NodeConditionGroup
+import io.violabs.picard.domain.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import java.time.LocalDateTime
 
@@ -46,6 +50,63 @@ class Job(
             Indexed,
             NonIndexed
         }
+
+        class Builder : DSLBuilder<Spec> {
+            private var template: PodTemplate.Spec? = null
+            var parallelism: Int? = null
+            var completions: Int? = null
+            var completionMode: CompletionMode? = null
+            var backoffLimit: Int? = null
+            var activeDeadlineSeconds: Long? = null
+            var ttlSecondsAfterFinished: Int? = null
+            private var suspend: Boolean? = null
+            private var selector: LabelSelector? = null
+            private var manualSelector: Boolean? = null
+            private var podFailurePolicy: PodFailurePolicy? = null
+            private var successPolicy: PodSuccessPolicy? = null
+
+            fun template(block: PodTemplate.Spec.Builder.() -> Unit) {
+                template = PodTemplate.Spec.Builder().apply(block).build()
+            }
+
+            fun suspend(value: Boolean = true) {
+                suspend = value
+            }
+
+            fun selector(block: LabelSelector.Builder.() -> Unit) {
+                selector = LabelSelector.Builder().apply(block).build()
+            }
+
+            fun manualSelector(value: Boolean = true) {
+                manualSelector = value
+            }
+
+            fun podFailurePolicy(block: PodFailurePolicy.Builder.() -> Unit) {
+                podFailurePolicy = PodFailurePolicy.Builder().apply(block).build()
+            }
+
+            fun successPolicy(block: PodSuccessPolicy.Builder.() -> Unit) {
+                successPolicy = PodSuccessPolicy.Builder().apply(block).build()
+            }
+
+
+            override fun build(): Spec {
+                return Spec(
+                    template = template,
+                    parallelism = parallelism,
+                    completions = completions,
+                    completionMode = completionMode,
+                    backoffLimit = backoffLimit,
+                    activeDeadlineSeconds = activeDeadlineSeconds,
+                    ttlSecondsAfterFinished = ttlSecondsAfterFinished,
+                    suspend = suspend,
+                    selector = selector,
+                    manualSelector = manualSelector,
+                    podFailurePolicy = podFailurePolicy,
+                    successPolicy = successPolicy
+                )
+            }
+        }
     }
 
     data class Status(
@@ -62,10 +123,64 @@ class Job(
         // Alpha level
         val failedIndexes: String? = null,
         val terminating: Int? = null
-    ) : BaseStatus
+    ) : BaseStatus {
+        class Builder : DSLBuilder<Status> {
+            var startTime: LocalDateTime? = null
+            var completionTime: LocalDateTime? = null
+            var active: Int? = null
+            var failed: Int? = null
+            var succeeded: Int? = null
+            var completedIndexes: String? = null
+            private var conditions: List<NodeCondition>? = null
+            private var uncountedTerminatedPods: UncountedTerminatedPods? = null
+            var ready: Int? = null
+            var failedIndexes: String? = null
+            var terminating: Int? = null
 
-    data class UncountedTerminatedPods(
-        val failed: List<String>? = null,
-        val succeeded: List<String>? = null
-    )
+            fun conditions(block: NodeConditionGroup.() -> Unit) {
+                conditions = NodeCondition.group(block)
+            }
+
+            fun uncountedTerminatedPods(block: UncountedTerminatedPods.Builder.() -> Unit) {
+                uncountedTerminatedPods = UncountedTerminatedPods.Builder().apply(block).build()
+            }
+
+            override fun build(): Status {
+                return Status(
+                    startTime = startTime,
+                    completionTime = completionTime,
+                    active = active,
+                    failed = failed,
+                    succeeded = succeeded,
+                    completedIndexes = completedIndexes,
+                    conditions = conditions,
+                    uncountedTerminatedPods = uncountedTerminatedPods,
+                    ready = ready,
+                    failedIndexes = failedIndexes,
+                    terminating = terminating
+                )
+            }
+        }
+    }
+
+    class Builder : ResourceSpecStatusDSLBuilder<
+        Job,
+        Spec,
+        Spec.Builder,
+        Status,
+        Status.Builder>(Spec.Builder(), Status.Builder()) {
+        override fun build(): Job {
+            return Job(
+                metadata = metadata,
+                spec = spec,
+                status = status
+            )
+        }
+    }
+
+    class Group : K8sListResource.ItemGroup<Job, Builder>(Builder()) {
+        fun job(scope: Builder.() -> Unit) {
+            item(scope)
+        }
+    }
 }

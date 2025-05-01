@@ -1,9 +1,26 @@
 package io.violabs.picard.domain.k8sResources.storage.persistentVolume
 
-sealed class ModifyVolumeStatus(
-    val status: String
+import io.violabs.picard.domain.DSLBuilder
+
+data class ModifyVolumeStatus(
+    val status: String,
+    val targetVolumeAttributesClassName: String? = null
 ) {
-    class Pending : ModifyVolumeStatus("Pending")
-    class InProgress : ModifyVolumeStatus("InProgress")
-    class Infeasible : ModifyVolumeStatus("Infeasible")
+    enum class Name {
+        Pending,
+        InProgress,
+        Infeasible
+    }
+
+    class Builder : DSLBuilder<ModifyVolumeStatus> {
+        var status: Name? = null
+        var targetVolumeAttributesClassName: String? = null
+
+        override fun build(): ModifyVolumeStatus {
+            return ModifyVolumeStatus(
+                status = requireNotNull(status?.name) { "status is required" },
+                targetVolumeAttributesClassName = targetVolumeAttributesClassName
+            )
+        }
+    }
 }

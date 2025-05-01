@@ -49,8 +49,8 @@ data class PriorityLevelConfiguration(
         class Builder : DSLBuilder<Status> {
             private var conditions: List<Condition>? = null
 
-            fun conditions(scope: ConditionGroup<Condition, Condition.Builder>.() -> Unit) {
-                this.conditions = ConditionGroup(Condition.Builder()).apply(scope).conditions()
+            fun conditions(scope: StandardConditionGroup.() -> Unit) {
+                this.conditions = Condition.group(scope)
             }
 
             override fun build(): Status {

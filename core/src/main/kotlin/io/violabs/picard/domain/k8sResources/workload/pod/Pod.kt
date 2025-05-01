@@ -3,6 +3,8 @@ package io.violabs.picard.domain.k8sResources.workload.pod
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.*
+import io.violabs.picard.domain.k8sResources.storage.volume.Volume
+import io.violabs.picard.domain.k8sResources.storage.volume.VolumeGroup
 import io.violabs.picard.domain.k8sResources.workload.pod.affinity.Affinity
 import io.violabs.picard.domain.k8sResources.workload.pod.container.*
 import io.violabs.picard.domain.k8sResources.workload.pod.dnsConfig.DNSConfig
@@ -337,8 +339,8 @@ data class Pod(
                 podIPs = IPGroup(::PodIP).apply(scope).ips()
             }
 
-            fun conditions(scope: ConditionGroup<Condition, Condition.Builder>.() -> Unit) {
-                conditions = ConditionGroup(Condition.Builder()).apply(scope).conditions()
+            fun conditions(scope: StandardConditionGroup.() -> Unit) {
+                conditions = Condition.group(scope)
             }
 
             fun initContainerStatuses(scope: ContainerStatusGroup.() -> Unit) {

@@ -94,8 +94,8 @@ data class Node(
                 this.capacity = capacity.toMap()
             }
 
-            fun conditions(scope: ConditionGroup<NodeCondition, NodeCondition.Builder>.() -> Unit) {
-                conditions = ConditionGroup(NodeCondition.Builder()).apply(scope).conditions()
+            fun conditions(scope: NodeConditionGroup.() -> Unit) {
+                conditions = NodeCondition.group(scope)
             }
 
             fun config(scope: NodeConfigStatus.Builder.() -> Unit) {

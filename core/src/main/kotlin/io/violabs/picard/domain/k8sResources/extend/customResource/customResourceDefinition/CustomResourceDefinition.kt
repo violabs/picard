@@ -77,8 +77,8 @@ data class CustomResourceDefinition(
                 this.acceptedNames = CustomResourceDefinitionNames.Builder().apply(block).build()
             }
 
-            fun conditions(block: ConditionGroup<Condition, Condition.Builder>.() -> Unit) {
-                this.conditions = ConditionGroup(Condition.Builder()).apply(block).conditions()
+            fun conditions(scope: StandardConditionGroup.() -> Unit) {
+                this.conditions = Condition.group(scope)
             }
 
             fun storedVersions(vararg versions: String) {

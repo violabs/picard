@@ -82,8 +82,8 @@ data class ValidatingAdmissionPolicy(
             var observedGeneration: Long? = null
             private var typeChecking: TypeChecking? = null
 
-            fun conditions(scope: ConditionGroup<ServiceCondition, ServiceCondition.Builder>.() -> Unit) {
-                conditions = ConditionGroup(ServiceCondition.Builder()).apply(scope).conditions()
+            fun conditions(scope: ServiceConditionGroup.() -> Unit) {
+                conditions = ServiceCondition.group(scope)
             }
 
             fun typeChecking(scope: TypeChecking.Builder.() -> Unit) {

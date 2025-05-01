@@ -4,7 +4,7 @@ package io.violabs.picard.domain.k8sResources.workload.pod
 import io.violabs.picard.FullBuildSim
 import io.violabs.picard.domain.LocalObjectReference
 import io.violabs.picard.domain.RestartPolicy
-import io.violabs.picard.domain.Volume
+import io.violabs.picard.domain.k8sResources.storage.volume.Volume
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.Toleration
 import io.violabs.picard.domain.k8sResources.workload.pod.affinity.*
@@ -29,8 +29,6 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
             SUCCESS_POSSIBILITIES,
             FAILURE_POSSIBILITIES
         )
-
-        private val STANDARD_CONTAINER = Container("standard")
 
         private val NODE_AFFINITY = NodeAffinity(
             preferredDuringSchedulingIgnoredDuringExecution = listOf(
@@ -201,7 +199,7 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
                 given(Pod.Spec.Builder()) {
                     containers {
                         container {
-                            name = "standard"
+                            name = PLACEHOLDER
                         }
                     }
                 }
@@ -215,7 +213,7 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
                 given(Pod.Spec.Builder()) {
                     containers {
                         container {
-                            name = "standard"
+                            name = PLACEHOLDER
                         }
                     }
 
@@ -428,7 +426,7 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
                 given(Pod.Spec.Builder()) {
                     containers {
                         container {
-                            name = "standard"
+                            name = PLACEHOLDER
                         }
                     }
                     enableServiceLinks(false)

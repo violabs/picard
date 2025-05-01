@@ -13,6 +13,7 @@ import io.violabs.picard.domain.k8sResources.authorization.RoleRef
 import io.violabs.picard.domain.k8sResources.policy.MatchResources
 import io.violabs.picard.domain.k8sResources.policy.NamedRuleWithOperations
 import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelectorTerm
+import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
 import org.junit.jupiter.api.TestTemplate
 import java.time.Instant
 import java.time.LocalDateTime
@@ -90,11 +91,12 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
         val BYTE_2: Byte = 0b01
         val BYTES: List<Byte> = listOf(BYTE_1, BYTE_2)
         val PORT_NUMBER = 8080
-        val QUANTITY = Quantity("1")
+        val QUANTITY = Quantity(PLACEHOLDER)
         val QUANTITY_MAP = mapOf(PLACEHOLDER to QUANTITY)
         val QUANTITY_PAIR = PLACEHOLDER to QUANTITY
         val INT_OR_STRING_1 = IntOrString(1)
         val INT_OR_STRING_2 = IntOrString(str = "1")
+        val STRING_MAP = mapOf(PLACEHOLDER to PLACEHOLDER)
 
         fun <T, B : ResourceDSLBuilder<T>> B.sharedMetadata() {
             metadata {
@@ -287,6 +289,9 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
                 }
             }
         }
+
+        @JvmStatic
+        protected val STANDARD_CONTAINER = Container(PLACEHOLDER)
 
         private val NAMED_RULE = NamedRuleWithOperations(
             apiGroups = PLACEHOLDER_LIST,

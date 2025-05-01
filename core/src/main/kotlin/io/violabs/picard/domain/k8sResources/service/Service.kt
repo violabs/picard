@@ -1,11 +1,7 @@
 package io.violabs.picard.domain.k8sResources.service
 
-import io.violabs.picard.domain.ObjectMetadata
+import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.*
-import io.violabs.picard.domain.BaseLoadBalancerIngress
-import io.violabs.picard.domain.BasePort
-import io.violabs.picard.domain.BaseSpec
-import io.violabs.picard.domain.BaseStatus
 
 data class Service(
     override val apiVersion: Version = KAPIVersion.V1,
@@ -17,7 +13,7 @@ data class Service(
 
     data class Spec(
         val selector: Map<String, String>? = null,
-        val ports: List<Port>? = null,
+        val ports: List<ServicePort>? = null,
         val type: String? = null,
         val ipFamilies: List<String>? = null,
         val ipFamilyPolicy: String? = null,
@@ -36,41 +32,128 @@ data class Service(
         val sessionAffinityConfig: SessionAffinityConfig? = null,
         val allocateLoadBalancerNodePorts: Boolean? = null,
         val trafficDistribution: String? = null
-    ) : BaseSpec
+    ) : BaseSpec {
+        class Builder : DSLBuilder<Spec> {
+            private var selector: Map<String, String>? = null
+            private var ports: List<ServicePort>? = null
+            var type: String? = null
+            private var ipFamilies: List<String>? = null
+            var ipFamilyPolicy: String? = null
+            var clusterIP: String? = null
+            private var clusterIPs: List<String>? = null
+            private var externalIPs: List<String>? = null
+            var sessionAffinity: String? = null
+            var loadBalancerIP: String? = null
+            private var loadBalancerSourceRanges: List<String>? = null
+            var loadBalancerClass: String? = null
+            var externalName: String? = null
+            var externalTrafficPolicy: String? = null
+            var internalTrafficPolicy: String? = null
+            var healthCheckNodePort: Int? = null
+            private var publishNotReadyAddresses: Boolean? = null
+            private var sessionAffinityConfig: SessionAffinityConfig? = null
+            private var allocateLoadBalancerNodePorts: Boolean? = null
+            var trafficDistribution: String? = null
+
+            fun selector(vararg selectors: Pair<String, String>) {
+                selector = selectors.toMap()
+            }
+
+            fun ports(scope: ServicePort.Group.() -> Unit) {
+                ports = ServicePort.Group().apply(scope).ports()
+            }
+
+            fun ipFamilies(vararg families: String) {
+                ipFamilies = families.toList()
+            }
+
+            fun clusterIPs(vararg ips: String) {
+                clusterIPs = ips.toList()
+            }
+
+            fun externalIPs(vararg ips: String) {
+                externalIPs = ips.toList()
+            }
+
+            fun loadBalancerSourceRanges(vararg ranges: String) {
+                loadBalancerSourceRanges = ranges.toList()
+            }
+
+            fun publishNotReadyAddresses(value: Boolean = true) {
+                publishNotReadyAddresses = value
+            }
+
+            fun sessionAffinityConfig(scope: SessionAffinityConfig.Builder.() -> Unit) {
+                sessionAffinityConfig = SessionAffinityConfig.Builder().apply(scope).build()
+            }
+
+            fun allocateLoadBalancerNodePorts(value: Boolean = true) {
+                allocateLoadBalancerNodePorts = value
+            }
+
+            override fun build(): Spec {
+                return Spec(
+                    selector = selector,
+                    ports = ports,
+                    type = type,
+                    ipFamilies = ipFamilies,
+                    ipFamilyPolicy = ipFamilyPolicy,
+                    clusterIP = clusterIP,
+                    clusterIPs = clusterIPs,
+                    externalIPs = externalIPs,
+                    sessionAffinity = sessionAffinity,
+                    loadBalancerIP = loadBalancerIP,
+                    loadBalancerSourceRanges = loadBalancerSourceRanges,
+                    loadBalancerClass = loadBalancerClass,
+                    externalName = externalName,
+                    externalTrafficPolicy = externalTrafficPolicy,
+                    internalTrafficPolicy = internalTrafficPolicy,
+                    healthCheckNodePort = healthCheckNodePort,
+                    publishNotReadyAddresses = publishNotReadyAddresses,
+                    sessionAffinityConfig = sessionAffinityConfig,
+                    allocateLoadBalancerNodePorts = allocateLoadBalancerNodePorts,
+                    trafficDistribution = trafficDistribution
+                )
+            }
+        }
+    }
 
     data class Status(
         val loadBalancer: LoadBalancerStatus? = null
-    ) : BaseStatus
+    ) : BaseStatus {
+        class Builder : DSLBuilder<Status> {
+            private var loadBalancer: LoadBalancerStatus? = null
 
-    data class Port(
-        val ports: Int,
-        val targetPort: IntOrString? = null,
-        val protocol: Protocol? = null,
-        val name: String? = null,
-        val nodePort: Int? = null,
-        val appProtocol: String? = null
-    ) : BasePort {
-        data class Status(
-            val port: Int? = null,
-            val protocol: Protocol? = null,
-            val error: String? = null
-        )
+            fun loadBalancer(scope: LoadBalancerStatus.Builder.() -> Unit) {
+                loadBalancer = LoadBalancerStatus.Builder().apply(scope).build()
+            }
+
+            override fun build(): Status {
+                return Status(
+                    loadBalancer = loadBalancer
+                )
+            }
+        }
     }
 
-    data class SessionAffinityConfig(
-        val clientIP: ClientIPConfig? = null
-    )
+    class Builder : ResourceSpecStatusDSLBuilder<
+        Service,
+        Spec,
+        Spec.Builder,
+        Status,
+        Status.Builder>(Spec.Builder(), Status.Builder()) {
+        override fun build(): Service {
+            return Service(
+                metadata = metadata,
+                spec = spec,
+                status = status
+            )
+        }
+    }
 
-    data class ClientIPConfig(val timeoutSeconds: Int? = null)
-
-    data class LoadBalancerStatus(
-        val ingress: List<LoadBalancerIngress>? = null
-    )
-
-    data class LoadBalancerIngress(
-        val hostname: String? = null,
-        val ip: String? = null,
-        val ipMode: String? = null,
-        val ports: List<Port.Status>? = null
-    ) : BaseLoadBalancerIngress
+    class Group : K8sListResource.ItemGroup<Service, Builder>(Builder()) {
+        fun service(scope: Builder.() -> Unit) {
+            item(scope)
+        }
+    }
 }

@@ -2,15 +2,13 @@ package io.violabs.picard.domain.k8sResources.workload.metric
 
 import io.violabs.picard.domain.DSLBuilder
 
-data class PodsMetricStatus(
+data class ExternalMetricStatus(
     val current: MetricValueStatus,
-    val metric: MetricIdentifier,
-    val resource: ContainerResourceMetricStatus
+    val metric: MetricIdentifier
 ) {
-    class Builder : DSLBuilder<PodsMetricStatus> {
+    class Builder : DSLBuilder<ExternalMetricStatus> {
         private var current: MetricValueStatus? = null
         private var metric: MetricIdentifier? = null
-        private var resource: ContainerResourceMetricStatus? = null
 
         fun current(block: MetricValueStatus.Builder.() -> Unit) {
             current = MetricValueStatus.Builder().apply(block).build()
@@ -20,15 +18,10 @@ data class PodsMetricStatus(
             metric = MetricIdentifier.Builder().apply(block).build()
         }
 
-        fun resource(block: ContainerResourceMetricStatus.Builder.() -> Unit) {
-            resource = ContainerResourceMetricStatus.Builder().apply(block).build()
-        }
-
-        override fun build(): PodsMetricStatus {
-            return PodsMetricStatus(
+        override fun build(): ExternalMetricStatus {
+            return ExternalMetricStatus(
                 current = requireNotNull(current),
-                metric = requireNotNull(metric),
-                resource = requireNotNull(resource)
+                metric = requireNotNull(metric)
             )
         }
     }

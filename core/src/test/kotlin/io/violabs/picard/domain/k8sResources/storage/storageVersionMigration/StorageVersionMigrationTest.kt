@@ -34,7 +34,7 @@ class StorageVersionMigrationTest : SuccessBuildSim<StorageVersionMigration, Sto
                         }
                         continueToken = PLACEHOLDER
                     }
-                    status {
+                    this.status {
                         conditions {
                             sharedCondition()
                         }

@@ -123,7 +123,7 @@ class NodeTest : SuccessBuildSim<Node, Node.Builder>() {
                         value()
                     }
 
-                    status {
+                    this.status {
                         addresses {
                             address {
                                 address = PLACEHOLDER

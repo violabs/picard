@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.metric
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DSLBuilder
 import io.violabs.picard.domain.k8sResources.Quantity
 
@@ -31,7 +32,7 @@ data class MetricTarget(
 
         override fun build(): MetricTarget {
             return MetricTarget(
-                type = requireNotNull(type),
+                type = vRequireNotNull(this::type),
                 averageUtilization = averageUtilization,
                 averageValue = averageValue,
                 value = value

@@ -14,7 +14,7 @@ import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.VersionTarget
 import io.violabs.picard.domain.k8sResources.workload.*
-import io.violabs.picard.domain.k8sResources.workload.metric.Metric
+import io.violabs.picard.domain.k8sResources.workload.metric.MetricStatus
 import java.time.LocalDateTime
 
 data class HorizontalPodAutoscaler(
@@ -34,7 +34,7 @@ data class HorizontalPodAutoscaler(
         @VersionTarget<KAPIVersion.AutoscalingV2>(KAPIVersion.AutoscalingV2::class)
         val behavior: HorizontalPodAutoscalerBehavior? = null,
         @VersionTarget<KAPIVersion.AutoscalingV2>(KAPIVersion.AutoscalingV2::class)
-        val metrics: List<Metric.Spec>? = null
+        val metrics: List<io.violabs.picard.domain.k8sResources.workload.metric.MetricSpec>? = null
     ) : BaseSpec {
         class Builder : DSLBuilder<Spec> {
             var maxReplicas: Int? = null
@@ -42,7 +42,7 @@ data class HorizontalPodAutoscaler(
             var minReplicas: Int? = null
             var targetCPUUtilizationPercentage: Int? = null
             private var behavior: HorizontalPodAutoscalerBehavior? = null
-            private var metrics: List<Metric.Spec>? = null
+            private var metrics: List<io.violabs.picard.domain.k8sResources.workload.metric.MetricSpec>? = null
 
             fun scaleTargetRef(block: CrossVersionObjectReference.Builder.() -> Unit) {
                 scaleTargetRef = CrossVersionObjectReference.Builder().apply(block).build()
@@ -52,8 +52,8 @@ data class HorizontalPodAutoscaler(
                 behavior = HorizontalPodAutoscalerBehavior.Builder().apply(block).build()
             }
 
-            fun metrics(block: Metric.Spec.Group.() -> Unit) {
-                metrics = Metric.Spec.Group().apply(block).specs()
+            fun metrics(block: io.violabs.picard.domain.k8sResources.workload.metric.MetricSpec.Group.() -> Unit) {
+                metrics = io.violabs.picard.domain.k8sResources.workload.metric.MetricSpec.Group().apply(block).specs()
             }
 
             override fun build(): Spec {
@@ -79,7 +79,7 @@ data class HorizontalPodAutoscaler(
         @VersionTarget<KAPIVersion.AutoscalingV2>(KAPIVersion.AutoscalingV2::class)
         val conditions: List<Condition>? = null,
         @VersionTarget<KAPIVersion.AutoscalingV2>(KAPIVersion.AutoscalingV2::class)
-        val currentMetrics: List<Metric.Status>? = null
+        val currentMetrics: List<MetricStatus>? = null
     ) : BaseStatus {
         class Builder : DSLBuilder<Status> {
             var currentReplicas: Int? = null
@@ -88,14 +88,14 @@ data class HorizontalPodAutoscaler(
             var observedGeneration: Long? = null
             var currentCPUUtilizationPercentage: Int? = null
             private var conditions: List<Condition>? = null
-            private var currentMetrics: List<Metric.Status>? = null
+            private var currentMetrics: List<MetricStatus>? = null
 
             fun conditions(block: StandardConditionGroup.() -> Unit) {
                 conditions = Condition.group(block)
             }
 
-            fun currentMetrics(block: Metric.Status.Group.() -> Unit) {
-                currentMetrics = Metric.Status.Group().apply(block).metrics()
+            fun currentMetrics(block: MetricStatus.Group.() -> Unit) {
+                currentMetrics = MetricStatus.Group().apply(block).statuses()
             }
 
             override fun build(): Status {

@@ -37,7 +37,7 @@ class CronJobTest : SuccessBuildSim<CronJob, CronJob.Builder>() {
                         successfulJobsHistoryLimit = 1
                         failedJobsHistoryLimit = 1
                     }
-                    status {
+                    this.status {
                         active {
                             reference {
                                 sharedObjectReference()

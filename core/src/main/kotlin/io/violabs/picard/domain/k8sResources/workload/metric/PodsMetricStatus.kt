@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.metric
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DSLBuilder
 
 data class PodsMetricStatus(
@@ -26,9 +27,9 @@ data class PodsMetricStatus(
 
         override fun build(): PodsMetricStatus {
             return PodsMetricStatus(
-                current = requireNotNull(current),
-                metric = requireNotNull(metric),
-                resource = requireNotNull(resource)
+                current = vRequireNotNull(this::current),
+                metric = vRequireNotNull(this::metric),
+                resource = vRequireNotNull(this::resource)
             )
         }
     }

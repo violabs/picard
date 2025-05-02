@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.metric
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DSLBuilder
 import io.violabs.picard.domain.LabelSelector
 
@@ -17,7 +18,7 @@ data class MetricIdentifier(
 
         override fun build(): MetricIdentifier {
             return MetricIdentifier(
-                name = requireNotNull(name),
+                name = vRequireNotNull(this::name),
                 selector = selector
             )
         }

@@ -92,7 +92,7 @@ class JobTest : SuccessBuildSim<Job, Job.Builder>() {
                         maxFailedIndexes = 1
                         podReplacementPolicy = PLACEHOLDER
                     }
-                    status {
+                    this.status {
                         startTime = NOW
                         completionTime = NOW
                         active = 1

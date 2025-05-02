@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.metric
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DSLBuilder
 import io.violabs.picard.domain.k8sResources.workload.CrossVersionObjectReference
 
@@ -27,9 +28,9 @@ data class ObjectMetricSource(
 
         override fun build(): ObjectMetricSource {
             return ObjectMetricSource(
-                describedObject = requireNotNull(describedObject),
-                metric = requireNotNull(metric),
-                target = requireNotNull(target)
+                describedObject = vRequireNotNull(this::describedObject),
+                metric = vRequireNotNull(this::metric),
+                target = vRequireNotNull(this::target)
             )
         }
     }

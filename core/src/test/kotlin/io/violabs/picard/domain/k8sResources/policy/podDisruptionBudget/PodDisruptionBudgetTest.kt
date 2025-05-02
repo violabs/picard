@@ -36,7 +36,7 @@ class PodDisruptionBudgetTest : SuccessBuildSim<PodDisruptionBudget, PodDisrupti
                         }
                         unhealthyPodEvictionPolicy = PLACEHOLDER
                     }
-                    status {
+                    this.status {
                         currentHealthy = 1
                         desiredHealthy = 1
                         disruptionsAllowed = 1

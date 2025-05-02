@@ -110,8 +110,8 @@ class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, Hor
             target = METRIC_TARGET
         )
 
-        private val METRIC_SPEC = Metric.Spec(
-            type = Metric.Type.Pods,
+        private val METRIC_SPEC = MetricSpec(
+            type = MetricType.Pods,
             containerResource = CONTAINER_RESOURCE_METRIC_SOURCE,
             external = EXTERNAL_METRIC_SOURCE,
             objectMetricSource = OBJECT_METRIC_SOURCE,
@@ -168,8 +168,8 @@ class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, Hor
             name = PLACEHOLDER
         )
 
-        private val METRIC_STATUS = Metric.Status(
-            type = Metric.Type.Pods,
+        private val METRIC_STATUS = MetricStatus(
+            type = MetricType.Pods,
             containerResource = CONTAINER_RESOURCE_METRIC_STATUS,
             external = EXTERNAL_METRIC_STATUS,
             objectMetricStatus = OBJECT_METRIC_STATUS,
@@ -205,7 +205,7 @@ class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, Hor
                         }
                         metrics {
                             metricSpec {
-                                type = Metric.Type.Pods
+                                type = MetricType.Pods
                                 containerResource {
                                     container = PLACEHOLDER
                                     name = PLACEHOLDER
@@ -252,7 +252,7 @@ class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, Hor
                             }
                         }
                     }
-                    status {
+                    this.status {
                         currentReplicas = 1
                         desiredReplicas = 1
                         lastScaleTime = NOW
@@ -262,8 +262,8 @@ class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, Hor
                             sharedCondition()
                         }
                         currentMetrics {
-                            metric {
-                                type = Metric.Type.Pods
+                            status {
+                                type = MetricType.Pods
                                 containerResource {
                                     sharedContainerResourceMetricStatus()
                                 }

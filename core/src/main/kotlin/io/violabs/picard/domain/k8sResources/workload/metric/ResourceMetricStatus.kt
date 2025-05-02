@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.metric
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseResourceMetricStatus
 import io.violabs.picard.domain.DSLBuilder
 
@@ -17,8 +18,8 @@ data class ResourceMetricStatus(
 
         override fun build(): ResourceMetricStatus {
             return ResourceMetricStatus(
-                current = requireNotNull(current),
-                name = requireNotNull(name)
+                current = vRequireNotNull(this::current),
+                name = vRequireNotNull(this::name)
             )
         }
     }

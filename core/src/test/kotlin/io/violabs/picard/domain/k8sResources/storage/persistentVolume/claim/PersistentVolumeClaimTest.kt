@@ -45,7 +45,7 @@ class PersistentVolumeClaimTest : SuccessBuildSim<PersistentVolumeClaim, Persist
                         volumeName = PLACEHOLDER
                         volumeMode = PLACEHOLDER
                     }
-                    status {
+                    this.status {
                         accessModes = PLACEHOLDER
                         allocatedResourceStatuses(PLACEHOLDER to PLACEHOLDER)
                         allocatedResources(PLACEHOLDER to PLACEHOLDER)

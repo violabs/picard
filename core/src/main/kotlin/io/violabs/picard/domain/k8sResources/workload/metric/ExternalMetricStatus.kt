@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.metric
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DSLBuilder
 
 data class ExternalMetricStatus(
@@ -20,8 +21,8 @@ data class ExternalMetricStatus(
 
         override fun build(): ExternalMetricStatus {
             return ExternalMetricStatus(
-                current = requireNotNull(current),
-                metric = requireNotNull(metric)
+                current = vRequireNotNull(this::current),
+                metric = vRequireNotNull(this::metric)
             )
         }
     }

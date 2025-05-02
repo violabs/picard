@@ -51,7 +51,7 @@ class CertificateSigningRequestTest : FullBuildSim<CertificateSigningRequest, Ce
                             username = PLACEHOLDER
                         }
 
-                        status {
+                        this.status {
                             certificate(0b1, 0b01)
                             conditions {
                                 condition {

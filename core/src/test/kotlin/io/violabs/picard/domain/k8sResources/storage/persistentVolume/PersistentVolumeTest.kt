@@ -53,7 +53,7 @@ class PersistentVolumeTest : SuccessBuildSim<PersistentVolume, PersistentVolume.
                         volumeAttributesClassName = PLACEHOLDER
                         volumeMode = PLACEHOLDER
                     }
-                    status {
+                    this.status {
                         phase = PLACEHOLDER
                         message = PLACEHOLDER
                         reason = PLACEHOLDER

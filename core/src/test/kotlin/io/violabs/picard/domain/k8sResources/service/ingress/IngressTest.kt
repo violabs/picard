@@ -106,7 +106,7 @@ class IngressTest : SuccessBuildSim<Ingress, Ingress.Builder>() {
                             }
                         }
                     }
-                    status {
+                    this.status {
                         loadBalancer {
                             hostname = PLACEHOLDER
                             ip = PLACEHOLDER

@@ -57,7 +57,7 @@ private val SUCCESS_POSSIBILITIES = possibilities<Pod, Pod.Builder> {
                 }
             }
 
-            status {  }
+            this.status {  }
         }
         expected = Pod(
             metadata = METADATA,

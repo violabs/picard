@@ -31,7 +31,7 @@ class LocalSubjectAccessReviewTest : FullBuildSim<LocalSubjectAccessReview, Loca
                 given(LocalSubjectAccessReview.Builder()) {
                     spec { sharedSubjectAccessReviewSpec() }
 
-                    status { sharedSubjectAccessReviewStatus() }
+                    this.status { sharedSubjectAccessReviewStatus() }
 
                     sharedMetadata()
                 }

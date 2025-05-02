@@ -31,7 +31,7 @@ class ServiceCIDRTest : SuccessBuildSim<ServiceCIDR, ServiceCIDR.Builder>() {
                     spec {
                         cidrs(PLACEHOLDER)
                     }
-                    status {
+                    this.status {
                         conditions {
                             condition {
                                 status = BooleanType.True

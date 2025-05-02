@@ -51,7 +51,7 @@ class DeploymentTest : SuccessBuildSim<Deployment, Deployment.Builder>() {
                         paused()
                     }
 
-                    status {
+                    this.status {
                         replicas = 1
                         availableReplicas = 1
                         unavailableReplicas = 1

@@ -46,7 +46,7 @@ class DaemonSetTest : SuccessBuildSim<DaemonSet, DaemonSet.Builder>() {
                         }
                         revisionHistoryLimit = 1
                     }
-                    status {
+                    this.status {
                         numberReady = 1
                         numberAvailable = 1
                         numberUnavailable = 1

@@ -195,7 +195,7 @@ class CustomResourceDefinitionTest : FullBuildSim<CustomResourceDefinition, Cust
                         preserveUnknownFields()
                     }
 
-                    status {
+                    this.status {
                         acceptedNames {
                             kind = PLACEHOLDER
                             plural = PLACEHOLDER

@@ -38,7 +38,7 @@ class TokenRequestTest : SuccessBuildSim<TokenRequest, TokenRequest.Builder>() {
                         expirationSeconds = 1
                     }
 
-                    status {
+                    this.status {
                         expirationTimestamp = NOW
                         token = PLACEHOLDER
                     }

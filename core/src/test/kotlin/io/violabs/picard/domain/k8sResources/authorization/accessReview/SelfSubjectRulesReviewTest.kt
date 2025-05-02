@@ -38,7 +38,7 @@ class SelfSubjectRulesReviewTest : FullBuildSim<SelfSubjectRulesReview, SelfSubj
                         namespace = PLACEHOLDER
                     }
 
-                    status {
+                    this.status {
                         incomplete()
                         nonResourceRules {
                             rule {

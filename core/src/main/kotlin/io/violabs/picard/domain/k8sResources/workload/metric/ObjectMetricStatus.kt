@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.metric
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DSLBuilder
 import io.violabs.picard.domain.k8sResources.workload.CrossVersionObjectReference
 
@@ -33,10 +34,10 @@ data class ObjectMetricStatus(
 
         override fun build(): ObjectMetricStatus {
             return ObjectMetricStatus(
-                current = requireNotNull(current),
-                describedObject = requireNotNull(describedObject),
-                metric = requireNotNull(metric),
-                pods = requireNotNull(pods)
+                current = vRequireNotNull(this::current),
+                describedObject = vRequireNotNull(this::describedObject),
+                metric = vRequireNotNull(this::metric),
+                pods = vRequireNotNull(this::pods)
             )
         }
     }

@@ -111,7 +111,7 @@ class ValidatingAdmissionPolicyTest : SuccessBuildSim<ValidatingAdmissionPolicy,
                                 }
                             }
                         }
-                        status {
+                        this.status {
                             conditions {
                                 condition {
                                     status = BooleanType.True

@@ -237,6 +237,28 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
         }
 
         @JvmStatic
+        protected val NODE_CONDITION =  NodeCondition(
+            status = BooleanType.True,
+            type = PLACEHOLDER,
+            lastProbeTime = NOW,
+            lastTransitionTime = NOW,
+            message = PLACEHOLDER,
+            reason = PLACEHOLDER
+        )
+
+        @JvmStatic
+        protected fun NodeConditionGroup.sharedNodeCondition() {
+            condition {
+                status = BooleanType.True
+                type = PLACEHOLDER
+                lastProbeTime = NOW
+                lastTransitionTime = NOW
+                message = PLACEHOLDER
+                reason = PLACEHOLDER
+            }
+        }
+
+        @JvmStatic
         protected val OBJECT_REFERENCE = ObjectReference(
             apiVersion = KAPIVersion.APIRegistrationV1,
             fieldPath = PLACEHOLDER,

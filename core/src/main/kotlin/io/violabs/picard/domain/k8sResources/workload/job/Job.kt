@@ -15,7 +15,7 @@ import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import java.time.LocalDateTime
 
-class Job(
+data class Job(
     override val apiVersion: Version = KAPIVersion.BatchV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
@@ -64,6 +64,10 @@ class Job(
             private var manualSelector: Boolean? = null
             private var podFailurePolicy: PodFailurePolicy? = null
             private var successPolicy: PodSuccessPolicy? = null
+            var backoffLimitPerIndex: Int? = null
+            var managedBy: String? = null
+            var maxFailedIndexes: Int? = null
+            var podReplacementPolicy: String? = null
 
             fun template(block: PodTemplate.Spec.Builder.() -> Unit) {
                 template = PodTemplate.Spec.Builder().apply(block).build()
@@ -103,7 +107,11 @@ class Job(
                     selector = selector,
                     manualSelector = manualSelector,
                     podFailurePolicy = podFailurePolicy,
-                    successPolicy = successPolicy
+                    successPolicy = successPolicy,
+                    backoffLimitPerIndex = backoffLimitPerIndex,
+                    managedBy = managedBy,
+                    maxFailedIndexes = maxFailedIndexes,
+                    podReplacementPolicy = podReplacementPolicy
                 )
             }
         }

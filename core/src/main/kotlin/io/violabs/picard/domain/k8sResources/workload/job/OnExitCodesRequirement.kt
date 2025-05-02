@@ -1,5 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.job
 
+import io.violabs.picard.common.vRequireNotEmpty
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DSLBuilder
 import io.violabs.picard.domain.Operator
 
@@ -13,10 +15,14 @@ data class OnExitCodesRequirement(
         private var values: List<Int>? = null
         var containerName: String? = null
 
+        fun values(vararg values: Int) {
+            this.values = values.toList()
+        }
+
         override fun build(): OnExitCodesRequirement {
             return OnExitCodesRequirement(
-                operator = requireNotNull(operator),
-                values = requireNotNull(values),
+                operator = vRequireNotNull(this::operator),
+                values = vRequireNotEmpty(this::values),
                 containerName = containerName
             )
         }

@@ -10,6 +10,14 @@ data class UncountedTerminatedPods(
         private var failed: List<String>? = null
         private var succeeded: List<String>? = null
 
+        fun failed(vararg failed: String) {
+            this.failed = failed.toList()
+        }
+
+        fun succeeded(vararg succeeded: String) {
+            this.succeeded = succeeded.toList()
+        }
+
         override fun build(): UncountedTerminatedPods {
             return UncountedTerminatedPods(
                 failed = failed,

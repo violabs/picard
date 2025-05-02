@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.job
 
+import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.ResourceListDSLBuilder
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -22,7 +23,7 @@ data class JobList(
 
         override fun build(): JobList {
             return JobList(
-                items = requireNotNull(items),
+                items = vRequireNotEmpty(this::items),
                 metadata = metadata
             )
         }

@@ -113,8 +113,6 @@ import io.violabs.picard.domain.k8sResources.workload.job.Job
 import io.violabs.picard.domain.k8sResources.workload.job.JobList
 import io.violabs.picard.domain.k8sResources.workload.pod.Pod
 import io.violabs.picard.domain.k8sResources.workload.pod.PodList
-import io.violabs.picard.domain.k8sResources.workload.podSchedulingContext.PodSchedulingContext
-import io.violabs.picard.domain.k8sResources.workload.podSchedulingContext.PodSchedulingContextList
 import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplateList
 import io.violabs.picard.domain.k8sResources.workload.priorityClass.PriorityClass
@@ -298,8 +296,6 @@ open class KAPIVersion(
     object ResourceV1Alpha3 : KAPIVersion("resource.k8s.io/v1alpha3"),
         DeviceClass.Version,
         DeviceClassList.Version,
-        PodSchedulingContext.Version,
-        PodSchedulingContextList.Version,
         ResourceClaim.Version,
         ResourceClaimList.Version,
         ResourceClaimTemplate.Version,

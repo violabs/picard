@@ -12,6 +12,7 @@ import io.violabs.picard.domain.k8sResources.authorization.PolicyRule
 import io.violabs.picard.domain.k8sResources.authorization.RoleRef
 import io.violabs.picard.domain.k8sResources.policy.MatchResources
 import io.violabs.picard.domain.k8sResources.policy.NamedRuleWithOperations
+import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelector
 import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelectorTerm
 import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
 import org.junit.jupiter.api.TestTemplate
@@ -294,6 +295,11 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
         )
 
         @JvmStatic
+        protected val NODE_SELECTOR = NodeSelector(
+            nodeSelectorTerms = listOf(NODE_SELECTOR_TERM)
+        )
+
+        @JvmStatic
         protected fun NodeSelectorTerm.Builder.sharedNodeSelectorTerm() {
             matchExpressions {
                 requirement {
@@ -367,5 +373,11 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
                 }
             }
         }
+
+        @JvmStatic
+        protected val OPAQUE_DEVICE_CONFIG = OpaqueDeviceConfiguration(
+            driver = PLACEHOLDER,
+            parameters = PLACEHOLDER
+        )
     }
 }

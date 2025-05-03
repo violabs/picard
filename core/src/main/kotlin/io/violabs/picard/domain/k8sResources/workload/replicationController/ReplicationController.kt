@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.replicationController
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
@@ -68,7 +69,7 @@ data class ReplicationController(
 
             override fun build(): Status {
                 return Status(
-                    replicas = requireNotNull(replicas),
+                    replicas = vRequireNotNull(this::replicas),
                     availableReplicas = availableReplicas,
                     readyReplicas = readyReplicas,
                     fullyLabeledReplicas = fullyLabeledReplicas,

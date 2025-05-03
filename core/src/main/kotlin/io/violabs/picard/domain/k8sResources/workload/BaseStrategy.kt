@@ -13,8 +13,8 @@ interface BaseStrategy : BaseK8s {
     }
 
     data class RollingUpdate(
-        val maxSurge: Int,
-        val maxUnavailable: Int
+        val maxSurge: Int? = null,
+        val maxUnavailable: Int? = null
     ) {
         class Builder : DSLBuilder<RollingUpdate> {
             private var maxSurge: Int? = null
@@ -38,8 +38,8 @@ interface BaseStrategy : BaseK8s {
 
             override fun build(): RollingUpdate {
                 return RollingUpdate(
-                    maxSurge = requireNotNull(maxSurge),
-                    maxUnavailable = requireNotNull(maxUnavailable)
+                    maxSurge = maxSurge,
+                    maxUnavailable = maxUnavailable
                 )
             }
         }

@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.DSLBuilder
 
 data class CrossVersionObjectReference(
@@ -14,8 +15,8 @@ data class CrossVersionObjectReference(
 
         override fun build(): CrossVersionObjectReference {
             return CrossVersionObjectReference(
-                kind = requireNotNull(kind),
-                name = requireNotNull(name),
+                kind = vRequireNotNull(this::kind),
+                name = vRequireNotNull(this::name),
                 apiVersion = apiVersion
             )
         }

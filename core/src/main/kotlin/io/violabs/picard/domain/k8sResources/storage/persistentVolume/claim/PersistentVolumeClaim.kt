@@ -133,6 +133,8 @@ data class PersistentVolumeClaim(
     }
 
     class Group : K8sListResource.ItemGroup<PersistentVolumeClaim, Builder>(Builder()) {
+        fun claims(): List<PersistentVolumeClaim>? = items()
+
         fun claim(scope: Builder.() -> Unit) {
             item(scope)
         }

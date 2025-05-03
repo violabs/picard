@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BuilderGroup
 import io.violabs.picard.domain.DSLBuilder
 
@@ -17,7 +18,7 @@ data class Device(
 
         override fun build(): Device {
             return Device(
-                name = requireNotNull(name),
+                name = vRequireNotNull(this::name),
                 basic = basic
             )
         }

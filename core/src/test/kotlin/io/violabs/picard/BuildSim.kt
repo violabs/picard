@@ -12,6 +12,8 @@ import io.violabs.picard.domain.k8sResources.authorization.PolicyRule
 import io.violabs.picard.domain.k8sResources.authorization.RoleRef
 import io.violabs.picard.domain.k8sResources.policy.MatchResources
 import io.violabs.picard.domain.k8sResources.policy.NamedRuleWithOperations
+import io.violabs.picard.domain.k8sResources.workload.BaseStrategy
+import io.violabs.picard.domain.k8sResources.workload.UpdateStrategy
 import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelector
 import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelectorTerm
 import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
@@ -386,6 +388,15 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
             generation = 1,
             name = PLACEHOLDER,
             resourceSliceCount = 1
+        )
+
+        @JvmStatic
+        protected val UPDATE_STRATEGY = UpdateStrategy(
+            type = BaseStrategy.Type.RollingUpdate,
+            rollingUpdate = BaseStrategy.RollingUpdate(
+                maxUnavailable = 1,
+                maxSurge = 1
+            )
         )
     }
 }

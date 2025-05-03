@@ -1,20 +1,33 @@
 package io.violabs.picard.domain.k8sResources.workload
 
-import io.violabs.picard.domain.k8sResources.Quantity
+import io.violabs.picard.domain.BuilderGroup
+import io.violabs.picard.domain.DSLBuilder
 
 data class Device(
     val name: String,
-    val basic: Basic? = null
+    val basic: DeviceBasic? = null
 ) {
-    data class Basic(
-        val attributes: Map<String, Attribute>? = null,
-        val capacity: Map<String, Quantity>? = null
-    )
+    class Builder : DSLBuilder<Device> {
+        var name: String? = null
+        private var basic: DeviceBasic? = null
 
-    data class Attribute(
-        val bool: Boolean? = null,
-        val int: Long? = null,
-        val string: String? = null,
-        val version: String? = null
-    )
+        fun basic(block: DeviceBasic.Builder.() -> Unit) {
+            basic = DeviceBasic.Builder().apply(block).build()
+        }
+
+        override fun build(): Device {
+            return Device(
+                name = requireNotNull(name),
+                basic = basic
+            )
+        }
+    }
+
+    class Group : BuilderGroup<Device, Builder>(Builder()) {
+        fun devices(): List<Device>? = items()
+
+        fun device(block: Builder.() -> Unit) {
+            add(block)
+        }
+    }
 }

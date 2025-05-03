@@ -15,6 +15,7 @@ import io.violabs.picard.domain.k8sResources.policy.NamedRuleWithOperations
 import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelector
 import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelectorTerm
 import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
+import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourcePool
 import org.junit.jupiter.api.TestTemplate
 import java.time.Instant
 import java.time.LocalDateTime
@@ -378,6 +379,13 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
         protected val OPAQUE_DEVICE_CONFIG = OpaqueDeviceConfiguration(
             driver = PLACEHOLDER,
             parameters = PLACEHOLDER
+        )
+
+        @JvmStatic
+        protected val RESOURCE_POOL = ResourcePool(
+            generation = 1,
+            name = PLACEHOLDER,
+            resourceSliceCount = 1
         )
     }
 }

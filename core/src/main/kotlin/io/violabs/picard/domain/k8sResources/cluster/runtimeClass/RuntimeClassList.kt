@@ -1,17 +1,17 @@
 package io.violabs.picard.domain.k8sResources.cluster.runtimeClass
 
+import io.violabs.picard.common.ResourceListDSLBuilder
 import io.violabs.picard.common.vRequireNotEmpty
+import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
-import io.violabs.picard.domain.ListMeta
-import io.violabs.picard.common.ResourceListDSLBuilder
-import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.manifest.ClusterListResource
 
 data class RuntimeClassList(
     override val apiVersion: Version = KAPIVersion.NodeV1,
     override val items: List<RuntimeClass>,
     override val metadata: ListMeta? = null
-) : K8sListResource<RuntimeClassList.Version, RuntimeClass> {
+) : ClusterListResource<RuntimeClassList.Version, RuntimeClass> {
     interface Version : APIVersion
 
     class Builder : ResourceListDSLBuilder<

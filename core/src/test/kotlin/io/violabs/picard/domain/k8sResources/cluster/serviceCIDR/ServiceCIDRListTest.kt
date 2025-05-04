@@ -20,7 +20,7 @@ class ServiceCIDRListTest : FullBuildSim<ServiceCIDRList, ServiceCIDRList.Builde
                 id = "minimum"
                 given(ServiceCIDRList.Builder()) {
                     items {
-                        serviceCIDR {  }
+                        serviceCIDRItem {  }
                     }
                 }
                 expected = ServiceCIDRList(

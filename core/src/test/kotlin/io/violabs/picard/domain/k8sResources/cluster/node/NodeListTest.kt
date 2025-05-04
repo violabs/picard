@@ -20,7 +20,7 @@ class NodeListTest : FullBuildSim<NodeList, NodeList.Builder>() {
                 id = "minimum"
                 given(NodeList.Builder()) {
                     items {
-                        node {  }
+                        nodeItem {  }
                     }
                 }
                 expected = NodeList(

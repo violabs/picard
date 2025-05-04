@@ -20,7 +20,7 @@ class LeaseListTest : FullBuildSim<LeaseList, LeaseList.Builder>() {
                 id = "minimum"
                 given(LeaseList.Builder()) {
                     items {
-                        lease {}
+                        leaseItem {}
                     }
                 }
                 expected = LeaseList(

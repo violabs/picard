@@ -3,6 +3,8 @@ package io.violabs.picard.domain.manifest
 
 import io.violabs.picard.FullBuildSim
 import io.violabs.picard.domain.k8sResources.authentication.tokenRequest.TokenRequest
+import io.violabs.picard.domain.k8sResources.authorization.clusterRole.ClusterRole
+import io.violabs.picard.domain.k8sResources.cluster.apiService.APIService
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
@@ -23,11 +25,25 @@ class ManifestTest : FullBuildSim<Manifest, Manifest.Builder>() {
                     authentication {
                         tokenRequest { }
                     }
+
+                    authorization {
+                        clusterRole { }
+                    }
+
+                    cluster {
+                        apiService { }
+                    }
                 }
                 expected = Manifest(
                     resources = listOf(
                         AuthenticationResourceSection(
                             resources = listOf(TokenRequest())
+                        ),
+                        AuthorizationResourceSection(
+                            resources = listOf(ClusterRole())
+                        ),
+                        ClusterResourceSection(
+                            resources = listOf(APIService())
                         )
                     )
                 )

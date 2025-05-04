@@ -2,20 +2,22 @@ package io.violabs.picard.domain.k8sResources.cluster.namespace
 
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
-import io.violabs.picard.domain.*
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.BaseStatus
+import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.condition.Condition
 import io.violabs.picard.domain.condition.StandardConditionGroup
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
-import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
+import io.violabs.picard.domain.manifest.ClusterResource
 
 data class Namespace(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : K8sResource<Namespace.Version> {
+) : ClusterResource<Namespace.Version> {
     interface Version : APIVersion
 
     data class Spec(
@@ -58,9 +60,9 @@ data class Namespace(
         Spec.Builder,
         Status,
         Status.Builder>(
-            Spec.Builder(),
-            Status.Builder()
-        ) {
+        Spec.Builder(),
+        Status.Builder()
+    ) {
         override fun build(): Namespace {
             return Namespace(
                 metadata = metadata,

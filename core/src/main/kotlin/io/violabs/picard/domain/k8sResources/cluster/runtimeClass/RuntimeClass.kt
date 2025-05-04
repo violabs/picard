@@ -4,6 +4,7 @@ import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.common.ResourceDSLBuilder
 import io.violabs.picard.domain.k8sResources.*
+import io.violabs.picard.domain.manifest.ClusterResource
 
 data class RuntimeClass(
     override val apiVersion: Version = KAPIVersion.NodeV1,
@@ -11,7 +12,7 @@ data class RuntimeClass(
     override val metadata: ObjectMetadata? = null,
     val overhead: RuntimeClassOverhead? = null,
     val scheduling: RuntimeClassScheduling? = null
-    ) : K8sResource<RuntimeClass.Version> {
+    ) : ClusterResource<RuntimeClass.Version> {
     interface Version : APIVersion
 
     class Builder : ResourceDSLBuilder<RuntimeClass>() {

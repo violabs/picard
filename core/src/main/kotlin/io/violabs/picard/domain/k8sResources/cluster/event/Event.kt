@@ -6,8 +6,8 @@ import io.violabs.picard.domain.ObjectReference
 import io.violabs.picard.common.ResourceDSLBuilder
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
-import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
+import io.violabs.picard.domain.manifest.ClusterResource
 import java.time.Instant
 import java.time.LocalDateTime
 
@@ -28,7 +28,7 @@ data class Event(
     val reportingInstance: String? = null,
     val series: EventSeries? = null,
     val type: Type? = null
-) : K8sResource<Event.Version> {
+) : ClusterResource<Event.Version> {
     interface Version : APIVersion
 
     enum class Type {
@@ -89,7 +89,7 @@ data class Event(
     }
 
     class Group : K8sListResource.ItemGroup<Event, Builder>(Builder()) {
-        fun event(scope: Builder.() -> Unit) {
+        fun eventItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

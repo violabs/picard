@@ -15,6 +15,16 @@ data class Manifest(
             resources.add(section)
         }
 
+        fun authorization(block: AuthorizationResourceSection.Builder.() -> Unit) {
+            val section = AuthorizationResourceSection.Builder().apply(block).build()
+            resources.add(section)
+        }
+
+        fun cluster(block: ClusterResourceSection.Builder.() -> Unit) {
+            val section = ClusterResourceSection.Builder().apply(block).build()
+            resources.add(section)
+        }
+
         override fun build(): Manifest {
             return Manifest(
                 resources = vRequireNotEmpty(this::resources)

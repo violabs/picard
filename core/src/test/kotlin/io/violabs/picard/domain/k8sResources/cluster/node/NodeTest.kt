@@ -3,7 +3,6 @@ package io.violabs.picard.domain.k8sResources.cluster.node
 
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.Taint
-import io.violabs.picard.domain.k8sResources.cluster.DaemonEndpoint
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 

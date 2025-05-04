@@ -2,6 +2,7 @@ package io.violabs.picard.domain.k8sResources.cluster
 
 
 import io.violabs.picard.FailureBuildSim
+import io.violabs.picard.domain.k8sResources.cluster.node.DaemonEndpoint
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 

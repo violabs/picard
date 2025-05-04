@@ -22,7 +22,7 @@ class ValidatingAdmissionPolicyBindingListTest :
                     id = "minimum"
                     given(ValidatingAdmissionPolicyBindingList.Builder()) {
                         items {
-                            binding {  }
+                            validatingAdmissionPolicyBindingItem {  }
                         }
                     }
                     expected = ValidatingAdmissionPolicyBindingList(

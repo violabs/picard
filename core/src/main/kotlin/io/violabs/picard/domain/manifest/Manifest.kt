@@ -35,6 +35,11 @@ data class Manifest(
             resources.add(section)
         }
 
+        fun policy(block: PolicyResourceSection.Builder.() -> Unit) {
+            val section = PolicyResourceSection.Builder().apply(block).build()
+            resources.add(section)
+        }
+
         override fun build(): Manifest {
             return Manifest(
                 resources = vRequireNotEmpty(this::resources)

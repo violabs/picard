@@ -7,6 +7,7 @@ import io.violabs.picard.domain.k8sResources.authorization.clusterRole.ClusterRo
 import io.violabs.picard.domain.k8sResources.cluster.apiService.APIService
 import io.violabs.picard.domain.k8sResources.config.configMap.ConfigMap
 import io.violabs.picard.domain.k8sResources.extend.webhook.mutatingWebhookConfig.MutatingWebhookConfiguration
+import io.violabs.picard.domain.k8sResources.policy.flowSchema.FlowSchema
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
@@ -43,6 +44,10 @@ class ManifestTest : FullBuildSim<Manifest, Manifest.Builder>() {
                     extend {
                         mutatingWebhook { }
                     }
+
+                    policy {
+                        flowSchema { }
+                    }
                 }
                 expected = Manifest(
                     resources = listOf(
@@ -60,6 +65,9 @@ class ManifestTest : FullBuildSim<Manifest, Manifest.Builder>() {
                         ),
                         ExtendResourceSection(
                             resources = listOf(MutatingWebhookConfiguration())
+                        ),
+                        PolicyResourceSection(
+                            resources = listOf(FlowSchema())
                         )
                     )
                 )

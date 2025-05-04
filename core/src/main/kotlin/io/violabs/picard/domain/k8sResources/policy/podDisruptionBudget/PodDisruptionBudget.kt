@@ -3,11 +3,17 @@ package io.violabs.picard.domain.k8sResources.policy.podDisruptionBudget
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.*
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.BaseStatus
+import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.condition.ServiceCondition
 import io.violabs.picard.domain.condition.ServiceConditionGroup
-import io.violabs.picard.domain.k8sResources.*
+import io.violabs.picard.domain.k8sResources.APIVersion
+import io.violabs.picard.domain.k8sResources.IntOrString
+import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.label.LabelSelector
+import io.violabs.picard.domain.manifest.PolicyResource
 import java.time.LocalDateTime
 
 data class PodDisruptionBudget(
@@ -15,7 +21,7 @@ data class PodDisruptionBudget(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : K8sResource<PodDisruptionBudget.Version> {
+) : PolicyResource<PodDisruptionBudget.Version> {
     interface Version : APIVersion
 
     data class Spec(
@@ -115,9 +121,9 @@ data class PodDisruptionBudget(
             )
         }
     }
-    
+
     class Group : K8sListResource.ItemGroup<PodDisruptionBudget, Builder>(Builder()) {
-        fun budget(scope: Builder.() -> Unit) {
+        fun podDisruptionBudgetItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

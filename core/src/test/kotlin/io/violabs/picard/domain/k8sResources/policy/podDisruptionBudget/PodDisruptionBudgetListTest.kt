@@ -20,7 +20,7 @@ class PodDisruptionBudgetListTest : FullBuildSim<PodDisruptionBudgetList, PodDis
                 id = "minimum"
                 given(PodDisruptionBudgetList.Builder()) {
                     items {
-                        budget {  }
+                        podDisruptionBudgetItem {  }
                     }
                 }
                 expected = PodDisruptionBudgetList(

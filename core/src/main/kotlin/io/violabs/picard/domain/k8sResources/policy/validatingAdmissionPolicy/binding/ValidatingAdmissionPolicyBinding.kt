@@ -1,21 +1,21 @@
 package io.violabs.picard.domain.k8sResources.policy.validatingAdmissionPolicy.binding
 
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.ResourceSpecDSLBuilder
+import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
-import io.violabs.picard.domain.k8sResources.K8sResource
+import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.policy.MatchResources
 import io.violabs.picard.domain.k8sResources.policy.ParamRef
-import io.violabs.picard.domain.BaseSpec
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecDSLBuilder
-import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.manifest.PolicyResource
 
 data class ValidatingAdmissionPolicyBinding(
     override val apiVersion: Version = KAPIVersion.AdmissionRegistrationV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null
-) : K8sResource<ValidatingAdmissionPolicyBinding.Version> {
+) : PolicyResource<ValidatingAdmissionPolicyBinding.Version> {
     interface Version : APIVersion
 
     data class Spec(
@@ -53,7 +53,7 @@ data class ValidatingAdmissionPolicyBinding(
     }
 
     class Group : K8sListResource.ItemGroup<ValidatingAdmissionPolicyBinding, Builder>(Builder()) {
-        fun binding(scope: Builder.() -> Unit) {
+        fun validatingAdmissionPolicyBindingItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

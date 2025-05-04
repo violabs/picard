@@ -20,7 +20,7 @@ class LimitRangeListTest : FullBuildSim<LimitRangeList, LimitRangeList.Builder>(
                 id = "minimum"
                 given(LimitRangeList.Builder()) {
                     items {
-                        range {  }
+                        limitRangeItem {  }
                     }
                 }
                 expected = LimitRangeList(

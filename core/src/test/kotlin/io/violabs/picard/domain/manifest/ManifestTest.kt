@@ -5,6 +5,8 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.domain.k8sResources.authentication.tokenRequest.TokenRequest
 import io.violabs.picard.domain.k8sResources.authorization.clusterRole.ClusterRole
 import io.violabs.picard.domain.k8sResources.cluster.apiService.APIService
+import io.violabs.picard.domain.k8sResources.config.configMap.ConfigMap
+import io.violabs.picard.domain.k8sResources.extend.webhook.mutatingWebhookConfig.MutatingWebhookConfiguration
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
@@ -33,6 +35,14 @@ class ManifestTest : FullBuildSim<Manifest, Manifest.Builder>() {
                     cluster {
                         apiService { }
                     }
+
+                    config {
+                        configMap { }
+                    }
+
+                    extend {
+                        mutatingWebhook { }
+                    }
                 }
                 expected = Manifest(
                     resources = listOf(
@@ -44,6 +54,12 @@ class ManifestTest : FullBuildSim<Manifest, Manifest.Builder>() {
                         ),
                         ClusterResourceSection(
                             resources = listOf(APIService())
+                        ),
+                        ConfigResourceSection(
+                            resources = listOf(ConfigMap())
+                        ),
+                        ExtendResourceSection(
+                            resources = listOf(MutatingWebhookConfiguration())
                         )
                     )
                 )

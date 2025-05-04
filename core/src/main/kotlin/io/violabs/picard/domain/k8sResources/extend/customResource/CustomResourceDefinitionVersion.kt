@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.extend.customResource
 
+import io.violabs.picard.common.BuilderGroup
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.domain.k8sResources.extend.json.SelectableField
@@ -67,6 +68,14 @@ data class CustomResourceDefinitionVersion(
                 selectableFields = selectableFields,
                 subresources = subresources
             )
+        }
+    }
+
+    class Group : BuilderGroup<CustomResourceDefinitionVersion, Builder>(Builder()) {
+        fun versions(): List<CustomResourceDefinitionVersion>? = items()
+
+        fun version(scope: Builder.() -> Unit) {
+            add(scope)
         }
     }
 }

@@ -25,6 +25,16 @@ data class Manifest(
             resources.add(section)
         }
 
+        fun config(block: ConfigResourceSection.Builder.() -> Unit) {
+            val section = ConfigResourceSection.Builder().apply(block).build()
+            resources.add(section)
+        }
+
+        fun extend(block: ExtendResourceSection.Builder.() -> Unit) {
+            val section = ExtendResourceSection.Builder().apply(block).build()
+            resources.add(section)
+        }
+
         override fun build(): Manifest {
             return Manifest(
                 resources = vRequireNotEmpty(this::resources)

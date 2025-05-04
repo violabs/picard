@@ -101,9 +101,11 @@ class CustomResourceDefinitionTest : FullBuildSim<CustomResourceDefinition, Cust
                         }
                         scope = PLACEHOLDER
                         versions {
-                            name = PLACEHOLDER
-                            served()
-                            storage()
+                            version {
+                                name = PLACEHOLDER
+                                served()
+                                storage()
+                            }
                         }
                     }
                 }
@@ -141,39 +143,41 @@ class CustomResourceDefinitionTest : FullBuildSim<CustomResourceDefinition, Cust
                         }
                         scope = PLACEHOLDER
                         versions {
-                            name = PLACEHOLDER
-                            served()
-                            storage()
-                            additionalPrinterColumns {
-                                definition {
-                                    jsonPath = PLACEHOLDER
-                                    name = PLACEHOLDER
-                                    type = PLACEHOLDER
-                                    description = PLACEHOLDER
-                                    format = PLACEHOLDER
-                                    priority = 1
+                            version {
+                                name = PLACEHOLDER
+                                served()
+                                storage()
+                                additionalPrinterColumns {
+                                    definition {
+                                        jsonPath = PLACEHOLDER
+                                        name = PLACEHOLDER
+                                        type = PLACEHOLDER
+                                        description = PLACEHOLDER
+                                        format = PLACEHOLDER
+                                        priority = 1
+                                    }
                                 }
-                            }
-                            deprecated()
-                            deprecationWarning = PLACEHOLDER
-                            schema {
-                                openAPIV3Schema {
+                                deprecated()
+                                deprecationWarning = PLACEHOLDER
+                                schema {
+                                    openAPIV3Schema {
 
+                                    }
                                 }
-                            }
-                            selectableFields {
-                                field {
-                                    jsonPath = PLACEHOLDER
+                                selectableFields {
+                                    field {
+                                        jsonPath = PLACEHOLDER
+                                    }
                                 }
-                            }
-                            subresources {
-                                status {
-                                    content = PLACEHOLDER
-                                }
-                                scale {
-                                    specReplicasPath = PLACEHOLDER
-                                    statusReplicasPath = PLACEHOLDER
-                                    labelSelectorPath = PLACEHOLDER
+                                subresources {
+                                    status {
+                                        content = PLACEHOLDER
+                                    }
+                                    scale {
+                                        specReplicasPath = PLACEHOLDER
+                                        statusReplicasPath = PLACEHOLDER
+                                        labelSelectorPath = PLACEHOLDER
+                                    }
                                 }
                             }
                         }

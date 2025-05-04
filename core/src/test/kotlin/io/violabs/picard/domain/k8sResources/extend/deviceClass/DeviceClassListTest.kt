@@ -20,7 +20,7 @@ class DeviceClassListTest : FullBuildSim<DeviceClassList, DeviceClassList.Builde
                 id = "minimum"
                 given(DeviceClassList.Builder()) {
                     items {
-                        deviceClass {
+                        deviceClassItem {
                             spec {}
                         }
                     }

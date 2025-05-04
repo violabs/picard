@@ -3,19 +3,21 @@ package io.violabs.picard.domain.k8sResources.authentication.tokenReview
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.*
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.BaseStatus
+import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
-import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.authentication.UserInfo
+import io.violabs.picard.domain.manifest.AuthenticationResource
 
 data class TokenReview(
     override val apiVersion: Version = KAPIVersion.AuthenticationV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec,
     val status: Status? = null
-) : K8sResource<TokenReview.Version> {
+) : AuthenticationResource<TokenReview.Version> {
     interface Version : APIVersion
 
     data class Spec(

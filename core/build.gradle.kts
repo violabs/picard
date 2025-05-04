@@ -1,6 +1,8 @@
 
 dependencies {
     implementation(project(":common"))
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.19.0")
+
     testImplementation(project(":core-test"))
     testImplementation("com.fasterxml.jackson.core:jackson-core:2.18.3")
     testImplementation("com.fasterxml.jackson.core:jackson-databind:2.18.3")
@@ -16,11 +18,3 @@ kover {
         }
     }
 }
-
-//koverReport {
-//    filters {
-//        excludes {
-//            annotatedBy("ExcludeFromCoverage")
-//        }
-//    }
-//}

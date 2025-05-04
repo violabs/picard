@@ -3,17 +3,18 @@ package io.violabs.picard.domain.k8sResources.authentication.clusterTrustBundle
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.ResourceSpecDSLBuilder
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.*
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
-import io.violabs.picard.domain.k8sResources.K8sResource
-import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.k8sResources.KAPIVersion
+import io.violabs.picard.domain.manifest.AuthenticationResource
 
 data class ClusterTrustBundle(
     override val apiVersion: Version = KAPIVersion.CertificatesV1Alpha1,
     val spec: Spec,
     override val metadata: ObjectMetadata? = null
-) : K8sResource<ClusterTrustBundle.Version> {
+) : AuthenticationResource<ClusterTrustBundle.Version> {
     interface Version : APIVersion
 
     data class Spec(

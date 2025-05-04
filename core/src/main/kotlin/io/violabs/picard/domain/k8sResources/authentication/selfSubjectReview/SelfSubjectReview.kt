@@ -2,17 +2,18 @@ package io.violabs.picard.domain.k8sResources.authentication.selfSubjectReview
 
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.ResourceStatusDSLBuilder
-import io.violabs.picard.domain.*
+import io.violabs.picard.domain.BaseStatus
+import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
-import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.authentication.UserInfo
+import io.violabs.picard.domain.manifest.AuthenticationResource
 
 data class SelfSubjectReview(
     override val apiVersion: Version = KAPIVersion.AuthenticationV1,
     override val metadata: ObjectMetadata? = null,
     val status: Status? = null
-) : K8sResource<SelfSubjectReview.Version> {
+) : AuthenticationResource<SelfSubjectReview.Version> {
     interface Version : APIVersion
 
     data class Status(

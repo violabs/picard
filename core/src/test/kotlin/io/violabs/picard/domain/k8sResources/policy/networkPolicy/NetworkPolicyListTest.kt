@@ -20,7 +20,7 @@ class NetworkPolicyListTest : FullBuildSim<NetworkPolicyList, NetworkPolicyList.
                 id = "minimum"
                 given(NetworkPolicyList.Builder()) {
                     items {
-                        policy {  }
+                        networkPolicyItem {  }
                     }
                 }
                 expected = NetworkPolicyList(

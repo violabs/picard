@@ -21,7 +21,7 @@ class ValidatingAdmissionPolicyListTest :
                 scenario {
                     id = "minimum"
                     given(ValidatingAdmissionPolicyList.Builder()) {
-                        items { policy {  }}
+                        items { validatingAdmissionPolicyItem {  }}
                     }
                     expected = ValidatingAdmissionPolicyList(
                         items = listOf(ValidatingAdmissionPolicy()),

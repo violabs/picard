@@ -20,7 +20,7 @@ class DaemonSetListTest : FullBuildSim<DaemonSetList, DaemonSetList.Builder>() {
                 id = "minimum"
                 given(DaemonSetList.Builder()) {
                     items {
-                        daemonSet {  }
+                        daemonSetItem {  }
                     }
                 }
                 expected = DaemonSetList(

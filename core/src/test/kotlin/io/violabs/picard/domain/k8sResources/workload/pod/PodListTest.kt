@@ -22,7 +22,7 @@ class PodListTest : FullBuildSim<PodList, PodList.Builder>() {
                 id = "minimum"
                 given(PodList.Builder()) {
                     items {
-                        pod { }
+                        podItem { }
                     }
                 }
                 expected = PodList(
@@ -34,7 +34,7 @@ class PodListTest : FullBuildSim<PodList, PodList.Builder>() {
                 id = "metadata"
                 given(PodList.Builder()) {
                     items {
-                        pod { }
+                        podItem { }
                     }
 
                     metadata {

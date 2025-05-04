@@ -2,7 +2,7 @@
 //
 //import io.violabs.picard.domain.Kind
 //import io.violabs.picard.domain.KubeletConfiguration
-//import io.violabs.picard.domain.Manifest
+//import io.violabs.picard.domain.manifest.Manifest
 //import io.violabs.picard.domain.PodResource
 //import io.violabs.picard.domain.builder.KubeletConfigurationBuilder
 //import io.violabs.picard.domain.builder.ManifestBuilder

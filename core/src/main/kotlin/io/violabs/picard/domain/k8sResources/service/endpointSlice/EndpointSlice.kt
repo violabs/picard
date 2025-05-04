@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.service.endpointSlice
 
 import io.violabs.picard.common.ResourceDSLBuilder
-import io.violabs.picard.domain.*
+import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
-import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.service.endpoint.Endpoint
 import io.violabs.picard.domain.k8sResources.service.endpoint.EndpointPort
+import io.violabs.picard.domain.manifest.ServiceResource
 
 
 data class EndpointSlice(
@@ -15,7 +15,7 @@ data class EndpointSlice(
     override val metadata: ObjectMetadata? = null,
     val endpoints: List<Endpoint>? = null,
     val ports: List<EndpointPort>? = null
-) : K8sResource<EndpointSlice.Version> {
+) : ServiceResource<EndpointSlice.Version> {
     interface Version : APIVersion
 
     class Builder : ResourceDSLBuilder<EndpointSlice>() {
@@ -40,7 +40,7 @@ data class EndpointSlice(
     }
 
     class Group : K8sListResource.ItemGroup<EndpointSlice, Builder>(Builder()) {
-        fun slice(scope: Builder.() -> Unit) {
+        fun endpointSliceItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

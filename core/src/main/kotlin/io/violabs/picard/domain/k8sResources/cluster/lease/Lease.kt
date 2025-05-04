@@ -6,15 +6,15 @@ import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.common.ResourceSpecDSLBuilder
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
-import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
+import io.violabs.picard.domain.manifest.ClusterResource
 import java.time.Instant
 
 data class Lease(
     override val apiVersion: Version = KAPIVersion.CoordinationV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null
-) : K8sResource<Lease.Version> {
+) : ClusterResource<Lease.Version> {
     interface Version : APIVersion
 
     data class Spec(
@@ -59,7 +59,7 @@ data class Lease(
     }
 
     class Group : K8sListResource.ItemGroup<Lease, Builder>(Builder()) {
-        fun lease(scope: Builder.() -> Unit) {
+        fun leaseItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

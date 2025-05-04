@@ -2,18 +2,18 @@ package io.violabs.picard.domain.k8sResources.workload.controllerRevision
 
 import io.violabs.picard.common.ResourceDSLBuilder
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.*
+import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
-import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
+import io.violabs.picard.domain.manifest.WorkloadResource
 
 data class ControllerRevision(
     override val apiVersion: Version = KAPIVersion.AppsV1,
     val revision: Long,
     override val metadata: ObjectMetadata? = null,
     val data: Any? = null
-) : K8sResource<ControllerRevision.Version> {
+) : WorkloadResource<ControllerRevision.Version> {
     interface Version : APIVersion
 
     class Builder : ResourceDSLBuilder<ControllerRevision>() {
@@ -34,7 +34,7 @@ data class ControllerRevision(
     }
 
     class Group : K8sListResource.ItemGroup<ControllerRevision, Builder>(Builder()) {
-        fun controllerRevision(scope: Builder.() -> Unit) {
+        fun controllerRevisionItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

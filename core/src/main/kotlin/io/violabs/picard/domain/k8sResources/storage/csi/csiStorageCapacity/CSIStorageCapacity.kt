@@ -2,9 +2,13 @@ package io.violabs.picard.domain.k8sResources.storage.csi.csiStorageCapacity
 
 import io.violabs.picard.common.ResourceDSLBuilder
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.*
-import io.violabs.picard.domain.k8sResources.*
+import io.violabs.picard.domain.ObjectMetadata
+import io.violabs.picard.domain.k8sResources.APIVersion
+import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.k8sResources.KAPIVersion
+import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.label.LabelSelector
+import io.violabs.picard.domain.manifest.StorageResource
 
 data class CSIStorageCapacity(
     override val apiVersion: Version = KAPIVersion.StorageV1,
@@ -13,7 +17,7 @@ data class CSIStorageCapacity(
     val capacity: Quantity? = null,
     val maximumVolumeSize: Quantity? = null,
     val nodeTopology: LabelSelector? = null
-) : K8sResource<CSIStorageCapacity.Version> {
+) : StorageResource<CSIStorageCapacity.Version> {
     interface Version : APIVersion
 
     class Builder : ResourceDSLBuilder<CSIStorageCapacity>() {
@@ -46,7 +50,7 @@ data class CSIStorageCapacity(
     }
 
     class Group : K8sListResource.ItemGroup<CSIStorageCapacity, Builder>(Builder()) {
-        fun capacity(scope: Builder.() -> Unit) {
+        fun csiStorageCapacityItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

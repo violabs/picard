@@ -1,18 +1,18 @@
 package io.violabs.picard.domain.k8sResources.workload.job
 
-import io.violabs.picard.domain.label.LabelSelector
-import io.violabs.picard.domain.k8sResources.APIVersion
-import io.violabs.picard.domain.k8sResources.KAPIVersion
-import io.violabs.picard.domain.ObjectMetadata
-import io.violabs.picard.domain.k8sResources.K8sResource
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.condition.NodeCondition
 import io.violabs.picard.domain.condition.NodeConditionGroup
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
+import io.violabs.picard.domain.label.LabelSelector
+import io.violabs.picard.domain.manifest.WorkloadResource
 import java.time.LocalDateTime
 
 data class Job(
@@ -20,7 +20,7 @@ data class Job(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : K8sResource<Job.Version> {
+) : WorkloadResource<Job.Version> {
     interface Version : APIVersion
 
     data class Spec(
@@ -187,7 +187,7 @@ data class Job(
     }
 
     class Group : K8sListResource.ItemGroup<Job, Builder>(Builder()) {
-        fun job(scope: Builder.() -> Unit) {
+        fun jobItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

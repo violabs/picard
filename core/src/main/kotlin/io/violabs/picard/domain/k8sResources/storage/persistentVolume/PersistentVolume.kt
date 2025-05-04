@@ -2,8 +2,15 @@ package io.violabs.picard.domain.k8sResources.storage.persistentVolume
 
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
-import io.violabs.picard.domain.*
-import io.violabs.picard.domain.k8sResources.*
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.BaseStatus
+import io.violabs.picard.domain.ObjectMetadata
+import io.violabs.picard.domain.ObjectReference
+import io.violabs.picard.domain.k8sResources.APIVersion
+import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.k8sResources.KAPIVersion
+import io.violabs.picard.domain.k8sResources.Quantity
+import io.violabs.picard.domain.manifest.StorageResource
 import java.time.LocalDateTime
 
 /**
@@ -16,7 +23,7 @@ data class PersistentVolume(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : K8sResource<PersistentVolume.Version> {
+) : StorageResource<PersistentVolume.Version> {
     interface Version : APIVersion
 
     data class Spec(
@@ -112,7 +119,7 @@ data class PersistentVolume(
     }
 
     class Group : K8sListResource.ItemGroup<PersistentVolume, Builder>(Builder()) {
-        fun volume(scope: Builder.() -> Unit) {
+        fun persistentVolumeItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

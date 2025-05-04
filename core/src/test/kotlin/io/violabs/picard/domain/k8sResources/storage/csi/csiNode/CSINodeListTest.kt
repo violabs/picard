@@ -20,7 +20,7 @@ class CSINodeListTest : FullBuildSim<CSINodeList, CSINodeList.Builder>() {
                 id = "minimum"
                 given(CSINodeList.Builder()) {
                     items {
-                        node {}
+                        csiNodeItem {}
                     }
                 }
                 expected = CSINodeList(

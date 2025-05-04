@@ -1,21 +1,21 @@
 package io.violabs.picard.domain.k8sResources.authorization.clusterRole
 
-import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
-import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.authorization.AggregationRule
 import io.violabs.picard.domain.k8sResources.authorization.K8sRole
 import io.violabs.picard.domain.k8sResources.authorization.PolicyRule
+import io.violabs.picard.domain.manifest.AuthorizationResource
 
 data class ClusterRole(
     override val apiVersion: Version = KAPIVersion.RBACAuthorizationV1,
     override val metadata: ObjectMetadata? = null,
     val aggregationRule: AggregationRule? = null,
     override val rules: List<PolicyRule>? = null
-) : K8sResource<ClusterRole.Version>, K8sRole {
+) : AuthorizationResource<ClusterRole.Version>, K8sRole {
     interface Version : APIVersion
 
     class Builder : ResourceDSLBuilder<ClusterRole>() {

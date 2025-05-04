@@ -20,7 +20,7 @@ class ResourceClaimListTest : FullBuildSim<ResourceClaimList, ResourceClaimList.
                 id = "minimum"
                 given(ResourceClaimList.Builder()) {
                     items {
-                        claim {
+                        resourceClaimItem {
                             spec {}
                         }
                     }

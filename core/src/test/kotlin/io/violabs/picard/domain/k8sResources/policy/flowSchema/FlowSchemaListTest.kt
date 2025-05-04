@@ -20,7 +20,7 @@ class FlowSchemaListTest : FullBuildSim<FlowSchemaList, FlowSchemaList.Builder>(
                 id = "minimum"
                 given(FlowSchemaList.Builder()) {
                     items {
-                        schema {  }
+                        flowSchemaItem {  }
                     }
                 }
                 expected = FlowSchemaList(

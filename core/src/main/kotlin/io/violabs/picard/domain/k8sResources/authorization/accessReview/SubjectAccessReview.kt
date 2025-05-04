@@ -3,19 +3,21 @@ package io.violabs.picard.domain.k8sResources.authorization.accessReview
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.*
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.BaseStatus
+import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
-import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.authorization.NonResourceAttributes
 import io.violabs.picard.domain.k8sResources.authorization.ResourceAttributes
+import io.violabs.picard.domain.manifest.AuthorizationResource
 
 data class SubjectAccessReview(
     override val apiVersion: Version = KAPIVersion.AuthorizationV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec,
     val status: Status? = null
-) : K8sResource<SubjectAccessReview.Version> {
+) : AuthorizationResource<SubjectAccessReview.Version> {
     interface Version : APIVersion
 
     data class Spec(

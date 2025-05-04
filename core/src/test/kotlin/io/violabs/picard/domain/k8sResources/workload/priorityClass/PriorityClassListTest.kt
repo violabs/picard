@@ -20,7 +20,7 @@ class PriorityClassListTest : FullBuildSim<PriorityClassList, PriorityClassList.
                 id = "minimum"
                 given(PriorityClassList.Builder()) {
                     items {
-                        priorityClass { value = 1 }
+                        priorityClassItem { value = 1 }
                     }
                 }
                 expected = PriorityClassList(

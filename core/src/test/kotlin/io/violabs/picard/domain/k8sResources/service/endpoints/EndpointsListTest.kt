@@ -20,7 +20,7 @@ class EndpointsListTest : FullBuildSim<EndpointsList, EndpointsList.Builder>() {
                 id = "minimum"
                 given(EndpointsList.Builder()) {
                     items {
-                        endpoints {  }
+                        endpointsItem {  }
                     }
                 }
                 expected = EndpointsList(

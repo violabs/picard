@@ -6,13 +6,14 @@ import io.violabs.picard.domain.*
 import io.violabs.picard.domain.condition.NodeCondition
 import io.violabs.picard.domain.condition.NodeConditionGroup
 import io.violabs.picard.domain.k8sResources.*
+import io.violabs.picard.domain.manifest.ClusterResource
 
 data class Node(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : K8sResource<Node.Version> {
+) : ClusterResource<Node.Version> {
     interface Version : APIVersion
 
     data class Spec(
@@ -170,7 +171,7 @@ data class Node(
     }
 
     class Group : K8sListResource.ItemGroup<Node, Builder>(Builder()) {
-        fun node(scope: Builder.() -> Unit) {
+        fun nodeItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

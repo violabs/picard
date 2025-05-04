@@ -20,7 +20,7 @@ class IngressListTest : FullBuildSim<IngressList, IngressList.Builder>() {
                 id = "minimum"
                 given(IngressList.Builder()) {
                     items {
-                        ingress {  }
+                        ingressItem {  }
                     }
                 }
                 expected = IngressList(

@@ -399,6 +399,13 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
         )
 
         @JvmStatic
+        protected fun ResourcePool.Builder.sharedResourcePool() {
+            generation = 1
+            name = PLACEHOLDER
+            resourceSliceCount = 1
+        }
+
+        @JvmStatic
         protected val UPDATE_STRATEGY = UpdateStrategy(
             type = BaseStrategy.Type.RollingUpdate,
             rollingUpdate = BaseStrategy.RollingUpdate(

@@ -21,7 +21,7 @@ class PersistentVolumeClaimListTest : FullBuildSim<PersistentVolumeClaimList, Pe
                     id = "minimum"
                     given(PersistentVolumeClaimList.Builder()) {
                         items {
-                            claim {  }
+                            persistentVolumeClaimItem {  }
                         }
                     }
                     expected = PersistentVolumeClaimList(items = listOf(

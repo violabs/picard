@@ -1,22 +1,22 @@
 package io.violabs.picard.domain.k8sResources.cluster.lease.candidate
 
-import io.violabs.picard.common.vRequireNotEmpty
-import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.ObjectMetadata
-import io.violabs.picard.domain.k8sResources.APIVersion
-import io.violabs.picard.domain.k8sResources.K8sResource
-import io.violabs.picard.domain.k8sResources.KAPIVersion
-import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.ResourceSpecDSLBuilder
+import io.violabs.picard.common.vRequireNotEmpty
+import io.violabs.picard.common.vRequireNotNull
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.ObjectMetadata
+import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.k8sResources.KAPIVersion
+import io.violabs.picard.domain.manifest.ClusterResource
 import java.time.Instant
 
 data class LeaseCandidate(
     override val apiVersion: Version = KAPIVersion.CoordinationV1Alpha1,
     val spec: Spec,
     override val metadata: ObjectMetadata? = null
-) : K8sResource<LeaseCandidate.Version> {
+) : ClusterResource<LeaseCandidate.Version> {
     interface Version : APIVersion
 
     data class Spec(
@@ -55,8 +55,7 @@ data class LeaseCandidate(
     class Builder : ResourceSpecDSLBuilder<LeaseCandidate, Spec, Spec.Builder>(Spec.Builder()) {
         override fun build(): LeaseCandidate {
             return LeaseCandidate(
-                spec = vRequireNotNull(this::spec),
-                metadata = metadata
+                spec = vRequireNotNull(this::spec), metadata = metadata
             )
         }
     }

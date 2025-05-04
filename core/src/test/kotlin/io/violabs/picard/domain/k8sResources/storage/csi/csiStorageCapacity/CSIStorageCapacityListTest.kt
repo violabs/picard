@@ -20,7 +20,7 @@ class CSIStorageCapacityListTest : FullBuildSim<CSIStorageCapacityList, CSIStora
                 id = "minimum"
                 given(CSIStorageCapacityList.Builder()) {
                     items {
-                        capacity {
+                        csiStorageCapacityItem {
                             storageClassName = PLACEHOLDER
                         }
                     }

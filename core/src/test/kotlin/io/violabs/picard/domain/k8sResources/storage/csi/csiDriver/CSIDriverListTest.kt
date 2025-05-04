@@ -20,7 +20,7 @@ class CSIDriverListTest : FullBuildSim<CSIDriverList, CSIDriverList.Builder>() {
                 id = "minimum"
                 given(CSIDriverList.Builder()) {
                     items {
-                        driver {  }
+                        csiDriverItem {  }
                     }
                 }
                 expected = CSIDriverList(

@@ -3,18 +3,20 @@ package io.violabs.picard.domain.k8sResources.extend.deviceClass
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.ResourceSpecDSLBuilder
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.*
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.DeviceSelector
+import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
-import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelector
+import io.violabs.picard.domain.manifest.ExtendResource
 
 data class DeviceClass(
     override val apiVersion: Version = KAPIVersion.ResourceV1Beta1,
     val spec: Spec,
     override val metadata: ObjectMetadata? = null
-) : K8sResource<DeviceClass.Version> {
+) : ExtendResource<DeviceClass.Version> {
     interface Version : APIVersion
 
     data class Spec(
@@ -59,7 +61,7 @@ data class DeviceClass(
     }
 
     class Group : K8sListResource.ItemGroup<DeviceClass, Builder>(Builder()) {
-        fun deviceClass(scope: Builder.() -> Unit) {
+        fun deviceClassItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

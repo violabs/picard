@@ -22,7 +22,7 @@ class PriorityLevelConfigurationListTest :
                     id = "minimum"
                     given(PriorityLevelConfigurationList.Builder()) {
                         items {
-                            config {  }
+                            priorityLevelConfigurationItem {  }
                         }
                     }
                     expected = PriorityLevelConfigurationList(

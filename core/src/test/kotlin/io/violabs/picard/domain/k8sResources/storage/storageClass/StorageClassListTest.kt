@@ -20,7 +20,7 @@ class StorageClassListTest : FullBuildSim<StorageClassList, StorageClassList.Bui
                 id = "minimum"
                 given(StorageClassList.Builder()) {
                     items {
-                        storageClass {
+                        storageClassItem {
                             provisioner = PLACEHOLDER
                         }
                     }

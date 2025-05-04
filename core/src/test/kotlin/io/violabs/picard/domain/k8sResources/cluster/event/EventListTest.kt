@@ -20,7 +20,7 @@ class EventListTest : FullBuildSim<EventList, EventList.Builder>() {
                 id = "minimum"
                 given(EventList.Builder()) {
                     items {
-                        event {
+                        eventItem {
                             eventTime = TIMESTAMP
                         }
                     }

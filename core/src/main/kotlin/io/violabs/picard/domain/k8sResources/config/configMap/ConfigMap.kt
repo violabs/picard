@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.config.configMap
 
+import io.violabs.picard.common.ResourceDSLBuilder
 import io.violabs.picard.domain.BinaryData
 import io.violabs.picard.domain.ObjectMetadata
-import io.violabs.picard.common.ResourceDSLBuilder
 import io.violabs.picard.domain.TextData
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
-import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
+import io.violabs.picard.domain.manifest.ConfigResource
 
 //todo: binary and text data should not share the same key - refactor
 /**
@@ -19,7 +19,7 @@ data class ConfigMap(
     val binaryData: BinaryData? = null,
     val data: TextData? = null,
     val immutable: Boolean? = null
-) : K8sResource<ConfigMap.Version> {
+) : ConfigResource<ConfigMap.Version> {
     interface Version : APIVersion
 
     class Builder : ResourceDSLBuilder<ConfigMap>() {

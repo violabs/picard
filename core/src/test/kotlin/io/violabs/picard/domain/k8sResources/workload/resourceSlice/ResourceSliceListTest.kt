@@ -20,7 +20,7 @@ class ResourceSliceListTest : FullBuildSim<ResourceSliceList, ResourceSliceList.
                 id = "minimum"
                 given(ResourceSliceList.Builder()) {
                     items {
-                        resourceSlice {
+                        resourceSliceItem {
                             spec {
                                 driver = PLACEHOLDER
                                 pool {

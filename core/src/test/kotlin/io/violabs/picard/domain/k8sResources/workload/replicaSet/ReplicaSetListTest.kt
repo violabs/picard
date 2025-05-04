@@ -20,7 +20,7 @@ class ReplicaSetListTest : FullBuildSim<ReplicaSetList, ReplicaSetList.Builder>(
                 id = "minimum"
                 given(ReplicaSetList.Builder()) {
                     items {
-                        replicaSet { }
+                        replicaSetItem { }
                     }
                 }
                 expected = ReplicaSetList(

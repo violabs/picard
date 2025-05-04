@@ -3,23 +3,23 @@ package io.violabs.picard.domain.k8sResources.workload.replicaSet
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.*
-import io.violabs.picard.domain.k8sResources.APIVersion
-import io.violabs.picard.domain.k8sResources.K8sResource
-import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
+import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.condition.Condition
+import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.domain.label.LabelSelector
+import io.violabs.picard.domain.manifest.WorkloadResource
 
 data class ReplicaSet(
     override val apiVersion: Version = KAPIVersion.AppsV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : K8sResource<ReplicaSet.Version> {
+) : WorkloadResource<ReplicaSet.Version> {
     interface Version : APIVersion
 
     data class Spec(
@@ -102,7 +102,7 @@ data class ReplicaSet(
     }
 
     class Group : K8sListResource.ItemGroup<ReplicaSet, Builder>(Builder()) {
-        fun replicaSet(scope: Builder.() -> Unit) {
+        fun replicaSetItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

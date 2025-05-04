@@ -11,13 +11,15 @@ and cli runs.
 
 # Road map
 
-* Work through basic objects
-* Create builders for basic objects
-* Create yaml mapping
-  * Test yaml mapping
-* Work on command line
-* Work on helm
+- [x] Work through basic objects
+- [x] Create builders for basic objects
+  - [x] Test
+- [ ] Create yaml mapping
+  - [ ] Test yaml mapping
+- [ ] Work on command line
+- [ ] Work on helm
 
-## Left off
+## Follow up
 
-https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/volume/
+- [ ] Documentation at builder level
+- [ ] Cloud resources

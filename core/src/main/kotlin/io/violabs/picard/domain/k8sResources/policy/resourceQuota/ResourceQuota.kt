@@ -2,16 +2,22 @@ package io.violabs.picard.domain.k8sResources.policy.resourceQuota
 
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
-import io.violabs.picard.domain.*
-import io.violabs.picard.domain.k8sResources.*
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.BaseStatus
+import io.violabs.picard.domain.ObjectMetadata
+import io.violabs.picard.domain.k8sResources.APIVersion
+import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.k8sResources.KAPIVersion
+import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.policy.ScopeSelector
+import io.violabs.picard.domain.manifest.PolicyResource
 
 data class ResourceQuota(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : K8sResource<ResourceQuota.Version> {
+) : PolicyResource<ResourceQuota.Version> {
     interface Version : APIVersion
 
     data class Spec(
@@ -45,7 +51,7 @@ data class ResourceQuota(
             }
         }
     }
-    
+
     data class Status(
         val hard: Map<String, Quantity>? = null,
         val used: Map<String, Quantity>? = null
@@ -88,7 +94,7 @@ data class ResourceQuota(
     }
 
     class Group : K8sListResource.ItemGroup<ResourceQuota, Builder>(Builder()) {
-        fun quota(scope: Builder.() -> Unit) {
+        fun resourceQuotaItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

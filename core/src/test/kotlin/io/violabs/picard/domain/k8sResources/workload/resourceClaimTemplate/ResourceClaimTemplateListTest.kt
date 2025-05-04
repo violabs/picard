@@ -22,7 +22,7 @@ class ResourceClaimTemplateListTest : FullBuildSim<ResourceClaimTemplateList, Re
                     id = "minimum"
                     given(ResourceClaimTemplateList.Builder()) {
                         items {
-                            resourceClaimTemplate {
+                            resourceClaimTemplateItem {
                                 spec {
                                     resourceClaimSpec { }
                                 }

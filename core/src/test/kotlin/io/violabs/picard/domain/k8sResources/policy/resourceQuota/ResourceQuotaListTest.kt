@@ -20,7 +20,7 @@ class ResourceQuotaListTest : FullBuildSim<ResourceQuotaList, ResourceQuotaList.
                 id = "minimum"
                 given(ResourceQuotaList.Builder()) {
                     items {
-                        quota {  }
+                        resourceQuotaItem {  }
                     }
                 }
                 expected = ResourceQuotaList(

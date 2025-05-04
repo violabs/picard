@@ -20,7 +20,7 @@ class StatefulSetListTest : FullBuildSim<StatefulSetList, StatefulSetList.Builde
                 id = "minimum"
                 given(StatefulSetList.Builder()) {
                     items {
-                        statefulSet { }
+                        statefulSetItem { }
                     }
                 }
                 expected = StatefulSetList(

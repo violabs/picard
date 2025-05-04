@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.authentication.certificateSigningR
 
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.ListMeta
-import io.violabs.picard.domain.ResourceListDSLBuilder
+import io.violabs.picard.common.ResourceListDSLBuilder
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion

@@ -1,5 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.statefulSet
 
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -8,10 +10,11 @@ import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.storage.persistentVolume.claim.PersistentVolumeClaim
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
-import io.violabs.picard.domain.Condition
+import io.violabs.picard.domain.condition.Condition
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.workload.UpdateStrategy
 import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
+import io.violabs.picard.domain.label.LabelSelector
 
 data class StatefulSet(
     override val apiVersion: Version = KAPIVersion.AppsV1,
@@ -113,7 +116,7 @@ data class StatefulSet(
             var updateRevision: String? = null
             var observedGeneration: Long? = null
 
-            fun conditions(block: StandardConditionGroup.() -> Unit) {
+            fun conditions(block: io.violabs.picard.domain.condition.StandardConditionGroup.() -> Unit) {
                 conditions = Condition.group(block)
             }
 

@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.workload.pod.resource
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseResourceClaim
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class PodResourceClaim(
     val name: String,

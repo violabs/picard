@@ -1,8 +1,8 @@
 package io.violabs.picard.domain.k8sResources.policy
 
 import io.violabs.picard.common.vRequireNotEmpty
-import io.violabs.picard.domain.BuilderGroup
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.BuilderGroup
+import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.domain.k8sResources.policy.rule.NonResourcePolicyRule
 import io.violabs.picard.domain.k8sResources.policy.rule.ResourcePolicyRule
 

@@ -2,6 +2,7 @@ package io.violabs.picard.domain.k8sResources.workload.pod.container.common
 
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.TestScenarioSet
+import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.domain.k8sResources.KAPIVersion

@@ -253,7 +253,7 @@ abstract class UnitSim(
             internal var expectCall: () -> Unit = {}                        // Expectation definition phase.
             internal var mockSetupCall: () -> Unit? = ::processMocks    // Mock setup phase.
             val wheneverBuilder: WheneverBuilder = WheneverBuilder()
-            internal var tearDownCall: () -> Unit = {}                      // Teardown phase.
+            internal var tearDownCall: () -> Unit = {}  // Teardown phase.
 
             fun execute() {
                 expectCall()
@@ -343,15 +343,38 @@ abstract class UnitSim(
              * @param U The type of the expected throwable.
              * @param whenFn A lambda that takes 'DynamicProperties<T>' and is expected to throw an exception of type U.
              */
-            inline fun <reified U : Throwable> wheneverThrows(crossinline scope: ExceptionBuilder<T, U>.() -> Unit) {
+            inline fun <reified U : Throwable> wheneverThrows(
+                crossinline scope: ExceptionBuilder<T, U>.() -> Unit
+            ) {
                 // Assigns a lambda that asserts an exception of type U is thrown during the execution of 'whenFn'.
                 wheneverBuilder.wheneverCall = {
                     val exceptionBuilder = ExceptionBuilder<T, U>().apply(scope)
-                    val ex = assertFailsWith<U> { exceptionBuilder.whenFn?.invoke(objectProvider) }
-                    exceptionBuilder.result?.invoke(ex)
+                    val localEx = assertFailsWith<U> { exceptionBuilder.whenFn?.invoke(objectProvider) }
+                    exceptionBuilder.result?.invoke(localEx)
                 }
             }
 
+            /**
+             * Sets up a 'whenever' function that expects a specific exception to be thrown.
+             *
+             * @param U The type of the expected throwable.
+             * @param whenFn A lambda that takes 'DynamicProperties<T>' and is expected to throw an exception of type U.
+             */
+            inline fun <reified U : Throwable> wheneverThrows(
+                exceptionMessage: String? = null,
+                crossinline exceptionBuilder: () -> Any
+            ) {
+                // Assigns a lambda that asserts an exception of type U is thrown during the execution of 'whenFn'.
+                wheneverBuilder.wheneverCall = {
+                    val localEx = assertFailsWith<U> { exceptionBuilder.invoke() }
+                    if (exceptionMessage != null) {
+                        assertOrLog(
+                            expected = exceptionMessage,
+                            actual = localEx.message
+                        )
+                    }
+                }
+            }
 
             /**
              * Defines a teardown function to be executed after test completion.

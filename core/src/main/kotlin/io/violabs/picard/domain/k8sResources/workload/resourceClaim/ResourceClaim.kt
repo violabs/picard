@@ -7,8 +7,8 @@ import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
-import io.violabs.picard.domain.DSLBuilder
-import io.violabs.picard.domain.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.domain.k8sResources.K8sListResource
 
 data class ResourceClaim(

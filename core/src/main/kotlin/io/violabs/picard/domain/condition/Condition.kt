@@ -1,5 +1,9 @@
-package io.violabs.picard.domain
+package io.violabs.picard.domain.condition
 
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.vRequireNotNull
+import io.violabs.picard.domain.BaseCondition
+import io.violabs.picard.domain.BooleanType
 import java.time.LocalDateTime
 
 typealias StandardConditionGroup = ConditionGroup<Condition, Condition.Builder>
@@ -19,8 +23,8 @@ data class Condition(
         var reason: String? = null
         override fun build(): Condition {
             return Condition(
-                status = requireNotNull(status),
-                type = requireNotNull(type),
+                status = vRequireNotNull(this::status),
+                type = vRequireNotNull(this::type),
                 lastTransitionTime = lastTransitionTime,
                 message = message,
                 reason = reason
@@ -54,8 +58,8 @@ data class NodeCondition(
         var reason: String? = null
         override fun build(): NodeCondition {
             return NodeCondition(
-                status = requireNotNull(status),
-                type = requireNotNull(type),
+                status = vRequireNotNull(this::status),
+                type = vRequireNotNull(this::type),
                 lastProbeTime = lastProbeTime,
                 lastTransitionTime = lastTransitionTime,
                 message = message,
@@ -90,8 +94,8 @@ data class ServiceCondition(
         var observedGeneration: Long? = null
         override fun build(): ServiceCondition {
             return ServiceCondition(
-                status = requireNotNull(status),
-                type = requireNotNull(type),
+                status = vRequireNotNull(this::status),
+                type = vRequireNotNull(this::type),
                 lastTransitionTime = lastTransitionTime,
                 message = message,
                 reason = reason,
@@ -122,8 +126,8 @@ data class ComponentCondition(
         var reason: String? = null
         override fun build(): ComponentCondition {
             return ComponentCondition(
-                status = requireNotNull(status),
-                type = requireNotNull(type),
+                status = vRequireNotNull(this::status),
+                type = vRequireNotNull(this::type),
                 message = message,
                 reason = reason,
             )
@@ -132,7 +136,7 @@ data class ComponentCondition(
 
     companion object {
         fun group(scope: ComponentConditionGroup.() -> Unit): List<ComponentCondition>? {
-            return ComponentConditionGroup(Builder()).apply(scope).conditions()
+            return _root_ide_package_.io.violabs.picard.domain.condition.ComponentConditionGroup(Builder()).apply(scope).conditions()
         }
     }
 }
@@ -156,8 +160,8 @@ data class SigningRequestCondition(
         var reason: String? = null
         override fun build(): SigningRequestCondition {
             return SigningRequestCondition(
-                status = requireNotNull(status),
-                type = requireNotNull(type),
+                status = vRequireNotNull(this::status),
+                type = vRequireNotNull(this::type),
                 lastTransitionTime = lastTransitionTime,
                 lastUpdateTime = lastUpdateTime,
                 message = message,

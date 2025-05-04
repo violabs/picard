@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.config.secret
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseKeySelector
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class SecretKeySelector(
     val key: String,

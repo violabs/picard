@@ -1,5 +1,8 @@
 package io.violabs.picard.domain
 
+import io.violabs.picard.common.BuilderGroup
+import io.violabs.picard.common.DSLBuilder
+
 data class DeviceSelector(
     val cel: CEL? = null
 ) {

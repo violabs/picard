@@ -2,9 +2,9 @@ package io.violabs.picard.domain.k8sResources.storage.volumeAttachment
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.domain.ObjectMetadata
-import io.violabs.picard.domain.ResourceSpecDSLBuilder
+import io.violabs.picard.common.ResourceSpecDSLBuilder
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.K8sResource

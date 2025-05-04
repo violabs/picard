@@ -1,5 +1,9 @@
-package io.violabs.picard.domain
+package io.violabs.picard.common
 
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.BaseStatus
+import io.violabs.picard.domain.ListMeta
+import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.K8sResource
 

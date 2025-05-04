@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.workload.pod.resource.ResourceStatus
 import io.violabs.picard.domain.k8sResources.workload.pod.resource.ResourceStatusGroup

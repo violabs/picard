@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.cluster.runtimeClass
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.ObjectMetadata
-import io.violabs.picard.domain.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDSLBuilder
 import io.violabs.picard.domain.k8sResources.*
 
 data class RuntimeClass(

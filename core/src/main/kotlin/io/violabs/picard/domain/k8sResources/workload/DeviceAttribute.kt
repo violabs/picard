@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload
 
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class DeviceAttribute(
     val bool: Boolean? = null,
@@ -31,7 +31,7 @@ data class DeviceAttribute(
     class MapGroup {
         private val map = mutableMapOf<String, DeviceAttribute>()
 
-        fun add(key: String, scope: DeviceAttribute.Builder.() -> Unit) {
+        fun add(key: String, scope: Builder.() -> Unit) {
             map[key] = Builder().apply(scope).build()
         }
 

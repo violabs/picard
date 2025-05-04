@@ -1,5 +1,7 @@
 package io.violabs.picard.domain.k8sResources.authentication.tokenRequest
 
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.*

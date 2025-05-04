@@ -1,5 +1,8 @@
 package io.violabs.picard.domain
 
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.vRequireNotNull
+
 data class OpaqueDeviceConfiguration(
     val driver: String,
     val parameters: Any
@@ -10,8 +13,8 @@ data class OpaqueDeviceConfiguration(
 
         override fun build(): OpaqueDeviceConfiguration {
             return OpaqueDeviceConfiguration(
-                driver = requireNotNull(driver),
-                parameters = requireNotNull(parameters)
+                driver = vRequireNotNull(this::driver),
+                parameters = vRequireNotNull(this::parameters)
             )
         }
     }

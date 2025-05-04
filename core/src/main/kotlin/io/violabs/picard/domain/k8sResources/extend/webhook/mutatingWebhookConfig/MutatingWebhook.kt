@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.extend.webhook.mutatingWebhookConf
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseWebhook
-import io.violabs.picard.domain.LabelSelector
+import io.violabs.picard.domain.label.LabelSelector
 import io.violabs.picard.domain.k8sResources.extend.webhook.MatchCondition
 import io.violabs.picard.domain.k8sResources.extend.webhook.RuleWithOperations
 import io.violabs.picard.domain.k8sResources.extend.webhook.Webhook

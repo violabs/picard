@@ -1,5 +1,7 @@
 package io.violabs.picard.domain.k8sResources.storage.persistentVolume
 
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.*
 import java.time.LocalDateTime

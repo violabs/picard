@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.dnsConfig
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class DNSConfigOption(val name: String, val value: String? = null) {
     class Builder : DSLBuilder<DNSConfigOption> {

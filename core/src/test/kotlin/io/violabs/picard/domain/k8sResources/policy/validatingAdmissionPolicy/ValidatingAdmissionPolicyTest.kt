@@ -3,7 +3,7 @@ package io.violabs.picard.domain.k8sResources.policy.validatingAdmissionPolicy
 
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.BooleanType
-import io.violabs.picard.domain.ServiceCondition
+import io.violabs.picard.domain.condition.ServiceCondition
 import io.violabs.picard.domain.k8sResources.extend.webhook.MatchCondition
 import io.violabs.picard.domain.k8sResources.policy.*
 import io.violabs.picard.possibilities

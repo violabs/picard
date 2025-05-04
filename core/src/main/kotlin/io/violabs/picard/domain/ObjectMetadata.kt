@@ -1,5 +1,9 @@
 package io.violabs.picard.domain
 
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.domain.label.Label
+import io.violabs.picard.domain.label.LabelGroup
+
 /**
  * https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/object-meta/#ObjectMeta
  * import "k8s.io/apimachinery/pkg/apis/meta/v1"

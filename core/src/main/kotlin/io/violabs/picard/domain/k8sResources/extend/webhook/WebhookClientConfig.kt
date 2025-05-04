@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.extend.webhook
 
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class WebhookClientConfig(
     val caBundle: List<Byte>? = null,

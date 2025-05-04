@@ -1,7 +1,11 @@
 package io.violabs.picard.domain.k8sResources.extend.customResource.customResourceDefinition
 
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.*
+import io.violabs.picard.domain.condition.Condition
+import io.violabs.picard.domain.condition.StandardConditionGroup
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.K8sResource

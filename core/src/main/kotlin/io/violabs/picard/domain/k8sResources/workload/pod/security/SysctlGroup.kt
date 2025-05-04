@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.security
 
 
-import io.violabs.picard.domain.BuilderGroup
+import io.violabs.picard.common.BuilderGroup
 
 class SysctlGroup : BuilderGroup<Sysctl, Sysctl.Builder>(Sysctl.Builder()) {
     fun sysctls(): MutableList<Sysctl>? = items()

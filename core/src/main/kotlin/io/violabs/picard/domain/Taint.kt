@@ -1,5 +1,9 @@
 package io.violabs.picard.domain
 
+import io.violabs.picard.common.BuilderGroup
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.vRequireNotNull
+
 data class Taint(
     val effect: Effect,
 ) {
@@ -14,7 +18,7 @@ data class Taint(
 
         override fun build(): Taint {
             return Taint(
-                effect = requireNotNull(effect)
+                effect = vRequireNotNull(this::effect)
             )
         }
     }

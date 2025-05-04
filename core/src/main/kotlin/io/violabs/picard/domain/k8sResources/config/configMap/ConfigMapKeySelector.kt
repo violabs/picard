@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.config.configMap
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class ConfigMapKeySelector(
     val key: String,

@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.policy.subject
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSubject
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class ServiceAccountSubject(
     val name: String,

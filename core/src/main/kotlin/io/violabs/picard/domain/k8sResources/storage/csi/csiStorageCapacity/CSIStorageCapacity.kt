@@ -1,8 +1,10 @@
 package io.violabs.picard.domain.k8sResources.storage.csi.csiStorageCapacity
 
+import io.violabs.picard.common.ResourceDSLBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.*
+import io.violabs.picard.domain.label.LabelSelector
 
 data class CSIStorageCapacity(
     override val apiVersion: Version = KAPIVersion.StorageV1,

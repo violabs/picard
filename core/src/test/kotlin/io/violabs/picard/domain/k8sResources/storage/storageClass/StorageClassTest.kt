@@ -2,7 +2,8 @@ package io.violabs.picard.domain.k8sResources.storage.storageClass
 
 
 import io.violabs.picard.FullBuildSim
-import io.violabs.picard.domain.TopologySelector
+import io.violabs.picard.domain.TopologySelectorTerm
+import io.violabs.picard.domain.TopologySelectorLabelRequirement
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
@@ -51,9 +52,9 @@ class StorageClassTest : FullBuildSim<StorageClass, StorageClass.Builder>() {
                     provisioner = PLACEHOLDER,
                     allowVolumeExpansion = true,
                     allowedTopologies = listOf(
-                        TopologySelector.Term(
+                        TopologySelectorTerm(
                             matchLabelExpressions = listOf(
-                                TopologySelector.LabelRequirement(
+                                TopologySelectorLabelRequirement(
                                     key = PLACEHOLDER,
                                     values = listOf(PLACEHOLDER)
                                 )

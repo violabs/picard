@@ -2,7 +2,12 @@ package io.violabs.picard
 
 import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceListDSLBuilder
 import io.violabs.picard.domain.*
+import io.violabs.picard.domain.condition.Condition
+import io.violabs.picard.domain.condition.ConditionGroup
 import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
@@ -18,6 +23,9 @@ import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelector
 import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelectorTerm
 import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
 import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourcePool
+import io.violabs.picard.domain.label.Label
+import io.violabs.picard.domain.label.LabelSelector
+import io.violabs.picard.domain.label.LabelSelectorRequirement
 import org.junit.jupiter.api.TestTemplate
 import java.time.Instant
 import java.time.LocalDateTime
@@ -241,7 +249,7 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
         }
 
         @JvmStatic
-        protected val NODE_CONDITION =  NodeCondition(
+        protected val NODE_CONDITION = _root_ide_package_.io.violabs.picard.domain.condition.NodeCondition(
             status = BooleanType.True,
             type = PLACEHOLDER,
             lastProbeTime = NOW,
@@ -251,7 +259,7 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
         )
 
         @JvmStatic
-        protected fun NodeConditionGroup.sharedNodeCondition() {
+        protected fun io.violabs.picard.domain.condition.NodeConditionGroup.sharedNodeCondition() {
             condition {
                 status = BooleanType.True
                 type = PLACEHOLDER

@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.job
 
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class UncountedTerminatedPods(
     val failed: List<String>? = null,

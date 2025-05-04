@@ -1,4 +1,7 @@
-package io.violabs.picard.domain
+package io.violabs.picard.domain.label
+
+import io.violabs.picard.common.BuilderGroup
+import io.violabs.picard.common.DSLBuilder
 
 /**
  * https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/label-selector/#LabelSelector

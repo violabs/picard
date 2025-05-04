@@ -1,5 +1,7 @@
 package io.violabs.picard.domain.k8sResources.storage.csi.csiNode
 
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.ResourceSpecDSLBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.APIVersion

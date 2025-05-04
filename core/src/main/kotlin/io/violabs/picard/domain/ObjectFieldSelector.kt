@@ -1,5 +1,7 @@
 package io.violabs.picard.domain
 
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.k8sResources.APIVersion
 
 data class ObjectFieldSelector(
@@ -11,7 +13,7 @@ data class ObjectFieldSelector(
         var apiVersion: APIVersion? = null
         override fun build(): ObjectFieldSelector {
             return ObjectFieldSelector(
-                fieldPath = requireNotNull(fieldPath) { "fieldPath is required" },
+                fieldPath = vRequireNotNull(this::fieldPath),
                 apiVersion = apiVersion
             )
         }

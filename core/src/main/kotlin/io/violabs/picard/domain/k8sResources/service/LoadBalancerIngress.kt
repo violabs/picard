@@ -1,8 +1,8 @@
 package io.violabs.picard.domain.k8sResources.service
 
 import io.violabs.picard.domain.BaseLoadBalancerIngress
-import io.violabs.picard.domain.BuilderGroup
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.BuilderGroup
+import io.violabs.picard.common.DSLBuilder
 
 data class LoadBalancerIngress(
     val hostname: String? = null,

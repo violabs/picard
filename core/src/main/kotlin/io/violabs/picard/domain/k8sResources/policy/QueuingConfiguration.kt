@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.policy
 
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class QueuingConfiguration(
     val handSize: Int? = null,

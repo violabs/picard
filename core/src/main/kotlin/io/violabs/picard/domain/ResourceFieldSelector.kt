@@ -1,5 +1,7 @@
 package io.violabs.picard.domain
 
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.k8sResources.Quantity
 
 data class ResourceFieldSelector(
@@ -18,8 +20,8 @@ data class ResourceFieldSelector(
 
         override fun build(): ResourceFieldSelector {
             return ResourceFieldSelector(
-                resource = resource ?: error("resource is required"),
-                containerName = containerName ?: error("containerName is required"),
+                resource = vRequireNotNull(this::resource),
+                containerName = vRequireNotNull(this::containerName),
                 divisor = divisor
             )
         }

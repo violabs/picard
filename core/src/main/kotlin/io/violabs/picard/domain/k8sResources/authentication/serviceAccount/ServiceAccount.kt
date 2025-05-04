@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.authentication.serviceAccount
 
+import io.violabs.picard.common.ResourceDSLBuilder
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource

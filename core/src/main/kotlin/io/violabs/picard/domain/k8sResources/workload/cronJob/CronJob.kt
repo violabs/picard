@@ -8,8 +8,8 @@ import io.violabs.picard.domain.ObjectReference
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
-import io.violabs.picard.domain.DSLBuilder
-import io.violabs.picard.domain.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.workload.job.Job
 import java.time.LocalDateTime

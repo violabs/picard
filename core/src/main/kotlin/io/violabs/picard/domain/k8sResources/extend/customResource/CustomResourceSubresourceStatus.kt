@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.extend.customResource
 
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class CustomResourceSubresourceStatus(
     val content: Any? = null

@@ -1,4 +1,8 @@
-package io.violabs.picard.domain
+package io.violabs.picard.domain.label
+
+import io.violabs.picard.common.BuilderGroup
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.vRequireNotNull
 
 data class LabelSelectorRequirement(
     val key: String,
@@ -16,8 +20,8 @@ data class LabelSelectorRequirement(
 
         override fun build(): LabelSelectorRequirement {
             return LabelSelectorRequirement(
-                key = requireNotNull(key),
-                operator = requireNotNull(operator),
+                key = vRequireNotNull(this::key),
+                operator = vRequireNotNull(this::operator),
                 values = values
             )
         }

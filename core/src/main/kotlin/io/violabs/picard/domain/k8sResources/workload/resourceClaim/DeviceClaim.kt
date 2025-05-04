@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.resourceClaim
 
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class DeviceClaim(
     val config: DeviceClaimConfiguration? = null,

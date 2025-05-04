@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.controllerRevision
 
+import io.violabs.picard.common.ResourceDSLBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.APIVersion

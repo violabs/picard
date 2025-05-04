@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload
 
 import io.violabs.picard.domain.BaseK8s
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 interface BaseStrategy : BaseK8s {
     val type: Type?

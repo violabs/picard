@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.storage.volumeAttachment
 
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class VolumeAttachmentSource(
     val persistentVolumeName: String? = null,

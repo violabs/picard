@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.authorization.accessReview
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.ObjectMetadata
-import io.violabs.picard.domain.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion

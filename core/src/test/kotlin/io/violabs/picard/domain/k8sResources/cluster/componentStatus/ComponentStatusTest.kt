@@ -3,7 +3,7 @@ package io.violabs.picard.domain.k8sResources.cluster.componentStatus
 
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.BooleanType
-import io.violabs.picard.domain.ComponentCondition
+import io.violabs.picard.domain.condition.ComponentCondition
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 

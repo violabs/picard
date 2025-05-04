@@ -1,16 +1,16 @@
 package io.violabs.picard.domain.k8sResources.workload.job
 
-import io.violabs.picard.domain.LabelSelector
+import io.violabs.picard.domain.label.LabelSelector
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
-import io.violabs.picard.domain.DSLBuilder
-import io.violabs.picard.domain.NodeCondition
-import io.violabs.picard.domain.NodeConditionGroup
-import io.violabs.picard.domain.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.domain.condition.NodeCondition
+import io.violabs.picard.domain.condition.NodeConditionGroup
+import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import java.time.LocalDateTime

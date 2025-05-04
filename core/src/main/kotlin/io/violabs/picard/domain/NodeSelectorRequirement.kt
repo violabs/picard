@@ -1,5 +1,6 @@
 package io.violabs.picard.domain
 
+import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.vRequireNotNull
 
 data class NodeSelectorRequirement(

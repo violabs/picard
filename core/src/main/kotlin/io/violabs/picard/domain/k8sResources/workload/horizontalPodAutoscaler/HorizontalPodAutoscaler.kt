@@ -3,11 +3,11 @@ package io.violabs.picard.domain.k8sResources.workload.horizontalPodAutoscaler
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
-import io.violabs.picard.domain.Condition
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.domain.condition.Condition
+import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.domain.ObjectMetadata
-import io.violabs.picard.domain.ResourceSpecStatusDSLBuilder
-import io.violabs.picard.domain.StandardConditionGroup
+import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.domain.condition.StandardConditionGroup
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.K8sResource

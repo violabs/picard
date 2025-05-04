@@ -1,4 +1,4 @@
-package io.violabs.picard.domain
+package io.violabs.picard.common
 
 abstract class BuilderGroup<T, B : DSLBuilder<T>>(protected val builder: B) {
     private val items: MutableList<T> = mutableListOf()

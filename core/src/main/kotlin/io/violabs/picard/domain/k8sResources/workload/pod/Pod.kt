@@ -1,7 +1,11 @@
 package io.violabs.picard.domain.k8sResources.workload.pod
 
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.*
+import io.violabs.picard.domain.condition.Condition
+import io.violabs.picard.domain.condition.StandardConditionGroup
 import io.violabs.picard.domain.k8sResources.*
 import io.violabs.picard.domain.k8sResources.storage.volume.Volume
 import io.violabs.picard.domain.k8sResources.storage.volume.VolumeGroup
@@ -26,7 +30,7 @@ data class Pod(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : K8sResource<Pod.Version>, Kind {
+) : K8sResource<Pod.Version> {
 
     interface Version : APIVersion
 

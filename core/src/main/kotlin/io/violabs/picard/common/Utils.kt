@@ -9,6 +9,7 @@ import kotlin.reflect.jvm.isAccessible
  * Takes in a classes property accessor and validates that is not null.
  * It used the accessor name as the default within the exception message.
  */
+@ExcludeFromCoverage
 internal fun <T> vRequireNotNull(accessor: KProperty<T?>): T {
     accessor.isAccessible = true
     return requireNotNull(accessor.getter.call()) { "${accessor.name} is required" }
@@ -19,6 +20,7 @@ internal fun <T> vRequireNotNull(accessor: KProperty<T?>): T {
  * It used the accessor name as the default within the exception message.
  * You may find problems using with nested class functions.
  */
+@ExcludeFromCoverage
 internal fun <T> vRequireNotEmpty(accessor: KProperty<List<T>?>): List<T> {
     accessor.isAccessible = true
     val accessorValue: List<T>? = accessor.call()
@@ -33,6 +35,7 @@ internal fun <T> vRequireNotEmpty(accessor: KProperty<List<T>?>): List<T> {
  * It used the accessor name as the default within the exception message.
  * You may find problems using with nested class functions.
  */
+@ExcludeFromCoverage
 internal fun <T> vRequireNotEmpty(accessor: KFunction<List<T>?>): List<T> {
     accessor.isAccessible = true
     val accessorValue: List<T>? = accessor.call()

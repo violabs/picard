@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload
 
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class Strategy(
     override val type: BaseStrategy.Type? = null,

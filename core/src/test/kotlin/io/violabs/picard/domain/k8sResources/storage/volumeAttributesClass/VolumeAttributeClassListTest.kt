@@ -20,7 +20,7 @@ class VolumeAttributeClassListTest : FullBuildSim<VolumeAttributesClassList, Vol
                 id = "minimum"
                 given(VolumeAttributesClassList.Builder()) {
                     items {
-                        attributesClass {  }
+                        volumeAttributesClassItem {  }
                     }
                 }
                 expected = VolumeAttributesClassList(

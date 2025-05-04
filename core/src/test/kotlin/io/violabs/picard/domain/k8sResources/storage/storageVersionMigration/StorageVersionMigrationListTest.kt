@@ -22,7 +22,7 @@ class StorageVersionMigrationListTest :
                     id = "minimum"
                     given(StorageVersionMigrationList.Builder()) {
                         items {
-                            migration {  }
+                            storageVersionMigrationItem {  }
                         }
                     }
                     expected = StorageVersionMigrationList(items = listOf(

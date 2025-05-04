@@ -2,11 +2,12 @@ package io.violabs.picard.domain.k8sResources.storage.storageClass
 
 import io.violabs.picard.common.ResourceDSLBuilder
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.*
+import io.violabs.picard.domain.ObjectMetadata
+import io.violabs.picard.domain.TopologySelectorTerm
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
-import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
+import io.violabs.picard.domain.manifest.StorageResource
 
 
 data class StorageClass(
@@ -19,7 +20,7 @@ data class StorageClass(
     val parameters: Map<String, String>? = null,
     val reclaimPolicy: String? = null,
     val volumeBindingMode: String? = null,
-) : K8sResource<StorageClass.Version> {
+) : StorageResource<StorageClass.Version> {
     interface Version : APIVersion
 
     class Builder : ResourceDSLBuilder<StorageClass>() {
@@ -62,7 +63,7 @@ data class StorageClass(
     }
 
     class Group : K8sListResource.ItemGroup<StorageClass, Builder>(Builder()) {
-        fun storageClass(scope: Builder.() -> Unit) {
+        fun storageClassItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

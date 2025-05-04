@@ -1,21 +1,21 @@
 package io.violabs.picard.domain.k8sResources.storage.csi.csiDriver
 
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.ResourceSpecDSLBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
-import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.domain.ObjectMetadata
-import io.violabs.picard.common.ResourceSpecDSLBuilder
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
-import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
+import io.violabs.picard.domain.manifest.StorageResource
 
 data class CSIDriver(
     override val apiVersion: Version = KAPIVersion.StorageV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null
-) : K8sResource<CSIDriver.Version> {
+) : StorageResource<CSIDriver.Version> {
     interface Version : APIVersion
 
     data class Spec(
@@ -87,7 +87,7 @@ data class CSIDriver(
     }
 
     class Group : K8sListResource.ItemGroup<CSIDriver, Builder>(Builder()) {
-        fun driver(scope: Builder.() -> Unit) {
+        fun csiDriverItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

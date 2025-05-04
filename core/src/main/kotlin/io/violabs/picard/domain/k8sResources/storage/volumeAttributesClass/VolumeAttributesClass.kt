@@ -1,18 +1,18 @@
 package io.violabs.picard.domain.k8sResources.storage.volumeAttributesClass
 
-import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
-import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
+import io.violabs.picard.domain.manifest.StorageResource
 
 data class VolumeAttributesClass(
     override val apiVersion: Version = KAPIVersion.StorageV1Beta1,
     override val metadata: ObjectMetadata? = null,
     val driverName: String? = null,
     val parameters: Map<String, String>? = null
-) : K8sResource<VolumeAttributesClass.Version> {
+) : StorageResource<VolumeAttributesClass.Version> {
     interface Version : APIVersion
 
     class Builder : ResourceDSLBuilder<VolumeAttributesClass>() {
@@ -33,7 +33,7 @@ data class VolumeAttributesClass(
     }
 
     class Group : K8sListResource.ItemGroup<VolumeAttributesClass, Builder>(Builder()) {
-        fun attributesClass(scope: Builder.() -> Unit) {
+        fun volumeAttributesClassItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

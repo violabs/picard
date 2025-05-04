@@ -50,7 +50,7 @@ class StatefulSetTest : SuccessBuildSim<StatefulSet, StatefulSet.Builder>() {
                         podManagementPolicy = PLACEHOLDER
                         revisionHistoryLimit = 1
                         volumeClaimTemplates {
-                            claim { }
+                            persistentVolumeClaimItem { }
                         }
                         minReadySeconds = 1
                         persistentVolumeClaimRetentionPolicy {

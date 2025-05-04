@@ -9,6 +9,7 @@ import io.violabs.picard.domain.k8sResources.config.configMap.ConfigMap
 import io.violabs.picard.domain.k8sResources.extend.webhook.mutatingWebhookConfig.MutatingWebhookConfiguration
 import io.violabs.picard.domain.k8sResources.policy.flowSchema.FlowSchema
 import io.violabs.picard.domain.k8sResources.service.ingress.Ingress
+import io.violabs.picard.domain.k8sResources.storage.persistentVolume.PersistentVolume
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
@@ -53,6 +54,10 @@ class ManifestTest : FullBuildSim<Manifest, Manifest.Builder>() {
                     service {
                         ingress { }
                     }
+
+                    storage {
+                        persistentVolume { }
+                    }
                 }
                 expected = Manifest(
                     resources = listOf(
@@ -76,6 +81,9 @@ class ManifestTest : FullBuildSim<Manifest, Manifest.Builder>() {
                         ),
                         ServiceResourceSection(
                             resources = listOf(Ingress())
+                        ),
+                        StorageResourceSection(
+                            resources = listOf(PersistentVolume())
                         )
                     )
                 )

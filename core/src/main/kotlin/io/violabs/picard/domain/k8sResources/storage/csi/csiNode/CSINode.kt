@@ -3,18 +3,18 @@ package io.violabs.picard.domain.k8sResources.storage.csi.csiNode
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.ResourceSpecDSLBuilder
 import io.violabs.picard.common.vRequireNotEmpty
-import io.violabs.picard.domain.*
-import io.violabs.picard.domain.k8sResources.APIVersion
-import io.violabs.picard.domain.k8sResources.K8sResource
-import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.ObjectMetadata
+import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.k8sResources.KAPIVersion
+import io.violabs.picard.domain.manifest.StorageResource
 
 data class CSINode(
     override val apiVersion: Version = KAPIVersion.StorageV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null
-) : K8sResource<CSINode.Version> {
+) : StorageResource<CSINode.Version> {
     interface Version : APIVersion
 
     data class Spec(
@@ -45,7 +45,7 @@ data class CSINode(
     }
 
     class Group : K8sListResource.ItemGroup<CSINode, Builder>(Builder()) {
-        fun node(scope: Builder.() -> Unit) {
+        fun csiNodeItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

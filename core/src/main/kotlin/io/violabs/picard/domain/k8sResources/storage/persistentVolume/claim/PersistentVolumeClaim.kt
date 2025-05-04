@@ -2,18 +2,18 @@ package io.violabs.picard.domain.k8sResources.storage.persistentVolume.claim
 
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
-import io.violabs.picard.domain.*
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.BaseStatus
+import io.violabs.picard.domain.ObjectMetadata
+import io.violabs.picard.domain.condition.Condition
 import io.violabs.picard.domain.k8sResources.APIVersion
-import io.violabs.picard.domain.k8sResources.K8sResource
+import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.storage.persistentVolume.ModifyVolumeStatus
-import io.violabs.picard.domain.BaseSpec
-import io.violabs.picard.domain.BaseStatus
-import io.violabs.picard.domain.condition.Condition
-import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.storage.volume.VolumeResourceRequirements
 import io.violabs.picard.domain.label.LabelSelector
+import io.violabs.picard.domain.manifest.StorageResource
 
 /**
  * https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/persistent-volume-claim-v1/
@@ -25,7 +25,7 @@ data class PersistentVolumeClaim(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : K8sResource<PersistentVolumeClaim.Version> {
+) : StorageResource<PersistentVolumeClaim.Version> {
     interface Version : APIVersion
 
     data class Spec(
@@ -138,7 +138,7 @@ data class PersistentVolumeClaim(
     class Group : K8sListResource.ItemGroup<PersistentVolumeClaim, Builder>(Builder()) {
         fun claims(): List<PersistentVolumeClaim>? = items()
 
-        fun claim(scope: Builder.() -> Unit) {
+        fun persistentVolumeClaimItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

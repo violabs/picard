@@ -38,6 +38,10 @@ data class Manifest(
             resources += ServiceResourceSection.Builder().apply(block).build()
         }
 
+        fun storage(block: StorageResourceSection.Builder.() -> Unit) {
+            resources += StorageResourceSection.Builder().apply(block).build()
+        }
+
         override fun build(): Manifest {
             return Manifest(
                 resources = vRequireNotEmpty(this::resources)

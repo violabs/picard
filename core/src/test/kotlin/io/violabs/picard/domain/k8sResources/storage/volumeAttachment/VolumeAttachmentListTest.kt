@@ -20,7 +20,7 @@ class VolumeAttachmentListTest : FullBuildSim<VolumeAttachmentList, VolumeAttach
                 id = "minimum"
                 given(VolumeAttachmentList.Builder()) {
                     items {
-                        attachment {  }
+                        volumeAttachmentItem {  }
                     }
                 }
                 expected = VolumeAttachmentList(

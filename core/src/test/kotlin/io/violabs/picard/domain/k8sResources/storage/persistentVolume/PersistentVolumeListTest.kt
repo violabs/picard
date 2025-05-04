@@ -20,7 +20,7 @@ class PersistentVolumeListTest : FullBuildSim<PersistentVolumeList, PersistentVo
                 id = "minimum"
                 given(PersistentVolumeList.Builder()) {
                     items {
-                        volume {  }
+                        persistentVolumeItem {  }
                     }
                 }
                 expected = PersistentVolumeList(

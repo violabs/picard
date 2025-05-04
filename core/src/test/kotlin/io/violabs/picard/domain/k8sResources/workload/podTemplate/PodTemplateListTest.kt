@@ -20,7 +20,7 @@ class PodTemplateListTest : FullBuildSim<PodTemplateList, PodTemplateList.Builde
                 id = "minimum"
                 given(PodTemplateList.Builder()) {
                     items {
-                        template {}
+                        podTemplateItem {}
                     }
                 }
                 expected = PodTemplateList(

@@ -22,7 +22,7 @@ class HorizontalPodAutoscalerListTest :
                     id = "minimum"
                     given(HorizontalPodAutoscalerList.Builder()) {
                         items {
-                            horizontalPodAutoscaler { }
+                            horizontalPodAutoscalerItem { }
                         }
                     }
                     expected = HorizontalPodAutoscalerList(

@@ -20,7 +20,7 @@ class DeploymentListTest : FullBuildSim<DeploymentList, DeploymentList.Builder>(
                 id = "minimum"
                 given(DeploymentList.Builder()) {
                     items {
-                        deployment {  }
+                        deploymentItem {  }
                     }
                 }
                 expected = DeploymentList(

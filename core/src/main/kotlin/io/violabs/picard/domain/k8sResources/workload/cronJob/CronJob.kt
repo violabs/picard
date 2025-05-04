@@ -1,17 +1,17 @@
 package io.violabs.picard.domain.k8sResources.workload.cronJob
 
-import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.k8sResources.APIVersion
-import io.violabs.picard.domain.k8sResources.KAPIVersion
-import io.violabs.picard.domain.ObjectMetadata
-import io.violabs.picard.domain.ObjectReference
-import io.violabs.picard.domain.k8sResources.K8sResource
-import io.violabs.picard.domain.BaseSpec
-import io.violabs.picard.domain.BaseStatus
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.vRequireNotNull
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.BaseStatus
+import io.violabs.picard.domain.ObjectMetadata
+import io.violabs.picard.domain.ObjectReference
+import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.workload.job.Job
+import io.violabs.picard.domain.manifest.WorkloadResource
 import java.time.LocalDateTime
 
 data class CronJob(
@@ -19,7 +19,7 @@ data class CronJob(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : K8sResource<CronJob.Version> {
+) : WorkloadResource<CronJob.Version> {
     interface Version : APIVersion
 
     data class Spec(
@@ -112,7 +112,7 @@ data class CronJob(
     }
 
     class Group : K8sListResource.ItemGroup<CronJob, Builder>(Builder()) {
-        fun cronJob(scope: Builder.() -> Unit) {
+        fun cronJobItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

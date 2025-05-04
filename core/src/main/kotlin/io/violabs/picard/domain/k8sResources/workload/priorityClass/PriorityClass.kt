@@ -1,12 +1,12 @@
 package io.violabs.picard.domain.k8sResources.workload.priorityClass
 
+import io.violabs.picard.common.ResourceDSLBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.ObjectMetadata
-import io.violabs.picard.common.ResourceDSLBuilder
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
-import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
+import io.violabs.picard.domain.manifest.WorkloadResource
 
 data class PriorityClass(
     override val apiVersion: Version = KAPIVersion.SchedulingV1,
@@ -15,7 +15,7 @@ data class PriorityClass(
     val description: String? = null,
     val globalDefault: Boolean? = null,
     val preemptionPolicy: String? = null
-) : K8sResource<PriorityClass.Version> {
+) : WorkloadResource<PriorityClass.Version> {
     interface Version : APIVersion
 
     class Builder : ResourceDSLBuilder<PriorityClass>() {
@@ -40,7 +40,7 @@ data class PriorityClass(
     }
 
     class Group : K8sListResource.ItemGroup<PriorityClass, Builder>(Builder()) {
-        fun priorityClass(scope: Builder.() -> Unit) {
+        fun priorityClassItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

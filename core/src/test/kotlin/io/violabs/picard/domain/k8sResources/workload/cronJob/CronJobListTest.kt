@@ -20,7 +20,7 @@ class CronJobListTest : FullBuildSim<CronJobList, CronJobList.Builder>() {
                 id = "minimum"
                 given(CronJobList.Builder()) {
                     items {
-                        cronJob { }
+                        cronJobItem { }
                     }
                 }
                 expected = CronJobList(

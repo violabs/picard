@@ -42,6 +42,10 @@ data class Manifest(
             resources += StorageResourceSection.Builder().apply(block).build()
         }
 
+        fun workload(block: WorkloadResourceSection.Builder.() -> Unit) {
+            resources += WorkloadResourceSection.Builder().apply(block).build()
+        }
+
         override fun build(): Manifest {
             return Manifest(
                 resources = vRequireNotEmpty(this::resources)

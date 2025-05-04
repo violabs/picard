@@ -10,6 +10,7 @@ import io.violabs.picard.domain.k8sResources.extend.webhook.mutatingWebhookConfi
 import io.violabs.picard.domain.k8sResources.policy.flowSchema.FlowSchema
 import io.violabs.picard.domain.k8sResources.service.ingress.Ingress
 import io.violabs.picard.domain.k8sResources.storage.persistentVolume.PersistentVolume
+import io.violabs.picard.domain.k8sResources.workload.pod.Pod
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
@@ -58,6 +59,10 @@ class ManifestTest : FullBuildSim<Manifest, Manifest.Builder>() {
                     storage {
                         persistentVolume { }
                     }
+
+                    workload {
+                        pod {  }
+                    }
                 }
                 expected = Manifest(
                     resources = listOf(
@@ -84,6 +89,9 @@ class ManifestTest : FullBuildSim<Manifest, Manifest.Builder>() {
                         ),
                         StorageResourceSection(
                             resources = listOf(PersistentVolume())
+                        ),
+                        WorkloadResourceSection(
+                            resources = listOf(Pod())
                         )
                     )
                 )

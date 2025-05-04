@@ -2,19 +2,19 @@ package io.violabs.picard.domain.k8sResources.workload.podTemplate
 
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.ResourceSpecDSLBuilder
-import io.violabs.picard.domain.*
-import io.violabs.picard.domain.k8sResources.APIVersion
-import io.violabs.picard.domain.k8sResources.K8sResource
-import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.ObjectMetadata
+import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.workload.pod.Pod
+import io.violabs.picard.domain.manifest.WorkloadResource
 
 data class PodTemplate(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null
-) : K8sResource<PodTemplate.Version> {
+) : WorkloadResource<PodTemplate.Version> {
     interface Version : APIVersion
 
     data class Spec(
@@ -52,7 +52,7 @@ data class PodTemplate(
     }
 
     class Group : K8sListResource.ItemGroup<PodTemplate, Builder>(Builder()) {
-        fun template(scope: Builder.() -> Unit) {
+        fun podTemplateItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

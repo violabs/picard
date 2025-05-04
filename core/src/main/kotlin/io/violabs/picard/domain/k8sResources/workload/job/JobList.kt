@@ -1,17 +1,17 @@
 package io.violabs.picard.domain.k8sResources.workload.job
 
+import io.violabs.picard.common.ResourceListDSLBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.ListMeta
-import io.violabs.picard.common.ResourceListDSLBuilder
 import io.violabs.picard.domain.k8sResources.APIVersion
-import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
+import io.violabs.picard.domain.manifest.WorkloadListResource
 
 data class JobList(
     override val apiVersion: Version = KAPIVersion.BatchV1,
     override val items: List<Job>,
     override val metadata: ListMeta? = null
-) : K8sListResource<JobList.Version, Job> {
+) : WorkloadListResource<JobList.Version, Job> {
     interface Version : APIVersion
 
     class Builder : ResourceListDSLBuilder<

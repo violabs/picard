@@ -20,7 +20,7 @@ class ControllerRevisionListTest : FullBuildSim<ControllerRevisionList, Controll
                 id = "minimum"
                 given(ControllerRevisionList.Builder()) {
                     items {
-                        controllerRevision {
+                        controllerRevisionItem {
                             revision = 1
                         }
                     }

@@ -21,7 +21,7 @@ class ReplicationControllerListTest : FullBuildSim<ReplicationControllerList, Re
                     id = "minimum"
                     given(ReplicationControllerList.Builder()) {
                         items {
-                            controller { }
+                            replicationControllerItem { }
                         }
                     }
                     expected = ReplicationControllerList(

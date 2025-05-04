@@ -20,7 +20,7 @@ class JobListTest : FullBuildSim<JobList, JobList.Builder>() {
                 id = "minimum"
                 given(JobList.Builder()) {
                     items {
-                        job { }
+                        jobItem { }
                     }
                 }
                 expected = JobList(

@@ -3,19 +3,20 @@ package io.violabs.picard.domain.k8sResources.workload.resourceSlice
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.ResourceSpecDSLBuilder
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.*
+import io.violabs.picard.domain.BaseSpec
+import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
-import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
-import io.violabs.picard.domain.k8sResources.workload.*
+import io.violabs.picard.domain.k8sResources.workload.Device
 import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelector
+import io.violabs.picard.domain.manifest.WorkloadResource
 
 data class ResourceSlice(
     override val apiVersion: Version = KAPIVersion.ResourceV1Beta1,
     val spec: Spec,
     override val metadata: ObjectMetadata? = null,
-) : K8sResource<ResourceSlice.Version> {
+) : WorkloadResource<ResourceSlice.Version> {
     interface Version : APIVersion
 
     data class Spec(
@@ -73,7 +74,7 @@ data class ResourceSlice(
     }
 
     class Group : K8sListResource.ItemGroup<ResourceSlice, Builder>(Builder()) {
-        fun resourceSlice(scope: Builder.() -> Unit) {
+        fun resourceSliceItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

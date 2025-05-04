@@ -23,6 +23,7 @@ import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceCl
 import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceClaimStatus
 import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceClaimStatusGroup
 import io.violabs.picard.domain.k8sResources.workload.pod.security.PodSecurityContext
+import io.violabs.picard.domain.manifest.WorkloadResource
 import java.time.LocalDateTime
 
 data class Pod(
@@ -30,7 +31,7 @@ data class Pod(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : K8sResource<Pod.Version> {
+) : WorkloadResource<Pod.Version> {
 
     interface Version : APIVersion
 
@@ -292,6 +293,7 @@ data class Pod(
             fun constraints(): MutableList<TopologySpreadConstraint> {
                 return constraints
             }
+
             fun constraint(scope: TopologySpreadConstraint.Builder.() -> Unit) {
                 constraints.add(TopologySpreadConstraint.Builder().apply(scope).build())
             }
@@ -404,7 +406,7 @@ data class Pod(
     }
 
     class Group : K8sListResource.ItemGroup<Pod, Builder>(Builder()) {
-        fun pod(scope: Builder.() -> Unit) {
+        fun podItem(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

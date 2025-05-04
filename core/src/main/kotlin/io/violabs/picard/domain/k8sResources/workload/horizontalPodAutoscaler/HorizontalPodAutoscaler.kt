@@ -1,20 +1,20 @@
 package io.violabs.picard.domain.k8sResources.workload.horizontalPodAutoscaler
 
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
-import io.violabs.picard.domain.condition.Condition
-import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.domain.ObjectMetadata
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.domain.condition.Condition
 import io.violabs.picard.domain.condition.StandardConditionGroup
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
-import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.VersionTarget
-import io.violabs.picard.domain.k8sResources.workload.*
+import io.violabs.picard.domain.k8sResources.workload.CrossVersionObjectReference
 import io.violabs.picard.domain.k8sResources.workload.metric.MetricStatus
+import io.violabs.picard.domain.manifest.WorkloadResource
 import java.time.LocalDateTime
 
 data class HorizontalPodAutoscaler(
@@ -22,7 +22,7 @@ data class HorizontalPodAutoscaler(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : K8sResource<HorizontalPodAutoscaler.Version> {
+) : WorkloadResource<HorizontalPodAutoscaler.Version> {
     interface Version : APIVersion
 
     data class Spec(
@@ -128,7 +128,7 @@ data class HorizontalPodAutoscaler(
     }
 
     class Group : K8sListResource.ItemGroup<HorizontalPodAutoscaler, Builder>(Builder()) {
-        fun horizontalPodAutoscaler(scope: Builder.() -> Unit) {
+        fun horizontalPodAutoscalerItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

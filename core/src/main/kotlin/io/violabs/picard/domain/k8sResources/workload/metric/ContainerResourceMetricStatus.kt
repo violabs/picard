@@ -1,23 +1,28 @@
 package io.violabs.picard.domain.k8sResources.workload.metric
 
+import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseResourceMetricStatus
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class ContainerResourceMetricStatus(
     val container: String,
-    val current: Metric.ValueStatus,
+    val current: MetricValueStatus,
     val name: String
 ) : BaseResourceMetricStatus {
     class Builder : DSLBuilder<ContainerResourceMetricStatus> {
-        private var container: String? = null
-        private var current: Metric.ValueStatus? = null
-        private var name: String? = null
+        var container: String? = null
+        private var current: MetricValueStatus? = null
+        var name: String? = null
+
+        fun current(block: MetricValueStatus.Builder.() -> Unit) {
+            current = MetricValueStatus.Builder().apply(block).build()
+        }
 
         override fun build(): ContainerResourceMetricStatus {
             return ContainerResourceMetricStatus(
-                container = container ?: error("container is required"),
-                current = current ?: error("current is required"),
-                name = name ?: error("name is required")
+                container = vRequireNotNull(this::container),
+                current = vRequireNotNull(this::current),
+                name = vRequireNotNull(this::name)
             )
         }
     }

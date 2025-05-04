@@ -2,8 +2,8 @@ package io.violabs.picard.domain.k8sResources.policy
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSubject
-import io.violabs.picard.domain.BuilderGroup
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.BuilderGroup
+import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.domain.k8sResources.policy.subject.GroupSubject
 import io.violabs.picard.domain.k8sResources.policy.subject.ServiceAccountSubject
 import io.violabs.picard.domain.k8sResources.policy.subject.UserSubject

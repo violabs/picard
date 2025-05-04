@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.storage.storageClass
 
+import io.violabs.picard.common.ResourceDSLBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -13,7 +14,7 @@ data class StorageClass(
     val provisioner: String,
     override val metadata: ObjectMetadata? = null,
     val allowVolumeExpansion: Boolean? = null,
-    val allowedTopologies: List<TopologySelector.Term>? = null,
+    val allowedTopologies: List<TopologySelectorTerm>? = null,
     val mountOptions: List<String>? = null,
     val parameters: Map<String, String>? = null,
     val reclaimPolicy: String? = null,
@@ -24,7 +25,7 @@ data class StorageClass(
     class Builder : ResourceDSLBuilder<StorageClass>() {
         var provisioner: String? = null
         private var allowVolumeExpansion: Boolean? = null
-        private var allowedTopologies: List<TopologySelector.Term>? = null
+        private var allowedTopologies: List<TopologySelectorTerm>? = null
         private var mountOptions: List<String>? = null
         private var parameters: Map<String, String>? = null
         var reclaimPolicy: String? = null
@@ -34,8 +35,8 @@ data class StorageClass(
             allowVolumeExpansion = value
         }
 
-        fun allowedTopologies(scope: TopologySelector.Term.Group.() -> Unit) {
-            allowedTopologies = TopologySelector.Term.Group().apply(scope).terms()
+        fun allowedTopologies(scope: TopologySelectorTerm.Group.() -> Unit) {
+            allowedTopologies = TopologySelectorTerm.Group().apply(scope).terms()
         }
 
         fun mountOptions(vararg options: String) {

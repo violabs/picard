@@ -1,8 +1,8 @@
 package io.violabs.picard.domain.k8sResources.extend.webhook
 
-import io.violabs.picard.domain.BuilderGroup
-import io.violabs.picard.domain.DSLBuilder
-import io.violabs.picard.domain.LabelSelector
+import io.violabs.picard.common.BuilderGroup
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.domain.label.LabelSelector
 
 interface Webhook {
     val admissionReviewVersions: List<String>

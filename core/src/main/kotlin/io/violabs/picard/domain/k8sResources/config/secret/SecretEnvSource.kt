@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.config.secret
 
 import io.violabs.picard.domain.BaseEnvSource
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class SecretEnvSource(
     val name: String? = null,

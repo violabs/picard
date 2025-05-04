@@ -1,5 +1,7 @@
 package io.violabs.picard.domain.k8sResources.storage.storageVersionMigration
 
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -7,7 +9,7 @@ import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
-import io.violabs.picard.domain.Condition
+import io.violabs.picard.domain.condition.Condition
 import io.violabs.picard.domain.k8sResources.K8sListResource
 
 
@@ -48,7 +50,7 @@ data class StorageVersionMigration(
             private var conditions: List<Condition>? = null
             var resourceVersion: String? = null
 
-            fun conditions(scope: StandardConditionGroup.() -> Unit) {
+            fun conditions(scope: io.violabs.picard.domain.condition.StandardConditionGroup.() -> Unit) {
                 conditions = Condition.group(scope)
             }
 

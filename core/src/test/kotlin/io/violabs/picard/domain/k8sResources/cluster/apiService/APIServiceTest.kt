@@ -38,7 +38,7 @@ class APIServiceTest : SuccessBuildSim<APIService, APIService.Builder>() {
                         }
                         version = PLACEHOLDER
                     }
-                    status {
+                    this.status {
                         conditions { sharedCondition() }
                     }
                 }

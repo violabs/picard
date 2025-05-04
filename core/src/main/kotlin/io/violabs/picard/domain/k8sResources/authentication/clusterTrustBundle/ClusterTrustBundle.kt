@@ -1,5 +1,7 @@
 package io.violabs.picard.domain.k8sResources.authentication.clusterTrustBundle
 
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.ResourceSpecDSLBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.APIVersion

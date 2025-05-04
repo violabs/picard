@@ -29,7 +29,7 @@ class NamespaceTest : SuccessBuildSim<Namespace, Namespace.Builder>() {
                         finalizers(PLACEHOLDER)
                     }
 
-                    status {
+                    this.status {
                         conditions {
                             sharedCondition()
                             phase = PLACEHOLDER

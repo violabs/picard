@@ -2,7 +2,12 @@ package io.violabs.picard
 
 import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceListDSLBuilder
 import io.violabs.picard.domain.*
+import io.violabs.picard.domain.condition.Condition
+import io.violabs.picard.domain.condition.ConditionGroup
 import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
@@ -12,8 +17,15 @@ import io.violabs.picard.domain.k8sResources.authorization.PolicyRule
 import io.violabs.picard.domain.k8sResources.authorization.RoleRef
 import io.violabs.picard.domain.k8sResources.policy.MatchResources
 import io.violabs.picard.domain.k8sResources.policy.NamedRuleWithOperations
+import io.violabs.picard.domain.k8sResources.workload.BaseStrategy
+import io.violabs.picard.domain.k8sResources.workload.UpdateStrategy
+import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelector
 import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelectorTerm
 import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
+import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourcePool
+import io.violabs.picard.domain.label.Label
+import io.violabs.picard.domain.label.LabelSelector
+import io.violabs.picard.domain.label.LabelSelectorRequirement
 import org.junit.jupiter.api.TestTemplate
 import java.time.Instant
 import java.time.LocalDateTime
@@ -237,6 +249,28 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
         }
 
         @JvmStatic
+        protected val NODE_CONDITION = _root_ide_package_.io.violabs.picard.domain.condition.NodeCondition(
+            status = BooleanType.True,
+            type = PLACEHOLDER,
+            lastProbeTime = NOW,
+            lastTransitionTime = NOW,
+            message = PLACEHOLDER,
+            reason = PLACEHOLDER
+        )
+
+        @JvmStatic
+        protected fun io.violabs.picard.domain.condition.NodeConditionGroup.sharedNodeCondition() {
+            condition {
+                status = BooleanType.True
+                type = PLACEHOLDER
+                lastProbeTime = NOW
+                lastTransitionTime = NOW
+                message = PLACEHOLDER
+                reason = PLACEHOLDER
+            }
+        }
+
+        @JvmStatic
         protected val OBJECT_REFERENCE = ObjectReference(
             apiVersion = KAPIVersion.APIRegistrationV1,
             fieldPath = PLACEHOLDER,
@@ -269,6 +303,11 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
         protected val NODE_SELECTOR_TERM = NodeSelectorTerm(
             matchExpression = listOf(NODE_SELECTOR_REQUIREMENT),
             matchFields = listOf(NODE_SELECTOR_REQUIREMENT)
+        )
+
+        @JvmStatic
+        protected val NODE_SELECTOR = NodeSelector(
+            nodeSelectorTerms = listOf(NODE_SELECTOR_TERM)
         )
 
         @JvmStatic
@@ -345,5 +384,27 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
                 }
             }
         }
+
+        @JvmStatic
+        protected val OPAQUE_DEVICE_CONFIG = OpaqueDeviceConfiguration(
+            driver = PLACEHOLDER,
+            parameters = PLACEHOLDER
+        )
+
+        @JvmStatic
+        protected val RESOURCE_POOL = ResourcePool(
+            generation = 1,
+            name = PLACEHOLDER,
+            resourceSliceCount = 1
+        )
+
+        @JvmStatic
+        protected val UPDATE_STRATEGY = UpdateStrategy(
+            type = BaseStrategy.Type.RollingUpdate,
+            rollingUpdate = BaseStrategy.RollingUpdate(
+                maxUnavailable = 1,
+                maxSurge = 1
+            )
+        )
     }
 }

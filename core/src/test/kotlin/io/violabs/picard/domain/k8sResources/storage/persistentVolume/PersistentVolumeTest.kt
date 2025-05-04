@@ -2,7 +2,6 @@ package io.violabs.picard.domain.k8sResources.storage.persistentVolume
 
 
 import io.violabs.picard.SuccessBuildSim
-import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelector
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
@@ -16,9 +15,7 @@ class PersistentVolumeTest : SuccessBuildSim<PersistentVolume, PersistentVolume.
         )
 
         private val NODE_AFFINITY = VolumeNodeAffinity(
-            required = NodeSelector(
-                nodeSelectorTerms = listOf(NODE_SELECTOR_TERM)
-            )
+            required = NODE_SELECTOR
         )
 
         private val SUCCESS_POSSIBILITIES = possibilities<PersistentVolume, PersistentVolume.Builder> {
@@ -53,7 +50,7 @@ class PersistentVolumeTest : SuccessBuildSim<PersistentVolume, PersistentVolume.
                         volumeAttributesClassName = PLACEHOLDER
                         volumeMode = PLACEHOLDER
                     }
-                    status {
+                    this.status {
                         phase = PLACEHOLDER
                         message = PLACEHOLDER
                         reason = PLACEHOLDER

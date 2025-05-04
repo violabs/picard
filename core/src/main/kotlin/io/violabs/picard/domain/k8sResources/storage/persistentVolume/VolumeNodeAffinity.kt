@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.storage.persistentVolume
 
 import io.violabs.picard.domain.BaseNodeAffinity
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelector
 
 data class VolumeNodeAffinity(

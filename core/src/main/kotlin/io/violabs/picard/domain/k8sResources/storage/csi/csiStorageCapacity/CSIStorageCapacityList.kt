@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.storage.csi.csiStorageCapacity
 
+import io.violabs.picard.common.ResourceListDSLBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.APIVersion

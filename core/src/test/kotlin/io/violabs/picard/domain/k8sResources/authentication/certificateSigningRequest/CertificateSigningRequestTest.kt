@@ -3,7 +3,7 @@ package io.violabs.picard.domain.k8sResources.authentication.certificateSigningR
 
 import io.violabs.picard.FullBuildSim
 import io.violabs.picard.domain.BooleanType
-import io.violabs.picard.domain.SigningRequestCondition
+import io.violabs.picard.domain.condition.SigningRequestCondition
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
@@ -51,7 +51,7 @@ class CertificateSigningRequestTest : FullBuildSim<CertificateSigningRequest, Ce
                             username = PLACEHOLDER
                         }
 
-                        status {
+                        this.status {
                             certificate(0b1, 0b01)
                             conditions {
                                 condition {

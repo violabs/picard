@@ -1,5 +1,7 @@
 package io.violabs.picard.domain.k8sResources.service
 
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.*
 

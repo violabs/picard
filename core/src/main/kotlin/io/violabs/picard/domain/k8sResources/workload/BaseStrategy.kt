@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload
 
 import io.violabs.picard.domain.BaseK8s
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 interface BaseStrategy : BaseK8s {
     val type: Type?
@@ -13,8 +13,8 @@ interface BaseStrategy : BaseK8s {
     }
 
     data class RollingUpdate(
-        val maxSurge: Int,
-        val maxUnavailable: Int
+        val maxSurge: Int? = null,
+        val maxUnavailable: Int? = null
     ) {
         class Builder : DSLBuilder<RollingUpdate> {
             private var maxSurge: Int? = null
@@ -38,8 +38,8 @@ interface BaseStrategy : BaseK8s {
 
             override fun build(): RollingUpdate {
                 return RollingUpdate(
-                    maxSurge = requireNotNull(maxSurge),
-                    maxUnavailable = requireNotNull(maxUnavailable)
+                    maxSurge = maxSurge,
+                    maxUnavailable = maxUnavailable
                 )
             }
         }

@@ -1,6 +1,10 @@
 package io.violabs.picard.domain.k8sResources.cluster.node
 
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.domain.*
+import io.violabs.picard.domain.condition.NodeCondition
+import io.violabs.picard.domain.condition.NodeConditionGroup
 import io.violabs.picard.domain.k8sResources.*
 
 data class Node(

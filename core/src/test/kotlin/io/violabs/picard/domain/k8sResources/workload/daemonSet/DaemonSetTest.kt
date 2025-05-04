@@ -2,7 +2,6 @@ package io.violabs.picard.domain.k8sResources.workload.daemonSet
 
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.k8sResources.workload.BaseStrategy
-import io.violabs.picard.domain.k8sResources.workload.UpdateStrategy
 import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
@@ -46,7 +45,7 @@ class DaemonSetTest : SuccessBuildSim<DaemonSet, DaemonSet.Builder>() {
                         }
                         revisionHistoryLimit = 1
                     }
-                    status {
+                    this.status {
                         numberReady = 1
                         numberAvailable = 1
                         numberUnavailable = 1
@@ -67,13 +66,7 @@ class DaemonSetTest : SuccessBuildSim<DaemonSet, DaemonSet.Builder>() {
                         selector = LABEL_SELECTOR,
                         template = PodTemplate.Spec(),
                         minReadySeconds = 1,
-                        updateStrategy = UpdateStrategy(
-                            type = BaseStrategy.Type.RollingUpdate,
-                            rollingUpdate = BaseStrategy.RollingUpdate(
-                                maxUnavailable = 1,
-                                maxSurge = 1
-                            )
-                        ),
+                        updateStrategy = UPDATE_STRATEGY,
                         revisionHistoryLimit = 1
                     ),
                     status = DaemonSet.Status(

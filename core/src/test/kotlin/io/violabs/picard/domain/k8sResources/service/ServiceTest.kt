@@ -90,7 +90,7 @@ class ServiceTest : SuccessBuildSim<Service, Service.Builder>() {
                         allocateLoadBalancerNodePorts()
                         trafficDistribution = PLACEHOLDER
                     }
-                    status {
+                    this.status {
                         loadBalancer {
                             ingresses {
                                 ingress {

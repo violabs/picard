@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.authorization.accessReview
 
 import io.violabs.picard.BuildSim.Companion.PLACEHOLDER
 import io.violabs.picard.domain.HTTPVerb
-import io.violabs.picard.domain.LabelSelectorRequirement
+import io.violabs.picard.domain.label.LabelSelectorRequirement
 import io.violabs.picard.domain.k8sResources.authorization.*
 
 interface AccessReviewTest {

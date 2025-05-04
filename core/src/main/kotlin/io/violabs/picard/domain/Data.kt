@@ -5,14 +5,26 @@ package io.violabs.picard.domain
  */
 data class BinaryData(
     override val content: MutableMap<String, List<Byte>> = mutableMapOf()
-) : Data<List<Byte>>(content)
+) : Data<List<Byte>>(content) {
+    init {
+        content.forEach { (key, _) ->
+            checkKey(key)
+        }
+    }
+}
 
 /**
  * UTF-8 encoded string
  */
 data class TextData(
     override val content: MutableMap<String, String> = mutableMapOf()
-) : Data<String>(content)
+) : Data<String>(content) {
+    init {
+        content.forEach { (key, _) ->
+            checkKey(key)
+        }
+    }
+}
 
 abstract class Data<V>(open val content: MutableMap<String, V> = mutableMapOf()) {
     fun add(key: String, value: V) {
@@ -20,11 +32,9 @@ abstract class Data<V>(open val content: MutableMap<String, V> = mutableMapOf())
         content[key] = value
     }
 
-    private fun checkKey(key: String) {
-        if (!key.contains("a-z0-9.-_")) {
+    protected fun checkKey(key: String) {
+        if (!key.contains("[a-z0-9.-_]".toRegex())) {
             throw IllegalArgumentException("Invalid key. Can only contain alphanumeric, '.', '-', '_' - key: $key")
         }
     }
-
-    override fun toString(): String = content.toString()
 }

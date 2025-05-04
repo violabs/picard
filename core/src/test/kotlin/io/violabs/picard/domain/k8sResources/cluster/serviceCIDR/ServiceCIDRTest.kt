@@ -3,7 +3,7 @@ package io.violabs.picard.domain.k8sResources.cluster.serviceCIDR
 
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.BooleanType
-import io.violabs.picard.domain.ServiceCondition
+import io.violabs.picard.domain.condition.ServiceCondition
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
@@ -31,7 +31,7 @@ class ServiceCIDRTest : SuccessBuildSim<ServiceCIDR, ServiceCIDR.Builder>() {
                     spec {
                         cidrs(PLACEHOLDER)
                     }
-                    status {
+                    this.status {
                         conditions {
                             condition {
                                 status = BooleanType.True

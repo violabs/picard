@@ -33,7 +33,7 @@ class SubjectAccessReviewTest : FullBuildSim<SubjectAccessReview, SubjectAccessR
 
                     spec { sharedSubjectAccessReviewSpec() }
 
-                    status { sharedSubjectAccessReviewStatus() }
+                    this.status { sharedSubjectAccessReviewStatus() }
                 }
                 expected = SubjectAccessReview(
                     metadata = METADATA,

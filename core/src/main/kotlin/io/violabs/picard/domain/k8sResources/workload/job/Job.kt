@@ -1,21 +1,21 @@
 package io.violabs.picard.domain.k8sResources.workload.job
 
-import io.violabs.picard.domain.LabelSelector
+import io.violabs.picard.domain.label.LabelSelector
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
-import io.violabs.picard.domain.DSLBuilder
-import io.violabs.picard.domain.NodeCondition
-import io.violabs.picard.domain.NodeConditionGroup
-import io.violabs.picard.domain.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.domain.condition.NodeCondition
+import io.violabs.picard.domain.condition.NodeConditionGroup
+import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import java.time.LocalDateTime
 
-class Job(
+data class Job(
     override val apiVersion: Version = KAPIVersion.BatchV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
@@ -64,6 +64,10 @@ class Job(
             private var manualSelector: Boolean? = null
             private var podFailurePolicy: PodFailurePolicy? = null
             private var successPolicy: PodSuccessPolicy? = null
+            var backoffLimitPerIndex: Int? = null
+            var managedBy: String? = null
+            var maxFailedIndexes: Int? = null
+            var podReplacementPolicy: String? = null
 
             fun template(block: PodTemplate.Spec.Builder.() -> Unit) {
                 template = PodTemplate.Spec.Builder().apply(block).build()
@@ -103,7 +107,11 @@ class Job(
                     selector = selector,
                     manualSelector = manualSelector,
                     podFailurePolicy = podFailurePolicy,
-                    successPolicy = successPolicy
+                    successPolicy = successPolicy,
+                    backoffLimitPerIndex = backoffLimitPerIndex,
+                    managedBy = managedBy,
+                    maxFailedIndexes = maxFailedIndexes,
+                    podReplacementPolicy = podReplacementPolicy
                 )
             }
         }

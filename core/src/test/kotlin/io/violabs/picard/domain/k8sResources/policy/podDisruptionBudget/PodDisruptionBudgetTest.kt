@@ -3,7 +3,7 @@ package io.violabs.picard.domain.k8sResources.policy.podDisruptionBudget
 
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.BooleanType
-import io.violabs.picard.domain.ServiceCondition
+import io.violabs.picard.domain.condition.ServiceCondition
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
@@ -36,7 +36,7 @@ class PodDisruptionBudgetTest : SuccessBuildSim<PodDisruptionBudget, PodDisrupti
                         }
                         unhealthyPodEvictionPolicy = PLACEHOLDER
                     }
-                    status {
+                    this.status {
                         currentHealthy = 1
                         desiredHealthy = 1
                         disruptionsAllowed = 1

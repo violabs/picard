@@ -98,7 +98,7 @@ class FlowSchemaTest : SuccessBuildSim<FlowSchema, FlowSchema.Builder>() {
                             }
                         }
                     }
-                    status {
+                    this.status {
                         conditions { sharedCondition() }
                     }
                 }

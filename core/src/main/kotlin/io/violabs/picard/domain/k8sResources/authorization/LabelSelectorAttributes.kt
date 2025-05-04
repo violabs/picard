@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.authorization
 
-import io.violabs.picard.domain.DSLBuilder
-import io.violabs.picard.domain.LabelSelectorRequirement
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.domain.label.LabelSelectorRequirement
 
 data class LabelSelectorAttributes(
     val rawSelector: String? = null,

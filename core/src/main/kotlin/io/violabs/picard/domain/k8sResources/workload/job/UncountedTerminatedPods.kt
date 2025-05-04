@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.job
 
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class UncountedTerminatedPods(
     val failed: List<String>? = null,
@@ -9,6 +9,14 @@ data class UncountedTerminatedPods(
     class Builder : DSLBuilder<UncountedTerminatedPods> {
         private var failed: List<String>? = null
         private var succeeded: List<String>? = null
+
+        fun failed(vararg failed: String) {
+            this.failed = failed.toList()
+        }
+
+        fun succeeded(vararg succeeded: String) {
+            this.succeeded = succeeded.toList()
+        }
 
         override fun build(): UncountedTerminatedPods {
             return UncountedTerminatedPods(

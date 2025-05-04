@@ -35,7 +35,7 @@ class SelfSubjectAccessReviewTest : FullBuildSim<SelfSubjectAccessReview, SelfSu
                     }
 
                     // this is same as already tests [SubjectAccessReviewTest]
-                    status { sharedSubjectAccessReviewStatus() }
+                    this.status { sharedSubjectAccessReviewStatus() }
 
                     sharedMetadata()
                 }

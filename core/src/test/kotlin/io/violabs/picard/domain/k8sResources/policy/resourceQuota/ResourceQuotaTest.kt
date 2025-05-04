@@ -44,7 +44,7 @@ class ResourceQuotaTest : SuccessBuildSim<ResourceQuota, ResourceQuota.Builder>(
                         }
                         scopes(PLACEHOLDER)
                     }
-                    status {
+                    this.status {
                         hard(QUANTITY_PAIR)
                         used(QUANTITY_PAIR)
                     }

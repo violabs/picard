@@ -50,7 +50,7 @@ class PriorityLevelConfigurationTest :
                                 nominalConcurrencyShares = 1
                             }
                         }
-                        status {
+                        this.status {
                             conditions {
                                 sharedCondition()
                             }

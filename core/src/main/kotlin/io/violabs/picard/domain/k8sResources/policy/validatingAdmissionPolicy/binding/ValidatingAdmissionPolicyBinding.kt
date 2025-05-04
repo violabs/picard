@@ -7,8 +7,8 @@ import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.policy.MatchResources
 import io.violabs.picard.domain.k8sResources.policy.ParamRef
 import io.violabs.picard.domain.BaseSpec
-import io.violabs.picard.domain.DSLBuilder
-import io.violabs.picard.domain.ResourceSpecDSLBuilder
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.ResourceSpecDSLBuilder
 import io.violabs.picard.domain.k8sResources.K8sListResource
 
 data class ValidatingAdmissionPolicyBinding(

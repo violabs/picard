@@ -1,6 +1,10 @@
 package io.violabs.picard.domain.k8sResources.cluster.serviceCIDR
 
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.domain.*
+import io.violabs.picard.domain.condition.ServiceCondition
+import io.violabs.picard.domain.condition.ServiceConditionGroup
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.K8sResource

@@ -1,5 +1,7 @@
 package io.violabs.picard.domain
 
+import io.violabs.picard.common.DSLBuilder
+
 /**
  * https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/list-meta/#ListMeta
  * import "k8s.io/apimachinery/pkg/apis/meta/v1"

@@ -1,8 +1,12 @@
 package io.violabs.picard.domain.k8sResources.authentication.certificateSigningRequest
 
+import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.*
+import io.violabs.picard.domain.condition.SigningRequestCondition
+import io.violabs.picard.domain.condition.SigningRequestConditionGroup
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.K8sResource
@@ -98,7 +102,7 @@ data class CertificateSigningRequest(
         CertificateSigningRequest,
         Spec, Spec.Builder,
         Status, Status.Builder
-    >(Spec.Builder(), Status.Builder()) {
+        >(Spec.Builder(), Status.Builder()) {
 
         override fun build(): CertificateSigningRequest {
             return CertificateSigningRequest(

@@ -1,7 +1,5 @@
 package io.violabs.picard.domain.cloud
 
-import io.violabs.picard.domain.SecretReference
-
 data class FlexPersistentVolumeSource(
     val driver: String,
     val fsType: String? = null,

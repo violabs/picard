@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.affinity
 
-import io.violabs.picard.domain.BuilderGroup
+import io.violabs.picard.common.BuilderGroup
 
 class WeightedPodAffinityTermGroup : BuilderGroup<WeightedPodAffinityTerm, WeightedPodAffinityTerm.Builder>(
     WeightedPodAffinityTerm.Builder()

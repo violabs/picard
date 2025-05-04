@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.cluster.node
 
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class RuntimeHandlerFeatures(
     val recursiveReadOnlyMounts: Boolean? = null,

@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.service.ingress
 
 import io.violabs.picard.domain.BasePort
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class IngressServiceBackendPort(
     val name: String? = null,

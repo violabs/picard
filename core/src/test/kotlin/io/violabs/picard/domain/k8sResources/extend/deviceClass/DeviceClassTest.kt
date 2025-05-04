@@ -3,8 +3,6 @@ package io.violabs.picard.domain.k8sResources.extend.deviceClass
 
 import io.violabs.picard.FullBuildSim
 import io.violabs.picard.domain.DeviceSelector
-import io.violabs.picard.domain.OpaqueDeviceConfiguration
-import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelector
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
@@ -61,10 +59,7 @@ class DeviceClassTest : FullBuildSim<DeviceClass, DeviceClass.Builder>() {
                     spec = DeviceClass.Spec(
                         config = listOf(
                             DeviceClassConfiguration(
-                                opaque = OpaqueDeviceConfiguration(
-                                    driver = PLACEHOLDER,
-                                    parameters = PLACEHOLDER
-                                )
+                                opaque = OPAQUE_DEVICE_CONFIG
                             )
                         ),
                         selectors = listOf(
@@ -72,9 +67,7 @@ class DeviceClassTest : FullBuildSim<DeviceClass, DeviceClass.Builder>() {
                                 cel = DeviceSelector.CEL(expression = PLACEHOLDER)
                             )
                         ),
-                        suitableNodes = NodeSelector(
-                            nodeSelectorTerms = listOf(NODE_SELECTOR_TERM)
-                        )
+                        suitableNodes = NODE_SELECTOR
                     )
                 )
             }

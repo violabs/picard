@@ -1,7 +1,5 @@
 package io.violabs.picard.domain.cloud
 
-import io.violabs.picard.domain.SecretReference
-
 data class ScaleIOPersistentVolumeSource(
     val gateway: String,
     val system: String,

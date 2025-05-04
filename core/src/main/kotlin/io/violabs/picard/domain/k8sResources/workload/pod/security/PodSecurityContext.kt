@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.security
 
 import io.violabs.picard.domain.BaseSecurityContext
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class PodSecurityContext(
     val appArmorProfile: AppArmorProfile? = null,

@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.config.secret
 
 import io.violabs.picard.domain.BinaryData
 import io.violabs.picard.domain.ObjectMetadata
-import io.violabs.picard.domain.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDSLBuilder
 import io.violabs.picard.domain.TextData
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource

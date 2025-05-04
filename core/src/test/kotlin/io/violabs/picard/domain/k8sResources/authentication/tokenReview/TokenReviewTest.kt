@@ -37,7 +37,7 @@ class TokenReviewTest : FullBuildSim<TokenReview, TokenReview.Builder>() {
                         token = PLACEHOLDER
                     }
 
-                    status {
+                    this.status {
                         audiences(PLACEHOLDER)
                         authenticated()
                         error = PLACEHOLDER

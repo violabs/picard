@@ -1,7 +1,8 @@
 package io.violabs.picard.domain.k8sResources.workload.nodeSelector
 
+import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.BaseNodeSelector
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class NodeSelector(
     val nodeSelectorTerms: List<NodeSelectorTerm>
@@ -16,7 +17,7 @@ data class NodeSelector(
 
         override fun build(): NodeSelector {
             return NodeSelector(
-                nodeSelectorTerms = requireNotNull(nodeSelectorTerms)
+                nodeSelectorTerms = vRequireNotEmpty(this::nodeSelectorTerms)
             )
         }
     }

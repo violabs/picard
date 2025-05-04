@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.resource
 
 
-import io.violabs.picard.domain.BuilderGroup
+import io.violabs.picard.common.BuilderGroup
 
 class ResourceStatusGroup : BuilderGroup<ResourceStatus, ResourceStatus.Builder>(ResourceStatus.Builder()) {
     fun statuses(): MutableList<ResourceStatus>? = items()

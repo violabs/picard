@@ -1,6 +1,9 @@
 package io.violabs.picard.domain.k8sResources.cluster.componentStatus
 
+import io.violabs.picard.common.ResourceDSLBuilder
 import io.violabs.picard.domain.*
+import io.violabs.picard.domain.condition.ComponentCondition
+import io.violabs.picard.domain.condition.ComponentConditionGroup
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.K8sResource

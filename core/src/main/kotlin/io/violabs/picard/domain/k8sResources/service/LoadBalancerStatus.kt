@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.service
 
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class LoadBalancerStatus(
     val ingress: List<LoadBalancerIngress>? = null

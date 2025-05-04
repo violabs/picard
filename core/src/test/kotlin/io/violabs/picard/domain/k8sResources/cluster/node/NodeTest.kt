@@ -2,8 +2,6 @@ package io.violabs.picard.domain.k8sResources.cluster.node
 
 
 import io.violabs.picard.SuccessBuildSim
-import io.violabs.picard.domain.BooleanType
-import io.violabs.picard.domain.NodeCondition
 import io.violabs.picard.domain.Taint
 import io.violabs.picard.domain.k8sResources.cluster.DaemonEndpoint
 import io.violabs.picard.possibilities
@@ -41,16 +39,7 @@ class NodeTest : SuccessBuildSim<Node, Node.Builder>() {
             addresses = listOf(NodeAddress(PLACEHOLDER, PLACEHOLDER)),
             allocatable = mapOf(PLACEHOLDER to QUANTITY),
             capacity = mapOf(PLACEHOLDER to QUANTITY),
-            conditions = listOf(
-                NodeCondition(
-                    status = BooleanType.True,
-                    type = PLACEHOLDER,
-                    lastProbeTime = NOW,
-                    lastTransitionTime = NOW,
-                    message = PLACEHOLDER,
-                    reason = PLACEHOLDER
-                )
-            ),
+            conditions = listOf(NODE_CONDITION),
             config = NodeConfigStatus(
                 active = NODE_CONFIG_SOURCE,
                 assigned = NODE_CONFIG_SOURCE,
@@ -134,7 +123,7 @@ class NodeTest : SuccessBuildSim<Node, Node.Builder>() {
                         value()
                     }
 
-                    status {
+                    this.status {
                         addresses {
                             address {
                                 address = PLACEHOLDER
@@ -144,14 +133,7 @@ class NodeTest : SuccessBuildSim<Node, Node.Builder>() {
                         allocatable(PLACEHOLDER to QUANTITY)
                         capacity(PLACEHOLDER to QUANTITY)
                         conditions {
-                            condition {
-                                status = BooleanType.True
-                                type = PLACEHOLDER
-                                lastProbeTime = NOW
-                                lastTransitionTime = NOW
-                                message = PLACEHOLDER
-                                reason = PLACEHOLDER
-                            }
+                            sharedNodeCondition()
                         }
                         config {
                             active { defaultNodeConfigSource() }

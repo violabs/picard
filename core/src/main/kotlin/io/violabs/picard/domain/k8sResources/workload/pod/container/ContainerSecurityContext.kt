@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.domain.k8sResources.workload.pod.security.AppArmorProfile
 import io.violabs.picard.domain.k8sResources.workload.pod.security.SELinuxOptions
 import io.violabs.picard.domain.k8sResources.workload.pod.security.SeccompProfile

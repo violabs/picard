@@ -3,7 +3,7 @@ package io.violabs.picard.domain.k8sResources.workload.pod
 
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.K8sAnnotation
-import io.violabs.picard.domain.Label
+import io.violabs.picard.domain.label.Label
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
 import io.violabs.picard.possibilities
@@ -57,7 +57,7 @@ private val SUCCESS_POSSIBILITIES = possibilities<Pod, Pod.Builder> {
                 }
             }
 
-            status {  }
+            this.status {  }
         }
         expected = Pod(
             metadata = METADATA,

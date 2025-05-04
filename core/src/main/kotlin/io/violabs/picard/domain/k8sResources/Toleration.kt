@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources
 
-import io.violabs.picard.domain.BuilderGroup
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.BuilderGroup
+import io.violabs.picard.common.DSLBuilder
 
 data class Toleration(
     val key: String? = null,

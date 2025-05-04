@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.domain.ObjectFieldSelector
 import io.violabs.picard.domain.ResourceFieldSelector
 import io.violabs.picard.domain.k8sResources.config.configMap.ConfigMapKeySelector

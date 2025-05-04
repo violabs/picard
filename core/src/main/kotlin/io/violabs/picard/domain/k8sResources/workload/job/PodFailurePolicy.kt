@@ -1,6 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.job
 
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.vRequireNotEmpty
+import io.violabs.picard.common.DSLBuilder
 
 data class PodFailurePolicy(val rules: List<PodFailurePolicyRule>) {
     class Builder : DSLBuilder<PodFailurePolicy> {
@@ -12,7 +13,7 @@ data class PodFailurePolicy(val rules: List<PodFailurePolicyRule>) {
 
         override fun build(): PodFailurePolicy {
             return PodFailurePolicy(
-                rules = requireNotNull(rules)
+                rules = vRequireNotEmpty(this::rules)
             )
         }
     }

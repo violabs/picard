@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.config.configMap
 
 import io.violabs.picard.domain.BaseEnvSource
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 
 data class ConfigMapEnvSource(
     val name: String? = null,

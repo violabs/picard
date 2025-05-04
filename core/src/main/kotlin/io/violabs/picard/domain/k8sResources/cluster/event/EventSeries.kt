@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.cluster.event
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.domain.DSLBuilder
+import io.violabs.picard.common.DSLBuilder
 import java.time.Instant
 
 data class EventSeries(

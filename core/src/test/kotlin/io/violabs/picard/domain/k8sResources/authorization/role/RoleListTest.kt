@@ -20,7 +20,7 @@ class RoleListTest : FullBuildSim<RoleList, RoleList.Builder>() {
                 id = "minimum"
                 given(RoleList.Builder()) {
                     items {
-                        role {  }
+                        roleItem {  }
                     }
 
                     sharedMetadata()

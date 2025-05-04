@@ -2,13 +2,13 @@ package io.violabs.picard.domain.k8sResources.service.ingress
 
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
-import io.violabs.picard.domain.*
-import io.violabs.picard.domain.k8sResources.APIVersion
-import io.violabs.picard.domain.k8sResources.K8sResource
-import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
+import io.violabs.picard.domain.ObjectMetadata
+import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.k8sResources.KAPIVersion
+import io.violabs.picard.domain.manifest.ServiceResource
 
 
 data class Ingress(
@@ -16,7 +16,7 @@ data class Ingress(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : K8sResource<Ingress.Version> {
+) : ServiceResource<Ingress.Version> {
     interface Version : APIVersion
 
     data class Spec(
@@ -88,7 +88,7 @@ data class Ingress(
     }
 
     class Group : K8sListResource.ItemGroup<Ingress, Builder>(Builder()) {
-        fun ingress(scope: Builder.() -> Unit) {
+        fun ingressItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

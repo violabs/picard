@@ -11,33 +11,31 @@ data class Manifest(
         private val resources: MutableList<ManifestResource> = mutableListOf()
 
         fun authentication(block: AuthenticationResourceSection.Builder.() -> Unit) {
-            val section = AuthenticationResourceSection.Builder().apply(block).build()
-            resources.add(section)
+            resources += AuthenticationResourceSection.Builder().apply(block).build()
         }
 
         fun authorization(block: AuthorizationResourceSection.Builder.() -> Unit) {
-            val section = AuthorizationResourceSection.Builder().apply(block).build()
-            resources.add(section)
+            resources += AuthorizationResourceSection.Builder().apply(block).build()
         }
 
         fun cluster(block: ClusterResourceSection.Builder.() -> Unit) {
-            val section = ClusterResourceSection.Builder().apply(block).build()
-            resources.add(section)
+            resources += ClusterResourceSection.Builder().apply(block).build()
         }
 
         fun config(block: ConfigResourceSection.Builder.() -> Unit) {
-            val section = ConfigResourceSection.Builder().apply(block).build()
-            resources.add(section)
+            resources += ConfigResourceSection.Builder().apply(block).build()
         }
 
         fun extend(block: ExtendResourceSection.Builder.() -> Unit) {
-            val section = ExtendResourceSection.Builder().apply(block).build()
-            resources.add(section)
+            resources += ExtendResourceSection.Builder().apply(block).build()
         }
 
         fun policy(block: PolicyResourceSection.Builder.() -> Unit) {
-            val section = PolicyResourceSection.Builder().apply(block).build()
-            resources.add(section)
+            resources += PolicyResourceSection.Builder().apply(block).build()
+        }
+
+        fun service(block: ServiceResourceSection.Builder.() -> Unit) {
+            resources += ServiceResourceSection.Builder().apply(block).build()
         }
 
         override fun build(): Manifest {

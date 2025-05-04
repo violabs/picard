@@ -27,8 +27,7 @@ data class ExtendResourceSection(
         private val lists: MutableList<ExtendListResource<*, *>> = mutableListOf()
     ) : DSLBuilder<ExtendResourceSection> {
         fun customResourceDefinition(block: CustomResourceDefinition.Builder.() -> Unit) {
-            val resource = CustomResourceDefinition.Builder().apply(block).build()
-            resources.add(resource)
+            resources += CustomResourceDefinition.Builder().apply(block).build()
         }
 
         fun customResourceDefinitionList(block: CustomResourceDefinitionList.Builder.() -> Unit) {

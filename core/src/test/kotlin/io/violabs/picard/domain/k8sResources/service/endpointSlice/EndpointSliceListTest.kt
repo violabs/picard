@@ -20,7 +20,7 @@ class EndpointSliceListTest : FullBuildSim<EndpointSliceList, EndpointSliceList.
                 id = "minimum"
                 given(EndpointSliceList.Builder()) {
                     items {
-                        slice {  }
+                        endpointSliceItem {  }
                     }
                 }
                 expected = EndpointSliceList(items = listOf(EndpointSlice()))

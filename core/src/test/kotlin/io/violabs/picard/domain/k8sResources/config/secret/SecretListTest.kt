@@ -20,7 +20,7 @@ class SecretListTest : FullBuildSim<SecretList, SecretList.Builder>() {
                 id = "minimum"
                 given(SecretList.Builder()) {
                     items {
-                        secret {}
+                        secretItem {}
                     }
                 }
                 expected = SecretList(

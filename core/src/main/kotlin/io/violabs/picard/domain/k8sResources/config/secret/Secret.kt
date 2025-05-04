@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.config.secret
 
+import io.violabs.picard.common.ResourceDSLBuilder
 import io.violabs.picard.domain.BinaryData
 import io.violabs.picard.domain.ObjectMetadata
-import io.violabs.picard.common.ResourceDSLBuilder
 import io.violabs.picard.domain.TextData
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
-import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
+import io.violabs.picard.domain.manifest.ConfigResource
 
 /**
  * https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/secret-v1/
@@ -20,7 +20,7 @@ data class Secret(
     val stringData: TextData? = null,
     val immutable: Boolean? = null,
     val type: Type? = null
-) : K8sResource<Secret.Version> {
+) : ConfigResource<Secret.Version> {
     interface Version : APIVersion
 
     enum class Type(private val ref: String) {
@@ -66,7 +66,7 @@ data class Secret(
     }
 
     class Group : K8sListResource.ItemGroup<Secret, Builder>(Builder()) {
-        fun secret(scope: Builder.() -> Unit) {
+        fun secretItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

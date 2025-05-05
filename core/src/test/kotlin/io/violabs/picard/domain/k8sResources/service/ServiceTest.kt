@@ -17,7 +17,7 @@ class ServiceTest : SuccessBuildSim<Service, Service.Builder>() {
         )
 
         private val SERVICE_PORT = ServicePort(
-            ports = PORT_NUMBER,
+            port = PORT_NUMBER,
             targetPort = IntOrString(PORT_NUMBER),
             protocol = Protocol.TCP,
             name = PLACEHOLDER,
@@ -59,7 +59,7 @@ class ServiceTest : SuccessBuildSim<Service, Service.Builder>() {
                         selector(PLACEHOLDER to PLACEHOLDER)
                         ports {
                             portItem {
-                                ports = PORT_NUMBER
+                                port = PORT_NUMBER
                                 targetPort(PORT_NUMBER)
                                 protocol = Protocol.TCP
                                 name = PLACEHOLDER

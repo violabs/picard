@@ -20,18 +20,18 @@ class ServicePortTest : FullBuildSim<ServicePort, ServicePort.Builder>() {
             scenario {
                 id = "minimum"
                 given(ServicePort.Builder()) {
-                    ports = 1
+                    port = 1
                     targetPort("1")
                 }
                 expected = ServicePort(
-                    ports = 1,
+                    port = 1,
                     targetPort = IntOrString(str = "1"),
                 )
             }
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<ServicePort, ServicePort.Builder> {
-            requireScenario("ports") {
+            requireScenario("port") {
                 given(ServicePort.Builder())
             }
         }

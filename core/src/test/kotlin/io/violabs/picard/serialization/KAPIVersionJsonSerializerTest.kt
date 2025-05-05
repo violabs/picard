@@ -12,7 +12,7 @@ class KAPIVersionJsonSerializerTest : UnitSim() {
     fun `version serializes correctly`() = test {
         given {
             expect { """
-                {"apiVersion":"v1","metadata":null,"spec":null,"status":null}
+                {"apiVersion":"v1","kind":"Pod","metadata":null,"spec":null,"status":null}
             """.trimIndent() }
 
             whenever {

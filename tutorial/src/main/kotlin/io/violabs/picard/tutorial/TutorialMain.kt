@@ -1,6 +1,7 @@
 package io.violabs.picard.tutorial
 
 import io.violabs.picard.common.DefaultLogger
+import io.violabs.picard.tutorial.job.JobFactory
 //import io.violabs.picard.tutorial.job.JobFactory
 //import io.violabs.picard.tutorial.kubletConfig.SimpleKubeletConfigurationFactory
 //import io.violabs.picard.tutorial.pod.ComplexPodFactory
@@ -50,11 +51,11 @@ fun main(vararg args: String) = with(FileManager()) {
 //        ComplexPodFactory.buildWithSideCar()
 //    )
 //
-//    addFile(
-//        "Job with sidecar",
-//        "./tutorial/src/main/resources/generated/job-sidecar.yaml",
-//        JobFactory.buildJobWithSideCar()
-//    )
+    addFile(
+        "Job with sidecar",
+        "./tutorial/src/main/resources/generated/job-sidecar.yaml",
+        JobFactory.buildJobWithSideCar()
+    )
 //
 //    addFile(
 //        "Simple deployment",

@@ -29,7 +29,7 @@ data class PodTemplate(
                 metadata = ObjectMetadata.Builder().apply(block).build()
             }
 
-            fun spec(block: Pod.Spec.Builder.() -> Unit) {
+            fun templateSpec(block: Pod.Spec.Builder.() -> Unit) {
                 spec = Pod.Spec.Builder().apply(block).build()
             }
 

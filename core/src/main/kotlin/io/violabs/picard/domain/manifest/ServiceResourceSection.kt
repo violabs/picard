@@ -19,7 +19,7 @@ interface ServiceResource<T : APIVersion> : K8sResource<T>
 interface ServiceListResource<T : APIVersion, E> : K8sListResource<T, E>
 
 data class ServiceResourceSection(
-    val resources: List<K8sAPIResource<*>>
+    override val resources: List<K8sAPIResource<*>>
 ) : ManifestResource {
 
     class Builder(

@@ -41,7 +41,7 @@ interface WorkloadResource<T : APIVersion> : K8sResource<T>
 interface WorkloadListResource<T : APIVersion, E> : K8sListResource<T, E>
 
 data class WorkloadResourceSection(
-    val resources: List<K8sAPIResource<*>>
+    override val resources: List<K8sAPIResource<*>>
 ) : ManifestResource {
 
     class Builder(

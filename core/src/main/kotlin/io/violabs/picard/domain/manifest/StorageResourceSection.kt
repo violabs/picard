@@ -29,7 +29,7 @@ interface StorageResource<T : APIVersion> : K8sResource<T>
 interface StorageListResource<T : APIVersion, E> : K8sListResource<T, E>
 
 data class StorageResourceSection(
-    val resources: List<K8sAPIResource<*>>
+    override val resources: List<K8sAPIResource<*>>
 ) : ManifestResource {
 
     class Builder(

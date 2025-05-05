@@ -1,3 +1,8 @@
 package io.violabs.picard.domain.label
 
-data class Label(val key: String, val value: String)
+import io.violabs.picard.common.YAMLMap
+
+data class Label(
+    override val key: String,
+    override val value: String
+) : YAMLMap

@@ -4,13 +4,14 @@ import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.*
+import io.violabs.picard.domain.manifest.ServiceResource
 
 data class Service(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : K8sResource<Service.Version> {
+) : ServiceResource<Service.Version> {
     interface Version : APIVersion
 
     data class Spec(
@@ -154,7 +155,7 @@ data class Service(
     }
 
     class Group : K8sListResource.ItemGroup<Service, Builder>(Builder()) {
-        fun service(scope: Builder.() -> Unit) {
+        fun serviceItem(scope: Builder.() -> Unit) {
             item(scope)
         }
     }

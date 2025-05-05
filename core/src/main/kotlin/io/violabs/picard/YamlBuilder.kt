@@ -11,10 +11,12 @@ object YamlBuilder {
     val yamlFactory = YAMLFactory().apply {
         disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER)
         enable(YAMLGenerator.Feature.MINIMIZE_QUOTES)
+        enable(YAMLGenerator.Feature.INDENT_ARRAYS_WITH_INDICATOR)
     }
 
     val listYamlFactory = YAMLFactory().apply {
         enable(YAMLGenerator.Feature.MINIMIZE_QUOTES)
+        enable(YAMLGenerator.Feature.INDENT_ARRAYS_WITH_INDICATOR)
     }
 
     private val singleOm = ObjectMapper(yamlFactory)
@@ -24,6 +26,8 @@ object YamlBuilder {
     private val listOm = ObjectMapper(listYamlFactory)
         .registerKotlinModule()
         .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+
+    fun singleBuild(o: Any): String = singleOm.writeValueAsString(o)
 
     fun build(manifest: Manifest): String {
         val resources = manifest.resources.flatMap { it.resources }

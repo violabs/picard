@@ -58,7 +58,7 @@ class ServiceTest : SuccessBuildSim<Service, Service.Builder>() {
                     spec {
                         selector(PLACEHOLDER to PLACEHOLDER)
                         ports {
-                            port {
+                            portItem {
                                 ports = PORT_NUMBER
                                 targetPort(PORT_NUMBER)
                                 protocol = Protocol.TCP

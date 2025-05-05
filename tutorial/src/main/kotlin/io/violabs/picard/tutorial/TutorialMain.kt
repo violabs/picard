@@ -2,6 +2,7 @@ package io.violabs.picard.tutorial
 
 import io.violabs.picard.common.DefaultLogger
 import io.violabs.picard.tutorial.job.JobFactory
+import io.violabs.picard.tutorial.pod.ComplexPodFactory
 //import io.violabs.picard.tutorial.job.JobFactory
 //import io.violabs.picard.tutorial.kubletConfig.SimpleKubeletConfigurationFactory
 //import io.violabs.picard.tutorial.pod.ComplexPodFactory
@@ -39,11 +40,11 @@ fun main(vararg args: String) = with(FileManager()) {
 //        SimpleKubeletConfigurationFactory.buildFromDsl()
 //    )
 //
-//    addFile(
-//        "Pod with init containers",
-//        "./tutorial/src/main/resources/generated/pod-with-init-containers.yaml",
-//        ComplexPodFactory.buildWithInitContainers()
-//    )
+    addFile(
+        "Pod with init containers",
+        "./tutorial/src/main/resources/generated/pod-with-init-containers.yaml",
+        ComplexPodFactory.buildWithInitContainers()
+    )
 //
 //    addFile(
 //        "Pod with sidecar",

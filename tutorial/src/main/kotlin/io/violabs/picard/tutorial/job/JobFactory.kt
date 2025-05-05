@@ -40,7 +40,7 @@ object JobFactory {
         val volumeName = "data"
 
         val manifest = buildManifest {
-            workload {
+            workloadSection {
                 job {
                     metadata {
                         name = appName

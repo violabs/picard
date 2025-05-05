@@ -1,8 +1,10 @@
 package io.violabs.picard.domain
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.domain.label.Label
 import io.violabs.picard.domain.label.LabelGroup
+import io.violabs.picard.serialization.ListAsMapSerializer
 
 /**
  * https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/object-meta/#ObjectMeta
@@ -17,6 +19,7 @@ data class ObjectMetadata(
     val name: String? = null,
     val generatedName: String? = null,
     val namespace: String? = null,
+    @JsonSerialize(using = ListAsMapSerializer::class)
     val labels: List<Label>? = null,
     val annotations: List<K8sAnnotation>? = null
 ) {

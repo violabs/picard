@@ -20,7 +20,7 @@ interface AuthenticationResource<T : APIVersion> : K8sResource<T>
 interface AuthenticationListResource<T : APIVersion, E> : K8sListResource<T, E>
 
 data class AuthenticationResourceSection(
-    val resources: List<K8sAPIResource<*>>
+    override val resources: List<K8sAPIResource<*>>
 ): ManifestResource {
 
     class Builder(

@@ -36,7 +36,7 @@ class RuntimeClassTest : FullBuildSim<RuntimeClass, RuntimeClass.Builder>() {
                     scheduling {
                         nodeSelector(PLACEHOLDER to PLACEHOLDER)
                         tolerations {
-                            toleration {
+                            addToleration {
                                 key = PLACEHOLDER
                                 operator = PLACEHOLDER
                                 value = PLACEHOLDER

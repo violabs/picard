@@ -55,7 +55,7 @@ data class MetricStatus(
     class Group : BuilderGroup<MetricStatus, Builder>(Builder()) {
         fun statuses(): List<MetricStatus>? = items()
 
-        fun status(block: Builder.() -> Unit) {
+        fun addMetricStatus(block: Builder.() -> Unit) {
             add(block)
         }
     }

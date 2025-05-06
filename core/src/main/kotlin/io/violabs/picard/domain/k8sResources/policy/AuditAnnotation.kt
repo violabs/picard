@@ -23,7 +23,7 @@ data class AuditAnnotation(
     class Group : BuilderGroup<AuditAnnotation, Builder>(Builder()) {
         fun annotations(): List<AuditAnnotation>? = items()
 
-        fun annotation(scope: Builder.() -> Unit) {
+        fun addAuditAnnotation(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

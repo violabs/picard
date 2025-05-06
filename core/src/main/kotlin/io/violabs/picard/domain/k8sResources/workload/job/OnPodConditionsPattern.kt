@@ -24,7 +24,7 @@ data class OnPodConditionsPattern(
     class Group : BuilderGroup<OnPodConditionsPattern, Builder>(Builder()) {
         fun patterns(): List<OnPodConditionsPattern>? = items()
 
-        fun pattern(block: Builder.() -> Unit) {
+        fun addOnPodConditionsPattern(block: Builder.() -> Unit) {
             add(block)
         }
     }

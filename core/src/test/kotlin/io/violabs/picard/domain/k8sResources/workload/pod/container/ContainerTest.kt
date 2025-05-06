@@ -60,7 +60,7 @@ class ContainerTest : ContainerSim<Container, Container.Builder>(Container.Build
                 FULL_CONTAINER
             ) {
                 ports {
-                    port {
+                    addContainerPort {
                         name = "http"
                         protocol = Protocol.TCP
                         containerPort = 8080
@@ -71,7 +71,7 @@ class ContainerTest : ContainerSim<Container, Container.Builder>(Container.Build
 
                 resources {
                     claims {
-                        claim {
+                        addContainerResourceClaim {
                             name = "claim-name"
                             request = "100m"
                         }
@@ -88,7 +88,7 @@ class ContainerTest : ContainerSim<Container, Container.Builder>(Container.Build
                     }
 
                     resizePolicy {
-                        add {
+                        addResizePolicy {
                             resourceName = "cpu"
                             restartPolicy = "Always"
                         }

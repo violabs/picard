@@ -52,7 +52,7 @@ data class PolicyRule(
     class Group : BuilderGroup<PolicyRule, Builder>(Builder()) {
         fun rules(): List<PolicyRule>? = items()
 
-        fun rule(scope: Builder.() -> Unit) {
+        fun addPolicyRule(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

@@ -30,7 +30,7 @@ data class Toleration(
     class Group : BuilderGroup<Toleration, Builder>(Builder()) {
         fun tolerations(): List<Toleration>? = items()
 
-        fun toleration(scope: Builder.() -> Unit) {
+        fun addToleration(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

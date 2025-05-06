@@ -28,39 +28,39 @@ class ManifestTest : FullBuildSim<Manifest, Manifest.Builder>() {
             scenario {
                 id = "full"
                 given(Manifest.Builder()) {
-                    authentication {
+                    authenticationSection {
                         tokenRequest { }
                     }
 
-                    authorization {
+                    authorizationSection {
                         clusterRole { }
                     }
 
-                    cluster {
+                    clusterSection {
                         apiService { }
                     }
 
-                    config {
+                    configSection {
                         configMap { }
                     }
 
-                    extend {
+                    extendSection {
                         mutatingWebhook { }
                     }
 
-                    policy {
+                    policySection {
                         flowSchema { }
                     }
 
-                    service {
+                    serviceSection {
                         ingress { }
                     }
 
-                    storage {
+                    storageSection {
                         persistentVolume { }
                     }
 
-                    workload {
+                    workloadSection {
                         pod {  }
                     }
                 }

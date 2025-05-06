@@ -37,7 +37,7 @@ data class NetworkPolicyIngressRule(
     class Group : BuilderGroup<NetworkPolicyIngressRule, Builder>(Builder()) {
         fun rules(): List<NetworkPolicyIngressRule>? = items()
 
-        fun rule(scope: Builder.() -> Unit) {
+        fun addNetworkPolicyIngressRule(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

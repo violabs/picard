@@ -63,7 +63,7 @@ class JobTest : SuccessBuildSim<Job, Job.Builder>() {
                         manualSelector()
                         podFailurePolicy {
                             rules {
-                                rule {
+                                addPodFailurePolicyRule {
                                     action = PodFailurePolicyRule.Action.FailIndex
                                     onExitCodes {
                                         operator = Operator.In
@@ -71,7 +71,7 @@ class JobTest : SuccessBuildSim<Job, Job.Builder>() {
                                         containerName = PLACEHOLDER
                                     }
                                     onPodConditions {
-                                        pattern {
+                                        addOnPodConditionsPattern {
                                             status = BooleanType.True
                                             type = PLACEHOLDER
                                         }
@@ -81,7 +81,7 @@ class JobTest : SuccessBuildSim<Job, Job.Builder>() {
                         }
                         successPolicy {
                             rules {
-                                rule {
+                                addPodSuccessPolicyRule {
                                     succeededCount = 1
                                     succeededIndexes = PLACEHOLDER
                                 }

@@ -67,7 +67,7 @@ class ResourceSliceTest : FullBuildSim<ResourceSlice, ResourceSlice.Builder>() {
                         }
                         allNodes()
                         devices {
-                            device {
+                            addDevice {
                                 name = PLACEHOLDER
                                 basic {
                                     attributes {

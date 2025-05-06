@@ -238,7 +238,7 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
                     os("linux")
 
                     volumes {
-                        volume {
+                        addVolume {
                             name = "test_volume"
                             emptyDir = "/test_empty_dir"
                         }
@@ -264,27 +264,27 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
 
                         podAffinity {
                             preferredDuringSchedulingIgnoredDuringExecution {
-                                term {
+                                addWeightedPodAffinityTerm {
                                     weight = 1
                                     podAffinityTerm { sharedTerm() }
                                 }
                             }
 
                             requiredDuringSchedulingIgnoredDuringExecution {
-                                term { sharedTerm() }
+                                addPodAffinityTerm { sharedTerm() }
                             }
                         }
 
                         podAntiAffinity {
                             preferredDuringSchedulingIgnoredDuringExecution {
-                                term {
+                                addWeightedPodAffinityTerm {
                                     weight = 1
                                     podAffinityTerm { sharedTerm() }
                                 }
                             }
 
                             requiredDuringSchedulingIgnoredDuringExecution {
-                                term { sharedTerm() }
+                                addPodAffinityTerm { sharedTerm() }
                             }
                         }
                     }
@@ -327,7 +327,7 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
                     activeDeadlineSeconds = 1L
 
                     readinessGates {
-                        readinessGate {
+                        addReadinessGate {
                             conditionType = "ready"
                         }
                     }
@@ -339,7 +339,7 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
                     subdomain = "test_subdomain"
 
                     hostAliases {
-                        hostAlias {
+                        addHostAlias {
                             ip = "0.0.0.0"
                             hostnames("localhost")
                         }
@@ -348,7 +348,7 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
                     dnsConfig {
                         nameservers("ns1")
                         options {
-                            option {
+                            addDNSConfigOption {
                                 name = "test"
                                 value = "test_value"
                             }
@@ -389,7 +389,7 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
                         supplementalGroups(100, 200)
                         supplementalGroupsPolicy = "groupPolicy"
                         sysctls {
-                            sysctl {
+                            addSysctl {
                                 name = "test"
                                 value = "sysctl"
                             }
@@ -405,7 +405,7 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
                     hostUsers()
 
                     resourceClaims {
-                        resourceClaim {
+                        addPodResourceClaim {
                             name = "test_resource"
                             resourceClaimName = "test_resource_claim_name"
                             resourceClaimTemplateName = "test_resource_claim_template_name"
@@ -413,7 +413,7 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
                     }
 
                     schedulingGates {
-                        schedulingGate {
+                        addSchedulingGate {
                             name = "test_scheduling"
                         }
                     }

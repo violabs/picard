@@ -47,7 +47,7 @@ data class RuleWithOperations(
     class Group : BuilderGroup<RuleWithOperations, Builder>(Builder()) {
         fun rules(): List<RuleWithOperations>? = items()
 
-        fun rule(scope: Builder.() -> Unit) {
+        fun addRuleWithOperations(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

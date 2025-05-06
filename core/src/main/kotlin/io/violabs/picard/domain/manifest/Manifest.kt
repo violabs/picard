@@ -10,39 +10,39 @@ data class Manifest(
     class Builder : DSLBuilder<Manifest> {
         private val resources: MutableList<ManifestResource> = mutableListOf()
 
-        fun authentication(block: AuthenticationResourceSection.Builder.() -> Unit) {
+        fun authenticationSection(block: AuthenticationResourceSection.Builder.() -> Unit) {
             resources += AuthenticationResourceSection.Builder().apply(block).build()
         }
 
-        fun authorization(block: AuthorizationResourceSection.Builder.() -> Unit) {
+        fun authorizationSection(block: AuthorizationResourceSection.Builder.() -> Unit) {
             resources += AuthorizationResourceSection.Builder().apply(block).build()
         }
 
-        fun cluster(block: ClusterResourceSection.Builder.() -> Unit) {
+        fun clusterSection(block: ClusterResourceSection.Builder.() -> Unit) {
             resources += ClusterResourceSection.Builder().apply(block).build()
         }
 
-        fun config(block: ConfigResourceSection.Builder.() -> Unit) {
+        fun configSection(block: ConfigResourceSection.Builder.() -> Unit) {
             resources += ConfigResourceSection.Builder().apply(block).build()
         }
 
-        fun extend(block: ExtendResourceSection.Builder.() -> Unit) {
+        fun extendSection(block: ExtendResourceSection.Builder.() -> Unit) {
             resources += ExtendResourceSection.Builder().apply(block).build()
         }
 
-        fun policy(block: PolicyResourceSection.Builder.() -> Unit) {
+        fun policySection(block: PolicyResourceSection.Builder.() -> Unit) {
             resources += PolicyResourceSection.Builder().apply(block).build()
         }
 
-        fun service(block: ServiceResourceSection.Builder.() -> Unit) {
+        fun serviceSection(block: ServiceResourceSection.Builder.() -> Unit) {
             resources += ServiceResourceSection.Builder().apply(block).build()
         }
 
-        fun storage(block: StorageResourceSection.Builder.() -> Unit) {
+        fun storageSection(block: StorageResourceSection.Builder.() -> Unit) {
             resources += StorageResourceSection.Builder().apply(block).build()
         }
 
-        fun workload(block: WorkloadResourceSection.Builder.() -> Unit) {
+        fun workloadSection(block: WorkloadResourceSection.Builder.() -> Unit) {
             resources += WorkloadResourceSection.Builder().apply(block).build()
         }
 

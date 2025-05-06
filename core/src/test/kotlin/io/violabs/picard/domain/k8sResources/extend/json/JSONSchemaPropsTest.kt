@@ -40,10 +40,10 @@ class JSONSchemaPropsTest : SuccessBuildSim<JSONSchemaProps, JSONSchemaProps.Bui
                         bool()
                     }
                     allOf {
-                        props { nestedProp() }
+                        addJSONSchemaProps { nestedProp() }
                     }
                     anyOf {
-                        props { nestedProp() }
+                        addJSONSchemaProps { nestedProp() }
                     }
                     default(PLACEHOLDER)
                     definitions {
@@ -90,7 +90,7 @@ class JSONSchemaPropsTest : SuccessBuildSim<JSONSchemaProps, JSONSchemaProps.Bui
                     }
                     nullable()
                     oneOf {
-                        props { nestedProp() }
+                        addJSONSchemaProps { nestedProp() }
                     }
                     pattern = PLACEHOLDER
                     patternProperties {
@@ -114,7 +114,7 @@ class JSONSchemaPropsTest : SuccessBuildSim<JSONSchemaProps, JSONSchemaProps.Bui
                     xKubernetesMapType = PLACEHOLDER
                     xKubernetesPreserveUnknownFields()
                     xKubernetesValidations {
-                        rule {
+                        addValidationRule {
                             rule = PLACEHOLDER
                             fieldPath = PLACEHOLDER
                             message = PLACEHOLDER

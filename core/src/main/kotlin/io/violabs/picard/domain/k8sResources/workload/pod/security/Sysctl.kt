@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.security
 
+import io.violabs.picard.common.BuilderGroup
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.DSLBuilder
 
@@ -16,6 +17,14 @@ data class Sysctl(
                 name = vRequireNotNull(this::name),
                 value = vRequireNotNull(this::value)
             )
+        }
+    }
+
+    class Group : BuilderGroup<Sysctl, Builder>(Builder()) {
+        fun sysctls(): List<Sysctl>? = items()
+
+        fun addSysctl(block: Builder.() -> Unit) {
+            add(block)
         }
     }
 }

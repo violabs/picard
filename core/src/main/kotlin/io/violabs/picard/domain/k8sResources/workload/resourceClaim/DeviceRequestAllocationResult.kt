@@ -29,7 +29,7 @@ data class DeviceRequestAllocationResult(
     class Group : BuilderGroup<DeviceRequestAllocationResult, Builder>(Builder()) {
         fun results(): List<DeviceRequestAllocationResult>? = items()
 
-        fun result(block: Builder.() -> Unit) {
+        fun addDeviceRequestAllocationResult(block: Builder.() -> Unit) {
             add(block)
         }
     }

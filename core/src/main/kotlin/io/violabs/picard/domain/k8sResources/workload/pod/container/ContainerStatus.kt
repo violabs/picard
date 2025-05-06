@@ -1,10 +1,10 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
+import io.violabs.picard.common.BuilderGroup
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.workload.pod.resource.ResourceStatus
-import io.violabs.picard.domain.k8sResources.workload.pod.resource.ResourceStatusGroup
 import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeMountStatus
 
 data class ContainerStatus(
@@ -28,8 +28,8 @@ data class ContainerStatus(
         var image: String? = null
         var name: String? = null
         private var ready: Boolean? = null
-        private var allocatedResources: MutableMap<String, Quantity>? = null
-        private var allocatedResourceStatus: MutableList<ResourceStatus>? = null
+        private var allocatedResources: Map<String, Quantity>? = null
+        private var allocatedResourceStatus: List<ResourceStatus>? = null
         var containerID: String? = null
         private var lastState: ContainerState? = null
         private var resources: ContainerResourceRequirements? = null
@@ -47,8 +47,8 @@ data class ContainerStatus(
             this.allocatedResources = mutableMapOf<String, Quantity>().apply(scope)
         }
 
-        fun allocatedResourceStatus(scope: ResourceStatusGroup.() -> Unit) {
-            this.allocatedResourceStatus = ResourceStatusGroup().apply(scope).statuses()
+        fun allocatedResourceStatus(scope: ResourceStatus.Group.() -> Unit) {
+            this.allocatedResourceStatus = ResourceStatus.Group().apply(scope).statuses()
         }
 
         fun lastState(scope: ContainerState.Builder.() -> Unit) {
@@ -92,6 +92,14 @@ data class ContainerStatus(
                 user,
                 volumeMounts
             )
+        }
+    }
+
+    class Group : BuilderGroup<ContainerStatus, Builder>(Builder()) {
+        fun statuses(): List<ContainerStatus>? = items()
+
+        fun addContainerStatus(block: Builder.() -> Unit) {
+            add(block)
         }
     }
 }

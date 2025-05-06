@@ -39,7 +39,7 @@ data class NetworkPolicyPeer(
     class Group : BuilderGroup<NetworkPolicyPeer, Builder>(Builder()) {
         fun peers(): List<NetworkPolicyPeer>? = items()
 
-        fun peer(scope: Builder.() -> Unit) {
+        fun addNetworkPolicyPeer(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

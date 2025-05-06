@@ -26,7 +26,7 @@ class ServiceAccountTest : SuccessBuildSim<ServiceAccount, ServiceAccount.Builde
                     }
 
                     secrets {
-                        reference { sharedObjectReference() }
+                        addObjectReference { sharedObjectReference() }
                     }
                 }
                 expected = ServiceAccount(

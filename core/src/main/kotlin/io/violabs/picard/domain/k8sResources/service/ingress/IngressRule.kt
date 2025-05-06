@@ -26,7 +26,7 @@ data class IngressRule(
     class Group : BuilderGroup<IngressRule, Builder>(Builder()) {
         fun rules(): List<IngressRule>? = items()
 
-        fun rule(scope: Builder.() -> Unit) {
+        fun addIngressRule(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

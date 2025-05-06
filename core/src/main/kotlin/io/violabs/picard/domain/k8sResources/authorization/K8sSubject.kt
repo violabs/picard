@@ -30,7 +30,7 @@ data class K8sSubject(
     class Group : BuilderGroup<K8sSubject, Builder>(Builder()) {
         fun subjects(): List<K8sSubject>? = items()
 
-        fun subject(scope: Builder.() -> Unit) {
+        fun addSubject(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

@@ -30,7 +30,7 @@ class PodTemplateTest : SuccessBuildSim<PodTemplate, PodTemplate.Builder>() {
                     sharedMetadata()
                     spec {
                         metadata { }
-                        spec {
+                        templateSpec {
                             containers {
                                 container {
                                     name = PLACEHOLDER

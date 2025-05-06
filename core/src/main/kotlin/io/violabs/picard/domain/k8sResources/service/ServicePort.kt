@@ -1,14 +1,17 @@
 package io.violabs.picard.domain.k8sResources.service
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BasePort
 import io.violabs.picard.common.BuilderGroup
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.domain.k8sResources.Protocol
+import io.violabs.picard.serialization.IntOrStringSerializer
 
 data class ServicePort(
-    val ports: Int,
+    val port: Int,
+    @get:JsonSerialize(using = IntOrStringSerializer::class)
     val targetPort: IntOrString? = null,
     val protocol: Protocol? = null,
     val name: String? = null,
@@ -16,7 +19,7 @@ data class ServicePort(
     val appProtocol: String? = null
 ) : BasePort {
     class Builder : DSLBuilder<ServicePort> {
-        var ports: Int? = null
+        var port: Int? = null
         private var targetPort: IntOrString? = null
         var protocol: Protocol? = null
         var name: String? = null
@@ -33,7 +36,7 @@ data class ServicePort(
 
         override fun build(): ServicePort {
             return ServicePort(
-                ports = vRequireNotNull(this::ports),
+                port = vRequireNotNull(this::port),
                 targetPort = targetPort,
                 protocol = protocol,
                 name = name,
@@ -46,7 +49,7 @@ data class ServicePort(
     class Group : BuilderGroup<ServicePort, Builder>(Builder()) {
         fun ports(): List<ServicePort>? = items()
 
-        fun port(scope: Builder.() -> Unit) {
+        fun addServicePort(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

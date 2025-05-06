@@ -23,7 +23,7 @@ data class NodeAddress(
     class Group : BuilderGroup<NodeAddress, Builder>(Builder()) {
         fun addresses(): List<NodeAddress>? = items()
 
-        fun address(scope: Builder.() -> Unit) {
+        fun addNodeAddress(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

@@ -39,7 +39,7 @@ data class CSINodeDriver(
     class Group : BuilderGroup<CSINodeDriver, Builder>(Builder()) {
         fun drivers(): List<CSINodeDriver>? = items()
 
-        fun driver(scope: Builder.() -> Unit) {
+        fun addCSINodeDriver(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

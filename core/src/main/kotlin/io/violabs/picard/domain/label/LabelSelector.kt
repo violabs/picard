@@ -1,7 +1,9 @@
 package io.violabs.picard.domain.label
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import io.violabs.picard.common.BuilderGroup
 import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.serialization.ListAsMapSerializer
 
 /**
  * https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/label-selector/#LabelSelector
@@ -9,6 +11,7 @@ import io.violabs.picard.common.DSLBuilder
  */
 data class LabelSelector(
     val matchExpressions: List<LabelSelectorRequirement>? = null,
+    @JsonSerialize(using = ListAsMapSerializer::class)
     val matchLabels: List<Label>? = null
 ) {
 
@@ -20,8 +23,8 @@ data class LabelSelector(
             matchExpressions = LabelSelectorRequirement.Group().apply(scope).requirements()
         }
 
-        fun matchLabels(scope: LabelGroup.() -> Unit) {
-            matchLabels = LabelGroup().apply(scope).labels()
+        fun matchLabels(scope: Label.Group.() -> Unit) {
+            matchLabels = Label.Group().apply(scope).labels()
         }
 
         override fun build(): LabelSelector {

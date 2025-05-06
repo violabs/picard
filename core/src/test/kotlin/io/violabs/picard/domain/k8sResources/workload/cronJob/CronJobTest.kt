@@ -39,7 +39,7 @@ class CronJobTest : SuccessBuildSim<CronJob, CronJob.Builder>() {
                     }
                     this.status {
                         active {
-                            reference {
+                            addObjectReference {
                                 sharedObjectReference()
                             }
                         }

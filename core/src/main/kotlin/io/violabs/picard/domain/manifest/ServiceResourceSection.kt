@@ -6,6 +6,8 @@ import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sAPIResource
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.K8sResource
+import io.violabs.picard.domain.k8sResources.service.Service
+import io.violabs.picard.domain.k8sResources.service.ServiceList
 import io.violabs.picard.domain.k8sResources.service.endpointSlice.EndpointSlice
 import io.violabs.picard.domain.k8sResources.service.endpointSlice.EndpointSliceList
 import io.violabs.picard.domain.k8sResources.service.endpoints.Endpoints
@@ -19,7 +21,7 @@ interface ServiceResource<T : APIVersion> : K8sResource<T>
 interface ServiceListResource<T : APIVersion, E> : K8sListResource<T, E>
 
 data class ServiceResourceSection(
-    val resources: List<K8sAPIResource<*>>
+    override val resources: List<K8sAPIResource<*>>
 ) : ManifestResource {
 
     class Builder(
@@ -58,6 +60,13 @@ data class ServiceResourceSection(
             lists += IngressClassList.Builder().apply(block).build()
         }
 
+        fun service(block: Service.Builder.() -> Unit) {
+            resources += Service.Builder().apply(block).build()
+        }
+
+        fun serviceList(block: ServiceList.Builder.() -> Unit) {
+            lists += ServiceList.Builder().apply(block).build()
+        }
 
         override fun build(): ServiceResourceSection {
             return ServiceResourceSection(

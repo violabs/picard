@@ -33,7 +33,7 @@ class CustomResourceDefinitionListTest :
                                     }
                                     scope = PLACEHOLDER
                                     versions {
-                                        version {
+                                        addCustomResourceDefinitionVersion {
                                             name = PLACEHOLDER
                                             served()
                                             storage()

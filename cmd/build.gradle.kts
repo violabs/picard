@@ -1,11 +1,27 @@
-
+plugins {
+    `maven-publish`
+}
 
 application {
     mainClass.set("io.violabs.picard.cmd.CmdMainKt")
 }
 
+group = "io.violabs.picard"
+version = "0.0.1"
+
 dependencies {
     implementation(project(":common"))
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("local") {
+            from(components["java"])
+            groupId    = "io.violabs.picard"
+            artifactId = "command"
+            version    = version
+        }
+    }
 }
 
 
@@ -65,3 +81,20 @@ open class TestTask : DefaultTask() {
 
 tasks.register<TestTask>("runTest")
 //endregion REVISIT
+
+tasks.register("listLocalMaven") {
+    doLast {
+        val repo = file("${System.getProperty("user.home")}/.m2/repository")
+        repo.walkTopDown()
+            .filter { it.extension == "pom" }
+            .map {
+                it.relativeTo(repo)
+                    .invariantSeparatorsPath
+                    .removeSuffix(".pom")
+                    .replace('/', ':')
+            }
+            .distinct()
+            .sorted()
+            .forEach(::println)
+    }
+}

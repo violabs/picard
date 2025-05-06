@@ -33,7 +33,7 @@ class DeviceClassTest : FullBuildSim<DeviceClass, DeviceClass.Builder>() {
                     sharedMetadata()
                     spec {
                         config {
-                            apply {
+                            addDeviceClassConfiguration {
                                 opaque {
                                     driver = PLACEHOLDER
                                     parameters = PLACEHOLDER
@@ -41,7 +41,7 @@ class DeviceClassTest : FullBuildSim<DeviceClass, DeviceClass.Builder>() {
                             }
                         }
                         selectors {
-                            selector {
+                            addDeviceSelector {
                                 cel(PLACEHOLDER)
                             }
                         }

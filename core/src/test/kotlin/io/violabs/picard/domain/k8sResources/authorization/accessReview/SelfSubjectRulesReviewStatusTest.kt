@@ -33,7 +33,7 @@ class SelfSubjectRulesReviewStatusTest :
                         incomplete()
 
                         nonResourceRules {
-                            rule {
+                            addNonResourceRule {
                                 verbs(HTTPVerb.GET)
                             }
                         }

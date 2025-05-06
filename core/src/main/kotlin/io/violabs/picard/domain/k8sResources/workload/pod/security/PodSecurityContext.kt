@@ -51,8 +51,8 @@ data class PodSecurityContext(
             this.supplementalGroups = supplementalGroups.toList()
         }
 
-        fun sysctls(scope: SysctlGroup.() -> Unit) {
-            sysctls = SysctlGroup().apply(scope).sysctls()
+        fun sysctls(scope: Sysctl.Group.() -> Unit) {
+            sysctls = Sysctl.Group().apply(scope).sysctls()
         }
 
         fun windowsOptions(scope: WindowsSecurityContextOptions.Builder.() -> Unit) {

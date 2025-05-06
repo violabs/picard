@@ -39,7 +39,7 @@ data class ValidationRule(
     class Group : BuilderGroup<ValidationRule, Builder>(Builder()) {
         fun rules(): List<ValidationRule>? = items()
 
-        fun rule(scope: Builder.() -> Unit) {
+        fun addValidationRule(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

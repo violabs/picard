@@ -7,7 +7,7 @@ import io.violabs.picard.domain.DefaultGroup
 class IPGroup<IP : BaseIP>(private val builder: (String) -> IP) : DefaultGroup<IP>() {
     fun ips(): MutableList<IP>? = items()
 
-    fun ip(content: String) {
+    fun addIp(content: String) {
         add(builder(content))
     }
 }

@@ -40,7 +40,7 @@ data class PolicyRulesWithSubjects(
     class Group : BuilderGroup<PolicyRulesWithSubjects, Builder>(Builder()) {
         fun ruleGroups(): List<PolicyRulesWithSubjects>? = items()
 
-        fun item(scope: Builder.() -> Unit) {
+        fun addPolicyRulesWithSubjects(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

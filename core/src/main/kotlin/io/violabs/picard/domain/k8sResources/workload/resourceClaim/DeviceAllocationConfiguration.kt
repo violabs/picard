@@ -35,7 +35,7 @@ data class DeviceAllocationConfiguration(
     class Group : BuilderGroup<DeviceAllocationConfiguration, Builder>(Builder()) {
         fun configs(): List<DeviceAllocationConfiguration>? = items()
 
-        fun configDetails(block: Builder.() -> Unit) {
+        fun addDeviceAllocationConfiguration(block: Builder.() -> Unit) {
             add(block)
         }
     }

@@ -44,7 +44,7 @@ data class DeviceRequest(
     class Group : BuilderGroup<DeviceRequest, Builder>(Builder()) {
         fun requests(): List<DeviceRequest>? = items()
 
-        fun request(block: Builder.() -> Unit) {
+        fun addDeviceRequest(block: Builder.() -> Unit) {
             add(block)
         }
     }

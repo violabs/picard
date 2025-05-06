@@ -26,7 +26,7 @@ data class HPAScalingPolicy(
     class Group : BuilderGroup<HPAScalingPolicy, Builder>(Builder()) {
         fun policies(): List<HPAScalingPolicy>? = items()
 
-        fun policy(block: Builder.() -> Unit) {
+        fun addHPAScalingPolicy(block: Builder.() -> Unit) {
             add(block)
         }
     }

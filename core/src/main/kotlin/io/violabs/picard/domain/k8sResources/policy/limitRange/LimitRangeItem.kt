@@ -56,7 +56,7 @@ data class LimitRangeItem(
     class Group : BuilderGroup<LimitRangeItem, Builder>(Builder()) {
         fun limitRangeItems(): List<LimitRangeItem>? = items()
 
-        fun limitRangeItem(scope: Builder.() -> Unit) {
+        fun addLimitRangeItem(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

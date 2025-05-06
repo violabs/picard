@@ -23,7 +23,7 @@ interface AuthorizationResource<T : APIVersion> : K8sResource<T>
 interface AuthorizationListResource<T : APIVersion, E> : K8sListResource<T, E>
 
 data class AuthorizationResourceSection(
-    val resources: List<K8sAPIResource<*>>
+    override val resources: List<K8sAPIResource<*>>
 ) : ManifestResource {
     class Builder(
         private val resources: MutableList<AuthorizationResource<*>> = mutableListOf(),

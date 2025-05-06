@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.affinity
 
+import io.violabs.picard.common.BuilderGroup
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseAffinityTerm
 import io.violabs.picard.common.DSLBuilder
@@ -50,6 +51,14 @@ data class PodAffinityTerm(
                 namespaceSelector = namespaceSelector,
                 namespaces = namespaces
             )
+        }
+    }
+
+    class Group : BuilderGroup<PodAffinityTerm, Builder>(Builder()) {
+        fun terms(): List<PodAffinityTerm>? = items()
+
+        fun addPodAffinityTerm(block: Builder.() -> Unit) {
+            add(block)
         }
     }
 }

@@ -117,14 +117,14 @@ class NodeTest : SuccessBuildSim<Node, Node.Builder>() {
                         podCIDR = PLACEHOLDER
                         providerID = PLACEHOLDER
                         taints {
-                            taint { effect = Taint.Effect.NoExecute }
+                            addTaint { effect = Taint.Effect.NoExecute }
                         }
                         value()
                     }
 
                     this.status {
                         addresses {
-                            address {
+                            addNodeAddress {
                                 address = PLACEHOLDER
                                 type = PLACEHOLDER
                             }
@@ -147,7 +147,7 @@ class NodeTest : SuccessBuildSim<Node, Node.Builder>() {
                             supplementalGroupsPolicy()
                         }
                         images {
-                            image {
+                            addContainerImage {
                                 names(PLACEHOLDER)
                                 sizeBytes = 1
                             }
@@ -166,7 +166,7 @@ class NodeTest : SuccessBuildSim<Node, Node.Builder>() {
                         }
                         phase = PLACEHOLDER
                         runtimeHandlers {
-                            handler {
+                            addRuntimeHandler {
                                 features {
                                     recursiveReadOnlyMounts()
                                     userNamespaces()
@@ -175,7 +175,7 @@ class NodeTest : SuccessBuildSim<Node, Node.Builder>() {
                             }
                         }
                         volumesAttached {
-                            volume {
+                            addAttachedVolume {
                                 devicePath = PLACEHOLDER
                                 name = PLACEHOLDER
                             }

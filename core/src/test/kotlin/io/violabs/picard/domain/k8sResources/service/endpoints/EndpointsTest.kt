@@ -59,21 +59,21 @@ class EndpointsTest : SuccessBuildSim<Endpoints, Endpoints.Builder>() {
                 given(Endpoints.Builder()) {
                     sharedMetadata()
                     subsets {
-                        subset {
+                        addEndpointSubset {
                             addresses {
-                                address {
+                                addEndpointAddress {
                                     sharedAddress()
                                 }
                             }
 
                             notReadyAddresses {
-                                address {
+                                addEndpointAddress {
                                     sharedAddress()
                                 }
                             }
 
                             ports {
-                                port {
+                                addEndpointPort {
                                     port = PORT_NUMBER
                                     protocol = Protocol.TCP
                                     name = PLACEHOLDER

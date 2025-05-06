@@ -27,7 +27,7 @@ interface PolicyResource<T : APIVersion> : K8sResource<T>
 interface PolicyListResource<T : APIVersion, E> : K8sListResource<T, E>
 
 data class PolicyResourceSection(
-    val resources: List<K8sAPIResource<*>>
+    override val resources: List<K8sAPIResource<*>>
 ) : ManifestResource {
 
     class Builder : DSLBuilder<PolicyResourceSection> {

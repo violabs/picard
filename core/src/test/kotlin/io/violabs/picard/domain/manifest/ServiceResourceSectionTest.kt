@@ -2,6 +2,8 @@ package io.violabs.picard.domain.manifest
 
 
 import io.violabs.picard.FullBuildSim
+import io.violabs.picard.domain.k8sResources.service.Service
+import io.violabs.picard.domain.k8sResources.service.ServiceList
 import io.violabs.picard.domain.k8sResources.service.endpointSlice.EndpointSlice
 import io.violabs.picard.domain.k8sResources.service.endpointSlice.EndpointSliceList
 import io.violabs.picard.domain.k8sResources.service.endpoints.Endpoints
@@ -51,6 +53,12 @@ class ServiceResourceSectionTest : FullBuildSim<ServiceResourceSection, ServiceR
                             ingressClassItem { }
                         }
                     }
+                    service {}
+                    serviceList {
+                        items {
+                            serviceItem {  }
+                        }
+                    }
                 }
                 expected = ServiceResourceSection(
                     resources = listOf(
@@ -61,7 +69,9 @@ class ServiceResourceSectionTest : FullBuildSim<ServiceResourceSection, ServiceR
                         Ingress(),
                         IngressClass(),
                         IngressClassList(items = listOf(IngressClass())),
-                        IngressList(items = listOf(Ingress()))
+                        IngressList(items = listOf(Ingress())),
+                        Service(),
+                        ServiceList(items = listOf(Service()))
                     )
                 )
             }

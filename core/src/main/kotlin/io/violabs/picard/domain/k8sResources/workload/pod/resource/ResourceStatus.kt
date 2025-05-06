@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.resource
 
+import io.violabs.picard.common.BuilderGroup
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.DSLBuilder
 
@@ -17,8 +18,8 @@ data class ResourceStatus(
         private var resources: List<ResourceHealth>? = null
         var containerID: String? = null
 
-        fun resources(scope: ResourceHealthGroup.() -> Unit) {
-            resources = ResourceHealthGroup().apply(scope).resources()
+        fun resources(scope: ResourceHealth.Group.() -> Unit) {
+            resources = ResourceHealth.Group().apply(scope).resourceHealths()
         }
 
         override fun build(): ResourceStatus {
@@ -29,6 +30,14 @@ data class ResourceStatus(
                 resources = resources,
                 containerID = containerID
             )
+        }
+    }
+
+    class Group : BuilderGroup<ResourceStatus, Builder>(Builder()) {
+        fun statuses(): List<ResourceStatus>? = items()
+
+        fun addResourceStatus(block: Builder.() -> Unit) {
+            add(block)
         }
     }
 }

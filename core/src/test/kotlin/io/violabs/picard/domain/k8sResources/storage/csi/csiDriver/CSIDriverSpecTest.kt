@@ -79,7 +79,7 @@ class CSIDriverSpecTest : FailureBuildSim<CSIDriver.Spec, CSIDriver.Spec.Builder
                     storageCapacity = 1
                     fsGroupPolicy = PLACEHOLDER
                     tokenRequests {
-                        request {
+                        addCSIDriverTokenRequest {
                             audience = PLACEHOLDER
                         }
                     }

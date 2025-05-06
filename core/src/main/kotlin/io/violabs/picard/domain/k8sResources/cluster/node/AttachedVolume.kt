@@ -23,7 +23,7 @@ data class AttachedVolume(
     class Group : BuilderGroup<AttachedVolume, Builder>(Builder()) {
         fun volumes(): List<AttachedVolume>? = items()
 
-        fun volume(scope: Builder.() -> Unit) {
+        fun addAttachedVolume(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

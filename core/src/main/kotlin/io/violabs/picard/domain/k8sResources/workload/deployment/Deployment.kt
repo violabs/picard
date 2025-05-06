@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.deployment
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.common.vRequireNotNull
@@ -24,6 +25,7 @@ data class Deployment(
 ) : WorkloadResource<Deployment.Version> {
     interface Version : APIVersion
 
+    @JsonPropertyOrder("replicas", "selector", "template")
     data class Spec(
         val selector: LabelSelector,
         val template: PodTemplate.Spec? = null,

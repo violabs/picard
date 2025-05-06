@@ -1,34 +1,40 @@
 apiVersion: apps/v1
 kind: Deployment
-metadata: 
+metadata:
   name: myapp
-  labels: 
+  labels:
     app: myapp
-spec: 
+spec:
   replicas: 1
-  selector: 
-    matchLabels: 
+  selector:
+    matchLabels:
       app: myapp
-  template: 
-    metadata: 
-      labels: 
+  template:
+    metadata:
+      labels:
         app: myapp
-    spec: 
-      containers: 
+    spec:
+      containers:
         - name: myapp
           image: alpine:latest
-          command: ['sh', '-c', 'while true; do echo "logging" >> /opt/logs.txt; sleep 1; done']
+          command:
+            - sh
+            - -c
+            - echo "logging" > /opt/logs.txt
           volumeMounts:
             - name: data
               mountPath: /opt
-      initContainers: 
+      initContainers:
         - name: logshipper
           image: alpine:latest
           restartPolicy: Always
-          command: ['sh', '-c', 'tail -F /opt/logs.txt']
+          command:
+            - sh
+            - -c
+            - tail -F /opt/logs.txt
           volumeMounts:
             - name: data
               mountPath: /opt
-      volumes: 
+      volumes:
         - name: data
           emptyDir: {}

@@ -77,14 +77,14 @@ class ValidatingAdmissionPolicyTest : SuccessBuildSim<ValidatingAdmissionPolicy,
                         sharedMetadata()
                         spec {
                             auditAnnotations {
-                                annotation {
+                                addAuditAnnotation {
                                     key = PLACEHOLDER
                                     valueExpression = PLACEHOLDER
                                 }
                             }
                             failurePolicy = PLACEHOLDER
                             matchConditions {
-                                condition {
+                                addMatchCondition {
                                     expression = PLACEHOLDER
                                     name = PLACEHOLDER
                                 }
@@ -97,7 +97,7 @@ class ValidatingAdmissionPolicyTest : SuccessBuildSim<ValidatingAdmissionPolicy,
                                 kind = PLACEHOLDER
                             }
                             validations {
-                                validation {
+                                addValidation {
                                     messageExpression = PLACEHOLDER
                                     expression = PLACEHOLDER
                                     message = PLACEHOLDER
@@ -105,7 +105,7 @@ class ValidatingAdmissionPolicyTest : SuccessBuildSim<ValidatingAdmissionPolicy,
                                 }
                             }
                             variables {
-                                variable {
+                                addVariable {
                                     name = PLACEHOLDER
                                     expression = PLACEHOLDER
                                 }
@@ -125,7 +125,7 @@ class ValidatingAdmissionPolicyTest : SuccessBuildSim<ValidatingAdmissionPolicy,
                             observedGeneration = 1
                             typeChecking {
                                 expressionWarnings {
-                                    warning {
+                                    addExpressionWarning {
                                         fieldRef = PLACEHOLDER
                                         warning = PLACEHOLDER
                                     }

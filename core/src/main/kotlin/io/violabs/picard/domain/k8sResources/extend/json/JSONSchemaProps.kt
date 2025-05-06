@@ -106,11 +106,11 @@ data class JSONSchemaProps(
         }
 
         fun allOf(scope: Group.() -> Unit) {
-            this.allOf = Group().apply(scope).props()
+            this.allOf = Group().apply(scope).addJSONSchemaProps()
         }
 
         fun anyOf(scope: Group.() -> Unit) {
-            this.anyOf = Group().apply(scope).props()
+            this.anyOf = Group().apply(scope).addJSONSchemaProps()
         }
 
         fun default(jsonContent: String) {
@@ -158,7 +158,7 @@ data class JSONSchemaProps(
         }
 
         fun oneOf(scope: Group.() -> Unit) {
-            this.oneOf = Group().apply(scope).props()
+            this.oneOf = Group().apply(scope).addJSONSchemaProps()
         }
 
         fun patternProperties(scope: MapGroup.() -> Unit) {
@@ -247,9 +247,9 @@ data class JSONSchemaProps(
     }
 
     class Group : BuilderGroup<JSONSchemaProps, Builder>(Builder()) {
-        fun props(): List<JSONSchemaProps>? = items()
+        fun addJSONSchemaProps(): List<JSONSchemaProps>? = items()
 
-        fun props(scope: Builder.() -> Unit) {
+        fun addJSONSchemaProps(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

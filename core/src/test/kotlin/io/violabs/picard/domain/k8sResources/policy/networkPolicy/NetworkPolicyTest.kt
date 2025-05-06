@@ -77,9 +77,9 @@ class NetworkPolicyTest : SuccessBuildSim<NetworkPolicy, NetworkPolicy.Builder>(
                         }
                         policyTypes(PLACEHOLDER_LIST)
                         ingress {
-                            rule {
+                            addNetworkPolicyIngressRule {
                                 from {
-                                    peer {
+                                    addNetworkPolicyPeer {
                                         sharedNetworkPolicyPeer()
                                     }
                                 }
@@ -89,9 +89,9 @@ class NetworkPolicyTest : SuccessBuildSim<NetworkPolicy, NetworkPolicy.Builder>(
                                     }
                                 }
                                 egress {
-                                    rule {
+                                    addNetworkPolicyEgressRule {
                                         to {
-                                            peer {
+                                            addNetworkPolicyPeer {
                                                 sharedNetworkPolicyPeer()
                                             }
                                         }

@@ -17,7 +17,7 @@ data class LoadBalancerIngress(
         private var ports: List<ServicePortStatus>? = null
 
         fun ports(scope: ServicePortStatus.Group.() -> Unit) {
-            ports = ServicePortStatus.Group().apply(scope).ports()
+            ports = ServicePortStatus.Group().apply(scope).statuses()
         }
 
         override fun build(): LoadBalancerIngress {
@@ -33,7 +33,7 @@ data class LoadBalancerIngress(
 class Group : BuilderGroup<LoadBalancerIngress, Builder>(Builder()) {
         fun ingresses(): List<LoadBalancerIngress>? = items()
 
-        fun ingress(scope: Builder.() -> Unit) {
+        fun addLoadBalancerIngress(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

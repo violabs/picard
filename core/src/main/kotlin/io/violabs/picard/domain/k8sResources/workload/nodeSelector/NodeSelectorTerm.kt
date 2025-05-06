@@ -3,7 +3,6 @@ package io.violabs.picard.domain.k8sResources.workload.nodeSelector
 import io.violabs.picard.common.BuilderGroup
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.domain.NodeSelectorRequirement
-import io.violabs.picard.domain.NodeSelectorRequirementGroup
 
 data class NodeSelectorTerm(
     val matchExpression: List<NodeSelectorRequirement>? = null,
@@ -13,12 +12,12 @@ data class NodeSelectorTerm(
         private var _matchExpression: List<NodeSelectorRequirement>? = null
         private var _matchFields: List<NodeSelectorRequirement>? = null
 
-        fun matchExpressions(scope: NodeSelectorRequirementGroup.() -> Unit) {
-            _matchExpression = NodeSelectorRequirementGroup().apply(scope).requirements()
+        fun matchExpressions(scope: NodeSelectorRequirement.Group.() -> Unit) {
+            _matchExpression = NodeSelectorRequirement.Group().apply(scope).requirements()
         }
 
-        fun matchFields(scope: NodeSelectorRequirementGroup.() -> Unit) {
-            _matchFields = NodeSelectorRequirementGroup().apply(scope).requirements()
+        fun matchFields(scope: NodeSelectorRequirement.Group.() -> Unit) {
+            _matchFields = NodeSelectorRequirement.Group().apply(scope).requirements()
         }
 
         override fun build(): NodeSelectorTerm {

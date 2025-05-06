@@ -38,7 +38,7 @@ data class ResourceRule(
     class Group : BuilderGroup<ResourceRule, Builder>(Builder()) {
         fun rules(): List<ResourceRule>? = items()
 
-        fun rule(scope: Builder.() -> Unit) {
+        fun addResourceRule(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

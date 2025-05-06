@@ -35,7 +35,7 @@ class ResourceQuotaTest : SuccessBuildSim<ResourceQuota, ResourceQuota.Builder>(
                         hard(QUANTITY_PAIR)
                         scopeSelector {
                             matchExpressions {
-                                requirement {
+                                addScopedResourceSelectorRequirement {
                                     operator = Operator.In
                                     scopeName = PLACEHOLDER
                                     values(PLACEHOLDER)

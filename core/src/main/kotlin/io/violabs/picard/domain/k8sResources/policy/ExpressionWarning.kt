@@ -23,7 +23,7 @@ data class ExpressionWarning(
     class Group : BuilderGroup<ExpressionWarning, Builder>(Builder()) {
         fun warnings(): List<ExpressionWarning>? = items()
 
-        fun warning(scope: Builder.() -> Unit) {
+        fun addExpressionWarning(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

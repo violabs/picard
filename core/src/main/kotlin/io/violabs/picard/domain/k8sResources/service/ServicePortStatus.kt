@@ -24,9 +24,9 @@ data class ServicePortStatus(
     }
 
     class Group : BuilderGroup<ServicePortStatus, Builder>(Builder()) {
-        fun ports(): List<ServicePortStatus>? = items()
+        fun statuses(): List<ServicePortStatus>? = items()
 
-        fun port(scope: Builder.() -> Unit) {
+        fun addServicePortStatus(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

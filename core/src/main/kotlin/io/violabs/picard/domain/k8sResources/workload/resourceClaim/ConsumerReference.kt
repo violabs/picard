@@ -29,7 +29,7 @@ data class ConsumerReference(
     class Group : BuilderGroup<ConsumerReference, Builder>(Builder()) {
         fun references(): List<ConsumerReference>? = items()
 
-        fun reference(block: Builder.() -> Unit) {
+        fun addConsumerReference(block: Builder.() -> Unit) {
             add(block)
         }
     }

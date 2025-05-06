@@ -37,7 +37,7 @@ data class EndpointSubset(
     class Group : BuilderGroup<EndpointSubset, Builder>(Builder()) {
         fun subsets(): List<EndpointSubset>? = items()
 
-        fun subset(scope: Builder.() -> Unit) {
+        fun addEndpointSubset(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

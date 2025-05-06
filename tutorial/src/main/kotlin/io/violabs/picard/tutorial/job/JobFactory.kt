@@ -79,7 +79,7 @@ object JobFactory {
                                 restartPolicy = RestartPolicy.Never
 
                                 volumes {
-                                    volume {
+                                    addVolume {
                                         name = volumeName
                                         emptyDirObject()
                                     }

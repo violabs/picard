@@ -26,7 +26,7 @@ data class ContainerImage(
     class Group : BuilderGroup<ContainerImage, Builder>(Builder()) {
         fun images(): List<ContainerImage>? = items()
 
-        fun image(scope: Builder.() -> Unit) {
+        fun addContainerImage(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

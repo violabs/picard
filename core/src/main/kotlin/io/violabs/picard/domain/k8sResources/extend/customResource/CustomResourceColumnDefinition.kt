@@ -35,7 +35,7 @@ data class CustomResourceColumnDefinition(
     class Group : BuilderGroup<CustomResourceColumnDefinition, Builder>(Builder()) {
         fun definitions(): List<CustomResourceColumnDefinition>? = items()
 
-        fun definition(scope: Builder.() -> Unit) {
+        fun addCustomResourceColumnDefinition(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

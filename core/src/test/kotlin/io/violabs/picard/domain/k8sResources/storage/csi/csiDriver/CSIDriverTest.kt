@@ -34,7 +34,7 @@ class CSIDriverTest : SuccessBuildSim<CSIDriver, CSIDriver.Builder>() {
                         storageCapacity = 1
                         fsGroupPolicy = PLACEHOLDER
                         tokenRequests {
-                            request {
+                            addCSIDriverTokenRequest {
                                 audience = PLACEHOLDER
                                 expirationSeconds = 1
                             }

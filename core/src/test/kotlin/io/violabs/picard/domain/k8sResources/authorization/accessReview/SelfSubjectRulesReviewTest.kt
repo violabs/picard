@@ -41,14 +41,14 @@ class SelfSubjectRulesReviewTest : FullBuildSim<SelfSubjectRulesReview, SelfSubj
                     this.status {
                         incomplete()
                         nonResourceRules {
-                            rule {
+                            addNonResourceRule {
                                 verbs(HTTPVerb.GET)
                                 nonResourceURLs = PLACEHOLDER
                             }
                         }
 
                         resourceRules {
-                            rule {
+                            addResourceRule {
                                 verbs(HTTPVerb.GET)
                                 apiGroups(PLACEHOLDER)
                                 resourceNames = PLACEHOLDER

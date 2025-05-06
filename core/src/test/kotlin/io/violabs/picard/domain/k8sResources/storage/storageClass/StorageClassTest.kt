@@ -34,9 +34,9 @@ class StorageClassTest : FullBuildSim<StorageClass, StorageClass.Builder>() {
                     provisioner = PLACEHOLDER
                     allowVolumeExpansion()
                     allowedTopologies {
-                        term {
+                        addTopologySelectorTerm {
                             matchLabelExpressions {
-                                requirement {
+                                addTopologySelectorLabelRequirement {
                                     key = PLACEHOLDER
                                     values(PLACEHOLDER)
                                 }

@@ -164,7 +164,7 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
         @JvmStatic
         protected fun LabelSelector.Builder.sharedSelector() {
             matchExpressions {
-                requirement {
+                addLabelSelectorRequirement {
                     key = PLACEHOLDER
                     operator = PLACEHOLDER
                     values(PLACEHOLDER)
@@ -201,7 +201,7 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
 
         @JvmStatic
         protected fun PolicyRule.Group.sharedPolicyRule() {
-            rule {
+            addPolicyRule {
                 verbs(PLACEHOLDER)
                 apiGroups(PLACEHOLDER)
                 resources(PLACEHOLDER)
@@ -220,7 +220,7 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
 
         @JvmStatic
         protected fun K8sSubject.Group.sharedSubject() {
-            subject {
+            addSubject {
                 kind = PLACEHOLDER
                 name = PLACEHOLDER
                 apiGroup = PLACEHOLDER
@@ -353,7 +353,7 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
         @JvmStatic
         protected fun MatchResources.Builder.sharedMatchResources() {
             excludeResourceRules {
-                rule {
+                addNamedRuleWithOperations {
                     apiGroups(PLACEHOLDER)
                     apiVersions(PLACEHOLDER)
                     operations(PLACEHOLDER)
@@ -374,7 +374,7 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
             }
 
             resourceRules {
-                rule {
+                addNamedRuleWithOperations {
                     apiGroups(PLACEHOLDER)
                     apiVersions(PLACEHOLDER)
                     operations(PLACEHOLDER)

@@ -2,6 +2,7 @@ package io.violabs.picard.tutorial.pod
 
 import io.violabs.picard.YamlBuilder
 import io.violabs.picard.buildManifest
+import io.violabs.picard.domain.RestartPolicy
 import io.violabs.picard.domain.k8sResources.Protocol
 
 object ComplexPodFactory {
@@ -59,7 +60,7 @@ object ComplexPodFactory {
 
                     spec {
                         ports {
-                            portItem {
+                            addServicePort {
                                 protocol = Protocol.TCP
                                 port = 80
                                 targetPort(9376)
@@ -75,7 +76,7 @@ object ComplexPodFactory {
 
                     spec {
                         ports {
-                            portItem {
+                            addServicePort {
                                 protocol = Protocol.TCP
                                 port = 80
                                 targetPort(9377)
@@ -97,6 +98,71 @@ object ComplexPodFactory {
         val volumeMountPath = "/opt"
 
         val config = buildManifest {
+            workloadSection {
+                deployment {
+                    metadata {
+                        name = appName
+                        labels {
+                            label(labelKey, appName)
+                        }
+                    }
+
+                    spec {
+                        replicas = 1
+                        selector {
+                            matchLabels {
+                                label(labelKey, appName)
+                            }
+                        }
+
+                        template {
+                            metadata {
+                                labels {
+                                    label(labelKey, appName)
+                                }
+                            }
+
+                            templateSpec {
+                                containers {
+                                    container {
+                                        name = appName
+                                        image = sharedImage
+                                        command("sh", "-c", "echo \"logging\" > /opt/logs.txt")
+                                        volumeMounts {
+                                            volumeMount {
+                                                name = volumeName
+                                                mountPath = volumeMountPath
+                                            }
+                                        }
+                                    }
+
+                                    initContainers {
+                                        container {
+                                            name = "logshipper"
+                                            image = sharedImage
+                                            restartPolicy = RestartPolicy.Always
+                                            command("sh", "-c", "tail -F /opt/logs.txt")
+                                            volumeMounts {
+                                                volumeMount {
+                                                    name = volumeName
+                                                    mountPath = volumeMountPath
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    volumes {
+                                        addVolume {
+                                            name = volumeName
+                                            emptyDirObject()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         return YamlBuilder.build(config)

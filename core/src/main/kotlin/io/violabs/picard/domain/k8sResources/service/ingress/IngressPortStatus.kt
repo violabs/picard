@@ -26,7 +26,7 @@ data class IngressPortStatus(
     class Group : BuilderGroup<IngressPortStatus, Builder>(Builder()) {
         fun statuses(): List<IngressPortStatus>? = items()
 
-        fun status(scope: Builder.() -> Unit) {
+        fun addIngressPortStatus(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

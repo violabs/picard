@@ -30,7 +30,7 @@ data class IngressHTTPIngressPath(
     class Group : BuilderGroup<IngressHTTPIngressPath, Builder>(Builder()) {
         fun paths(): List<IngressHTTPIngressPath>? = items()
 
-        fun path(scope: Builder.() -> Unit) {
+        fun addIngressHTTPIngressPath(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

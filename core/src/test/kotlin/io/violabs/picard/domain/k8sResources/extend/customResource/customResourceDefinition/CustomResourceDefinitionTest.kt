@@ -101,7 +101,7 @@ class CustomResourceDefinitionTest : FullBuildSim<CustomResourceDefinition, Cust
                         }
                         scope = PLACEHOLDER
                         versions {
-                            version {
+                            addCustomResourceDefinitionVersion {
                                 name = PLACEHOLDER
                                 served()
                                 storage()
@@ -143,12 +143,12 @@ class CustomResourceDefinitionTest : FullBuildSim<CustomResourceDefinition, Cust
                         }
                         scope = PLACEHOLDER
                         versions {
-                            version {
+                            addCustomResourceDefinitionVersion {
                                 name = PLACEHOLDER
                                 served()
                                 storage()
                                 additionalPrinterColumns {
-                                    definition {
+                                    addCustomResourceColumnDefinition {
                                         jsonPath = PLACEHOLDER
                                         name = PLACEHOLDER
                                         type = PLACEHOLDER
@@ -165,7 +165,7 @@ class CustomResourceDefinitionTest : FullBuildSim<CustomResourceDefinition, Cust
                                     }
                                 }
                                 selectableFields {
-                                    field {
+                                    addSelectableField {
                                         jsonPath = PLACEHOLDER
                                     }
                                 }

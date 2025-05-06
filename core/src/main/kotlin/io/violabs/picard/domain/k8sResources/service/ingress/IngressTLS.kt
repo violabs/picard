@@ -26,7 +26,7 @@ data class IngressTLS(
     class Group : BuilderGroup<IngressTLS, Builder>(Builder()) {
         fun tlsList(): List<IngressTLS>? = items()
 
-        fun tlsItem(scope: Builder.() -> Unit) {
+        fun addIngressTLS(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

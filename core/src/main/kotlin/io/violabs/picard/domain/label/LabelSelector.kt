@@ -23,8 +23,8 @@ data class LabelSelector(
             matchExpressions = LabelSelectorRequirement.Group().apply(scope).requirements()
         }
 
-        fun matchLabels(scope: LabelGroup.() -> Unit) {
-            matchLabels = LabelGroup().apply(scope).labels()
+        fun matchLabels(scope: Label.Group.() -> Unit) {
+            matchLabels = Label.Group().apply(scope).labels()
         }
 
         override fun build(): LabelSelector {

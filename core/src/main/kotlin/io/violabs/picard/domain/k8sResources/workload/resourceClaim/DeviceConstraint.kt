@@ -26,7 +26,7 @@ data class DeviceConstraint(
     class Group : BuilderGroup<DeviceConstraint, Builder>(Builder()) {
         fun constraints(): List<DeviceConstraint>? = items()
 
-        fun constraint(block: Builder.() -> Unit) {
+        fun addDeviceConstraint(block: Builder.() -> Unit) {
             add(block)
         }
     }

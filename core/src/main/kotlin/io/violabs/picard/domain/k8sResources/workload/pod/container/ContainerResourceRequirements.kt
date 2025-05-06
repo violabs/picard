@@ -15,8 +15,8 @@ data class ContainerResourceRequirements(
         private var requests: MutableMap<String, Quantity>? = null
         private var resizePolicy: List<ResizePolicy>? = null
 
-        fun claims(scope: ClaimGroup.() -> Unit) {
-            claims = ClaimGroup().apply(scope).claims()
+        fun claims(scope: ContainerResourceClaim.Group.() -> Unit) {
+            claims = ContainerResourceClaim.Group().apply(scope).claims()
         }
 
         fun limits(scope: MutableMap<String, Quantity>.() -> Unit) {
@@ -35,8 +35,8 @@ data class ContainerResourceRequirements(
             requests!!.apply(scope)
         }
 
-        fun resizePolicy(scope: ResizePolicyGroup.() -> Unit) {
-            resizePolicy = ResizePolicyGroup().apply(scope).resizePolicies()
+        fun resizePolicy(scope: ResizePolicy.Group.() -> Unit) {
+            resizePolicy = ResizePolicy.Group().apply(scope).policies()
         }
 
         override fun build(): ContainerResourceRequirements {
@@ -46,22 +46,6 @@ data class ContainerResourceRequirements(
                 requests,
                 resizePolicy
             )
-        }
-
-        class ClaimGroup {
-            private val claims = mutableListOf<ContainerResourceClaim>()
-            fun claim(block: ContainerResourceClaim.Builder.() -> Unit) {
-                claims.add(ContainerResourceClaim.Builder().apply(block).build())
-            }
-            fun claims(): List<ContainerResourceClaim> = claims
-        }
-
-        class ResizePolicyGroup {
-            private val resizePolicies = mutableListOf<ResizePolicy>()
-            fun add(block: ResizePolicy.Builder.() -> Unit) {
-                resizePolicies.add(ResizePolicy.Builder().apply(block).build())
-            }
-            fun resizePolicies(): List<ResizePolicy> = resizePolicies
         }
     }
 }

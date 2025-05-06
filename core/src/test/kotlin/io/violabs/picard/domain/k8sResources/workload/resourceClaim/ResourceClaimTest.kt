@@ -86,20 +86,20 @@ class ResourceClaimTest : FullBuildSim<ResourceClaim, ResourceClaim.Builder>() {
                                 requests(PLACEHOLDER)
                             }
                             constraints {
-                                constraint {
+                                addDeviceConstraint {
                                     matchAttribute = PLACEHOLDER
                                     requests(PLACEHOLDER)
                                 }
                             }
                             requests {
-                                request {
+                                addDeviceRequest {
                                     deviceClassName = PLACEHOLDER
                                     name = PLACEHOLDER
                                     adminAccess()
                                     allocationMode = AllocationMode.All
                                     count = 1
                                     selectors {
-                                        selector {
+                                        addDeviceSelector {
                                             cel(PLACEHOLDER)
                                         }
                                     }
@@ -111,7 +111,7 @@ class ResourceClaimTest : FullBuildSim<ResourceClaim, ResourceClaim.Builder>() {
                         allocation {
                             devices {
                                 config {
-                                    configDetails {
+                                    addDeviceAllocationConfiguration {
                                         source = PLACEHOLDER
                                         opaque {
                                             driver = PLACEHOLDER
@@ -121,7 +121,7 @@ class ResourceClaimTest : FullBuildSim<ResourceClaim, ResourceClaim.Builder>() {
                                     }
                                 }
                                 results {
-                                    result {
+                                    addDeviceRequestAllocationResult {
                                         device = PLACEHOLDER
                                         driver = PLACEHOLDER
                                         pool = PLACEHOLDER
@@ -142,7 +142,7 @@ class ResourceClaimTest : FullBuildSim<ResourceClaim, ResourceClaim.Builder>() {
                         deallocationRequested()
 
                         reservedFor {
-                            reference {
+                            addConsumerReference {
                                 name = PLACEHOLDER
                                 resource = PLACEHOLDER
                                 uid = PLACEHOLDER

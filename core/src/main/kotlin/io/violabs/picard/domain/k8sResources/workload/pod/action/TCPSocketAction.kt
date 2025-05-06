@@ -1,10 +1,13 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.action
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.domain.k8sResources.IntOrString
+import io.violabs.picard.serialization.IntOrStringSerializer
 
 data class TCPSocketAction(
+    @get:JsonSerialize(using = IntOrStringSerializer::class)
     val port: IntOrString,
     val host: String? = null
 ) {

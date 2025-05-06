@@ -32,7 +32,7 @@ data class EndpointPort(
     class Group : BuilderGroup<EndpointPort, Builder>(Builder()) {
         fun ports(): List<EndpointPort>? = items()
 
-        fun port(scope: Builder.() -> Unit) {
+        fun addEndpointPort(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

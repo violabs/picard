@@ -26,7 +26,7 @@ data class Taint(
     class Group : BuilderGroup<Taint, Builder>(Builder()) {
         fun taints(): List<Taint>? = items()
 
-        fun taint(scope: Builder.() -> Unit) {
+        fun addTaint(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

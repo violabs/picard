@@ -24,7 +24,7 @@ data class DeviceClassConfiguration(
     class Group : BuilderGroup<DeviceClassConfiguration, Builder>(Builder()) {
         fun configs(): List<DeviceClassConfiguration>? = items()
 
-        fun apply(scope: Builder.() -> Unit) {
+        fun addDeviceClassConfiguration(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

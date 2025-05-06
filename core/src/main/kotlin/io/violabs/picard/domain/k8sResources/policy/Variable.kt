@@ -23,7 +23,7 @@ data class Variable(
     class Group : BuilderGroup<Variable, Builder>(Builder()) {
         fun variables(): List<Variable>? = items()
 
-        fun variable(scope: Builder.() -> Unit) {
+        fun addVariable(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

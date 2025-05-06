@@ -28,7 +28,7 @@ data class NonResourceRule(
     class Group : BuilderGroup<NonResourceRule, Builder>(Builder()) {
         fun rules(): List<NonResourceRule>? = items()
 
-        fun rule(scope: Builder.() -> Unit) {
+        fun addNonResourceRule(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

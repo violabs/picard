@@ -50,7 +50,7 @@ class ExtendResourceSectionTest : FullBuildSim<ExtendResourceSection, ExtendReso
                 }
                 scope = PLACEHOLDER
                 versions {
-                    version {
+                    addCustomResourceDefinitionVersion {
                         name = PLACEHOLDER
                         served()
                         storage()

@@ -8,15 +8,15 @@ data class PodAntiAffinity(
     val requiredDuringSchedulingIgnoredDuringExecution: List<PodAffinityTerm>? = null,
 ) : BaseAffinity {
     class Builder : DSLBuilder<PodAntiAffinity> {
-        private var preferredDuringSchedulingIgnoredDuringExecution: MutableList<WeightedPodAffinityTerm>? = null
-        private var requiredDuringSchedulingIgnoredDuringExecution: MutableList<PodAffinityTerm>? = null
+        private var preferredDuringSchedulingIgnoredDuringExecution: List<WeightedPodAffinityTerm>? = null
+        private var requiredDuringSchedulingIgnoredDuringExecution: List<PodAffinityTerm>? = null
 
-        fun preferredDuringSchedulingIgnoredDuringExecution(scope: WeightedPodAffinityTermGroup.() -> Unit) {
-            preferredDuringSchedulingIgnoredDuringExecution = WeightedPodAffinityTermGroup().apply(scope).terms()
+        fun preferredDuringSchedulingIgnoredDuringExecution(scope: WeightedPodAffinityTerm.Group.() -> Unit) {
+            preferredDuringSchedulingIgnoredDuringExecution = WeightedPodAffinityTerm.Group().apply(scope).terms()
         }
 
-        fun requiredDuringSchedulingIgnoredDuringExecution(scope: PodAffinityTermGroup.() -> Unit) {
-            requiredDuringSchedulingIgnoredDuringExecution = PodAffinityTermGroup().apply(scope).terms()
+        fun requiredDuringSchedulingIgnoredDuringExecution(scope: PodAffinityTerm.Group.() -> Unit) {
+            requiredDuringSchedulingIgnoredDuringExecution = PodAffinityTerm.Group().apply(scope).terms()
         }
 
         override fun build(): PodAntiAffinity {

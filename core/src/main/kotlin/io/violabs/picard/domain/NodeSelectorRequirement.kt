@@ -1,5 +1,6 @@
 package io.violabs.picard.domain
 
+import io.violabs.picard.common.BuilderGroup
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.vRequireNotNull
 
@@ -23,6 +24,14 @@ data class NodeSelectorRequirement(
                 operator = vRequireNotNull(this::operator),
                 values = _values
             )
+        }
+    }
+
+    class Group : BuilderGroup<NodeSelectorRequirement, Builder>(Builder()) {
+        fun requirements(): List<NodeSelectorRequirement>? = items()
+
+        fun requirement(scope: Builder.() -> Unit) {
+            add(scope)
         }
     }
 }

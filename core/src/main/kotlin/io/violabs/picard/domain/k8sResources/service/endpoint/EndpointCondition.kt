@@ -37,7 +37,7 @@ data class EndpointCondition(
     class Group : BuilderGroup<EndpointCondition, Builder>(Builder()) {
         fun conditions(): List<EndpointCondition>? = items()
 
-        fun condition(scope: Builder.() -> Unit) {
+        fun addEndpointCondition(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

@@ -26,7 +26,7 @@ data class RuntimeHandler(
     class Group : BuilderGroup<RuntimeHandler, Builder>(Builder()) {
         fun handlers(): List<RuntimeHandler>? = items()
 
-        fun handler(scope: Builder.() -> Unit) {
+        fun addRuntimeHandler(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

@@ -8,20 +8,14 @@ import io.violabs.picard.domain.condition.Condition
 import io.violabs.picard.domain.condition.StandardConditionGroup
 import io.violabs.picard.domain.k8sResources.*
 import io.violabs.picard.domain.k8sResources.storage.volume.Volume
-import io.violabs.picard.domain.k8sResources.storage.volume.VolumeGroup
 import io.violabs.picard.domain.k8sResources.workload.pod.affinity.Affinity
 import io.violabs.picard.domain.k8sResources.workload.pod.container.*
 import io.violabs.picard.domain.k8sResources.workload.pod.dnsConfig.DNSConfig
 import io.violabs.picard.domain.k8sResources.workload.pod.gate.ReadinessGate
-import io.violabs.picard.domain.k8sResources.workload.pod.gate.ReadinessGateGroup
 import io.violabs.picard.domain.k8sResources.workload.pod.gate.SchedulingGate
-import io.violabs.picard.domain.k8sResources.workload.pod.gate.SchedulingGateGroup
 import io.violabs.picard.domain.k8sResources.workload.pod.hostAlias.HostAlias
-import io.violabs.picard.domain.k8sResources.workload.pod.hostAlias.HostAliasGroup
 import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceClaim
-import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceClaimGroup
 import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceClaimStatus
-import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceClaimStatusGroup
 import io.violabs.picard.domain.k8sResources.workload.pod.security.PodSecurityContext
 import io.violabs.picard.domain.manifest.WorkloadResource
 import java.time.LocalDateTime
@@ -146,8 +140,8 @@ data class Pod(
                 os = PodOS(name)
             }
 
-            fun volumes(scope: VolumeGroup.() -> Unit) {
-                volumes = VolumeGroup().apply(scope).volumes()
+            fun volumes(scope: Volume.Group.() -> Unit) {
+                volumes = Volume.Group().apply(scope).volumes()
             }
 
             fun nodeSelector(scope: MutableMap<String, String>.() -> Unit) {
@@ -170,16 +164,16 @@ data class Pod(
                 overhead = mutableMapOf<String, Quantity>().apply(scope)
             }
 
-            fun readinessGates(scope: ReadinessGateGroup.() -> Unit) {
-                readinessGates = ReadinessGateGroup().apply(scope).readinessGates()
+            fun readinessGates(scope: ReadinessGate.Group.() -> Unit) {
+                readinessGates = ReadinessGate.Group().apply(scope).readinessGates()
             }
 
             fun setHostnameAsFQDN(value: Boolean = true) {
                 setHostnameAsFQDN = value
             }
 
-            fun hostAliases(scope: HostAliasGroup.() -> Unit) {
-                hostAliases = HostAliasGroup().apply(scope).hostAliases()
+            fun hostAliases(scope: HostAlias.Group.() -> Unit) {
+                hostAliases = HostAlias.Group().apply(scope).hostAliases()
             }
 
             fun dnsConfig(scope: DNSConfig.Builder.() -> Unit) {
@@ -214,12 +208,12 @@ data class Pod(
                 hostUsers = value
             }
 
-            fun resourceClaims(scope: PodResourceClaimGroup.() -> Unit) {
-                resourceClaims = PodResourceClaimGroup().apply(scope).resourceClaims()
+            fun resourceClaims(scope: PodResourceClaim.Group.() -> Unit) {
+                resourceClaims = PodResourceClaim.Group().apply(scope).resourceClaims()
             }
 
-            fun schedulingGates(scope: SchedulingGateGroup.() -> Unit) {
-                schedulingGates = SchedulingGateGroup().apply(scope).schedulingGates()
+            fun schedulingGates(scope: SchedulingGate.Group.() -> Unit) {
+                schedulingGates = SchedulingGate.Group().apply(scope).gates()
             }
 
             override fun build(): Spec {
@@ -349,20 +343,20 @@ data class Pod(
                 conditions = Condition.group(scope)
             }
 
-            fun initContainerStatuses(scope: ContainerStatusGroup.() -> Unit) {
-                initContainerStatuses = ContainerStatusGroup().apply(scope).statuses()
+            fun initContainerStatuses(scope: ContainerStatus.Group.() -> Unit) {
+                initContainerStatuses = ContainerStatus.Group().apply(scope).statuses()
             }
 
-            fun containerStatuses(scope: ContainerStatusGroup.() -> Unit) {
-                containerStatuses = ContainerStatusGroup().apply(scope).statuses()
+            fun containerStatuses(scope: ContainerStatus.Group.() -> Unit) {
+                containerStatuses = ContainerStatus.Group().apply(scope).statuses()
             }
 
-            fun ephemeralContainerStatuses(scope: ContainerStatusGroup.() -> Unit) {
-                ephemeralContainerStatuses = ContainerStatusGroup().apply(scope).statuses()
+            fun ephemeralContainerStatuses(scope: ContainerStatus.Group.() -> Unit) {
+                ephemeralContainerStatuses = ContainerStatus.Group().apply(scope).statuses()
             }
 
-            fun resourceClaimStatuses(scope: PodResourceClaimStatusGroup.() -> Unit) {
-                resourceClaimStatuses = PodResourceClaimStatusGroup().apply(scope).statuses()
+            fun resourceClaimStatuses(scope: PodResourceClaimStatus.Group.() -> Unit) {
+                resourceClaimStatuses = PodResourceClaimStatus.Group().apply(scope).resourceClaimStatuses()
             }
 
             override fun build(): Status {

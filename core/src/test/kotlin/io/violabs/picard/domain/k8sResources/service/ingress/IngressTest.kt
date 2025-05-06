@@ -84,11 +84,11 @@ class IngressTest : SuccessBuildSim<Ingress, Ingress.Builder>() {
                         }
                         ingressClassName = PLACEHOLDER
                         rules {
-                            rule {
+                            addIngressRule {
                                 host = PLACEHOLDER
                                 http {
                                     paths {
-                                        path {
+                                        addIngressHTTPIngressPath {
                                             path = PLACEHOLDER
                                             pathType = PLACEHOLDER
                                             backend {
@@ -100,7 +100,7 @@ class IngressTest : SuccessBuildSim<Ingress, Ingress.Builder>() {
                             }
                         }
                         tlsList {
-                            tlsItem {
+                            addIngressTLS {
                                 hosts(PLACEHOLDER)
                                 secretName = PLACEHOLDER
                             }
@@ -111,7 +111,7 @@ class IngressTest : SuccessBuildSim<Ingress, Ingress.Builder>() {
                             hostname = PLACEHOLDER
                             ip = PLACEHOLDER
                             ports {
-                                status {
+                                addIngressPortStatus {
                                     port = PORT_NUMBER
                                     protocol = Protocol.TCP
                                     error = PLACEHOLDER

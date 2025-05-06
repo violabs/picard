@@ -82,7 +82,7 @@ class ValidatingWebhookConfigurationTest :
                                 sideEffects = PLACEHOLDER
                                 failurePolicy = PLACEHOLDER
                                 matchConditions {
-                                    condition {
+                                    addMatchCondition {
                                         expression = PLACEHOLDER
                                         name = PLACEHOLDER
                                     }
@@ -91,7 +91,7 @@ class ValidatingWebhookConfigurationTest :
                                 namespaceSelector { sharedSelector() }
                                 objectSelector { sharedSelector() }
                                 rules {
-                                    rule {
+                                    addRuleWithOperations {
                                         apiGroups(PLACEHOLDER)
                                         apiVersions(PLACEHOLDER)
                                         operations(PLACEHOLDER)

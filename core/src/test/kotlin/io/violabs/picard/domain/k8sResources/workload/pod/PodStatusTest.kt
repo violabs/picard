@@ -117,13 +117,13 @@ class PodStatusTest : SuccessBuildSim<Pod.Status, Pod.Status.Builder>() {
                 given(Pod.Status.Builder()) {
                     nominatedNodeName = "test_nominated_node_name"
                     hostIP = "127.0.0.1"
-                    hostIPs { ip("0.0.0.0") }
+                    hostIPs { addIp("0.0.0.0") }
                     startTime = NOW
                     phase = "test_phase"
                     message = "test_message"
                     reason = "test_reason"
                     podIP = "127.0.0.1"
-                    podIPs { ip("0.0.0.0") }
+                    podIPs { addIp("0.0.0.0") }
                     conditions {
                         sharedCondition()
                     }
@@ -132,7 +132,7 @@ class PodStatusTest : SuccessBuildSim<Pod.Status, Pod.Status.Builder>() {
                     containerStatuses { sharedContainerStatus() }
                     ephemeralContainerStatuses { sharedContainerStatus() }
                     resourceClaimStatuses {
-                        claimStatus {
+                        addPodResourceClaimStatus {
                             name = "test_resource_claim"
                             resourceClaimName = "test_resource_claim_name"
                         }
@@ -164,8 +164,8 @@ class PodStatusTest : SuccessBuildSim<Pod.Status, Pod.Status.Builder>() {
             }
         }
 
-        private fun ContainerStatusGroup.sharedContainerStatus() {
-            containerStatus {
+        private fun ContainerStatus.Group.sharedContainerStatus() {
+            addContainerStatus {
                 imageID = "start"
                 image = "test/image"
                 name = "test_name"
@@ -174,12 +174,12 @@ class PodStatusTest : SuccessBuildSim<Pod.Status, Pod.Status.Builder>() {
                     put("resource", "one".quantity())
                 }
                 allocatedResourceStatus {
-                    resourceStatus {
+                    addResourceStatus {
                         name = "resource_status_name"
                         image = "test/image"
                         imageID = "test_image"
                         resources {
-                            resource {
+                            addResourceHealth {
                                 resourceID = "1"
                                 health = ResourceHealth.Type.Healthy
                             }
@@ -191,7 +191,7 @@ class PodStatusTest : SuccessBuildSim<Pod.Status, Pod.Status.Builder>() {
                 lastState { sharedContainerState() }
                 resources {
                     claims {
-                        claim {
+                        addContainerResourceClaim {
                             name = "claim-name"
                             request = "100m"
                         }
@@ -206,7 +206,7 @@ class PodStatusTest : SuccessBuildSim<Pod.Status, Pod.Status.Builder>() {
                     }
 
                     resizePolicy {
-                        add {
+                        addResizePolicy {
                             resourceName = "cpu"
                             restartPolicy = "Always"
                         }

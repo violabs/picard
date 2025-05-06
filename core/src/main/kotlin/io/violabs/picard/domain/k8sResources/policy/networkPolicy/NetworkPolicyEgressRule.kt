@@ -30,7 +30,7 @@ data class NetworkPolicyEgressRule(
     class Group : BuilderGroup<NetworkPolicyEgressRule, Builder>(Builder()) {
         fun rules(): List<NetworkPolicyEgressRule>? = items()
 
-        fun rule(scope: Builder.() -> Unit) {
+        fun addNetworkPolicyEgressRule(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

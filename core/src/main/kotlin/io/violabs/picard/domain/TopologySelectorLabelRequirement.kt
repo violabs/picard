@@ -25,7 +25,7 @@ data class TopologySelectorLabelRequirement(val key: String, val values: List<St
     class Group : BuilderGroup<TopologySelectorLabelRequirement, Builder>(Builder()) {
         fun requirements(): List<TopologySelectorLabelRequirement>? = items()
 
-        fun requirement(scope: Builder.() -> Unit) {
+        fun addTopologySelectorLabelRequirement(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

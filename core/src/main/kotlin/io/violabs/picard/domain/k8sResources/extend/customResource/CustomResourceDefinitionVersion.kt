@@ -74,7 +74,7 @@ data class CustomResourceDefinitionVersion(
     class Group : BuilderGroup<CustomResourceDefinitionVersion, Builder>(Builder()) {
         fun versions(): List<CustomResourceDefinitionVersion>? = items()
 
-        fun version(scope: Builder.() -> Unit) {
+        fun addCustomResourceDefinitionVersion(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

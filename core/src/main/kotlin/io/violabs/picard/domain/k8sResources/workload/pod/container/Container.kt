@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import io.violabs.picard.domain.ImagePullPolicy
 import io.violabs.picard.domain.RestartPolicy
 import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeDevice
@@ -14,6 +15,14 @@ import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeMount
  * @property workingDir containers working directory. default is container runtime's default
  * @property ports container ports. unique values on keys containerPort and protocol
  */
+@JsonPropertyOrder(
+    "name", "image", "restartPolicy",
+    "imagePullPolicy", "command", "args",
+    "ports", "env", "envFrom", "volumeMounts", "volumeDevices",
+    "resources", "lifecycle", "workingDir", "terminationMessagePath",
+    "terminationMessagePolicy", "livenessProbe", "readinessProbe",
+    "startupProbe", "securityContext", "stdin", "stdinOnce", "tty"
+)
 data class Container(
     override val name: String,
     // Image
@@ -57,8 +66,8 @@ data class Container(
         private var readinessProbe: Probe? = null
         private var startupProbe: Probe? = null
 
-        fun ports(scope: PortGroup.() -> Unit) {
-            ports = PortGroup().apply(scope).ports()
+        fun ports(scope: ContainerPort.Group.() -> Unit) {
+            ports = ContainerPort.Group().apply(scope).ports()
         }
 
         fun resources(scope: ContainerResourceRequirements.Builder.() -> Unit) {
@@ -107,16 +116,6 @@ data class Container(
                 stdinOnce,
                 tty
             )
-        }
-
-        class PortGroup {
-            private val content: MutableList<ContainerPort> = mutableListOf()
-
-            fun ports(): List<ContainerPort> = content
-
-            fun port(scope: ContainerPort.Builder.() -> Unit) {
-                content.add(ContainerPort.Builder().apply(scope).build())
-            }
         }
     }
 }

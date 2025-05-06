@@ -49,7 +49,7 @@ data class ServicePort(
     class Group : BuilderGroup<ServicePort, Builder>(Builder()) {
         fun ports(): List<ServicePort>? = items()
 
-        fun portItem(scope: Builder.() -> Unit) {
+        fun addServicePort(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

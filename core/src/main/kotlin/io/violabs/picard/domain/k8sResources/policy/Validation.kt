@@ -29,7 +29,7 @@ data class Validation(
     class Group : BuilderGroup<Validation, Builder>(Builder()) {
         fun validations(): List<Validation>? = items()
 
-        fun validation(scope: Builder.() -> Unit) {
+        fun addValidation(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

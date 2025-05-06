@@ -30,7 +30,7 @@ data class FieldSelectorRequirement(
     class Group : BuilderGroup<FieldSelectorRequirement, Builder>(Builder()) {
         fun requirements(): List<FieldSelectorRequirement>? = items()
 
-        fun requirement(scope: Builder.() -> Unit) {
+        fun addRequirement(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

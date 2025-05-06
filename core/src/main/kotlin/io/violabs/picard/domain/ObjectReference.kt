@@ -38,7 +38,7 @@ data class ObjectReference(
     class Group : BuilderGroup<ObjectReference, Builder>(Builder()) {
         fun references(): List<ObjectReference>? = items()
 
-        fun reference(scope: Builder.() -> Unit) {
+        fun addObjectReference(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

@@ -54,7 +54,7 @@ data class NamedRuleWithOperations(
     class Group : BuilderGroup<NamedRuleWithOperations, Builder>(Builder()) {
         fun rules(): List<NamedRuleWithOperations>? = items()
 
-        fun rule(scope: Builder.() -> Unit) {
+        fun addNamedRuleWithOperations(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

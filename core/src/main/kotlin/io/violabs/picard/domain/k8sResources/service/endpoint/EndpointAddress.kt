@@ -34,7 +34,7 @@ data class EndpointAddress(
     class Group : BuilderGroup<EndpointAddress, Builder>(Builder()) {
         fun addresses(): List<EndpointAddress>? = items()
 
-        fun address(scope: Builder.() -> Unit) {
+        fun addEndpointAddress(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

@@ -27,7 +27,7 @@ data class Device(
     class Group : BuilderGroup<Device, Builder>(Builder()) {
         fun devices(): List<Device>? = items()
 
-        fun device(block: Builder.() -> Unit) {
+        fun addDevice(block: Builder.() -> Unit) {
             add(block)
         }
     }

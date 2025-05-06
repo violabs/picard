@@ -83,7 +83,7 @@ class MutatingWebhookConfigurationTest :
                                 sideEffects = PLACEHOLDER
                                 failurePolicy = PLACEHOLDER
                                 matchConditions {
-                                    condition {
+                                    addMatchCondition {
                                         expression = PLACEHOLDER
                                         name = PLACEHOLDER
                                     }
@@ -93,7 +93,7 @@ class MutatingWebhookConfigurationTest :
                                 objectSelector { sharedSelector() }
                                 reinvocationPolicy = PLACEHOLDER
                                 rules {
-                                    rule {
+                                    addRuleWithOperations {
                                         apiGroups(PLACEHOLDER)
                                         apiVersions(PLACEHOLDER)
                                         operations(PLACEHOLDER)

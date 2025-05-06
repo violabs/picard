@@ -1,11 +1,14 @@
 package io.violabs.picard.domain.k8sResources.policy.networkPolicy
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import io.violabs.picard.common.BuilderGroup
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.domain.k8sResources.Protocol
+import io.violabs.picard.serialization.IntOrStringSerializer
 
 data class NetworkPolicyPort(
+    @get:JsonSerialize(using = IntOrStringSerializer::class)
     val port: IntOrString? = null,
     val endPort: Int? = null,
     val protocol: Protocol? = null

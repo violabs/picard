@@ -3,7 +3,6 @@ package io.violabs.picard.domain
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.domain.label.Label
-import io.violabs.picard.domain.label.LabelGroup
 import io.violabs.picard.serialization.ListAsMapSerializer
 
 /**
@@ -30,12 +29,12 @@ data class ObjectMetadata(
         private var labels: List<Label>? = null
         private var annotations: List<K8sAnnotation>? = null
 
-        fun labels(scope: LabelGroup.() -> Unit) {
-            labels = LabelGroup().apply(scope).labels()
+        fun labels(scope: Label.Group.() -> Unit) {
+            labels = Label.Group().apply(scope).labels()
         }
 
-        fun annotations(scope: AnnotationGroup.() -> Unit) {
-            annotations = AnnotationGroup().apply(scope).annotations()
+        fun annotations(scope: K8sAnnotation.Group.() -> Unit) {
+            annotations = K8sAnnotation.Group().apply(scope).annotations()
         }
 
         override fun build(): ObjectMetadata {
@@ -46,18 +45,6 @@ data class ObjectMetadata(
                 labels,
                 annotations
             )
-        }
-    }
-
-    class AnnotationGroup {
-        private var annotations: MutableList<K8sAnnotation> = mutableListOf()
-
-        fun annotations(): MutableList<K8sAnnotation>? {
-            return annotations
-        }
-
-        fun annotations(key: String, value: String) {
-            annotations.add(K8sAnnotation(key, value))
         }
     }
 }

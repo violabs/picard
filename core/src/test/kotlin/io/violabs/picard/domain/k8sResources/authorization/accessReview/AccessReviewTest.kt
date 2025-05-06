@@ -40,7 +40,7 @@ interface AccessReviewTest {
         fieldSelector {
             rawSelector = PLACEHOLDER
             this.resourceAttributes {
-                requirement {
+                addRequirement {
                     key = PLACEHOLDER
                     requirements = PLACEHOLDER
                     values(PLACEHOLDER)
@@ -52,7 +52,7 @@ interface AccessReviewTest {
         labelSelector {
             rawSelector = PLACEHOLDER
             requirements {
-                requirement {
+                addLabelSelectorRequirement {
                     key = PLACEHOLDER
                     operator = PLACEHOLDER
                     values(PLACEHOLDER)

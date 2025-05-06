@@ -23,7 +23,7 @@ data class MatchCondition(
     class Group : BuilderGroup<MatchCondition, Builder>(Builder()) {
         fun conditions(): List<MatchCondition>? = items()
 
-        fun condition(scope: Builder.() -> Unit) {
+        fun addMatchCondition(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

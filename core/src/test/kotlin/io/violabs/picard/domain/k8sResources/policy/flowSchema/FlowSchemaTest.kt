@@ -68,9 +68,9 @@ class FlowSchemaTest : SuccessBuildSim<FlowSchema, FlowSchema.Builder>() {
                         distinguisherMethod(FlowDistinguisherMethod.Type.ByUser)
                         matchingPrecedence = 1
                         rules {
-                            item {
+                            addPolicyRulesWithSubjects {
                                 subjects {
-                                    subject {
+                                    addPolicyRuleSubject {
                                         kind = PLACEHOLDER
                                         group(PLACEHOLDER)
                                         serviceAccount {

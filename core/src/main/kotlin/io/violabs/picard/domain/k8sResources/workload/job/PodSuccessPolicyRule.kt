@@ -22,7 +22,7 @@ data class PodSuccessPolicyRule(
     class Group : BuilderGroup<PodSuccessPolicyRule, Builder>(Builder()) {
         fun rules(): List<PodSuccessPolicyRule>? = items()
 
-        fun rule(block: Builder.() -> Unit) {
+        fun addPodSuccessPolicyRule(block: Builder.() -> Unit) {
             add(block)
         }
     }

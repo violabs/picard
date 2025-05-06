@@ -42,7 +42,7 @@ class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, Hor
 
         private fun HPAScalingRules.Builder.sharedHPAScalingRules() {
             policies {
-                policy {
+                addHPAScalingPolicy {
                     type = PLACEHOLDER
                     value = 1
                     periodSeconds = 1
@@ -262,7 +262,7 @@ class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, Hor
                             sharedCondition()
                         }
                         currentMetrics {
-                            status {
+                            addMetricStatus {
                                 type = MetricType.Pods
                                 containerResource {
                                     sharedContainerResourceMetricStatus()

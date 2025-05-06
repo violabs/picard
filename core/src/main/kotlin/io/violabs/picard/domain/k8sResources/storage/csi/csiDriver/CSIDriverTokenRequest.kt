@@ -23,7 +23,7 @@ data class CSIDriverTokenRequest(
     class Group : BuilderGroup<CSIDriverTokenRequest, Builder>(Builder()) {
         fun requests(): List<CSIDriverTokenRequest>? = items()
 
-        fun request(scope: Builder.() -> Unit) {
+        fun addCSIDriverTokenRequest(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

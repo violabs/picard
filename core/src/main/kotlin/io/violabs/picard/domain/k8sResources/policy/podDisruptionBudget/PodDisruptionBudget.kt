@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.policy.podDisruptionBudget
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.common.vRequireNotNull
@@ -14,6 +15,7 @@ import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.label.LabelSelector
 import io.violabs.picard.domain.manifest.PolicyResource
+import io.violabs.picard.serialization.IntOrStringSerializer
 import java.time.LocalDateTime
 
 data class PodDisruptionBudget(
@@ -26,6 +28,7 @@ data class PodDisruptionBudget(
 
     data class Spec(
         val maxUnavailable: IntOrString? = null,
+        @get:JsonSerialize(using = IntOrStringSerializer::class)
         val minAvailable: IntOrString? = null,
         val selector: LabelSelector? = null,
         val unhealthyPodEvictionPolicy: String? = null,

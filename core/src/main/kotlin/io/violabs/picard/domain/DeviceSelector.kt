@@ -27,7 +27,7 @@ data class DeviceSelector(
     class Group : BuilderGroup<DeviceSelector, Builder>(Builder()) {
         fun selectors(): List<DeviceSelector>? = items()
 
-        fun selector(scope: Builder.() -> Unit) {
+        fun addDeviceSelector(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

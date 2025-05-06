@@ -28,7 +28,7 @@ class CSINodeTest : SuccessBuildSim<CSINode, CSINode.Builder>() {
                     sharedMetadata()
                     spec {
                         drivers {
-                            driver {
+                            addCSINodeDriver {
                                 name = PLACEHOLDER
                                 nodeID = PLACEHOLDER
                                 allocatable(1)

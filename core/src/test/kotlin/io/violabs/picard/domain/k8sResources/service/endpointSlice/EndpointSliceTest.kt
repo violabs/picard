@@ -62,7 +62,7 @@ class EndpointSliceTest : SuccessBuildSim<EndpointSlice, EndpointSlice.Builder>(
                         endpoint {
                             addresses(PLACEHOLDER)
                             conditions {
-                                condition {
+                                addEndpointCondition {
                                     ready()
                                     serving()
                                     terminating()
@@ -85,7 +85,7 @@ class EndpointSliceTest : SuccessBuildSim<EndpointSlice, EndpointSlice.Builder>(
                             zone = PLACEHOLDER
                         }
                         ports {
-                            port {
+                            addEndpointPort {
                                 port = PORT_NUMBER
                                 protocol = Protocol.TCP
                                 name = PLACEHOLDER

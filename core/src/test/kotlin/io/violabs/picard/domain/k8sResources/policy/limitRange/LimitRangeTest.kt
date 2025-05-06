@@ -28,7 +28,7 @@ class LimitRangeTest : SuccessBuildSim<LimitRange, LimitRange.Builder>() {
                     sharedMetadata()
                     spec {
                         limits {
-                            limitRangeItem {
+                            addLimitRangeItem {
                                 type = PLACEHOLDER
                                 default(QUANTITY_PAIR)
                                 defaultRequest(QUANTITY_PAIR)

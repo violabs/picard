@@ -31,7 +31,7 @@ data class ScopedResourceSelectorRequirement(
     class Group : BuilderGroup<ScopedResourceSelectorRequirement, Builder>(Builder()) {
         fun requirements(): List<ScopedResourceSelectorRequirement>? = items()
 
-        fun requirement(scope: Builder.() -> Unit) {
+        fun addScopedResourceSelectorRequirement(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

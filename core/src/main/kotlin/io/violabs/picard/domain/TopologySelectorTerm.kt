@@ -23,7 +23,7 @@ data class TopologySelectorTerm(
     class Group : BuilderGroup<TopologySelectorTerm, Builder>(Builder()) {
         fun terms(): List<TopologySelectorTerm>? = items()
 
-        fun term(scope: Builder.() -> Unit) {
+        fun addTopologySelectorTerm(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

@@ -20,7 +20,7 @@ data class SelectableField(
     class Group : BuilderGroup<SelectableField, Builder>(Builder()) {
         fun fields(): List<SelectableField>? = items()
 
-        fun field(scope: Builder.() -> Unit) {
+        fun addSelectableField(scope: Builder.() -> Unit) {
             add(scope)
         }
     }

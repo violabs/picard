@@ -19,8 +19,8 @@ data class DNSConfig(
             this.nameservers = nameservers.toList()
         }
 
-        fun options(scope: DNSConfigOptionGroup.() -> Unit) {
-            options = DNSConfigOptionGroup().apply(scope).options()
+        fun options(scope: DNSConfigOption.Group.() -> Unit) {
+            options = DNSConfigOption.Group().apply(scope).options()
         }
 
         fun searches(vararg searches: String) {

@@ -27,13 +27,13 @@ class ConfigMapTest : SuccessBuildSim<ConfigMap, ConfigMap.Builder>() {
                 id = "full"
                 given(ConfigMap.Builder()) {
                     sharedMetadata()
-                    binaryData(PLACEHOLDER to BYTES)
+                    binaryData(PLACEHOLDER to PLACEHOLDER)
                     data(PLACEHOLDER to PLACEHOLDER)
                     immutable()
                 }
                 expected = ConfigMap(
                     metadata = METADATA,
-                    binaryData = BinaryData(mutableMapOf(PLACEHOLDER to BYTES)),
+                    binaryData = BinaryData(mutableMapOf(PLACEHOLDER to PLACEHOLDER)),
                     data = TextData(mutableMapOf(PLACEHOLDER to PLACEHOLDER)),
                     immutable = true
                 )

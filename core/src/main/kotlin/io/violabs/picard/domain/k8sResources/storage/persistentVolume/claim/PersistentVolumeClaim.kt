@@ -2,6 +2,7 @@ package io.violabs.picard.domain.k8sResources.storage.persistentVolume.claim
 
 import io.violabs.picard.common.DSLBuilder
 import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.domain.AccessMode
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
 import io.violabs.picard.domain.ObjectMetadata
@@ -29,7 +30,7 @@ data class PersistentVolumeClaim(
     interface Version : APIVersion
 
     data class Spec(
-        val accessModes: String? = null,
+        val accessModes: List<AccessMode>? = null,
         val selector: LabelSelector? = null,
         val resources: VolumeResourceRequirements? = null,
         val storageClassName: String? = null,
@@ -37,12 +38,16 @@ data class PersistentVolumeClaim(
         val volumeMode: String? = null,
     ) : BaseSpec {
         class Builder : DSLBuilder<Spec> {
-            var accessModes: String? = null
+            private var accessModes: List<AccessMode>? = null
             private var selector: LabelSelector? = null
             private var resources: VolumeResourceRequirements? = null
             var storageClassName: String? = null
             var volumeName: String? = null
             var volumeMode: String? = null
+
+            fun accessModes(vararg accessModes: AccessMode) {
+                this.accessModes = accessModes.toList()
+            }
 
             fun selector(block: LabelSelector.Builder.() -> Unit) {
                 selector = LabelSelector.Builder().apply(block).build()
@@ -66,7 +71,7 @@ data class PersistentVolumeClaim(
     }
 
     data class Status(
-        val accessModes: String? = null,
+        val accessModes: List<AccessMode>? = null,
         val allocatedResourceStatuses: Map<String, String>? = null,
         val allocatedResources: Map<String, Quantity>? = null,
         val capacity: Map<String, Quantity>? = null,
@@ -76,7 +81,7 @@ data class PersistentVolumeClaim(
         val phase: String? = null
     ) : BaseStatus {
         class Builder : DSLBuilder<Status> {
-            var accessModes: String? = null
+            private var accessModes: List<AccessMode>? = null
             private var allocatedResourceStatuses: Map<String, String>? = null
             private var allocatedResources: Map<String, Quantity>? = null
             private var capacity: Map<String, Quantity>? = null
@@ -84,6 +89,10 @@ data class PersistentVolumeClaim(
             var currentVolumeAttributesClassName: String? = null
             private var modifyVolumeStatus: ModifyVolumeStatus? = null
             var phase: String? = null
+
+            fun accessModes(vararg accessModes: AccessMode) {
+                this.accessModes = accessModes.toList()
+            }
 
             fun allocatedResourceStatuses(vararg pairs: Pair<String, String>) {
                 allocatedResourceStatuses = pairs.toMap()

@@ -34,14 +34,14 @@ class SecretTest : SuccessBuildSim<Secret, Secret.Builder>() {
                 id = "full"
                 given(Secret.Builder()) {
                     sharedMetadata()
-                    data(PLACEHOLDER to BYTES)
+                    data(PLACEHOLDER to PLACEHOLDER)
                     stringData(PLACEHOLDER to PLACEHOLDER)
                     immutable()
                     type = Secret.Type.OPAQUE
                 }
                 expected = Secret(
                     metadata = METADATA,
-                    data = BinaryData(mutableMapOf(PLACEHOLDER to BYTES)),
+                    data = BinaryData(mutableMapOf(PLACEHOLDER to PLACEHOLDER)),
                     stringData = TextData(mutableMapOf(PLACEHOLDER to PLACEHOLDER)),
                     immutable = true,
                     type = Secret.Type.OPAQUE

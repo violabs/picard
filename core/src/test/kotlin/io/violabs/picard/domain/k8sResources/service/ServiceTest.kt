@@ -67,7 +67,7 @@ class ServiceTest : SuccessBuildSim<Service, Service.Builder>() {
                                 appProtocol = PLACEHOLDER
                             }
                         }
-                        type = PLACEHOLDER
+                        type = Service.Spec.Type.ClusterIP
                         ipFamilies(PLACEHOLDER)
                         ipFamilyPolicy = PLACEHOLDER
                         clusterIP = PLACEHOLDER
@@ -114,7 +114,7 @@ class ServiceTest : SuccessBuildSim<Service, Service.Builder>() {
                     spec = Service.Spec(
                         selector = mapOf(PLACEHOLDER to PLACEHOLDER),
                         ports = listOf(SERVICE_PORT),
-                        type = PLACEHOLDER,
+                        type = Service.Spec.Type.ClusterIP,
                         ipFamilies = listOf(PLACEHOLDER),
                         ipFamilyPolicy = PLACEHOLDER,
                         clusterIP = PLACEHOLDER,

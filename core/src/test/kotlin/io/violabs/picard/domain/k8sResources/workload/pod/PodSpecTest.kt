@@ -158,7 +158,7 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
             volumes = listOf(
                 Volume(
                     "test_volume",
-                    "/test_empty_dir",
+                    emptyDir = "/test_empty_dir",
                 )
             ),
             nodeSelector = mapOf("nodeSelectorKey" to "nodeSelectorValue"),

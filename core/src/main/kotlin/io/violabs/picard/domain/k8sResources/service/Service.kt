@@ -17,7 +17,7 @@ data class Service(
     data class Spec(
         val selector: Map<String, String>? = null,
         val ports: List<ServicePort>? = null,
-        val type: String? = null,
+        val type: Type? = null,
         val ipFamilies: List<String>? = null,
         val ipFamilyPolicy: String? = null,
         val clusterIP: String? = null,
@@ -36,10 +36,17 @@ data class Service(
         val allocateLoadBalancerNodePorts: Boolean? = null,
         val trafficDistribution: String? = null
     ) : BaseSpec {
+        enum class Type {
+            ExternalName,
+            ClusterIP,
+            NodePort,
+            LoadBalancer
+        }
+
         class Builder : DSLBuilder<Spec> {
             private var selector: Map<String, String>? = null
             private var ports: List<ServicePort>? = null
-            var type: String? = null
+            var type: Type? = null
             private var ipFamilies: List<String>? = null
             var ipFamilyPolicy: String? = null
             var clusterIP: String? = null

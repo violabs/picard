@@ -27,8 +27,12 @@ data class ConfigMap(
         private var data: TextData? = null
         private var immutable: Boolean? = null
 
-        fun binaryData(vararg bytes: Pair<String, List<Byte>>) {
+        fun binaryData(vararg bytes: Pair<String, String>) {
             binaryData = BinaryData(bytes.toMap().toMutableMap())
+        }
+
+        fun binaryData(type: BinaryData.Type, vararg bytes: Pair<String, String>) {
+            binaryData = BinaryData(bytes.toMap().toMutableMap(), type)
         }
 
         fun data(vararg strings: Pair<String, String>) {

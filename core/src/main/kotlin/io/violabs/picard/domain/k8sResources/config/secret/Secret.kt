@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.config.secret
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import io.violabs.picard.common.ResourceDSLBuilder
 import io.violabs.picard.domain.BinaryData
 import io.violabs.picard.domain.ObjectMetadata
@@ -13,6 +14,7 @@ import io.violabs.picard.domain.manifest.ConfigResource
  * https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/secret-v1/
  * base64 encoded string data
  */
+@JsonPropertyOrder("apiVersion", "kind", "metadata", "type", "data", "immutable")
 data class Secret(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,
@@ -42,8 +44,12 @@ data class Secret(
         private var immutable: Boolean? = null
         var type: Type? = null
 
-        fun data(vararg data: Pair<String, List<Byte>>) {
+        fun data(vararg data: Pair<String, String>) {
             this.data = BinaryData(data.toMap().toMutableMap())
+        }
+
+        fun data(type: BinaryData.Type, vararg data: Pair<String, String>) {
+            this.data = BinaryData(data.toMap().toMutableMap(), type)
         }
 
         fun stringData(vararg data: Pair<String, String>) {

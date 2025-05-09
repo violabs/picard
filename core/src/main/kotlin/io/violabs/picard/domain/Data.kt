@@ -1,15 +1,30 @@
 package io.violabs.picard.domain
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import io.violabs.picard.serialization.DataClassSerializer
+import java.util.Base64
+
 /**
  * Non-UTF-8 encoded binary data
  */
 data class BinaryData(
-    override val content: MutableMap<String, List<Byte>> = mutableMapOf()
-) : Data<List<Byte>>(content) {
+    override val content: MutableMap<String, String> = mutableMapOf(),
+    val type: Type = Type.Plaintext
+) : Data(content) {
     init {
-        content.forEach { (key, _) ->
+        content.forEach { (key, value) ->
             checkKey(key)
+
+            this.content[key] = if (type == Type.Encoded) {
+                value
+            } else {
+                Base64.getEncoder().encodeToString(value.toByteArray())
+            }
         }
+    }
+
+    enum class Type {
+        Encoded, Plaintext
     }
 }
 
@@ -18,7 +33,7 @@ data class BinaryData(
  */
 data class TextData(
     override val content: MutableMap<String, String> = mutableMapOf()
-) : Data<String>(content) {
+) : Data(content) {
     init {
         content.forEach { (key, _) ->
             checkKey(key)
@@ -26,8 +41,9 @@ data class TextData(
     }
 }
 
-abstract class Data<V>(open val content: MutableMap<String, V> = mutableMapOf()) {
-    fun add(key: String, value: V) {
+@JsonSerialize(using = DataClassSerializer::class)
+abstract class Data(open val content: MutableMap<String, String> = mutableMapOf()) {
+    fun add(key: String, value: String) {
         checkKey(key)
         content[key] = value
     }

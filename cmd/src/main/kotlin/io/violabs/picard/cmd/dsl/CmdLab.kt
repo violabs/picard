@@ -228,6 +228,7 @@ class DescribePodKubeTask : KubeTask() {
 class LogsKubeTask : KubeTask() {
     var name: String? = null
     var container: String? = null
+    var namespace: String? = null
     var follow: Boolean = false
 
     override fun cmd(): Array<String> {

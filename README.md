@@ -9,6 +9,16 @@ and cli runs.
 * CLI is more experimental
 * Helm is a future work in progress
 
+# Docker / Containers
+
+## Enterprise Test App
+
+A spring boot app that can be used to test containerization.
+
+```shell
+./build_container.sh -m generation-test -j enterprise -i picard-enterprise -v 0.0.1-SNAPSHOT
+```
+
 # Road map
 
 - [x] Work through basic objects

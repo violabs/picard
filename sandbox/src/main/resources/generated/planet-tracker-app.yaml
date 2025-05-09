@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: planet-tracker-app
+  namespace: picard-sandbox
 spec:
   replicas: 1
   selector:
@@ -15,7 +16,7 @@ spec:
     spec:
       containers:
         - name: planet-tracker-app
-          image: violabs/enterprise-planet-tracker:0.0.1-SNAPSHOT
+          image: violabs/enterprise-planet-tracker:0.0.2-SNAPSHOT
           ports:
             - containerPort: 8080
           env:
@@ -41,6 +42,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: postgres-credentials
+  namespace: picard-sandbox
 type: OPAQUE
 data:
   username: cG9zdGdyZXM=
@@ -51,6 +53,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: planet-tracker-app-service
+  namespace: picard-sandbox
 spec:
   selector:
     app: planet-tracker-app

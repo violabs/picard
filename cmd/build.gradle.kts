@@ -13,6 +13,10 @@ dependencies {
     implementation(project(":common"))
 }
 
+tasks.jar {
+    archiveBaseName.set("picard-command")
+}
+
 publishing {
     publications {
         create<MavenPublication>("local") {

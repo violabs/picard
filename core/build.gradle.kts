@@ -7,7 +7,7 @@ group = "io.violabs.picard"
 version = "0.1.0"
 
 dependencies {
-    implementation(project(":common"))
+//    implementation(project(":common"))
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.19.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.19.0")
 
@@ -15,6 +15,11 @@ dependencies {
     testImplementation("com.fasterxml.jackson.core:jackson-core:2.18.3")
     testImplementation("com.fasterxml.jackson.core:jackson-databind:2.18.3")
     testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.3")
+}
+
+tasks.jar {
+    archiveBaseName.set("picard-core")
+    from(project(":common").sourceSets.main.get().output)
 }
 
 publishing {

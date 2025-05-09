@@ -2,14 +2,14 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: postgres
+  name: picard-sandbox
 
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgres-config
-  namespace: postgres
+  namespace: picard-sandbox
 data:
   POSTGRES_DB: postgres
 
@@ -18,7 +18,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: postgres-secret
-  namespace: postgres
+  namespace: picard-sandbox
 type: OPAQUE
 data:
   POSTGRES_USERNAME: cG9zdGdyZXM=
@@ -29,7 +29,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: postgres-pvc
-  namespace: postgres
+  namespace: picard-sandbox
 spec:
   accessModes:
     - ReadWriteOnce
@@ -43,7 +43,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres
-  namespace: postgres
+  namespace: picard-sandbox
 spec:
   replicas: 1
   selector:
@@ -77,7 +77,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: postgres
-  namespace: postgres
+  namespace: picard-sandbox
 spec:
   selector:
     app: postgres

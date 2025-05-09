@@ -50,6 +50,7 @@ allprojects {
 
 fun Project.sharedRepositories() {
     repositories {
+        mavenLocal()
         mavenCentral()
         maven { url = uri("https://www.jetbrains.com/intellij-repository/releases") }
     }

@@ -25,17 +25,23 @@ private const val POSTGRES_OUTBOUND_PORT = 5432
 
 private const val DEFAULT_DOCKER_K8s_STORAGE_CLASS = "hostpath"
 
+private const val NAMESPACE = "picard-sandbox"
+
 fun main(vararg args: String) {
-    addManifestForPostgres()
-    addManifestForPlanetTracker()
+//    addManifestForPostgres()
+//    addManifestForPlanetTracker()
     runManifest(
         POSTGRES_FILE_NAME,
-        disabled = true
+        apply = false,
+        list = false,
+        describe = false,
+        disabled = false
     )
     runManifest(
         PLANET_TRACKER_FILE_NAME,
         apply = false,
-        describe = true,
+        list = true,
+        describe = false,
         disabled = false
     )
 }
@@ -75,7 +81,7 @@ fun addManifestForPostgres() = with(fileManager) {
 
         clusterSection {
             namespace {
-                metadata { name = POSTGRES_MANIFEST_NAME }
+                metadata { name = NAMESPACE }
             }
         }
 
@@ -83,7 +89,7 @@ fun addManifestForPostgres() = with(fileManager) {
             configMap {
                 metadata {
                     name = configName
-                    namespace = POSTGRES_MANIFEST_NAME
+                    namespace = NAMESPACE
                 }
 
                 data("POSTGRES_DB" to POSTGRES_DB)
@@ -92,7 +98,7 @@ fun addManifestForPostgres() = with(fileManager) {
             secret {
                 metadata {
                     name = secretName
-                    namespace = POSTGRES_MANIFEST_NAME
+                    namespace = NAMESPACE
                 }
                 type = Secret.Type.OPAQUE
                 data(
@@ -106,7 +112,7 @@ fun addManifestForPostgres() = with(fileManager) {
             persistentVolumeClaim {
                 metadata {
                     name = volumeClaimName
-                    namespace = POSTGRES_MANIFEST_NAME
+                    namespace = NAMESPACE
                 }
 
                 spec {
@@ -125,7 +131,7 @@ fun addManifestForPostgres() = with(fileManager) {
             deployment {
                 metadata {
                     name = POSTGRES_MANIFEST_NAME
-                    namespace = POSTGRES_MANIFEST_NAME
+                    namespace = NAMESPACE
                 }
 
                 spec {
@@ -193,7 +199,7 @@ fun addManifestForPostgres() = with(fileManager) {
             service {
                 metadata {
                     name = POSTGRES_MANIFEST_NAME
-                    namespace = POSTGRES_MANIFEST_NAME
+                    namespace = NAMESPACE
                 }
 
                 spec {
@@ -227,6 +233,7 @@ fun addManifestForPlanetTracker() = with(fileManager) {
             deployment {
                 metadata {
                     name = PLANET_TRACKER_MANIFEST_NAME
+                    namespace = NAMESPACE
                 }
 
                 spec {
@@ -248,7 +255,7 @@ fun addManifestForPlanetTracker() = with(fileManager) {
                             containers {
                                 container {
                                     name = PLANET_TRACKER_MANIFEST_NAME
-                                    image = "violabs/enterprise-planet-tracker:0.0.1-SNAPSHOT"
+                                    image = "violabs/enterprise-planet-tracker:0.0.2-SNAPSHOT"
                                     ports {
                                         addContainerPort {
                                             containerPort = 8080
@@ -302,6 +309,7 @@ fun addManifestForPlanetTracker() = with(fileManager) {
             secret {
                 metadata {
                     name = postgresSecretName
+                    namespace = NAMESPACE
                 }
 
                 type = Secret.Type.OPAQUE
@@ -316,6 +324,7 @@ fun addManifestForPlanetTracker() = with(fileManager) {
             service {
                 metadata {
                     name = "planet-tracker-app-service"
+                    namespace = NAMESPACE
                 }
 
                 spec {

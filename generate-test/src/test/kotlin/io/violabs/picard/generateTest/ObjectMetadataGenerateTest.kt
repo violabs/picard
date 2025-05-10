@@ -19,7 +19,7 @@ class ObjectMetadataGenerateTest : UnitSim() {
                     |  name: test
                     |  namespace: test
                     |  annotations:
-                    |    example: annotation
+                    |    example: "annotation"
                     |
                 """.trimMargin().replace(" ", "•")
             }

@@ -20,6 +20,7 @@ class ObjectMetadataGenerateTest : UnitSim() {
                     |  namespace: test
                     |  annotations:
                     |    example: "annotation"
+                    |    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
                     |
                 """.trimMargin().replace(" ", "•")
             }
@@ -33,6 +34,7 @@ class ObjectMetadataGenerateTest : UnitSim() {
                                 namespace = "test"
                                 annotations {
                                     add("example", "annotation")
+                                    add("nginx.ingress.kubernetes.io/proxy-read-timeout", "300")
                                 }
                             }
                         }

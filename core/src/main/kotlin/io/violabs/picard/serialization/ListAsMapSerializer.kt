@@ -15,7 +15,11 @@ class ListAsMapSerializer<T : YAMLMap> : JsonSerializer<List<T>>() {
         if (value == null) {
             gen.writeNull()
         } else {
-            value.forEach { gen.writeObject(mapOf(it.key to it.value)) }
+            gen.writeStartObject()
+            value.forEach {
+                gen.writeObjectField(it.key, it.value)
+            }
+            gen.writeEndObject()
         }
     }
 }

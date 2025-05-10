@@ -1,11 +1,12 @@
 
 include(
-    "sandbox",
-    "tutorial",
-    "core",
     "cmd",
     "common",
-    "dsl",
+    "core",
     "core-test",
-    "generate-test"
+    "dsl",
+    "generate-test",
+    "sandbox",
+    "star-charts",
+    "tutorial"
 )

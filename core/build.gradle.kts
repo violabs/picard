@@ -4,10 +4,10 @@ plugins {
 }
 
 group = "io.violabs.picard"
-version = "0.1.0"
+version = "0.1.2-SNAPSHOT"
 
 dependencies {
-//    implementation(project(":common"))
+    implementation(project(":common"))
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.19.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.19.0")
 

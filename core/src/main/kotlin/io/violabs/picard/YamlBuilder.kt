@@ -1,6 +1,7 @@
 package io.violabs.picard
 
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
@@ -29,13 +30,21 @@ object YamlBuilder {
 
     fun singleBuild(o: Any): String = singleOm.writeValueAsString(o)
 
-    fun build(manifest: Manifest): String {
+    fun build(manifest: Manifest): String = try {
         val resources = manifest.resources.flatMap { it.resources }
 
-        return if (resources.size > 1)
+        if (resources.size > 1)
             resources.joinToString("\n", transform = listOm::writeValueAsString)
         else {
             singleOm.writeValueAsString(resources.firstOrNull())
+        }
+    } catch (e: JsonMappingException) {
+        if (e.message?.contains("cannot be cast to class io.violabs.picard.common.YAMLMap") == true) {
+            throw IllegalArgumentException(
+                "Missing YAMLMap implementation for ${e.pathReference}"
+            )
+        } else {
+            throw e
         }
     }
 }

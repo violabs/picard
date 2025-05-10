@@ -20,6 +20,7 @@ data class ObjectMetadata(
     val namespace: String? = null,
     @JsonSerialize(using = ListAsMapSerializer::class)
     val labels: List<Label>? = null,
+    @JsonSerialize(using = ListAsMapSerializer::class)
     val annotations: List<K8sAnnotation>? = null
 ) {
     class Builder : DSLBuilder<ObjectMetadata> {

@@ -5,6 +5,9 @@ import java.io.File
 class FileManager(logId: String) : DefaultLogger(logId) {
     fun addFile(label: String, fileName: String, content: String) {
         val file = File(fileName)
+
+        file.parentFile?.mkdirs()
+
         file.writeText(content)
 
         log.info(label)

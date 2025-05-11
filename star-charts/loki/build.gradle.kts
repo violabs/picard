@@ -37,3 +37,7 @@ kover {
         }
     }
 }
+
+ksp {
+    arg("dslBuilder.classpath", "io.violabs.picard.starCharts.loki.common")
+}

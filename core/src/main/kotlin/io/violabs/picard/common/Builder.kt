@@ -9,7 +9,6 @@ import io.violabs.picard.domain.k8sResources.K8sResource
 
 @PicardDsl
 interface DSLBuilder<T> {
-
     fun build(): T
 }
 

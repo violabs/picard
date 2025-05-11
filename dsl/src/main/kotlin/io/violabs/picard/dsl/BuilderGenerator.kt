@@ -15,13 +15,30 @@ import com.squareup.kotlinpoet.ksp.writeTo
 interface DSLParam {
     val propName: String
     val propTypeName: TypeName
+    val nullable: Boolean get() = true
+    val verifyNotNull: Boolean get() = true
+    val verifyNotEmpty: Boolean get() = false
     fun toPropertySpec(): PropertySpec
-    fun accessors(): List<FunSpec> { return emptyList() }
+    fun accessors(): List<FunSpec> {
+        return emptyList()
+    }
+
+    fun propertyValueReturn(): String {
+        if (nullable) return propName
+
+        return if (verifyNotNull) {
+            "vRequireNotNull(::$propName)"
+        } else if (verifyNotEmpty) {
+            "vRequireNotEmpty(::$propName, \"$propName\")"
+        } else {
+            propName
+        }
+    }
 }
 
 class BooleanParam(
     override val propName: String,
-    nullable: Boolean = true
+    override val nullable: Boolean = true
 ) : DSLParam {
     override val propTypeName: TypeName = BOOLEAN.copy(nullable)
 
@@ -47,7 +64,8 @@ class BooleanParam(
 
 class DefaultParam(
     override val propName: String,
-    override val propTypeName: TypeName = STRING
+    override val propTypeName: TypeName = STRING,
+    override val nullable: Boolean = true
 ) : DSLParam {
     override fun toPropertySpec(): PropertySpec = PropertySpec.builder(propName, propTypeName)
         .mutable(true)
@@ -57,7 +75,8 @@ class DefaultParam(
 
 class BuilderParam(
     override val propName: String,
-    override val propTypeName: TypeName
+    override val propTypeName: TypeName,
+    override val nullable: Boolean = true
 ) : DSLParam {
     override fun toPropertySpec(): PropertySpec = PropertySpec.builder(propName, propTypeName)
         .mutable(true)
@@ -67,17 +86,22 @@ class BuilderParam(
 
 class ListParam(
     override val propName: String,
-    override val propTypeName: TypeName = LIST.parameterizedBy(STRING)
+    override val propTypeName: TypeName = LIST.parameterizedBy(STRING),
+    override val nullable: Boolean = true
 ) : DSLParam {
     override fun toPropertySpec(): PropertySpec = PropertySpec.builder(propName, propTypeName)
         .mutable(true)
         .initializer("null")
         .build()
+
+    override val verifyNotNull: Boolean = false
+    override val verifyNotEmpty: Boolean = true
 }
 
 class GroupParam(
     override val propName: String,
-    override val propTypeName: TypeName
+    override val propTypeName: TypeName,
+    override val nullable: Boolean = true
 ) : DSLParam {
     override fun toPropertySpec(): PropertySpec = PropertySpec.builder(propName, propTypeName)
         .mutable(true)
@@ -91,14 +115,17 @@ private val DEFAULT_TYPE_NAMES = DEFAULT_TYPES.map { it.simpleName }
 fun determineParam(prop: KSPropertyDeclaration): DSLParam {
     val propClassName = prop.type.resolve().toClassName().simpleName
     val propName = prop.simpleName.asString()
+    val propType = prop.type.toTypeName()
     val propTypeName = prop.type.toTypeName().copy(nullable = true)
 
+    val isNullable = propType.isNullable
+
     return when {
-        propClassName == BOOLEAN.simpleName -> BooleanParam(propName)
-        propClassName in DEFAULT_TYPE_NAMES -> DefaultParam(propName, propTypeName)
-        LIST.simpleName in propClassName -> ListParam(propName, propTypeName)
-        "Group" in propClassName -> GroupParam(propName, propTypeName)
-        else -> BuilderParam(propName, propTypeName)
+        propClassName == BOOLEAN.simpleName -> BooleanParam(propName, isNullable)
+        propClassName in DEFAULT_TYPE_NAMES -> DefaultParam(propName, propTypeName, isNullable)
+        LIST.simpleName in propClassName -> ListParam(propName, propTypeName, isNullable)
+        "Group" in propClassName -> GroupParam(propName, propTypeName, isNullable)
+        else -> BuilderParam(propName, propTypeName, isNullable)
     }
 }
 
@@ -139,16 +166,8 @@ class BuilderGenerator(val logger: KSPLogger) {
                 .returns(domainClassName)
 
             // 3) for each property, add a var + setter + required check
-            domain.getAllProperties().forEach { prop ->
-                val propName = prop.simpleName.asString()
-                val propTypeName = prop.type.toTypeName().copy(nullable = true)
-
+            val buildVars: List<DSLParam> = domain.getAllProperties().map { prop ->
                 val dslParam = determineParam(prop)
-
-                val accessor = if (prop.type.resolve().declaration.simpleName.asString().contains("Boolean"))
-                    KModifier.PRIVATE
-                else
-                    KModifier.PUBLIC
 
                 // a) backing var
                 builderClass.addProperty(dslParam.toPropertySpec())
@@ -157,49 +176,76 @@ class BuilderGenerator(val logger: KSPLogger) {
                 dslParam.accessors().forEach {
                     builderClass.addFunction(it)
                 }
-//                builderClass.addFunction(
-//                    FunSpec.builder(propName)
-//                        .addParameter(propName, propTypeName)
-//                        .addStatement("this.%N = %N", propName, propName)
-//                        .build()
-//                )
 
-                // c) require-not-null in build()
-                buildFun.addStatement(
-                    "%N ?: error(%S)",
-                    propName,
-                    "$propName required for $typeName DSL"
-                )
-            }
+                dslParam
+            }.toList()
 
-            // 4) assemble the constructor args and return
-            val args = domain.getAllProperties()
-                .joinToString(", ") { it.simpleName.asString() }
+            val buildFn = generateInstanceCreationFunction("build", domainClassName, buildVars, KModifier.OVERRIDE)
 
-            buildFun.addStatement("return %T($args)", domainClassName)
-            builderClass.addFunction(buildFun.build())
+            buildFun.addStatement("return %T(%L)", domainClassName, buildVars)
+            builderClass.addFunction(buildFn)
 
-            // 5) top-level DSL function
-            val dslFunName = typeName.replaceFirstChar(Char::lowercase)
-            val dslFun = FunSpec.builder(dslFunName)
-                .receiver(domainClassName)
-                .addParameter(
-                    "block",
-                    LambdaTypeName.get(
-                        receiver = ClassName(pkg, builderName),
-                        returnType = UNIT
-                    )
-                )
-                .returns(domainClassName)
-                .addStatement("return %TBuilder().apply(block).build()", domainClassName)
-                .build()
+            println("-----HERE")
+
+            val anyRequiredNotNull = buildVars.any { !it.nullable && it.verifyNotNull }
+            val anyRequiredNotEmpty = buildVars.any { !it.nullable && it.verifyNotEmpty }
 
             // 6) write into a file named `${TypeName}Dsl.kt`
-            FileSpec.builder(pkg, "${typeName}Dsl")
+            val fileSpec = FileSpec
+                .builder(pkg, "${typeName}Dsl")
                 .addType(builderClass.build())
-//                .addFunction(dslFun)
+                .indent("    ")
+
+            if (anyRequiredNotNull) {
+                fileSpec.addImport("io.violabs.picard.starCharts.common", "vRequireNotNull")
+            }
+
+            if (anyRequiredNotEmpty) {
+                fileSpec.addImport("io.violabs.picard.starCharts.common", "vRequireNotEmpty")
+            }
+
+            fileSpec
                 .build()
                 .writeTo(codeGenerator, Dependencies(false))
         }
     }
+}
+
+/**
+ * Generates a function that creates an instance of [returnClassType]
+ * using named arguments from [constructorArgs].
+ *
+ * @param functionName The name of the function to generate.
+ * @param returnClassType The TypeName of the class to be instantiated and returned.
+ * @param constructorArgs A list of pairs, where each pair is (propertyName: String, propertyValue: Any?).
+ * The propertyValue will be treated as a literal.
+ * @return A FunSpec for the generated function.
+ */
+private fun generateInstanceCreationFunction(
+    functionName: String,
+    returnClassType: TypeName,
+    constructorArgs: List<DSLParam>,
+    modifier: KModifier = KModifier.PUBLIC,
+): FunSpec {
+    val funBuilder = FunSpec.builder(functionName)
+        .returns(returnClassType)
+
+    if (constructorArgs.isEmpty()) {
+        // Case: No constructor arguments, e.g., return MyData()
+        funBuilder.addStatement("return %T()", returnClassType)
+    } else {
+        // Case: Constructor with arguments
+        // 1. Create the block of "propertyName = propertyValue" assignments
+        val argumentsBlock = constructorArgs.map { param ->
+            // %N is for the name (property name)
+            // %L is for the literal value
+            CodeBlock.of("\t%N = %L", param.propName, param.propertyValueReturn())
+        }.joinToCode(separator = ",\n") // Join with comma and newline for readability
+
+        // 2. Add the return statement, embedding the argumentsBlock
+        // The \n%L\n ensures the arguments are on new lines and indented (by KotlinPoet's default formatting for statements)
+        funBuilder.addStatement("return %T(\n%L\n)", returnClassType, argumentsBlock)
+    }
+
+    return funBuilder.addModifiers(modifier).build()
 }

@@ -1,19 +1,10 @@
 package io.violabs.picard.dsl
 
-import com.google.devtools.ksp.processing.CodeGenerator
-import com.google.devtools.ksp.processing.Dependencies
-import com.google.devtools.ksp.processing.KSPLogger
-import com.google.devtools.ksp.processing.Resolver
-import com.google.devtools.ksp.processing.SymbolProcessor
+import com.google.devtools.ksp.processing.*
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
-import com.squareup.kotlinpoet.ClassName
-import com.squareup.kotlinpoet.FileSpec
-import com.squareup.kotlinpoet.FunSpec
-import com.squareup.kotlinpoet.LambdaTypeName
-import com.squareup.kotlinpoet.PropertySpec
-import com.squareup.kotlinpoet.TypeSpec
-import com.squareup.kotlinpoet.UNIT
+import com.squareup.kotlinpoet.*
+import com.squareup.kotlinpoet.ksp.toClassName
 import com.squareup.kotlinpoet.ksp.toTypeName
 import com.squareup.kotlinpoet.ksp.writeTo
 
@@ -31,42 +22,54 @@ class DSLProcessor(
             val pkg = domain.packageName.asString()
             val typeName = domain.simpleName.asString()
             val builderName = "${typeName}Builder"
+            // <-- convert the KSClassDeclaration into a ClassName once
+            val domainClassName: ClassName = domain.toClassName()
 
+            // 1) build the Builder class
             val builderClass = TypeSpec.classBuilder(builderName)
-            val buildFun = FunSpec.builder("build")
-                .returns(domain.asType(emptyList()).toTypeName())
 
-            // Every property becomes a var in the builder + a DSL setter
+            // 2) build the `build()` function returning the real class
+            val buildFun = FunSpec.builder("build")
+                .returns(domainClassName)
+
+            // 3) for each property, add a var + setter + required check
             domain.getAllProperties().forEach { prop ->
-                val name = prop.simpleName.asString()
-                val kType = prop.type.toTypeName().copy(nullable = true)
+                val propName = prop.simpleName.asString()
+                val propTypeName = prop.type.toTypeName().copy(nullable = true)
+
+                // a) backing var
                 builderClass.addProperty(
-                    PropertySpec.builder(name, kType)
+                    PropertySpec.builder(propName, propTypeName)
                         .mutable(true)
                         .initializer("null")
                         .build()
                 )
+
+                // b) DSL setter
                 builderClass.addFunction(
-                    FunSpec.builder(name)
-                        .addParameter(name, kType)
-                        .addStatement("this.%N = %N", name, name)
-                        .addStatement("return this")
+                    FunSpec.builder(propName)
+                        .addModifiers(KModifier.PUBLIC)
+                        .addParameter(propName, propTypeName)
+                        .addStatement("this.%N = %N", propName, propName)
                         .build()
                 )
+
+                // c) require-not-null in build()
                 buildFun.addStatement(
                     "%N ?: error(%S)",
-                    name,
-                    "$name required for $typeName DSL"
+                    propName,
+                    "$propName required for $typeName DSL"
                 )
             }
 
+            // 4) assemble the constructor args and return
             val args = domain.getAllProperties()
-                .joinToString { it.simpleName.asString() }
+                .joinToString(", ") { it.simpleName.asString() }
 
-            buildFun.addStatement("return %T($args)", domain)
-
+            buildFun.addStatement("return %T($args)", domainClassName)
             builderClass.addFunction(buildFun.build())
 
+            // 5) top-level DSL function
             val dslFun = FunSpec.builder(typeName.replaceFirstChar(Char::lowercase))
                 .addParameter(
                     "block",
@@ -75,17 +78,18 @@ class DSLProcessor(
                         returnType = UNIT
                     )
                 )
-                .returns(domain.asType(emptyList()).toTypeName())
-                .addStatement("return %T().apply(block).build()", ClassName(pkg, builderName))
+                .returns(domainClassName)
+                .addStatement("return %T().apply(block).build()", domainClassName)
                 .build()
 
-            val file = FileSpec.builder(pkg, "${typeName}Dsl")
+            // 6) write into a file named `${TypeName}Dsl.kt`
+            FileSpec.builder(pkg, "${typeName}Dsl")
                 .addType(builderClass.build())
-                .addFunction(dslFun)
+//                .addFunction(dslFun)
                 .build()
-
-            file.writeTo(codeGenerator, Dependencies(false))
+                .writeTo(codeGenerator, Dependencies(false))
         }
+
         return emptyList()
     }
 }

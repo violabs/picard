@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     implementation(project(":star-charts"))
+    implementation(project(":dsl"))
     ksp(project(":dsl"))
 }
 

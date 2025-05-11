@@ -36,11 +36,9 @@ class PersistentVolumeTest : SuccessBuildSim<PersistentVolume, PersistentVolume.
                         mountOptions(PLACEHOLDER)
                         nodeAffinity {
                             required {
-                                nodeAffinity {
-                                    terms {
-                                        term {
-                                            sharedNodeSelectorTerm()
-                                        }
+                                this.terms {
+                                    term {
+                                        sharedNodeSelectorTerm()
                                     }
                                 }
                             }

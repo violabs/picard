@@ -1,5 +1,6 @@
 package io.violabs.picard.domain.k8sResources.authentication.certificateSigningRequest
 
+import io.violabs.picard.common.PicardDsl
 import io.violabs.picard.common.ResourceListDSLBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.ListMeta
@@ -14,6 +15,7 @@ data class CertificateSigningRequestList(
 ) : AuthenticationListResource<CertificateSigningRequestList.Version, CertificateSigningRequest> {
     interface Version : APIVersion
 
+    @PicardDsl
     class Builder : ResourceListDSLBuilder<
         CertificateSigningRequest,
         CertificateSigningRequest.Builder,

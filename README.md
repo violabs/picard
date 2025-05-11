@@ -37,3 +37,4 @@ A spring boot app that can be used to test containerization.
 
 ### left
 https://grafana.com/docs/loki/latest/configure/#s3_storage_config
+https://square.github.io/kotlinpoet/

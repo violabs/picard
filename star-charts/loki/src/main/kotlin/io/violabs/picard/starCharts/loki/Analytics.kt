@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.annotation.JsonNaming
 import io.violabs.picard.starCharts.loki.tls.TLSConfig
 
+@LokiDSL
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 class Analytics(
     /**

@@ -1,6 +1,7 @@
 package io.violabs.picard.domain.k8sResources.authentication.certificateSigningRequest
 
 import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.PicardDsl
 import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.common.vRequireNotNull
@@ -32,8 +33,9 @@ data class CertificateSigningRequest(
         val usages: List<String>? = null,
         val username: String? = null
     ) : BaseSpec {
+        @PicardDsl
         class Builder : DSLBuilder<Spec> {
-            private var _request: List<Byte>? = null
+            private var request: List<Byte>? = null
             var signerName: String? = null
             var expirationSeconds: Int? = null
             private var extra: Map<String, List<String>>? = null
@@ -42,10 +44,8 @@ data class CertificateSigningRequest(
             private var usages: List<String>? = null
             var username: String? = null
 
-            fun request(): List<Byte>? = _request
-
             fun request(vararg bytes: Byte) {
-                _request = bytes.toList()
+                request = bytes.toList()
             }
 
             fun extra(vararg pairs: Pair<String, List<String>>) {

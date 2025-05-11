@@ -1,14 +1,8 @@
-package io.violabs.picard.starCharts.loki
+package io.violabs.picard.starCharts.loki.bloomBuild
 
-class BloomBuild(
+class BloomBuildPlanner(
     /**
-     * # Flag to enable or disable the usage of the bloom-planner and bloom-builder
-     * # components.
-     * # CLI flag: -bloom-build.enabled
-     * [enabled: <boolean> | default = false]
-     *
-     * planner:
-     *   # Interval at which to re-run the bloom creation planning.
+     * # Interval at which to re-run the bloom creation planning.
      *   # CLI flag: -bloom-build.planner.interval
      *   [planning_interval: <duration> | default = 8h]
      *
@@ -48,30 +42,6 @@ class BloomBuild(
      *     # Whether to clean the tasks directory on startup.
      *     # CLI flag: -bloom-build.planner.queue.clean-tasks-directory
      *     [clean_tasks_directory: <boolean> | default = false]
-     *
-     * builder:
-     *   # The grpc_client block configures the gRPC client used to communicate between
-     *   # a client and server component in Loki.
-     *   # The CLI flags prefix for this block configuration is:
-     *   # bloom-build.builder.grpc
-     *   [grpc_config: <grpc_client>]
-     *
-     *   # Hostname (and port) of the bloom planner
-     *   # CLI flag: -bloom-build.builder.planner-address
-     *   [planner_address: <string> | default = ""]
-     *
-     *   backoff_config:
-     *     # Minimum delay when backing off.
-     *     # CLI flag: -bloom-build.builder.backoff.backoff-min-period
-     *     [min_period: <duration> | default = 100ms]
-     *
-     *     # Maximum delay when backing off.
-     *     # CLI flag: -bloom-build.builder.backoff.backoff-max-period
-     *     [max_period: <duration> | default = 10s]
-     *
-     *     # Number of times to backoff and retry before failing.
-     *     # CLI flag: -bloom-build.builder.backoff.backoff-retries
-     *     [max_retries: <int> | default = 10]
      */
 ) {
 }

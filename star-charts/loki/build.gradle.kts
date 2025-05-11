@@ -1,10 +1,15 @@
 plugins {
     `maven-publish`
+    id("com.google.devtools.ksp")
 }
 
 dependencies {
     implementation(project(":star-charts"))
+    ksp(project(":dsl"))
 }
+
+//src/main/resources/META-INF/services/com.google.devtools.ksp.processing.SymbolProcessorProvider
+kotlin.sourceSets["main"].kotlin.srcDir("build/generated/ksp/main/kotlin")
 
 tasks.jar {
     archiveBaseName.set("loki")

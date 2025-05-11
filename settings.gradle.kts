@@ -1,4 +1,12 @@
 
+pluginManagement {
+    repositories {
+        gradlePluginPortal()   // still check here first
+        google()
+        mavenCentral()        // KSP plugin actually lives here
+    }
+}
+
 includeModules(
     "cmd",
     "common",

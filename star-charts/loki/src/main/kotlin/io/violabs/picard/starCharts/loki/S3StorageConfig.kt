@@ -108,20 +108,20 @@ data class S3StorageConfig(
          *   # CLI flag: -<prefix>.s3.http.timeout
          *   [timeout: <duration> | default = 0s]
          */
-        val timeout: Quantity? = null,
+        val timeout: Duration? = null,
         /**
          *   # The maximum amount of time an idle connection will be held open.
          *   # CLI flag: -<prefix>.s3.http.idle-conn-timeout
          *   [idle_conn_timeout: <duration> | default = 1m30s]
          */
-        val idleConnTimeout: Quantity? = null,
+        val idleConnTimeout: Duration? = null,
         /**
          *   # If non-zero, specifies the amount of time to wait for a server's response
          *   # headers after fully writing the request.
          *   # CLI flag: -<prefix>.s3.http.response-header-timeout
          *   [response_header_timeout: <duration> | default = 0s]
          */
-        val responseHeaderTimeout: Quantity? = null,
+        val responseHeaderTimeout: Duration? = null,
         /**
          *   # Set to true to skip verifying the certificate chain and hostname.
          *   # CLI flag: -<prefix>.s3.http.insecure-skip-verify
@@ -172,13 +172,13 @@ data class S3StorageConfig(
          * # CLI flag: -<prefix>.s3.min-backoff
          * [min_period: <duration> | default = 100ms]
          */
-        val minPeriod: Quantity? = null,
+        val minPeriod: Duration? = null,
         /**
          * # Maximum backoff time when s3 get Object
          * # CLI flag: -<prefix>.s3.max-backoff
          * [max_period: <duration> | default = 3s]
          */
-        val maxPeriod: Quantity? = null,
+        val maxPeriod: Duration? = null,
         /**
          * # Maximum number of times to retry for s3 GetObject or ObjectExists
          * # CLI flag: -<prefix>.s3.max-retries

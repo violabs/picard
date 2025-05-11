@@ -33,3 +33,7 @@ A spring boot app that can be used to test containerization.
 
 - [ ] Documentation at builder level
 - [ ] Cloud resources
+
+
+### left
+https://grafana.com/docs/loki/latest/configure/#s3_storage_config

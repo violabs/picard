@@ -1,4 +1,4 @@
-package io.violabs.picard.starCharts.loki.schemaConfig
+package io.violabs.picard.starCharts.loki
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.annotation.JsonNaming

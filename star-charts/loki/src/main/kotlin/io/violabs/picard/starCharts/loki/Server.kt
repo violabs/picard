@@ -99,32 +99,32 @@ data class Server(
      * # CLI flag: -server.graceful-shutdown-timeout
      * [graceful_shutdown_timeout: <duration> | default = 30s]
      */
-    val gracefulShutdownTimeout: Quantity? = null,
+    val gracefulShutdownTimeout: Duration? = null,
     /**
      * # Read timeout for entire HTTP request, including headers and body.
      * # CLI flag: -server.http-read-timeout
      * [http_server_read_timeout: <duration> | default = 30s]
      */
-    val httpServerReadTimeout: Quantity? = null,
+    val httpServerReadTimeout: Duration? = null,
     /**
      * # Read timeout for HTTP request headers. If set to 0, value of
      * # -server.http-read-timeout is used.
      * # CLI flag: -server.http-read-header-timeout
      * [http_server_read_header_timeout: <duration> | default = 0s]
      */
-    val httpServerReadHeaderTimeout: Quantity? = null,
+    val httpServerReadHeaderTimeout: Duration? = null,
     /**
      * # Write timeout for HTTP server
      * # CLI flag: -server.http-write-timeout
      * [http_server_write_timeout: <duration> | default = 30s]
      */
-    val httpServerWriteTimeout: Quantity? = null,
+    val httpServerWriteTimeout: Duration? = null,
     /**
      * # Idle timeout for HTTP server
      * # CLI flag: -server.http-idle-timeout
      * [http_server_idle_timeout: <duration> | default = 2m]
      */
-    val httpServerIdleTimeout: Quantity? = null,
+    val httpServerIdleTimeout: Duration? = null,
     /**
      * # Log closed connections that did not receive any response, most likely because
      * # client didn't send any request within timeout.
@@ -157,35 +157,35 @@ data class Server(
      * # CLI flag: -server.grpc.keepalive.max-connection-idle
      * [grpc_server_max_connection_idle: <duration> | default = 2562047h47m16.854775807s]
      */
-    val grpcServerMaxConnectionIdle: Quantity? = null,
+    val grpcServerMaxConnectionIdle: Duration? = null,
     /**
      * # The duration for the maximum amount of time a connection may exist before it
      * # will be closed. Default: infinity
      * # CLI flag: -server.grpc.keepalive.max-connection-age
      * [grpc_server_max_connection_age: <duration> | default = 2562047h47m16.854775807s]
      */
-    val grpcServerMaxConnectionAge: Quantity? = null,
+    val grpcServerMaxConnectionAge: Duration? = null,
     /**
      * # An additive period after max-connection-age after which the connection will be
      * # forcibly closed. Default: infinity
      * # CLI flag: -server.grpc.keepalive.max-connection-age-grace
      * [grpc_server_max_connection_age_grace: <duration> | default = 2562047h47m16.854775807s]
      */
-    val grpcServerMaxConnectionAgeGrace: Quantity? = null,
+    val grpcServerMaxConnectionAgeGrace: Duration? = null,
     /**
      * # Duration after which a keepalive probe is sent in case of no activity over the
      * # connection., Default: 2h
      * # CLI flag: -server.grpc.keepalive.time
      * [grpc_server_keepalive_time: <duration> | default = 2h]
      */
-    val grpcServerKeepaliveTime: Quantity? = null,
+    val grpcServerKeepaliveTime: Duration? = null,
     /**
      * # After having pinged for keepalive check, the duration after which an idle
      * # connection should be closed, Default: 20s
      * # CLI flag: -server.grpc.keepalive.timeout
      * [grpc_server_keepalive_timeout: <duration> | default = 20s]
      */
-    val grpcServerKeepaliveTimeout: Quantity? = null,
+    val grpcServerKeepaliveTimeout: Duration? = null,
     /**
      * # Minimum amount of time a client should wait before sending a keepalive ping.
      * # If client sends keepalive ping more often, server will send GOAWAY and close
@@ -193,7 +193,7 @@ data class Server(
      * # CLI flag: -server.grpc.keepalive.min-time-between-pings
      * [grpc_server_min_time_between_pings: <duration> | default = 10s]
      */
-    val grpcServerMinTimeBetweenPings: Quantity? = null,
+    val grpcServerMinTimeBetweenPings: Duration? = null,
     /**
      * # If true, server allows keepalive pings even when there are no active
      * # streams(RPCs). If false, and client sends ping when there are no active

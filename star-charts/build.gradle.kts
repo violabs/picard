@@ -19,10 +19,26 @@ dependencies {
     testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.3")
 }
 
+subprojects {
+    dependencies {
+        implementation(project(":common"))
+        implementation(project(":core"))
+        implementation(project(":cmd"))
+        implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.19.0")
+        implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.19.0")
+
+        testImplementation(project(":core-test"))
+        testImplementation("com.fasterxml.jackson.core:jackson-core:2.18.3")
+        testImplementation("com.fasterxml.jackson.core:jackson-databind:2.18.3")
+        testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.3")
+    }
+}
+
 tasks.jar {
     archiveBaseName.set("picard-star-charts")
     from(project(":common").sourceSets.main.get().output)
     from(project(":core").sourceSets.main.get().output)
+    from(project(":cmd").sourceSets.main.get().output)
 }
 
 publishing {

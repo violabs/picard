@@ -185,8 +185,6 @@ class BuilderGenerator(val logger: KSPLogger) {
             buildFun.addStatement("return %T(%L)", domainClassName, buildVars)
             builderClass.addFunction(buildFn)
 
-            println("-----HERE")
-
             val anyRequiredNotNull = buildVars.any { !it.nullable && it.verifyNotNull }
             val anyRequiredNotEmpty = buildVars.any { !it.nullable && it.verifyNotEmpty }
 

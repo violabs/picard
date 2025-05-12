@@ -31,6 +31,7 @@ private const val NAMESPACE = "picard-sandbox"
 fun main(vararg args: String) {
 //    addManifestForPostgres()
 //    addManifestForPlanetTracker()
+
     runManifest(
         POSTGRES_FILE_NAME,
         apply = false,

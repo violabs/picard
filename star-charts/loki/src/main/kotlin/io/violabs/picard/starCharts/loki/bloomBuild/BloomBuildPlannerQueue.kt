@@ -1,6 +1,6 @@
 package io.violabs.picard.starCharts.loki.bloomBuild
 
-import io.violabs.picard.dsl.GenerateDSL
+import io.violabs.picard.dsl.annotation.GenerateDSL
 
 @GenerateDSL
 class BloomBuildPlannerQueue(

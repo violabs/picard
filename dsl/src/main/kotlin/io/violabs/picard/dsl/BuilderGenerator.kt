@@ -11,180 +11,14 @@ import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.ksp.toClassName
 import com.squareup.kotlinpoet.ksp.toTypeName
 import com.squareup.kotlinpoet.ksp.writeTo
-
-interface DSLParam {
-    val propName: String
-    val propTypeName: TypeName // This should be the type of the actual property in the domain object
-    val nullable: Boolean get() = true
-    val verifyNotNull: Boolean get() = true
-    val verifyNotEmpty: Boolean get() = false
-
-    fun toPropertySpec(): PropertySpec
-
-    // Added containingBuilderClassName to allow fluent return types
-    fun accessors(containingBuilderClassName: ClassName): List<FunSpec> {
-        return emptyList()
-    }
-
-    fun propertyValueReturn(): String {
-        if (nullable) return propName
-
-        return if (verifyNotNull) {
-            "vRequireNotNull(::$propName, \"$propName\")" // Added message for vRequireNotNull
-        } else if (verifyNotEmpty) {
-            "vRequireNotEmpty(::$propName, \"$propName\")"
-        } else {
-            propName
-        }
-    }
-}
-
-class BooleanParam(
-    override val propName: String,
-    override val nullable: Boolean = true
-) : DSLParam {
-    override val propTypeName: TypeName = BOOLEAN.copy(nullable = nullable) // Correctly use constructor arg
-
-    override fun toPropertySpec(): PropertySpec = PropertySpec.builder(propName, propTypeName)
-        .addModifiers(KModifier.PRIVATE)
-        .mutable(true)
-        .initializer("null")
-        .build()
-
-    override fun accessors(containingBuilderClassName: ClassName): List<FunSpec> {
-        val param = ParameterSpec
-            .builder("on", BOOLEAN) // Non-nullable for the setter
-            .defaultValue("true")
-            .build()
-
-        return FunSpec.builder(propName)
-            .addParameter(param)
-            .addStatement("this.%N = %N", propName, param)
-            .addStatement("return this") // Fluent API
-            .returns(containingBuilderClassName) // Return the builder itself
-            .build()
-            .let { listOf(it) }
-    }
-}
-
-class DefaultParam(
-    override val propName: String,
-    actualPropTypeName: TypeName, // Use a more descriptive name
-    override val nullable: Boolean = true
-) : DSLParam {
-    override val propTypeName: TypeName = actualPropTypeName.copy(nullable = nullable)
-
-    override fun toPropertySpec(): PropertySpec = PropertySpec.builder(propName, propTypeName)
-        .addModifiers(KModifier.PRIVATE) // Good to make backing fields private
-        .mutable(true)
-        .initializer("null")
-        .build()
-
-    // Example of a simple setter for DefaultParam if needed for fluency
-    override fun accessors(containingBuilderClassName: ClassName): List<FunSpec> {
-        return FunSpec.builder(propName)
-            .addParameter(propName, propTypeName.copy(nullable = false)) // Parameter should match property type (or be non-nullable version)
-            .addStatement("this.%N = %N", propName, propName)
-            .addStatement("return this")
-            .returns(containingBuilderClassName)
-            .build()
-            .let { listOf(it) }
-    }
-}
-
-class BuilderParam(
-    override val propName: String,
-    private val originalPropertyType: TypeName, // e.g., BloomBuildPlannerQueue?
-    private val nestedBuilderClassName: ClassName, // e.g., BloomBuildPlannerQueueBuilder
-    override val nullable: Boolean = true
-) : DSLParam {
-    override val propTypeName: TypeName = originalPropertyType // Type of the field in the builder
-
-    override fun toPropertySpec(): PropertySpec = PropertySpec.builder(propName, propTypeName)
-        .addModifiers(KModifier.PRIVATE)
-        .mutable(true)
-        .initializer("null")
-        .build()
-
-    override fun accessors(containingBuilderClassName: ClassName): List<FunSpec> {
-        val blockParam = ParameterSpec.builder("block", LambdaTypeName.get(
-            receiver = nestedBuilderClassName,  // THIS IS THE KEY: uses the specific builder type
-            parameters = emptyList(),
-            returnType = UNIT
-        )).build()
-
-        val funSpec = FunSpec.builder(propName) // Setter method name
-            .addParameter(blockParam)
-            .addStatement("val builder = %T()", nestedBuilderClassName) // Instantiates the specific builder
-            .addStatement("builder.block()")
-            .addStatement("this.%N = builder.build()", propName) // Assigns the built object
-            .build()
-
-        return listOf(funSpec)
-    }
-}
-
-class ListParam(
-    override val propName: String,
-    actualPropTypeName: TypeName = LIST.parameterizedBy(STRING), // More descriptive name
-    override val nullable: Boolean = true
-) : DSLParam {
-    override val propTypeName: TypeName = actualPropTypeName.copy(nullable = nullable)
-
-    override fun toPropertySpec(): PropertySpec = PropertySpec.builder(propName, propTypeName)
-        .addModifiers(KModifier.PRIVATE) // Good to make backing fields private
-        .mutable(true)
-        .initializer("null")
-        .build()
-
-    override val verifyNotNull: Boolean = false
-    override val verifyNotEmpty: Boolean = true
-
-    // Example for a list setter (could be more sophisticated, e.g., vararg)
-    override fun accessors(containingBuilderClassName: ClassName): List<FunSpec> {
-        return FunSpec.builder(propName)
-            .addParameter(propName, propTypeName.copy(nullable = false)) // Usually a non-null list
-            .addStatement("this.%N = %N", propName, propName)
-            .addStatement("return this")
-            .returns(containingBuilderClassName)
-            .build()
-            .let { listOf(it) }
-    }
-}
-
-// Assuming GroupParam is similar to BuilderParam or a complex type needing its own builder
-class GroupParam(
-    override val propName: String,
-    private val originalPropertyType: TypeName, // e.g., MyGroupType?
-    private val groupBuilderClassName: ClassName, // e.g., MyGroupTypeBuilder
-    override val nullable: Boolean = true
-) : DSLParam {
-    override val propTypeName: TypeName = originalPropertyType
-
-    override fun toPropertySpec(): PropertySpec = PropertySpec.builder(propName, propTypeName)
-        .addModifiers(KModifier.PRIVATE)
-        .mutable(true)
-        .initializer("null")
-        .build()
-
-    override fun accessors(containingBuilderClassName: ClassName): List<FunSpec> {
-        val blockParam = ParameterSpec.builder("block", LambdaTypeName.get(
-            receiver = groupBuilderClassName,
-            parameters = emptyList(),
-            returnType = UNIT
-        )).build()
-
-        val funSpec = FunSpec.builder(propName)
-            .addParameter(blockParam)
-            .addStatement("val builder = %T()", groupBuilderClassName)
-            .addStatement("builder.block()")
-            .addStatement("this.%N = builder.build()", propName)
-            .addStatement("return this")
-            .returns(containingBuilderClassName)
-            .build()
-        return listOf(funSpec)
-    }
-}
+import io.violabs.picard.dsl.annotation.GenerateDSL
+import io.violabs.picard.dsl.annotation.SingleEntryDSL
+import io.violabs.picard.dsl.param.BooleanParam
+import io.violabs.picard.dsl.param.BuilderParam
+import io.violabs.picard.dsl.param.DSLParam
+import io.violabs.picard.dsl.param.DefaultParam
+import io.violabs.picard.dsl.param.GroupParam
+import io.violabs.picard.dsl.param.ListParam
 
 private val DEFAULT_TYPE_CANONICAL_NAMES = listOf(
     BOOLEAN, STRING, INT, LONG, SHORT, BYTE, DOUBLE, FLOAT
@@ -248,16 +82,20 @@ class BuilderGenerator(val logger: KSPLogger) {
             .getSymbolsWithAnnotation(GenerateDSL::class.qualifiedName!!)
             .filterIsInstance<KSClassDeclaration>()
 
+        val annotatedClasses = resolver
+            .getSymbolsWithAnnotation(SingleEntryDSL::class.qualifiedName!!)
+            .filterIsInstance<KSClassDeclaration>()
+
         annotated.forEach { domain ->
             val pkg = domain.packageName.asString()
             val typeName = domain.simpleName.asString()
             val builderName = "${typeName}Builder"
             val domainClassName: ClassName = domain.toClassName()
-            val currentGeneratedBuilderClassName = ClassName(pkg, builderName) // ClassName of the builder we are generating
 
             val builderClass: TypeSpec.Builder = TypeSpec.classBuilder(builderName)
                 .addModifiers(KModifier.PUBLIC) // Typically builders are public
 
+            // add DSL Marker to the top of the class to restrict scope. Provided by consumer.
             if (dslMarkerClasspath != null) {
                 println("Adding DSL Marker to $builderName")
                 val split = dslMarkerClasspath.split(".")
@@ -277,7 +115,7 @@ class BuilderGenerator(val logger: KSPLogger) {
 
                 builderClass.addProperty(dslParam.toPropertySpec())
 
-                dslParam.accessors(currentGeneratedBuilderClassName).forEach { // Pass the current builder's ClassName
+                dslParam.accessors().forEach { // Pass the current builder's ClassName
                     builderClass.addFunction(it)
                 }
                 // Prepare for the build() method's constructor call
@@ -328,6 +166,3 @@ class BuilderGenerator(val logger: KSPLogger) {
         }
     }
 }
-
-// Removed generateInstanceCreationFunction as its logic is now inline in the main generate function
-// for better clarity with constructorParams and dslParam.propertyValueReturn()

@@ -1,5 +1,8 @@
 package io.violabs.picard.starCharts.loki.bloomBuild
 
+import io.violabs.picard.dsl.GenerateDSL
+
+@GenerateDSL
 class BloomBuildPlanner(
     /**
      * # Interval at which to re-run the bloom creation planning.
@@ -25,23 +28,7 @@ class BloomBuildPlanner(
      *     # Enable bloom retention.
      *     # CLI flag: -bloom-build.planner.retention.enabled
      *     [enabled: <boolean> | default = false]
-     *
-     *   queue:
-     *     # Maximum number of tasks to queue per tenant.
-     *     # CLI flag: -bloom-build.planner.queue.max-tasks-per-tenant
-     *     [max_queued_tasks_per_tenant: <int> | default = 30000]
-     *
-     *     # Whether to store tasks on disk.
-     *     # CLI flag: -bloom-build.planner.queue.store-tasks-on-disk
-     *     [store_tasks_on_disk: <boolean> | default = false]
-     *
-     *     # Directory to store tasks on disk.
-     *     # CLI flag: -bloom-build.planner.queue.tasks-disk-directory
-     *     [tasks_disk_directory: <string> | default = "/tmp/bloom-planner-queue"]
-     *
-     *     # Whether to clean the tasks directory on startup.
-     *     # CLI flag: -bloom-build.planner.queue.clean-tasks-directory
-     *     [clean_tasks_directory: <boolean> | default = false]
      */
+    val queue: BloomBuildPlannerQueue? = null
 ) {
 }

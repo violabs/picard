@@ -2,6 +2,7 @@ package io.violabs.picard.starCharts.loki
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.annotation.JsonNaming
+import io.violabs.picard.starCharts.loki.common.LokiDSL
 import io.violabs.picard.starCharts.loki.tls.TLSConfig
 
 @LokiDSL

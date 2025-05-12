@@ -1,7 +1,7 @@
 package io.violabs.picard.cmd
 
-import io.violabs.picard.cmd.dsl.Kubectl
-import io.violabs.picard.cmd.dsl.kubectl
+import io.violabs.picard.cmd.dsl.k8s.Kubectl
+import io.violabs.picard.cmd.dsl.k8s.kubectl
 
 private const val USE_EXAMPLE = false
 

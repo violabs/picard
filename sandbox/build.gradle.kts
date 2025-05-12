@@ -3,6 +3,8 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":common"))
     implementation(project(":cmd"))
+    implementation(project(":star-charts"))
+    implementation(project(":star-charts:loki"))
 }
 
 

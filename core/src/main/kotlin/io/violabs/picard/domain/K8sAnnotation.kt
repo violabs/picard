@@ -1,9 +1,12 @@
 package io.violabs.picard.domain
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import io.violabs.picard.common.YAMLMap
+
 data class K8sAnnotation(
-    val key: String,
-    val value: String
-) {
+    override val key: String,
+    override val value: String
+) : YAMLMap {
     class Group {
         private var annotations: MutableList<K8sAnnotation> = mutableListOf()
 
@@ -11,7 +14,7 @@ data class K8sAnnotation(
             return annotations
         }
 
-        fun annotations(key: String, value: String) {
+        fun add(key: String, value: String) {
             annotations.add(K8sAnnotation(key, value))
         }
     }

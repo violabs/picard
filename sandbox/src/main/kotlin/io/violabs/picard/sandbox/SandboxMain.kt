@@ -2,7 +2,8 @@ package io.violabs.picard.sandbox
 
 import io.violabs.picard.YamlBuilder
 import io.violabs.picard.buildManifest
-import io.violabs.picard.cmd.dsl.kubectl
+import io.violabs.picard.cmd.dsl.helm.helm
+import io.violabs.picard.cmd.dsl.k8s.kubectl
 import io.violabs.picard.common.FileManager
 import io.violabs.picard.domain.AccessMode
 import io.violabs.picard.domain.k8sResources.config.secret.Secret
@@ -30,20 +31,25 @@ private const val NAMESPACE = "picard-sandbox"
 fun main(vararg args: String) {
 //    addManifestForPostgres()
 //    addManifestForPlanetTracker()
+
     runManifest(
         POSTGRES_FILE_NAME,
         apply = false,
         list = false,
         describe = false,
-        disabled = false
+        disabled = true
     )
     runManifest(
         PLANET_TRACKER_FILE_NAME,
         apply = false,
-        list = true,
+        list = false,
         describe = false,
-        disabled = false
+        disabled = true
     )
+
+    helm {
+
+    }
 }
 
 fun runManifest(

@@ -47,7 +47,7 @@ private val SUCCESS_POSSIBILITIES = possibilities<Pod, Pod.Builder> {
                     label("app", "test")
                 }
                 annotations {
-                    annotations("test-run", "example")
+                    add("test-run", "example")
                 }
             }
 

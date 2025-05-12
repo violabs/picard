@@ -120,7 +120,7 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
                 }
 
                 annotations {
-                    annotations(PLACEHOLDER, PLACEHOLDER)
+                    add(PLACEHOLDER, PLACEHOLDER)
                 }
             }
         }

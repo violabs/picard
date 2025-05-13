@@ -32,13 +32,3 @@ publishing {
         }
     }
 }
-
-kover {
-    reports {
-        filters {
-            excludes {
-                annotatedBy("io.violabs.picard.common.ExcludeFromCoverage")
-            }
-        }
-    }
-}

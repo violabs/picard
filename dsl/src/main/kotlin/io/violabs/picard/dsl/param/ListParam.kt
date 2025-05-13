@@ -13,6 +13,20 @@ class ListParam(
     override val verifyNotNull: Boolean = false
     override val verifyNotEmpty: Boolean = true
 
+    override fun toPropertySpec(): PropertySpec {
+        val type = propTypeName.copy(nullable = nullable)
+
+        var spec = PropertySpec.Companion.builder(propName, type)
+            .addModifiers(accessModifier)
+            .mutable(true)
+
+        if (nullable) {
+            spec = spec.initializer("null")
+        }
+
+        return spec.build()
+    }
+
     // Example for a list setter (could be more sophisticated, e.g., vararg)
     override fun accessors(): List<FunSpec> {
         val spec = ParameterSpec.Companion

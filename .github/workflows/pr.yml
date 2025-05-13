@@ -29,7 +29,7 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Run Unit Tests
-        run: ./gradlew core:test -Pkover koverXmlReport
+        run: ./gradlew clean test -Pkover koverXmlReport
 
       - name: Upload Unit Test Results
         if: success()
@@ -44,7 +44,7 @@ jobs:
           path: core/build/reports/kover/report.xml
           title: Code Coverage
           update-comment: true
-          min-coverage-overall: 40
+          min-coverage-overall: 80
           min-coverage-changed-files: 40
           coverage-counter-type: LINE
 

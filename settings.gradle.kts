@@ -1,10 +1,36 @@
-
 pluginManagement {
     repositories {
-        gradlePluginPortal()   // still check here first
+        gradlePluginPortal()
         google()
-        mavenCentral()        // KSP plugin actually lives here
+        mavenCentral()
     }
+}
+
+plugins {
+    id("org.jetbrains.kotlinx.kover.aggregation") version "0.9.1"
+}
+
+kover {
+    enableCoverage()
+    reports {
+        includedProjects.addAll(
+            ":cmd",
+            ":core",
+            ":dsl",
+            ":star-charts:loki"
+        )
+        excludesAnnotatedBy.add("io.violabs.picard.common.ExcludeFromCoverage")
+//        excludedClasses.add("io.violabs.picard.domain.api.view.*")
+        verify {
+            rule("Minimum Line Coverage") {
+                bound {
+                    minValue = 80
+                }
+            }
+        }
+    }
+
+
 }
 
 includeModules(

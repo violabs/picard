@@ -1,9 +1,8 @@
 package io.violabs.picard.starCharts.loki.bloomBuild
 
-import io.violabs.picard.dsl.annotation.GenerateDSL
 import io.violabs.picard.starCharts.loki.Duration
 
-@GenerateDSL
+//@GenerateDSL
 class BloomBuildPlanner(
     /**
      * # Interval at which to re-run the bloom creation planning.

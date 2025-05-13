@@ -36,12 +36,12 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: unit-test-results
-          path: core/build/reports/kover
+          path: build/reports/kover
 
       - name: Add coverage report to PR
         uses: mi-kas/kover-report@v1
         with:
-          path: core/build/reports/kover/report.xml
+          path: build/reports/kover/report.xml
           title: Code Coverage
           update-comment: true
           min-coverage-overall: 80

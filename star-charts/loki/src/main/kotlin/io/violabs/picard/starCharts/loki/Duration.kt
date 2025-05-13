@@ -1,12 +1,9 @@
 package io.violabs.picard.starCharts.loki
 
-import io.violabs.picard.dsl.annotation.SingleEntryDSL
+import io.violabs.picard.dsl.annotation.SingleEntryTransformDSL
 
 /**
  * todo: Restrict format
  */
-@SingleEntryDSL<String, String>(
-    paramType = String::class,
-    returnType = String::class
-)
+@SingleEntryTransformDSL<String>(String::class)
 data class Duration(val amount: String)

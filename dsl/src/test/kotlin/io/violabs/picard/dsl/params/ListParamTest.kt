@@ -1,11 +1,10 @@
-package io.violabs.picard.dsl
+package io.violabs.picard.dsl.params
 
 import com.squareup.kotlinpoet.INT
 import com.squareup.kotlinpoet.STRING
 import com.squareup.kotlinpoet.TypeName
 import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
-import io.violabs.picard.dsl.param.ListParam
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestTemplate
@@ -31,7 +30,7 @@ class ListParamTest : UnitSim() {
     @Test
     fun `accessors - happy path`() = test {
         given {
-            val param = ListParam("test", nullable = true)
+            val param = ListParam("test", nullableAssignment = true)
 
             expect {
                 """

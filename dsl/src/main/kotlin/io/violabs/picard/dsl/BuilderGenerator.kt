@@ -14,7 +14,13 @@ import com.squareup.kotlinpoet.ksp.toTypeName
 import com.squareup.kotlinpoet.ksp.writeTo
 import io.violabs.picard.dsl.annotation.GenerateDSL
 import io.violabs.picard.dsl.annotation.SingleEntryTransformDSL
-import io.violabs.picard.dsl.param.*
+import io.violabs.picard.dsl.params.BooleanParam
+import io.violabs.picard.dsl.params.BuilderParam
+import io.violabs.picard.dsl.params.DSLParam
+import io.violabs.picard.dsl.params.DefaultParam
+import io.violabs.picard.dsl.params.GroupParam
+import io.violabs.picard.dsl.params.ListParam
+import io.violabs.picard.dsl.params.SingleTransformParam
 
 private val DEFAULT_TYPE_CANONICAL_NAMES = listOf(
     BOOLEAN, STRING, INT, LONG, SHORT, BYTE, DOUBLE, FLOAT
@@ -33,9 +39,6 @@ fun determineParam(
 
     // For deriving builder names, we need the non-nullable ClassName of the type
     val resolvedType = prop.type.resolve()
-    val propertyClassDeclaration = resolvedType.declaration as? KSClassDeclaration
-    val propertyNonNullableClassName =
-        propertyClassDeclaration?.toClassName() // Might be null if not a class (e.g. typealias to primitive)
 
     // Use canonicalName for robust comparison, especially with nullable types
     val canonicalName = actualPropertyType.copy(nullable = false).toString() // Get base type string
@@ -44,18 +47,16 @@ fun determineParam(
         val annotation = singleEntryTransform
             .annotations
             .find { it.shortName.asString() == SingleEntryTransformDSL::class.simpleName }
-            ?: return throw IllegalArgumentException("SingleEntryTransform annotation not found on class ${singleEntryTransform.simpleName.asString()}")
 
         val transformTemplate = annotation
-            .arguments
-            .firstOrNull { it.name?.asString() == "transformTemplate" }
+            ?.arguments
+            ?.firstOrNull { it.name?.asString() == "transformTemplate" }
             ?.toString()
 
         val transformType = annotation
-            .arguments
-            .firstOrNull { it.name?.asString() == "inputType" }
+            ?.arguments
+            ?.firstOrNull { it.name?.asString() == "inputType" }
             ?.value as KSType
-            ?: throw IllegalArgumentException("transformTemplate requires a inputType argument")
 
         // Create a DSLParam that uses the transformer
         return SingleTransformParam(
@@ -63,8 +64,19 @@ fun determineParam(
             transformTemplate = transformTemplate,
             actualPropTypeName = prop.type.toTypeName(),
             inputTypeName = transformType.toTypeName(),
-            nullable = prop.type.resolve().isMarkedNullable
+            nullableAssignment = prop.type.resolve().isMarkedNullable
         )
+    }
+    val propertyClassDeclaration = resolvedType.declaration as? KSClassDeclaration
+    val propertyNonNullableClassName = propertyClassDeclaration?.toClassName()
+
+    // Check if the class type of the property has the GenerateDSL annotation
+    val hasGenerateDSLAnnotation = propertyClassDeclaration?.annotations?.any {
+        it.shortName.asString() == GenerateDSL::class.simpleName
+    } ?: false
+
+    if (hasGenerateDSLAnnotation && propertyNonNullableClassName != null) {
+        return createBuilderParam(propName, actualPropertyType, propertyNonNullableClassName, isNullable)
     }
 
     return when {
@@ -80,20 +92,24 @@ fun determineParam(
             val groupBuilderClassName = ClassName(propertyNonNullableClassName.packageName, groupBuilderName)
             GroupParam(propName, actualPropertyType, groupBuilderClassName, isNullable)
         }
-        // Default to BuilderParam for other class types, assuming they follow the convention
-        // or are meant to be configured via a builder.
-        propertyNonNullableClassName != null -> {
-            val nestedBuilderName = propertyNonNullableClassName.simpleName + "Builder"
-            // The nested builder will be in the same package as its corresponding domain class
-            val nestedBuilderClassName = ClassName(propertyNonNullableClassName.packageName, nestedBuilderName)
-            BuilderParam(propName, actualPropertyType, nestedBuilderClassName, isNullable)
-        }
         // Fallback for types not covered (e.g. functional types, type aliases not resolving to classes)
         else -> {
             logger.warn("Property '$propName' of type '${actualPropertyType}' could not be mapped to a known DSLParam type. Using DefaultParam as a fallback.")
             DefaultParam(propName, actualPropertyType, isNullable)
         }
     }
+}
+
+fun createBuilderParam(
+    propName: String,
+    actualPropertyType: TypeName,
+    propertyNonNullableClassName: ClassName,
+    isNullable: Boolean = true
+): BuilderParam {
+    val nestedBuilderName = propertyNonNullableClassName.simpleName + "Builder"
+    // The nested builder will be in the same package as its corresponding domain class
+    val nestedBuilderClassName = ClassName(propertyNonNullableClassName.packageName, nestedBuilderName)
+    return BuilderParam(propName, actualPropertyType, nestedBuilderClassName, isNullable)
 }
 
 class BuilderGenerator(val logger: KSPLogger) {
@@ -173,11 +189,11 @@ class BuilderGenerator(val logger: KSPLogger) {
             // This logic assumes propertyValueReturn() generates the vRequireNotNull etc. calls.
             val requiresVRequireNotNull = domain.getAllProperties().any { prop ->
                 val dslP = determineParam(prop, null, logger)
-                !dslP.nullable && dslP.verifyNotNull
+                !dslP.nullableAssignment && dslP.verifyNotNull
             }
             val requiresVRequireNotEmpty = domain.getAllProperties().any { prop ->
                 val dslP = determineParam(prop, null, logger)
-                !dslP.nullable && dslP.verifyNotEmpty
+                !dslP.nullableAssignment && dslP.verifyNotEmpty
             }
 
             val fileSpecBuilder = FileSpec
@@ -187,10 +203,10 @@ class BuilderGenerator(val logger: KSPLogger) {
 
             if (requiresVRequireNotNull) {
                 // Assuming these are top-level functions or extension functions
-                fileSpecBuilder.addImport("io.violabs.picard.starCharts.common", "vRequireNotNull")
+                fileSpecBuilder.addImport("io.violabs.picard.dsl", "vRequireNotNull")
             }
             if (requiresVRequireNotEmpty) {
-                fileSpecBuilder.addImport("io.violabs.picard.starCharts.common", "vRequireNotEmpty")
+                fileSpecBuilder.addImport("io.violabs.picard.dsl", "vRequireNotEmpty")
             }
 
             fileSpecBuilder

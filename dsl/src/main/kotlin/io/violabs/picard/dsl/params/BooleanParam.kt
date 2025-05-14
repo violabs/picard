@@ -1,12 +1,13 @@
-package io.violabs.picard.dsl.param
+package io.violabs.picard.dsl.params
 
 import com.squareup.kotlinpoet.*
 
 class BooleanParam(
     override val propName: String,
-    override val nullable: Boolean = true
+    override val nullableAssignment: Boolean = true,
+    override val nullableProp: Boolean = true
 ) : DSLParam {
-    override val propTypeName: TypeName = BOOLEAN.copy(nullable = nullable) // Correctly use constructor arg
+    override val propTypeName: TypeName = BOOLEAN.copy(nullable = nullableAssignment) // Correctly use constructor arg
 
     override fun accessors(): List<FunSpec> {
         val param = ParameterSpec.Companion

@@ -1,4 +1,4 @@
-package io.violabs.picard.dsl.param
+package io.violabs.picard.dsl.params
 
 import com.squareup.kotlinpoet.*
 
@@ -7,7 +7,8 @@ class GroupParam(
     override val propName: String,
     private val originalPropertyType: TypeName, // e.g., MyGroupType?
     private val groupBuilderClassName: ClassName, // e.g., MyGroupTypeBuilder
-    override val nullable: Boolean = true
+    override val nullableAssignment: Boolean = true,
+    override val nullableProp: Boolean = true
 ) : DSLParam {
     override val propTypeName: TypeName = originalPropertyType
 

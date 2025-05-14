@@ -1,9 +1,9 @@
-package io.violabs.picard.dsl
+package io.violabs.picard.dsl.params
 
+import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.asTypeName
 import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
-import io.violabs.picard.dsl.param.SingleTransformParam
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestTemplate
@@ -14,13 +14,13 @@ class SingleTransformParamTest : UnitSim() {
     val inputTypeName = String::class.asTypeName()
 
     @TestTemplate
-    fun `toPropertySpec - happy path - #scenario`(expected: String, nullable: Boolean) = test {
+    fun `toPropertySpec - happy path - #scenario`(expected: String, nullableProp: Boolean) = test {
         given {
             val param = SingleTransformParam(
                 "test",
                 inputTypeName,
                 propTypeName,
-                nullable = true
+                nullableProp = nullableProp
             )
 
             expect { expected }
@@ -40,13 +40,13 @@ class SingleTransformParamTest : UnitSim() {
                 "test",
                 inputTypeName,
                 propTypeName,
-                nullable = true
+                nullableAssignment = true
             )
 
             expect {
                 """
                     |public fun test(test: kotlin.String) {
-                    |  this.test = io.violabs.picard.dsl.TestCase(test)
+                    |  this.test = $testResponseClassName(test)
                     |}
                 """.trimMargin()
             }
@@ -63,10 +63,13 @@ class SingleTransformParamTest : UnitSim() {
             SCENARIO_GROUP to { this::`toPropertySpec - happy path - #scenario` }
         )
 
+        private val testResponseClassName = TestCase::class.asClassName()
+        private val propertyString = "public var test: $testResponseClassName"
+
         val SCENARIO_GROUP = SimulationGroup
-            .vars("scenario", "expected", "nullable")
-            .with("nullable", "public var test: io.violabs.picard.dsl.TestCase? = null", true)
-            .with("non-null", "public var test: io.violabs.picard.dsl.TestCase", false)
+            .vars("scenario", "expected", "nullableProp")
+            .with("nullable", "$propertyString? = null", true)
+            .with("non-null", propertyString, false)
     }
 }
 

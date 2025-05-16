@@ -1,9 +1,9 @@
 package io.violabs.picard.generateTest
 
-import io.violabs.picard.dsl.annotation.GenerateDSL
+import io.violabs.picard.dsl.annotation.GeneratedDSL
 
-@GenerateDSL
-class Space(
+@GeneratedDSL
+data class Space(
     val x: Float,
     val y: Float,
     val z: Float

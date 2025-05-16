@@ -1,6 +1,8 @@
 package io.violabs.picard.dsl.params
 
+import com.google.common.base.Defaults.defaultValue
 import com.squareup.kotlinpoet.*
+import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 
 // Assuming GroupParam is similar to BuilderParam or a complex type needing its own builder
 class GroupParam(
@@ -12,11 +14,14 @@ class GroupParam(
 ) : DSLParam {
     override val propTypeName: TypeName = originalPropertyType
 
-    override fun toPropertySpec(): PropertySpec = PropertySpec.Companion.builder(propName, propTypeName)
-        .addModifiers(KModifier.PRIVATE)
-        .mutable(true)
-        .initializer("null")
-        .build()
+    override fun toPropertySpec(): PropertySpec {
+        return PropertySpec.Companion.builder(propName, MUTABLE_LIST.parameterizedBy(groupBuilderClassName))
+            .addModifiers(accessModifier)
+            .mutable(true)
+            .initializer(null)
+            .build()
+    }
+
 
     override fun accessors(): List<FunSpec> {
         val blockParam = ParameterSpec.Companion.builder(

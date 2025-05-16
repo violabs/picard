@@ -1,7 +1,6 @@
 package io.violabs.picard.dsl.params
 
 import com.squareup.kotlinpoet.FunSpec
-import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.ParameterSpec
 import com.squareup.kotlinpoet.TypeName
 
@@ -14,7 +13,6 @@ class SingleTransformParam(
     override val nullableProp: Boolean = true
 ) : DSLParam {
     override val propTypeName: TypeName = actualPropTypeName.copy(nullable = nullableAssignment)
-    override val accessModifier: KModifier = KModifier.PUBLIC
 
     override fun accessors(): List<FunSpec> {
         val param = ParameterSpec.Companion

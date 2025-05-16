@@ -33,15 +33,15 @@ publishing {
     }
 }
 
-//kover {
-//    reports {
-//        filters {
-//            excludes {
-//                annotatedBy("io.violabs.picard.common.ExcludeFromCoverage")
-//            }
-//        }
-//    }
-//}
+kover {
+    reports {
+        filters {
+            excludes {
+                annotatedBy("io.violabs.picard.common.ExcludeFromCoverage")
+            }
+        }
+    }
+}
 
 ksp {
     arg("dslBuilder.classpath", "io.violabs.picard.starCharts.loki.common")

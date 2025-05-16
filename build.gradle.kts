@@ -3,6 +3,7 @@ plugins {
     kotlin("jvm") version "2.1.20"
     id("org.jetbrains.dokka") version "1.9.20" apply false
     id("com.google.devtools.ksp") version "2.1.20-1.0.32" apply false
+    id("org.jetbrains.kotlinx.kover") version "0.9.1"
     application
 }
 
@@ -22,6 +23,7 @@ allprojects {
         plugin("org.jetbrains.kotlin.jvm")
         plugin("org.jetbrains.dokka")
         plugin("application")
+        plugin("org.jetbrains.kotlinx.kover")
     }
 
     sharedRepositories()

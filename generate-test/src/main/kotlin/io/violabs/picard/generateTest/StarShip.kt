@@ -1,11 +1,15 @@
 package io.violabs.picard.generateTest
 
-import io.violabs.picard.dsl.annotation.GenerateDSL
+import io.violabs.picard.dsl.annotation.GeneratedDSL
 
-@GenerateDSL
+@GeneratedDSL
 data class StarShip(
     val name: String? = null,
     val activated: Boolean? = null,
+    val docked: Boolean? = null,
     val capacity: Int? = null,
-    val coordinates: SpaceTime? = null
+    val coordinates: SpaceTime? = null,
+    val stardate: Stardate? = null,
+    val commanderNames: List<String>? = null,
+    val passengers: List<Passenger>? = null
 )

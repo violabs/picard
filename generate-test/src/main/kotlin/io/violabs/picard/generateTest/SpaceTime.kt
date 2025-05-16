@@ -1,9 +1,9 @@
 package io.violabs.picard.generateTest
 
-import io.violabs.picard.dsl.annotation.GenerateDSL
+import io.violabs.picard.dsl.annotation.GeneratedDSL
 import java.time.LocalDateTime
 
-@GenerateDSL
+@GeneratedDSL
 data class SpaceTime(
     val space: Space? = null,
     val time: LocalDateTime? = null

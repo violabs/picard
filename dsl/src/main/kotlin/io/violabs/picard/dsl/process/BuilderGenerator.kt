@@ -1,0 +1,160 @@
+package io.violabs.picard.dsl.process
+
+import com.google.devtools.ksp.processing.CodeGenerator
+import com.google.devtools.ksp.processing.Dependencies
+import com.google.devtools.ksp.processing.KSPLogger
+import com.google.devtools.ksp.processing.Resolver
+import com.google.devtools.ksp.symbol.KSClassDeclaration
+import com.squareup.kotlinpoet.*
+import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.squareup.kotlinpoet.ksp.toClassName
+import com.squareup.kotlinpoet.ksp.toTypeName
+import com.squareup.kotlinpoet.ksp.writeTo
+import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedGroupDSL
+import io.violabs.picard.dsl.annotation.SingleEntryTransformDSL
+
+class BuilderGenerator(
+    val logger: KSPLogger,
+    val parameterFactory: DefaultParameterFactory = DefaultParameterFactory()
+) {
+
+    fun generate(resolver: Resolver, codeGenerator: CodeGenerator, options: Map<String, String> = emptyMap()) {
+        val dslBuilderClasspath = options["dslBuilder.classpath"]
+        val dslMarkerClasspath = options["dslMarker.classpath"]
+
+        if (dslBuilderClasspath == null) {
+            logger.error("KSP Option 'dslBuilder.classpath' is not defined. Please set it in your build.gradle.")
+            return
+        }
+
+        val generatedBuilderDSL = resolver
+            .getSymbolsWithAnnotation(GeneratedDSL::class.qualifiedName!!)
+            .filterIsInstance<KSClassDeclaration>()
+
+        val singleEntryTransform: Map<String, KSClassDeclaration> = resolver
+            .getSymbolsWithAnnotation(SingleEntryTransformDSL::class.qualifiedName!!)
+            .filterIsInstance<KSClassDeclaration>()
+            .associateBy { it.toClassName().toString() }
+
+        generatedBuilderDSL.forEach { domain ->
+            val pkg = domain.packageName.asString()
+            val typeName = domain.simpleName.asString()
+            val builderName = "${typeName}Builder"
+            val domainClassName: ClassName = domain.toClassName()
+
+            val builderClass: TypeSpec.Builder = TypeSpec.classBuilder(builderName)
+                .addModifiers(KModifier.PUBLIC) // Typically builders are public
+
+            // add DSL Marker to the top of the class to restrict scope. Provided by consumer.
+            if (dslMarkerClasspath != null) {
+                println("Adding DSL Marker to $builderName")
+                val split = dslMarkerClasspath.split(".")
+                val dslMarkerPackageName = split.subList(0, split.size - 1).joinToString(".")
+                val dslMarkerSimpleName = split.last()
+                builderClass.addAnnotation(ClassName(dslMarkerPackageName, dslMarkerSimpleName))
+            }
+
+            val dslBuilderInterface = ClassName(dslBuilderClasspath, "DSLBuilder")
+            val parameterizedDslBuilder = dslBuilderInterface.parameterizedBy(domainClassName)
+            builderClass.addSuperinterface(parameterizedDslBuilder)
+
+            val constructorParams = mutableListOf<CodeBlock>()
+
+            println("single entry: $singleEntryTransform")
+
+            domain.getAllProperties().forEach { prop ->
+                val type = prop.type.toTypeName().copy(nullable = false)
+                println("Processing property '${singleEntryTransform}' of type '$type'")
+                val singleEntryTransform = singleEntryTransform[type.toString()]
+
+                val dslParam = parameterFactory.determineParam(prop, singleEntryTransform, logger) // Pass logger
+
+                builderClass.addProperty(dslParam.toPropertySpec())
+
+                dslParam.accessors().forEach { // Pass the current builder's ClassName
+                    builderClass.addFunction(it)
+                }
+                // Prepare for the build() method's constructor call
+                constructorParams.add(CodeBlock.of("%N = %L", dslParam.propName, dslParam.propertyValueReturn()))
+            }
+
+            val buildFun = FunSpec.builder("build")
+                .addModifiers(KModifier.OVERRIDE)
+                .returns(domainClassName)
+
+            if (constructorParams.isEmpty()) {
+                buildFun.addStatement("return %T()", domainClassName)
+            } else {
+                // joinToCode is cleaner for multi-line constructor calls
+                val argumentsBlock =
+                    constructorParams.joinToCode(separator = ",\n    ", prefix = "\n    ", suffix = "\n")
+                buildFun.addStatement("return %T(%L)", domainClassName, argumentsBlock)
+            }
+            builderClass.addFunction(buildFun.build())
+
+
+            val isGroup = domain.annotations
+                .any { it.shortName.asString() == GeneratedGroupDSL::class.simpleName.toString() }
+
+            if (isGroup) {
+                val builderClassName = ClassName(pkg, builderName)
+
+                val nestedClass = TypeSpec
+                    .classBuilder("Group")
+                    .addProperty(
+                        PropertySpec.builder("items", MUTABLE_LIST.parameterizedBy(domainClassName))
+                            .addModifiers(KModifier.PRIVATE)
+                            .initializer("mutableListOf()")
+                            .build()
+                    )
+                    .addFunction(
+                        FunSpec.builder("items")
+                            .returns(LIST.parameterizedBy(domainClassName))
+                            .addStatement("return items.toList()")
+                            .build()
+                    )
+                    .addFunction(
+                        FunSpec.builder(domainClassName.simpleName.replaceFirstChar { it.lowercase() })
+                            .addParameter("block", LambdaTypeName.get(receiver = builderClassName, returnType = UNIT))
+                            .addStatement("items.add(%T().apply(block).build())", builderClassName)
+                            .build()
+                    )
+                    .build()
+
+                builderClass.addType(nestedClass)
+            }
+
+            // Check if any validation functions are needed.
+            // This logic assumes propertyValueReturn() generates the vRequireNotNull etc. calls.
+            val requiresVRequireNotNull = domain.getAllProperties().any { prop ->
+                val dslP = parameterFactory.determineParam(prop, null, logger)
+                !dslP.nullableAssignment && dslP.verifyNotNull
+            }
+            val requiresVRequireNotEmpty = domain.getAllProperties().any { prop ->
+                val dslP = parameterFactory.determineParam(prop, null, logger)
+                !dslP.nullableAssignment && dslP.verifyNotEmpty
+            }
+
+            val fileSpecBuilder = FileSpec
+                .builder(pkg, "${typeName}Dsl") // File name
+                .addType(builderClass.build())
+                .indent("    ")
+
+            if (requiresVRequireNotNull) {
+                // Assuming these are top-level functions or extension functions
+                fileSpecBuilder.addImport("io.violabs.picard.dsl", "vRequireNotNull")
+            }
+            if (requiresVRequireNotEmpty) {
+                fileSpecBuilder.addImport("io.violabs.picard.dsl", "vRequireNotEmpty")
+            }
+
+            fileSpecBuilder
+                .build()
+                .writeTo(
+                    codeGenerator,
+                    Dependencies(aggregating = false, sources = listOfNotNull(domain.containingFile).toTypedArray())
+                )
+        }
+    }
+}

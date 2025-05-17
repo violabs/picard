@@ -40,6 +40,7 @@ private const val PADDING_CHAR = '·' // Simple middle dot for padding
 class Logger(private val logId: String) {
     private var isDebugEnabled = false
     private var warningEnabled = true
+    private val activeBranches = mutableSetOf<Int>()
 
     // Apply fixed padding to ensure consistent log formatting
     private val formattedName: String = if (logId.length < FIXED_PADDING_LENGTH) {
@@ -60,26 +61,51 @@ class Logger(private val logId: String) {
         warningEnabled = false
     }
 
-    fun info(message: Any) {
-        val id = Logging.ID_TEMPLATE.format(formattedName)
-        println("${Logging.LOGO} ${Logging.INFO} $id ${Logging.DELIMITER} $message")
+    private fun tierPrefix(tier: Int): String {
+        if (tier <= 0) return ""
+
+        val sb = StringBuilder()
+        for (i in 1 until tier) {
+            sb.append(if (activeBranches.contains(i)) "|  " else "   ")
+        }
+        sb.append("|__ ")
+
+        return sb.toString()
     }
 
-    fun debug(message: Any) {
+    private fun updateBranches(tier: Int, branch: Boolean) {
+        activeBranches.removeIf { it >= tier }
+        if (branch) activeBranches.add(tier)
+    }
+
+    fun info(message: Any, tier: Int = 0, branch: Boolean = false) {
+        val id = Logging.ID_TEMPLATE.format(formattedName)
+        val prefix = tierPrefix(tier)
+        println("${Logging.LOGO} ${Logging.INFO} $id ${Logging.DELIMITER} $prefix$message")
+        updateBranches(tier, branch)
+    }
+
+    fun debug(message: Any, tier: Int = 0, branch: Boolean = false) {
         if (!isDebugEnabled) return
         val id = Logging.ID_TEMPLATE.format(formattedName)
-        println("${Logging.LOGO} ${Logging.DEBUG} $id ${Logging.DELIMITER} $message")
+        val prefix = tierPrefix(tier)
+        println("${Logging.LOGO} ${Logging.DEBUG} $id ${Logging.DELIMITER} $prefix$message")
+        updateBranches(tier, branch)
     }
 
-    fun warn(message: Any) {
+    fun warn(message: Any, tier: Int = 0, branch: Boolean = false) {
         if (!warningEnabled) return
         val id = Logging.ID_TEMPLATE.format(formattedName)
-        println("${Logging.LOGO} ${Logging.WARN} $id ${Logging.DELIMITER} ${Colors.YELLOW}$message${Colors.RESET}")
+        val prefix = tierPrefix(tier)
+        println("${Logging.LOGO} ${Logging.WARN} $id ${Logging.DELIMITER} ${Colors.YELLOW}$prefix$message${Colors.RESET}")
+        updateBranches(tier, branch)
     }
 
-    fun error(message: Any) {
+    fun error(message: Any, tier: Int = 0, branch: Boolean = false) {
         val id = Logging.ID_TEMPLATE.format(formattedName)
-        println("${Logging.LOGO} ${Logging.ERROR} $id ${Logging.DELIMITER} ${Colors.RED}$message${Colors.RESET}")
+        val prefix = tierPrefix(tier)
+        println("${Logging.LOGO} ${Logging.ERROR} $id ${Logging.DELIMITER} ${Colors.RED}$prefix$message${Colors.RESET}")
+        updateBranches(tier, branch)
     }
 
     // For multi-line logging with consistent indentation

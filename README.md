@@ -46,6 +46,21 @@ https://grafana.com/docs/loki/latest/configure/#s3_storage_config
 https://square.github.io/kotlinpoet/
 
 ## Logging
+### Tiered Logging Example
+
+The `Logger` methods now accept optional `tier` and `branch` parameters
+that help format nested log output with connecting lines.
+
+```kotlin
+val logger = Logger("DSL_BUILDER").enableDebug()
+
+logger.debug("+++ DOMAIN: MyDomain +++")
+logger.debug("package: com.example", tier = 1, branch = true)
+logger.debug("type: MyDomain", tier = 1, branch = true)
+logger.debug("Properties", tier = 1)
+logger.debug("myProperty", tier = 2, branch = true)
+logger.debug("type: kotlin.String", tier = 3)
+```
 
 Should have a structure if there are nested processes:
 

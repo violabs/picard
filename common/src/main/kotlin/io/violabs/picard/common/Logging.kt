@@ -60,26 +60,40 @@ class Logger(private val logId: String) {
         warningEnabled = false
     }
 
-    fun info(message: Any) {
-        val id = Logging.ID_TEMPLATE.format(formattedName)
-        println("${Logging.LOGO} ${Logging.INFO} $id ${Logging.DELIMITER} $message")
+    private fun tierPrefix(tier: Int, branch: Boolean = false): String {
+        if (tier <= 0) return ""
+
+        return if (branch) {
+            "  ".repeat(tier - 1) + "|   |__ "
+        } else {
+            "  ".repeat(tier) + "|__ "
+        }
     }
 
-    fun debug(message: Any) {
+    fun info(message: Any, tier: Int = 0, branch: Boolean = false) {
+        val id = Logging.ID_TEMPLATE.format(formattedName)
+        val prefix = tierPrefix(tier, branch)
+        println("${Logging.LOGO} ${Logging.INFO} $id ${Logging.DELIMITER} $prefix$message")
+    }
+
+    fun debug(message: Any, tier: Int = 0, branch: Boolean = false) {
         if (!isDebugEnabled) return
         val id = Logging.ID_TEMPLATE.format(formattedName)
-        println("${Logging.LOGO} ${Logging.DEBUG} $id ${Logging.DELIMITER} $message")
+        val prefix = tierPrefix(tier, branch)
+        println("${Logging.LOGO} ${Logging.DEBUG} $id ${Logging.DELIMITER} $prefix$message")
     }
 
-    fun warn(message: Any) {
+    fun warn(message: Any, tier: Int = 0, branch: Boolean = false) {
         if (!warningEnabled) return
         val id = Logging.ID_TEMPLATE.format(formattedName)
-        println("${Logging.LOGO} ${Logging.WARN} $id ${Logging.DELIMITER} ${Colors.YELLOW}$message${Colors.RESET}")
+        val prefix = tierPrefix(tier, branch)
+        println("${Logging.LOGO} ${Logging.WARN} $id ${Logging.DELIMITER} ${Colors.YELLOW}$prefix$message${Colors.RESET}")
     }
 
-    fun error(message: Any) {
+    fun error(message: Any, tier: Int = 0, branch: Boolean = false) {
         val id = Logging.ID_TEMPLATE.format(formattedName)
-        println("${Logging.LOGO} ${Logging.ERROR} $id ${Logging.DELIMITER} ${Colors.RED}$message${Colors.RESET}")
+        val prefix = tierPrefix(tier, branch)
+        println("${Logging.LOGO} ${Logging.ERROR} $id ${Logging.DELIMITER} ${Colors.RED}$prefix$message${Colors.RESET}")
     }
 
     // For multi-line logging with consistent indentation

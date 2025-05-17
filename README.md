@@ -44,3 +44,20 @@ Slowly move original DSL I made over - testing is covered so that helps.
 ### left
 https://grafana.com/docs/loki/latest/configure/#s3_storage_config
 https://square.github.io/kotlinpoet/
+
+## Tiered Logging Example
+
+The `Logger` methods now accept an optional `tier` parameter that adds
+indentation for nested log output.
+
+```kotlin
+val logger = Logger("DSL_BUILDER").enableDebug()
+
+logger.debug("+++ DOMAIN: MyDomain +++")
+logger.debug("package: com.example", tier = 1)
+logger.debug("type: MyDomain", tier = 1)
+logger.debug("Properties", tier = 1)
+logger.debug("myProperty", tier = 2)
+logger.debug("type: kotlin.String", tier = 3)
+```
+

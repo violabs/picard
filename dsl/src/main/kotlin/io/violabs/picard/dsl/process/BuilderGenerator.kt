@@ -53,16 +53,16 @@ class BuilderGenerator(
             val domainClassName: ClassName = domain.toClassName()
 
             LOGGER.debug("+++ DOMAIN: $domainClassName  +++")
-            LOGGER.debug("  |__ package: $pkg")
-            LOGGER.debug("  |__ type: $typeName")
-            LOGGER.debug("  |__ builder: $builderName")
+            LOGGER.debug("package: $pkg", tier = 1)
+            LOGGER.debug("type: $typeName", tier = 1)
+            LOGGER.debug("builder: $builderName", tier = 1)
 
             val builderClass: TypeSpec.Builder = TypeSpec.classBuilder(builderName)
                 .addModifiers(KModifier.PUBLIC) // Typically builders are public
 
             // add DSL Marker to the top of the class to restrict scope. Provided by consumer.
             if (dslMarkerClasspath != null) {
-                LOGGER.debug("  |__ DSL Marker added")
+                LOGGER.debug("DSL Marker added", tier = 1)
                 val split = dslMarkerClasspath.split(".")
                 val dslMarkerPackageName = split.subList(0, split.size - 1).joinToString(".")
                 val dslMarkerSimpleName = split.last()
@@ -72,29 +72,21 @@ class BuilderGenerator(
             val dslBuilderInterface = ClassName(dslBuilderClasspath, "DSLBuilder")
             val parameterizedDslBuilder = dslBuilderInterface.parameterizedBy(domainClassName)
             builderClass.addSuperinterface(parameterizedDslBuilder)
-            LOGGER.debug("  |__ DSL Builder Interface added")
+            LOGGER.debug("DSL Builder Interface added", tier = 1)
 
             val constructorParams = mutableListOf<CodeBlock>()
 
 
-            LOGGER.debug("  |__ Properties added")
-            val lastIndex = domain.getAllProperties().count() - 1
-
-            domain.getAllProperties().forEachIndexed { i, prop ->
+            LOGGER.debug("Properties added", tier = 1)
+            domain.getAllProperties().forEach { prop ->
                 val type = prop.type.toTypeName().copy(nullable = false)
-                val separator = if (LOGGER.debugEnabled() && i != lastIndex) {
-                    "    |"
-                } else {
-                    "     "
-                }
-                LOGGER.debug("      |__ ${prop.simpleName.asString()}")
-                LOGGER.debug("  $separator   |__ type: $type")
+                LOGGER.debug(prop.simpleName.asString(), tier = 2)
+                LOGGER.debug("type: $type", tier = 3)
                 val singleEntryTransform = singleEntryTransform[type.toString()]
-                LOGGER.debug("  $separator   |__ singleEntryTransform: $singleEntryTransform")
+                LOGGER.debug("singleEntryTransform: $singleEntryTransform", tier = 3)
 
                 val adapter = DefaultParameterFactoryAdapter(prop, singleEntryTransform)
-
-                val dslParam = parameterFactory.determineParam(adapter, i == lastIndex) // Pass logger
+                val dslParam = parameterFactory.determineParam(adapter, false)
 
                 builderClass.addProperty(dslParam.toPropertySpec())
 

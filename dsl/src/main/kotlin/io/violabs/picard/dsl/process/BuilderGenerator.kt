@@ -2,7 +2,6 @@ package io.violabs.picard.dsl.process
 
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.Dependencies
-import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.squareup.kotlinpoet.*
@@ -21,7 +20,7 @@ private val LOGGER = Logger("DSL_BUILDER")
     .disableWarning()
 
 class BuilderGenerator(
-    val parameterFactory: ParameterFactory2 = DefaultParameterFactory2(LOGGER)
+    val parameterFactory: ParameterFactory = DefaultParameterFactory(LOGGER)
 ) {
 
     fun generate(resolver: Resolver, codeGenerator: CodeGenerator, options: Map<String, String> = emptyMap()) {
@@ -63,13 +62,7 @@ class BuilderGenerator(
                 .addModifiers(KModifier.PUBLIC) // Typically builders are public
 
             // add DSL Marker to the top of the class to restrict scope. Provided by consumer.
-            if (dslMarkerClasspath != null) {
-                LOGGER.debug("DSL Marker added", tier = 1, branch = true)
-                val split = dslMarkerClasspath.split(".")
-                val dslMarkerPackageName = split.subList(0, split.size - 1).joinToString(".")
-                val dslMarkerSimpleName = split.last()
-                builderClass.addAnnotation(ClassName(dslMarkerPackageName, dslMarkerSimpleName))
-            }
+            addDslMarker(dslMarkerClasspath, builderClass)
 
             val dslBuilderInterface = ClassName(dslBuilderClasspath, "DSLBuilder")
             val parameterizedDslBuilder = dslBuilderInterface.parameterizedBy(domainClassName)
@@ -127,6 +120,7 @@ class BuilderGenerator(
 
                 val nestedClass = TypeSpec
                     .classBuilder("Group")
+                    .also { addDslMarker(dslMarkerClasspath, it) }
                     .addProperty(
                         PropertySpec.builder("items", MUTABLE_LIST.parameterizedBy(domainClassName))
                             .addModifiers(KModifier.PRIVATE)
@@ -187,6 +181,16 @@ class BuilderGenerator(
                     Dependencies(aggregating = false, sources = listOfNotNull(domain.containingFile).toTypedArray())
                 )
             LOGGER.debug("file written: ${pkg}.${typeName}Dsl", tier = 1)
+        }
+    }
+
+    private fun addDslMarker(dslMarkerClasspath: String?, builderClass: TypeSpec.Builder) = with(builderClass) {
+        if (dslMarkerClasspath != null) {
+            LOGGER.debug("DSL Marker added", tier = 1, branch = true)
+            val split = dslMarkerClasspath.split(".")
+            val dslMarkerPackageName = split.subList(0, split.size - 1).joinToString(".")
+            val dslMarkerSimpleName = split.last()
+            builderClass.addAnnotation(ClassName(dslMarkerPackageName, dslMarkerSimpleName))
         }
     }
 }

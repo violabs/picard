@@ -5,6 +5,7 @@ plugins {
     id("com.google.devtools.ksp") version "2.1.20-1.0.32" apply false
     id("org.jetbrains.kotlinx.kover") version "0.9.1"
     application
+    id("io.violabs.plugins.pipeline")
 }
 
 group = "io.violabs"

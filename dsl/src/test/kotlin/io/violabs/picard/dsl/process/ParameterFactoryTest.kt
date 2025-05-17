@@ -1,6 +1,5 @@
 package io.violabs.picard.dsl.process
 
-import com.google.devtools.ksp.processing.KSPLogger
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.LIST
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
@@ -13,7 +12,7 @@ import io.violabs.picard.dsl.annotation.GeneratedGroupDSL
 import org.junit.jupiter.api.Test
 
 class ParameterFactoryTest : UnitSim() {
-    val parameterFactory = DefaultParameterFactory2(Logger("TEST"))
+    val parameterFactory = DefaultParameterFactory(Logger("TEST"))
 
     @Test
     fun `determineParam will create a default param`() = test {

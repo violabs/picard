@@ -1,5 +1,4 @@
 package io.violabs.picard.generateTest
 
 @DslMarker
-annotation class TestDSLMarker {
-}
+annotation class TestDSLMarker

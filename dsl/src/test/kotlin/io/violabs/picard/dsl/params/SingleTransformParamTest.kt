@@ -64,7 +64,7 @@ class SingleTransformParamTest : UnitSim() {
         )
 
         private val testResponseClassName = TestCase::class.asClassName()
-        private val propertyString = "public var test: $testResponseClassName"
+        private val propertyString = "private var test: $testResponseClassName"
 
         val SCENARIO_GROUP = SimulationGroup
             .vars("scenario", "expected", "nullableProp")

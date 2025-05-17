@@ -31,7 +31,7 @@ class GenerateTest : UnitSim() {
                     // group (list bldr)
                     passengers = listOf(
                         Passenger(name = "Beverly Crusher", rank = Passenger.Rank.COMMANDER),
-                        Passenger(name = "Worf", rank = Passenger.Rank.CAPTAIN)
+                        Passenger(name = "Worf", rank = Passenger.Rank.LIEUTENANT_COMMANDER)
                     )
                 )
             }
@@ -51,6 +51,17 @@ class GenerateTest : UnitSim() {
                         "Captain Jean-Luc Picard",
                         "Commander William T. Riker"
                     )
+                    passengers {
+                        passenger {
+                            name = "Beverly Crusher"
+                            rank = Passenger.Rank.COMMANDER
+                        }
+
+                        passenger {
+                            name = "Worf"
+                            rank = Passenger.Rank.LIEUTENANT_COMMANDER
+                        }
+                    }
                 }
             }
         }

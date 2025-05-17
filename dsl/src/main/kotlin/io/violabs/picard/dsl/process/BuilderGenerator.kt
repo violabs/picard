@@ -25,6 +25,7 @@ class BuilderGenerator(
 ) {
 
     fun generate(resolver: Resolver, codeGenerator: CodeGenerator, options: Map<String, String> = emptyMap()) {
+        LOGGER.debug("generate()", tier = 0)
         val dslBuilderClasspath = options["dslBuilder.classpath"]
         val dslMarkerClasspath = options["dslMarker.classpath"]
         LOGGER.debug("dslBuilderClasspath: $dslBuilderClasspath")
@@ -47,6 +48,7 @@ class BuilderGenerator(
             .associateBy { it.toClassName().toString() }
 
         generatedBuilderDSL.forEach { domain ->
+            LOGGER.debug("-- generating builder --", tier = 0)
             val pkg = domain.packageName.asString()
             val typeName = domain.simpleName.asString()
             val builderName = "${typeName}Builder"
@@ -120,6 +122,7 @@ class BuilderGenerator(
                 .any { it.shortName.asString() == GeneratedGroupDSL::class.simpleName.toString() }
 
             if (isGroup) {
+                LOGGER.debug("group domain", tier = 1, branch = true)
                 val builderClassName = ClassName(pkg, builderName)
 
                 val nestedClass = TypeSpec
@@ -145,6 +148,8 @@ class BuilderGenerator(
                     .build()
 
                 builderClass.addType(nestedClass)
+            } else {
+                LOGGER.debug("single domain", tier = 1, branch = true)
             }
 
             // Check if any validation functions are needed.
@@ -159,6 +164,8 @@ class BuilderGenerator(
                 val dslP = parameterFactory.determineParam(adapter, false)
                 !dslP.nullableAssignment && dslP.verifyNotEmpty
             }
+            LOGGER.debug("requiresNotNull: $requiresVRequireNotNull", tier = 1, branch = true)
+            LOGGER.debug("requiresNotEmpty: $requiresVRequireNotEmpty", tier = 1, branch = true)
 
             val fileSpecBuilder = FileSpec
                 .builder(pkg, "${typeName}Dsl") // File name
@@ -179,6 +186,7 @@ class BuilderGenerator(
                     codeGenerator,
                     Dependencies(aggregating = false, sources = listOfNotNull(domain.containingFile).toTypedArray())
                 )
+            LOGGER.debug("file written: ${pkg}.${typeName}Dsl", tier = 1)
         }
     }
 }

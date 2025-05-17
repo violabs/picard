@@ -1,6 +1,5 @@
 package io.violabs.picard.dsl.params
 
-import com.google.common.base.Defaults.defaultValue
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 
@@ -8,25 +7,30 @@ import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 class GroupParam(
     override val propName: String,
     private val originalPropertyType: TypeName, // e.g., MyGroupType?
-    private val groupBuilderClassName: ClassName, // e.g., MyGroupTypeBuilder
+    private val builtClassName: ClassName, // e.g., MyGroupTypeBuilder
     override val nullableAssignment: Boolean = true,
     override val nullableProp: Boolean = true
 ) : DSLParam {
     override val propTypeName: TypeName = originalPropertyType
 
     override fun toPropertySpec(): PropertySpec {
-        return PropertySpec.Companion.builder(propName, MUTABLE_LIST.parameterizedBy(groupBuilderClassName))
+        val assignmentType = LIST.parameterizedBy(builtClassName).copy(nullable = true)
+
+        return PropertySpec.Companion.builder(propName, assignmentType)
             .addModifiers(accessModifier)
             .mutable(true)
-            .initializer(null)
+            .initializer("null")
             .build()
     }
 
 
     override fun accessors(): List<FunSpec> {
+        val groupBuilderClassName = ClassName(builtClassName.packageName, builtClassName.simpleName, "Builder")
+        val receiverName = ClassName(groupBuilderClassName.packageName, builtClassName.simpleName + "Builder", "Group")
+
         val blockParam = ParameterSpec.Companion.builder(
             "block", LambdaTypeName.Companion.get(
-                receiver = groupBuilderClassName,
+                receiver = receiverName,
                 parameters = emptyList(),
                 returnType = UNIT
             )
@@ -34,9 +38,7 @@ class GroupParam(
 
         val funSpec = FunSpec.Companion.builder(propName)
             .addParameter(blockParam)
-            .addStatement("val builder = %T()", groupBuilderClassName)
-            .addStatement("builder.block()")
-            .addStatement("this.%N = builder.build()", propName)
+            .addStatement("this.%N = $receiverName().apply(block).items()", propName)
             .build()
         return listOf(funSpec)
     }

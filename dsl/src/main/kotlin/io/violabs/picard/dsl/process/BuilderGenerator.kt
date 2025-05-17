@@ -10,31 +10,40 @@ import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.ksp.toClassName
 import com.squareup.kotlinpoet.ksp.toTypeName
 import com.squareup.kotlinpoet.ksp.writeTo
+import io.violabs.picard.common.Colors
+import io.violabs.picard.common.Logger
 import io.violabs.picard.dsl.annotation.GeneratedDSL
 import io.violabs.picard.dsl.annotation.GeneratedGroupDSL
 import io.violabs.picard.dsl.annotation.SingleEntryTransformDSL
 
+private val LOGGER = Logger("DSL_BUILDER")
+    .enableDebug()
+    .disableWarning()
+
 class BuilderGenerator(
-    val logger: KSPLogger,
-    val parameterFactory: DefaultParameterFactory = DefaultParameterFactory()
+    val parameterFactory: ParameterFactory2 = DefaultParameterFactory2(LOGGER)
 ) {
 
     fun generate(resolver: Resolver, codeGenerator: CodeGenerator, options: Map<String, String> = emptyMap()) {
         val dslBuilderClasspath = options["dslBuilder.classpath"]
         val dslMarkerClasspath = options["dslMarker.classpath"]
+        LOGGER.debug("dslBuilderClasspath: $dslBuilderClasspath")
+        LOGGER.debug("dslMarkerClasspath:  $dslMarkerClasspath")
 
         if (dslBuilderClasspath == null) {
-            logger.error("KSP Option 'dslBuilder.classpath' is not defined. Please set it in your build.gradle.")
+            LOGGER.error("KSP Option 'dslBuilder.classpath' is not defined. Please set it in your build.gradle.")
             return
         }
 
         val generatedBuilderDSL = resolver
             .getSymbolsWithAnnotation(GeneratedDSL::class.qualifiedName!!)
             .filterIsInstance<KSClassDeclaration>()
+            .onEach { LOGGER.debug("Found ${Colors.yellow("@GeneratedDSL")} on ${it.simpleName.asString()}") }
 
         val singleEntryTransform: Map<String, KSClassDeclaration> = resolver
             .getSymbolsWithAnnotation(SingleEntryTransformDSL::class.qualifiedName!!)
             .filterIsInstance<KSClassDeclaration>()
+            .onEach { LOGGER.debug("Found ${Colors.yellow("@SingleEntryTransformDSL")} on ${it.simpleName.asString()}") }
             .associateBy { it.toClassName().toString() }
 
         generatedBuilderDSL.forEach { domain ->
@@ -43,12 +52,17 @@ class BuilderGenerator(
             val builderName = "${typeName}Builder"
             val domainClassName: ClassName = domain.toClassName()
 
+            LOGGER.debug("+++ DOMAIN: $domainClassName  +++")
+            LOGGER.debug("  |__ package: $pkg")
+            LOGGER.debug("  |__ type: $typeName")
+            LOGGER.debug("  |__ builder: $builderName")
+
             val builderClass: TypeSpec.Builder = TypeSpec.classBuilder(builderName)
                 .addModifiers(KModifier.PUBLIC) // Typically builders are public
 
             // add DSL Marker to the top of the class to restrict scope. Provided by consumer.
             if (dslMarkerClasspath != null) {
-                println("Adding DSL Marker to $builderName")
+                LOGGER.debug("  |__ DSL Marker added")
                 val split = dslMarkerClasspath.split(".")
                 val dslMarkerPackageName = split.subList(0, split.size - 1).joinToString(".")
                 val dslMarkerSimpleName = split.last()
@@ -58,17 +72,29 @@ class BuilderGenerator(
             val dslBuilderInterface = ClassName(dslBuilderClasspath, "DSLBuilder")
             val parameterizedDslBuilder = dslBuilderInterface.parameterizedBy(domainClassName)
             builderClass.addSuperinterface(parameterizedDslBuilder)
+            LOGGER.debug("  |__ DSL Builder Interface added")
 
             val constructorParams = mutableListOf<CodeBlock>()
 
-            println("single entry: $singleEntryTransform")
 
-            domain.getAllProperties().forEach { prop ->
+            LOGGER.debug("  |__ Properties added")
+            val lastIndex = domain.getAllProperties().count() - 1
+
+            domain.getAllProperties().forEachIndexed { i, prop ->
                 val type = prop.type.toTypeName().copy(nullable = false)
-                println("Processing property '${singleEntryTransform}' of type '$type'")
+                val separator = if (LOGGER.debugEnabled() && i != lastIndex) {
+                    "    |"
+                } else {
+                    "     "
+                }
+                LOGGER.debug("      |__ ${prop.simpleName.asString()}")
+                LOGGER.debug("  $separator   |__ type: $type")
                 val singleEntryTransform = singleEntryTransform[type.toString()]
+                LOGGER.debug("  $separator   |__ singleEntryTransform: $singleEntryTransform")
 
-                val dslParam = parameterFactory.determineParam(prop, singleEntryTransform, logger) // Pass logger
+                val adapter = DefaultParameterFactoryAdapter(prop, singleEntryTransform)
+
+                val dslParam = parameterFactory.determineParam(adapter, i == lastIndex) // Pass logger
 
                 builderClass.addProperty(dslParam.toPropertySpec())
 
@@ -128,11 +154,13 @@ class BuilderGenerator(
             // Check if any validation functions are needed.
             // This logic assumes propertyValueReturn() generates the vRequireNotNull etc. calls.
             val requiresVRequireNotNull = domain.getAllProperties().any { prop ->
-                val dslP = parameterFactory.determineParam(prop, null, logger)
+                val adapter = DefaultParameterFactoryAdapter(prop, null)
+                val dslP = parameterFactory.determineParam(adapter, false)
                 !dslP.nullableAssignment && dslP.verifyNotNull
             }
             val requiresVRequireNotEmpty = domain.getAllProperties().any { prop ->
-                val dslP = parameterFactory.determineParam(prop, null, logger)
+                val adapter = DefaultParameterFactoryAdapter(prop, null)
+                val dslP = parameterFactory.determineParam(adapter, false)
                 !dslP.nullableAssignment && dslP.verifyNotEmpty
             }
 

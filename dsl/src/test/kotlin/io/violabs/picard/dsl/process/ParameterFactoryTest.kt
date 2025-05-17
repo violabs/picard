@@ -1,54 +1,95 @@
 package io.violabs.picard.dsl.process
 
 import com.google.devtools.ksp.processing.KSPLogger
-import com.google.devtools.ksp.symbol.KSClassDeclaration
-import com.google.devtools.ksp.symbol.KSDeclaration
-import com.google.devtools.ksp.symbol.KSName
-import com.google.devtools.ksp.symbol.KSPropertyDeclaration
-import com.google.devtools.ksp.symbol.KSReferenceElement
-import com.google.devtools.ksp.symbol.KSType
-import com.google.devtools.ksp.symbol.KSTypeReference
+import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.LIST
+import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.squareup.kotlinpoet.STRING
+import com.squareup.kotlinpoet.TypeName
+import com.squareup.kotlinpoet.asTypeName
 import io.violabs.geordi.UnitSim
+import io.violabs.picard.common.Logger
+import io.violabs.picard.dsl.annotation.GeneratedGroupDSL
 import org.junit.jupiter.api.Test
 
 class ParameterFactoryTest : UnitSim() {
-    val parameterFactory = DefaultParameterFactory()
-
-    val mockDeclaration = mock<KSPropertyDeclaration>()
-    val singleEntryTransform = mock<KSClassDeclaration>()
-    val declaration = mock<KSDeclaration>()
-    val logger = mock<KSPLogger>()
-    val name = mock<KSName>()
-    val typeReference = mock<KSTypeReference>()
-    val type = mock<KSType>()
-    val refElement = mock<KSReferenceElement>()
+    val parameterFactory = DefaultParameterFactory2(Logger("TEST"))
 
     @Test
-    fun `determineParam will create a group`() = test {
+    fun `determineParam will create a default param`() = test {
         given {
-            expect { "test" }
+            val adapter = TestAdapter()
 
-            setupMocks {
-                every { name.asString() } returns "test"
-                every { mockDeclaration.simpleName } returns name
-                every { type.toString() } returns "String"
-                every { type.arguments } returns emptyList()
-                every { type.isError } returns false
-                every { type.declaration } returns declaration
-                every { typeReference.resolve() } returns type
-                every { typeReference.element } returns refElement
-                every { mockDeclaration.type } returns typeReference
+            expect {
+                TestResponse(
+                    "public var test: kotlin.String? = null\n",
+                    ""
+                )
             }
 
             whenever {
-                parameterFactory.determineParam(
-                    mockDeclaration,
-                    null,
-                    logger
+                val param = parameterFactory.determineParam(adapter)
+
+                TestResponse(
+                    param.toPropertySpec().toString(),
+                    param.accessors().firstOrNull()?.toString() ?: ""
                 )
             }
         }
     }
 
+    @Test
+    fun `determineParam will create a group param`() = test {
+        given {
+            val adapter = TestAdapter(
+                LIST.parameterizedBy(Example::class.asTypeName()),
+                isGroup = true
+            )
 
+            expect {
+                TestResponse(
+                    "private var test: kotlin.collections.List<test.Example>? = null\n",
+                    """
+                        |public fun test(block: test.ExampleBuilder.Group.() -> kotlin.Unit) {
+                        |  this.test = test.ExampleBuilder.Group().apply(block).items()
+                        |}
+                        |
+                    """.trimMargin()
+                )
+            }
+
+            whenever {
+                val param = parameterFactory.determineParam(adapter)
+
+                TestResponse(
+                    param.toPropertySpec().toString(),
+                    param.accessors().firstOrNull()?.toString() ?: ""
+                )
+            }
+        }
+    }
+
+    class TestAdapter(
+        override val actualPropTypeName: TypeName = STRING,
+        val isGroup: Boolean = false
+    ) : ParameterFactoryAdapter {
+        override val propName: String = "test"
+        override val hasSingleEntryTransform: Boolean = false
+        override val transformTemplate: String? = null
+        override val transformType: TypeName? = null
+        override val hasNullableAssignment: Boolean = false
+        override val propertyNonNullableClassName: ClassName? = null
+        override val hasGeneratedDSLAnnotation: Boolean = false
+        override val propertyClassDeclarationQualifiedName: String? = null
+        override val isGroupElement: Boolean = isGroup
+        override val groupElementClassName: ClassName? = ClassName("test", "Example")
+    }
+
+    data class TestResponse(
+        val propertyContent: String,
+        val functionContent: String
+    )
+
+    @GeneratedGroupDSL
+    class Example
 }

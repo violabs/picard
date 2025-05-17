@@ -9,11 +9,10 @@ import io.violabs.picard.dsl.process.BuilderGenerator
 
 class DSLProcessor(
     private val codeGenerator: CodeGenerator,
-    private val logger: KSPLogger,
     private val options: Map<String, String>
 ) : SymbolProcessor {
     override fun process(resolver: Resolver): List<KSAnnotated> {
-        BuilderGenerator(logger).generate(resolver, codeGenerator, options)
+        BuilderGenerator().generate(resolver, codeGenerator, options)
 
         return emptyList()
     }

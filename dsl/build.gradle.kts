@@ -5,7 +5,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":core"))
+    implementation(project(":common"))
     implementation(kotlin("stdlib"))
     implementation("com.squareup:kotlinpoet:2.1.0")
     implementation("com.squareup:kotlinpoet-ksp:2.1.0")
@@ -13,4 +13,14 @@ dependencies {
     implementation("com.google.auto.service:auto-service:1.1.1")
 
     testImplementation(project(":core-test"))
+}
+
+kover {
+    reports {
+        filters {
+            excludes {
+                annotatedBy("io.violabs.picard.common.ExcludeFromCoverage")
+            }
+        }
+    }
 }

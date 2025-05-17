@@ -1,4 +1,4 @@
-package io.violabs.picard.dsl.param
+package io.violabs.picard.dsl.params
 
 import com.squareup.kotlinpoet.*
 
@@ -6,7 +6,8 @@ class BuilderParam(
     override val propName: String,
     private val originalPropertyType: TypeName,
     private val nestedBuilderClassName: ClassName,
-    override val nullable: Boolean = true
+    override val nullableAssignment: Boolean = true,
+    override val nullableProp: Boolean = true
 ) : DSLParam {
     override val propTypeName: TypeName = originalPropertyType // Type of the field in the builder
 

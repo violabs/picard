@@ -1,8 +1,7 @@
-package io.violabs.picard.dsl
+package io.violabs.picard.dsl.params
 
 import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
-import io.violabs.picard.dsl.param.BooleanParam
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestTemplate
@@ -10,9 +9,9 @@ import org.junit.jupiter.api.TestTemplate
 class BooleanParamTest : UnitSim() {
 
     @TestTemplate
-    fun `toPropertySpec - happy path - #scenario`(expected: String, nullable: Boolean) = test {
+    fun `toPropertySpec - happy path - #scenario`(expected: String, nullableProp: Boolean) = test {
         given {
-            val param = BooleanParam("test", nullable)
+            val param = BooleanParam("test", nullableProp = nullableProp)
 
             expect { expected }
 
@@ -50,7 +49,7 @@ class BooleanParamTest : UnitSim() {
         )
 
         val SCENARIO_GROUP = SimulationGroup
-            .vars("scenario", "expected", "nullable")
+            .vars("scenario", "expected", "nullableProp")
             .with("nullable", "private var test: kotlin.Boolean? = null", true)
             .with("non-null", "private var test: kotlin.Boolean", false)
     }

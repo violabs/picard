@@ -1,10 +1,9 @@
-package io.violabs.picard.dsl
+package io.violabs.picard.dsl.params
 
 import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.asTypeName
 import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
-import io.violabs.picard.dsl.param.BuilderParam
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestTemplate
@@ -14,9 +13,9 @@ class BuilderParamTest : UnitSim() {
     val buildClassName = TestBuilder::class.asClassName()
 
     @TestTemplate
-    fun `toPropertySpec - happy path - #scenario`(expected: String, nullable: Boolean) = test {
+    fun `toPropertySpec - happy path - #scenario`(expected: String, nullableProp: Boolean) = test {
         given {
-            val param = BuilderParam("test", typeName, buildClassName, nullable)
+            val param = BuilderParam("test", typeName, buildClassName, nullableProp = nullableProp)
 
             expect { expected }
 
@@ -35,8 +34,8 @@ class BuilderParamTest : UnitSim() {
 
             expect {
                 """
-                    |public fun test(block: io.violabs.picard.dsl.BuilderParamTest.TestBuilder.() -> kotlin.Unit) {
-                    |  val builder = io.violabs.picard.dsl.BuilderParamTest.TestBuilder()
+                    |public fun test(block: io.violabs.picard.dsl.params.BuilderParamTest.TestBuilder.() -> kotlin.Unit) {
+                    |  val builder = io.violabs.picard.dsl.params.BuilderParamTest.TestBuilder()
                     |  builder.block()
                     |  this.test = builder.build()
                     |}
@@ -55,10 +54,12 @@ class BuilderParamTest : UnitSim() {
             SCENARIO_GROUP to { this::`toPropertySpec - happy path - #scenario` }
         )
 
+        private val testResponseClassName = TestResponse::class.asClassName()
+        private val propertyString = "private var test: $testResponseClassName"
         val SCENARIO_GROUP = SimulationGroup
-            .vars("scenario", "expected", "nullable")
-            .with("nullable", "private var test: io.violabs.picard.dsl.BuilderParamTest.TestResponse? = null", true)
-            .with("non-null", "private var test: io.violabs.picard.dsl.BuilderParamTest.TestResponse", false)
+            .vars("scenario", "expected", "nullableProp")
+            .with("nullable", "$propertyString? = null", true)
+            .with("non-null", propertyString, false)
     }
 
     class TestResponse

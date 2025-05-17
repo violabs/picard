@@ -5,6 +5,7 @@ plugins {
     id("com.google.devtools.ksp") version "2.1.20-1.0.32" apply false
     id("org.jetbrains.kotlinx.kover") version "0.9.1"
     application
+    id("io.violabs.plugins.pipeline")
 }
 
 group = "io.violabs"
@@ -22,8 +23,8 @@ allprojects {
     apply {
         plugin("org.jetbrains.kotlin.jvm")
         plugin("org.jetbrains.dokka")
-        plugin("org.jetbrains.kotlinx.kover")
         plugin("application")
+        plugin("org.jetbrains.kotlinx.kover")
     }
 
     sharedRepositories()

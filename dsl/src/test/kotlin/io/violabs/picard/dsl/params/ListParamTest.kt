@@ -1,13 +1,10 @@
-package io.violabs.picard.dsl
+package io.violabs.picard.dsl.params
 
 import com.squareup.kotlinpoet.INT
-import com.squareup.kotlinpoet.LIST
-import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.STRING
 import com.squareup.kotlinpoet.TypeName
 import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
-import io.violabs.picard.dsl.param.ListParam
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestTemplate
@@ -15,24 +12,25 @@ import org.junit.jupiter.api.TestTemplate
 class ListParamTest : UnitSim() {
 
     @TestTemplate
-    fun `toPropertySpec - happy path - #scenario`(expected: String, typeName: TypeName, nullable: Boolean) = test {
-        given {
-            val param = ListParam("test", typeName, nullable)
+    fun `toPropertySpec - happy path - #scenario`(expected: String, collectionTypeName: TypeName, nullable: Boolean) =
+        test {
+            given {
+                val param = ListParam("test", collectionTypeName, nullable)
 
-            expect { expected }
+                expect { expected }
 
-            whenever {
-                val propSpec = param.toPropertySpec()
+                whenever {
+                    val propSpec = param.toPropertySpec()
 
-                propSpec.toString().trimIndent()
+                    propSpec.toString().trimIndent()
+                }
             }
         }
-    }
 
     @Test
     fun `accessors - happy path`() = test {
         given {
-            val param = ListParam("test", nullable = true)
+            val param = ListParam("test", nullableAssignment = true)
 
             expect {
                 """
@@ -59,9 +57,14 @@ class ListParamTest : UnitSim() {
             .with(
                 "nullable",
                 "private var test: kotlin.collections.List<kotlin.String>? = null",
-                LIST.parameterizedBy(STRING),
+                STRING,
                 true
             )
-            .with("non-null", "private var test: kotlin.collections.List<kotlin.Int>", LIST.parameterizedBy(INT), false)
+            .with(
+                "non-null",
+                "private var test: kotlin.collections.List<kotlin.Int>",
+                INT,
+                false
+            )
     }
 }

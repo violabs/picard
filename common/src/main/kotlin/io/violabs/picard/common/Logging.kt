@@ -2,7 +2,7 @@ package io.violabs.picard.common
 
 import kotlin.reflect.KClass
 
-private object Colors {
+object Colors {
     const val RESET = "\u001B[0m"
     const val RED = "\u001B[31m"
     const val GREEN = "\u001B[32m"
@@ -10,6 +10,13 @@ private object Colors {
     const val BLUE = "\u001B[34m"
     const val PURPLE = "\u001B[35m"
     const val CYAN = "\u001B[36m"
+
+    fun red(content: String): String = "$RED$content$RESET"
+    fun green(content: String): String = "$GREEN$content$RESET"
+    fun yellow(content: String): String = "$YELLOW$content$RESET"
+    fun blue(content: String): String = "$BLUE$content$RESET"
+    fun purple(content: String): String = "$PURPLE$content$RESET"
+    fun cyan(content: String): String = "$CYAN$content$RESET"
 }
 
 object Logging {
@@ -17,6 +24,7 @@ object Logging {
     const val DELIMITER = "${Colors.PURPLE}*${Colors.CYAN}>>${Colors.RESET}"
     const val ID_TEMPLATE = "${Colors.CYAN}[${Colors.RESET}%s${Colors.CYAN}]${Colors.RESET}"
     const val INFO = "${Colors.CYAN}INFO ${Colors.RESET}"
+    const val WARN = "${Colors.YELLOW}WARN ${Colors.RESET}"
     const val DEBUG = "${Colors.BLUE}DEBUG${Colors.RESET}"
     const val ERROR = "${Colors.RED}ERROR${Colors.RESET}"
 
@@ -31,6 +39,8 @@ private const val PADDING_CHAR = '·' // Simple middle dot for padding
 
 class Logger(private val logId: String) {
     private var isDebugEnabled = false
+    private var warningEnabled = true
+    private val activeBranches = mutableSetOf<Int>()
 
     // Apply fixed padding to ensure consistent log formatting
     private val formattedName: String = if (logId.length < FIXED_PADDING_LENGTH) {
@@ -41,24 +51,61 @@ class Logger(private val logId: String) {
         logId
     }
 
-    fun enableDebug() {
+    fun enableDebug(): Logger = apply {
         isDebugEnabled = true
     }
 
-    fun info(message: Any) {
-        val id = Logging.ID_TEMPLATE.format(formattedName)
-        println("${Logging.LOGO} ${Logging.INFO} $id ${Logging.DELIMITER} $message")
+    fun debugEnabled(): Boolean = isDebugEnabled
+
+    fun disableWarning(): Logger = apply {
+        warningEnabled = false
     }
 
-    fun debug(message: Any) {
+    private fun tierPrefix(tier: Int): String {
+        if (tier <= 0) return ""
+
+        val sb = StringBuilder()
+        for (i in 1 until tier) {
+            sb.append(if (activeBranches.contains(i)) "|  " else "   ")
+        }
+        sb.append("|__ ")
+
+        return sb.toString()
+    }
+
+    private fun updateBranches(tier: Int, branch: Boolean) {
+        activeBranches.removeIf { it >= tier }
+        if (branch) activeBranches.add(tier)
+    }
+
+    fun info(message: Any, tier: Int = 0, branch: Boolean = false) {
+        val id = Logging.ID_TEMPLATE.format(formattedName)
+        val prefix = tierPrefix(tier)
+        println("${Logging.LOGO} ${Logging.INFO} $id ${Logging.DELIMITER} $prefix$message")
+        updateBranches(tier, branch)
+    }
+
+    fun debug(message: Any, tier: Int = 0, branch: Boolean = false) {
         if (!isDebugEnabled) return
         val id = Logging.ID_TEMPLATE.format(formattedName)
-        println("${Logging.LOGO} ${Logging.DEBUG} $id ${Logging.DELIMITER} $message")
+        val prefix = tierPrefix(tier)
+        println("${Logging.LOGO} ${Logging.DEBUG} $id ${Logging.DELIMITER} $prefix$message")
+        updateBranches(tier, branch)
     }
 
-    fun error(message: Any) {
+    fun warn(message: Any, tier: Int = 0, branch: Boolean = false) {
+        if (!warningEnabled) return
         val id = Logging.ID_TEMPLATE.format(formattedName)
-        println("${Logging.LOGO} ${Logging.ERROR} $id ${Logging.DELIMITER} ${Colors.RED}$message${Colors.RESET}")
+        val prefix = tierPrefix(tier)
+        println("${Logging.LOGO} ${Logging.WARN} $id ${Logging.DELIMITER} ${Colors.YELLOW}$prefix$message${Colors.RESET}")
+        updateBranches(tier, branch)
+    }
+
+    fun error(message: Any, tier: Int = 0, branch: Boolean = false) {
+        val id = Logging.ID_TEMPLATE.format(formattedName)
+        val prefix = tierPrefix(tier)
+        println("${Logging.LOGO} ${Logging.ERROR} $id ${Logging.DELIMITER} ${Colors.RED}$prefix$message${Colors.RESET}")
+        updateBranches(tier, branch)
     }
 
     // For multi-line logging with consistent indentation

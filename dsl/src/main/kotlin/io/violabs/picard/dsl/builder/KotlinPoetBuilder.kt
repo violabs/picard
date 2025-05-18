@@ -1,6 +1,7 @@
 package io.violabs.picard.dsl.builder
 
 import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.LIST
 import com.squareup.kotlinpoet.MAP
@@ -28,7 +29,6 @@ internal fun kpListOf(type: TypeName, nullable: Boolean = true): TypeName =
 internal fun kpMutableListOf(type: TypeName, nullable: Boolean = true): TypeName =
     MUTABLE_LIST.parameterizedBy(type).copy(nullable = nullable)
 
-@PicardDSLMarker
 internal class KotlinPoetBuilder : DefaultParamSpecEnabled() {
     fun ClassName.nestedClass(
         extensionName: String,
@@ -65,7 +65,11 @@ internal class KotlinPoetBuilder : DefaultParamSpecEnabled() {
         return KPFunSpecBuilder.Group().apply(block).items
     }
 
-    fun type(block: KPTypeBuilder.() -> Unit): TypeSpec {
-        return KPTypeBuilder().apply(block).build()
+    fun type(block: KPTypeSpecBuilder.() -> Unit): TypeSpec {
+        return KPTypeSpecBuilder().apply(block).build()
+    }
+
+    fun file(block: KPFileSpecBuilder.() -> Unit): FileSpec {
+        return KPFileSpecBuilder().apply(block).build()
     }
 }

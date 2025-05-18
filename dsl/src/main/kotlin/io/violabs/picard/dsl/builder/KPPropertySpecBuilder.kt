@@ -36,6 +36,25 @@ internal class KPPropertySpecBuilder : TypedSpec, MutabilitySpec, DefaultKotlinP
         fun add(block: KPPropertySpecBuilder.() -> Unit) {
             items.add(KPPropertySpecBuilder().apply(block).build())
         }
+
+        fun add(spec: PropertySpec) {
+            items.add(spec)
+        }
+
+        /**
+         * Will use the [transformFn] on each item in the [list] and add the resulting
+         * [PropertySpec] to the list.
+         * You can use the extension of [List.addForEach] within this scope.
+         */
+        fun <T> addForEachIn(list: List<T>, transformFn: (T) -> PropertySpec) {
+            list.forEach { add(transformFn(it)) }
+        }
+
+        /**
+         * Will use the [transformFn] on each item int this list and add the resulting
+         * [PropertySpec] to the items list.
+         */
+        fun <T> List<T>.addForEach(transformFn: (T) -> PropertySpec) = this.forEach { add(transformFn(it)) }
     }
 
     companion object {

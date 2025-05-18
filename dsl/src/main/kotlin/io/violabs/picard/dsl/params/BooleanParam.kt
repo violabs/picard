@@ -1,6 +1,7 @@
 package io.violabs.picard.dsl.params
 
 import com.squareup.kotlinpoet.*
+import io.violabs.picard.dsl.builder.kotlinPoet
 
 class BooleanParam(
     override val propName: String,
@@ -9,16 +10,18 @@ class BooleanParam(
 ) : DSLParam {
     override val propTypeName: TypeName = BOOLEAN.copy(nullable = nullableAssignment) // Correctly use constructor arg
 
-    override fun accessors(): List<FunSpec> {
-        val param = ParameterSpec.Companion
-            .builder("on", BOOLEAN) // Non-nullable for the setter
-            .defaultValue("true")
-            .build()
-
-        return FunSpec.Companion.builder(propName)
-            .addParameter(param)
-            .addStatement("this.%N = %N", propName, param) // Return the builder itself
-            .build()
-            .let { listOf(it) }
+    override fun accessors(): List<FunSpec> = kotlinPoet {
+        function {
+            add {
+                funName = propName
+                val param = param {
+                    booleanType()
+                    defaultValue(true)
+                }
+                statements {
+                    addLine("this.%N = %N", propName, param)
+                }
+            }
+        }
     }
 }

@@ -4,9 +4,11 @@ import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeName
+import io.violabs.picard.dsl.builder.kotlinPoet
 
 interface DSLParam {
     val propName: String
+    val functionName: String get() = propName
     val propTypeName: TypeName // This should be the type of the actual property in the domain object
     val nullableAssignment: Boolean get() = true
     val nullableProp: Boolean get() = true
@@ -14,19 +16,15 @@ interface DSLParam {
     val verifyNotEmpty: Boolean get() = false
     val accessModifier: KModifier get() = KModifier.PRIVATE
 
-    fun toPropertySpec(): PropertySpec {
-        val type = propTypeName.copy(nullable = nullableProp)
+    fun toPropertySpec(): PropertySpec = kotlinPoet {
+        property {
+            accessModifier(accessModifier)
+            variable()
+            name = propName
+            type(propTypeName.copy(nullable = nullableProp))
 
-        var propSpec = PropertySpec.Companion
-            .builder(propName, type)
-            .addModifiers(accessModifier)
-            .mutable(true)
-
-        if (nullableProp) {
-            propSpec = propSpec.initializer("null")
+            if (nullableProp) initNullValue()
         }
-
-        return propSpec.build()
     }
 
     // Added containingBuilderClassName to allow fluent return types

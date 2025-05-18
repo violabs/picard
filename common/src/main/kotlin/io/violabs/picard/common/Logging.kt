@@ -37,9 +37,11 @@ private const val FIXED_PADDING_LENGTH = 15
 private val FRONT_LOADED_SPACES = System.getProperty("frontLoadedSpaces")?.toBoolean() ?: true
 private const val PADDING_CHAR = '·' // Simple middle dot for padding
 
-class Logger(private val logId: String) {
-    private var isDebugEnabled = false
-    private var warningEnabled = true
+data class Logger(
+    private val logId: String,
+    private var isDebugEnabled: Boolean = true,
+    private var isWarningEnabled: Boolean = true
+) {
     private val activeBranches = mutableSetOf<Int>()
 
     // Apply fixed padding to ensure consistent log formatting
@@ -58,7 +60,7 @@ class Logger(private val logId: String) {
     fun debugEnabled(): Boolean = isDebugEnabled
 
     fun disableWarning(): Logger = apply {
-        warningEnabled = false
+        isWarningEnabled = false
     }
 
     private fun tierPrefix(tier: Int): String {
@@ -85,7 +87,7 @@ class Logger(private val logId: String) {
         updateBranches(tier, branch)
     }
 
-    fun debug(message: Any, tier: Int = 0, branch: Boolean = false) {
+    fun debug(message: Any, tier: Int = 0, branch: Boolean = false, continuous: Boolean = false) {
         if (!isDebugEnabled) return
         val id = Logging.ID_TEMPLATE.format(formattedName)
         val prefix = tierPrefix(tier)
@@ -94,7 +96,7 @@ class Logger(private val logId: String) {
     }
 
     fun warn(message: Any, tier: Int = 0, branch: Boolean = false) {
-        if (!warningEnabled) return
+        if (!isWarningEnabled) return
         val id = Logging.ID_TEMPLATE.format(formattedName)
         val prefix = tierPrefix(tier)
         println("${Logging.LOGO} ${Logging.WARN} $id ${Logging.DELIMITER} ${Colors.YELLOW}$prefix$message${Colors.RESET}")
@@ -129,6 +131,7 @@ class Logger(private val logId: String) {
 
 private val LOG_MAP = mutableMapOf<String, Logger>()
 private val DEBUG_ENABLED = System.getProperty("debug")?.toBoolean() ?: false
+private val WARNING_ENABLED = System.getProperty("warn")?.toBoolean() ?: true
 
 interface VLoggable {
     fun logId(): String? = null
@@ -139,6 +142,7 @@ interface VLoggable {
             return LOG_MAP.getOrPut(name) {
                 val logger = Logger(name)
                 if (DEBUG_ENABLED) logger.enableDebug()
+                if (!WARNING_ENABLED) logger.disableWarning()
                 logger
             }
         }

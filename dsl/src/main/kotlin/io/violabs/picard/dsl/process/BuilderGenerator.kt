@@ -14,6 +14,9 @@ import io.violabs.picard.common.Logger
 import io.violabs.picard.dsl.annotation.GeneratedDSL
 import io.violabs.picard.dsl.annotation.GeneratedGroupDSL
 import io.violabs.picard.dsl.annotation.SingleEntryTransformDSL
+import io.violabs.picard.dsl.builder.kotlinPoet
+import io.violabs.picard.dsl.builder.kpListOf
+import io.violabs.picard.dsl.builder.kpMutableListOf
 
 private val LOGGER = Logger("DSL_BUILDER")
     .enableDebug()
@@ -24,7 +27,7 @@ class BuilderGenerator(
 ) {
 
     fun generate(resolver: Resolver, codeGenerator: CodeGenerator, options: Map<String, String> = emptyMap()) {
-        LOGGER.debug("generate()", tier = 0)
+        LOGGER.debug("------- GENERATE", tier = 0)
         val dslBuilderClasspath = options["dslBuilder.classpath"]
         val dslMarkerClasspath = options["dslMarker.classpath"]
         LOGGER.debug("dslBuilderClasspath: $dslBuilderClasspath")
@@ -58,11 +61,17 @@ class BuilderGenerator(
             LOGGER.debug("type: $typeName", tier = 1, branch = true)
             LOGGER.debug("builder: $builderName", tier = 1, branch = true)
 
+//            val bc = kotlinPoet {
+//                type {
+//                    public()
+//                }
+//            }
+
             val builderClass: TypeSpec.Builder = TypeSpec.classBuilder(builderName)
                 .addModifiers(KModifier.PUBLIC) // Typically builders are public
 
             // add DSL Marker to the top of the class to restrict scope. Provided by consumer.
-            addDslMarker(dslMarkerClasspath, builderClass)
+            createDslMarkerIfAvailable(dslMarkerClasspath)?.let { builderClass.addAnnotation(it) }
 
             val dslBuilderInterface = ClassName(dslBuilderClasspath, "DSLBuilder")
             val parameterizedDslBuilder = dslBuilderInterface.parameterizedBy(domainClassName)
@@ -78,10 +87,15 @@ class BuilderGenerator(
             domain.getAllProperties().forEachIndexed { i, prop ->
                 val type = prop.type.toTypeName().copy(nullable = false)
                 val continueBranch = i != lastIndex
-                LOGGER.debug(prop.simpleName.asString(), tier = 2, branch = continueBranch)
-                LOGGER.debug("type: $type", tier = 3, branch = continueBranch)
+                LOGGER.debug(prop.simpleName.asString(), tier = 2, branch = continueBranch, continuous = true)
+                LOGGER.debug("type:  $type", tier = 3, branch = continueBranch, continuous = true)
                 val singleEntryTransform = singleEntryTransform[type.toString()]
-                LOGGER.debug("singleEntryTransform: $singleEntryTransform", tier = 3, branch = continueBranch)
+                LOGGER.debug(
+                    "singleEntryTransform: $singleEntryTransform",
+                    tier = 3,
+                    branch = continueBranch,
+                    continuous = true
+                )
 
                 val adapter = DefaultParameterFactoryAdapter(prop, singleEntryTransform)
 
@@ -118,30 +132,45 @@ class BuilderGenerator(
                 LOGGER.debug("group domain", tier = 1, branch = true)
                 val builderClassName = ClassName(pkg, builderName)
 
-                val nestedClass = TypeSpec
-                    .classBuilder("Group")
-                    .also { addDslMarker(dslMarkerClasspath, it) }
-                    .addProperty(
-                        PropertySpec.builder("items", MUTABLE_LIST.parameterizedBy(domainClassName))
-                            .addModifiers(KModifier.PRIVATE)
-                            .initializer("mutableListOf()")
-                            .build()
-                    )
-                    .addFunction(
-                        FunSpec.builder("items")
-                            .returns(LIST.parameterizedBy(domainClassName))
-                            .addStatement("return items.toList()")
-                            .build()
-                    )
-                    .addFunction(
-                        FunSpec.builder(domainClassName.simpleName.replaceFirstChar { it.lowercase() })
-                            .addParameter("block", LambdaTypeName.get(receiver = builderClassName, returnType = UNIT))
-                            .addStatement("items.add(%T().apply(block).build())", builderClassName)
-                            .build()
-                    )
-                    .build()
+                val nested = kotlinPoet {
+                    type {
+                        name = "Group"
+                        annotation {
+                            createDslMarkerIfAvailable(dslMarkerClasspath)
+                        }
+                        properties {
+                            add {
+                                private()
+                                name = "items"
+                                type(kpMutableListOf(domainClassName, nullable = false))
+                                initializer = "mutableListOf()"
+                            }
+                        }
+                        functions {
+                            add {
+                                funName = "items"
+                                returns = kpListOf(domainClassName, nullable = false)
+                                statements {
+                                    addLine("return items.toList()")
+                                }
+                            }
 
-                builderClass.addType(nestedClass)
+                            add {
+                                funName = domainClassName.simpleName.replaceFirstChar { it.lowercase() }
+                                param {
+                                    lambdaType {
+                                        receiver = builderClassName
+                                    }
+                                }
+                                statements {
+                                    addLine("items.add(%T().apply(block).build())", builderClassName)
+                                }
+                            }
+                        }
+                    }
+                }
+
+                builderClass.addType(nested)
             } else {
                 LOGGER.debug("single domain", tier = 1, branch = true)
             }
@@ -184,13 +213,13 @@ class BuilderGenerator(
         }
     }
 
-    private fun addDslMarker(dslMarkerClasspath: String?, builderClass: TypeSpec.Builder) = with(builderClass) {
-        if (dslMarkerClasspath != null) {
-            LOGGER.debug("DSL Marker added", tier = 1, branch = true)
-            val split = dslMarkerClasspath.split(".")
-            val dslMarkerPackageName = split.subList(0, split.size - 1).joinToString(".")
-            val dslMarkerSimpleName = split.last()
-            builderClass.addAnnotation(ClassName(dslMarkerPackageName, dslMarkerSimpleName))
-        }
+    private fun createDslMarkerIfAvailable(dslMarkerClasspath: String?): ClassName? {
+        if (dslMarkerClasspath == null) return null
+
+        LOGGER.debug("DSL Marker added", tier = 1, branch = true)
+        val split = dslMarkerClasspath.split(".")
+        val dslMarkerPackageName = split.subList(0, split.size - 1).joinToString(".")
+        val dslMarkerSimpleName = split.last()
+        return ClassName(dslMarkerPackageName, dslMarkerSimpleName)
     }
 }

@@ -1,7 +1,7 @@
 package io.violabs.picard.dsl.params
 
 import com.squareup.kotlinpoet.*
-import io.violabs.picard.dsl.utils.kotlinPoet
+import io.violabs.picard.dsl.builder.kotlinPoet
 
 class BuilderParam(
     override val propName: String,
@@ -13,7 +13,7 @@ class BuilderParam(
     override val propTypeName: TypeName = originalPropertyType
 
     override fun accessors(): List<FunSpec> = kotlinPoet {
-        functionSpecs {
+        function {
             add {
                 funName = functionName
                 param {

@@ -4,8 +4,8 @@ import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.STRING
 import com.squareup.kotlinpoet.TypeName
-import io.violabs.picard.dsl.utils.kotlinPoet
-import io.violabs.picard.dsl.utils.kpMapOf
+import io.violabs.picard.dsl.builder.kotlinPoet
+import io.violabs.picard.dsl.builder.kpMapOf
 
 class MapParam(
     override val propName: String,
@@ -20,7 +20,7 @@ class MapParam(
     override val verifyNotEmpty: Boolean = true
 
     override fun toPropertySpec(): PropertySpec = kotlinPoet {
-        propertySpec {
+        property {
             private()
             variable()
             name = propName
@@ -33,7 +33,7 @@ class MapParam(
     override fun accessors(): List<FunSpec> = kotlinPoet {
         val pairType = pairTypeOf(mapKeyType, mapValueType, nullable = false)
 
-        functionSpecs {
+        function {
             add {
                 funName = functionName
                 varargParam {

@@ -4,7 +4,7 @@ import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeName
-import io.violabs.picard.dsl.utils.kotlinPoet
+import io.violabs.picard.dsl.builder.kotlinPoet
 
 interface DSLParam {
     val propName: String
@@ -17,7 +17,7 @@ interface DSLParam {
     val accessModifier: KModifier get() = KModifier.PRIVATE
 
     fun toPropertySpec(): PropertySpec = kotlinPoet {
-        propertySpec {
+        property {
             accessModifier(accessModifier)
             variable()
             name = propName

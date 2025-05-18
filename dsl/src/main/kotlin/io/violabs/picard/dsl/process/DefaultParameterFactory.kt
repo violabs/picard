@@ -5,7 +5,7 @@ import io.violabs.picard.common.Logger
 import io.violabs.picard.dsl.params.*
 
 private val DEFAULT_TYPE_NAMES = listOf(
-    STRING, INT, LONG, SHORT, BYTE, DOUBLE, FLOAT
+    CHAR, STRING, BYTE, SHORT, INT, LONG, DOUBLE, FLOAT
 )
 
 interface ParameterFactory {
@@ -16,9 +16,9 @@ interface ParameterFactory {
     ): DSLParam
 }
 
-
 class DefaultParameterFactory(val logger: Logger) : ParameterFactory {
     override fun determineParam(adapter: ParameterFactoryAdapter, isLast: Boolean, log: Boolean): DSLParam {
+        val logger = logger.copy(isDebugEnabled = log)
         val propName = adapter.propName
         val actualPropertyType: TypeName = adapter.actualPropTypeName
         val isNullable = actualPropertyType.isNullable
@@ -26,53 +26,29 @@ class DefaultParameterFactory(val logger: Logger) : ParameterFactory {
 
         val branch = !isLast
 
-        if (log) {
-            logger.debug("mapping '$propName'", tier = 3, branch = branch)
-            logger.debug("nullable: $isNullable", tier = 4, branch = branch)
-        }
+        logger.debug("mapping '$propName'", tier = 3, branch = branch, continuous = true)
+        logger.debug("nullable: $isNullable", tier = 4, branch = branch, continuous = true)
 
         if (adapter.hasSingleEntryTransform) {
-            val transformTemplate = adapter.transformTemplate
-            val transformType = adapter.transformType
-
-            if (log) {
-                logger.debug("SingleEntryTransform", tier = 4, branch = branch)
-                logger.debug("template: $transformTemplate", tier = 5, branch = branch)
-                logger.debug("type: $transformType", tier = 5, branch = branch)
-            }
-
-            if (transformType == null) {
-                logger.warn("SingleEntryTransformDSL.inputType is missing or not a KSType.")
-                return DefaultParam(propName, actualPropertyType, isNullable)
-            }
-
-            val param = SingleTransformParam(
-                propName = propName,
-                transformTemplate = transformTemplate,
-                actualPropTypeName = actualPropertyType,
-                inputTypeName = transformType,
-                nullableAssignment = adapter.hasNullableAssignment
-            )
-            if (log) logger.debug("-> SingleTransformParam", tier = 4, branch = branch)
-            return param
+            return buildSingleTransformParam(adapter, log, branch)
         }
 
         val propertyNonNullableClassName: ClassName? = adapter.propertyNonNullableClassName
         val hasGeneratedDSLAnnotation = adapter.hasGeneratedDSLAnnotation
 
         if (hasGeneratedDSLAnnotation && propertyNonNullableClassName != null) {
-            if (log) logger.debug("BuilderParam", tier = 4, branch = branch)
+            logger.debug("BuilderParam", tier = 4, branch = branch, continuous = true)
             return createBuilderParam(propName, actualPropertyType, propertyNonNullableClassName, isNullable)
         }
 
         return when {
             BOOLEAN == nonNullPropType -> {
-                if (log) logger.debug("BooleanParam", tier = 4, branch = branch)
+                logger.debug("BooleanParam", tier = 4, branch = branch, continuous = true)
                 BooleanParam(propName, isNullable)
             }
 
             DEFAULT_TYPE_NAMES.contains(nonNullPropType) -> {
-                if (log) logger.debug("DefaultParam", tier = 4, branch = branch)
+                logger.debug("DefaultParam", tier = 4, branch = branch, continuous = true)
                 DefaultParam(propName, actualPropertyType, isNullable)
             }
 
@@ -81,10 +57,10 @@ class DefaultParameterFactory(val logger: Logger) : ParameterFactory {
                 if (adapter.isGroupElement) {
                     val elementClassName = adapter.groupElementClassName
                         ?: throw IllegalArgumentException("Could not determine group element class name.")
-                    if (log) logger.debug("GroupParam", tier = 4, branch = branch)
+                    logger.debug("GroupParam", tier = 4, branch = branch, continuous = true)
                     createGroupParam(propName, actualPropertyType, elementClassName, isNullable)
                 } else {
-                    if (log) logger.debug("ListParam", tier = 4, branch = branch)
+                    logger.debug("ListParam", tier = 4, branch = branch, continuous = true)
                     createListParam(actualPropertyType, propName, isNullable)
                 }
             }
@@ -92,10 +68,30 @@ class DefaultParameterFactory(val logger: Logger) : ParameterFactory {
             else -> {
                 logger.warn("Property '$propName' of type '${actualPropertyType}' could not be mapped to a known DSLParam type. Using DefaultParam as a fallback.")
                 val param = DefaultParam(propName, actualPropertyType, isNullable)
-                if (log) logger.debug("-> DefaultParam (fallback)", tier = 4, branch = branch)
+                logger.debug("-> DefaultParam (fallback)", tier = 4, branch = branch, continuous = true)
                 param
             }
         }
+    }
+
+    private fun buildSingleTransformParam(
+        adapter: ParameterFactoryAdapter,
+        log: Boolean = true,
+        branch: Boolean = true
+    ): DSLParam {
+        val transformType = adapter.transformType
+
+        logger.debug("SingleEntryTransform", tier = 4, branch = branch, continuous = true)
+        logger.debug("template: ${adapter.transformTemplate}", tier = 5, branch = branch, continuous = true)
+        logger.debug("type: $transformType", tier = 5, branch = branch, continuous = true)
+
+        if (transformType == null) {
+            logger.warn("SingleEntryTransformDSL.inputType is missing or not a KSType.")
+            return DefaultParam(adapter)
+        }
+
+        if (log) logger.debug("-> SingleTransformParam", tier = 4, branch = branch, continuous = true)
+        return SingleTransformParam(adapter)
     }
 
     private fun createBuilderParam(
@@ -106,7 +102,7 @@ class DefaultParameterFactory(val logger: Logger) : ParameterFactory {
     ): BuilderParam {
         val nestedBuilderName = propertyNonNullableClassName.simpleName + "Builder"
         val nestedBuilderClassName = ClassName(propertyNonNullableClassName.packageName, nestedBuilderName)
-        logger.debug("nestedBuilder: $nestedBuilderClassName", tier = 5)
+        logger.debug("nestedBuilder: $nestedBuilderClassName", tier = 5, continuous = true)
         return BuilderParam(propName, actualPropertyType, nestedBuilderClassName, isNullable)
     }
 
@@ -117,7 +113,7 @@ class DefaultParameterFactory(val logger: Logger) : ParameterFactory {
         listElementClassName: ClassName, // This is ClassName of the element, e.g., MyItem
         isNullable: Boolean
     ): GroupParam {
-        logger.debug("listElementClassName: $listElementClassName", tier = 5)
+        logger.debug("listElementClassName:  $listElementClassName", tier = 5, continuous = true)
         return GroupParam(propName, actualPropertyType, listElementClassName, isNullable)
     }
 
@@ -128,7 +124,7 @@ class DefaultParameterFactory(val logger: Logger) : ParameterFactory {
     ): ListParam {
         return if (actualPropertyType is ParameterizedTypeName && actualPropertyType.rawType == LIST) {
             val elementTypeArgument: TypeName = actualPropertyType.typeArguments.first()
-            logger.debug("listElementType: $elementTypeArgument", tier = 5)
+            logger.debug("listElementType: $elementTypeArgument", tier = 5, continuous = true)
             ListParam(propName, elementTypeArgument, isNullable)
         } else {
             // This case should ideally be caught earlier if the type isn't a ParameterizedTypeName

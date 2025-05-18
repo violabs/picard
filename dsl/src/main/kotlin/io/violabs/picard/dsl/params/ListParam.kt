@@ -1,8 +1,8 @@
 package io.violabs.picard.dsl.params
 
 import com.squareup.kotlinpoet.*
-import io.violabs.picard.dsl.utils.kotlinPoet
-import io.violabs.picard.dsl.utils.kpListOf
+import io.violabs.picard.dsl.builder.kotlinPoet
+import io.violabs.picard.dsl.builder.kpListOf
 
 class ListParam(
     override val propName: String,
@@ -16,7 +16,7 @@ class ListParam(
     override val verifyNotEmpty: Boolean = true
 
     override fun toPropertySpec(): PropertySpec = kotlinPoet {
-        propertySpec {
+        property {
             private()
             variable()
             name = propName
@@ -28,7 +28,7 @@ class ListParam(
 
     // Example for a list setter (could be more sophisticated, e.g., vararg)
     override fun accessors(): List<FunSpec> = kotlinPoet {
-        functionSpecs {
+        function {
             add {
                 funName = functionName
                 varargParam {

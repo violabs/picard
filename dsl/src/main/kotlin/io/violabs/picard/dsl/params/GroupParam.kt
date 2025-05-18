@@ -1,7 +1,7 @@
 package io.violabs.picard.dsl.params
 
 import com.squareup.kotlinpoet.*
-import io.violabs.picard.dsl.utils.kotlinPoet
+import io.violabs.picard.dsl.builder.kotlinPoet
 
 // Assuming GroupParam is similar to BuilderParam or a complex type needing its own builder
 class GroupParam(
@@ -16,7 +16,7 @@ class GroupParam(
     override fun toPropertySpec(): PropertySpec = kotlinPoet {
         val assignmentType = listTypeOf(builtClassName)
 
-        propertySpec {
+        property {
             private()
             name = propName
             type(assignmentType)
@@ -31,7 +31,7 @@ class GroupParam(
             nestedClassName = "Group"
         )
 
-        functionSpecs {
+        function {
             add {
                 funName = functionName
                 param {

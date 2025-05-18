@@ -3,13 +3,19 @@ package io.violabs.picard.dsl.builder
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.PropertySpec
+import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeSpec
 
 @PicardDSLMarker
 internal class KPTypeBuilder : DefaultKotlinPoetSpec() {
+    private var superInterface: TypeName? = null
     private val annotationNames: MutableList<ClassName> = mutableListOf()
     private var properties: MutableList<PropertySpec> = mutableListOf()
     private var functions: MutableList<FunSpec> = mutableListOf()
+
+    fun superInterface(superInterface: TypeName) {
+        this.superInterface = superInterface
+    }
 
     fun annotation(packageName: String, annotationSimpleName: String) {
         annotationNames.add(ClassName(packageName, annotationSimpleName))

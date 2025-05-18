@@ -19,6 +19,11 @@ class DefaultParameterFactoryAdapter(
     override val actualPropTypeName: TypeName = prop.type.toTypeName()
     override val hasSingleEntryTransform: Boolean = singleEntryTransform != null
 
+    constructor(propertyAdapter: DefaultPropertyAdapter) : this(
+        propertyAdapter.prop,
+        propertyAdapter.singleEntryTransform()
+    )
+
     private val singleEntryTransformAnnotation = singleEntryTransform
         ?.annotations
         ?.find { it.shortName.asString() == SingleEntryTransformDSL::class.simpleName }

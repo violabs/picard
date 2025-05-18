@@ -8,16 +8,44 @@ private val DEFAULT_TYPE_NAMES = listOf(
     CHAR, STRING, BYTE, SHORT, INT, LONG, DOUBLE, FLOAT
 )
 
-interface ParameterFactory {
+interface ParameterFactory<T : ParameterFactoryAdapter, P : PropertyAdapter> {
+    val logger: Logger
+
+    fun createParameterFactoryAdapter(propertyAdapter: P): T
+
+    fun logAdapter(propertyAdapter: P) {
+        val branch = propertyAdapter.continueBranch()
+        logger.debug(propertyAdapter.simpleName(), tier = 2, branch = branch, continuous = true)
+
+        val type = propertyAdapter.type
+        logger.debug("type:  $type", tier = 3, branch = branch, continuous = true)
+
+        val singleEntryTransform = propertyAdapter.singleEntryTransformString()
+        logger.debug("singleEntryTransform: $singleEntryTransform", tier = 3, branch = branch, continuous = true)
+    }
+
     fun determineParam(
-        adapter: ParameterFactoryAdapter,
+        adapter: T,
         isLast: Boolean = false,
         log: Boolean = true
     ): DSLParam
 }
 
-class DefaultParameterFactory(val logger: Logger) : ParameterFactory {
-    override fun determineParam(adapter: ParameterFactoryAdapter, isLast: Boolean, log: Boolean): DSLParam {
+class DefaultParameterFactory(logger: Logger) :
+    AbstractParameterFactory<DefaultParameterFactoryAdapter, DefaultPropertyAdapter>(logger) {
+
+    override fun createParameterFactoryAdapter(propertyAdapter: DefaultPropertyAdapter): DefaultParameterFactoryAdapter {
+        logAdapter(propertyAdapter)
+
+        return DefaultParameterFactoryAdapter(propertyAdapter)
+    }
+}
+
+
+abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : PropertyAdapter>(
+    override val logger: Logger
+) : ParameterFactory<T, P> {
+    override fun determineParam(adapter: T, isLast: Boolean, log: Boolean): DSLParam {
         val logger = logger.copy(isDebugEnabled = log)
         val propName = adapter.propName
         val actualPropertyType: TypeName = adapter.actualPropTypeName

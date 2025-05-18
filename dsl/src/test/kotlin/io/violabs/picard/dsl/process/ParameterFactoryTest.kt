@@ -12,12 +12,16 @@ import io.violabs.picard.dsl.annotation.GeneratedGroupDSL
 import org.junit.jupiter.api.Test
 
 class ParameterFactoryTest : UnitSim() {
-    val parameterFactory = DefaultParameterFactory(Logger("TEST"))
+    val parameterFactory = object : AbstractParameterFactory<TestParamFactoryAdaptor, TestPropAdapter>(Logger("TEST")) {
+        override fun createParameterFactoryAdapter(propertyAdapter: TestPropAdapter): TestParamFactoryAdaptor {
+            return TestParamFactoryAdaptor(propertyAdapter.type, propertyAdapter.isGroup)
+        }
+    }
 
     @Test
     fun `determineParam will create a default param`() = test {
         given {
-            val adapter = TestAdapter()
+            val adapter = TestParamFactoryAdaptor()
 
             expect {
                 TestResponse(
@@ -40,7 +44,7 @@ class ParameterFactoryTest : UnitSim() {
     @Test
     fun `determineParam will create a group param`() = test {
         given {
-            val adapter = TestAdapter(
+            val adapter = TestParamFactoryAdaptor(
                 LIST.parameterizedBy(Example::class.asTypeName()),
                 isGroup = true
             )
@@ -68,7 +72,7 @@ class ParameterFactoryTest : UnitSim() {
         }
     }
 
-    class TestAdapter(
+    class TestParamFactoryAdaptor(
         override val actualPropTypeName: TypeName = STRING,
         val isGroup: Boolean = false
     ) : ParameterFactoryAdapter {
@@ -82,6 +86,15 @@ class ParameterFactoryTest : UnitSim() {
         override val propertyClassDeclarationQualifiedName: String? = null
         override val isGroupElement: Boolean = isGroup
         override val groupElementClassName: ClassName? = ClassName("test", "Example")
+    }
+
+    class TestPropAdapter(
+        override val type: TypeName = STRING,
+        val isGroup: Boolean = false
+    ) : PropertyAdapter {
+        override fun simpleName(): String = "test"
+        override fun continueBranch(): Boolean = false
+        override fun singleEntryTransformString(): String? = null
     }
 
     data class TestResponse(

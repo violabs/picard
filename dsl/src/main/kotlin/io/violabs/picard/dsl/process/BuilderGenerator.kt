@@ -7,7 +7,6 @@ import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.ksp.toClassName
-import com.squareup.kotlinpoet.ksp.toTypeName
 import com.squareup.kotlinpoet.ksp.writeTo
 import io.violabs.picard.common.Colors
 import io.violabs.picard.common.Logger
@@ -23,7 +22,8 @@ private val LOGGER = Logger("DSL_BUILDER")
     .disableWarning()
 
 class BuilderGenerator(
-    val parameterFactory: ParameterFactory = DefaultParameterFactory(LOGGER)
+    val parameterFactory: ParameterFactory<DefaultParameterFactoryAdapter, DefaultPropertyAdapter> =
+        DefaultParameterFactory(LOGGER)
 ) {
 
     fun generate(resolver: Resolver, codeGenerator: CodeGenerator, options: Map<String, String> = emptyMap()) {
@@ -61,9 +61,14 @@ class BuilderGenerator(
             LOGGER.debug("type: $typeName", tier = 1, branch = true)
             LOGGER.debug("builder: $builderName", tier = 1, branch = true)
 
+            val dslBuilderInterface = ClassName(dslBuilderClasspath, "DSLBuilder")
+            val parameterizedDslBuilder = dslBuilderInterface.parameterizedBy(domainClassName)
+
 //            val bc = kotlinPoet {
 //                type {
 //                    public()
+//                    annotation { createDslMarkerIfAvailable(dslMarkerClasspath) }
+//                    superInterface(parameterizedDslBuilder)
 //                }
 //            }
 
@@ -73,42 +78,25 @@ class BuilderGenerator(
             // add DSL Marker to the top of the class to restrict scope. Provided by consumer.
             createDslMarkerIfAvailable(dslMarkerClasspath)?.let { builderClass.addAnnotation(it) }
 
-            val dslBuilderInterface = ClassName(dslBuilderClasspath, "DSLBuilder")
-            val parameterizedDslBuilder = dslBuilderInterface.parameterizedBy(domainClassName)
             builderClass.addSuperinterface(parameterizedDslBuilder)
             LOGGER.debug("DSL Builder Interface added", tier = 1, branch = true)
-
-            val constructorParams = mutableListOf<CodeBlock>()
-
 
             LOGGER.debug("Properties added", tier = 1)
             val lastIndex = domain.getAllProperties().count() - 1
 
-            domain.getAllProperties().forEachIndexed { i, prop ->
-                val type = prop.type.toTypeName().copy(nullable = false)
-                val continueBranch = i != lastIndex
-                LOGGER.debug(prop.simpleName.asString(), tier = 2, branch = continueBranch, continuous = true)
-                LOGGER.debug("type:  $type", tier = 3, branch = continueBranch, continuous = true)
-                val singleEntryTransform = singleEntryTransform[type.toString()]
-                LOGGER.debug(
-                    "singleEntryTransform: $singleEntryTransform",
-                    tier = 3,
-                    branch = continueBranch,
-                    continuous = true
-                )
+            val params = domain
+                .getAllProperties()
+                .mapIndexed { i, prop -> DefaultPropertyAdapter(i, lastIndex, prop, singleEntryTransform) }
+                .map(parameterFactory::createParameterFactoryAdapter)
+                .map(parameterFactory::determineParam)
+                .toList()
 
-                val adapter = DefaultParameterFactoryAdapter(prop, singleEntryTransform)
+            params.forEach { builderClass.addProperty(it.toPropertySpec()) }
 
-                val dslParam = parameterFactory.determineParam(adapter, i == lastIndex) // Pass logger
+            params.forEach { builderClass.addFunctions(it.accessors()) }
 
-                builderClass.addProperty(dslParam.toPropertySpec())
-
-                dslParam.accessors().forEach { // Pass the current builder's ClassName
-                    builderClass.addFunction(it)
-                }
-                // Prepare for the build() method's constructor call
-                constructorParams.add(CodeBlock.of("%N = %L", dslParam.propName, dslParam.propertyValueReturn()))
-            }
+            val constructorParams = params
+                .map { CodeBlock.of("%N = %L", it.propName, it.propertyValueReturn()) }
 
             val buildFun = FunSpec.builder("build")
                 .addModifiers(KModifier.OVERRIDE)
@@ -123,7 +111,6 @@ class BuilderGenerator(
                 buildFun.addStatement("return %T(%L)", domainClassName, argumentsBlock)
             }
             builderClass.addFunction(buildFun.build())
-
 
             val isGroup = domain.annotations
                 .any { it.shortName.asString() == GeneratedGroupDSL::class.simpleName.toString() }

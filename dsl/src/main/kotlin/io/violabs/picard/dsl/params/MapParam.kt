@@ -1,7 +1,11 @@
 package io.violabs.picard.dsl.params
 
-import com.squareup.kotlinpoet.*
-import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.PropertySpec
+import com.squareup.kotlinpoet.STRING
+import com.squareup.kotlinpoet.TypeName
+import io.violabs.picard.dsl.utils.kotlinPoet
+import io.violabs.picard.dsl.utils.kpMapOf
 
 class MapParam(
     override val propName: String,
@@ -10,41 +14,35 @@ class MapParam(
     override val nullableAssignment: Boolean = true,
     override val nullableProp: Boolean = true
 ) : DSLParam {
-    override val propTypeName: TypeName = MAP
-        .parameterizedBy(mapKeyType, mapValueType)
-        .copy(nullable = nullableAssignment)
+    override val propTypeName: TypeName = kpMapOf(mapKeyType, mapValueType, nullable = nullableAssignment)
 
     override val verifyNotNull: Boolean = false
     override val verifyNotEmpty: Boolean = true
 
-    override fun toPropertySpec(): PropertySpec {
-        val type = propTypeName.copy(nullable = nullableAssignment)
+    override fun toPropertySpec(): PropertySpec = kotlinPoet {
+        propertySpec {
+            private()
+            variable()
+            name = propName
+            type(propTypeName)
 
-        var spec = PropertySpec.Companion.builder(propName, type)
-            .addModifiers(accessModifier)
-            .mutable(true)
-
-        if (nullableAssignment) {
-            spec = spec.initializer("null")
+            if (nullableAssignment) initNullValue()
         }
-
-        return spec.build()
     }
 
-    override fun accessors(): List<FunSpec> {
-        val pairType = Pair::class.asClassName()
-            .parameterizedBy(mapKeyType, mapValueType)
+    override fun accessors(): List<FunSpec> = kotlinPoet {
+        val pairType = pairTypeOf(mapKeyType, mapValueType, nullable = false)
 
-        val spec = ParameterSpec.Companion
-            .builder("items", pairType.copy(nullable = false))
-            .addModifiers(KModifier.VARARG)
-            .build()
-
-        val varargFun = FunSpec.Companion.builder(propName)
-            .addParameter(spec) // Usually a non-null list
-            .addStatement("this.%N = items.toMap()", propName)
-            .build()
-
-        return listOf(varargFun)
+        functionSpecs {
+            add {
+                funName = functionName
+                varargParam {
+                    type(pairType)
+                }
+                statements {
+                    addLine("this.%N = items.toMap()", propName)
+                }
+            }
+        }
     }
 }

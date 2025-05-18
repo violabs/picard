@@ -1,7 +1,7 @@
 package io.violabs.picard.dsl.params
 
 import com.squareup.kotlinpoet.*
-import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import io.violabs.picard.dsl.utils.kotlinPoet
 
 // Assuming GroupParam is similar to BuilderParam or a complex type needing its own builder
 class GroupParam(
@@ -13,32 +13,36 @@ class GroupParam(
 ) : DSLParam {
     override val propTypeName: TypeName = originalPropertyType
 
-    override fun toPropertySpec(): PropertySpec {
-        val assignmentType = LIST.parameterizedBy(builtClassName).copy(nullable = true)
+    override fun toPropertySpec(): PropertySpec = kotlinPoet {
+        val assignmentType = listTypeOf(builtClassName)
 
-        return PropertySpec.Companion.builder(propName, assignmentType)
-            .addModifiers(accessModifier)
-            .mutable(true)
-            .initializer("null")
-            .build()
+        propertySpec {
+            private()
+            name = propName
+            type(assignmentType)
+            mutable()
+            initNullValue()
+        }
     }
 
+    override fun accessors(): List<FunSpec> = kotlinPoet {
+        val receiverName =  builtClassName.nestedClass(
+            extensionName = "Builder",
+            nestedClassName = "Group"
+        )
 
-    override fun accessors(): List<FunSpec> {
-        val receiverName = ClassName(builtClassName.packageName, builtClassName.simpleName + "Builder", "Group")
-
-        val blockParam = ParameterSpec.Companion.builder(
-            "block", LambdaTypeName.Companion.get(
-                receiver = receiverName,
-                parameters = emptyList(),
-                returnType = UNIT
-            )
-        ).build()
-
-        val funSpec = FunSpec.Companion.builder(propName)
-            .addParameter(blockParam)
-            .addStatement("this.%N = $receiverName().apply(block).items()", propName)
-            .build()
-        return listOf(funSpec)
+        functionSpecs {
+            add {
+                funName = functionName
+                param {
+                    lambdaType {
+                        receiver = receiverName
+                    }
+                }
+                statements {
+                    addLine("this.%N = $receiverName().apply(block).items()", propName)
+                }
+            }
+        }
     }
 }

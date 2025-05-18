@@ -1,7 +1,8 @@
 package io.violabs.picard.dsl.params
 
 import com.squareup.kotlinpoet.*
-import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import io.violabs.picard.dsl.utils.kotlinPoet
+import io.violabs.picard.dsl.utils.kpListOf
 
 class ListParam(
     override val propName: String,
@@ -9,36 +10,34 @@ class ListParam(
     override val nullableAssignment: Boolean = true,
     override val nullableProp: Boolean = true
 ) : DSLParam {
-    override val propTypeName: TypeName = LIST.parameterizedBy(collectionType).copy(nullable = nullableAssignment)
+    override val propTypeName: TypeName = kpListOf(collectionType, nullable = nullableAssignment)
 
     override val verifyNotNull: Boolean = false
     override val verifyNotEmpty: Boolean = true
 
-    override fun toPropertySpec(): PropertySpec {
-        val type = propTypeName.copy(nullable = nullableAssignment)
+    override fun toPropertySpec(): PropertySpec = kotlinPoet {
+        propertySpec {
+            private()
+            variable()
+            name = propName
+            type(propTypeName)
 
-        var spec = PropertySpec.Companion.builder(propName, type)
-            .addModifiers(accessModifier)
-            .mutable(true)
-
-        if (nullableAssignment) {
-            spec = spec.initializer("null")
+            if (nullableAssignment) initNullValue()
         }
-
-        return spec.build()
     }
 
     // Example for a list setter (could be more sophisticated, e.g., vararg)
-    override fun accessors(): List<FunSpec> {
-        val spec = ParameterSpec.Companion
-            .builder("items", collectionType.copy(nullable = false))
-            .addModifiers(KModifier.VARARG)
-            .build()
-
-        return FunSpec.Companion.builder(propName)
-            .addParameter(spec) // Usually a non-null list
-            .addStatement("this.%N = items.toList()", propName)
-            .build()
-            .let { listOf(it) }
+    override fun accessors(): List<FunSpec> = kotlinPoet {
+        functionSpecs {
+            add {
+                funName = functionName
+                varargParam {
+                    type(collectionType, nullable = false)
+                }
+                statements {
+                    addLine("this.%N = items.toList()", propName)
+                }
+            }
+        }
     }
 }

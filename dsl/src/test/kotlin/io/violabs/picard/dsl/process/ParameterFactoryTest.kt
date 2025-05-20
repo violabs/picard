@@ -8,7 +8,7 @@ import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.asTypeName
 import io.violabs.geordi.UnitSim
 import io.violabs.picard.common.Logger
-import io.violabs.picard.dsl.annotation.GeneratedGroupDSL
+import io.violabs.picard.dsl.annotation.GeneratedDSL
 import org.junit.jupiter.api.Test
 
 class ParameterFactoryTest : UnitSim() {
@@ -103,6 +103,8 @@ class ParameterFactoryTest : UnitSim() {
         val functionContent: String
     )
 
-    @GeneratedGroupDSL
+    @GeneratedDSL(
+        withGroup = true
+    )
     class Example
 }

@@ -159,7 +159,7 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
             adapter.propName,
             adapter.actualPropTypeName,
             nestedBuilderClassName,
-            adapter.actualPropTypeName.isNullable
+            adapter.hasNullableAssignment
         )
     }
 
@@ -172,7 +172,7 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
             adapter.propName,
             adapter.actualPropTypeName,
             groupElementClassName,
-            adapter.actualPropTypeName.isNullable
+            adapter.hasNullableAssignment
         )
     }
 
@@ -183,7 +183,7 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
             adapter.propName,
             mapDetails.keyType,
             mapDetails.valueType,
-            adapter.actualPropTypeName.isNullable
+            adapter.hasNullableAssignment
         )
     }
 
@@ -195,7 +195,7 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
             val elementValueTypeArgument: TypeName = actualPropertyType.typeArguments.last()
             logger.debug("mapElementKey: $elementKeyTypeArgument", tier = 5, continuous = true)
             logger.debug("mapElementValue: $elementValueTypeArgument", tier = 5, continuous = true)
-            MapParam(propName, elementKeyTypeArgument, elementValueTypeArgument, adapter.actualPropTypeName.isNullable)
+            MapParam(propName, elementKeyTypeArgument, elementValueTypeArgument, adapter.hasNullableAssignment)
         } else {
             // This case should ideally be caught earlier if the type isn't a ParameterizedTypeName
             // or if it's not a list.
@@ -219,7 +219,7 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
         return if (actualPropertyType is ParameterizedTypeName && actualPropertyType.rawType == LIST) {
             val elementTypeArgument: TypeName = actualPropertyType.typeArguments.first()
             logger.debug("listElementType: $elementTypeArgument", tier = 5, continuous = true)
-            ListParam(propName, elementTypeArgument, adapter.actualPropTypeName.isNullable)
+            ListParam(propName, elementTypeArgument, adapter.hasNullableAssignment)
         } else {
             // This case should ideally be caught earlier if the type isn't a ParameterizedTypeName
             // or if it's not a list.

@@ -6,7 +6,6 @@ import io.violabs.picard.dsl.annotation.GeneratedDSL
     withGroup = true,
     withMapGroup = "SINGLE"
 )
-//@GeneratedGroupDSL
 data class Passenger(val name: String, val rank: Rank) {
 
     enum class Rank {

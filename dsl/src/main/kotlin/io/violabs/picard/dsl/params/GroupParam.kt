@@ -9,7 +9,8 @@ class GroupParam(
     originalPropertyType: TypeName,
     private val builtClassName: ClassName,
     override val nullableAssignment: Boolean = true,
-    override val nullableProp: Boolean = true
+    override val nullableProp: Boolean = true,
+    private val kdoc: String? = null
 ) : DSLParam {
     override val propTypeName: TypeName = originalPropertyType
 
@@ -34,6 +35,7 @@ class GroupParam(
         function {
             add {
                 funName = functionName
+                kdoc?.let { kdoc(it) }
                 param {
                     lambdaType {
                         receiver = receiverName

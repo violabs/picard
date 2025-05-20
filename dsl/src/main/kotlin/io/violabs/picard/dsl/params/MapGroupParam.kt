@@ -10,7 +10,8 @@ class MapGroupParam(
     val mapKeyType: TypeName = STRING,
     val mapValueType: TypeName,
     override val nullableAssignment: Boolean = true,
-    override val nullableProp: Boolean = true
+    override val nullableProp: Boolean = true,
+    private val kdoc: String? = null
 ) : DSLParam {
     override val propTypeName: TypeName = kpMapOf(mapKeyType, mapValueType, nullable = nullableAssignment)
 
@@ -39,6 +40,7 @@ class MapGroupParam(
         function {
             add {
                 funName = functionName
+                kdoc?.let { kdoc(it) }
                 param {
                     lambdaType {
                         receiver = mapGroupClass

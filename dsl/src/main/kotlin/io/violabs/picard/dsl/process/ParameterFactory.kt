@@ -1,6 +1,7 @@
 package io.violabs.picard.dsl.process
 
 import com.squareup.kotlinpoet.*
+import com.google.devtools.ksp.symbol.KSClassDeclaration
 import io.violabs.picard.common.Logger
 import io.violabs.picard.dsl.annotation.GeneratedDSL
 import io.violabs.picard.dsl.params.*
@@ -170,11 +171,14 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
         val nestedBuilderName = propertyNonNullableClassName.simpleName + "Builder"
         val nestedBuilderClassName = ClassName(propertyNonNullableClassName.packageName, nestedBuilderName)
         logger.debug("nestedBuilder: $nestedBuilderClassName", tier = 5, continuous = true)
+        val kdoc = builderDoc(nestedBuilderClassName, adapter.propertyClassDeclaration)
+        
         return BuilderParam(
             adapter.propName,
             adapter.actualPropTypeName,
             nestedBuilderClassName,
-            adapter.hasNullableAssignment
+            adapter.hasNullableAssignment,
+            kdoc = kdoc
         )
     }
 
@@ -183,23 +187,36 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
             "Could not determine group element class name."
         }
         logger.debug("listElementClassName: $groupElementClassName", tier = 5, continuous = true)
+        val builderClassName = ClassName(groupElementClassName.packageName, groupElementClassName.simpleName + "Builder")
+        val kdoc = builderDoc(builderClassName, adapter.groupElementClassDeclaration)
         return GroupParam(
             adapter.propName,
             adapter.actualPropTypeName,
             groupElementClassName,
-            adapter.hasNullableAssignment
+            adapter.hasNullableAssignment,
+            kdoc = kdoc
         )
     }
 
     private fun createMapGroupParam(adapter: T): MapGroupParam {
         val mapDetails = requireNotNull(adapter.mapDetails) { "Please add map details to the map parameter" }
+        val kdoc = builderDoc(mapDetails.valueClass(), adapter.mapValueClassDeclaration)
 
         return MapGroupParam(
             adapter.propName,
             mapDetails.keyType,
             mapDetails.valueType,
-            adapter.hasNullableAssignment
+            adapter.hasNullableAssignment,
+            kdoc = kdoc
         )
+    }
+
+    private fun builderDoc(builderClass: ClassName, declaration: KSClassDeclaration?): String? {
+        val props = declaration?.getAllProperties()?.map { it.simpleName.asString() }?.toList() ?: return null
+
+        if (props.isEmpty()) return null
+        val list = props.sorted().joinToString("\n") { "* [${builderClass.simpleName}.$it]" }
+        return "Available builder functions:\n$list"
     }
 
     /**

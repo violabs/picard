@@ -39,8 +39,8 @@ class MapBuilderParamTest : UnitSim() {
 
             expect {
                 """
-                    |public fun test(block: io.violabs.picard.dsl.params.TestObjBuilder.MapGroup<kotlin.String>.() -> kotlin.Unit) {
-                    |  this.test = io.violabs.picard.dsl.params.TestObjBuilder.MapGroup<kotlin.String>().apply(block).items().toMap()
+                    |public fun test(block: io.violabs.picard.dsl.params.TestObjDSLBuilder.MapGroup<kotlin.String>.() -> kotlin.Unit) {
+                    |  this.test = io.violabs.picard.dsl.params.TestObjDSLBuilder.MapGroup<kotlin.String>().apply(block).items().toMap()
                     |}
                 """.trimMargin()
             }

@@ -1,6 +1,7 @@
-package io.violabs.picard.starCharts.loki
+package io.violabs.picard.starCharts.loki.cacheConfig
 
 import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.starCharts.loki.Duration
 
 @GeneratedDSL
 data class CacheConfig(
@@ -10,9 +11,9 @@ data class CacheConfig(
      * [default_validity: <duration> | default = 1h]
      */
     val defaultValidity: Duration? = null,
-    val background: cacheConfig.Background? = null,
-    val memcached: cacheConfig.Memcached? = null,
-    val memcachedClient: cacheConfig.MemcachedClient? = null,
-    val redis: cacheConfig.Redis? = null,
-    val embeddedCache: cacheConfig.EmbeddedCache? = null,
+    val background: Background? = null,
+    val memcached: Memcached? = null,
+    val memcachedClient: MemcachedClient? = null,
+    val redis: Redis? = null,
+    val embeddedCache: EmbeddedCache? = null,
 )

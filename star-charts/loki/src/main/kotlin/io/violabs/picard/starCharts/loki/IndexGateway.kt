@@ -1,6 +1,7 @@
 package io.violabs.picard.starCharts.loki
 
 import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.starCharts.loki.ring.Ring
 
 @GeneratedDSL
 data class IndexGateway(
@@ -21,5 +22,5 @@ data class IndexGateway(
      * # configured, this block supports inheriting configuration from the common ring
      * # section.
      */
-    val ring: indexGateway.Ring? = null,
+    val ring: Ring? = null,
 )

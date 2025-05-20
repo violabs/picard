@@ -1,5 +1,7 @@
 package io.violabs.picard.starCharts.loki
 
+import io.violabs.picard.starCharts.loki.gatewayConfig.GatewayConfig
+
 
 //  loki:
 //    schemaConfig:

@@ -37,8 +37,8 @@ class GroupParamTest : UnitSim() {
 
             expect {
                 """
-                    |public fun test(block: test.TestObjBuilder.Group.() -> kotlin.Unit) {
-                    |  this.test = test.TestObjBuilder.Group().apply(block).items()
+                    |public fun test(block: test.TestObjDSLBuilder.Group.() -> kotlin.Unit) {
+                    |  this.test = test.TestObjDSLBuilder.Group().apply(block).items()
                     |}
                 """.trimMargin()
             }

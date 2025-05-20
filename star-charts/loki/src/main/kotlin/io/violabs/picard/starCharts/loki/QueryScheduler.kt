@@ -1,6 +1,7 @@
 package io.violabs.picard.starCharts.loki
 
 import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.starCharts.loki.ring.SchedulerRing
 
 @GeneratedDSL
 data class QueryScheduler(
@@ -48,5 +49,5 @@ data class QueryScheduler(
      * # The hash ring configuration. This option is required only if
      * # use_scheduler_ring is true.
      */
-    val schedulerRing: queryScheduler.SchedulerRing? = null,
+    val schedulerRing: SchedulerRing? = null,
 )

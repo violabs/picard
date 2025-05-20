@@ -28,7 +28,7 @@ class GroupParam(
 
     override fun accessors(): List<FunSpec> = kotlinPoet {
         val receiverName =  builtClassName.nestedClass(
-            extensionName = "Builder",
+            extensionName = "DSLBuilder",
             nestedClassName = "Group"
         )
 

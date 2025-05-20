@@ -1,12 +1,12 @@
-package io.violabs.picard.starCharts.loki
+package io.violabs.picard.starCharts.loki.periodConfig
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.PropertyNamingStrategies
-import com.fasterxml.jackson.databind.annotation.JsonNaming
-import io.violabs.picard.domain.k8sResources.Quantity
+import io.violabs.picard.dsl.annotation.GeneratedDSL
 import java.time.LocalDate
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
+@GeneratedDSL(
+    withGroup = true
+)
 data class PeriodConfig(
     /**
      * The date of the first day that index buckets should be created. Use a date in
@@ -46,43 +46,4 @@ data class PeriodConfig(
      */
     @JsonProperty("row_shards")
     val rowShards: Int? = null
-) {
-
-    @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
-    data class Index(
-        /**
-         * Path prefix for index tables. Prefix always needs to end with a path
-         * delimiter '/', except when the prefix is empty.
-         */
-        @JsonProperty("path_prefix")
-        val pathPrefix: String? = null,
-        /**
-         * Table prefix for all period tables.
-         */
-        val prefix: String? = null,
-        /**
-         * Table period.
-         */
-        val period: Quantity? = null,
-        /**
-         * A map to be added to all managed tables.
-         */
-        val tags: Map<String, String>? = null
-    )
-
-    @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
-    data class Chunk(
-        /**
-         * Table prefix for all period tables.
-         */
-        val prefix: String? = null,
-        /**
-         * Table period.
-         */
-        val period: Quantity? = null,
-        /**
-         * A map to be added to all managed tables.
-         */
-        val tags: Map<String, String>? = null
-    )
-}
+)

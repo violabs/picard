@@ -187,7 +187,7 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
             "Could not determine group element class name."
         }
         logger.debug("listElementClassName: $groupElementClassName", tier = 5, continuous = true)
-        val builderClassName = ClassName(groupElementClassName.packageName, groupElementClassName.simpleName + "Builder")
+        val builderClassName = ClassName(groupElementClassName.packageName, groupElementClassName.simpleName + "DSLBuilder")
         val kdoc = builderDoc(builderClassName, adapter.groupElementClassDeclaration)
         return GroupParam(
             adapter.propName,

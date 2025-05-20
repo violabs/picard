@@ -54,8 +54,8 @@ class ParameterFactoryTest : UnitSim() {
                 TestResponse(
                     "private var test: kotlin.collections.List<test.Example>? = null\n",
                     """
-                        |public fun test(block: test.ExampleBuilder.Group.() -> kotlin.Unit) {
-                        |  this.test = test.ExampleBuilder.Group().apply(block).items()
+                        |public fun test(block: test.ExampleDSLBuilder.Group.() -> kotlin.Unit) {
+                        |  this.test = test.ExampleDSLBuilder.Group().apply(block).items()
                         |}
                         |
                     """.trimMargin()

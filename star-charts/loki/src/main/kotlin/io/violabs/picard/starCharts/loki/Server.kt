@@ -3,7 +3,7 @@ package io.violabs.picard.starCharts.loki
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.annotation.JsonNaming
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import io.violabs.picard.domain.k8sResources.Quantity
+import io.violabs.picard.starCharts.loki.clusterValidation.ClusterValidation
 import io.violabs.picard.starCharts.loki.tls.TLSConfig
 import io.violabs.picard.starCharts.loki.tls.TLSVersion
 import io.violabs.picard.starCharts.serialization.ListToCommaSeparatedSerializer

@@ -33,7 +33,7 @@ class MapGroupParam(
         val valueClassName = mapValueType.copy(nullable = false) as ClassName
         val mapGroupClass = ClassName(
             valueClassName.packageName,
-            valueClassName.simpleName + "Builder",
+            valueClassName.simpleName + "DSLBuilder",
             "MapGroup"
         ).parameterizedBy(mapKeyType.copy(nullable = false))
 

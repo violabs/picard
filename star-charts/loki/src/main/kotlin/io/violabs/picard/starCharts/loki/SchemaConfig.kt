@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies
-import com.fasterxml.jackson.databind.annotation.JsonNaming
+import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.starCharts.loki.periodConfig.PeriodConfig
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
+@GeneratedDSL
 data class SchemaConfig(
     val configs: List<PeriodConfig>
 )

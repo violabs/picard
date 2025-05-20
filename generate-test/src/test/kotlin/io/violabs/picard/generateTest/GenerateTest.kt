@@ -92,7 +92,7 @@ class GenerateTest : UnitSim() {
         }
     }
 
-    fun makeCall(block: StarShipBuilder.() -> Unit): StarShip {
-        return StarShipBuilder().apply(block).build()
+    fun makeCall(block: StarShipDSLBuilder.() -> Unit): StarShip {
+        return StarShipDSLBuilder().apply(block).build()
     }
 }

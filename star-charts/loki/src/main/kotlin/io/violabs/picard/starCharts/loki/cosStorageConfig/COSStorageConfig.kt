@@ -1,8 +1,6 @@
-package io.violabs.picard.starCharts.loki
+package io.violabs.picard.starCharts.loki.cosStorageConfig
 
 import io.violabs.picard.dsl.annotation.GeneratedDSL
-import io.violabs.picard.starCharts.loki.cosStorageConfig.BackoffConfig
-import io.violabs.picard.starCharts.loki.cosStorageConfig.HTTPConfig
 
 @GeneratedDSL
 data class COSStorageConfig(

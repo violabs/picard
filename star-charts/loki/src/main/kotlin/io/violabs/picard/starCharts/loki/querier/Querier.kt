@@ -1,10 +1,9 @@
-package io.violabs.picard.starCharts.loki
+package io.violabs.picard.starCharts.loki.querier
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies
-import com.fasterxml.jackson.databind.annotation.JsonNaming
 import io.violabs.picard.domain.k8sResources.Quantity
+import io.violabs.picard.dsl.annotation.GeneratedDSL
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
+@GeneratedDSL
 data class Querier(
     /**
      * Maximum duration for which the live tailing requests are served.
@@ -57,20 +56,4 @@ data class Querier(
      * CLI flag: -querier.query-partition-ingesters
      */
     val queryPartitionIngesters: Boolean? = null
-) {
-    @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
-    data class Engine(
-        /**
-         * The maximum amount of time to look back for log lines. Used only for instant
-         * log queries.
-         * CLI flag: -querier.engine.max-lookback-period
-         */
-        val maxLookBackPeriod: Quantity? = null,
-        /**
-         * The maximum number of labels the heap of a topk query using a count min
-         * sketch can track.
-         * CLI flag: -querier.engine.max-count-min-sketch-heap-size
-         */
-        val maxCountMinSketchHeapSize: Int? = null
-    )
-}
+)

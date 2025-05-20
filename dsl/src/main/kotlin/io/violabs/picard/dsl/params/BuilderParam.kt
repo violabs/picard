@@ -8,7 +8,8 @@ class BuilderParam(
     originalPropertyType: TypeName,
     private val nestedBuilderClassName: ClassName,
     override val nullableAssignment: Boolean = true,
-    override val nullableProp: Boolean = true
+    override val nullableProp: Boolean = true,
+    private val kdoc: String? = null
 ) : DSLParam {
     override val propTypeName: TypeName = originalPropertyType
 
@@ -16,6 +17,7 @@ class BuilderParam(
         function {
             add {
                 funName = functionName
+                kdoc?.let { kdoc(it) }
                 param {
                     lambdaType {
                         receiver = nestedBuilderClassName

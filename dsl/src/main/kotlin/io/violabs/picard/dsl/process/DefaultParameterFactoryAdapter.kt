@@ -46,15 +46,16 @@ class DefaultParameterFactoryAdapter(
 
     override val hasNullableAssignment: Boolean = resolvedPropKSType.isMarkedNullable
 
-    private val propertyClassDeclaration = resolvedPropKSType.declaration as? KSClassDeclaration
+    private val classDeclarationInternal = resolvedPropKSType.declaration as? KSClassDeclaration
 
-    override val propertyNonNullableClassName: ClassName? = propertyClassDeclaration?.toClassName()
+    override val propertyNonNullableClassName: ClassName? = classDeclarationInternal?.toClassName()
 
-    override val hasGeneratedDSLAnnotation: Boolean = propertyClassDeclaration?.annotations?.any {
+    override val hasGeneratedDSLAnnotation: Boolean = classDeclarationInternal?.annotations?.any {
         it.shortName.asString() == GeneratedDSL::class.simpleName
     } ?: false
 
-    override val propertyClassDeclarationQualifiedName: String? = propertyClassDeclaration?.qualifiedName?.asString()
+    override val propertyClassDeclarationQualifiedName: String? = classDeclarationInternal?.qualifiedName?.asString()
+    override val propertyClassDeclaration: KSClassDeclaration? = classDeclarationInternal
 
     // list only
     private val collectionFirstElementClassDecl = resolvedPropKSType
@@ -84,6 +85,7 @@ class DefaultParameterFactoryAdapter(
         ?: false
 
     override val groupElementClassName: ClassName? = collectionFirstElementClassDecl?.toClassName()
+    override val groupElementClassDeclaration: KSClassDeclaration? = collectionFirstElementClassDecl
 
     private val dslAnnotations: List<KSAnnotation>? = collectionSecondElementClassDecl
         ?.annotations
@@ -100,6 +102,7 @@ class DefaultParameterFactoryAdapter(
     }
 
     override var mapDetails: ParameterFactoryAdapter.MapDetails? = null
+    override val mapValueClassDeclaration: KSClassDeclaration? = collectionSecondElementClassDecl
 
     override fun mapDetails(): ParameterFactoryAdapter.MapDetails? {
         if (mapDetails != null) return mapDetails

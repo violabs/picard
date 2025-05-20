@@ -8,11 +8,16 @@ import com.squareup.kotlinpoet.TypeName
 internal class KPFunSpecBuilder : DefaultParamSpecEnabled() {
     var funName: String? = null
     var returns: TypeName? = null
+    var kdoc: String? = null
     private var overridden: Boolean = false
     private var statements: MutableList<KPStatement> = mutableListOf()
 
     fun override(on: Boolean = true) {
         overridden = on
+    }
+
+    fun kdoc(text: String) {
+        kdoc = text
     }
 
     fun statements(block: KPStatement.Group.() -> Unit) {
@@ -28,6 +33,9 @@ internal class KPFunSpecBuilder : DefaultParamSpecEnabled() {
         }
 
         spec = returns?.let { spec.returns(it) } ?: spec
+
+        if (overridden) spec = spec.addModifiers(KModifier.OVERRIDE)
+        if (kdoc != null) spec = spec.addKdoc(kdoc!!)
 
         for (statement in statements) {
             spec = spec.addStatement(statement.statement, *statement.args.toTypedArray())

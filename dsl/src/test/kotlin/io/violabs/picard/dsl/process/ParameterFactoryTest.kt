@@ -6,6 +6,7 @@ import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.STRING
 import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.asTypeName
+import com.google.devtools.ksp.symbol.KSClassDeclaration
 import io.violabs.geordi.UnitSim
 import io.violabs.picard.common.Logger
 import io.violabs.picard.dsl.annotation.GeneratedDSL
@@ -84,9 +85,12 @@ class ParameterFactoryTest : UnitSim() {
         override val propertyNonNullableClassName: ClassName? = null
         override val hasGeneratedDSLAnnotation: Boolean = false
         override val propertyClassDeclarationQualifiedName: String? = null
+        override val propertyClassDeclaration: KSClassDeclaration? = null
         override val isGroupElement: Boolean = isGroup
         override val groupElementClassName: ClassName? = ClassName("test", "Example")
+        override val groupElementClassDeclaration: KSClassDeclaration? = null
         override var mapDetails: ParameterFactoryAdapter.MapDetails? = null
+        override val mapValueClassDeclaration: KSClassDeclaration? = null
     }
 
     class TestPropAdapter(

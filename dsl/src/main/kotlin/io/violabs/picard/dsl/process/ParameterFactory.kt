@@ -2,7 +2,10 @@ package io.violabs.picard.dsl.process
 
 import com.squareup.kotlinpoet.*
 import io.violabs.picard.common.Logger
+import io.violabs.picard.dsl.annotation.GeneratedDSL
 import io.violabs.picard.dsl.params.*
+import kotlin.reflect.KClass
+
 
 private val DEFAULT_TYPE_NAMES = listOf(
     CHAR, STRING, BYTE, SHORT, INT, LONG, DOUBLE, FLOAT
@@ -50,7 +53,7 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
         val propName = adapter.propName
         val actualPropertyType: TypeName = adapter.actualPropTypeName
         val isNullable = actualPropertyType.isNullable
-        val nonNullPropType = actualPropertyType.copy(nullable = false)
+        val nonNullPropType = adapter.nonNullablePropTypeName()
 
         val branch = !isLast
 
@@ -66,7 +69,7 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
 
         if (hasGeneratedDSLAnnotation && propertyNonNullableClassName != null) {
             logger.debug("BuilderParam", tier = 4, branch = branch, continuous = true)
-            return createBuilderParam(propName, actualPropertyType, propertyNonNullableClassName, isNullable)
+            return createBuilderParam(adapter)
         }
 
         return when {
@@ -80,16 +83,25 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
                 DefaultParam(propName, actualPropertyType, isNullable)
             }
 
-            (nonNullPropType is ParameterizedTypeName && nonNullPropType.rawType == LIST) ||
-                (adapter.propertyClassDeclarationQualifiedName == List::class.qualifiedName) -> {
-                if (adapter.isGroupElement) {
-                    val elementClassName = adapter.groupElementClassName
-                        ?: throw IllegalArgumentException("Could not determine group element class name.")
-                    logger.debug("GroupParam", tier = 4, branch = branch, continuous = true)
-                    createGroupParam(propName, actualPropertyType, elementClassName, isNullable)
+            checkCollectionType(adapter, MAP, Map::class) -> {
+                logger.debug("[CHOICE] map branch", tier = 4, branch = branch, continuous = true)
+                if (adapter.mapDetails()?.mapGroupType in GeneratedDSL.MapGroupType.ACTIVE_TYPES) {
+                    logger.debug("[DECISION] build MapGroupParam", tier = 4, branch = branch, continuous = true)
+                    createMapGroupParam(adapter)
                 } else {
-                    logger.debug("ListParam", tier = 4, branch = branch, continuous = true)
-                    createListParam(actualPropertyType, propName, isNullable)
+                    logger.debug("[DECISION] build MapParam", tier = 4, branch = branch, continuous = true)
+                    createMapParam(adapter)
+                }
+            }
+
+            checkCollectionType(adapter, LIST, List::class) -> {
+                logger.debug("[CHOICE] list branch", tier = 4, branch = branch, continuous = true)
+                if (adapter.isGroupElement) {
+                    logger.debug("[DECISION] build GroupParam", tier = 4, branch = branch, continuous = true)
+                    createGroupParam(adapter)
+                } else {
+                    logger.debug("[DECISION] build ListParam", tier = 4, branch = branch, continuous = true)
+                    createListParam(adapter)
                 }
             }
 
@@ -100,6 +112,18 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
                 param
             }
         }
+    }
+
+    private fun checkCollectionType(
+        adapter: T,
+        expectedType: TypeName,
+        expectedClass: KClass<*>
+    ): Boolean {
+        val nonNullPropType = adapter.nonNullablePropTypeName()
+        val isRawCollection = nonNullPropType is ParameterizedTypeName && nonNullPropType.rawType == expectedType
+        val isQualifiedCollection = adapter.propertyClassDeclarationQualifiedName == expectedClass.qualifiedName
+
+        return isRawCollection || isQualifiedCollection
     }
 
     private fun buildSingleTransformParam(
@@ -123,46 +147,93 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
     }
 
     private fun createBuilderParam(
-        propName: String,
-        actualPropertyType: TypeName,
-        propertyNonNullableClassName: ClassName, // This is the ClassName of the type that needs a builder
-        isNullable: Boolean
+        adapter: T,
     ): BuilderParam {
+        val propertyNonNullableClassName = requireNotNull(adapter.propertyNonNullableClassName) {
+            "Could not determine property non-nullable class name."
+        }
         val nestedBuilderName = propertyNonNullableClassName.simpleName + "Builder"
         val nestedBuilderClassName = ClassName(propertyNonNullableClassName.packageName, nestedBuilderName)
         logger.debug("nestedBuilder: $nestedBuilderClassName", tier = 5, continuous = true)
-        return BuilderParam(propName, actualPropertyType, nestedBuilderClassName, isNullable)
+        return BuilderParam(
+            adapter.propName,
+            adapter.actualPropTypeName,
+            nestedBuilderClassName,
+            adapter.actualPropTypeName.isNullable
+        )
     }
 
-
-    private fun createGroupParam(
-        propName: String,
-        actualPropertyType: TypeName, // This is TypeName of the List itself, e.g., List<MyItem>
-        listElementClassName: ClassName, // This is ClassName of the element, e.g., MyItem
-        isNullable: Boolean
-    ): GroupParam {
-        logger.debug("listElementClassName:  $listElementClassName", tier = 5, continuous = true)
-        return GroupParam(propName, actualPropertyType, listElementClassName, isNullable)
+    private fun createGroupParam(adapter: T): GroupParam {
+        val groupElementClassName = requireNotNull(adapter.groupElementClassName) {
+            "Could not determine group element class name."
+        }
+        logger.debug("listElementClassName: $groupElementClassName", tier = 5, continuous = true)
+        return GroupParam(
+            adapter.propName,
+            adapter.actualPropTypeName,
+            groupElementClassName,
+            adapter.actualPropTypeName.isNullable
+        )
     }
 
-    private fun createListParam(
-        actualPropertyType: TypeName, // TypeName of the List itself
-        propName: String,
-        isNullable: Boolean
-    ): ListParam {
-        return if (actualPropertyType is ParameterizedTypeName && actualPropertyType.rawType == LIST) {
-            val elementTypeArgument: TypeName = actualPropertyType.typeArguments.first()
-            logger.debug("listElementType: $elementTypeArgument", tier = 5, continuous = true)
-            ListParam(propName, elementTypeArgument, isNullable)
+    private fun createMapGroupParam(adapter: T): MapGroupParam {
+        val mapDetails = requireNotNull(adapter.mapDetails) { "Please add map details to the map parameter" }
+
+        return MapGroupParam(
+            adapter.propName,
+            mapDetails.keyType,
+            mapDetails.valueType,
+            adapter.actualPropTypeName.isNullable
+        )
+    }
+
+    private fun createMapParam(adapter: T): MapParam {
+        val propName = adapter.propName
+        val actualPropertyType: TypeName = adapter.actualPropTypeName
+        return if (actualPropertyType is ParameterizedTypeName && actualPropertyType.rawType == MAP) {
+            val elementKeyTypeArgument: TypeName = actualPropertyType.typeArguments.first()
+            val elementValueTypeArgument: TypeName = actualPropertyType.typeArguments.last()
+            logger.debug("mapElementKey: $elementKeyTypeArgument", tier = 5, continuous = true)
+            logger.debug("mapElementValue: $elementValueTypeArgument", tier = 5, continuous = true)
+            MapParam(propName, elementKeyTypeArgument, elementValueTypeArgument, adapter.actualPropTypeName.isNullable)
         } else {
             // This case should ideally be caught earlier if the type isn't a ParameterizedTypeName
             // or if it's not a list.
             // If actualPropertyType is just a non-parameterized List (raw List), handle appropriately.
             // For safety, if somehow called with a non-parameterized list or non-list:
-            logger.warn("Attempted to create ListParam for non-parameterized or non-list type: $actualPropertyType. Falling back to DefaultParam logic for element if possible, or erroring.")
+            logger.warn(
+                "Attempted to create ListParam for non-parameterized or non-list type: $actualPropertyType. " +
+                    "Falling back to DefaultParam logic for element if possible, or erroring."
+            )
             // A true raw list is rare in Kotlin type declarations. If it's List<*>, typeArguments.first() might be STAR
             // This fallback might need to be more robust or simply throw an error as it indicates an unexpected state.
-            throw IllegalArgumentException("Property '$propName' of type '${actualPropertyType}' could not be definitively mapped to ListParam components.")
+            throw IllegalArgumentException(
+                "Property '$propName' of type '${actualPropertyType}' could not be definitively " +
+                    "mapped to ListParam components.")
+        }
+    }
+
+    private fun createListParam(adapter: T): ListParam {
+        val propName = adapter.propName
+        val actualPropertyType: TypeName = adapter.actualPropTypeName
+        return if (actualPropertyType is ParameterizedTypeName && actualPropertyType.rawType == LIST) {
+            val elementTypeArgument: TypeName = actualPropertyType.typeArguments.first()
+            logger.debug("listElementType: $elementTypeArgument", tier = 5, continuous = true)
+            ListParam(propName, elementTypeArgument, adapter.actualPropTypeName.isNullable)
+        } else {
+            // This case should ideally be caught earlier if the type isn't a ParameterizedTypeName
+            // or if it's not a list.
+            // If actualPropertyType is just a non-parameterized List (raw List), handle appropriately.
+            // For safety, if somehow called with a non-parameterized list or non-list:
+            logger.warn(
+                "Attempted to create ListParam for non-parameterized or non-list type: $actualPropertyType. " +
+                    "Falling back to DefaultParam logic for element if possible, or erroring."
+            )
+            // A true raw list is rare in Kotlin type declarations. If it's List<*>, typeArguments.first() might be STAR
+            // This fallback might need to be more robust or simply throw an error as it indicates an unexpected state.
+            throw IllegalArgumentException(
+                "Property '$propName' of type '${actualPropertyType}' could not be definitively " +
+                    "mapped to ListParam components.")
         }
     }
 }

@@ -28,10 +28,20 @@ class GenerateTest : UnitSim() {
                     // map based primitives (vararg)
                     // map based primitives (add)
                     // map based complex (add w/ builder)
-                    // group (list bldr)
                     passengers = listOf(
                         Passenger(name = "Beverly Crusher", rank = Passenger.Rank.COMMANDER),
                         Passenger(name = "Worf", rank = Passenger.Rank.LIEUTENANT_COMMANDER)
+                    ),
+                    areaCodes = mapOf(
+                        "A1" to "Artax 1",
+                        "VLS" to "Violet Lunar Station"
+                    ),
+                    roomMap = mapOf(
+                        "1" to Passenger(name = "Jean-Luc Picard", rank = Passenger.Rank.CAPTAIN),
+                        "2" to Passenger(
+                            name = "William T. Riker",
+                            rank = Passenger.Rank.COMMANDER
+                        )
                     )
                 )
             }
@@ -60,6 +70,21 @@ class GenerateTest : UnitSim() {
                         passenger {
                             name = "Worf"
                             rank = Passenger.Rank.LIEUTENANT_COMMANDER
+                        }
+                    }
+                    areaCodes(
+                        "A1" to "Artax 1",
+                        "VLS" to "Violet Lunar Station"
+                    )
+                    roomMap {
+                        passenger("1") {
+                            name = "Jean-Luc Picard"
+                            rank = Passenger.Rank.CAPTAIN
+                        }
+
+                        passenger("2") {
+                            name = "William T. Riker"
+                            rank = Passenger.Rank.COMMANDER
                         }
                     }
                 }

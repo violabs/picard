@@ -7,17 +7,15 @@ import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.squareup.kotlinpoet.TypeVariableName
 import com.squareup.kotlinpoet.joinToCode
 import com.squareup.kotlinpoet.ksp.toClassName
 import com.squareup.kotlinpoet.ksp.writeTo
 import io.violabs.picard.common.Colors
 import io.violabs.picard.common.Logger
 import io.violabs.picard.dsl.annotation.GeneratedDSL
-import io.violabs.picard.dsl.annotation.GeneratedGroupDSL
 import io.violabs.picard.dsl.annotation.SingleEntryTransformDSL
-import io.violabs.picard.dsl.builder.kotlinPoet
-import io.violabs.picard.dsl.builder.kpListOf
-import io.violabs.picard.dsl.builder.kpMutableListOf
+import io.violabs.picard.dsl.builder.*
 import io.violabs.picard.dsl.params.DSLParam
 
 private val LOGGER = Logger("DSL_BUILDER")
@@ -115,7 +113,24 @@ class BuilderGenerator(
                     }
 
                     val isGroup = domain.annotations
-                        .any { it.shortName.asString() == GeneratedGroupDSL::class.simpleName.toString() }
+                        .filter { it.shortName.asString() == GeneratedDSL::class.simpleName.toString() }
+                        .flatMap { it.arguments }
+                        .filter { it.name?.asString() == GeneratedDSL::withGroup.name }
+                        .onEach { LOGGER.debug("found arg: ${it.name?.asString()} - ${it.value}", tier = 1) }
+                        .any { it.value.toString() == "true" }
+
+                    LOGGER.debug("[DECISION] isGroup: $isGroup", tier = 1)
+
+                    val isMapBuilderGroup = domain.annotations
+                        .filter { it.shortName.asString() == GeneratedDSL::class.simpleName.toString() }
+                        .flatMap { it.arguments }
+                        .filter { it.name?.asString() == GeneratedDSL::withMapGroup.name }
+                        .onEach { LOGGER.debug("found arg: ${it.name?.asString()} - ${it.value}", tier = 1) }
+                        .any { argument ->
+                            val activeTypes = GeneratedDSL.MapGroupType.ACTIVE_TYPES.map { it.name }
+                            argument.value?.toString() in activeTypes
+                        }
+                    LOGGER.debug("[DECISION] isMapGroup: $isGroup", tier = 1)
 
                     if (isGroup) {
                         LOGGER.debug("group domain", tier = 1, branch = true)
@@ -158,8 +173,55 @@ class BuilderGenerator(
                                 }
                             }
                         }
-                    } else {
-                        LOGGER.debug("single domain", tier = 1, branch = true)
+                    }
+
+                    if (isMapBuilderGroup) {
+                        LOGGER.debug("map group domain", tier = 1, branch = true)
+                        val builderClassName = ClassName(pkg, builderName)
+
+                        nested {
+                            val typeVariable = TypeVariableName("T")
+                            addType {
+                                name = "MapGroup"
+                                typeVariables(typeVariable)
+                                annotation {
+                                    createDslMarkerIfAvailable(dslMarkerClasspath)
+                                }
+                                properties {
+                                    add {
+                                        private()
+                                        name = "items"
+                                        type(kpMutableMapOf(typeVariable, domainClassName, nullable = false))
+                                        initializer = "mutableMapOf()"
+                                    }
+                                }
+                                functions {
+                                    add {
+                                        funName = "items"
+                                        returns = kpMapOf(typeVariable, domainClassName, nullable = false)
+                                        statements {
+                                            addLine("return items.toMap()")
+                                        }
+                                    }
+
+                                    add {
+                                        funName = domainClassName.simpleName.replaceFirstChar { it.lowercase() }
+                                        param {
+                                            name = "key"
+                                            type(typeVariable, nullable = false)
+                                        }
+                                        param {
+                                            lambdaType {
+                                                receiver = builderClassName
+                                            }
+                                        }
+                                        statements {
+                                            addLine("items[key] = %T().apply(block).build()", builderClassName)
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

@@ -86,6 +86,7 @@ class ParameterFactoryTest : UnitSim() {
         override val propertyClassDeclarationQualifiedName: String? = null
         override val isGroupElement: Boolean = isGroup
         override val groupElementClassName: ClassName? = ClassName("test", "Example")
+        override var mapDetails: ParameterFactoryAdapter.MapDetails? = null
     }
 
     class TestPropAdapter(

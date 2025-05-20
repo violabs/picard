@@ -23,7 +23,9 @@ internal class KPFunSpecBuilder : DefaultParamSpecEnabled() {
         val name = requireNotNull(funName) { "Fun - funName must be set" }
         var spec = FunSpec.builder(name)
 
-        spec = param?.let { spec.addParameter(it) } ?: spec
+        for (param in params) {
+            spec = spec.addParameter(param)
+        }
 
         spec = returns?.let { spec.returns(it) } ?: spec
 

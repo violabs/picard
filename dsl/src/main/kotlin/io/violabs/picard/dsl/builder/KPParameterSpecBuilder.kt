@@ -1,5 +1,6 @@
 package io.violabs.picard.dsl.builder
 
+import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.ParameterSpec
 import com.squareup.kotlinpoet.TypeName
 
@@ -23,5 +24,29 @@ internal class KPParameterSpecBuilder : TypedSpec, DefaultKotlinPoetSpec() {
         if (defaultValue != null) spec = spec.defaultValue(defaultValue!!)
 
         return spec.build()
+    }
+
+    class Group {
+        val items: MutableList<ParameterSpec> = mutableListOf()
+
+        fun param(
+            block: KPParameterSpecBuilder.() -> Unit
+        ): ParameterSpec {
+            return KPParameterSpecBuilder().apply(block).build()
+        }
+
+        fun varargParam(
+            block: KPParameterSpecBuilder.() -> Unit
+        ): ParameterSpec {
+            return KPParameterSpecBuilder()
+                .apply {
+                    name = "items"
+                }
+                .apply(block)
+                .apply {
+                    modifiers.add(KModifier.VARARG)
+                }
+                .build()
+        }
     }
 }

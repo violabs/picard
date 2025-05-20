@@ -1,22 +1,16 @@
 package io.violabs.picard.dsl.builder
 
-import com.squareup.kotlinpoet.ClassName
-import com.squareup.kotlinpoet.FunSpec
-import com.squareup.kotlinpoet.PropertySpec
-import com.squareup.kotlinpoet.TypeName
-import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.*
 
 @PicardDSLMarker
 internal class KPTypeSpecBuilder : DefaultKotlinPoetSpec() {
     private var superInterface: TypeName? = null
+    private var typeVariables: MutableList<TypeVariableName> = mutableListOf()
     private val annotationNames: MutableList<ClassName> = mutableListOf()
     private var properties: MutableList<PropertySpec> = mutableListOf()
     private var functions: MutableList<FunSpec> = mutableListOf()
     private var nested: MutableList<TypeSpec> = mutableListOf()
-
-    fun superInterface(superInterface: TypeName) {
-        this.superInterface = superInterface
-    }
+    private var sharedGroup: Group? = null
 
     fun annotation(packageName: String, annotationSimpleName: String) {
         annotationNames.add(ClassName(packageName, annotationSimpleName))
@@ -24,6 +18,18 @@ internal class KPTypeSpecBuilder : DefaultKotlinPoetSpec() {
 
     fun annotation(provider: () -> ClassName?) {
         provider()?.let { annotationNames.add(it) }
+    }
+
+    fun superInterface(superInterface: TypeName) {
+        this.superInterface = superInterface
+    }
+
+    fun typeVariables(vararg typeVariables: String) {
+        this.typeVariables = typeVariables.map { TypeVariableName(it) }.toMutableList()
+    }
+
+    fun typeVariables(vararg typeVariables: TypeVariableName) {
+        this.typeVariables = typeVariables.toMutableList()
     }
 
     fun properties(block: KPPropertySpecBuilder.Group.() -> Unit) {
@@ -39,12 +45,17 @@ internal class KPTypeSpecBuilder : DefaultKotlinPoetSpec() {
     }
 
     fun nested(block: Group.() -> Unit) {
-        nested = Group().apply(block).items
+        val group = sharedGroup ?: Group().also { sharedGroup = it }
+        nested = group.apply(block).items
     }
 
     fun build(): TypeSpec {
         var typeBuilder = TypeSpec
             .classBuilder(requireNotNull(name) { "Type - name must be set" })
+
+        for (variable in typeVariables) {
+            typeBuilder = typeBuilder.addTypeVariable(variable)
+        }
 
         for (annotation in annotationNames) {
             typeBuilder = typeBuilder.addAnnotation(annotation)

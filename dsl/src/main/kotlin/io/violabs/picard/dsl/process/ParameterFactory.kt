@@ -172,6 +172,7 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
         val nestedBuilderClassName = ClassName(propertyNonNullableClassName.packageName, nestedBuilderName)
         logger.debug("nestedBuilder: $nestedBuilderClassName", tier = 5, continuous = true)
         val kdoc = builderDoc(nestedBuilderClassName, adapter.propertyClassDeclaration)
+        
         return BuilderParam(
             adapter.propName,
             adapter.actualPropTypeName,
@@ -212,6 +213,7 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
 
     private fun builderDoc(builderClass: ClassName, declaration: KSClassDeclaration?): String? {
         val props = declaration?.getAllProperties()?.map { it.simpleName.asString() }?.toList() ?: return null
+
         if (props.isEmpty()) return null
         val list = props.sorted().joinToString("\n") { "* [${builderClass.simpleName}.$it]" }
         return "Available builder functions:\n$list"

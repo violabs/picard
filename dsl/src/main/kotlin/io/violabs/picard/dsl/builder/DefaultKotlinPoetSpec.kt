@@ -12,17 +12,21 @@ internal abstract class DefaultKotlinPoetSpec : KotlinPoetSpec {
     override var name: String? = null
     override val modifiers: MutableList<KModifier> = mutableListOf()
 
+    /**
+     * Add a single access modifier to this spec.
+     *
+     * @throws IllegalArgumentException if an access modifier has already been set
+     */
     fun accessModifier(modifier: KModifier) {
-        if(ALL_ACCESS_MODIFIERS.any { it in modifiers }) throw IllegalArgumentException("access modifier already set")
+        val existing = modifiers.firstOrNull { it in ALL_ACCESS_MODIFIERS }
+        if (existing != null) {
+            throw IllegalArgumentException("access modifier already set to $existing")
+        }
 
         modifiers.add(modifier)
     }
 
-    fun private() {
-        modifiers.add(KModifier.PRIVATE)
-    }
+    fun private() = accessModifier(KModifier.PRIVATE)
 
-    fun public() {
-        modifiers.add(KModifier.PUBLIC)
-    }
+    fun public() = accessModifier(KModifier.PUBLIC)
 }

@@ -11,7 +11,11 @@ private val DEFAULT_TYPE_NAMES = listOf(
     CHAR, STRING, BYTE, SHORT, INT, LONG, DOUBLE, FLOAT
 )
 
+/**
+ * Responsible for creating [DSLParam] instances for a given property adapter.
+ */
 interface ParameterFactory<T : ParameterFactoryAdapter, P : PropertyAdapter> {
+    /** logger used for debug output */
     val logger: Logger
 
     fun createParameterFactoryAdapter(propertyAdapter: P): T
@@ -27,6 +31,13 @@ interface ParameterFactory<T : ParameterFactoryAdapter, P : PropertyAdapter> {
         logger.debug("singleEntryTransform: $singleEntryTransform", tier = 3, branch = branch, continuous = true)
     }
 
+    /**
+     * Resolve the correct [DSLParam] implementation for the provided adapter.
+     *
+     * @param adapter the property adapter being processed
+     * @param isLast whether this is the last parameter being generated
+     * @param log enable debug logging for this invocation
+     */
     fun determineParam(
         adapter: T,
         isLast: Boolean = false,
@@ -45,9 +56,13 @@ class DefaultParameterFactory(logger: Logger) :
 }
 
 
+/**
+ * Base implementation of [ParameterFactory] with common resolution logic.
+ */
 abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : PropertyAdapter>(
     override val logger: Logger
 ) : ParameterFactory<T, P> {
+    /** @inheritdoc */
     override fun determineParam(adapter: T, isLast: Boolean, log: Boolean): DSLParam {
         val logger = logger.copy(isDebugEnabled = log)
         val propName = adapter.propName
@@ -187,53 +202,45 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
         )
     }
 
-    private fun createMapParam(adapter: T): MapParam {
+    /**
+     * Build a [MapParam] from the adapter when the property is a Map type.
+     * Falls back to [DefaultParam] when the type information is insufficient.
+     */
+    private fun createMapParam(adapter: T): DSLParam {
         val propName = adapter.propName
         val actualPropertyType: TypeName = adapter.actualPropTypeName
-        return if (actualPropertyType is ParameterizedTypeName && actualPropertyType.rawType == MAP) {
-            val elementKeyTypeArgument: TypeName = actualPropertyType.typeArguments.first()
-            val elementValueTypeArgument: TypeName = actualPropertyType.typeArguments.last()
-            logger.debug("mapElementKey: $elementKeyTypeArgument", tier = 5, continuous = true)
-            logger.debug("mapElementValue: $elementValueTypeArgument", tier = 5, continuous = true)
-            MapParam(propName, elementKeyTypeArgument, elementValueTypeArgument, adapter.hasNullableAssignment)
-        } else {
-            // This case should ideally be caught earlier if the type isn't a ParameterizedTypeName
-            // or if it's not a list.
-            // If actualPropertyType is just a non-parameterized List (raw List), handle appropriately.
-            // For safety, if somehow called with a non-parameterized list or non-list:
-            logger.warn(
-                "Attempted to create ListParam for non-parameterized or non-list type: $actualPropertyType. " +
-                    "Falling back to DefaultParam logic for element if possible, or erroring."
-            )
-            // A true raw list is rare in Kotlin type declarations. If it's List<*>, typeArguments.first() might be STAR
-            // This fallback might need to be more robust or simply throw an error as it indicates an unexpected state.
-            throw IllegalArgumentException(
-                "Property '$propName' of type '${actualPropertyType}' could not be definitively " +
-                    "mapped to ListParam components.")
+
+        if (actualPropertyType is ParameterizedTypeName && actualPropertyType.rawType == MAP) {
+            val keyType: TypeName = actualPropertyType.typeArguments.first()
+            val valueType: TypeName = actualPropertyType.typeArguments.last()
+            logger.debug("mapElementKey: $keyType", tier = 5, continuous = true)
+            logger.debug("mapElementValue: $valueType", tier = 5, continuous = true)
+            return MapParam(propName, keyType, valueType, adapter.hasNullableAssignment)
         }
+
+        logger.warn(
+            "Attempted to create MapParam for unsupported type '$actualPropertyType'. Falling back to DefaultParam."
+        )
+        return DefaultParam(propName, actualPropertyType, adapter.hasNullableAssignment)
     }
 
-    private fun createListParam(adapter: T): ListParam {
+    /**
+     * Build a [ListParam] from the adapter when the property is a List type.
+     * Falls back to [DefaultParam] when the type information is insufficient.
+     */
+    private fun createListParam(adapter: T): DSLParam {
         val propName = adapter.propName
         val actualPropertyType: TypeName = adapter.actualPropTypeName
-        return if (actualPropertyType is ParameterizedTypeName && actualPropertyType.rawType == LIST) {
+
+        if (actualPropertyType is ParameterizedTypeName && actualPropertyType.rawType == LIST) {
             val elementTypeArgument: TypeName = actualPropertyType.typeArguments.first()
             logger.debug("listElementType: $elementTypeArgument", tier = 5, continuous = true)
-            ListParam(propName, elementTypeArgument, adapter.hasNullableAssignment)
-        } else {
-            // This case should ideally be caught earlier if the type isn't a ParameterizedTypeName
-            // or if it's not a list.
-            // If actualPropertyType is just a non-parameterized List (raw List), handle appropriately.
-            // For safety, if somehow called with a non-parameterized list or non-list:
-            logger.warn(
-                "Attempted to create ListParam for non-parameterized or non-list type: $actualPropertyType. " +
-                    "Falling back to DefaultParam logic for element if possible, or erroring."
-            )
-            // A true raw list is rare in Kotlin type declarations. If it's List<*>, typeArguments.first() might be STAR
-            // This fallback might need to be more robust or simply throw an error as it indicates an unexpected state.
-            throw IllegalArgumentException(
-                "Property '$propName' of type '${actualPropertyType}' could not be definitively " +
-                    "mapped to ListParam components.")
+            return ListParam(propName, elementTypeArgument, adapter.hasNullableAssignment)
         }
+
+        logger.warn(
+            "Attempted to create ListParam for unsupported type '$actualPropertyType'. Falling back to DefaultParam."
+        )
+        return DefaultParam(propName, actualPropertyType, adapter.hasNullableAssignment)
     }
 }

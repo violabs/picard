@@ -177,7 +177,7 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
             adapter.actualPropTypeName,
             nestedBuilderClassName,
             adapter.hasNullableAssignment,
-            kdoc
+            kdoc = kdoc
         )
     }
 
@@ -193,7 +193,7 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
             adapter.actualPropTypeName,
             groupElementClassName,
             adapter.hasNullableAssignment,
-            kdoc
+            kdoc = kdoc
         )
     }
 
@@ -206,7 +206,7 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
             mapDetails.keyType,
             mapDetails.valueType,
             adapter.hasNullableAssignment,
-            kdoc
+            kdoc = kdoc
         )
     }
 

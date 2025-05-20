@@ -53,6 +53,8 @@ internal class KPTypeSpecBuilder : DefaultKotlinPoetSpec() {
         var typeBuilder = TypeSpec
             .classBuilder(requireNotNull(name) { "Type - name must be set" })
 
+        superInterface?.let { typeBuilder.addSuperinterface(it) }
+
         for (variable in typeVariables) {
             typeBuilder = typeBuilder.addTypeVariable(variable)
         }

@@ -1,13 +1,14 @@
 package io.violabs.picard.starCharts.loki.bloomBuild
 
+import io.violabs.picard.dsl.annotation.GeneratedDSL
 import io.violabs.picard.starCharts.loki.Duration
 
-//@GenerateDSL
+@GeneratedDSL
 class BloomBuildPlanner(
     /**
      * # Interval at which to re-run the bloom creation planning.
-     *   # CLI flag: -bloom-build.planner.interval
-     *   [planning_interval: <duration> | default = 8h]
+     * # CLI flag: -bloom-build.planner.interval
+     * [planning_interval: <duration> | default = 8h]
      */
     val planningInterval: Duration? = null,
     /**

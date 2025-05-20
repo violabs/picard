@@ -1,5 +1,8 @@
 package io.violabs.picard.starCharts.loki
 
+import io.violabs.picard.dsl.annotation.GeneratedDSL
+
+@GeneratedDSL
 class AzureStorageConfig(
     /**
      * # Azure Cloud environment. Supported values are: AzureGlobal, AzureChinaCloud,

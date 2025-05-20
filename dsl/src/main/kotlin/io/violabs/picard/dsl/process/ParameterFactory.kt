@@ -168,7 +168,7 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
         val propertyNonNullableClassName = requireNotNull(adapter.propertyNonNullableClassName) {
             "Could not determine property non-nullable class name."
         }
-        val nestedBuilderName = propertyNonNullableClassName.simpleName + "Builder"
+        val nestedBuilderName = propertyNonNullableClassName.simpleName + "DSLBuilder"
         val nestedBuilderClassName = ClassName(propertyNonNullableClassName.packageName, nestedBuilderName)
         logger.debug("nestedBuilder: $nestedBuilderClassName", tier = 5, continuous = true)
         val kdoc = builderDoc(nestedBuilderClassName, adapter.propertyClassDeclaration)

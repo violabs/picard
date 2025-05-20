@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies
-import com.fasterxml.jackson.databind.annotation.JsonNaming
+import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.starCharts.loki.s3StorageConfig.S3StorageConfig
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
+@GeneratedDSL
 data class AWSStorageConfig(
     /**
      * # The s3_storage_config block configures the connection to Amazon S3 object

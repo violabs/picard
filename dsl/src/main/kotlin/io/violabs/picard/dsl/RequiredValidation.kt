@@ -6,9 +6,11 @@ import kotlin.reflect.KProperty
 import kotlin.reflect.jvm.isAccessible
 
 /**
-* Takes in a classes property accessor and validates that is not null.
-* It used the accessor name as the default within the exception message.
-*/
+ * Ensures the value returned by the given property reference is not `null`.
+ *
+ * @param accessor the property reference being validated
+ * @return the non-null value of [accessor]
+ */
 @ExcludeFromCoverage
 fun <T> vRequireNotNull(accessor: KProperty<T?>): T {
     accessor.isAccessible = true
@@ -16,16 +18,20 @@ fun <T> vRequireNotNull(accessor: KProperty<T?>): T {
 }
 
 /**
- * Takes in a classes property accessor and validates that is not null or blank.
- * It used the accessor name as the default within the exception message.
- * You may find problems using with nested class functions.
+ * Common implementation for [vRequireNotEmpty] variants.
  */
 @ExcludeFromCoverage
-fun <T> vRequireNotEmpty(value: List<T>?, name: String): List<T> {
+private fun <T> requireNotEmptyInternal(value: List<T>?, name: String): List<T> {
     val returnedValue = if (value?.isEmpty() != false) null else value
-
     return requireNotNull(returnedValue) { "$name is required and cannot be empty" }
 }
+
+/**
+ * Validates that the supplied list is not null or empty.
+ */
+@ExcludeFromCoverage
+fun <T> vRequireNotEmpty(value: List<T>?, name: String): List<T> =
+    requireNotEmptyInternal(value, name)
 
 /**
  * Takes in a classes property accessor and validates that is not null or blank.
@@ -35,11 +41,7 @@ fun <T> vRequireNotEmpty(value: List<T>?, name: String): List<T> {
 @ExcludeFromCoverage
 fun <T> vRequireNotEmpty(accessor: KProperty<List<T>?>): List<T> {
     accessor.isAccessible = true
-    val accessorValue: List<T>? = accessor.call()
-
-    val returnedValue = if (accessorValue?.isEmpty() != false) null else accessorValue
-
-    return requireNotNull(returnedValue) { "${accessor.name} is required and cannot be empty" }
+    return requireNotEmptyInternal(accessor.call(), accessor.name)
 }
 
 /**
@@ -50,9 +52,5 @@ fun <T> vRequireNotEmpty(accessor: KProperty<List<T>?>): List<T> {
 @ExcludeFromCoverage
 fun <T> vRequireNotEmpty(accessor: KFunction<List<T>?>): List<T> {
     accessor.isAccessible = true
-    val accessorValue: List<T>? = accessor.call()
-
-    val returnedValue = if (accessorValue?.isEmpty() != false) null else accessorValue
-
-    return requireNotNull(returnedValue) { "${accessor.name} is required and cannot be empty" }
+    return requireNotEmptyInternal(accessor.call(), accessor.name)
 }

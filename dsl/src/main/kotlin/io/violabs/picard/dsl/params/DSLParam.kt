@@ -6,6 +6,9 @@ import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeName
 import io.violabs.picard.dsl.builder.kotlinPoet
 
+/**
+ * Represents a property in a generated DSL builder.
+ */
 interface DSLParam {
     val propName: String
     val functionName: String get() = propName
@@ -16,6 +19,9 @@ interface DSLParam {
     val verifyNotEmpty: Boolean get() = false
     val accessModifier: KModifier get() = KModifier.PRIVATE
 
+    /**
+     * Create the KotlinPoet [PropertySpec] representing this DSL property.
+     */
     fun toPropertySpec(): PropertySpec = kotlinPoet {
         property {
             accessModifier(accessModifier)
@@ -28,10 +34,16 @@ interface DSLParam {
     }
 
     // Added containingBuilderClassName to allow fluent return types
+    /**
+     * Generate any accessor functions (such as DSL builder methods) for this parameter.
+     */
     fun accessors(): List<FunSpec> {
         return emptyList()
     }
 
+    /**
+     * Provide the code snippet used when returning this parameter's value.
+     */
     fun propertyValueReturn(): String {
         if (nullableAssignment) return propName
 

@@ -11,5 +11,7 @@ data class StarShip(
     val coordinates: SpaceTime? = null,
     val stardate: Stardate? = null,
     val commanderNames: List<String>? = null,
-    val passengers: List<Passenger>? = null
+    val passengers: List<Passenger>? = null,
+    val areaCodes: Map<String, String>? = null,
+    val roomMap: Map<String, Passenger>? = null
 )

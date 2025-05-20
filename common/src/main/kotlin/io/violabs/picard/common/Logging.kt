@@ -57,6 +57,10 @@ data class Logger(
         isDebugEnabled = true
     }
 
+    fun disableDebug(): Logger = apply {
+        isDebugEnabled = false
+    }
+
     fun debugEnabled(): Boolean = isDebugEnabled
 
     fun disableWarning(): Logger = apply {

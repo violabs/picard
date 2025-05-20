@@ -21,4 +21,8 @@ internal abstract class DefaultKotlinPoetSpec : KotlinPoetSpec {
     fun private() {
         modifiers.add(KModifier.PRIVATE)
     }
+
+    fun public() {
+        modifiers.add(KModifier.PUBLIC)
+    }
 }

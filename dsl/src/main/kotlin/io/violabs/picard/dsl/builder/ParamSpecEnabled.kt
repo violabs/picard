@@ -4,16 +4,21 @@ import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.ParameterSpec
 
 internal abstract class DefaultParamSpecEnabled : ParamSpecEnabled {
-    override var param: ParameterSpec? = null
+    override var params: MutableList<ParameterSpec> = mutableListOf()
 }
 
 internal interface ParamSpecEnabled {
-    var param: ParameterSpec?
+    var params: MutableList<ParameterSpec>
+
+
+    fun params(block: KPParameterSpecBuilder.Group.() -> Unit) {
+        params = KPParameterSpecBuilder.Group().apply(block).items
+    }
 
     fun param(
         block: KPParameterSpecBuilder.() -> Unit
     ): ParameterSpec {
-        return KPParameterSpecBuilder().apply(block).build().also { param = it }
+        return KPParameterSpecBuilder().apply(block).build().also { params.add(it) }
     }
 
     fun varargParam(
@@ -28,6 +33,6 @@ internal interface ParamSpecEnabled {
                 modifiers.add(KModifier.VARARG)
             }
             .build()
-            .also { param = it }
+            .also { params.add(it) }
     }
 }

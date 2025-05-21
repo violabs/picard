@@ -1,4 +1,4 @@
-package io.violabs.picard.starCharts.loki.common
+package io.violabs.picard.starCharts.loki.utils
 
 @LokiDSL
 interface DSLBuilder<T> {

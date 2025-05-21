@@ -1,8 +1,6 @@
 package io.violabs.picard.starCharts.loki
 
 import io.violabs.picard.dsl.annotation.GeneratedDSL
-import io.violabs.picard.starCharts.loki.Duration
-import io.violabs.picard.starCharts.loki.GRPCClient
 
 @GeneratedDSL
 data class FrontendWorker(
@@ -46,7 +44,7 @@ data class FrontendWorker(
      * # querier.frontend-grpc-client
      * [query_frontend_grpc_client: <grpc_client>]
      */
-    val queryFrontendGrpcClient: GRPCClient? = null,
+    val queryFrontendGrpcClient: GrpcClient? = null,
     /**
      * # Configures the querier gRPC client used to communicate with the query-frontend
      * # and with the query-scheduler. This can't be used in conjunction with
@@ -54,7 +52,7 @@ data class FrontendWorker(
      * # The CLI flags prefix for this block configuration is: querier.frontend-client
      * [grpc_client_config: <grpc_client>]
      */
-    val grpcClientConfig: GRPCClient? = null,
+    val grpcClientConfig: GrpcClient? = null,
     /**
      * # Configures the querier gRPC client used to communicate with the
      * # query-scheduler. This can't be used in conjunction with 'grpc_client_config'.
@@ -62,5 +60,5 @@ data class FrontendWorker(
      * # querier.scheduler-grpc-client
      * [query_scheduler_grpc_client: <grpc_client>]
      */
-    val querySchedulerGrpcClient: GRPCClient? = null,
+    val querySchedulerGrpcClient: GrpcClient? = null,
 )

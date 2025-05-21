@@ -1,11 +1,10 @@
 package io.violabs.picard.starCharts.loki
 
 import io.violabs.picard.dsl.annotation.GeneratedDSL
-import io.violabs.picard.starCharts.loki.Duration
 import io.violabs.picard.starCharts.loki.tls.TLSConfig
 
 @GeneratedDSL
-data class ETCD(
+data class Etcd(
     /**
      * # The etcd endpoints to connect to.
      * # CLI flag: -<prefix>.etcd.endpoints

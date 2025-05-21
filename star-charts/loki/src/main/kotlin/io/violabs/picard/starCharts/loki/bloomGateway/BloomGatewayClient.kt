@@ -1,7 +1,7 @@
 package io.violabs.picard.starCharts.loki.bloomGateway
 
 import io.violabs.picard.dsl.annotation.GeneratedDSL
-import io.violabs.picard.starCharts.loki.GRPCClient
+import io.violabs.picard.starCharts.loki.GrpcClient
 
 @GeneratedDSL
 data class BloomGatewayClient(
@@ -16,7 +16,7 @@ data class BloomGatewayClient(
      * # bloom-gateway-client.grpc
      * [grpc_client_config: <grpc_client>]
      */
-    val grpcClientConfig: GRPCClient? = null,
+    val grpcClientConfig: GrpcClient? = null,
     /**
      * # Comma separated addresses list in DNS Service Discovery format:
      * # https://grafana.com/docs/mimir/latest/configure/about-dns-service-discovery/#supported-discovery-modes

@@ -3,7 +3,7 @@ package io.violabs.picard.starCharts.loki
 import io.violabs.picard.dsl.annotation.GeneratedDSL
 
 @GeneratedDSL
-data class BOSStorageConfig(
+data class BosStorageConfig(
     /**
      * # Name of BOS bucket.
      * # CLI flag: -<prefix>.bos.bucket-name

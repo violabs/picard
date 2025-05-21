@@ -1,5 +1,6 @@
 package io.violabs.picard.starCharts.loki.ring
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import io.violabs.picard.dsl.annotation.GeneratedDSL
 import io.violabs.picard.starCharts.loki.Duration
 
@@ -34,6 +35,19 @@ data class Ring(
      */
     val zoneAwarenessEnabled: Boolean? = null,
     /**
+     * # Comma-separated list of zones to exclude from the ring. Instances in
+     * # excluded zones will be filtered out from the ring.
+     * # CLI flag: -distributor.excluded-zones
+     * [excluded_zones: <string> | default = ""]
+     */
+    val excludedZones: String? = null,
+    /**
+     *   # Number of tokens to own in the ring.
+     *   # CLI flag: -common.storage.ring.num-tokens
+     *   [num_tokens: <int> | default = 128]
+     */
+    val numTokens: Int? = null,
+    /**
      *   # Deprecated: How many index gateway instances are assigned to each tenant.
      *   # Use -index-gateway.shard-size instead.
      *   # CLI flag: -replication-factor
@@ -63,7 +77,8 @@ data class Ring(
      *   # CLI flag: -index-gateway.ring.instance-addr
      *   [instance_addr: <string> | default = ""]
      */
-    val instanceAddr: String? = null,
+    @JsonProperty("instanceAddr")
+    val instanceAddress: String? = null,
     /**
      *   # The availability zone where this instance is running. Required if
      *   # zone-awareness is enabled.
@@ -76,5 +91,5 @@ data class Ring(
      *   # CLI flag: -index-gateway.ring.instance-enable-ipv6
      *   [instance_enable_ipv6: <boolean> | default = false]
      */
-    val instanceEnableIpv6: Boolean? = null,
+    val instanceEnableIpv6: Boolean? = null
 )

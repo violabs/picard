@@ -36,7 +36,7 @@ data class QueryScheduler(
      * # query-scheduler.grpc-client-config
      * [grpc_client_config: <grpc_client>]
      */
-    val grpcClientConfig: GRPCClient? = null,
+    val grpcClientConfig: GrpcClient? = null,
     /**
      * # Set to true to have the query schedulers create and place themselves in a
      * # ring. If no frontend_address or scheduler_address are present anywhere else in

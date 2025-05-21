@@ -1,7 +1,6 @@
-package io.violabs.picard.starCharts.loki.grpcClient.backoffConfig
+package io.violabs.picard.starCharts.loki
 
 import io.violabs.picard.dsl.annotation.GeneratedDSL
-import io.violabs.picard.starCharts.loki.Duration
 
 @GeneratedDSL
 data class BackoffConfig(

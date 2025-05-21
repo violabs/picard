@@ -2,7 +2,7 @@ package io.violabs.picard.starCharts.loki.ring
 
 import io.violabs.picard.dsl.annotation.GeneratedDSL
 import io.violabs.picard.starCharts.loki.Consul
-import io.violabs.picard.starCharts.loki.ETCD
+import io.violabs.picard.starCharts.loki.Etcd
 
 @GeneratedDSL
 data class KVStore(
@@ -32,6 +32,6 @@ data class KVStore(
      *     # The CLI flags prefix for this block configuration is: index-gateway.ring
      *     [etcd: <etcd>]
      */
-    val etcd: ETCD? = null,
+    val etcd: Etcd? = null,
     val multi: Multi? = null,
 )

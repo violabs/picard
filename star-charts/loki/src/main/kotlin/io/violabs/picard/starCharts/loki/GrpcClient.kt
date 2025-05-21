@@ -1,13 +1,11 @@
 package io.violabs.picard.starCharts.loki
 
 import io.violabs.picard.dsl.annotation.GeneratedDSL
-import io.violabs.picard.starCharts.loki.Duration
 import io.violabs.picard.starCharts.loki.tls.TLSConfig
 import io.violabs.picard.starCharts.loki.clusterValidation.ClusterValidation
-import io.violabs.picard.starCharts.loki.grpcClient.backoffConfig.BackoffConfig
 
 @GeneratedDSL
-class GRPCClient(
+class GrpcClient(
     /**
      * # gRPC client max receive message size (bytes).
      * # CLI flag: -<prefix>.grpc-max-recv-msg-size

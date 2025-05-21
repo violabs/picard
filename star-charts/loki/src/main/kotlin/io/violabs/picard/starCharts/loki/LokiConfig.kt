@@ -1,5 +1,6 @@
 package io.violabs.picard.starCharts.loki
 
+import io.violabs.picard.dsl.annotation.GeneratedDSL
 import io.violabs.picard.starCharts.loki.gatewayConfig.GatewayConfig
 
 
@@ -40,6 +41,7 @@ import io.violabs.picard.starCharts.loki.gatewayConfig.GatewayConfig
 //  gateway:
 //    service:
 //      type: LoadBalancer
+@GeneratedDSL
 class LokiConfig(
     val schemaConfig: SchemaConfig,
     val deploymentMode: DeploymentMode,
@@ -48,6 +50,4 @@ class LokiConfig(
     val write: DeployConfig,
     val minio: MinIOConfig,
     val gateway: GatewayConfig
-) {
-
-}
+)

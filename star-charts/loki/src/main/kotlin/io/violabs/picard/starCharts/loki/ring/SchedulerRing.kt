@@ -70,6 +70,4 @@ data class SchedulerRing(
      *   [instance_enable_ipv6: <boolean> | default = false]
      */
     val instanceEnableIpv6: Boolean? = null,
-) {
-
-}
+)

@@ -1,10 +1,11 @@
 package io.violabs.picard.starCharts.loki
 
 import io.violabs.picard.dsl.annotation.GeneratedDSL
-import io.violabs.picard.starCharts.loki.Duration
 
-@GeneratedDSL
-data class GCSStorageConfig(
+@GeneratedDSL(
+    withMapGroup = "SINGLE"
+)
+data class GcsStorageConfig(
     /**
      * # Name of GCS bucket. Please refer to
      * # https://cloud.google.com/docs/authentication/production for more information

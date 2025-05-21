@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import io.violabs.picard.dsl.annotation.GeneratedDSL
 import io.violabs.picard.starCharts.loki.*
 import io.violabs.picard.starCharts.loki.common.congestionControl.CongestionControl
-import io.violabs.picard.starCharts.loki.cosStorageConfig.COSStorageConfig
+import io.violabs.picard.starCharts.loki.cosStorageConfig.CosStorageConfig
 import io.violabs.picard.starCharts.loki.s3StorageConfig.S3StorageConfig
 
 @GeneratedDSL
@@ -23,7 +23,7 @@ data class Storage(
      *   # The CLI flags prefix for this block configuration is: common.storage
      *   [gcs: <gcs_storage_config>]
      */
-    val gcsStorageConfig: GCSStorageConfig? = null,
+    val gcsStorageConfig: GcsStorageConfig? = null,
     /**
      *   # The azure_storage_config block configures the connection to Azure object
      *   # storage backend.
@@ -61,7 +61,7 @@ data class Storage(
      *   # The CLI flags prefix for this block configuration is: common.storage
      *   [cos: <cos_storage_config>]
      */
-    val cos: COSStorageConfig? = null,
+    val cos: CosStorageConfig? = null,
     val congestionControl: CongestionControl? = null,
     /**
      *   # The thanos_object_store_config block configures the connection to object

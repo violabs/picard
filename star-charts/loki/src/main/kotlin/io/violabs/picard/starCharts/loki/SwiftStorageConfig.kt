@@ -1,5 +1,10 @@
 package io.violabs.picard.starCharts.loki
 
+import io.violabs.picard.dsl.annotation.GeneratedDSL
+
+@GeneratedDSL(
+    withMapGroup = "SINGLE"
+)
 class SwiftStorageConfig(
     /**
      * # OpenStack Swift authentication API version. 0 to autodetect.

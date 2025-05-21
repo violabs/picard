@@ -2,8 +2,10 @@ package io.violabs.picard.starCharts.loki.cosStorageConfig
 
 import io.violabs.picard.dsl.annotation.GeneratedDSL
 
-@GeneratedDSL
-data class COSStorageConfig(
+@GeneratedDSL(
+    withMapGroup = "SINGLE"
+)
+data class CosStorageConfig(
     /**
      * # Set this to `true` to force the request to use path-style addressing.
      * # CLI flag: -<prefix>.cos.force-path-style

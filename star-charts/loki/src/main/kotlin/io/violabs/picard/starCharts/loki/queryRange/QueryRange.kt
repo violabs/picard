@@ -1,6 +1,4 @@
-package io.violabs.picard.starCharts.loki
-
-import io.violabs.picard.starCharts.loki.cacheConfig.CacheConfig
+package io.violabs.picard.starCharts.loki.queryRange
 
 class QueryRange(
     /**
@@ -87,33 +85,5 @@ class QueryRange(
 
     val labelResultsCache: LabelResultsCache? = null,
 ) {
-    data class ResultsCache(
-        val cache: CacheConfig? = null,
-        val compression: String? = null,
-    )
 
-    data class IndexStatsResultsCache(
-        val cache: CacheConfig? = null,
-        val compression: String? = null,
-    )
-
-    data class VolumeResultsCache(
-        val cache: CacheConfig? = null,
-        val compression: String? = null,
-    )
-
-    data class InstantMetricResultsCache(
-        val cache: CacheConfig? = null,
-        val compression: String? = null,
-    )
-
-    data class SeriesResultsCache(
-        val cache: CacheConfig? = null,
-        val compression: String? = null,
-    )
-
-    data class LabelResultsCache(
-        val cache: CacheConfig? = null,
-        val compression: String? = null,
-    )
 }

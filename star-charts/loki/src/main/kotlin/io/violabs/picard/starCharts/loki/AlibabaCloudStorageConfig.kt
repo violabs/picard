@@ -2,7 +2,9 @@ package io.violabs.picard.starCharts.loki
 
 import io.violabs.picard.dsl.annotation.GeneratedDSL
 
-@GeneratedDSL
+@GeneratedDSL(
+    withMapGroup = "SINGLE"
+)
 data class AlibabaCloudStorageConfig(
     /**
      *  Name of OSS bucket.

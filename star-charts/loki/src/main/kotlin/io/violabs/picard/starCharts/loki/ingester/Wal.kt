@@ -2,7 +2,7 @@ package io.violabs.picard.starCharts.loki.ingester
 
 import io.violabs.picard.starCharts.loki.Duration
 
-data class WAL(
+data class Wal(
     /**
     # Enable writing of ingested data into WAL.
      *   # CLI flag: -ingester.wal-enabled

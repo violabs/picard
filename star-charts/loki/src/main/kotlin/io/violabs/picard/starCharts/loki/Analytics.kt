@@ -1,7 +1,7 @@
 package io.violabs.picard.starCharts.loki
 
 import io.violabs.picard.dsl.annotation.GeneratedDSL
-import io.violabs.picard.starCharts.loki.tls.TLSConfig
+import io.violabs.picard.starCharts.loki.tls.TlsConfig
 
 @GeneratedDSL
 class Analytics(
@@ -28,5 +28,5 @@ class Analytics(
      * # The CLI flags prefix for this block configuration is: reporting.tls-config
      * [tls_config: <tls_config>]
      */
-    val tlsConfig: TLSConfig? = null
+    val tlsConfig: TlsConfig? = null
 )

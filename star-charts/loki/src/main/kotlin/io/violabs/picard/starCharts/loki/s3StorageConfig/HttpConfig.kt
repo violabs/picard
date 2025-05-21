@@ -4,7 +4,7 @@ import io.violabs.picard.dsl.annotation.GeneratedDSL
 import io.violabs.picard.starCharts.loki.Duration
 
 @GeneratedDSL
-data class HTTPConfig(
+data class HttpConfig(
     /**
      *   # Timeout specifies a time limit for requests made by s3 Client.
      *   # CLI flag: -<prefix>.s3.http.timeout

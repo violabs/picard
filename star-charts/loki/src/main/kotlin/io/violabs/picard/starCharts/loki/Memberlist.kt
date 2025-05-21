@@ -1,6 +1,6 @@
 package io.violabs.picard.starCharts.loki
 
-import io.violabs.picard.starCharts.loki.tls.TLSConfig
+import io.violabs.picard.starCharts.loki.tls.TlsConfig
 
 class Memberlist(
     /**
@@ -231,6 +231,6 @@ class Memberlist(
      * # The CLI flags prefix for this block configuration is: memberlist
      * [<tls_config>]
      */
-    val tlsConfig: TLSConfig? = null,
+    val tlsConfig: TlsConfig? = null,
 )
 

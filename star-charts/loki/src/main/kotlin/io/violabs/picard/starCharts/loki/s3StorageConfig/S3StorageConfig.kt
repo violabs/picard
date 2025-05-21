@@ -2,6 +2,7 @@ package io.violabs.picard.starCharts.loki.s3StorageConfig
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.starCharts.loki.Sse
 import java.net.URL
 
 @GeneratedDSL
@@ -74,7 +75,7 @@ data class S3StorageConfig(
      * [chunk_delimiter: <string> | default = ""]
      */
     val chunkDelimiter: String? = null,
-    val httpConfig: HTTPConfig? = null,
+    val httpConfig: HttpConfig? = null,
     /**
      * # The signature version to use for authenticating against S3. Supported values
      * # are: v4.
@@ -90,7 +91,7 @@ data class S3StorageConfig(
      * [storage_class: <string> | default = "STANDARD"]
      */
     val storageClass: String? = null,
-    val sse: SSE? = null,
+    val sse: Sse? = null,
     val backoffConfig: BackoffConfig? = null,
     /**
      * # Disable forcing S3 dualstack endpoint usage.

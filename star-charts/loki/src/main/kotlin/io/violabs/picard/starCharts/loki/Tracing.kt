@@ -9,5 +9,5 @@ data class Tracing(
      * # CLI flag: -tracing.enabled
      * [enabled: <boolean> | default = true]
      */
-    val enabled: Boolean? = null,
+    val enabled: Boolean? = null
 )

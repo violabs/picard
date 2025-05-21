@@ -1,7 +1,7 @@
 package io.violabs.picard.starCharts.loki
 
 import io.violabs.picard.dsl.annotation.GeneratedDSL
-import io.violabs.picard.starCharts.loki.tls.TLSConfig
+import io.violabs.picard.starCharts.loki.tls.TlsConfig
 
 @GeneratedDSL
 data class Etcd(
@@ -34,7 +34,7 @@ data class Etcd(
      * # The CLI flags prefix for this block configuration is: ruler.ring.etcd
      * [<tls_config>]
      */
-    val tlsConfig: TLSConfig? = null,
+    val tlsConfig: TlsConfig? = null,
     /**
      * # Etcd username.
      * # CLI flag: -<prefix>.etcd.username

@@ -1,5 +1,8 @@
 package io.violabs.picard.starCharts.loki
 
+import io.violabs.picard.dsl.annotation.GeneratedDSL
+
+@GeneratedDSL
 class Profiling(
     /**
      * # Sets the value for runtime.SetBlockProfilingRate
@@ -19,5 +22,4 @@ class Profiling(
      * [mutex_profile_fraction: <int> | default = 0]
      */
     val mutexProfileFraction: Int? = null,
-) {
-}
+)

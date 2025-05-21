@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import io.violabs.picard.starCharts.serialization.ListToCommaSeparatedSerializer
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
-class TLSConfig(
+class TlsConfig(
     /**
      * # Path to the client certificate, which will be used for authenticating with the
      * # server. Also requires the key path to be configured.

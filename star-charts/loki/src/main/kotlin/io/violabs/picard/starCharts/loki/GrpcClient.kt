@@ -1,7 +1,7 @@
 package io.violabs.picard.starCharts.loki
 
 import io.violabs.picard.dsl.annotation.GeneratedDSL
-import io.violabs.picard.starCharts.loki.tls.TLSConfig
+import io.violabs.picard.starCharts.loki.tls.TlsConfig
 import io.violabs.picard.starCharts.loki.clusterValidation.ClusterValidation
 
 @GeneratedDSL
@@ -88,7 +88,7 @@ class GrpcClient(
      * # tsdb.shipper.index-gateway-client.grpc
      * [<tls_config>]
      */
-    val tlsConfig: TLSConfig? = null,
+    val tlsConfig: TlsConfig? = null,
     /**
      * # The maximum amount of time to establish a connection. A value of 0 means
      * # default gRPC client connect timeout and backoff.

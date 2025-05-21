@@ -2,7 +2,7 @@ package io.violabs.picard.starCharts.loki.cacheConfig
 
 import io.violabs.picard.dsl.annotation.GeneratedDSL
 import io.violabs.picard.starCharts.loki.Duration
-import io.violabs.picard.starCharts.loki.tls.TLSConfig
+import io.violabs.picard.starCharts.loki.tls.TlsConfig
 
 @GeneratedDSL
 data class MemcachedClient(
@@ -89,5 +89,5 @@ data class MemcachedClient(
      *   # store.index-cache-write.memcached
      *   [<tls_config>]
      */
-    val tlsConfig: TLSConfig? = null,
+    val tlsConfig: TlsConfig? = null,
 )

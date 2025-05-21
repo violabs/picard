@@ -44,6 +44,6 @@ kover {
 }
 
 ksp {
-    arg("dslBuilder.classpath", "io.violabs.picard.starCharts.loki.common")
-    arg("dslMarker.classpath", "io.violabs.picard.starCharts.loki.common.LokiDSL")
+    arg("dslBuilder.classpath", "io.violabs.picard.starCharts.loki.utils")
+    arg("dslMarker.classpath", "io.violabs.picard.starCharts.loki.utils.LokiDSL")
 }

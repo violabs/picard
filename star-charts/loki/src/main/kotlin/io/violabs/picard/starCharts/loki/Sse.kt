@@ -1,11 +1,11 @@
-package io.violabs.picard.starCharts.loki.s3StorageConfig
+package io.violabs.picard.starCharts.loki
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.annotation.JsonNaming
 import io.violabs.picard.dsl.annotation.GeneratedDSL
 
 @GeneratedDSL
-data class SSE(
+data class Sse(
     /**
      *   # Enable AWS Server Side Encryption. Supported values: SSE-KMS, SSE-S3.
      *   # CLI flag: -<prefix>.s3.sse.type

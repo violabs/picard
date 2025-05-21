@@ -125,7 +125,7 @@ class Ingester(
      * # the local file systems in order to guarantee persistence of acknowledged data
      * # in the event of a process crash.
      */
-    val wal: WAL? = null,
+    val wal: Wal? = null,
     /**
      * # Shard factor used in the ingesters for the in process reverse index. This MUST
      * # be evenly divisible by ALL schema shard factors or Loki will not start.

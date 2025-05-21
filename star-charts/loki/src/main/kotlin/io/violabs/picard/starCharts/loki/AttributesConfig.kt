@@ -1,9 +1,8 @@
 package io.violabs.picard.starCharts.loki
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies
-import com.fasterxml.jackson.databind.annotation.JsonNaming
+import io.violabs.picard.dsl.annotation.GeneratedDSL
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
+@GeneratedDSL
 data class AttributesConfig(
     /**
      * # Configures action to take on matching attributes. It allows one of

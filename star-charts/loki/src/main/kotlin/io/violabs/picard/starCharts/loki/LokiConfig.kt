@@ -1,43 +1,9 @@
 package io.violabs.picard.starCharts.loki
 
+import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.starCharts.loki.gatewayConfig.GatewayConfig
 
-//  loki:
-//    schemaConfig:
-//      configs:
-//        - from: "2024-04-01"
-//          store: tsdb
-//          object_store: s3
-//          schema: v13
-//          index:
-//            prefix: loki_index_
-//            period: 24h
-//    ingester:
-//      chunk_encoding: snappy
-//    querier:
-//      # Default is 4, if you have enough memory and CPU you can increase, reduce if OOMing
-//      max_concurrent: 4
-//    pattern_ingester:
-//      enabled: true
-//    limits_config:
-//      allow_structured_metadata: true
-//      volume_enabled: true
-//
-//  deploymentMode: SimpleScalable
-//
-//  backend:
-//    replicas: 2
-//  read:
-//    replicas: 2
-//  write:
-//    replicas: 3 # To ensure data durability with replication
-//
-//  # Enable minio for storage
-//  minio:
-//    enabled: true
-//
-//  gateway:
-//    service:
-//      type: LoadBalancer
+@GeneratedDSL
 class LokiConfig(
     val schemaConfig: SchemaConfig,
     val deploymentMode: DeploymentMode,
@@ -46,6 +12,4 @@ class LokiConfig(
     val write: DeployConfig,
     val minio: MinIOConfig,
     val gateway: GatewayConfig
-) {
-
-}
+)

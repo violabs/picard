@@ -168,7 +168,7 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
         val propertyNonNullableClassName = requireNotNull(adapter.propertyNonNullableClassName) {
             "Could not determine property non-nullable class name."
         }
-        val nestedBuilderName = propertyNonNullableClassName.simpleName + "Builder"
+        val nestedBuilderName = propertyNonNullableClassName.simpleName + "DSLBuilder"
         val nestedBuilderClassName = ClassName(propertyNonNullableClassName.packageName, nestedBuilderName)
         logger.debug("nestedBuilder: $nestedBuilderClassName", tier = 5, continuous = true)
         val kdoc = builderDoc(nestedBuilderClassName, adapter.propertyClassDeclaration)
@@ -187,7 +187,7 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
             "Could not determine group element class name."
         }
         logger.debug("listElementClassName: $groupElementClassName", tier = 5, continuous = true)
-        val builderClassName = ClassName(groupElementClassName.packageName, groupElementClassName.simpleName + "Builder")
+        val builderClassName = ClassName(groupElementClassName.packageName, groupElementClassName.simpleName + "DSLBuilder")
         val kdoc = builderDoc(builderClassName, adapter.groupElementClassDeclaration)
         return GroupParam(
             adapter.propName,

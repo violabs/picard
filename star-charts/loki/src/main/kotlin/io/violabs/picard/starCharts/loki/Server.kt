@@ -1,14 +1,13 @@
 package io.violabs.picard.starCharts.loki
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies
-import com.fasterxml.jackson.databind.annotation.JsonNaming
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import io.violabs.picard.domain.k8sResources.Quantity
-import io.violabs.picard.starCharts.loki.tls.TLSConfig
+import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.starCharts.loki.clusterValidation.ClusterValidation
 import io.violabs.picard.starCharts.loki.tls.TLSVersion
+import io.violabs.picard.starCharts.loki.tls.TlsConfig
 import io.violabs.picard.starCharts.serialization.ListToCommaSeparatedSerializer
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
+@GeneratedDSL
 data class Server(
     /**
      * # HTTP server listen network, default tcp
@@ -79,8 +78,8 @@ data class Server(
      * [tls_min_version: <string> | default = ""]
      */
     val tlsMinVersion: TLSVersion? = null,
-    val httpTLSConfig: TLSConfig.HTTP? = null,
-    val grpcTLSConfig: TLSConfig.GRPC? = null,
+    val httpTLSConfig: TlsConfig.HTTP? = null,
+    val grpcTLSConfig: TlsConfig.GRPC? = null,
     /**
      * # Register the intrumentation handlers (/metrics etc).
      * # CLI flag: -server.register-instrumentation

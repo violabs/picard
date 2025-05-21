@@ -1,12 +1,9 @@
 package io.violabs.picard.starCharts.loki
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies
-import com.fasterxml.jackson.databind.annotation.JsonNaming
-import io.violabs.picard.starCharts.loki.common.LokiDSL
-import io.violabs.picard.starCharts.loki.tls.TLSConfig
+import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.starCharts.loki.tls.TlsConfig
 
-@LokiDSL
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
+@GeneratedDSL
 class Analytics(
     /**
      * # Enable anonymous usage reporting.
@@ -31,5 +28,5 @@ class Analytics(
      * # The CLI flags prefix for this block configuration is: reporting.tls-config
      * [tls_config: <tls_config>]
      */
-    val tlsConfig: TLSConfig? = null
+    val tlsConfig: TlsConfig? = null
 )

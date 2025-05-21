@@ -54,7 +54,7 @@ class BuilderGenerator(
             LOGGER.debug("-- generating builder --", tier = 0)
             val pkg = domain.packageName.asString()
             val typeName = domain.simpleName.asString()
-            val builderName = "${typeName}Builder"
+            val builderName = "${typeName}DSLBuilder"
             val domainClassName: ClassName = domain.toClassName()
 
             LOGGER.debug("+++ DOMAIN: $domainClassName  +++")

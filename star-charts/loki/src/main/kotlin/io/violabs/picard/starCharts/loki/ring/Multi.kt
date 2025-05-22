@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki.ring
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.Duration
 
-@GeneratedDSL
+@GeneratedDsl
 data class Multi(
     /**
      * # Primary backend storage used by multi-client.

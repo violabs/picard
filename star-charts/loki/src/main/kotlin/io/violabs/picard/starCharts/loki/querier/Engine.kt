@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki.querier
 
 import io.violabs.picard.domain.k8sResources.Quantity
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 
-@GeneratedDSL
+@GeneratedDsl
 data class Engine(
     /**
      * The maximum amount of time to look back for log lines. Used only for instant

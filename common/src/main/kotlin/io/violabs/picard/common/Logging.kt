@@ -139,7 +139,7 @@ private val WARNING_ENABLED = System.getProperty("warn")?.toBoolean() ?: true
 
 interface VLoggable {
     fun logId(): String? = null
-    val log: Logger
+    val logger: Logger
         get() {
             val name = logId() ?: this::class.simpleName ?: "DefaultLogger"
 

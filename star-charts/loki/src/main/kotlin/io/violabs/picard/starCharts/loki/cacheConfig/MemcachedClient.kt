@@ -1,10 +1,10 @@
 package io.violabs.picard.starCharts.loki.cacheConfig
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.Duration
 import io.violabs.picard.starCharts.loki.tls.TlsConfig
 
-@GeneratedDSL
+@GeneratedDsl
 data class MemcachedClient(
     /**
      *   # Hostname for memcached service to use. If empty and if addresses is unset,

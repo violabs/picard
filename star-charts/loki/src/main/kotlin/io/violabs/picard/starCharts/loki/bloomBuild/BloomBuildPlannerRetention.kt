@@ -1,8 +1,8 @@
 package io.violabs.picard.starCharts.loki.bloomBuild
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 
-@GeneratedDSL
+@GeneratedDsl
 data class BloomBuildPlannerRetention(
     /**
      * # Enable bloom retention.

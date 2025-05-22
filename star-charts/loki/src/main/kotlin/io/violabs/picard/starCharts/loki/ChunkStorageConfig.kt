@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.cacheConfig.CacheConfig
 
-@GeneratedDSL
+@GeneratedDsl
 data class ChunkStorageConfig(
     /**
      * # The cache_config block configures the cache backend for a specific Loki

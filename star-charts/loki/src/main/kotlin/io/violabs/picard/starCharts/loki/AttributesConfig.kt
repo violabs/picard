@@ -1,8 +1,8 @@
 package io.violabs.picard.starCharts.loki
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 
-@GeneratedDSL
+@GeneratedDsl
 data class AttributesConfig(
     /**
      * # Configures action to take on matching attributes. It allows one of

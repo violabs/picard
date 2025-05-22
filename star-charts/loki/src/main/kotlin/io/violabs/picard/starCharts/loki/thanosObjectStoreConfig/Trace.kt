@@ -1,8 +1,8 @@
 package io.violabs.picard.starCharts.loki.thanosObjectStoreConfig
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 
-@GeneratedDSL
+@GeneratedDsl
 class Trace(
     /**
      *     # When enabled, low-level S3 HTTP operation information is logged at the

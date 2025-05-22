@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki.cosStorageConfig
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.Duration
 
-@GeneratedDSL
+@GeneratedDsl
 data class HTTPConfig(
     /**
      *   # The maximum amount of time an idle connection will be held open.

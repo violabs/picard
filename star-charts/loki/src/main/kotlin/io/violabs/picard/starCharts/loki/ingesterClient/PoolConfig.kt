@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki.ingesterClient
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.Duration
 
-@GeneratedDSL
+@GeneratedDsl
 data class PoolConfig(
     /**
      *   # How frequently to clean up clients for ingesters that have gone away.

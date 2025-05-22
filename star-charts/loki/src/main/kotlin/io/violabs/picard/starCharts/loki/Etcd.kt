@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.tls.TlsConfig
 
-@GeneratedDSL
+@GeneratedDsl
 data class Etcd(
     /**
      * # The etcd endpoints to connect to.

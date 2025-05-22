@@ -1,8 +1,8 @@
 package io.violabs.picard.starCharts.loki.cacheConfig
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 
-@GeneratedDSL
+@GeneratedDsl
 data class Background(
     /**
      *   # At what concurrency to write back to cache.

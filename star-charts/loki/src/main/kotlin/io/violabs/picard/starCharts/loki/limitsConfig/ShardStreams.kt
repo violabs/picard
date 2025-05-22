@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki.limitsConfig
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.Duration
 
-@GeneratedDSL
+@GeneratedDsl
 data class ShardStreams(
     /**
      *   # Automatically shard streams to keep them under the per-stream rate limit.

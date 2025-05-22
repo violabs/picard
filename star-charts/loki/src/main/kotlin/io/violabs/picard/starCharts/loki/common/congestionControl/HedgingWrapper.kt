@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki.common.congestionControl
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.common.Hedging
 
-@GeneratedDSL
+@GeneratedDsl
 data class HedgingWrapper(
     val config: Hedging? = null,
     /**

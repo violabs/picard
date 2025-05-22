@@ -1,11 +1,11 @@
 package io.violabs.picard.starCharts.loki.storageConfig
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.Duration
 import io.violabs.picard.starCharts.loki.GrpcClient
 
-@GeneratedDSL
+@GeneratedDsl
 data class IndexGatewayClient(
     /**
      *     # The grpc_client block configures the gRPC client used to communicate

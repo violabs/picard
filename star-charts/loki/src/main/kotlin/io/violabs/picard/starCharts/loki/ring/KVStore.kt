@@ -1,10 +1,10 @@
 package io.violabs.picard.starCharts.loki.ring
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.Consul
 import io.violabs.picard.starCharts.loki.Etcd
 
-@GeneratedDSL
+@GeneratedDsl
 data class KVStore(
     /**
      *     # Backend storage to use for the ring. Supported values are: consul, etcd,

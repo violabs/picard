@@ -8,13 +8,12 @@ import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.asTypeName
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import io.violabs.geordi.UnitSim
-import io.violabs.picard.common.Logger
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import org.junit.jupiter.api.Test
 
 class ParameterFactoryTest : UnitSim() {
-    val parameterFactory = object : AbstractParameterFactory<TestParamFactoryAdaptor, TestPropAdapter>(Logger("TEST")) {
-        override fun createParameterFactoryAdapter(propertyAdapter: TestPropAdapter): TestParamFactoryAdaptor {
+    val parameterFactory = object : AbstractPropertySchemaFactory<TestParamFactoryAdaptor, TestPropDomain>() {
+        override fun createPropertySchemaFactoryAdapter(propertyAdapter: TestPropDomain): TestParamFactoryAdaptor {
             return TestParamFactoryAdaptor(propertyAdapter.type, propertyAdapter.isGroup)
         }
     }
@@ -32,11 +31,11 @@ class ParameterFactoryTest : UnitSim() {
             }
 
             whenever {
-                val param = parameterFactory.determineParam(adapter)
+                val propSchema = parameterFactory.determinePropertySchema(adapter)
 
                 TestResponse(
-                    param.toPropertySpec().toString(),
-                    param.accessors().firstOrNull()?.toString() ?: ""
+                    propSchema.toPropertySpec().toString(),
+                    propSchema.accessors().firstOrNull()?.toString() ?: ""
                 )
             }
         }
@@ -54,8 +53,8 @@ class ParameterFactoryTest : UnitSim() {
                 TestResponse(
                     "private var test: kotlin.collections.List<test.Example>? = null\n",
                     """
-                        |public fun test(block: test.ExampleDSLBuilder.Group.() -> kotlin.Unit) {
-                        |  this.test = test.ExampleDSLBuilder.Group().apply(block).items()
+                        |public fun test(block: test.ExampleDslBuilder.Group.() -> kotlin.Unit) {
+                        |  this.test = test.ExampleDslBuilder.Group().apply(block).items()
                         |}
                         |
                     """.trimMargin()
@@ -63,11 +62,11 @@ class ParameterFactoryTest : UnitSim() {
             }
 
             whenever {
-                val param = parameterFactory.determineParam(adapter)
+                val propSchema = parameterFactory.determinePropertySchema(adapter)
 
                 TestResponse(
-                    param.toPropertySpec().toString(),
-                    param.accessors().firstOrNull()?.toString() ?: ""
+                    propSchema.toPropertySpec().toString(),
+                    propSchema.accessors().firstOrNull()?.toString() ?: ""
                 )
             }
         }
@@ -76,27 +75,27 @@ class ParameterFactoryTest : UnitSim() {
     class TestParamFactoryAdaptor(
         override val actualPropTypeName: TypeName = STRING,
         val isGroup: Boolean = false
-    ) : ParameterFactoryAdapter {
+    ) : PropertySchemaFactoryAdapter {
         override val propName: String = "test"
         override val hasSingleEntryTransform: Boolean = false
         override val transformTemplate: String? = null
         override val transformType: TypeName? = null
         override val hasNullableAssignment: Boolean = false
         override val propertyNonNullableClassName: ClassName? = null
-        override val hasGeneratedDSLAnnotation: Boolean = false
+        override val hasGeneratedDslAnnotation: Boolean = false
         override val propertyClassDeclarationQualifiedName: String? = null
         override val propertyClassDeclaration: KSClassDeclaration? = null
         override val isGroupElement: Boolean = isGroup
         override val groupElementClassName: ClassName? = ClassName("test", "Example")
         override val groupElementClassDeclaration: KSClassDeclaration? = null
-        override var mapDetails: ParameterFactoryAdapter.MapDetails? = null
+        override var mapDetails: PropertySchemaFactoryAdapter.MapDetails? = null
         override val mapValueClassDeclaration: KSClassDeclaration? = null
     }
 
-    class TestPropAdapter(
+    class TestPropDomain(
         override val type: TypeName = STRING,
         val isGroup: Boolean = false
-    ) : PropertyAdapter {
+    ) : DomainProperty {
         override fun simpleName(): String = "test"
         override fun continueBranch(): Boolean = false
         override fun singleEntryTransformString(): String? = null
@@ -107,7 +106,7 @@ class ParameterFactoryTest : UnitSim() {
         val functionContent: String
     )
 
-    @GeneratedDSL(
+    @GeneratedDsl(
         withGroup = true
     )
     class Example

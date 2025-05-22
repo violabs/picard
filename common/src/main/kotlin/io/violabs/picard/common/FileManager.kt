@@ -10,7 +10,7 @@ class FileManager(logId: String) : DefaultLogger(logId) {
 
         file.writeText(content)
 
-        log.info(label)
-        content.split("\n").forEach { log.info("  | $it") }
+        logger.info(label)
+        content.split("\n").forEach { logger.info("  | $it") }
     }
 }

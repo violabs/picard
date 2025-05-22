@@ -5,7 +5,7 @@ import com.squareup.kotlinpoet.ParameterSpec
 import com.squareup.kotlinpoet.TypeName
 
 @PicardDSLMarker
-internal class KPParameterSpecBuilder : TypedSpec, DefaultKotlinPoetSpec() {
+class KPParameterSpecBuilder : TypedSpec, DefaultKotlinPoetSpec() {
     override var type: TypeName? = null
     private var defaultValue: String? = null
 

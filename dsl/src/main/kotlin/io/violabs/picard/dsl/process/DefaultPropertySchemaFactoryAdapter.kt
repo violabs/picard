@@ -79,7 +79,7 @@ class DefaultPropertySchemaFactoryAdapter(
         ?.any { annotation ->
             annotation
                 .arguments
-                .firstOrNull { it.name?.asString() == GeneratedDsl::withGroup.name }
+                .firstOrNull { it.name?.asString() == GeneratedDsl::withListGroup.name }
                 ?.value == true
         }
         ?: false

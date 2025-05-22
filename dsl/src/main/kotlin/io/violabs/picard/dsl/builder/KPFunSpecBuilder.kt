@@ -6,7 +6,7 @@ import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeName
 
 @PicardDSLMarker
-internal class KPFunSpecBuilder : DefaultParamSpecEnabled() {
+class KPFunSpecBuilder : DefaultParamSpecEnabled() {
     var funName: String? = null
     var returns: TypeName? = null
     var kdoc: String? = null
@@ -46,7 +46,7 @@ internal class KPFunSpecBuilder : DefaultParamSpecEnabled() {
     }
 
     @PicardDSLMarker
-    internal class Group {
+    class Group {
         val items: MutableList<FunSpec> = mutableListOf()
 
         fun add(block: KPFunSpecBuilder.() -> Unit) {

@@ -3,7 +3,7 @@ package io.violabs.picard.dsl.builder
 import com.squareup.kotlinpoet.*
 
 @PicardDSLMarker
-internal class KPTypeSpecBuilder : DefaultKotlinPoetSpec() {
+class KPTypeSpecBuilder : DefaultKotlinPoetSpec() {
     private var superInterface: TypeName? = null
     private var typeVariables: MutableList<TypeVariableName> = mutableListOf()
     private val annotationNames: MutableList<ClassName> = mutableListOf()

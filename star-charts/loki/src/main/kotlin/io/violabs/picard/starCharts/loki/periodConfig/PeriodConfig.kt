@@ -5,7 +5,7 @@ import io.violabs.picard.dsl.annotation.GeneratedDsl
 import java.time.LocalDate
 
 @GeneratedDsl(
-    withGroup = true
+    withListGroup = true
 )
 data class PeriodConfig(
     /**

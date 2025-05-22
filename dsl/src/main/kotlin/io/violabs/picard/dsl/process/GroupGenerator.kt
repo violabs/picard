@@ -5,10 +5,10 @@ import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeVariableName
 import io.violabs.picard.common.VLoggable
-import io.violabs.picard.dsl.annotation.GeneratedDsl
-import io.violabs.picard.dsl.builder.AnnotationDecorator
-import io.violabs.picard.dsl.builder.KPTypeSpecBuilder
-import io.violabs.picard.dsl.config.DomainConfig
+import io.violabs.picard.metaDsl.annotation.GeneratedDsl
+import io.violabs.picard.metaDsl.builder.AnnotationDecorator
+import io.violabs.picard.metaDsl.builder.KPTypeSpecBuilder
+import io.violabs.picard.metaDsl.config.DomainConfig
 import kotlin.reflect.KProperty1
 
 abstract class GroupGenerator<T>(

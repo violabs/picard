@@ -8,7 +8,10 @@ import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.asTypeName
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import io.violabs.geordi.UnitSim
-import io.violabs.picard.dsl.annotation.GeneratedDsl
+import io.violabs.picard.metaDsl.annotation.GeneratedDsl
+import io.violabs.picard.metaDsl.process.AbstractPropertySchemaFactory
+import io.violabs.picard.metaDsl.process.DomainProperty
+import io.violabs.picard.metaDsl.process.PropertySchemaFactoryAdapter
 import org.junit.jupiter.api.Test
 
 class ParameterFactoryTest : UnitSim() {

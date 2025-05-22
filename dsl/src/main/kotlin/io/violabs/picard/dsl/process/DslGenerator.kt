@@ -6,9 +6,15 @@ import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.squareup.kotlinpoet.ksp.toClassName
 import io.violabs.picard.common.Colors
 import io.violabs.picard.common.VLoggable
-import io.violabs.picard.dsl.annotation.GeneratedDsl
-import io.violabs.picard.dsl.annotation.SingleEntryTransformDsl
-import io.violabs.picard.dsl.config.BuilderConfig
+import io.violabs.picard.metaDsl.annotation.GeneratedDsl
+import io.violabs.picard.metaDsl.annotation.SingleEntryTransformDsl
+import io.violabs.picard.metaDsl.config.BuilderConfig
+import io.violabs.picard.metaDsl.process.DefaultDomainProperty
+import io.violabs.picard.metaDsl.process.DefaultPropertySchemaFactory
+import io.violabs.picard.metaDsl.process.DefaultPropertySchemaFactoryAdapter
+import io.violabs.picard.metaDsl.process.DomainProperty
+import io.violabs.picard.metaDsl.process.PropertySchemaFactory
+import io.violabs.picard.metaDsl.process.PropertySchemaFactoryAdapter
 import kotlin.reflect.KClass
 
 interface DslGenerator<PARAM_ADAPTER : PropertySchemaFactoryAdapter, PROP_ADAPTER : DomainProperty> {

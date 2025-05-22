@@ -1,4 +1,4 @@
 package io.violabs.picard.starCharts.loki.utils
 
 @DslMarker
-internal annotation class LokiDsl
+annotation class LokiDsl

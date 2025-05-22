@@ -5,8 +5,8 @@ plugins {
 
 dependencies {
     implementation(project(":star-charts"))
-//    implementation(project(":dsl"))
     ksp(project(":dsl"))
+    implementation(project(":meta-dsl"))
 }
 
 //src/main/resources/META-INF/services/com.google.devtools.ksp.processing.SymbolProcessorProvider

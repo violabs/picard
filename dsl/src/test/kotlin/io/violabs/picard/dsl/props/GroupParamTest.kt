@@ -6,6 +6,7 @@ import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.asTypeName
 import io.violabs.geordi.UnitSim
+import io.violabs.picard.metaDsl.schema.GroupPropSchema
 import org.junit.jupiter.api.Test
 
 class GroupParamTest : UnitSim() {

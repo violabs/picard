@@ -1,7 +1,7 @@
 package io.violabs.picard.starCharts.loki
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import io.violabs.picard.dsl.annotation.GeneratedDsl
+import io.violabs.picard.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.clusterValidation.ClusterValidation
 import io.violabs.picard.starCharts.loki.tls.TLSVersion
 import io.violabs.picard.starCharts.loki.tls.TlsConfig

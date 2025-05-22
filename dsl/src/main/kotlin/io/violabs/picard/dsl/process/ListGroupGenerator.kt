@@ -1,11 +1,11 @@
 package io.violabs.picard.dsl.process
 
-import io.violabs.picard.dsl.annotation.GeneratedDsl
-import io.violabs.picard.dsl.builder.AnnotationDecorator
-import io.violabs.picard.dsl.builder.kpListOf
-import io.violabs.picard.dsl.builder.kpMutableListOf
+import io.violabs.picard.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.dsl.process.GroupGenerator.Config
 import io.violabs.picard.dsl.process.GroupGenerator.Namespace
+import io.violabs.picard.metaDsl.builder.AnnotationDecorator
+import io.violabs.picard.metaDsl.builder.kpListOf
+import io.violabs.picard.metaDsl.builder.kpMutableListOf
 
 private val LIST_GROUP_GENERATOR_CONFIG = Config(
     namespace = Namespace(

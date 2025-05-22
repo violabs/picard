@@ -107,7 +107,7 @@ class ParameterFactoryTest : UnitSim() {
     )
 
     @GeneratedDsl(
-        withGroup = true
+        withListGroup = true
     )
     class Example
 }

@@ -8,7 +8,7 @@ internal interface KotlinPoetSpec {
     val modifiers: MutableList<KModifier>
 }
 
-internal abstract class DefaultKotlinPoetSpec : KotlinPoetSpec {
+abstract class DefaultKotlinPoetSpec : KotlinPoetSpec {
     override var name: String? = null
     override val modifiers: MutableList<KModifier> = mutableListOf()
 

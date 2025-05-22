@@ -6,7 +6,7 @@ import com.squareup.kotlinpoet.TypeName
 
 
 @PicardDSLMarker
-internal class KPPropertySpecBuilder : TypedSpec, MutabilitySpec, DefaultKotlinPoetSpec() {
+class KPPropertySpecBuilder : TypedSpec, MutabilitySpec, DefaultKotlinPoetSpec() {
     override var type: TypeName? = null
     override var mutable: Boolean = true
     var initializer: String? = null
@@ -58,6 +58,6 @@ internal class KPPropertySpecBuilder : TypedSpec, MutabilitySpec, DefaultKotlinP
     }
 
     companion object {
-        internal val ALL_ACCESS_MODIFIERS = listOf(KModifier.PUBLIC, KModifier.PROTECTED, KModifier.INTERNAL, KModifier.PRIVATE)
+        val ALL_ACCESS_MODIFIERS = listOf(KModifier.PUBLIC, KModifier.PROTECTED, KModifier.INTERNAL, KModifier.PRIVATE)
     }
 }

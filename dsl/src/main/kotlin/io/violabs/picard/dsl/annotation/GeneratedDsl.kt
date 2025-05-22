@@ -3,7 +3,7 @@ package io.violabs.picard.dsl.annotation
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.SOURCE)
 annotation class GeneratedDsl(
-    val withGroup: Boolean = false,
+    val withListGroup: Boolean = false,
     val withMapGroup: String = MapGroupTypes.NONE
 ) {
     object MapGroupTypes {

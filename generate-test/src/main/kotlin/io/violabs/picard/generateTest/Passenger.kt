@@ -3,7 +3,7 @@ package io.violabs.picard.generateTest
 import io.violabs.picard.dsl.annotation.GeneratedDsl
 
 @GeneratedDsl(
-    withGroup = true,
+    withListGroup = true,
     withMapGroup = "SINGLE"
 )
 data class Passenger(val name: String, val rank: Rank) {

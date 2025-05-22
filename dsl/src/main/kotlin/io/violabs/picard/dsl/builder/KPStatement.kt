@@ -1,13 +1,13 @@
 package io.violabs.picard.dsl.builder
 
 @PicardDSLMarker
-internal class KPStatement(
+class KPStatement(
     var statement: String,
     var args: MutableList<Any> = mutableListOf()
 ) {
 
     @PicardDSLMarker
-    internal class Group {
+    class Group {
         val items: MutableList<KPStatement> = mutableListOf()
 
         fun addLine(statement: String, vararg args: Any) {

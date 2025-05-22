@@ -1,6 +1,6 @@
 package io.violabs.picard.generateTest
 
-import io.violabs.picard.dsl.CoreDslBuilder
+import io.violabs.picard.metaDsl.CoreDslBuilder
 
 @TestDslMarker
 interface DslBuilder<T> : CoreDslBuilder<T> {

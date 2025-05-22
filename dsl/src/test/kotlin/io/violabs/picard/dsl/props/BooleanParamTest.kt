@@ -2,6 +2,7 @@ package io.violabs.picard.dsl.props
 
 import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
+import io.violabs.picard.metaDsl.schema.BooleanPropSchema
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestTemplate

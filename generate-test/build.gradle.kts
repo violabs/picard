@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
     ksp(project(":dsl"))
-    implementation(project(":dsl"))
+    implementation(project(":meta-dsl"))
     testImplementation(project(":common"))
     testImplementation(project(":core-test"))
     testImplementation(project(":core"))

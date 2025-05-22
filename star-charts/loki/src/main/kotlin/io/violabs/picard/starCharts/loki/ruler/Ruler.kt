@@ -1,7 +1,7 @@
 package io.violabs.picard.starCharts.loki.ruler
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import io.violabs.picard.dsl.annotation.GeneratedDsl
+import io.violabs.picard.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.Duration
 import io.violabs.picard.starCharts.loki.GrpcClient
 import io.violabs.picard.starCharts.loki.ring.Ring

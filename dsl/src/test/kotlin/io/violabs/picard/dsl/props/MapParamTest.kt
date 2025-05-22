@@ -6,6 +6,7 @@ import com.squareup.kotlinpoet.STRING
 import com.squareup.kotlinpoet.TypeName
 import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
+import io.violabs.picard.metaDsl.schema.MapPropSchema
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestTemplate

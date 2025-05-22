@@ -1,6 +1,6 @@
 package io.violabs.picard.starCharts.loki
 
-import io.violabs.picard.dsl.annotation.GeneratedDsl
+import io.violabs.picard.metaDsl.annotation.GeneratedDsl
 
 @GeneratedDsl
 data class OperationalConfig(

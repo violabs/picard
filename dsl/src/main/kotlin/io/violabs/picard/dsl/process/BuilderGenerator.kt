@@ -7,11 +7,12 @@ import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.joinToCode
 import com.squareup.kotlinpoet.ksp.writeTo
 import io.violabs.picard.common.VLoggable
-import io.violabs.picard.dsl.builder.AnnotationDecorator
-import io.violabs.picard.dsl.builder.kotlinPoet
-import io.violabs.picard.dsl.config.BuilderConfig
-import io.violabs.picard.dsl.config.DomainConfig
-import io.violabs.picard.dsl.props.DslPropSchema
+import io.violabs.picard.metaDsl.config.BuilderConfig
+import io.violabs.picard.metaDsl.config.DomainConfig
+import io.violabs.picard.metaDsl.schema.DslPropSchema
+import io.violabs.picard.metaDsl.builder.AnnotationDecorator
+import io.violabs.picard.metaDsl.builder.kotlinPoet
+import io.violabs.picard.metaDsl.process.DefaultPropertySchemaService
 
 interface BuilderGenerator {
     fun generate(
@@ -71,8 +72,8 @@ class DefaultBuilderGenerator(
 
         val fileSpec = kotlinPoet {
             file {
-                addImportIf(hasRequireNotNull, "io.violabs.picard.dsl", "vRequireNotNull")
-                addImportIf(hasRequireNotEmpty, "io.violabs.picard.dsl", "vRequireNotEmpty")
+                addImportIf(hasRequireNotNull, "io.violabs.picard.metaDsl", "vRequireNotNull")
+                addImportIf(hasRequireNotEmpty, "io.violabs.picard.metaDsl", "vRequireNotEmpty")
                 className = domainConfig.fileClassName
                 types(fileContent)
             }

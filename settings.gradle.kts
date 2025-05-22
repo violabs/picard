@@ -39,6 +39,8 @@ includeModules(
     "core",
     "core-test",
     "dsl",
+    "dsl-test",
+    "meta-dsl",
     "generate-test",
     "sandbox",
     "star-charts".subModules(

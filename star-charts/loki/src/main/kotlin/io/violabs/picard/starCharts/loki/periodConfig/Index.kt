@@ -2,7 +2,7 @@ package io.violabs.picard.starCharts.loki.periodConfig
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.violabs.picard.domain.k8sResources.Quantity
-import io.violabs.picard.dsl.annotation.GeneratedDsl
+import io.violabs.picard.metaDsl.annotation.GeneratedDsl
 
 @GeneratedDsl
 data class Index(

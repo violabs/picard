@@ -1,6 +1,6 @@
 package io.violabs.picard.starCharts.loki.thanosObjectStoreConfig
 
-import io.violabs.picard.dsl.annotation.GeneratedDsl
+import io.violabs.picard.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.Duration
 import io.violabs.picard.starCharts.loki.s3StorageConfig.HttpConfig
 

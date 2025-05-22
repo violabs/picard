@@ -1,7 +1,7 @@
 package io.violabs.picard.starCharts.loki.periodConfig
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import io.violabs.picard.dsl.annotation.GeneratedDsl
+import io.violabs.picard.metaDsl.annotation.GeneratedDsl
 import java.time.LocalDate
 
 @GeneratedDsl(

@@ -16,7 +16,7 @@ import io.violabs.picard.tutorial.podTemplate.PodTemplateFactory.buildPodTemplat
 import java.io.File
 
 fun main(vararg args: String) = with(FileManager()) {
-    log.info("Beginning Tutorial run")
+    logger.info("Beginning Tutorial run")
 
     addFile(
         "Simple pod DSL",
@@ -90,7 +90,7 @@ class FileManager : DefaultLogger("TUTORIAL") {
         val file = File(fileName)
         file.writeText(content)
 
-        log.info(label)
-        content.split("\n").forEach { log.info("  | $it") }
+        logger.info(label)
+        content.split("\n").forEach { logger.info("  | $it") }
     }
 }

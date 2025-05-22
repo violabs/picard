@@ -33,6 +33,6 @@ kotlin {
 
 
 ksp {
-    arg("dslBuilder.classpath", "io.violabs.picard.generateTest")
-    arg("dslMarker.classpath", "io.violabs.picard.generateTest.TestDSLMarker")
+    arg("dslBuilderClasspath", "io.violabs.picard.generateTest")
+    arg("dslMarkerClass", "io.violabs.picard.generateTest.TestDSLMarker")
 }

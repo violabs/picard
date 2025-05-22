@@ -1,224 +1,184 @@
 package io.violabs.picard.dsl.process
 
 import com.google.devtools.ksp.processing.CodeGenerator
-import com.google.devtools.ksp.processing.Dependencies
-import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.symbol.KSClassDeclaration
-import com.squareup.kotlinpoet.ClassName
-import com.squareup.kotlinpoet.CodeBlock
-import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
-import com.squareup.kotlinpoet.TypeVariableName
-import com.squareup.kotlinpoet.joinToCode
-import com.squareup.kotlinpoet.ksp.toClassName
+import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ksp.writeTo
-import io.violabs.picard.common.Colors
-import io.violabs.picard.common.Logger
+import io.violabs.picard.common.VLoggable
 import io.violabs.picard.dsl.annotation.GeneratedDSL
-import io.violabs.picard.dsl.annotation.SingleEntryTransformDSL
 import io.violabs.picard.dsl.builder.*
-import io.violabs.picard.dsl.params.DSLParam
+import io.violabs.picard.dsl.config.BuilderConfig
+import io.violabs.picard.dsl.config.DomainConfig
+import io.violabs.picard.dsl.props.DslProp
 
-private val LOGGER = Logger("DSL_BUILDER")
-    .enableDebug()
-    .disableWarning()
+interface BuilderGenerator {
+    fun generate(
+        codeGenerator: CodeGenerator,
+        domain: KSClassDeclaration,
+        builderConfig: BuilderConfig,
+        singleEntryTransformByClassName: Map<String, KSClassDeclaration>,
+    )
+}
 
-class BuilderGenerator(
-    val parameterFactory: ParameterFactory<DefaultParameterFactoryAdapter, DefaultPropertyAdapter> =
-        DefaultParameterFactory(LOGGER)
-) {
+class DefaultBuilderGenerator(
+    val parameterService: DefaultPropertyService = DefaultPropertyService()
+) : BuilderGenerator, VLoggable {
+    override fun logId(): String? = "BLDR_GENERATOR"
 
-    fun generate(resolver: Resolver, codeGenerator: CodeGenerator, options: Map<String, String> = emptyMap()) {
-        LOGGER.debug("------- GENERATE", tier = 0)
-        val dslBuilderClasspath = options["dslBuilder.classpath"]
-        val dslMarkerClasspath = options["dslMarker.classpath"]
-        LOGGER.debug("dslBuilderClasspath: $dslBuilderClasspath")
-        LOGGER.debug("dslMarkerClasspath:  $dslMarkerClasspath")
+    init {
+        logger.enableDebug()
+    }
 
-        if (dslBuilderClasspath == null) {
-            LOGGER.error("KSP Option 'dslBuilder.classpath' is not defined. Please set it in your build.gradle.")
-            return
+    override fun generate(
+        codeGenerator: CodeGenerator,
+        domain: KSClassDeclaration,
+        builderConfig: BuilderConfig,
+        singleEntryTransformByClassName: Map<String, KSClassDeclaration>,
+    ) {
+        val domainConfig = DomainConfig(
+            builderConfig,
+            singleEntryTransformByClassName,
+            domain
+        )
+        generateFilesForDsl(domainConfig, codeGenerator)
+    }
+
+    private fun generateFilesForDsl(
+        domainConfig: DomainConfig,
+        codeGenerator: CodeGenerator
+    ) {
+        logger.debug("-- generating builder --", tier = 0)
+        logger.debug("+++ DOMAIN: ${domainConfig.domainClassName}  +++")
+        logger.debug("package: ${domainConfig.packageName}", tier = 1, branch = true)
+        logger.debug("type: ${domainConfig.typeName}", tier = 1, branch = true)
+        logger.debug("builder: ${domainConfig.builderName}", tier = 1, branch = true)
+
+        val params = parameterService.getParamsFromDomain(domainConfig)
+
+        val fileContent = generateBuilderFileContent(domainConfig, params)
+
+        // Check if any validation functions are needed.
+        // This logic assumes propertyValueReturn() generates the vRequireNotNull etc. calls.
+        val hasRequireNotNull = params.any { param -> !param.nullableAssignment && param.verifyNotNull }
+        val hasRequireNotEmpty = params.any { param -> !param.nullableAssignment && param.verifyNotEmpty }
+        logger.debug("requiresNotNull: $hasRequireNotNull", tier = 1, branch = true)
+        logger.debug("requiresNotEmpty: $hasRequireNotEmpty", tier = 1, branch = true)
+
+        val fileSpec = kotlinPoet {
+            file {
+                addImportIf(hasRequireNotNull, "io.violabs.picard.dsl", "vRequireNotNull")
+                addImportIf(hasRequireNotEmpty, "io.violabs.picard.dsl", "vRequireNotEmpty")
+                className = domainConfig.fileClassName
+                types(fileContent)
+            }
         }
 
-        val generatedBuilderDSL = resolver
-            .getSymbolsWithAnnotation(GeneratedDSL::class.qualifiedName!!)
-            .filterIsInstance<KSClassDeclaration>()
-            .onEach { LOGGER.debug("Found ${Colors.yellow("@GeneratedDSL")} on ${it.simpleName.asString()}") }
+        fileSpec.writeTo(codeGenerator, domainConfig.dependencies)
+        logger.debug("file written: ${domainConfig.fileClassName}", tier = 1)
+    }
 
-        val singleEntryTransform: Map<String, KSClassDeclaration> = resolver
-            .getSymbolsWithAnnotation(SingleEntryTransformDSL::class.qualifiedName!!)
-            .filterIsInstance<KSClassDeclaration>()
-            .onEach { LOGGER.debug("Found ${Colors.yellow("@SingleEntryTransformDSL")} on ${it.simpleName.asString()}") }
-            .associateBy { it.toClassName().toString() }
+    private fun generateBuilderFileContent(
+        domainConfig: DomainConfig,
+        params: List<DslProp>
+    ): TypeSpec = kotlinPoet {
+        val domainClassName = domainConfig.domainClassName
+        val domain = domainConfig.domain
 
-        generatedBuilderDSL.forEach { domain ->
-            LOGGER.debug("-- generating builder --", tier = 0)
-            val pkg = domain.packageName.asString()
-            val typeName = domain.simpleName.asString()
-            val builderName = "${typeName}DSLBuilder"
-            val domainClassName: ClassName = domain.toClassName()
+        type {
+            annotation { createDslMarkerIfAvailable(domainConfig.builderConfig.dslMarkerClass) }
+            public()
+            name = domainConfig.builderName
+            superInterface(domainConfig.parameterizedDslBuilder)
+            logger.debug("DSL Builder Interface added", tier = 1, branch = true)
+            logger.debug("Properties added", tier = 1)
 
-            LOGGER.debug("+++ DOMAIN: $domainClassName  +++")
-            LOGGER.debug("package: $pkg", tier = 1, branch = true)
-            LOGGER.debug("type: $typeName", tier = 1, branch = true)
-            LOGGER.debug("builder: $builderName", tier = 1, branch = true)
+            properties {
+                params.addForEach(DslProp::toPropertySpec)
+            }
 
-            val dslBuilderInterface = ClassName(dslBuilderClasspath, "DSLBuilder")
-            val parameterizedDslBuilder = dslBuilderInterface.parameterizedBy(domainClassName)
+            functions {
+                params.addForEach(DslProp::accessors)
 
-            val lastIndex = domain.getAllProperties().count() - 1
+                add {
+                    override()
+                    funName = "build"
+                    returns = domainClassName
 
-            val params = domain
-                .getAllProperties()
-                .mapIndexed { i, prop -> DefaultPropertyAdapter(i, lastIndex, prop, singleEntryTransform) }
-                .map(parameterFactory::createParameterFactoryAdapter)
-                .map(parameterFactory::determineParam)
-                .toList()
-
-            val fileContent = kotlinPoet {
-                type {
-                    annotation { createDslMarkerIfAvailable(dslMarkerClasspath) }
-                    public()
-                    name = builderName
-                    superInterface(parameterizedDslBuilder)
-                    LOGGER.debug("DSL Builder Interface added", tier = 1, branch = true)
-                    LOGGER.debug("Properties added", tier = 1)
-
-                    properties {
-                        params.addForEach(DSLParam::toPropertySpec)
+                    statements {
+                        val constructorParams = params
+                            .map { CodeBlock.of("%N = %L", it.propName, it.propertyValueReturn()) }
+                        if (constructorParams.isEmpty()) {
+                            addLine("return %T()", domainClassName)
+                        } else {
+                            val argumentsBlock = constructorParams.joinToCode(
+                                separator = ",\n    ",
+                                prefix = "\n    ",
+                                suffix = "\n"
+                            )
+                            addLine("return %T(%L)", domainClassName, argumentsBlock)
+                        }
                     }
+                }
+            }
 
-                    functions {
-                        params.addForEach(DSLParam::accessors)
+            val isGroup = domain
+                .annotations
+                .filter { it.shortName.asString() == GeneratedDSL::class.simpleName.toString() }
+                .flatMap { it.arguments }
+                .filter { it.name?.asString() == GeneratedDSL::withGroup.name }
+                .onEach { logger.debug("found arg: ${it.name?.asString()} - ${it.value}", tier = 1) }
+                .any { it.value.toString() == "true" }
 
-                        add {
-                            override()
-                            funName = "build"
-                            returns = domainClassName
+            logger.debug("[DECISION] isGroup: $isGroup", tier = 1)
 
-                            statements {
-                                val constructorParams = params
-                                    .map { CodeBlock.of("%N = %L", it.propName, it.propertyValueReturn()) }
-                                if (constructorParams.isEmpty()) {
-                                    addLine("return %T()", domainClassName)
-                                } else {
-                                    val argumentsBlock = constructorParams.joinToCode(
-                                        separator = ",\n    ",
-                                        prefix = "\n    ",
-                                        suffix = "\n"
-                                    )
-                                    addLine("return %T(%L)", domainClassName, argumentsBlock)
-                                }
+            val isMapBuilderGroup = domain
+                .annotations
+                .filter { it.shortName.asString() == GeneratedDSL::class.simpleName.toString() }
+                .flatMap { it.arguments }
+                .filter { it.name?.asString() == GeneratedDSL::withMapGroup.name }
+                .onEach { logger.debug("found arg: ${it.name?.asString()} - ${it.value}", tier = 1) }
+                .any { argument ->
+                    val activeTypes = GeneratedDSL.MapGroupType.ACTIVE_TYPES.map { it.name }
+                    argument.value?.toString() in activeTypes
+                }
+            logger.debug("[DECISION] isMapGroup: $isGroup", tier = 1)
+
+            if (isGroup) {
+                logger.debug("group domain", tier = 1, branch = true)
+                val builderClassName = domainConfig.builderClassName
+
+                nested {
+                    addType {
+                        name = "Group"
+                        annotation {
+                            createDslMarkerIfAvailable(domainConfig.builderConfig.dslMarkerClass)
+                        }
+                        properties {
+                            add {
+                                private()
+                                name = "items"
+                                type(kpMutableListOf(domainClassName, nullable = false))
+                                initializer = "mutableListOf()"
                             }
                         }
-                    }
-
-                    val isGroup = domain.annotations
-                        .filter { it.shortName.asString() == GeneratedDSL::class.simpleName.toString() }
-                        .flatMap { it.arguments }
-                        .filter { it.name?.asString() == GeneratedDSL::withGroup.name }
-                        .onEach { LOGGER.debug("found arg: ${it.name?.asString()} - ${it.value}", tier = 1) }
-                        .any { it.value.toString() == "true" }
-
-                    LOGGER.debug("[DECISION] isGroup: $isGroup", tier = 1)
-
-                    val isMapBuilderGroup = domain.annotations
-                        .filter { it.shortName.asString() == GeneratedDSL::class.simpleName.toString() }
-                        .flatMap { it.arguments }
-                        .filter { it.name?.asString() == GeneratedDSL::withMapGroup.name }
-                        .onEach { LOGGER.debug("found arg: ${it.name?.asString()} - ${it.value}", tier = 1) }
-                        .any { argument ->
-                            val activeTypes = GeneratedDSL.MapGroupType.ACTIVE_TYPES.map { it.name }
-                            argument.value?.toString() in activeTypes
-                        }
-                    LOGGER.debug("[DECISION] isMapGroup: $isGroup", tier = 1)
-
-                    if (isGroup) {
-                        LOGGER.debug("group domain", tier = 1, branch = true)
-                        val builderClassName = ClassName(pkg, builderName)
-
-                        nested {
-                            addType {
-                                name = "Group"
-                                annotation {
-                                    createDslMarkerIfAvailable(dslMarkerClasspath)
-                                }
-                                properties {
-                                    add {
-                                        private()
-                                        name = "items"
-                                        type(kpMutableListOf(domainClassName, nullable = false))
-                                        initializer = "mutableListOf()"
-                                    }
-                                }
-                                functions {
-                                    add {
-                                        funName = "items"
-                                        returns = kpListOf(domainClassName, nullable = false)
-                                        statements {
-                                            addLine("return items.toList()")
-                                        }
-                                    }
-
-                                    add {
-                                        funName = domainClassName.simpleName.replaceFirstChar { it.lowercase() }
-                                        param {
-                                            lambdaType {
-                                                receiver = builderClassName
-                                            }
-                                        }
-                                        statements {
-                                            addLine("items.add(%T().apply(block).build())", builderClassName)
-                                        }
-                                    }
+                        functions {
+                            add {
+                                funName = "items"
+                                returns = kpListOf(domainClassName, nullable = false)
+                                statements {
+                                    addLine("return items.toList()")
                                 }
                             }
-                        }
-                    }
 
-                    if (isMapBuilderGroup) {
-                        LOGGER.debug("map group domain", tier = 1, branch = true)
-                        val builderClassName = ClassName(pkg, builderName)
-
-                        nested {
-                            val typeVariable = TypeVariableName("T")
-                            addType {
-                                name = "MapGroup"
-                                typeVariables(typeVariable)
-                                annotation {
-                                    createDslMarkerIfAvailable(dslMarkerClasspath)
-                                }
-                                properties {
-                                    add {
-                                        private()
-                                        name = "items"
-                                        type(kpMutableMapOf(typeVariable, domainClassName, nullable = false))
-                                        initializer = "mutableMapOf()"
+                            add {
+                                funName = domainClassName.simpleName.replaceFirstChar { it.lowercase() }
+                                param {
+                                    lambdaType {
+                                        receiver = builderClassName
                                     }
                                 }
-                                functions {
-                                    add {
-                                        funName = "items"
-                                        returns = kpMapOf(typeVariable, domainClassName, nullable = false)
-                                        statements {
-                                            addLine("return items.toMap()")
-                                        }
-                                    }
-
-                                    add {
-                                        funName = domainClassName.simpleName.replaceFirstChar { it.lowercase() }
-                                        param {
-                                            name = "key"
-                                            type(typeVariable, nullable = false)
-                                        }
-                                        param {
-                                            lambdaType {
-                                                receiver = builderClassName
-                                            }
-                                        }
-                                        statements {
-                                            addLine("items[key] = %T().apply(block).build()", builderClassName)
-                                        }
-                                    }
+                                statements {
+                                    addLine("items.add(%T().apply(block).build())", builderClassName)
                                 }
                             }
                         }
@@ -226,35 +186,60 @@ class BuilderGenerator(
                 }
             }
 
-            // Check if any validation functions are needed.
-            // This logic assumes propertyValueReturn() generates the vRequireNotNull etc. calls.
-            val requiresVRequireNotNull = params.any { param -> !param.nullableAssignment && param.verifyNotNull }
-            val requiresVRequireNotEmpty = params.any { param -> !param.nullableAssignment && param.verifyNotEmpty }
-            LOGGER.debug("requiresNotNull: $requiresVRequireNotNull", tier = 1, branch = true)
-            LOGGER.debug("requiresNotEmpty: $requiresVRequireNotEmpty", tier = 1, branch = true)
+            if (isMapBuilderGroup) {
+                logger.debug("map group domain", tier = 1, branch = true)
 
-            val fileSpec = kotlinPoet {
-                file {
-                    addImportIf(requiresVRequireNotNull, "io.violabs.picard.dsl", "vRequireNotNull")
-                    addImportIf(requiresVRequireNotEmpty, "io.violabs.picard.dsl", "vRequireNotEmpty")
-                    className = ClassName(pkg, "${typeName}Dsl")
-                    types(fileContent)
+                nested {
+                    val typeVariable = TypeVariableName("T")
+                    addType {
+                        name = "MapGroup"
+                        typeVariables(typeVariable)
+                        annotation {
+                            createDslMarkerIfAvailable(domainConfig.builderConfig.dslMarkerClass)
+                        }
+                        properties {
+                            add {
+                                private()
+                                name = "items"
+                                type(kpMutableMapOf(typeVariable, domainClassName, nullable = false))
+                                initializer = "mutableMapOf()"
+                            }
+                        }
+                        functions {
+                            add {
+                                funName = "items"
+                                returns = kpMapOf(typeVariable, domainClassName, nullable = false)
+                                statements {
+                                    addLine("return items.toMap()")
+                                }
+                            }
+
+                            add {
+                                funName = domainClassName.simpleName.replaceFirstChar { it.lowercase() }
+                                param {
+                                    name = "key"
+                                    type(typeVariable, nullable = false)
+                                }
+                                param {
+                                    lambdaType {
+                                        receiver = domainConfig.builderClassName
+                                    }
+                                }
+                                statements {
+                                    addLine("items[key] = %T().apply(block).build()", domainConfig.builderClassName)
+                                }
+                            }
+                        }
+                    }
                 }
             }
-
-            fileSpec
-                .writeTo(
-                    codeGenerator,
-                    Dependencies(aggregating = false, sources = listOfNotNull(domain.containingFile).toTypedArray())
-                )
-            LOGGER.debug("file written: ${pkg}.${typeName}Dsl", tier = 1)
         }
     }
 
     private fun createDslMarkerIfAvailable(dslMarkerClasspath: String?): ClassName? {
         if (dslMarkerClasspath == null) return null
 
-        LOGGER.debug("DSL Marker added", tier = 1, branch = true)
+        logger.debug("DSL Marker added", tier = 1, branch = true)
         val split = dslMarkerClasspath.split(".")
         val dslMarkerPackageName = split.subList(0, split.size - 1).joinToString(".")
         val dslMarkerSimpleName = split.last()

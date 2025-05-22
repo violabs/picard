@@ -1,17 +1,20 @@
-package io.violabs.picard.dsl.params
+package io.violabs.picard.dsl.props
 
-import com.squareup.kotlinpoet.*
+import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.PropertySpec
+import com.squareup.kotlinpoet.TypeName
 import io.violabs.picard.dsl.builder.kotlinPoet
 
 // Assuming GroupParam is similar to BuilderParam or a complex type needing its own builder
-class GroupParam(
+class GroupProp(
     override val propName: String,
     originalPropertyType: TypeName,
     private val builtClassName: ClassName,
     override val nullableAssignment: Boolean = true,
     override val nullableProp: Boolean = true,
     private val kdoc: String? = null
-) : DSLParam {
+) : DslProp {
     override val propTypeName: TypeName = originalPropertyType
 
     override fun toPropertySpec(): PropertySpec = kotlinPoet {
@@ -27,7 +30,7 @@ class GroupParam(
     }
 
     override fun accessors(): List<FunSpec> = kotlinPoet {
-        val receiverName =  builtClassName.nestedClass(
+        val receiverName = builtClassName.nestedClass(
             extensionName = "DSLBuilder",
             nestedClassName = "Group"
         )

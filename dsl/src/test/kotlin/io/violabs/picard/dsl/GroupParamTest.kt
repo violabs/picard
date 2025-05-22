@@ -6,7 +6,7 @@ import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.asTypeName
 import io.violabs.geordi.UnitSim
-import io.violabs.picard.dsl.params.GroupParam
+import io.violabs.picard.dsl.props.GroupProp
 import org.junit.jupiter.api.Test
 
 class GroupParamTest : UnitSim() {
@@ -16,7 +16,7 @@ class GroupParamTest : UnitSim() {
     @Test
     fun `toPropertySpec - happy path`() = test {
         given {
-            val param = GroupParam("test", propTypeName, groupBuilderName)
+            val param = GroupProp("test", propTypeName, groupBuilderName)
 
             expect {
                 "private var test: kotlin.collections.List<test.TestObj>? = null"
@@ -33,7 +33,7 @@ class GroupParamTest : UnitSim() {
     @Test
     fun `accessors - happy path`() = test {
         given {
-            val param = GroupParam("test", propTypeName, groupBuilderName)
+            val param = GroupProp("test", propTypeName, groupBuilderName)
 
             expect {
                 """

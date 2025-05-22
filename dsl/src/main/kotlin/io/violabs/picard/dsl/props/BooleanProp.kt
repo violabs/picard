@@ -1,13 +1,13 @@
-package io.violabs.picard.dsl.params
+package io.violabs.picard.dsl.props
 
 import com.squareup.kotlinpoet.*
 import io.violabs.picard.dsl.builder.kotlinPoet
 
-class BooleanParam(
+class BooleanProp(
     override val propName: String,
     override val nullableAssignment: Boolean = true,
     override val nullableProp: Boolean = true
-) : DSLParam {
+) : DslProp {
     override val propTypeName: TypeName = BOOLEAN.copy(nullable = nullableAssignment) // Correctly use constructor arg
 
     override fun accessors(): List<FunSpec> = kotlinPoet {

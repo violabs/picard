@@ -1,4 +1,4 @@
-package io.violabs.picard.dsl.params
+package io.violabs.picard.dsl.props
 
 import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.asTypeName
@@ -15,7 +15,7 @@ class BuilderParamTest : UnitSim() {
     @TestTemplate
     fun `toPropertySpec - happy path - #scenario`(expected: String, nullableProp: Boolean) = test {
         given {
-            val param = BuilderParam("test", typeName, buildClassName, nullableProp = nullableProp)
+            val param = BuilderProp("test", typeName, buildClassName, nullableProp = nullableProp)
 
             expect { expected }
 
@@ -30,12 +30,12 @@ class BuilderParamTest : UnitSim() {
     @Test
     fun `accessors - happy path`() = test {
         given {
-            val param = BuilderParam("test", typeName, buildClassName, true)
+            val param = BuilderProp("test", typeName, buildClassName, true)
 
             expect {
                 """
-                    |public fun test(block: io.violabs.picard.dsl.params.BuilderParamTest.TestBuilder.() -> kotlin.Unit) {
-                    |  val builder = io.violabs.picard.dsl.params.BuilderParamTest.TestBuilder()
+                    |public fun test(block: io.violabs.picard.dsl.props.BuilderParamTest.TestBuilder.() -> kotlin.Unit) {
+                    |  val builder = io.violabs.picard.dsl.props.BuilderParamTest.TestBuilder()
                     |  builder.block()
                     |  this.test = builder.build()
                     |}

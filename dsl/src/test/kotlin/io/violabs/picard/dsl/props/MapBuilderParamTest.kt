@@ -1,16 +1,13 @@
-package io.violabs.picard.dsl.params
+package io.violabs.picard.dsl.props
 
-import com.squareup.kotlinpoet.BOOLEAN
-import com.squareup.kotlinpoet.INT
-import com.squareup.kotlinpoet.STRING
-import com.squareup.kotlinpoet.TypeName
+import com.squareup.kotlinpoet.*
 import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestTemplate
 
-class MapParamTest : UnitSim() {
+class MapBuilderParamTest : UnitSim() {
 
     @TestTemplate
     fun `toPropertySpec - happy path - #scenario`(
@@ -19,7 +16,7 @@ class MapParamTest : UnitSim() {
         nullable: Boolean
     ) = test {
         given {
-            val param = MapParam("test", keyType, valueType, nullable)
+            val param = MapGroupProp("test", keyType, valueType, nullable)
 
             expect { expected }
 
@@ -34,12 +31,16 @@ class MapParamTest : UnitSim() {
     @Test
     fun `accessors - happy path`() = test {
         given {
-            val param = MapParam("test", STRING, INT, nullableAssignment = true)
+            val param = MapGroupProp(
+                "test",
+                STRING, TestObj::class.asTypeName() as TypeName,
+                false
+            )
 
             expect {
                 """
-                    |public fun test(vararg items: kotlin.Pair<kotlin.String, kotlin.Int>) {
-                    |  this.test = items.toMap()
+                    |public fun test(block: io.violabs.picard.dsl.props.TestObjDSLBuilder.MapGroup<kotlin.String>.() -> kotlin.Unit) {
+                    |  this.test = io.violabs.picard.dsl.props.TestObjDSLBuilder.MapGroup<kotlin.String>().apply(block).items().toMap()
                     |}
                 """.trimMargin()
             }
@@ -52,7 +53,7 @@ class MapParamTest : UnitSim() {
         @JvmStatic
         @BeforeAll
         fun setup() = setup(
-            MapParamTest::class,
+            MapBuilderParamTest::class,
             SCENARIO_GROUP to { this::`toPropertySpec - happy path - #scenario` }
         )
 
@@ -60,17 +61,20 @@ class MapParamTest : UnitSim() {
             .vars("scenario", "expected", "keyType", "valueType", "nullable")
             .with(
                 "nullable",
-                "private var test: kotlin.collections.Map<kotlin.String, kotlin.Int>? = null",
+                "private var test: kotlin.collections.Map<kotlin.String, io.violabs.picard.dsl.props.MapBuilderParamTest.TestObj>? = null",
                 STRING,
-                INT,
+                TestObj::class.asTypeName() as TypeName,
                 true
             )
             .with(
                 "non-null",
-                "private var test: kotlin.collections.Map<kotlin.Int, kotlin.Boolean>",
+                "private var test: kotlin.collections.Map<kotlin.Int, io.violabs.picard.dsl.props.MapBuilderParamTest.TestObj>",
                 INT,
-                BOOLEAN,
+                TestObj::class.asTypeName() as TypeName,
                 false
             )
     }
+
+    class TestObj
+    class TestObjBuilder
 }

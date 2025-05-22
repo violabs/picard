@@ -1,4 +1,4 @@
-package io.violabs.picard.dsl.params
+package io.violabs.picard.dsl.props
 
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.PropertySpec
@@ -7,13 +7,13 @@ import com.squareup.kotlinpoet.TypeName
 import io.violabs.picard.dsl.builder.kotlinPoet
 import io.violabs.picard.dsl.builder.kpMapOf
 
-class MapParam(
+class MapProp(
     override val propName: String,
     val mapKeyType: TypeName = STRING,
     val mapValueType: TypeName = STRING,
     override val nullableAssignment: Boolean = true,
     override val nullableProp: Boolean = true
-) : DSLParam {
+) : DslProp {
     override val propTypeName: TypeName = kpMapOf(mapKeyType, mapValueType, nullable = nullableAssignment)
 
     override val verifyNotNull: Boolean = false

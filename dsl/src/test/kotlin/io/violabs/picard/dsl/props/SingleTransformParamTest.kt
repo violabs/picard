@@ -1,21 +1,27 @@
-package io.violabs.picard.dsl.params
+package io.violabs.picard.dsl.props
 
 import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.asTypeName
 import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
-import io.violabs.picard.dsl.params.BuilderParamTest.TestResponse
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestTemplate
 
-class DefaultParamTest : UnitSim() {
-    val propTypeName = String::class.asTypeName()
+
+class SingleTransformParamTest : UnitSim() {
+    val propTypeName = TestCase::class.asTypeName()
+    val inputTypeName = String::class.asTypeName()
 
     @TestTemplate
     fun `toPropertySpec - happy path - #scenario`(expected: String, nullableProp: Boolean) = test {
         given {
-            val param = DefaultParam("test", propTypeName, nullableProp = nullableProp)
+            val param = SingleTransformProp(
+                "test",
+                inputTypeName,
+                propTypeName,
+                nullableProp = nullableProp
+            )
 
             expect { expected }
 
@@ -30,11 +36,22 @@ class DefaultParamTest : UnitSim() {
     @Test
     fun `accessors - happy path`() = test {
         given {
-            val param = DefaultParam("test", propTypeName, true)
+            val param = SingleTransformProp(
+                "test",
+                inputTypeName,
+                propTypeName,
+                nullableAssignment = true
+            )
 
-            expect { true }
+            expect {
+                """
+                    |public fun test(test: kotlin.String) {
+                    |  this.test = $testResponseClassName(test)
+                    |}
+                """.trimMargin()
+            }
 
-            whenever { param.accessors().isEmpty() }
+            whenever { param.accessors().first().toString().trimIndent() }
         }
     }
 
@@ -46,12 +63,14 @@ class DefaultParamTest : UnitSim() {
             SCENARIO_GROUP to { this::`toPropertySpec - happy path - #scenario` }
         )
 
+        private val testResponseClassName = TestCase::class.asClassName()
+        private val propertyString = "private var test: $testResponseClassName"
 
-        private val testResponseClassName = String::class.asClassName()
-        private val propertyString = "public var test: $testResponseClassName"
         val SCENARIO_GROUP = SimulationGroup
             .vars("scenario", "expected", "nullableProp")
             .with("nullable", "$propertyString? = null", true)
             .with("non-null", propertyString, false)
     }
 }
+
+private class TestCase(val scenario: String)

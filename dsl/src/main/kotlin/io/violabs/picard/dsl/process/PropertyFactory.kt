@@ -2,9 +2,17 @@ package io.violabs.picard.dsl.process
 
 import com.squareup.kotlinpoet.*
 import com.google.devtools.ksp.symbol.KSClassDeclaration
-import io.violabs.picard.common.Logger
+import io.violabs.picard.common.VLoggable
 import io.violabs.picard.dsl.annotation.GeneratedDSL
-import io.violabs.picard.dsl.params.*
+import io.violabs.picard.dsl.props.BooleanProp
+import io.violabs.picard.dsl.props.BuilderProp
+import io.violabs.picard.dsl.props.DefaultProp
+import io.violabs.picard.dsl.props.DslProp
+import io.violabs.picard.dsl.props.GroupProp
+import io.violabs.picard.dsl.props.ListProp
+import io.violabs.picard.dsl.props.MapGroupProp
+import io.violabs.picard.dsl.props.MapProp
+import io.violabs.picard.dsl.props.SingleTransformProp
 import kotlin.reflect.KClass
 
 
@@ -13,13 +21,14 @@ private val DEFAULT_TYPE_NAMES = listOf(
 )
 
 /**
- * Responsible for creating [DSLParam] instances for a given property adapter.
+ * Responsible for creating [io.violabs.picard.dsl.props.DslProp] instances for a given property adapter.
  */
-interface ParameterFactory<T : ParameterFactoryAdapter, P : PropertyAdapter> {
+interface PropertyFactory<T : ParameterFactoryAdapter, P : PropertyAdapter> : VLoggable {
     /** logger used for debug output */
-    val logger: Logger
+//    val logger: Logger
+    override fun logId(): String? = "PROP_FACTORY"
 
-    fun createParameterFactoryAdapter(propertyAdapter: P): T
+    fun createPropertyFactoryAdapter(propertyAdapter: P): T
 
     fun logAdapter(propertyAdapter: P) {
         val branch = propertyAdapter.continueBranch()
@@ -33,23 +42,26 @@ interface ParameterFactory<T : ParameterFactoryAdapter, P : PropertyAdapter> {
     }
 
     /**
-     * Resolve the correct [DSLParam] implementation for the provided adapter.
+     * Resolve the correct [io.violabs.picard.dsl.props.DslProp] implementation for the provided adapter.
      *
      * @param adapter the property adapter being processed
      * @param isLast whether this is the last parameter being generated
      * @param log enable debug logging for this invocation
      */
-    fun determineParam(
+    fun determineProperty(
         adapter: T,
         isLast: Boolean = false,
         log: Boolean = true
-    ): DSLParam
+    ): DslProp
 }
 
-class DefaultParameterFactory(logger: Logger) :
-    AbstractParameterFactory<DefaultParameterFactoryAdapter, DefaultPropertyAdapter>(logger) {
+class DefaultPropertyFactory() :
+    AbstractPropertyFactory<DefaultParameterFactoryAdapter, DefaultPropertyAdapter>() {
+    init {
+        logger.enableDebug()
+    }
 
-    override fun createParameterFactoryAdapter(propertyAdapter: DefaultPropertyAdapter): DefaultParameterFactoryAdapter {
+    override fun createPropertyFactoryAdapter(propertyAdapter: DefaultPropertyAdapter): DefaultParameterFactoryAdapter {
         logAdapter(propertyAdapter)
 
         return DefaultParameterFactoryAdapter(propertyAdapter)
@@ -58,13 +70,11 @@ class DefaultParameterFactory(logger: Logger) :
 
 
 /**
- * Base implementation of [ParameterFactory] with common resolution logic.
+ * Base implementation of [PropertyFactory] with common resolution logic.
  */
-abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : PropertyAdapter>(
-    override val logger: Logger
-) : ParameterFactory<T, P> {
+abstract class AbstractPropertyFactory<T : ParameterFactoryAdapter, P : PropertyAdapter> : PropertyFactory<T, P> {
     /** @inheritdoc */
-    override fun determineParam(adapter: T, isLast: Boolean, log: Boolean): DSLParam {
+    override fun determineProperty(adapter: T, isLast: Boolean, log: Boolean): DslProp {
         val logger = logger.copy(isDebugEnabled = log)
         val propName = adapter.propName
         val actualPropertyType: TypeName = adapter.actualPropTypeName
@@ -77,54 +87,54 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
         logger.debug("nullable: $isNullable", tier = 4, branch = branch, continuous = true)
 
         if (adapter.hasSingleEntryTransform) {
-            return buildSingleTransformParam(adapter, log, branch)
+            return buildSingleTransformProp(adapter, log, branch)
         }
 
         val propertyNonNullableClassName: ClassName? = adapter.propertyNonNullableClassName
         val hasGeneratedDSLAnnotation = adapter.hasGeneratedDSLAnnotation
 
         if (hasGeneratedDSLAnnotation && propertyNonNullableClassName != null) {
-            logger.debug("BuilderParam", tier = 4, branch = branch, continuous = true)
-            return createBuilderParam(adapter)
+            logger.debug("BuilderProp", tier = 4, branch = branch, continuous = true)
+            return createBuilderProp(adapter)
         }
 
         return when {
             BOOLEAN == nonNullPropType -> {
-                logger.debug("BooleanParam", tier = 4, branch = branch, continuous = true)
-                BooleanParam(propName, isNullable)
+                logger.debug("BooleanProp", tier = 4, branch = branch, continuous = true)
+                BooleanProp(propName, isNullable)
             }
 
             DEFAULT_TYPE_NAMES.contains(nonNullPropType) -> {
-                logger.debug("DefaultParam", tier = 4, branch = branch, continuous = true)
-                DefaultParam(propName, actualPropertyType, isNullable)
+                logger.debug("DefaultProp", tier = 4, branch = branch, continuous = true)
+                DefaultProp(propName, actualPropertyType, isNullable)
             }
 
             checkCollectionType(adapter, MAP, Map::class) -> {
                 logger.debug("[CHOICE] map branch", tier = 4, branch = branch, continuous = true)
                 if (adapter.mapDetails()?.mapGroupType in GeneratedDSL.MapGroupType.ACTIVE_TYPES) {
-                    logger.debug("[DECISION] build MapGroupParam", tier = 4, branch = branch, continuous = true)
-                    createMapGroupParam(adapter)
+                    logger.debug("[DECISION] build MapGroupProp", tier = 4, branch = branch, continuous = true)
+                    createMapGroupProp(adapter)
                 } else {
-                    logger.debug("[DECISION] build MapParam", tier = 4, branch = branch, continuous = true)
-                    createMapParam(adapter)
+                    logger.debug("[DECISION] build MapProp", tier = 4, branch = branch, continuous = true)
+                    createMapProp(adapter)
                 }
             }
 
             checkCollectionType(adapter, LIST, List::class) -> {
                 logger.debug("[CHOICE] list branch", tier = 4, branch = branch, continuous = true)
                 if (adapter.isGroupElement) {
-                    logger.debug("[DECISION] build GroupParam", tier = 4, branch = branch, continuous = true)
-                    createGroupParam(adapter)
+                    logger.debug("[DECISION] build GroupProp", tier = 4, branch = branch, continuous = true)
+                    createGroupProp(adapter)
                 } else {
-                    logger.debug("[DECISION] build ListParam", tier = 4, branch = branch, continuous = true)
-                    createListParam(adapter)
+                    logger.debug("[DECISION] build ListProp", tier = 4, branch = branch, continuous = true)
+                    createListProp(adapter)
                 }
             }
 
             else -> {
                 logger.warn("Property '$propName' of type '${actualPropertyType}' could not be mapped to a known DSLParam type. Using DefaultParam as a fallback.")
-                val param = DefaultParam(propName, actualPropertyType, isNullable)
-                logger.debug("-> DefaultParam (fallback)", tier = 4, branch = branch, continuous = true)
+                val param = DefaultProp(propName, actualPropertyType, isNullable)
+                logger.debug("-> DefaultProp (fallback)", tier = 4, branch = branch, continuous = true)
                 param
             }
         }
@@ -142,11 +152,11 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
         return isRawCollection || isQualifiedCollection
     }
 
-    private fun buildSingleTransformParam(
+    private fun buildSingleTransformProp(
         adapter: ParameterFactoryAdapter,
         log: Boolean = true,
         branch: Boolean = true
-    ): DSLParam {
+    ): DslProp {
         val transformType = adapter.transformType
 
         logger.debug("SingleEntryTransform", tier = 4, branch = branch, continuous = true)
@@ -155,16 +165,16 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
 
         if (transformType == null) {
             logger.warn("SingleEntryTransformDSL.inputType is missing or not a KSType.")
-            return DefaultParam(adapter)
+            return DefaultProp(adapter)
         }
 
-        if (log) logger.debug("-> SingleTransformParam", tier = 4, branch = branch, continuous = true)
-        return SingleTransformParam(adapter)
+        if (log) logger.debug("-> SingleTransformProp", tier = 4, branch = branch, continuous = true)
+        return SingleTransformProp(adapter)
     }
 
-    private fun createBuilderParam(
+    private fun createBuilderProp(
         adapter: T,
-    ): BuilderParam {
+    ): BuilderProp {
         val propertyNonNullableClassName = requireNotNull(adapter.propertyNonNullableClassName) {
             "Could not determine property non-nullable class name."
         }
@@ -173,7 +183,7 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
         logger.debug("nestedBuilder: $nestedBuilderClassName", tier = 5, continuous = true)
         val kdoc = builderDoc(nestedBuilderClassName, adapter.propertyClassDeclaration)
         
-        return BuilderParam(
+        return BuilderProp(
             adapter.propName,
             adapter.actualPropTypeName,
             nestedBuilderClassName,
@@ -182,14 +192,14 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
         )
     }
 
-    private fun createGroupParam(adapter: T): GroupParam {
+    private fun createGroupProp(adapter: T): GroupProp {
         val groupElementClassName = requireNotNull(adapter.groupElementClassName) {
             "Could not determine group element class name."
         }
         logger.debug("listElementClassName: $groupElementClassName", tier = 5, continuous = true)
         val builderClassName = ClassName(groupElementClassName.packageName, groupElementClassName.simpleName + "DSLBuilder")
         val kdoc = builderDoc(builderClassName, adapter.groupElementClassDeclaration)
-        return GroupParam(
+        return GroupProp(
             adapter.propName,
             adapter.actualPropTypeName,
             groupElementClassName,
@@ -198,11 +208,11 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
         )
     }
 
-    private fun createMapGroupParam(adapter: T): MapGroupParam {
+    private fun createMapGroupProp(adapter: T): MapGroupProp {
         val mapDetails = requireNotNull(adapter.mapDetails) { "Please add map details to the map parameter" }
         val kdoc = builderDoc(mapDetails.valueClass(), adapter.mapValueClassDeclaration)
 
-        return MapGroupParam(
+        return MapGroupProp(
             adapter.propName,
             mapDetails.keyType,
             mapDetails.valueType,
@@ -220,10 +230,10 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
     }
 
     /**
-     * Build a [MapParam] from the adapter when the property is a Map type.
-     * Falls back to [DefaultParam] when the type information is insufficient.
+     * Build a [io.violabs.picard.dsl.props.MapProp] from the adapter when the property is a Map type.
+     * Falls back to [DefaultProp] when the type information is insufficient.
      */
-    private fun createMapParam(adapter: T): DSLParam {
+    private fun createMapProp(adapter: T): DslProp {
         val propName = adapter.propName
         val actualPropertyType: TypeName = adapter.actualPropTypeName
 
@@ -232,32 +242,32 @@ abstract class AbstractParameterFactory<T : ParameterFactoryAdapter, P : Propert
             val valueType: TypeName = actualPropertyType.typeArguments.last()
             logger.debug("mapElementKey: $keyType", tier = 5, continuous = true)
             logger.debug("mapElementValue: $valueType", tier = 5, continuous = true)
-            return MapParam(propName, keyType, valueType, adapter.hasNullableAssignment)
+            return MapProp(propName, keyType, valueType, adapter.hasNullableAssignment)
         }
 
         logger.warn(
-            "Attempted to create MapParam for unsupported type '$actualPropertyType'. Falling back to DefaultParam."
+            "Attempted to create MapProp for unsupported type '$actualPropertyType'. Falling back to DefaultProp."
         )
-        return DefaultParam(propName, actualPropertyType, adapter.hasNullableAssignment)
+        return DefaultProp(propName, actualPropertyType, adapter.hasNullableAssignment)
     }
 
     /**
-     * Build a [ListParam] from the adapter when the property is a List type.
-     * Falls back to [DefaultParam] when the type information is insufficient.
+     * Build a [io.violabs.picard.dsl.props.ListProp] from the adapter when the property is a List type.
+     * Falls back to [DefaultProp] when the type information is insufficient.
      */
-    private fun createListParam(adapter: T): DSLParam {
+    private fun createListProp(adapter: T): DslProp {
         val propName = adapter.propName
         val actualPropertyType: TypeName = adapter.actualPropTypeName
 
         if (actualPropertyType is ParameterizedTypeName && actualPropertyType.rawType == LIST) {
             val elementTypeArgument: TypeName = actualPropertyType.typeArguments.first()
             logger.debug("listElementType: $elementTypeArgument", tier = 5, continuous = true)
-            return ListParam(propName, elementTypeArgument, adapter.hasNullableAssignment)
+            return ListProp(propName, elementTypeArgument, adapter.hasNullableAssignment)
         }
 
         logger.warn(
-            "Attempted to create ListParam for unsupported type '$actualPropertyType'. Falling back to DefaultParam."
+            "Attempted to create ListProp for unsupported type '$actualPropertyType'. Falling back to DefaultProp."
         )
-        return DefaultParam(propName, actualPropertyType, adapter.hasNullableAssignment)
+        return DefaultProp(propName, actualPropertyType, adapter.hasNullableAssignment)
     }
 }

@@ -1,16 +1,16 @@
-package io.violabs.picard.dsl.params
+package io.violabs.picard.dsl.props
 
 import com.squareup.kotlinpoet.*
 import io.violabs.picard.dsl.builder.kotlinPoet
 
-class BuilderParam(
+class BuilderProp(
     override val propName: String,
     originalPropertyType: TypeName,
     private val nestedBuilderClassName: ClassName,
     override val nullableAssignment: Boolean = true,
     override val nullableProp: Boolean = true,
     kdoc: String? = null
-) : DSLParam {
+) : DslProp {
     override val propTypeName: TypeName = originalPropertyType
     private val _kdoc: String? = kdoc
 

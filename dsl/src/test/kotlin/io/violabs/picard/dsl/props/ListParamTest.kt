@@ -1,4 +1,4 @@
-package io.violabs.picard.dsl.params
+package io.violabs.picard.dsl.props
 
 import com.squareup.kotlinpoet.INT
 import com.squareup.kotlinpoet.STRING
@@ -15,7 +15,7 @@ class ListParamTest : UnitSim() {
     fun `toPropertySpec - happy path - #scenario`(expected: String, collectionTypeName: TypeName, nullable: Boolean) =
         test {
             given {
-                val param = ListParam("test", collectionTypeName, nullable)
+                val param = ListProp("test", collectionTypeName, nullable)
 
                 expect { expected }
 
@@ -30,7 +30,7 @@ class ListParamTest : UnitSim() {
     @Test
     fun `accessors - happy path`() = test {
         given {
-            val param = ListParam("test", nullableAssignment = true)
+            val param = ListProp("test", nullableAssignment = true)
 
             expect {
                 """

@@ -8,13 +8,12 @@ import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.asTypeName
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import io.violabs.geordi.UnitSim
-import io.violabs.picard.common.Logger
 import io.violabs.picard.dsl.annotation.GeneratedDSL
 import org.junit.jupiter.api.Test
 
 class ParameterFactoryTest : UnitSim() {
-    val parameterFactory = object : AbstractParameterFactory<TestParamFactoryAdaptor, TestPropAdapter>(Logger("TEST")) {
-        override fun createParameterFactoryAdapter(propertyAdapter: TestPropAdapter): TestParamFactoryAdaptor {
+    val parameterFactory = object : AbstractPropertyFactory<TestParamFactoryAdaptor, TestPropAdapter>() {
+        override fun createPropertyFactoryAdapter(propertyAdapter: TestPropAdapter): TestParamFactoryAdaptor {
             return TestParamFactoryAdaptor(propertyAdapter.type, propertyAdapter.isGroup)
         }
     }
@@ -32,7 +31,7 @@ class ParameterFactoryTest : UnitSim() {
             }
 
             whenever {
-                val param = parameterFactory.determineParam(adapter)
+                val param = parameterFactory.determineProperty(adapter)
 
                 TestResponse(
                     param.toPropertySpec().toString(),
@@ -63,7 +62,7 @@ class ParameterFactoryTest : UnitSim() {
             }
 
             whenever {
-                val param = parameterFactory.determineParam(adapter)
+                val param = parameterFactory.determineProperty(adapter)
 
                 TestResponse(
                     param.toPropertySpec().toString(),

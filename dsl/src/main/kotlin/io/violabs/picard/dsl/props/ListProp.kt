@@ -1,15 +1,18 @@
-package io.violabs.picard.dsl.params
+package io.violabs.picard.dsl.props
 
-import com.squareup.kotlinpoet.*
+import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.PropertySpec
+import com.squareup.kotlinpoet.STRING
+import com.squareup.kotlinpoet.TypeName
 import io.violabs.picard.dsl.builder.kotlinPoet
 import io.violabs.picard.dsl.builder.kpListOf
 
-class ListParam(
+class ListProp(
     override val propName: String,
     val collectionType: TypeName = STRING,
     override val nullableAssignment: Boolean = true,
     override val nullableProp: Boolean = true
-) : DSLParam {
+) : DslProp {
     override val propTypeName: TypeName = kpListOf(collectionType, nullable = nullableAssignment)
 
     override val verifyNotNull: Boolean = false

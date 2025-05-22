@@ -1,4 +1,4 @@
-package io.violabs.picard.dsl.params
+package io.violabs.picard.dsl.props
 
 import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
@@ -11,7 +11,7 @@ class BooleanParamTest : UnitSim() {
     @TestTemplate
     fun `toPropertySpec - happy path - #scenario`(expected: String, nullableProp: Boolean) = test {
         given {
-            val param = BooleanParam("test", nullableProp = nullableProp)
+            val param = BooleanProp("test", nullableProp = nullableProp)
 
             expect { expected }
 
@@ -26,7 +26,7 @@ class BooleanParamTest : UnitSim() {
     @Test
     fun `accessors - happy path`() = test {
         given {
-            val param = BooleanParam("test", true)
+            val param = BooleanProp("test", true)
 
             expect {
                 """

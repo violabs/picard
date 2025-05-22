@@ -5,7 +5,7 @@ import com.google.devtools.ksp.processing.SymbolProcessorEnvironment
 import com.google.devtools.ksp.processing.SymbolProcessorProvider
 
 @AutoService(SymbolProcessorProvider::class)
-class DSLProvider : SymbolProcessorProvider {
+class DslProvider : SymbolProcessorProvider {
     override fun create(env: SymbolProcessorEnvironment) =
-        DSLProcessor(env.codeGenerator, env.options)
+        DslProcessor(env.codeGenerator, env.options)
 }

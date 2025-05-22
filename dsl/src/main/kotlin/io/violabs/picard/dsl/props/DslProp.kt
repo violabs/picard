@@ -1,4 +1,4 @@
-package io.violabs.picard.dsl.params
+package io.violabs.picard.dsl.props
 
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
@@ -9,7 +9,7 @@ import io.violabs.picard.dsl.builder.kotlinPoet
 /**
  * Represents a property in a generated DSL builder.
  */
-interface DSLParam {
+interface DslProp {
     val propName: String
     val functionName: String get() = propName
     val propTypeName: TypeName // This should be the type of the actual property in the domain object

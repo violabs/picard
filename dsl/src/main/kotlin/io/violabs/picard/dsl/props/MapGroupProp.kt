@@ -1,18 +1,18 @@
-package io.violabs.picard.dsl.params
+package io.violabs.picard.dsl.props
 
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import io.violabs.picard.dsl.builder.kotlinPoet
 import io.violabs.picard.dsl.builder.kpMapOf
 
-class MapGroupParam(
+class MapGroupProp(
     override val propName: String,
     val mapKeyType: TypeName = STRING,
     val mapValueType: TypeName,
     override val nullableAssignment: Boolean = true,
     override val nullableProp: Boolean = true,
     private val kdoc: String? = null
-) : DSLParam {
+) : DslProp {
     override val propTypeName: TypeName = kpMapOf(mapKeyType, mapValueType, nullable = nullableAssignment)
 
     override val verifyNotNull: Boolean = false

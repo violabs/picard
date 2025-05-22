@@ -3,14 +3,14 @@ package io.violabs.picard.dsl.props
 import com.squareup.kotlinpoet.*
 import io.violabs.picard.dsl.builder.kotlinPoet
 
-class BuilderProp(
+class BuilderPropSchema(
     override val propName: String,
     originalPropertyType: TypeName,
     private val nestedBuilderClassName: ClassName,
     override val nullableAssignment: Boolean = true,
     override val nullableProp: Boolean = true,
     kdoc: String? = null
-) : DslProp {
+) : DslPropSchema {
     override val propTypeName: TypeName = originalPropertyType
     private val _kdoc: String? = kdoc
 

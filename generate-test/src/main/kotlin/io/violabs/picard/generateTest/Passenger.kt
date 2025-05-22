@@ -1,8 +1,8 @@
 package io.violabs.picard.generateTest
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 
-@GeneratedDSL(
+@GeneratedDsl(
     withGroup = true,
     withMapGroup = "SINGLE"
 )

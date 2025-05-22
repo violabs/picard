@@ -5,16 +5,15 @@ import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.STRING
 import com.squareup.kotlinpoet.TypeName
 import io.violabs.picard.dsl.builder.kotlinPoet
-import io.violabs.picard.dsl.builder.kpMapOf
+import io.violabs.picard.dsl.builder.kpListOf
 
-class MapProp(
+class ListPropSchema(
     override val propName: String,
-    val mapKeyType: TypeName = STRING,
-    val mapValueType: TypeName = STRING,
+    val collectionType: TypeName = STRING,
     override val nullableAssignment: Boolean = true,
     override val nullableProp: Boolean = true
-) : DslProp {
-    override val propTypeName: TypeName = kpMapOf(mapKeyType, mapValueType, nullable = nullableAssignment)
+) : DslPropSchema {
+    override val propTypeName: TypeName = kpListOf(collectionType, nullable = nullableAssignment)
 
     override val verifyNotNull: Boolean = false
     override val verifyNotEmpty: Boolean = true
@@ -30,17 +29,16 @@ class MapProp(
         }
     }
 
+    // Example for a list setter (could be more sophisticated, e.g., vararg)
     override fun accessors(): List<FunSpec> = kotlinPoet {
-        val pairType = pairTypeOf(mapKeyType, mapValueType, nullable = false)
-
         function {
             add {
                 funName = functionName
                 varargParam {
-                    type(pairType)
+                    type(collectionType, nullable = false)
                 }
                 statements {
-                    addLine("this.%N = items.toMap()", propName)
+                    addLine("this.%N = items.toList()", propName)
                 }
             }
         }

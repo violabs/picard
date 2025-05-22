@@ -9,7 +9,7 @@ import io.violabs.picard.dsl.builder.kotlinPoet
 /**
  * Represents a property in a generated DSL builder.
  */
-interface DslProp {
+interface DslPropSchema {
     val propName: String
     val functionName: String get() = propName
     val propTypeName: TypeName // This should be the type of the actual property in the domain object

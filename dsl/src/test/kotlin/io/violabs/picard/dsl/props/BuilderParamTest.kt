@@ -15,7 +15,7 @@ class BuilderParamTest : UnitSim() {
     @TestTemplate
     fun `toPropertySpec - happy path - #scenario`(expected: String, nullableProp: Boolean) = test {
         given {
-            val param = BuilderProp("test", typeName, buildClassName, nullableProp = nullableProp)
+            val param = BuilderPropSchema("test", typeName, buildClassName, nullableProp = nullableProp)
 
             expect { expected }
 
@@ -30,7 +30,7 @@ class BuilderParamTest : UnitSim() {
     @Test
     fun `accessors - happy path`() = test {
         given {
-            val param = BuilderProp("test", typeName, buildClassName, true)
+            val param = BuilderPropSchema("test", typeName, buildClassName, true)
 
             expect {
                 """

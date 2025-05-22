@@ -5,11 +5,11 @@ import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ksp.writeTo
 import io.violabs.picard.common.VLoggable
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import io.violabs.picard.dsl.builder.*
 import io.violabs.picard.dsl.config.BuilderConfig
 import io.violabs.picard.dsl.config.DomainConfig
-import io.violabs.picard.dsl.props.DslProp
+import io.violabs.picard.dsl.props.DslPropSchema
 
 interface BuilderGenerator {
     fun generate(
@@ -21,7 +21,7 @@ interface BuilderGenerator {
 }
 
 class DefaultBuilderGenerator(
-    val parameterService: DefaultPropertyService = DefaultPropertyService()
+    val parameterService: DefaultPropertySchemaService = DefaultPropertySchemaService()
 ) : BuilderGenerator, VLoggable {
     override fun logId(): String? = "BLDR_GENERATOR"
 
@@ -79,7 +79,7 @@ class DefaultBuilderGenerator(
 
     private fun generateBuilderFileContent(
         domainConfig: DomainConfig,
-        params: List<DslProp>
+        params: List<DslPropSchema>
     ): TypeSpec = kotlinPoet {
         val domainClassName = domainConfig.domainClassName
         val domain = domainConfig.domain
@@ -93,11 +93,11 @@ class DefaultBuilderGenerator(
             logger.debug("Properties added", tier = 1)
 
             properties {
-                params.addForEach(DslProp::toPropertySpec)
+                params.addForEach(DslPropSchema::toPropertySpec)
             }
 
             functions {
-                params.addForEach(DslProp::accessors)
+                params.addForEach(DslPropSchema::accessors)
 
                 add {
                     override()
@@ -123,9 +123,9 @@ class DefaultBuilderGenerator(
 
             val isGroup = domain
                 .annotations
-                .filter { it.shortName.asString() == GeneratedDSL::class.simpleName.toString() }
+                .filter { it.shortName.asString() == GeneratedDsl::class.simpleName.toString() }
                 .flatMap { it.arguments }
-                .filter { it.name?.asString() == GeneratedDSL::withGroup.name }
+                .filter { it.name?.asString() == GeneratedDsl::withGroup.name }
                 .onEach { logger.debug("found arg: ${it.name?.asString()} - ${it.value}", tier = 1) }
                 .any { it.value.toString() == "true" }
 
@@ -133,12 +133,12 @@ class DefaultBuilderGenerator(
 
             val isMapBuilderGroup = domain
                 .annotations
-                .filter { it.shortName.asString() == GeneratedDSL::class.simpleName.toString() }
+                .filter { it.shortName.asString() == GeneratedDsl::class.simpleName.toString() }
                 .flatMap { it.arguments }
-                .filter { it.name?.asString() == GeneratedDSL::withMapGroup.name }
+                .filter { it.name?.asString() == GeneratedDsl::withMapGroup.name }
                 .onEach { logger.debug("found arg: ${it.name?.asString()} - ${it.value}", tier = 1) }
                 .any { argument ->
-                    val activeTypes = GeneratedDSL.MapGroupType.ACTIVE_TYPES.map { it.name }
+                    val activeTypes = GeneratedDsl.MapGroupType.ACTIVE_TYPES.map { it.name }
                     argument.value?.toString() in activeTypes
                 }
             logger.debug("[DECISION] isMapGroup: $isGroup", tier = 1)

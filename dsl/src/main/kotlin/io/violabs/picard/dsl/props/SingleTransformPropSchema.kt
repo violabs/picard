@@ -3,19 +3,19 @@ package io.violabs.picard.dsl.props
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.TypeName
 import io.violabs.picard.dsl.builder.kotlinPoet
-import io.violabs.picard.dsl.process.ParameterFactoryAdapter
+import io.violabs.picard.dsl.process.PropertySchemaFactoryAdapter
 
-class SingleTransformProp(
+class SingleTransformPropSchema(
     override val propName: String,
     val inputTypeName: TypeName,
     actualPropTypeName: TypeName,
     val transformTemplate: String? = null,
     override val nullableAssignment: Boolean = true,
     override val nullableProp: Boolean = true
-) : DslProp {
+) : DslPropSchema {
     override val propTypeName: TypeName = actualPropTypeName.copy(nullable = nullableAssignment)
 
-    constructor(adapter: ParameterFactoryAdapter) : this(
+    constructor(adapter: PropertySchemaFactoryAdapter) : this(
         propName = adapter.propName,
         transformTemplate = adapter.transformTemplate,
         actualPropTypeName = adapter.actualPropTypeName,

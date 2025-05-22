@@ -16,7 +16,7 @@ class MapBuilderParamTest : UnitSim() {
         nullable: Boolean
     ) = test {
         given {
-            val param = MapGroupProp("test", keyType, valueType, nullable)
+            val param = MapGroupPropSchema("test", keyType, valueType, nullable)
 
             expect { expected }
 
@@ -31,7 +31,7 @@ class MapBuilderParamTest : UnitSim() {
     @Test
     fun `accessors - happy path`() = test {
         given {
-            val param = MapGroupProp(
+            val param = MapGroupPropSchema(
                 "test",
                 STRING, TestObj::class.asTypeName() as TypeName,
                 false
@@ -39,8 +39,8 @@ class MapBuilderParamTest : UnitSim() {
 
             expect {
                 """
-                    |public fun test(block: io.violabs.picard.dsl.props.TestObjDSLBuilder.MapGroup<kotlin.String>.() -> kotlin.Unit) {
-                    |  this.test = io.violabs.picard.dsl.props.TestObjDSLBuilder.MapGroup<kotlin.String>().apply(block).items().toMap()
+                    |public fun test(block: io.violabs.picard.dsl.props.TestObjDslBuilder.MapGroup<kotlin.String>.() -> kotlin.Unit) {
+                    |  this.test = io.violabs.picard.dsl.props.TestObjDslBuilder.MapGroup<kotlin.String>().apply(block).items().toMap()
                     |}
                 """.trimMargin()
             }

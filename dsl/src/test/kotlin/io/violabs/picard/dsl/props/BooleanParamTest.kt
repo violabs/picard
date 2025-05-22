@@ -11,7 +11,7 @@ class BooleanParamTest : UnitSim() {
     @TestTemplate
     fun `toPropertySpec - happy path - #scenario`(expected: String, nullableProp: Boolean) = test {
         given {
-            val param = BooleanProp("test", nullableProp = nullableProp)
+            val param = BooleanPropSchema("test", nullableProp = nullableProp)
 
             expect { expected }
 
@@ -26,7 +26,7 @@ class BooleanParamTest : UnitSim() {
     @Test
     fun `accessors - happy path`() = test {
         given {
-            val param = BooleanProp("test", true)
+            val param = BooleanPropSchema("test", true)
 
             expect {
                 """

@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.s3StorageConfig.S3StorageConfig
 
-@GeneratedDSL(
+@GeneratedDsl(
     withMapGroup = "SINGLE"
 )
 data class AwsStorageConfig(

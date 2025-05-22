@@ -16,7 +16,7 @@ class SingleTransformParamTest : UnitSim() {
     @TestTemplate
     fun `toPropertySpec - happy path - #scenario`(expected: String, nullableProp: Boolean) = test {
         given {
-            val param = SingleTransformProp(
+            val param = SingleTransformPropSchema(
                 "test",
                 inputTypeName,
                 propTypeName,
@@ -36,7 +36,7 @@ class SingleTransformParamTest : UnitSim() {
     @Test
     fun `accessors - happy path`() = test {
         given {
-            val param = SingleTransformProp(
+            val param = SingleTransformPropSchema(
                 "test",
                 inputTypeName,
                 propTypeName,

@@ -3,11 +3,11 @@ package io.violabs.picard.dsl.props
 import com.squareup.kotlinpoet.*
 import io.violabs.picard.dsl.builder.kotlinPoet
 
-class BooleanProp(
+class BooleanPropSchema(
     override val propName: String,
     override val nullableAssignment: Boolean = true,
     override val nullableProp: Boolean = true
-) : DslProp {
+) : DslPropSchema {
     override val propTypeName: TypeName = BOOLEAN.copy(nullable = nullableAssignment) // Correctly use constructor arg
 
     override fun accessors(): List<FunSpec> = kotlinPoet {

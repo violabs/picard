@@ -2,9 +2,9 @@ package io.violabs.picard.starCharts.loki.periodConfig
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.violabs.picard.domain.k8sResources.Quantity
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 
-@GeneratedDSL
+@GeneratedDsl
 data class Index(
     /**
      * Path prefix for index tables. Prefix always needs to end with a path

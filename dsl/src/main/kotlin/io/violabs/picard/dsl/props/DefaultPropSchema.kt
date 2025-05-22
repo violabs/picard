@@ -2,22 +2,22 @@ package io.violabs.picard.dsl.props
 
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.TypeName
-import io.violabs.picard.dsl.process.ParameterFactoryAdapter
+import io.violabs.picard.dsl.process.PropertySchemaFactoryAdapter
 
 /**
  * Basic DSL parameter used when no specialized type matches.
  */
-class DefaultProp(
+class DefaultPropSchema(
     override val propName: String,
     actualPropTypeName: TypeName,
     override val nullableAssignment: Boolean = true,
     override val nullableProp: Boolean = true
-) : DslProp {
+) : DslPropSchema {
     override val propTypeName: TypeName = actualPropTypeName.copy(nullable = nullableAssignment)
     // Default parameters are public so generated builders can reference them
     override val accessModifier: KModifier = KModifier.PUBLIC
 
-    constructor(adapter: ParameterFactoryAdapter) : this(
+    constructor(adapter: PropertySchemaFactoryAdapter) : this(
         adapter.propName,
         adapter.actualPropTypeName,
         adapter.actualPropTypeName.isNullable

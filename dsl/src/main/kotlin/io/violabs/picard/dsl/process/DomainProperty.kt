@@ -5,7 +5,7 @@ import com.google.devtools.ksp.symbol.KSPropertyDeclaration
 import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.ksp.toTypeName
 
-interface PropertyAdapter {
+interface DomainProperty {
     val type: TypeName?
 
     fun simpleName(): String
@@ -13,12 +13,12 @@ interface PropertyAdapter {
     fun singleEntryTransformString(): String?
 }
 
-data class DefaultPropertyAdapter(
+data class DefaultDomainProperty(
     val index: Int,
     val lastIndex: Int,
     val prop: KSPropertyDeclaration,
     val singleEntryTransformMap: Map<String, KSClassDeclaration>
-) : PropertyAdapter {
+) : DomainProperty {
     override val type: TypeName? = prop.type.toTypeName().copy(nullable = false)
 
     override fun simpleName(): String {

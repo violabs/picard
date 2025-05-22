@@ -19,7 +19,7 @@ class MapParamTest : UnitSim() {
         nullable: Boolean
     ) = test {
         given {
-            val param = MapProp("test", keyType, valueType, nullable)
+            val param = MapPropSchema("test", keyType, valueType, nullable)
 
             expect { expected }
 
@@ -34,7 +34,7 @@ class MapParamTest : UnitSim() {
     @Test
     fun `accessors - happy path`() = test {
         given {
-            val param = MapProp("test", STRING, INT, nullableAssignment = true)
+            val param = MapPropSchema("test", STRING, INT, nullableAssignment = true)
 
             expect {
                 """

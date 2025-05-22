@@ -1,10 +1,10 @@
 package io.violabs.picard.starCharts.loki.periodConfig
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import java.time.LocalDate
 
-@GeneratedDSL(
+@GeneratedDsl(
     withGroup = true
 )
 data class PeriodConfig(

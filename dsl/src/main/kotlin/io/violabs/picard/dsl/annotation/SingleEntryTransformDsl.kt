@@ -9,7 +9,7 @@ import kotlin.reflect.KClass
  *
  * e.g. Duration(%N)
  */
-annotation class SingleEntryTransformDSL<T : Any>(
+annotation class SingleEntryTransformDsl<T : Any>(
     val inputType: KClass<T>,
     val transformTemplate: String = ""
 )

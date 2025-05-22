@@ -1,8 +1,8 @@
 package io.violabs.picard.starCharts.loki.thanosObjectStoreConfig
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 
-@GeneratedDSL
+@GeneratedDsl
 data class FileSystem(
     /**
      *   # Local filesystem storage directory.

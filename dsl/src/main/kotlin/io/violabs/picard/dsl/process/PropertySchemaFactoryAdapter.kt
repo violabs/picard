@@ -3,9 +3,9 @@ package io.violabs.picard.dsl.process
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.TypeName
 import com.google.devtools.ksp.symbol.KSClassDeclaration
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 
-interface ParameterFactoryAdapter {
+interface PropertySchemaFactoryAdapter {
     val propName: String
     val actualPropTypeName: TypeName
     val hasSingleEntryTransform: Boolean
@@ -13,7 +13,7 @@ interface ParameterFactoryAdapter {
     val transformType: TypeName?
     val hasNullableAssignment: Boolean
     val propertyNonNullableClassName: ClassName?
-    val hasGeneratedDSLAnnotation: Boolean
+    val hasGeneratedDslAnnotation: Boolean
     val propertyClassDeclarationQualifiedName: String?
     val propertyClassDeclaration: KSClassDeclaration?
     val isGroupElement: Boolean
@@ -27,7 +27,7 @@ interface ParameterFactoryAdapter {
     fun nonNullablePropTypeName(): TypeName = actualPropTypeName.copy(nullable = false)
 
     interface MapDetails {
-        val mapGroupType: GeneratedDSL.MapGroupType
+        val mapGroupType: GeneratedDsl.MapGroupType
         val keyType: TypeName
         val valueType: TypeName
 

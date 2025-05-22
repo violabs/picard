@@ -1,8 +1,8 @@
 package io.violabs.picard.generateTest
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 
-@GeneratedDSL
+@GeneratedDsl
 data class StarShip(
     val name: String? = null,
     val activated: Boolean? = null,

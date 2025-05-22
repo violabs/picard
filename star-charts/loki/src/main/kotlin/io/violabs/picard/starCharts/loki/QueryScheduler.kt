@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.ring.SchedulerRing
 
-@GeneratedDSL
+@GeneratedDsl
 data class QueryScheduler(
     /**
      * # Maximum number of outstanding requests per tenant per query-scheduler.

@@ -1,8 +1,8 @@
 package io.violabs.picard.starCharts.loki
 
-import io.violabs.picard.dsl.annotation.SingleEntryTransformDSL
+import io.violabs.picard.dsl.annotation.SingleEntryTransformDsl
 
-@SingleEntryTransformDSL<Boolean>(inputType = Boolean::class)
+@SingleEntryTransformDsl<Boolean>(inputType = Boolean::class)
 data class PatternIngester(
     val enabled: Boolean
 )

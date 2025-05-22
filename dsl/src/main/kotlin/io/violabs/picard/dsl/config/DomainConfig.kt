@@ -14,9 +14,9 @@ class DomainConfig(
     val packageName = domain.packageName.asString()
     val typeName = domain.simpleName.asString()
     val domainClassName: ClassName = domain.toClassName()
-    val builderName = "${typeName}DSLBuilder"
+    val builderName = "${typeName}DslBuilder"
     val builderClassName = ClassName(packageName, builderName)
-    val dslBuilderInterface = ClassName(builderConfig.dslBuilderClasspath, "DSLBuilder")
+    val dslBuilderInterface = ClassName(builderConfig.dslBuilderClasspath, "DslBuilder")
     val parameterizedDslBuilder = dslBuilderInterface.parameterizedBy(domainClassName)
 
     val fileClassName = ClassName(packageName, "${typeName}Dsl")

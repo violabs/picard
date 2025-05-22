@@ -9,36 +9,36 @@ import com.squareup.kotlinpoet.ParameterizedTypeName
 import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.ksp.toClassName
 import com.squareup.kotlinpoet.ksp.toTypeName
-import io.violabs.picard.dsl.annotation.GeneratedDSL
-import io.violabs.picard.dsl.annotation.SingleEntryTransformDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
+import io.violabs.picard.dsl.annotation.SingleEntryTransformDsl
 
-class DefaultParameterFactoryAdapter(
+class DefaultPropertySchemaFactoryAdapter(
     prop: KSPropertyDeclaration,
     singleEntryTransform: KSClassDeclaration?,
-) : ParameterFactoryAdapter {
+) : PropertySchemaFactoryAdapter {
     override val propName: String = prop.simpleName.asString()
     override val actualPropTypeName: TypeName = prop.type.toTypeName()
     override val hasSingleEntryTransform: Boolean = singleEntryTransform != null
 
-    constructor(propertyAdapter: DefaultPropertyAdapter) : this(
+    constructor(propertyAdapter: DefaultDomainProperty) : this(
         propertyAdapter.prop,
         propertyAdapter.singleEntryTransform()
     )
 
     private val singleEntryTransformAnnotation = singleEntryTransform
         ?.annotations
-        ?.find { it.shortName.asString() == SingleEntryTransformDSL::class.simpleName }
+        ?.find { it.shortName.asString() == SingleEntryTransformDsl::class.simpleName }
 
     override val transformTemplate = singleEntryTransformAnnotation
         ?.arguments
-        ?.firstOrNull { it.name?.asString() == SingleEntryTransformDSL<*>::transformTemplate.name }
+        ?.firstOrNull { it.name?.asString() == SingleEntryTransformDsl<*>::transformTemplate.name }
         ?.value
         ?.toString()
         ?.takeIf { it.isNotBlank() }
 
     override val transformType = singleEntryTransformAnnotation
         ?.arguments
-        ?.firstOrNull { it.name?.asString() == SingleEntryTransformDSL<*>::inputType.name }
+        ?.firstOrNull { it.name?.asString() == SingleEntryTransformDsl<*>::inputType.name }
         ?.let { it.value as? KSType }
         ?.toTypeName()
 
@@ -50,8 +50,8 @@ class DefaultParameterFactoryAdapter(
 
     override val propertyNonNullableClassName: ClassName? = classDeclarationInternal?.toClassName()
 
-    override val hasGeneratedDSLAnnotation: Boolean = classDeclarationInternal?.annotations?.any {
-        it.shortName.asString() == GeneratedDSL::class.simpleName
+    override val hasGeneratedDslAnnotation: Boolean = classDeclarationInternal?.annotations?.any {
+        it.shortName.asString() == GeneratedDsl::class.simpleName
     } ?: false
 
     override val propertyClassDeclarationQualifiedName: String? = classDeclarationInternal?.qualifiedName?.asString()
@@ -75,11 +75,11 @@ class DefaultParameterFactoryAdapter(
 
     override val isGroupElement: Boolean = collectionFirstElementClassDecl
         ?.annotations
-        ?.filter { it.shortName.asString() == GeneratedDSL::class.simpleName }
+        ?.filter { it.shortName.asString() == GeneratedDsl::class.simpleName }
         ?.any { annotation ->
             annotation
                 .arguments
-                .firstOrNull { it.name?.asString() == GeneratedDSL::withGroup.name }
+                .firstOrNull { it.name?.asString() == GeneratedDsl::withGroup.name }
                 ?.value == true
         }
         ?: false
@@ -89,22 +89,22 @@ class DefaultParameterFactoryAdapter(
 
     private val dslAnnotations: List<KSAnnotation>? = collectionSecondElementClassDecl
         ?.annotations
-        ?.filter { it.shortName.asString() == GeneratedDSL::class.simpleName }
+        ?.filter { it.shortName.asString() == GeneratedDsl::class.simpleName }
         ?.toList()
 
-    private fun mapGroupType(): GeneratedDSL.MapGroupType? {
+    private fun mapGroupType(): GeneratedDsl.MapGroupType? {
         val arguments = dslAnnotations?.flatMap(KSAnnotation::arguments)
         val mapGroup = arguments
-            ?.firstOrNull { it.name?.asString() == GeneratedDSL::withMapGroup.name }
+            ?.firstOrNull { it.name?.asString() == GeneratedDsl::withMapGroup.name }
             ?: return null
 
-        return GeneratedDSL.MapGroupType.valueOf(mapGroup.value.toString().uppercase())
+        return GeneratedDsl.MapGroupType.valueOf(mapGroup.value.toString().uppercase())
     }
 
-    override var mapDetails: ParameterFactoryAdapter.MapDetails? = null
+    override var mapDetails: PropertySchemaFactoryAdapter.MapDetails? = null
     override val mapValueClassDeclaration: KSClassDeclaration? = collectionSecondElementClassDecl
 
-    override fun mapDetails(): ParameterFactoryAdapter.MapDetails? {
+    override fun mapDetails(): PropertySchemaFactoryAdapter.MapDetails? {
         if (mapDetails != null) return mapDetails
 
         val groupType = mapGroupType() ?: return null
@@ -116,8 +116,8 @@ class DefaultParameterFactoryAdapter(
     }
 
     class MapDetails(
-        override val mapGroupType: GeneratedDSL.MapGroupType = GeneratedDSL.MapGroupType.SINGLE,
+        override val mapGroupType: GeneratedDsl.MapGroupType = GeneratedDsl.MapGroupType.SINGLE,
         override val keyType: TypeName,
         override val valueType: TypeName
-    ) : ParameterFactoryAdapter.MapDetails
+    ) : PropertySchemaFactoryAdapter.MapDetails
 }

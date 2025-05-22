@@ -5,14 +5,14 @@ import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import io.violabs.picard.dsl.builder.kotlinPoet
 import io.violabs.picard.dsl.builder.kpMapOf
 
-class MapGroupProp(
+class MapGroupPropSchema(
     override val propName: String,
     val mapKeyType: TypeName = STRING,
     val mapValueType: TypeName,
     override val nullableAssignment: Boolean = true,
     override val nullableProp: Boolean = true,
     private val kdoc: String? = null
-) : DslProp {
+) : DslPropSchema {
     override val propTypeName: TypeName = kpMapOf(mapKeyType, mapValueType, nullable = nullableAssignment)
 
     override val verifyNotNull: Boolean = false
@@ -33,7 +33,7 @@ class MapGroupProp(
         val valueClassName = mapValueType.copy(nullable = false) as ClassName
         val mapGroupClass = ClassName(
             valueClassName.packageName,
-            valueClassName.simpleName + "DSLBuilder",
+            valueClassName.simpleName + "DslBuilder",
             "MapGroup"
         ).parameterizedBy(mapKeyType.copy(nullable = false))
 

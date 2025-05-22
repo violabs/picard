@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.gatewayConfig.GatewayConfig
 
-@GeneratedDSL
+@GeneratedDsl
 class LokiConfig(
     val schemaConfig: SchemaConfig,
     val deploymentMode: DeploymentMode,

@@ -1,8 +1,8 @@
 package io.violabs.picard.starCharts.loki.cosStorageConfig
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 
-@GeneratedDSL(
+@GeneratedDsl(
     withMapGroup = "SINGLE"
 )
 data class CosStorageConfig(

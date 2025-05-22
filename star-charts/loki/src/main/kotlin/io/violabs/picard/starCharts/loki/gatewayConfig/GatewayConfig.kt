@@ -1,8 +1,8 @@
 package io.violabs.picard.starCharts.loki.gatewayConfig
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 
-@GeneratedDSL
+@GeneratedDsl
 data class GatewayConfig(
     val service: Service
 )

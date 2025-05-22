@@ -1,11 +1,11 @@
 package io.violabs.picard.starCharts.loki.s3StorageConfig
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.Sse
 import java.net.URL
 
-@GeneratedDSL
+@GeneratedDsl
 data class S3StorageConfig(
     /**
      * # S3 endpoint URL with escaped Key and Secret encoded. If only region is

@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki.ruler
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.Duration
 
-@GeneratedDSL
+@GeneratedDsl
 data class WalCleaner(
     /**
      *   # The minimum age of a WAL to consider for cleaning.

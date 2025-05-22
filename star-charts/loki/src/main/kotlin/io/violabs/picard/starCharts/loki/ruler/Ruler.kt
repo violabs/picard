@@ -1,13 +1,13 @@
 package io.violabs.picard.starCharts.loki.ruler
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.Duration
 import io.violabs.picard.starCharts.loki.GrpcClient
 import io.violabs.picard.starCharts.loki.ring.Ring
 import io.violabs.picard.starCharts.loki.tls.TlsConfig
 
-@GeneratedDSL
+@GeneratedDsl
 class Ruler(
     /**
      * # Base URL of the Grafana instance.

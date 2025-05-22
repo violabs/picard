@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki.distributor
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.Duration
 
-@GeneratedDSL
+@GeneratedDsl
 data class RateStore(
     /**
      * # The max number of concurrent requests to make to ingester stream apis

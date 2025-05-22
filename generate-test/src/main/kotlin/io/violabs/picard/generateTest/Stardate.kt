@@ -1,6 +1,6 @@
 package io.violabs.picard.generateTest
 
-import io.violabs.picard.dsl.annotation.SingleEntryTransformDSL
+import io.violabs.picard.dsl.annotation.SingleEntryTransformDsl
 
-@SingleEntryTransformDSL<String>(String::class)
+@SingleEntryTransformDsl<String>(String::class)
 data class Stardate(val content: String)

@@ -15,7 +15,7 @@ class ListParamTest : UnitSim() {
     fun `toPropertySpec - happy path - #scenario`(expected: String, collectionTypeName: TypeName, nullable: Boolean) =
         test {
             given {
-                val param = ListProp("test", collectionTypeName, nullable)
+                val param = ListPropSchema("test", collectionTypeName, nullable)
 
                 expect { expected }
 
@@ -30,7 +30,7 @@ class ListParamTest : UnitSim() {
     @Test
     fun `accessors - happy path`() = test {
         given {
-            val param = ListProp("test", nullableAssignment = true)
+            val param = ListPropSchema("test", nullableAssignment = true)
 
             expect {
                 """

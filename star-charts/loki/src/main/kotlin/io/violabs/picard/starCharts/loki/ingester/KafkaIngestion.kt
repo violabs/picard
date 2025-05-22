@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki.ingester
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.ring.Ring
 
-@GeneratedDSL
+@GeneratedDsl
 data class KafkaIngestion(
     /**
      *   # Whether the kafka ingester is enabled.

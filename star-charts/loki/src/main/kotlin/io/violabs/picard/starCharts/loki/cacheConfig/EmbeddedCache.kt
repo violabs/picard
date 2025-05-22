@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki.cacheConfig
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.Duration
 
-@GeneratedDSL
+@GeneratedDsl
 data class EmbeddedCache(
     /**
      *   # Whether embedded cache is enabled.

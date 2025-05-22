@@ -14,7 +14,7 @@ class DefaultParamTest : UnitSim() {
     @TestTemplate
     fun `toPropertySpec - happy path - #scenario`(expected: String, nullableProp: Boolean) = test {
         given {
-            val param = DefaultProp("test", propTypeName, nullableProp = nullableProp)
+            val param = DefaultPropSchema("test", propTypeName, nullableProp = nullableProp)
 
             expect { expected }
 
@@ -29,7 +29,7 @@ class DefaultParamTest : UnitSim() {
     @Test
     fun `accessors - happy path`() = test {
         given {
-            val param = DefaultProp("test", propTypeName, true)
+            val param = DefaultPropSchema("test", propTypeName, true)
 
             expect { true }
 

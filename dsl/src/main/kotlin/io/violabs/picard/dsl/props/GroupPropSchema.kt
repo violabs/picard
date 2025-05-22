@@ -7,14 +7,14 @@ import com.squareup.kotlinpoet.TypeName
 import io.violabs.picard.dsl.builder.kotlinPoet
 
 // Assuming GroupParam is similar to BuilderParam or a complex type needing its own builder
-class GroupProp(
+class GroupPropSchema(
     override val propName: String,
     originalPropertyType: TypeName,
     private val builtClassName: ClassName,
     override val nullableAssignment: Boolean = true,
     override val nullableProp: Boolean = true,
     private val kdoc: String? = null
-) : DslProp {
+) : DslPropSchema {
     override val propTypeName: TypeName = originalPropertyType
 
     override fun toPropertySpec(): PropertySpec = kotlinPoet {
@@ -31,7 +31,7 @@ class GroupProp(
 
     override fun accessors(): List<FunSpec> = kotlinPoet {
         val receiverName = builtClassName.nestedClass(
-            extensionName = "DSLBuilder",
+            extensionName = "DslBuilder",
             nestedClassName = "Group"
         )
 

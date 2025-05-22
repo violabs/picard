@@ -6,32 +6,35 @@ import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.squareup.kotlinpoet.ksp.toClassName
 import io.violabs.picard.common.Colors
 import io.violabs.picard.common.VLoggable
-import io.violabs.picard.dsl.annotation.GeneratedDSL
-import io.violabs.picard.dsl.annotation.SingleEntryTransformDSL
+import io.violabs.picard.dsl.annotation.GeneratedDsl
+import io.violabs.picard.dsl.annotation.SingleEntryTransformDsl
 import io.violabs.picard.dsl.config.BuilderConfig
 import kotlin.reflect.KClass
 
-interface DslGenerator<PARAM_ADAPTER : ParameterFactoryAdapter, PROP_ADAPTER : PropertyAdapter> {
-    val propertyFactory: PropertyFactory<PARAM_ADAPTER, PROP_ADAPTER>
+interface DslGenerator<PARAM_ADAPTER : PropertySchemaFactoryAdapter, PROP_ADAPTER : DomainProperty> {
+    val propertySchemaFactory: PropertySchemaFactory<PARAM_ADAPTER, PROP_ADAPTER>
     val builderGenerator: BuilderGenerator
 
     fun generate(resolver: Resolver, codeGenerator: CodeGenerator, options: Map<String, String?> = emptyMap())
 }
 
 class DefaultDslGenerator(
-    override val propertyFactory: DefaultPropertyFactory = DefaultPropertyFactory(),
+    override val propertySchemaFactory: DefaultPropertySchemaFactory = DefaultPropertySchemaFactory(),
     override val builderGenerator: DefaultBuilderGenerator = DefaultBuilderGenerator()
-) : DslGenerator<DefaultParameterFactoryAdapter, DefaultPropertyAdapter>, VLoggable {
+) : DslGenerator<DefaultPropertySchemaFactoryAdapter, DefaultDomainProperty>, VLoggable {
     override fun logId(): String? = "DSL_GENERATOR"
+    init {
+        logger.enableDebug()
+    }
 
     /**
      * This will generate Custom DSL Builders based on the annotation, as well as the
      * test classes that can verify the data.
      * Keywords:
-     * - User Defined DSL: the use of the [GeneratedDSL] annotation to define a custom DSL
+     * - User Defined DSL: the use of the [GeneratedDsl] annotation to define a custom DSL
      * - DSL Builder: the engine that creates the DSL per use
      * - DSL Marker: the provided annotation for the used library (also restricts scope)
-     * - Resolved Class: the user defined class that the [GeneratedDSL] will decorate
+     * - Resolved Class: the user defined class that the [GeneratedDsl] will decorate
      * - Builder Class: the generated class that should match the specs of the Resolved Class
      * - Group Class: A list of builders - requires a specific implementation
      * - Map Group Class: a map of builders - requires a specific implementation
@@ -57,11 +60,11 @@ class DefaultDslGenerator(
     }
 
     private fun getGeneratedDslAnnotation(resolver: Resolver): Sequence<KSClassDeclaration> {
-        return getClassDeclarationByAnnotation(resolver, GeneratedDSL::class)
+        return getClassDeclarationByAnnotation(resolver, GeneratedDsl::class)
     }
 
     private fun getSingleEntryTransformByClassName(resolver: Resolver): Map<String, KSClassDeclaration> {
-        return getClassDeclarationByAnnotation(resolver, SingleEntryTransformDSL::class)
+        return getClassDeclarationByAnnotation(resolver, SingleEntryTransformDsl::class)
             .associateBy { it.toClassName().toString() }
     }
 

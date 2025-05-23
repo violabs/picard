@@ -24,7 +24,7 @@ class SingleTransformPropSchema(
     )
 
     override fun accessors(): List<FunSpec> = kotlinPoet {
-        function {
+        functions {
             add {
                 funName = functionName
                 val param = param {

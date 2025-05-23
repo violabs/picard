@@ -2,7 +2,9 @@ package io.violabs.picard.generateTest
 
 import io.violabs.picard.metaDsl.annotation.GeneratedDsl
 
-@GeneratedDsl
+@GeneratedDsl(
+    isRoot = true
+)
 data class StarShip(
     val name: String? = null,
     val activated: Boolean? = null,

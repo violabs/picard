@@ -33,7 +33,7 @@ class MapPropSchema(
     override fun accessors(): List<FunSpec> = kotlinPoet {
         val pairType = pairTypeOf(mapKeyType, mapValueType, nullable = false)
 
-        function {
+        functions {
             add {
                 funName = functionName
                 varargParam {

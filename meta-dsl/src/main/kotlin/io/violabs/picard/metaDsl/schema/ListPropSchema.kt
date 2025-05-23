@@ -31,7 +31,7 @@ class ListPropSchema(
 
     // Example for a list setter (could be more sophisticated, e.g., vararg)
     override fun accessors(): List<FunSpec> = kotlinPoet {
-        function {
+        functions {
             add {
                 funName = functionName
                 varargParam {

@@ -14,7 +14,9 @@ import io.violabs.picard.metaDsl.builder.AnnotationDecorator
 import io.violabs.picard.metaDsl.builder.kotlinPoet
 import io.violabs.picard.metaDsl.process.DefaultPropertySchemaService
 
-interface BuilderGenerator {
+interface BuilderGenerator : DslFileWriter, VLoggable {
+    override fun logId(): String? = BuilderGenerator::class.simpleName
+
     fun generate(
         codeGenerator: CodeGenerator,
         domain: KSClassDeclaration,
@@ -28,9 +30,7 @@ class DefaultBuilderGenerator(
     val annotationDecorator: AnnotationDecorator = AnnotationDecorator(),
     val mapGroupGenerator: MapGroupGenerator = MapGroupGenerator(),
     val listGroupGenerator: ListGroupGenerator = ListGroupGenerator(),
-) : BuilderGenerator, VLoggable {
-    override fun logId(): String? = "BLDR_GENERATOR"
-
+) : BuilderGenerator {
     init {
         logger.enableDebug()
     }

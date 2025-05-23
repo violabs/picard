@@ -4,6 +4,7 @@ import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.ksp.writeTo
+import io.violabs.picard.dslTest.TestDomainConfig
 import io.violabs.picard.metaDsl.builder.kotlinPoet
 import io.violabs.picard.metaDsl.config.BuilderConfig
 import io.violabs.picard.metaDsl.config.DomainConfig
@@ -25,11 +26,12 @@ class DefaultTestGenerator(
         builderConfig: BuilderConfig,
         singleEntryTransformByClassName: Map<String, KSClassDeclaration>
     ) {
-        val domainConfig = DomainConfig(
+        val domainConfig = TestDomainConfig(
             builderConfig,
             singleEntryTransformByClassName,
             domain
         )
+        generateFilesForDsl(domainConfig, codeGenerator)
     }
 
 
@@ -38,6 +40,7 @@ class DefaultTestGenerator(
         codeGenerator: CodeGenerator
     ) {
         logger.debug("-- generating tests for builder --", tier = 0)
+
         logger.debug("+++ DOMAIN: ${domainConfig.domainClassName} +++")
         logger.debug("package: ${domainConfig.packageName}", tier = 1, branch = true)
         logger.debug("type: ${domainConfig.typeName}", tier = 1, branch = true)
@@ -54,11 +57,6 @@ class DefaultTestGenerator(
             }
         }
 
-        codeGenerator.createNewFileByPath(
-            domainConfig.dependencies,
-            "",
-        )
-
         fileSpec.writeTo(codeGenerator, domainConfig.dependencies)
         logger.debug("file written: ${domainConfig.fileClassName}", tier = 1)
 
@@ -67,9 +65,10 @@ class DefaultTestGenerator(
 
     private fun generateTestFileContent(domainConfig: DomainConfig, schemas: List<DslPropSchema>): TypeSpec =
         kotlinPoet {
+            val domainClassName = domainConfig.domainClassName
+
             type {
-
-
+                name = domainConfig.builderName
             }
         }
 }

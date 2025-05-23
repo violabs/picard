@@ -35,7 +35,7 @@ class GroupPropSchema(
             nestedClassName = "Group"
         )
 
-        function {
+        functions {
             add {
                 funName = functionName
                 kdoc?.let { kdoc(it) }

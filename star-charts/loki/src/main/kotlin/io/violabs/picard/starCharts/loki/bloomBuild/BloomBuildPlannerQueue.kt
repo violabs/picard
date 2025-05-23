@@ -3,7 +3,7 @@ package io.violabs.picard.starCharts.loki.bloomBuild
 import io.violabs.picard.metaDsl.annotation.GeneratedDsl
 
 @GeneratedDsl
-class BloomBuildPlannerQueue(
+data class BloomBuildPlannerQueue(
     /**
      * # Maximum number of tasks to queue per tenant.
      * # CLI flag: -bloom-build.planner.queue.max-tasks-per-tenant

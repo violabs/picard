@@ -27,7 +27,7 @@ private val DEFAULT_TYPE_NAMES = listOf(
 interface PropertySchemaFactory<T : PropertySchemaFactoryAdapter, P : DomainProperty> : VLoggable {
     /** logger used for debug output */
 //    val logger: Logger
-    override fun logId(): String? = "PROP_FACTORY"
+    override fun logId(): String? = PropertySchemaFactory::class.simpleName
 
     fun createPropertySchemaFactoryAdapter(propertyAdapter: P): T
 

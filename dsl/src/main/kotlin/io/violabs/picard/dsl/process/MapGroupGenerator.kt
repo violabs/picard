@@ -28,5 +28,5 @@ private val MAP_GROUP_GENERATOR_CONFIG = Config(
 class MapGroupGenerator(
     annotationDecorator: AnnotationDecorator = AnnotationDecorator()
 ) : GroupGenerator<String>(MAP_GROUP_GENERATOR_CONFIG, annotationDecorator) {
-    override fun logId(): String? = "MAP_GRP_GENERATOR"
+    override fun logId(): String? = this::class.simpleName
 }

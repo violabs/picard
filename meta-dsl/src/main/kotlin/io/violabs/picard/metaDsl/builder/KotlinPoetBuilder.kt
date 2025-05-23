@@ -61,7 +61,11 @@ class KotlinPoetBuilder : DefaultParamSpecEnabled() {
         return KPPropertySpecBuilder().apply(block).build()
     }
 
-    fun function(block: KPFunSpecBuilder.Group.() -> Unit): List<FunSpec> {
+    fun function(block: KPFunSpecBuilder.() -> Unit): FunSpec {
+        return KPFunSpecBuilder().apply(block).build()
+    }
+
+    fun functions(block: KPFunSpecBuilder.Group.() -> Unit): List<FunSpec> {
         return KPFunSpecBuilder.Group().apply(block).items
     }
 

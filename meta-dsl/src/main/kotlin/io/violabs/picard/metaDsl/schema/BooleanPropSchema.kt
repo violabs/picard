@@ -13,7 +13,7 @@ class BooleanPropSchema(
     override val propTypeName: TypeName = BOOLEAN.copy(nullable = nullableAssignment) // Correctly use constructor arg
 
     override fun accessors(): List<FunSpec> = kotlinPoet {
-        function {
+        functions {
             add {
                 funName = propName
                 val param = param {

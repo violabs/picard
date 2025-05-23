@@ -11,6 +11,7 @@ dependencies {
     testImplementation(project(":core"))
     testImplementation(project(":cmd"))
     testImplementation(project(":star-charts:loki"))
+    ksp(project(":dsl-test"))
 }
 
 kotlin {
@@ -33,6 +34,7 @@ kotlin {
 
 
 ksp {
+    arg("projectRootClasspath", "io.violabs.picard.generateTest")
     arg("dslBuilderClasspath", "io.violabs.picard.generateTest")
     arg("dslMarkerClass", "io.violabs.picard.generateTest.TestDslMarker")
 }

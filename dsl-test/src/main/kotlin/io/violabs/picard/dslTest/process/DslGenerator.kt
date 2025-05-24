@@ -28,7 +28,6 @@ class DefaultDslGenerator(
     override val propertySchemaFactory: DefaultPropertySchemaFactory = DefaultPropertySchemaFactory(),
     override val testGenerator: DefaultTestGenerator = DefaultTestGenerator()
 ) : DslGenerator<DefaultPropertySchemaFactoryAdapter, DefaultDomainProperty>, VLoggable {
-    override fun logId(): String? = "DSL_GENERATOR"
     init {
         logger.enableDebug()
     }

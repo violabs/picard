@@ -14,5 +14,4 @@ internal interface MutabilitySpec {
     fun value() {
         mutable = false
     }
-
 }

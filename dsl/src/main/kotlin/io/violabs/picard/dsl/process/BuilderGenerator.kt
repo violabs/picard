@@ -88,9 +88,14 @@ class DefaultBuilderGenerator(
         params: List<DslPropSchema>
     ): TypeSpec = kotlinPoet {
         val domainClassName = domainConfig.domainClassName
+        val dslMarkerClass = domainConfig.builderConfig.dslMarkerClass
 
         type {
-            annotation { annotationDecorator.createDslMarkerIfAvailable(domainConfig.builderConfig.dslMarkerClass) }
+            annotations {
+                annotationDecorator
+                    .createDslMarkerIfAvailable(dslMarkerClass)
+                    ?.apply(::annotation)
+            }
             public()
             name = domainConfig.builderName
             superInterface(domainConfig.parameterizedDslBuilder)

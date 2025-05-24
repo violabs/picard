@@ -1,16 +1,20 @@
 package io.violabs.picard.metaDsl.builder
 
+import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.ParameterSpec
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeName
 
 @PicardDSLMarker
-class KPFunSpecBuilder : DefaultParamSpecEnabled() {
+class KPFunSpecBuilder : ParamSpecEnabled, DefaultKotlinPoetSpec() {
+    override var params: MutableList<ParameterSpec> = mutableListOf()
     var funName: String? = null
     var returns: TypeName? = null
     var kdoc: String? = null
     private var overridden: Boolean = false
+    private var annotations: List<ClassName> = mutableListOf()
     private var statements: MutableList<KPStatement> = mutableListOf()
 
     fun override(on: Boolean = true) {
@@ -23,6 +27,10 @@ class KPFunSpecBuilder : DefaultParamSpecEnabled() {
 
     fun statements(block: KPStatement.Group.() -> Unit) {
         statements = KPStatement.Group().apply(block).items
+    }
+
+    fun annotations(block: AnnotationGroup.() -> Unit) {
+        this.annotations = AnnotationGroup().apply(block).annotationNames
     }
 
     fun build(): FunSpec {
@@ -40,6 +48,10 @@ class KPFunSpecBuilder : DefaultParamSpecEnabled() {
 
         for (statement in statements) {
             spec = spec.addStatement(statement.statement, *statement.args.toTypedArray())
+        }
+
+        for (annotation in annotations) {
+            spec = spec.addAnnotation(annotation)
         }
 
         return spec.build()

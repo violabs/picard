@@ -6,7 +6,8 @@ import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.UNIT
 
 @PicardDSLMarker
-class KPLambdaTypeNameBuilder : DefaultParamSpecEnabled() {
+class KPLambdaTypeNameBuilder : ParamSpecEnabled {
+    override var params: MutableList<ParameterSpec> = mutableListOf()
     var receiver: TypeName? = null
     private var parameters: MutableList<ParameterSpec> = mutableListOf()
     var returnType: TypeName = UNIT

@@ -2,14 +2,16 @@ package io.violabs.picard.dslTest.process
 
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.symbol.KSClassDeclaration
+import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.ksp.writeTo
 import io.violabs.picard.dslTest.TestDomainConfig
 import io.violabs.picard.metaDsl.builder.kotlinPoet
 import io.violabs.picard.metaDsl.config.BuilderConfig
-import io.violabs.picard.metaDsl.config.DomainConfig
 import io.violabs.picard.metaDsl.process.DefaultPropertySchemaService
 import io.violabs.picard.metaDsl.schema.DslPropSchema
+
+private val TEST_IMPORT = ClassName("org.junit.jupiter.api", "Test")
 
 class DefaultTestGenerator(
     val propertySchemaService: DefaultPropertySchemaService = DefaultPropertySchemaService()
@@ -36,7 +38,7 @@ class DefaultTestGenerator(
 
 
     private fun generateFilesForDsl(
-        domainConfig: DomainConfig,
+        domainConfig: TestDomainConfig,
         codeGenerator: CodeGenerator
     ) {
         logger.debug("-- generating tests for builder --", tier = 0)
@@ -53,7 +55,8 @@ class DefaultTestGenerator(
         val fileSpec = kotlinPoet {
             file {
                 className = domainConfig.fileClassName
-                types(fileContent)
+//                types(fileContent)
+                addImport(TEST_IMPORT)
             }
         }
 
@@ -62,13 +65,21 @@ class DefaultTestGenerator(
 
     }
 
-
-    private fun generateTestFileContent(domainConfig: DomainConfig, schemas: List<DslPropSchema>): TypeSpec =
+    private fun generateTestFileContent(domainConfig: TestDomainConfig, schemas: List<DslPropSchema>): TypeSpec =
         kotlinPoet {
             val domainClassName = domainConfig.domainClassName
 
             type {
-                name = domainConfig.builderName
+                name = domainConfig.testClassName.simpleName
+
+//                functions {
+//                    add {
+//                        annotations {
+//                            annotation(TEST_IMPORT)
+//                        }
+//                        public()
+//                    }
+//                }
             }
         }
 }

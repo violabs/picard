@@ -17,8 +17,8 @@ import io.violabs.picard.metaDsl.process.PropertySchemaFactory
 import io.violabs.picard.metaDsl.process.PropertySchemaFactoryAdapter
 import kotlin.reflect.KClass
 
-interface DslGenerator<PARAM_ADAPTER : PropertySchemaFactoryAdapter, PROP_ADAPTER : DomainProperty> : VLoggable {
-    override fun logId(): String? = DslGenerator::class.simpleName
+interface TestDslGenerator<PARAM_ADAPTER : PropertySchemaFactoryAdapter, PROP_ADAPTER : DomainProperty> : VLoggable {
+    override fun logId(): String? = TestDslGenerator::class.simpleName
 
     val propertySchemaFactory: PropertySchemaFactory<PARAM_ADAPTER, PROP_ADAPTER>
     val testGenerator: TestGenerator
@@ -29,7 +29,7 @@ interface DslGenerator<PARAM_ADAPTER : PropertySchemaFactoryAdapter, PROP_ADAPTE
 class DefaultDslGenerator(
     override val propertySchemaFactory: DefaultPropertySchemaFactory = DefaultPropertySchemaFactory(),
     override val testGenerator: DefaultTestGenerator = DefaultTestGenerator()
-) : DslGenerator<DefaultPropertySchemaFactoryAdapter, DefaultDomainProperty> {
+) : TestDslGenerator<DefaultPropertySchemaFactoryAdapter, DefaultDomainProperty> {
     init {
         logger.enableDebug()
     }
@@ -57,6 +57,7 @@ class DefaultDslGenerator(
         val builderConfig = BuilderConfig(options, logger)
 
         val generatedBuilderDSL = getGeneratedDslAnnotation(resolver)
+        logger.debug("num found: ${generatedBuilderDSL.count()}", tier = 1, branch = true)
 
         val singleEntryTransformByClassName: Map<String, KSClassDeclaration> =
             getSingleEntryTransformByClassName(resolver)

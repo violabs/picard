@@ -4,14 +4,18 @@ import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.processing.SymbolProcessor
 import com.google.devtools.ksp.symbol.KSAnnotated
+import io.violabs.picard.common.VLoggable
+import io.violabs.picard.dslTest.process.DefaultDslGenerator
 
-class DslProcessor(
+class TestDslProcessor(
     private val codeGenerator: CodeGenerator,
     private val options: Map<String, String>
-) : SymbolProcessor {
+) : SymbolProcessor, VLoggable {
     override fun process(resolver: Resolver): List<KSAnnotated> {
-//        DefaultDslGenerator().generate(resolver, codeGenerator, options)
+        logger.debug("Starting Test DSL Processor")
+        DefaultDslGenerator().generate(resolver, codeGenerator, options)
 
+        logger.debug("Finished Test DSL Processor")
         return emptyList()
     }
 }

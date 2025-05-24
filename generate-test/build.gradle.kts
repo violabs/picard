@@ -12,7 +12,7 @@ dependencies {
     testImplementation(project(":core"))
     testImplementation(project(":cmd"))
     testImplementation(project(":star-charts:loki"))
-    ksp(project(":dsl-test"))
+//    ksp(project(":dsl-test"))
     kspTest(project(":dsl-test"))
 }
 

@@ -25,6 +25,10 @@ class KPFileSpecBuilder {
         this.types = specs.toMutableList()
     }
 
+    fun addImport(className: ClassName) {
+        imports.add(className.packageName to className.simpleName)
+    }
+
     fun addImport(classNamePair: Pair<String, String>) {
         imports.add(classNamePair)
     }

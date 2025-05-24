@@ -54,7 +54,6 @@ class DefaultDslGenerator(
      * - **dslMarkerClass** ~required~ the class that contains a [DslMarker] to denote the host dsl name.
      */
     override fun generate(resolver: Resolver, codeGenerator: CodeGenerator, options: Map<String, String?>) {
-        logger.debug("")
         val builderConfig = BuilderConfig(options, logger)
 
         if (builderConfig.isIgnored) {

@@ -29,5 +29,5 @@ class ListGroupGenerator(
     LIST_GROUP_GENERATOR_CONFIG,
     annotationDecorator
 ) {
-    override fun logId(): String? = "LIST_GRP_GENERATOR"
+    override fun logId(): String? = this::class.simpleName
 }

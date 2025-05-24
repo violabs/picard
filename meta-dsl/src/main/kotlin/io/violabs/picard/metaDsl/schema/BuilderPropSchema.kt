@@ -15,7 +15,7 @@ class BuilderPropSchema(
     private val _kdoc: String? = kdoc
 
     override fun accessors(): List<FunSpec> = kotlinPoet {
-        function {
+        functions {
             add {
                 funName = functionName
                 _kdoc?.let { kdoc(it) }

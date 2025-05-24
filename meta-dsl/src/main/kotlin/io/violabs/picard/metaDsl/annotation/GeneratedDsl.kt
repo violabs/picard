@@ -4,7 +4,8 @@ package io.violabs.picard.metaDsl.annotation
 @Retention(AnnotationRetention.SOURCE)
 annotation class GeneratedDsl(
     val withListGroup: Boolean = false,
-    val withMapGroup: String = MapGroupTypes.NONE
+    val withMapGroup: String = MapGroupTypes.NONE,
+    val isRoot: Boolean = false
 ) {
     object MapGroupTypes {
         const val NONE = "NONE"

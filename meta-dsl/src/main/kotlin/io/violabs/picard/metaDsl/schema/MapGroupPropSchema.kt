@@ -37,7 +37,7 @@ class MapGroupPropSchema(
             "MapGroup"
         ).parameterizedBy(mapKeyType.copy(nullable = false))
 
-        function {
+        functions {
             add {
                 funName = functionName
                 kdoc?.let { kdoc(it) }

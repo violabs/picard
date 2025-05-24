@@ -4,8 +4,6 @@ import com.squareup.kotlinpoet.ClassName
 import io.violabs.picard.common.VLoggable
 
 class AnnotationDecorator : VLoggable {
-    override fun logId(): String? = "ANNO_DECORATOR"
-
     init {
         logger.enableDebug()
     }

@@ -2,7 +2,9 @@ package io.violabs.picard.starCharts.loki.bloomBuild
 
 import io.violabs.picard.metaDsl.annotation.GeneratedDsl
 
-@GeneratedDsl
+@GeneratedDsl(
+    isRoot = true
+)
 data class BloomBuild(
     /**
      * # Flag to enable or disable the usage of the bloom-planner and bloom-builder

@@ -47,7 +47,7 @@ class GenerateTest : UnitSim() {
             }
 
             whenever {
-                makeCall {
+                starShip {
                     name = "USS Enterprise NCC-1701-D"
                     activated()
                     docked(false)
@@ -90,9 +90,5 @@ class GenerateTest : UnitSim() {
                 }
             }
         }
-    }
-
-    fun makeCall(block: StarShipDslBuilder.() -> Unit): StarShip {
-        return StarShipDslBuilder().apply(block).build()
     }
 }

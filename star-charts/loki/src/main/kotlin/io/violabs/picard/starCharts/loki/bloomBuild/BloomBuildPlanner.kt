@@ -4,7 +4,7 @@ import io.violabs.picard.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.Duration
 
 @GeneratedDsl
-class BloomBuildPlanner(
+data class BloomBuildPlanner(
     /**
      * # Interval at which to re-run the bloom creation planning.
      * # CLI flag: -bloom-build.planner.interval

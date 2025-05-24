@@ -33,7 +33,7 @@ object Logging {
 }
 
 // Fixed padding length to ensure consistent log formatting
-private const val FIXED_PADDING_LENGTH = 15
+private const val FIXED_PADDING_LENGTH = 25
 private val FRONT_LOADED_SPACES = System.getProperty("frontLoadedSpaces")?.toBoolean() ?: true
 private const val PADDING_CHAR = '·' // Simple middle dot for padding
 

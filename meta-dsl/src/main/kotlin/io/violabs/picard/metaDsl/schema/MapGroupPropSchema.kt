@@ -10,10 +10,10 @@ class MapGroupPropSchema(
     val mapKeyType: TypeName = STRING,
     val mapValueType: TypeName,
     override val nullableAssignment: Boolean = true,
-    override val nullableProp: Boolean = true,
     private val kdoc: String? = null
 ) : DslPropSchema {
-    override val propTypeName: TypeName = kpMapOf(mapKeyType, mapValueType, nullable = nullableAssignment)
+    override val propTypeName: TypeName = kpMapOf(mapKeyType, mapValueType, nullable = true)
+    override val iterableType: DslPropSchema.IterableType = DslPropSchema.IterableType.MAP
 
     override val verifyNotNull: Boolean = false
     override val verifyNotEmpty: Boolean = true
@@ -25,7 +25,7 @@ class MapGroupPropSchema(
             name = propName
             type(propTypeName)
 
-            if (nullableAssignment) initNullValue()
+            initNullValue()
         }
     }
 

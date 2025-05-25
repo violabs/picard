@@ -11,7 +11,6 @@ class DefaultPropSchema(
     override val propName: String,
     actualPropTypeName: TypeName,
     override val nullableAssignment: Boolean = true,
-    override val nullableProp: Boolean = true
 ) : DslPropSchema {
     override val propTypeName: TypeName = actualPropTypeName.copy(nullable = nullableAssignment)
 

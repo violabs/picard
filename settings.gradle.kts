@@ -37,7 +37,6 @@ includeModules(
     "common",
     "core-test",
     "dsl",
-    "dsl-test",
     "meta-dsl",
     "generate-test"
 )

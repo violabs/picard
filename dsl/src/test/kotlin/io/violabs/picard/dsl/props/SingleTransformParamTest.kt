@@ -2,29 +2,27 @@ package io.violabs.picard.dsl.props
 
 import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.asTypeName
-import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
 import io.violabs.picard.metaDsl.schema.SingleTransformPropSchema
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestTemplate
 
+private class TestCase
 
 class SingleTransformParamTest : UnitSim() {
     val propTypeName = TestCase::class.asTypeName()
     val inputTypeName = String::class.asTypeName()
+    private val testResponseClassName = TestCase::class.asClassName()
 
-    @TestTemplate
-    fun `toPropertySpec - happy path - #scenario`(expected: String, nullableProp: Boolean) = test {
+    @Test
+    fun `toPropertySpec - happy path`() = test {
         given {
             val param = SingleTransformPropSchema(
                 "test",
                 inputTypeName,
                 propTypeName,
-                nullableProp = nullableProp
             )
 
-            expect { expected }
+            expect { "private var test: $testResponseClassName? = null" }
 
             whenever {
                 val propSpec = param.toPropertySpec()
@@ -55,23 +53,4 @@ class SingleTransformParamTest : UnitSim() {
             whenever { param.accessors().first().toString().trimIndent() }
         }
     }
-
-    companion object {
-        @JvmStatic
-        @BeforeAll
-        fun setup() = setup(
-            DefaultParamTest::class,
-            SCENARIO_GROUP to { this::`toPropertySpec - happy path - #scenario` }
-        )
-
-        private val testResponseClassName = TestCase::class.asClassName()
-        private val propertyString = "private var test: $testResponseClassName"
-
-        val SCENARIO_GROUP = SimulationGroup
-            .vars("scenario", "expected", "nullableProp")
-            .with("nullable", "$propertyString? = null", true)
-            .with("non-null", propertyString, false)
-    }
 }
-
-private class TestCase(val scenario: String)

@@ -1,28 +1,19 @@
 package io.violabs.picard.dsl.props
 
-import com.squareup.kotlinpoet.BOOLEAN
 import com.squareup.kotlinpoet.INT
 import com.squareup.kotlinpoet.STRING
-import com.squareup.kotlinpoet.TypeName
-import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
 import io.violabs.picard.metaDsl.schema.MapPropSchema
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestTemplate
 
 class MapParamTest : UnitSim() {
 
-    @TestTemplate
-    fun `toPropertySpec - happy path - #scenario`(
-        expected: String,
-        keyType: TypeName, valueType: TypeName,
-        nullable: Boolean
-    ) = test {
+    @Test
+    fun `toPropertySpec - happy path`() = test {
         given {
-            val param = MapPropSchema("test", keyType, valueType, nullable)
+            val param = MapPropSchema("test", STRING, INT)
 
-            expect { expected }
+            expect { "private var test: kotlin.collections.Map<kotlin.String, kotlin.Int>? = null" }
 
             whenever {
                 val propSpec = param.toPropertySpec()
@@ -47,31 +38,5 @@ class MapParamTest : UnitSim() {
 
             whenever { param.accessors().first().toString().trimIndent() }
         }
-    }
-
-    companion object {
-        @JvmStatic
-        @BeforeAll
-        fun setup() = setup(
-            MapParamTest::class,
-            SCENARIO_GROUP to { this::`toPropertySpec - happy path - #scenario` }
-        )
-
-        val SCENARIO_GROUP = SimulationGroup
-            .vars("scenario", "expected", "keyType", "valueType", "nullable")
-            .with(
-                "nullable",
-                "private var test: kotlin.collections.Map<kotlin.String, kotlin.Int>? = null",
-                STRING,
-                INT,
-                true
-            )
-            .with(
-                "non-null",
-                "private var test: kotlin.collections.Map<kotlin.Int, kotlin.Boolean>",
-                INT,
-                BOOLEAN,
-                false
-            )
     }
 }

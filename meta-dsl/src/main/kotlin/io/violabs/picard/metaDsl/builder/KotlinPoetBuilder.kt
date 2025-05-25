@@ -10,6 +10,7 @@ import com.squareup.kotlinpoet.MUTABLE_MAP
 import com.squareup.kotlinpoet.ParameterSpec
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.PropertySpec
+import com.squareup.kotlinpoet.TypeAliasSpec
 import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asTypeName
@@ -73,7 +74,7 @@ class KotlinPoetBuilder : ParamSpecEnabled {
     }
 
     /**
-     * Available methods:
+     * Available properties:
      * - [KPTypeSpecBuilder.annotation]
      * - [KPTypeSpecBuilder.superInterface]
      * - [KPTypeSpecBuilder.typeVariables]
@@ -83,6 +84,16 @@ class KotlinPoetBuilder : ParamSpecEnabled {
      */
     fun type(block: KPTypeSpecBuilder.() -> Unit): TypeSpec {
         return KPTypeSpecBuilder().apply(block).build()
+    }
+
+    /**
+     * Available properties:
+     * [KPTypeAliasSpecBuilder.name]
+     * [KPTypeAliasSpecBuilder.type]
+     * [KPTypeAliasSpecBuilder.typeVariables]
+     */
+    fun typeAlias(block: KPTypeAliasSpecBuilder.() -> Unit): TypeAliasSpec {
+        return KPTypeAliasSpecBuilder().apply(block).build()
     }
 
     fun file(block: KPFileSpecBuilder.() -> Unit): FileSpec {

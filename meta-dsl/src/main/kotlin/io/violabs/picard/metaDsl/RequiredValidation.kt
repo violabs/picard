@@ -17,11 +17,12 @@ fun <T> vRequireNotNull(accessor: KProperty<T?>): T {
     return requireNotNull(accessor.getter.call()) { "${accessor.name} is required" }
 }
 
+//region COLLECTION
 /**
- * Common implementation for [vRequireNotEmpty] variants.
+ * Common implementation for [vRequireCollectionNotEmpty] variants.
  */
 @ExcludeFromCoverage
-private fun <T> requireNotEmptyInternal(value: List<T>?, name: String): List<T> {
+private fun <T, C : Collection<T>> requireCollectionNotEmptyInternal(value: C?, name: String): C {
     val returnedValue = if (value?.isEmpty() != false) null else value
     return requireNotNull(returnedValue) { "$name is required and cannot be empty" }
 }
@@ -30,8 +31,8 @@ private fun <T> requireNotEmptyInternal(value: List<T>?, name: String): List<T> 
  * Validates that the supplied list is not null or empty.
  */
 @ExcludeFromCoverage
-fun <T> vRequireNotEmpty(value: List<T>?, name: String): List<T> =
-    requireNotEmptyInternal(value, name)
+fun <T, C : Collection<T>> vRequireCollectionNotEmpty(value: C?, name: String): C =
+    requireCollectionNotEmptyInternal(value, name)
 
 /**
  * Takes in a classes property accessor and validates that is not null or blank.
@@ -39,9 +40,9 @@ fun <T> vRequireNotEmpty(value: List<T>?, name: String): List<T> =
  * You may find problems using with nested class functions.
  */
 @ExcludeFromCoverage
-fun <T> vRequireNotEmpty(accessor: KProperty<List<T>?>): List<T> {
+fun <T, C : Collection<T>> vRequireCollectionNotEmpty(accessor: KProperty<C?>): C {
     accessor.isAccessible = true
-    return requireNotEmptyInternal(accessor.call(), accessor.name)
+    return requireCollectionNotEmptyInternal(accessor.call(), accessor.name)
 }
 
 /**
@@ -50,7 +51,48 @@ fun <T> vRequireNotEmpty(accessor: KProperty<List<T>?>): List<T> {
  * You may find problems using with nested class functions.
  */
 @ExcludeFromCoverage
-fun <T> vRequireNotEmpty(accessor: KFunction<List<T>?>): List<T> {
+fun <T, C : Collection<T>> vRequireCollectionNotEmpty(accessor: KFunction<C?>): C {
     accessor.isAccessible = true
-    return requireNotEmptyInternal(accessor.call(), accessor.name)
+    return requireCollectionNotEmptyInternal(accessor.call(), accessor.name)
 }
+//endregion COLLECTION
+
+//region MAP
+/**
+ * Common implementation for [vRequireMapNotEmpty] variants.
+ */
+@ExcludeFromCoverage
+private fun <K, V, M : Map<K, V>> requireMapNotEmptyInternal(map: M?, name: String): M {
+    val returnedValue = if (map?.isEmpty() != false) null else map
+    return requireNotNull(returnedValue) { "$name is required and cannot be empty" }
+}
+
+/**
+ * Validates that the supplied list is not null or empty.
+ */
+@ExcludeFromCoverage
+fun <K, V, M : Map<K, V>> vRequireMapNotEmpty(map: M?, name: String): M =
+    requireMapNotEmptyInternal(map, name)
+
+/**
+ * Takes in a classes property accessor and validates that is not null or blank.
+ * It used the accessor name as the default within the exception message.
+ * You may find problems using with nested class functions.
+ */
+@ExcludeFromCoverage
+fun <K, V, M : Map<K, V>> vRequireMapNotEmpty(accessor: KProperty<M?>): M {
+    accessor.isAccessible = true
+    return requireMapNotEmptyInternal(accessor.call(), accessor.name)
+}
+
+/**
+ * Takes in a classes function accessor and validates that is not null or blank.
+ * It used the accessor name as the default within the exception message.
+ * You may find problems using with nested class functions.
+ */
+@ExcludeFromCoverage
+fun <K, V, M : Map<K, V>> vRequireMapNotEmpty(accessor: KFunction<M?>): M {
+    accessor.isAccessible = true
+    return requireMapNotEmptyInternal(accessor.call(), accessor.name)
+}
+//endregion MAP

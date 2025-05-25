@@ -12,9 +12,9 @@ class MapPropSchema(
     val mapKeyType: TypeName = STRING,
     val mapValueType: TypeName = STRING,
     override val nullableAssignment: Boolean = true,
-    override val nullableProp: Boolean = true
 ) : DslPropSchema {
-    override val propTypeName: TypeName = kpMapOf(mapKeyType, mapValueType, nullable = nullableAssignment)
+    override val propTypeName: TypeName = kpMapOf(mapKeyType, mapValueType, nullable = true)
+    override val iterableType: DslPropSchema.IterableType = DslPropSchema.IterableType.COLLECTION
 
     override val verifyNotNull: Boolean = false
     override val verifyNotEmpty: Boolean = true
@@ -26,7 +26,7 @@ class MapPropSchema(
             name = propName
             type(propTypeName)
 
-            if (nullableAssignment) initNullValue()
+            initNullValue()
         }
     }
 

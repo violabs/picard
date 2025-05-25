@@ -1,4 +1,3 @@
-
 plugins {
     id("com.google.devtools.ksp")
 }
@@ -9,8 +8,6 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation(project(":common"))
     testImplementation(project(":core-test"))
-//    ksp(project(":dsl-test"))
-    kspTest(project(":dsl-test"))
 }
 
 kotlin {
@@ -19,13 +16,6 @@ kotlin {
             kotlin {
                 // add KSP’s output dir for main
                 srcDir("${layout.buildDirectory}/generated/ksp/main/kotlin")
-            }
-        }
-
-        test {
-            kotlin {
-                // add KSP’s output dir for test
-                srcDir("${layout.buildDirectory}/generated/ksp/test/kotlin")
             }
         }
     }

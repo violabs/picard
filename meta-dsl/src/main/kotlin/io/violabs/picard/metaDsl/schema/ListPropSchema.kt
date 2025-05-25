@@ -11,9 +11,9 @@ class ListPropSchema(
     override val propName: String,
     val collectionType: TypeName = STRING,
     override val nullableAssignment: Boolean = true,
-    override val nullableProp: Boolean = true
 ) : DslPropSchema {
-    override val propTypeName: TypeName = kpListOf(collectionType, nullable = nullableAssignment)
+    override val propTypeName: TypeName = kpListOf(collectionType, nullable = true)
+    override val iterableType: DslPropSchema.IterableType = DslPropSchema.IterableType.COLLECTION
 
     override val verifyNotNull: Boolean = false
     override val verifyNotEmpty: Boolean = true
@@ -25,7 +25,7 @@ class ListPropSchema(
             name = propName
             type(propTypeName)
 
-            if (nullableAssignment) initNullValue()
+            initNullValue()
         }
     }
 

@@ -2,23 +2,21 @@ package io.violabs.picard.dsl.props
 
 import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.asTypeName
-import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
 import io.violabs.picard.metaDsl.schema.BuilderPropSchema
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestTemplate
 
 class BuilderParamTest : UnitSim() {
     val typeName = TestResponse::class.asTypeName()
     val buildClassName = TestBuilder::class.asClassName()
+    private val testResponseClassName = TestResponse::class.asClassName()
 
-    @TestTemplate
-    fun `toPropertySpec - happy path - #scenario`(expected: String, nullableProp: Boolean) = test {
+    @Test
+    fun `toPropertySpec - happy path`() = test {
         given {
-            val param = BuilderPropSchema("test", typeName, buildClassName, nullableProp = nullableProp)
+            val param = BuilderPropSchema("test", typeName, buildClassName)
 
-            expect { expected }
+            expect { "private var test: $testResponseClassName? = null" }
 
             whenever {
                 val propSpec = param.toPropertySpec()
@@ -45,22 +43,6 @@ class BuilderParamTest : UnitSim() {
 
             whenever { param.accessors().first().toString().trimIndent() }
         }
-    }
-
-    companion object {
-        @JvmStatic
-        @BeforeAll
-        fun setup() = setup(
-            BuilderParamTest::class,
-            SCENARIO_GROUP to { this::`toPropertySpec - happy path - #scenario` }
-        )
-
-        private val testResponseClassName = TestResponse::class.asClassName()
-        private val propertyString = "private var test: $testResponseClassName"
-        val SCENARIO_GROUP = SimulationGroup
-            .vars("scenario", "expected", "nullableProp")
-            .with("nullable", "$propertyString? = null", true)
-            .with("non-null", propertyString, false)
     }
 
     class TestResponse

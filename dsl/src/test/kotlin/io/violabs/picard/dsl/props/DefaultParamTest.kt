@@ -2,22 +2,20 @@ package io.violabs.picard.dsl.props
 
 import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.asTypeName
-import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
 import io.violabs.picard.metaDsl.schema.DefaultPropSchema
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestTemplate
 
 class DefaultParamTest : UnitSim() {
     val propTypeName = String::class.asTypeName()
+    private val testResponseClassName = String::class.asClassName()
 
-    @TestTemplate
-    fun `toPropertySpec - happy path - #scenario`(expected: String, nullableProp: Boolean) = test {
+    @Test
+    fun `toPropertySpec - happy path - #scenario`() = test {
         given {
-            val param = DefaultPropSchema("test", propTypeName, nullableProp = nullableProp)
+            val param = DefaultPropSchema("test", propTypeName)
 
-            expect { expected }
+            expect { "public var test: $testResponseClassName? = null" }
 
             whenever {
                 val propSpec = param.toPropertySpec()
@@ -36,22 +34,5 @@ class DefaultParamTest : UnitSim() {
 
             whenever { param.accessors().isEmpty() }
         }
-    }
-
-    companion object {
-        @JvmStatic
-        @BeforeAll
-        fun setup() = setup(
-            DefaultParamTest::class,
-            SCENARIO_GROUP to { this::`toPropertySpec - happy path - #scenario` }
-        )
-
-
-        private val testResponseClassName = String::class.asClassName()
-        private val propertyString = "public var test: $testResponseClassName"
-        val SCENARIO_GROUP = SimulationGroup
-            .vars("scenario", "expected", "nullableProp")
-            .with("nullable", "$propertyString? = null", true)
-            .with("non-null", propertyString, false)
     }
 }

@@ -14,10 +14,13 @@ interface DslPropSchema {
     val functionName: String get() = propName
     val propTypeName: TypeName // This should be the type of the actual property in the domain object
     val nullableAssignment: Boolean get() = true
-    val nullableProp: Boolean get() = true
     val verifyNotNull: Boolean get() = true
     val verifyNotEmpty: Boolean get() = false
+    val iterableType: IterableType? get() = null
     val accessModifier: KModifier get() = KModifier.PRIVATE
+
+    fun isCollection(): Boolean = iterableType == IterableType.COLLECTION
+    fun isMap(): Boolean = iterableType == IterableType.MAP
 
     /**
      * Create the KotlinPoet [PropertySpec] representing this DSL property.
@@ -27,9 +30,9 @@ interface DslPropSchema {
             accessModifier(accessModifier)
             variable()
             name = propName
-            type(propTypeName.copy(nullable = nullableProp))
+            type(propTypeName.copy(nullable = true))
 
-            if (nullableProp) initNullValue()
+            initNullValue()
         }
     }
 
@@ -49,10 +52,16 @@ interface DslPropSchema {
 
         return if (verifyNotNull) {
             "vRequireNotNull(::$propName)" // Added message for vRequireNotNull
-        } else if (verifyNotEmpty) {
-            "vRequireNotEmpty(::$propName)"
+        } else if (verifyNotEmpty && isCollection()) {
+            "vRequireCollectionNotEmpty(::$propName)"
+        } else if (verifyNotEmpty && isMap()) {
+            "vRequireMapNotEmpty(::$propName)"
         } else {
             propName
         }
+    }
+
+    enum class IterableType {
+        COLLECTION, MAP
     }
 }

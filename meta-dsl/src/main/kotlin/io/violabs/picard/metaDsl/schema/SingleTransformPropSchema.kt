@@ -11,7 +11,6 @@ class SingleTransformPropSchema(
     actualPropTypeName: TypeName,
     val transformTemplate: String? = null,
     override val nullableAssignment: Boolean = true,
-    override val nullableProp: Boolean = true
 ) : DslPropSchema {
     override val propTypeName: TypeName = actualPropTypeName.copy(nullable = nullableAssignment)
 

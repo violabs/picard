@@ -8,7 +8,6 @@ class BuilderPropSchema(
     originalPropertyType: TypeName,
     private val nestedBuilderClassName: ClassName,
     override val nullableAssignment: Boolean = true,
-    override val nullableProp: Boolean = true,
     kdoc: String? = null
 ) : DslPropSchema {
     override val propTypeName: TypeName = originalPropertyType

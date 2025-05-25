@@ -3,11 +3,13 @@ package io.violabs.picard.metaDsl.builder
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.TypeAliasSpec
 import com.squareup.kotlinpoet.TypeSpec
 
 class KPFileSpecBuilder {
     var className: ClassName? = null
     private var imports = mutableListOf<Pair<String, String>>()
+    private var typeAliases = mutableListOf<TypeAliasSpec>()
     private var types = mutableListOf<TypeSpec>()
     private var functions = mutableListOf<FunSpec>()
 
@@ -20,6 +22,10 @@ class KPFileSpecBuilder {
     }
 
     fun functions(funs: MutableList<FunSpec>) { this.functions = funs }
+
+    fun typeAliases(vararg aliases: TypeAliasSpec) {
+        this.typeAliases = aliases.toMutableList()
+    }
 
     fun types(vararg specs: TypeSpec) {
         this.types = specs.toMutableList()
@@ -45,6 +51,10 @@ class KPFileSpecBuilder {
         var spec = FileSpec
             .builder(className)
             .indent("    ")
+
+        for (alias in typeAliases) {
+            spec = spec.addTypeAlias(alias)
+        }
 
         for (type in types) {
             spec = spec.addType(type)

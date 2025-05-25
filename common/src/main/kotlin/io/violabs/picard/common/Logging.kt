@@ -20,7 +20,7 @@ object Colors {
 }
 
 object Logging {
-    const val LOGO = "${Colors.GREEN}picard${Colors.RESET}"
+    const val LOGO = "${Colors.GREEN}konstellation${Colors.RESET}"
     const val DELIMITER = "${Colors.PURPLE}*${Colors.CYAN}>>${Colors.RESET}"
     const val ID_TEMPLATE = "${Colors.CYAN}[${Colors.RESET}%s${Colors.CYAN}]${Colors.RESET}"
     const val INFO = "${Colors.CYAN}INFO ${Colors.RESET}"

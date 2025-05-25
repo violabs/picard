@@ -12,10 +12,10 @@ class GroupPropSchema(
     originalPropertyType: TypeName,
     private val builtClassName: ClassName,
     override val nullableAssignment: Boolean = true,
-    override val nullableProp: Boolean = true,
     private val kdoc: String? = null
 ) : DslPropSchema {
     override val propTypeName: TypeName = originalPropertyType
+    override val iterableType: DslPropSchema.IterableType = DslPropSchema.IterableType.COLLECTION
 
     override fun toPropertySpec(): PropertySpec = kotlinPoet {
         val assignmentType = listTypeOf(builtClassName)

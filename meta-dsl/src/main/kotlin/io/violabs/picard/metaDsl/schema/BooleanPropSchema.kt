@@ -8,7 +8,6 @@ import io.violabs.picard.metaDsl.builder.kotlinPoet
 class BooleanPropSchema(
     override val propName: String,
     override val nullableAssignment: Boolean = true,
-    override val nullableProp: Boolean = true
 ) : DslPropSchema {
     override val propTypeName: TypeName = BOOLEAN.copy(nullable = nullableAssignment) // Correctly use constructor arg
 

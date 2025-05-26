@@ -23,7 +23,15 @@ jobs:
       - name: Determine affected modules
         id: set-matrix
         run: |
-          echo "matrix=$(./gradlew -q detectChangedModules | grep 'MATRIX=' | cut -d'=' -f2-)" >> "$GITHUB_OUTPUT"
+          # grab the JSON payload (or empty)
+          MATRIX=$(./gradlew -q detectChangedModules \
+            | grep 'MATRIX=' \
+            | cut -d'=' -f2-)
+          MATRIX=${MATRIX:-[]}
+          # write a multi-line file command so any [] or {"…"} is handled safely
+          echo "matrix<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$MATRIX"      >> "$GITHUB_OUTPUT"
+          echo "EOF"          >> "$GITHUB_OUTPUT"
 
       - name: Debug Output
         run: |

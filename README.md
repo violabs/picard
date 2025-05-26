@@ -24,8 +24,8 @@ logger.debug("type: kotlin.String", tier = 3)
 Should have a structure if there are nested processes:
 
 ```
-konstellation DEBUG [····DSL_BUILDER] *>> +++ DOMAIN: io.violabs.picard.starCharts.loki.bloomBuild.BloomBuildPlannerQueue  +++
-konstellation DEBUG [····DSL_BUILDER] *>>   |__ package: io.violabs.picard.starCharts.loki.bloomBuild
+konstellation DEBUG [····DSL_BUILDER] *>> +++ DOMAIN: io.violabs.konstellation.starCharts.loki.bloomBuild.BloomBuildPlannerQueue  +++
+konstellation DEBUG [····DSL_BUILDER] *>>   |__ package: io.violabs.konstellation.starCharts.loki.bloomBuild
 konstellation DEBUG [····DSL_BUILDER] *>>   |__ type: BloomBuildPlannerQueue
 konstellation DEBUG [····DSL_BUILDER] *>>   |__ builder: BloomBuildPlannerQueueBuilder
 konstellation DEBUG [····DSL_BUILDER] *>>   |__ DSL Marker added

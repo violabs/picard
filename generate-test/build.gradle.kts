@@ -22,7 +22,7 @@ kotlin {
 
 
 ksp {
-    arg("projectRootClasspath", "io.violabs.picard.generateTest")
-    arg("dslBuilderClasspath", "io.violabs.picard.generateTest")
-    arg("dslMarkerClass", "io.violabs.picard.generateTest.TestDslMarker")
+    arg("projectRootClasspath", "io.violabs.konstellation.generateTest")
+    arg("dslBuilderClasspath", "io.violabs.konstellation.generateTest")
+    arg("dslMarkerClass", "io.violabs.konstellation.generateTest.TestDslMarker")
 }

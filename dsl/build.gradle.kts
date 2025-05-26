@@ -11,16 +11,8 @@ repositories {
     google()
 }
 
-sourceSets.main.get().kotlin {
-    srcDirs(
-        "src/main/kotlin",
-        project(":meta-dsl").sourceSets.main.get().kotlin.srcDirs
-    )
-}
-
-
 dependencies {
-    compileOnly(project(":meta-dsl"))
+    implementation(project(":meta-dsl"))
     implementation(kotlin("stdlib"))
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("com.squareup:kotlinpoet:2.1.0")
@@ -50,7 +42,7 @@ kover {
     reports {
         filters {
             excludes {
-                annotatedBy("io.violabs.picard.common.ExcludeFromCoverage")
+                annotatedBy("io.violabs.konstellation.common.ExcludeFromCoverage")
             }
         }
     }

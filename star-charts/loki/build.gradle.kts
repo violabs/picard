@@ -10,11 +10,11 @@ dependencies {
     ksp("io.violabs.konstellation:dsl:0.0.1")
 }
 
-//src/main/resources/META-INF/services/com.google.devtools.ksp.processing.SymbolProcessorProvider
 kotlin
     .sourceSets["main"]
-    .kotlin
-    .srcDir("build/generated/ksp/main/kotlin")
+    .kotlin {
+        srcDir("build/generated/ksp/main/kotlin")
+    }
 
 tasks.jar {
     archiveBaseName.set("loki")

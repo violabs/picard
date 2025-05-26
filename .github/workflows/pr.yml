@@ -29,8 +29,32 @@ jobs:
         run: |
           echo "Gradle Modules: ${{ fromJson(steps.set-matrix.outputs.matrix) }}"
 
+  build-konstellation:
+    name: Build Konstellation Library
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Clone and build konstellation library
+        run: |
+          git clone https://github.com/violabs/konstellation.git temp-konstellation
+          cd temp-konstellation
+          ./gradlew publishToMavenLocal
+          cd ..
+          rm -rf temp-konstellation
+
+      - name: Cache Maven local repository
+        uses: actions/cache/save@v3
+        with:
+          path: ~/.m2/repository/io/violabs/konstellation
+          key: konstellation-${{ github.sha }}
+
   module-tests:
-    needs: determine-modules
+    needs: [ determine-modules, build-konstellation ]
     if: needs.determine-modules.outputs.matrix != '[]'
     name: Test ${{ matrix.module-namespace.module }}
     runs-on: ubuntu-latest

@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.ring.Ring
 
-@GeneratedDSL
+@GeneratedDsl
 class Compactor(
     /**
      * # Directory where files can be downloaded for compaction.

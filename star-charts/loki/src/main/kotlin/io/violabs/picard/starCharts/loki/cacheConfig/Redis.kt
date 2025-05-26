@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki.cacheConfig
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.Duration
 
-@GeneratedDSL
+@GeneratedDsl
 data class Redis(
     /**
      *   # Redis Server or Cluster configuration endpoint to use for caching. A

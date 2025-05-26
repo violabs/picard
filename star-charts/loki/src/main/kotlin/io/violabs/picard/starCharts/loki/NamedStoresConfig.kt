@@ -1,10 +1,10 @@
 package io.violabs.picard.starCharts.loki
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.cosStorageConfig.CosStorageConfig
 import io.violabs.picard.starCharts.loki.swiftStorageConfig.SwiftStorageConfig
 
-@GeneratedDSL
+@GeneratedDsl
 class NamedStoresConfig(
     val aws: Map<String, AwsStorageConfig>? = null,
     val azure: Map<String, AzureStorageConfig>? = null,

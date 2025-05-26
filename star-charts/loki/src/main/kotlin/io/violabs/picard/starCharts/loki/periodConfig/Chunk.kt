@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki.periodConfig
 
 import io.violabs.picard.domain.k8sResources.Quantity
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 
-@GeneratedDSL
+@GeneratedDsl
 data class Chunk(
     /**
      * Table prefix for all period tables.

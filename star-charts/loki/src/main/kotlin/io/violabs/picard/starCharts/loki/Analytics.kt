@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.tls.TlsConfig
 
-@GeneratedDSL
+@GeneratedDsl
 class Analytics(
     /**
      * # Enable anonymous usage reporting.

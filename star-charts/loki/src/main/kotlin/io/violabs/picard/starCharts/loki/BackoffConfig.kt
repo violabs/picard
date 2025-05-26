@@ -1,8 +1,8 @@
 package io.violabs.picard.starCharts.loki
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 
-@GeneratedDSL
+@GeneratedDsl
 data class BackoffConfig(
     /**
      *   # Minimum delay when backing off.

@@ -1,8 +1,8 @@
 package io.violabs.picard.starCharts.loki.distributor
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 
-@GeneratedDSL
+@GeneratedDsl
 data class OTLPConfig(
     /**
      * # List of default otlp resource attributes to be picked as index labels

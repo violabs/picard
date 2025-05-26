@@ -1,13 +1,13 @@
 package io.violabs.picard.starCharts.loki
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.clusterValidation.ClusterValidation
 import io.violabs.picard.starCharts.loki.tls.TLSVersion
 import io.violabs.picard.starCharts.loki.tls.TlsConfig
 import io.violabs.picard.starCharts.serialization.ListToCommaSeparatedSerializer
 
-@GeneratedDSL
+@GeneratedDsl
 data class Server(
     /**
      * # HTTP server listen network, default tcp

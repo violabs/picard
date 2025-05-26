@@ -1,10 +1,10 @@
 package io.violabs.picard.starCharts.loki.ingesterClient
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.Duration
 import io.violabs.picard.starCharts.loki.GrpcClient
 
-@GeneratedDSL
+@GeneratedDsl
 data class IngesterClient(
     /**
      * # Configures how connections are pooled.

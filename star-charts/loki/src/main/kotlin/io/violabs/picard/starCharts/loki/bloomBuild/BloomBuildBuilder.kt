@@ -1,8 +1,8 @@
 package io.violabs.picard.starCharts.loki.bloomBuild
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 
-@GeneratedDSL
+@GeneratedDsl
 data class BloomBuildBuilder(
     /**
      * # The grpc_client block configures the gRPC client used to communicate between

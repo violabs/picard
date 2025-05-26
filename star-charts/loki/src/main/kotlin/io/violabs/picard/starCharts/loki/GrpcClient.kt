@@ -1,10 +1,10 @@
 package io.violabs.picard.starCharts.loki
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.tls.TlsConfig
 import io.violabs.picard.starCharts.loki.clusterValidation.ClusterValidation
 
-@GeneratedDSL
+@GeneratedDsl
 class GrpcClient(
     /**
      * # gRPC client max receive message size (bytes).

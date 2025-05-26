@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki.distributor
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.ring.Ring
 
-@GeneratedDSL
+@GeneratedDsl
 data class Distributor(
     val ring: Ring? = null,
     /**

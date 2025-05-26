@@ -1,8 +1,8 @@
 package io.violabs.picard.starCharts.loki
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 
-@GeneratedDSL
+@GeneratedDsl
 data class OperationalConfig(
     /**
      * # Log every new stream created by a push request (very verbose, recommend to

@@ -1,8 +1,8 @@
 package io.violabs.picard.starCharts.loki.bloomGateway
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 
-@GeneratedDSL
+@GeneratedDsl
 class BloomGateway(
     /**
      * # Flag to enable or disable the bloom gateway component globally.

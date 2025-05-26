@@ -1,7 +1,7 @@
 package io.violabs.picard.starCharts.loki.common
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.*
 import io.violabs.picard.starCharts.loki.common.congestionControl.CongestionControl
 import io.violabs.picard.starCharts.loki.cosStorageConfig.CosStorageConfig
@@ -9,7 +9,7 @@ import io.violabs.picard.starCharts.loki.s3StorageConfig.S3StorageConfig
 import io.violabs.picard.starCharts.loki.swiftStorageConfig.SwiftStorageConfig
 import io.violabs.picard.starCharts.loki.thanosObjectStoreConfig.ThanosObjectStoreConfig
 
-@GeneratedDSL
+@GeneratedDsl
 data class Storage(
     /**
      * storage:

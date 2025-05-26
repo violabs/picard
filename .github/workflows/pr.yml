@@ -29,32 +29,8 @@ jobs:
         run: |
           echo "Gradle Modules: ${{ fromJson(steps.set-matrix.outputs.matrix) }}"
 
-  build-konstellation:
-    name: Build Konstellation Library
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 21
-
-      - name: Clone and build konstellation library
-        run: |
-          git clone https://github.com/violabs/konstellation.git temp-konstellation
-          cd temp-konstellation
-          ./gradlew publishToMavenLocal
-          cd ..
-          rm -rf temp-konstellation
-
-      - name: Cache Maven local repository
-        uses: actions/cache/save@v3
-        with:
-          path: ~/.m2/repository/io/violabs/konstellation
-          key: konstellation-${{ github.sha }}
-
   module-tests:
-    needs: [ determine-modules, build-konstellation ]
+    needs: [ determine-modules ]
     if: needs.determine-modules.outputs.matrix != '[]'
     name: Test ${{ matrix.module-namespace.module }}
     runs-on: ubuntu-latest
@@ -66,6 +42,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         name: Checkout code
+
+      - name: Check if module needs konstellation
+        id: check-konstellation
+        run: |
+          BUILD_FILE="${{ matrix.module-namespace.path }}/build.gradle.kts"
+          if grep -q "io\.violabs\.konstellation" "$BUILD_FILE"; then
+          echo "needs-konstellation=true" >> "$GITHUB_OUTPUT"
+          echo "Module ${{ matrix.module-namespace.module }} needs konstellation"
+          else
+          echo "needs-konstellation=false" >> "$GITHUB_OUTPUT"
+          echo "Module ${{ matrix.module-namespace.module }} does not need konstellation"
+          fi
+
+      - name: Build konstellation library
+        if: steps.check-konstellation.outputs.needs-konstellation == 'true'
+        run: |
+          echo "Building konstellation for ${{ matrix.module-namespace.module }}"
+          git clone https://github.com/violabs/konstellation.git temp-konstellation
+          cd temp-konstellation
+          ./gradlew publishToMavenLocal
+          cd ..
+          rm -rf temp-konstellation
 
       - name: Cache Gradle packages
         uses: actions/cache@v3

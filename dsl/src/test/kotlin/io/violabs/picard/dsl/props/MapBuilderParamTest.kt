@@ -4,7 +4,7 @@ import com.squareup.kotlinpoet.STRING
 import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.asTypeName
 import io.violabs.geordi.UnitSim
-import io.violabs.picard.metaDsl.schema.MapGroupPropSchema
+import io.violabs.picard.dsl.schema.MapGroupPropSchema
 import org.junit.jupiter.api.Test
 
 class MapBuilderParamTest : UnitSim() {

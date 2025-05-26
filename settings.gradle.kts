@@ -34,7 +34,6 @@ pluginManagement {
 //}
 
 includeModules(
-    "common",
     "core-test",
     "dsl",
     "meta-dsl",

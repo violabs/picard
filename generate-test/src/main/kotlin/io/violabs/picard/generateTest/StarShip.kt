@@ -1,6 +1,6 @@
 package io.violabs.picard.generateTest
 
-import io.violabs.picard.metaDsl.annotation.GeneratedDsl
+import io.violabs.picard.dsl.annotation.GeneratedDsl
 
 @GeneratedDsl(
     isRoot = true

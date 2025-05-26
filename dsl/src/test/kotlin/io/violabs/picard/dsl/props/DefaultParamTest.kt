@@ -3,7 +3,7 @@ package io.violabs.picard.dsl.props
 import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.asTypeName
 import io.violabs.geordi.UnitSim
-import io.violabs.picard.metaDsl.schema.DefaultPropSchema
+import io.violabs.picard.dsl.schema.DefaultPropSchema
 import org.junit.jupiter.api.Test
 
 class DefaultParamTest : UnitSim() {

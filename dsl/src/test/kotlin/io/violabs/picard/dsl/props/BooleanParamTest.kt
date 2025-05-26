@@ -1,7 +1,7 @@
 package io.violabs.picard.dsl.props
 
 import io.violabs.geordi.UnitSim
-import io.violabs.picard.metaDsl.schema.BooleanPropSchema
+import io.violabs.picard.dsl.schema.BooleanPropSchema
 import org.junit.jupiter.api.Test
 
 class BooleanParamTest : UnitSim() {

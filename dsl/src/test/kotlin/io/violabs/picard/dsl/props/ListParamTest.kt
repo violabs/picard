@@ -2,7 +2,7 @@ package io.violabs.picard.dsl.props
 
 import com.squareup.kotlinpoet.STRING
 import io.violabs.geordi.UnitSim
-import io.violabs.picard.metaDsl.schema.ListPropSchema
+import io.violabs.picard.dsl.schema.ListPropSchema
 import org.junit.jupiter.api.Test
 
 class ListParamTest : UnitSim() {

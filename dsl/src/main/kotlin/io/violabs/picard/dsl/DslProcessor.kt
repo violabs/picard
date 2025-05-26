@@ -4,7 +4,7 @@ import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.processing.SymbolProcessor
 import com.google.devtools.ksp.symbol.KSAnnotated
-import io.violabs.picard.dsl.process.DefaultDslGenerator
+import io.violabs.picard.dsl.process.generator.DefaultDslGenerator
 
 class DslProcessor(
     private val codeGenerator: CodeGenerator,

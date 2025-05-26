@@ -6,7 +6,6 @@ dependencies {
     ksp(project(":dsl"))
     implementation(project(":meta-dsl"))
     implementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testImplementation(project(":common"))
     testImplementation(project(":core-test"))
 }
 

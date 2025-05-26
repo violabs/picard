@@ -3,6 +3,7 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
+//small update
 dependencies {
     implementation(project(":star-charts"))
     implementation("io.violabs.picard:command:0.0.1")

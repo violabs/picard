@@ -25,6 +25,7 @@ allprojects {
         plugin("org.jetbrains.dokka")
         plugin("application")
         plugin("org.jetbrains.kotlinx.kover")
+        plugin("io.violabs.plugins.pipeline")
     }
 
     sharedRepositories()

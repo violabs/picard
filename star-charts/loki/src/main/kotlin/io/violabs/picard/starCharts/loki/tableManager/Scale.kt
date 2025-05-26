@@ -1,8 +1,8 @@
 package io.violabs.picard.starCharts.loki.tableManager
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 
-@GeneratedDSL
+@GeneratedDsl
 data class Scale(
     /**
      * # Should we enable autoscale for the table.

@@ -1,8 +1,8 @@
 package io.violabs.picard.starCharts.loki.thanosObjectStoreConfig
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 
-@GeneratedDSL
+@GeneratedDsl
 data class ThanosObjectStoreConfig(
     val s3: S3? = null,
     val gcs: Gcs? = null,

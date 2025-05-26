@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki.tableManager
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 
-@GeneratedDSL
+@GeneratedDsl
 data class TablesProvisioning(
     /**
      *   # Enables on demand throughput provisioning for the storage provider (if

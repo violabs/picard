@@ -2,9 +2,9 @@ package io.violabs.picard.starCharts.loki
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.annotation.JsonNaming
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 
-@GeneratedDSL
+@GeneratedDsl
 data class Sse(
     /**
      *   # Enable AWS Server Side Encryption. Supported values: SSE-KMS, SSE-S3.

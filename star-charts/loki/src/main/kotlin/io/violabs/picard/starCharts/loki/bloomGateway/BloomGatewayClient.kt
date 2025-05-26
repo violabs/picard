@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki.bloomGateway
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.GrpcClient
 
-@GeneratedDSL
+@GeneratedDsl
 data class BloomGatewayClient(
     /**
      * Configures the behavior of the connection pool.

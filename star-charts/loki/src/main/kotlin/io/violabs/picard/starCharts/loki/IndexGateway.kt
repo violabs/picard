@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.ring.Ring
 
-@GeneratedDSL
+@GeneratedDsl
 data class IndexGateway(
     /**
      * # Defines in which mode the index gateway server will operate (default to

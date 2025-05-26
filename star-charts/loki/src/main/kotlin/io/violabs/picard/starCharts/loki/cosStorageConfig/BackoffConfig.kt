@@ -1,9 +1,9 @@
 package io.violabs.picard.starCharts.loki.cosStorageConfig
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.Duration
 
-@GeneratedDSL
+@GeneratedDsl
 data class BackoffConfig(
     /**
      *   # Minimum backoff time when cos get Object.

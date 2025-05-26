@@ -1,10 +1,10 @@
 package io.violabs.picard.starCharts.loki.storageConfig
 
-import io.violabs.picard.dsl.annotation.GeneratedDSL
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.NamedStoresConfig
 import io.violabs.picard.starCharts.loki.thanosObjectStoreConfig.ThanosObjectStoreConfig
 
-@GeneratedDSL
+@GeneratedDsl
 data class ObjectStore(
     /**
      *   # The thanos_object_store_config block configures the connection to object

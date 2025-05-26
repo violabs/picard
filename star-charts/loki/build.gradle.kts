@@ -5,15 +5,16 @@ plugins {
 
 dependencies {
     implementation(project(":star-charts"))
-//    implementation(project(":dsl"))
-    ksp(project(":dsl"))
+    implementation("io.violabs.picard:command:0.0.1")
+    implementation("io.violabs.konstellation:meta-dsl:0.0.2")
+    ksp("io.violabs.konstellation:dsl:0.0.1")
 }
 
-//src/main/resources/META-INF/services/com.google.devtools.ksp.processing.SymbolProcessorProvider
 kotlin
     .sourceSets["main"]
-    .kotlin
-    .srcDir("build/generated/ksp/main/kotlin")
+    .kotlin {
+        srcDir("build/generated/ksp/main/kotlin")
+    }
 
 tasks.jar {
     archiveBaseName.set("loki")
@@ -44,6 +45,7 @@ kover {
 }
 
 ksp {
-    arg("dslBuilder.classpath", "io.violabs.picard.starCharts.loki.utils")
-    arg("dslMarker.classpath", "io.violabs.picard.starCharts.loki.utils.LokiDSL")
+    arg("projectRootClasspath", "io.violabs.picard.starCharts.loki")
+    arg("dslBuilderClasspath", "io.violabs.picard.starCharts.loki.utils")
+    arg("dslMarkerClass", "io.violabs.picard.starCharts.loki.utils.LokiDSL")
 }

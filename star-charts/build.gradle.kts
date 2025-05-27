@@ -13,11 +13,12 @@ dependencies {
     implementation(project(":cmd"))
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.19.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.19.0")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.19.0")
 
     testImplementation(project(":core-test"))
-    testImplementation("com.fasterxml.jackson.core:jackson-core:2.18.3")
-    testImplementation("com.fasterxml.jackson.core:jackson-databind:2.18.3")
-    testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.3")
+    testImplementation("com.fasterxml.jackson.core:jackson-core:2.19.0")
+    testImplementation("com.fasterxml.jackson.core:jackson-databind:2.19.0")
+    testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.19.0")
 }
 
 subprojects {
@@ -27,11 +28,12 @@ subprojects {
         implementation(project(":cmd"))
         implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.19.0")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.19.0")
+        implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.19.0")
 
         testImplementation(project(":core-test"))
-        testImplementation("com.fasterxml.jackson.core:jackson-core:2.18.3")
-        testImplementation("com.fasterxml.jackson.core:jackson-databind:2.18.3")
-        testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.3")
+        testImplementation("com.fasterxml.jackson.core:jackson-core:2.19.0")
+        testImplementation("com.fasterxml.jackson.core:jackson-databind:2.19.0")
+        testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.19.0")
     }
 
     tasks.jar {

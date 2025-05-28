@@ -9,7 +9,6 @@ version = "0.0.1-SNAPSHOT"
 
 dependencies {
     implementation(project(":common"))
-    implementation(project(":core"))
     implementation(project(":cmd"))
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.19.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.19.0")
@@ -24,8 +23,6 @@ dependencies {
 subprojects {
     dependencies {
         implementation(project(":common"))
-        implementation(project(":core"))
-        implementation(project(":cmd"))
         implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.19.0")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.19.0")
         implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.19.0")
@@ -38,15 +35,12 @@ subprojects {
 
     tasks.jar {
         from(project(":common").sourceSets.main.get().output)
-        from(project(":core").sourceSets.main.get().output)
-        from(project(":cmd").sourceSets.main.get().output)
     }
 }
 
 tasks.jar {
     archiveBaseName.set("picard-star-charts")
     from(project(":common").sourceSets.main.get().output)
-    from(project(":core").sourceSets.main.get().output)
     from(project(":cmd").sourceSets.main.get().output)
 }
 

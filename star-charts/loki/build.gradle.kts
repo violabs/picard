@@ -25,9 +25,7 @@ kotlin
 
 tasks.jar {
     archiveBaseName.set("loki")
-    from(
-        project(":star-charts").sourceSets.main.get().output
-    )
+    from(project(":star-charts").sourceSets.main.get().output)
 }
 
 publishing {

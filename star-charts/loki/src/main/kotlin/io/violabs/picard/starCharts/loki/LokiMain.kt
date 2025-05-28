@@ -23,12 +23,15 @@ fun main(vararg args: String) {
     logger.info("Running Loki DSL...")
 
     lokiRunner.addResource {
-        schemaConfig {
-            configs {
-                periodConfig {
-                    from = LocalDate.now()
+        config {
+            schemaConfig {
+                configs {
+                    periodConfig {
+                        from = LocalDate.now()
+                    }
                 }
             }
+
         }
 
         deploymentMode = DeploymentMode.SimpleScalable

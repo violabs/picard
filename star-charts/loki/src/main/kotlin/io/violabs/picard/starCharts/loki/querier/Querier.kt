@@ -1,7 +1,7 @@
 package io.violabs.picard.starCharts.loki.querier
 
-import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
+import io.violabs.picard.starCharts.loki.Quantity
 
 @GeneratedDsl
 data class Querier(

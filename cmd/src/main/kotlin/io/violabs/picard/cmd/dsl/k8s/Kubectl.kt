@@ -18,6 +18,7 @@ fun kubectl(scope: Kubectl.() -> Unit) {
 
 class Kubectl : CommandLineProcessor<KubeTask>(KubeTask::class) {
     fun applyPod(scope: ApplyPodKubeTask.() -> Unit) = processTask(ApplyPodKubeTask(), scope)
+    fun applyBasicIngress(scope: (ApplyBasicIngressKubeTask.() -> Unit) = {}) = processTask(ApplyBasicIngressKubeTask(), scope)
     fun describePod(scope: DescribePodKubeTask.() -> Unit) = processTask(DescribePodKubeTask(), scope)
     fun deletePod(scope: DeletePodKubeTask.() -> Unit) = processTask(DeletePodKubeTask(), scope)
     fun deleteDeployment(scope: DeleteDeploymentKubeTask.() -> Unit) = processTask(DeleteDeploymentKubeTask(), scope)

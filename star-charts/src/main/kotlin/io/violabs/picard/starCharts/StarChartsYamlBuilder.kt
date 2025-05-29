@@ -9,6 +9,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 
 class StarChartsYamlBuilder(
+    timeModuleBuilder: JavaTimeModule.() -> Unit = {},
     yamlFactoryBuilder: YAMLFactory.() -> Unit = {},
     objectMapperBuilder: ObjectMapper.() -> Unit = {}
 ) {
@@ -30,13 +31,13 @@ class StarChartsYamlBuilder(
     private val singleOm = ObjectMapper(yamlFactory)
         .apply(objectMapperBuilder)
         .registerKotlinModule()
-        .registerModule(JavaTimeModule())
+        .registerModule(JavaTimeModule().apply(timeModuleBuilder))
         .setSerializationInclusion(JsonInclude.Include.NON_NULL)
 
     private val listOm = ObjectMapper(listYamlFactory)
         .apply(objectMapperBuilder)
         .registerKotlinModule()
-        .registerModule(JavaTimeModule())
+        .registerModule(JavaTimeModule().apply(timeModuleBuilder))
         .setSerializationInclusion(JsonInclude.Include.NON_NULL)
 
     fun singleBuild(o: Any): String = singleOm.writeValueAsString(o)

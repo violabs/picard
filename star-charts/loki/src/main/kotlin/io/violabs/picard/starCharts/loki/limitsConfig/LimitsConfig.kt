@@ -1,10 +1,12 @@
 package io.violabs.picard.starCharts.loki.limitsConfig
 
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.Duration
 import io.violabs.picard.starCharts.loki.Header
 import io.violabs.picard.starCharts.loki.distributor.OTLPConfig
 import java.time.LocalDateTime
 
+@GeneratedDsl
 class LimitsConfig(
     /**
      * # Whether the ingestion rate limit should be applied individually to each

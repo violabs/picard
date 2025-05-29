@@ -1,4 +1,4 @@
-package io.violabs.picard.starCharts.grafana
+package io.violabs.picard.starCharts
 
 import io.violabs.picard.cmd.dsl.helm.Helm
 

@@ -1,8 +1,10 @@
 package io.violabs.picard.starCharts.loki.ingester
 
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.starCharts.loki.BackoffConfig
 import io.violabs.picard.starCharts.loki.Duration
 
+@GeneratedDsl
 class Ingester(
     /**
      * # Configures how the lifecycle of the ingester will operate and where it will

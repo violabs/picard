@@ -1,17 +1,24 @@
 package io.violabs.picard.starCharts.loki
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies
+import com.fasterxml.jackson.databind.annotation.JsonNaming
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
-import io.violabs.picard.starCharts.loki.gatewayConfig.GatewayConfig
+import io.violabs.picard.starCharts.loki.ingester.Ingester
+import io.violabs.picard.starCharts.loki.limitsConfig.LimitsConfig
+import io.violabs.picard.starCharts.loki.querier.Querier
+import io.violabs.picard.starCharts.loki.ruler.Ruler
 
-@GeneratedDsl(
-    isRoot = true
-)
+@GeneratedDsl
+@JsonNaming(PropertyNamingStrategies.LowerCamelCaseStrategy::class)
 class LokiConfig(
-    val schemaConfig: SchemaConfig,
-    val deploymentMode: DeploymentMode,
-    val backend: DeployConfig,
-    val read: DeployConfig,
-    val write: DeployConfig,
-    val minio: MinIOConfig,
-    val gateway: GatewayConfig
+    val commonConfig: CommonConfig? = null,
+    val schemaConfig: SchemaConfig? = null,
+    // this is for scalable deployment
+    val ingester: Ingester? = null,
+    // this is for scalable deployment
+    val querier: Querier? = null,
+    val patternIngester: PatternIngester? = null,
+    val limitsConfig: LimitsConfig? = null,
+    // this is for monolith
+    val ruler: Ruler? = null,
 )

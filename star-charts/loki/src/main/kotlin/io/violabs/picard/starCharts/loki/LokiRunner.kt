@@ -5,15 +5,15 @@ import io.violabs.picard.starCharts.loki.utils.LokiDsl
 
 @LokiDsl
 class LokiRunner(private val yamlBuilder: StarChartsYamlBuilder) {
-    private val resources: MutableList<Loki> = mutableListOf()
+    private val resources: MutableList<LokiDeployment> = mutableListOf()
     var fileLocation: String? = null
 
-    fun addResource(resource: Loki) {
+    fun addResource(resource: LokiDeployment) {
         resources.add(resource)
     }
 
-    fun addResource(block: LokiDslBuilder.() -> Unit) {
-        val builder = LokiDslBuilder()
+    fun addResource(block: LokiDeploymentDslBuilder.() -> Unit) {
+        val builder = LokiDeploymentDslBuilder()
         builder.block()
         resources.add(builder.build())
     }

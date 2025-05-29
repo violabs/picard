@@ -1,0 +1,8 @@
+package io.violabs.picard.starCharts.loki
+
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
+
+@GeneratedDsl
+data class CommonConfig(
+    val replicationFactor: Int? = null
+)

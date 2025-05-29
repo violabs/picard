@@ -1,6 +1,9 @@
 package io.violabs.picard.plugins.pipeline.tasks
 
 import org.gradle.api.DefaultTask
+import org.gradle.api.provider.Property
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import org.gradle.process.ExecOperations
 import java.io.ByteArrayOutputStream
@@ -9,6 +12,9 @@ import javax.inject.Inject
 open class DetectChangeModulesTask @Inject constructor(
     private val execOperations: ExecOperations
 ) : DefaultTask() {
+
+    @Input
+    open var skipModules: List<String> = emptyList()
 
     @TaskAction
     fun detectChangeModules() {
@@ -63,11 +69,13 @@ open class DetectChangeModulesTask @Inject constructor(
     }
 
     private fun Set<String>.filterHasChangedFiles(changedFiles: List<String>): Set<String> {
-        return changedFiles.mapNotNull { file ->
-            this.find { module ->
-                file.startsWith("$module/") || file.startsWith("$module\\")
-            } ?: "src".takeIf { file.startsWith(it) }
-        }.toSet()
+        return changedFiles
+            .mapNotNull { file ->
+                this.find { module -> file.startsWith("$module/") || file.startsWith("$module\\") }
+                    ?: "src".takeIf { file.startsWith(it) }
+            }
+            .filter { it !in skipModules }
+            .toSet()
     }
 
     private fun Set<String>.toNamespaceJson(): String {

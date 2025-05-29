@@ -33,7 +33,6 @@ abstract class DetectModuleContainsDependenciesTask : DefaultTask() {
     @get:Optional
     abstract val artifactId: Property<String>
 
-
     @TaskAction
     fun detectDependencies() {
         println("Detecting changed modules...")

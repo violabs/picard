@@ -18,6 +18,8 @@ class PipelinePlugin : Plugin<Project> {
 
         target.tasks.register<DetectChangeModulesTask>("detectChangedModules") {
             group = "pipeline"
+
+            skipModules = extension.skipModules
         }
 
         target.tasks.register<DetectModuleContainsDependenciesTask>("detectModuleContainsDependencies") {

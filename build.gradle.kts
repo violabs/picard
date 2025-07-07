@@ -6,6 +6,8 @@ plugins {
     id("org.jetbrains.kotlinx.kover") version "0.9.1"
     application
     id("io.violabs.plugins.pipeline")
+    id("io.violabs.plugins.open.publishing.maven-generated-artifacts") version "0.0.13" apply false
+    id("io.violabs.plugins.open.publishing.digital-ocean-spaces") version "0.0.8" apply false
 }
 
 group = "io.violabs"
@@ -36,7 +38,8 @@ allprojects {
 
         implementation("io.github.microutils:kotlin-logging:4.0.0-beta-2")
 
-        testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+        testImplementation(kotlin("test")) // Kotlin’s own assert functions, optional but handy
+        testImplementation("org.junit.jupiter:junit-jupiter-api:6.0.0-M1")
         testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     }
 
@@ -56,6 +59,9 @@ fun Project.sharedRepositories() {
         mavenLocal()
         mavenCentral()
         maven { url = uri("https://www.jetbrains.com/intellij-repository/releases") }
+        maven {
+            url = uri("https://open-reliquary.nyc3.digitaloceanspaces.com")
+        }
     }
 }
 

@@ -9,8 +9,8 @@ version = "0.0.1-SNAPSHOT"
 dependencies {
     implementation(project(":star-charts"))
     implementation("io.violabs.picard:command:0.0.1")
-    implementation("io.violabs.konstellation:meta-dsl:0.0.2")
     ksp("io.violabs.konstellation:dsl:0.0.1")
+    implementation("io.violabs.konstellation:meta-dsl:0.0.1")
 }
 
 application {

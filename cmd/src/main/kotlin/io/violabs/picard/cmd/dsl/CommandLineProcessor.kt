@@ -7,11 +7,11 @@ import kotlin.reflect.KClass
 abstract class CommandLineProcessor<T : CommandLineTask>(val type: KClass<T>) {
     protected val logger = Logger(Logging.CMD)
 
-    protected fun processTask(taskSupplier: () -> T) = processTask(taskSupplier())
+    fun processTask(taskSupplier: () -> T) = processTask(taskSupplier())
 
-    protected fun <S : T> processTask(task: S, block: S.() -> Unit = {}) = processTask(task.apply(block))
+    fun <S : T> processTask(task: S, block: S.() -> Unit = {}) = processTask(task.apply(block))
 
-    protected fun processTask(task: T) {
+    fun processTask(task: T) {
         if (!task.enabled) {
             logger.info("${type.simpleName} is disabled, skipping execution. command: ${task.cmd().joinToString(" ")}")
             return

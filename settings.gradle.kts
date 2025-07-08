@@ -3,6 +3,9 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
+        maven {
+            url = uri("https://open-reliquary.nyc3.digitaloceanspaces.com")
+        }
     }
 }
 

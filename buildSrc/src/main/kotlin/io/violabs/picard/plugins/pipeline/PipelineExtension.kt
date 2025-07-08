@@ -2,6 +2,7 @@ package io.violabs.picard.plugins.pipeline
 
 open class PipelineExtension {
     var hasSrc: Boolean = false
+    var skipModules: List<String> = emptyList()
     private var dependencyLookUp: DependencyLookUp? = null
 
     fun dependencyLookUps(): DependencyLookUp? {

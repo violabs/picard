@@ -1,7 +1,6 @@
 package io.violabs.picard.starCharts.loki
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
-import io.violabs.picard.starCharts.loki.Duration
 
 @GeneratedDsl
 data class Consul(

@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.authorization.clusterRole
 
-import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDslBuilder
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
@@ -18,7 +18,7 @@ data class ClusterRole(
 ) : AuthorizationResource<ClusterRole.Version>, K8sRole {
     interface Version : APIVersion
 
-    class Builder : ResourceDSLBuilder<ClusterRole>() {
+    class Builder : ResourceDslBuilder<ClusterRole>() {
         private var aggregationRule: AggregationRule? = null
         private var rules: List<PolicyRule>? = null
 

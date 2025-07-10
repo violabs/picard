@@ -1,14 +1,14 @@
 package io.violabs.picard.domain.k8sResources.workload.resourceSlice
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class ResourcePool(
     val generation: Long,
     val name: String,
     val resourceSliceCount: Long
 ) {
-    class Builder : DSLBuilder<ResourcePool> {
+    class Builder : DslBuilder<ResourcePool> {
         var generation: Long? = null
         var name: String? = null
         var resourceSliceCount: Long? = null

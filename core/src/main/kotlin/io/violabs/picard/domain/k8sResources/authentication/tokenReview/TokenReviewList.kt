@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.authentication.tokenReview
 
-import io.violabs.picard.common.ResourceListDSLBuilder
+import io.violabs.picard.common.ResourceListDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -14,7 +14,7 @@ data class TokenReviewList(
 ) : AuthenticationListResource<TokenReviewList.Version, TokenReview> {
     interface Version : APIVersion
 
-    class Builder : ResourceListDSLBuilder<
+    class Builder : ResourceListDslBuilder<
         TokenReview,
         TokenReview.Builder,
         TokenReview.Group,

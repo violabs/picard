@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.storage.persistentVolume
 
 import io.violabs.picard.domain.BaseNodeAffinity
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelector
 
 data class VolumeNodeAffinity(
     val required: NodeSelector? = null,
 ) : BaseNodeAffinity {
-    class Builder : DSLBuilder<VolumeNodeAffinity> {
+    class Builder : DslBuilder<VolumeNodeAffinity> {
         private var required: NodeSelector? = null
 
         fun required(block: NodeSelector.Builder.() -> Unit) {

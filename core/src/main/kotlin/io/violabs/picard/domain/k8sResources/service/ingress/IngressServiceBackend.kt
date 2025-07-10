@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.service.ingress
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class IngressServiceBackend(
     val name: String,
     val port: IngressServiceBackendPort? = null
 ) {
-    class Builder : DSLBuilder<IngressServiceBackend> {
+    class Builder : DslBuilder<IngressServiceBackend> {
         var name: String? = null
         private var port: IngressServiceBackendPort? = null
 

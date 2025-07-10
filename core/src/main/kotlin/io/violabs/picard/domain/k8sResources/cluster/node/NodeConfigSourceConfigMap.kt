@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.cluster.node
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class NodeConfigSourceConfigMap(
     val kubeletConfigKey: String,
@@ -10,7 +10,7 @@ data class NodeConfigSourceConfigMap(
     val resourceVersion: String? = null,
     val uid: String? = null
 ) {
-    class Builder : DSLBuilder<NodeConfigSourceConfigMap> {
+    class Builder : DslBuilder<NodeConfigSourceConfigMap> {
         var kubeletConfigKey: String? = null
         var name: String? = null
         var namespace: String? = null

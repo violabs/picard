@@ -1,13 +1,13 @@
 package io.violabs.picard
 
 import io.violabs.geordi.UnitSim
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
-fun <B : DSLBuilder<T>, T> dslBuild(builder: B, block: B.() -> Unit): T {
+fun <B : DslBuilder<T>, T> dslBuild(builder: B, block: B.() -> Unit): T {
     return builder.apply(block).build()
 }
 
-fun <T> UnitSim.verifyRequiredField(fieldName: String, builder: DSLBuilder<T>) = test<Unit> {
+fun <T> UnitSim.verifyRequiredField(fieldName: String, builder: DslBuilder<T>) = test<Unit> {
     given {
         wheneverThrows<IllegalArgumentException>(
             "$fieldName must not be null"
@@ -15,7 +15,7 @@ fun <T> UnitSim.verifyRequiredField(fieldName: String, builder: DSLBuilder<T>) =
     }
 }
 
-fun <T> UnitSim.verifyRequiredField(builder: DSLBuilder<T>, exceptionMessage: ExceptionMessage) = test<Unit> {
+fun <T> UnitSim.verifyRequiredField(builder: DslBuilder<T>, exceptionMessage: ExceptionMessage) = test<Unit> {
     given {
         wheneverThrows<IllegalArgumentException>(
             exceptionMessage.content
@@ -25,7 +25,7 @@ fun <T> UnitSim.verifyRequiredField(builder: DSLBuilder<T>, exceptionMessage: Ex
     }
 }
 
-fun <B : DSLBuilder<T>, T> UnitSim.verifyHappyPath(
+fun <B : DslBuilder<T>, T> UnitSim.verifyHappyPath(
     builder: B,
     expected: T,
     scope: B.() -> Unit = {}

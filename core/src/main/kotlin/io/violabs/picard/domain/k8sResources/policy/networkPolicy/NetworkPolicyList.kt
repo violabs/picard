@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.policy.networkPolicy
 
-import io.violabs.picard.common.ResourceListDSLBuilder
+import io.violabs.picard.common.ResourceListDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -14,7 +14,7 @@ data class NetworkPolicyList(
 ) : PolicyListResource<NetworkPolicyList.Version, NetworkPolicy> {
     interface Version : APIVersion
 
-    class Builder : ResourceListDSLBuilder<
+    class Builder : ResourceListDslBuilder<
         NetworkPolicy,
         NetworkPolicy.Builder,
         NetworkPolicy.Group,

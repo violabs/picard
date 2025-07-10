@@ -3,7 +3,7 @@ package io.violabs.picard.domain.k8sResources.authorization
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSubject
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class K8sSubject(
     val kind: String,
@@ -11,7 +11,7 @@ data class K8sSubject(
     val apiGroup: String? = null,
     val namespace: String? = null
 ) : BaseSubject {
-    class Builder : DSLBuilder<K8sSubject> {
+    class Builder : DslBuilder<K8sSubject> {
         var kind: String? = null
         var name: String? = null
         var apiGroup: String? = null

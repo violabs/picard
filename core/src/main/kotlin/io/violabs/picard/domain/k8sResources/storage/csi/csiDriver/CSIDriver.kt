@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.storage.csi.csiDriver
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
@@ -28,7 +28,7 @@ data class CSIDriver(
         val tokenRequests: List<CSIDriverTokenRequest>,
         val volumeLifecycleModes: List<String>
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var attachRequired: Boolean? = null
             private var podInfoOnMount: Boolean? = null
             private var requiresRepublish: Boolean? = null
@@ -77,7 +77,7 @@ data class CSIDriver(
         }
     }
 
-    class Builder : ResourceSpecDSLBuilder<CSIDriver, Spec, Spec.Builder>(Spec.Builder()) {
+    class Builder : ResourceSpecDslBuilder<CSIDriver, Spec, Spec.Builder>(Spec.Builder()) {
         override fun build(): CSIDriver {
             return CSIDriver(
                 metadata = metadata,

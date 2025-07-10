@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.storage.volumeAttributesClass
 
-import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDslBuilder
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
@@ -15,7 +15,7 @@ data class VolumeAttributesClass(
 ) : StorageResource<VolumeAttributesClass.Version> {
     interface Version : APIVersion
 
-    class Builder : ResourceDSLBuilder<VolumeAttributesClass>() {
+    class Builder : ResourceDslBuilder<VolumeAttributesClass>() {
         var driverName: String? = null
         private var parameters: Map<String, String>? = null
 

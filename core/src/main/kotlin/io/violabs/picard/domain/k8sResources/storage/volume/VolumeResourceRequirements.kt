@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.storage.volume
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.Quantity
 
 data class VolumeResourceRequirements(
     val limits: Map<String, Quantity>? = null,
     val requests: Map<String, Quantity>? = null
 ) {
-    class Builder : DSLBuilder<VolumeResourceRequirements> {
+    class Builder : DslBuilder<VolumeResourceRequirements> {
         private var limits: Map<String, Quantity>? = null
         private var requests: Map<String, Quantity>? = null
 

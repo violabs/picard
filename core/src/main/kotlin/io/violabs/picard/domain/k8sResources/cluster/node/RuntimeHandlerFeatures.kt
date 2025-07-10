@@ -1,12 +1,12 @@
 package io.violabs.picard.domain.k8sResources.cluster.node
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class RuntimeHandlerFeatures(
     val recursiveReadOnlyMounts: Boolean? = null,
     val userNamespaces: Boolean? = null
 ) {
-    class Builder : DSLBuilder<RuntimeHandlerFeatures> {
+    class Builder : DslBuilder<RuntimeHandlerFeatures> {
         private var recursiveReadOnlyMounts: Boolean? = null
         private var userNamespaces: Boolean? = null
 

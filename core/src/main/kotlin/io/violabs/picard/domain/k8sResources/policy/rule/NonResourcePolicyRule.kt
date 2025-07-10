@@ -2,13 +2,13 @@ package io.violabs.picard.domain.k8sResources.policy.rule
 
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class NonResourcePolicyRule(
     val nonResourceURLs: List<String>,
     val verbs: List<String>
 ) {
-    class Builder : DSLBuilder<NonResourcePolicyRule> {
+    class Builder : DslBuilder<NonResourcePolicyRule> {
         private var nonResourceURLs: List<String>? = null
         private var verbs: List<String>? = null
 

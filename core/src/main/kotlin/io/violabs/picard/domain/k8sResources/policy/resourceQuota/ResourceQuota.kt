@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.policy.resourceQuota
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
 import io.violabs.picard.domain.ObjectMetadata
@@ -25,7 +25,7 @@ data class ResourceQuota(
         val scopeSelector: ScopeSelector? = null,
         val scopes: List<String>? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var hard: Map<String, Quantity>? = null
             private var scopeSelector: ScopeSelector? = null
             private var scopes: List<String>? = null
@@ -56,7 +56,7 @@ data class ResourceQuota(
         val hard: Map<String, Quantity>? = null,
         val used: Map<String, Quantity>? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             private var hard: Map<String, Quantity>? = null
             private var used: Map<String, Quantity>? = null
 
@@ -77,7 +77,7 @@ data class ResourceQuota(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         ResourceQuota,
         Spec,
         Spec.Builder,

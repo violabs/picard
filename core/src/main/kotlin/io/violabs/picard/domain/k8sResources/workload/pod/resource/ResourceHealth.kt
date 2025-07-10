@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.workload.pod.resource
 
 import io.violabs.picard.common.BuilderGroup
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class ResourceHealth(
     val resourceID: String,
@@ -14,7 +14,7 @@ data class ResourceHealth(
         Unknown
     }
 
-    class Builder : DSLBuilder<ResourceHealth> {
+    class Builder : DslBuilder<ResourceHealth> {
         var resourceID: String? = null
         var health: Type? = null
 

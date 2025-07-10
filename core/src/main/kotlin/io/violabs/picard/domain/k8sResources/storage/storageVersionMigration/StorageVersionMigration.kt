@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.storage.storageVersionMigration
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
@@ -25,7 +25,7 @@ data class StorageVersionMigration(
         val resource: GroupVersionResource? = null,
         val continueToken: String? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var resource: GroupVersionResource? = null
             var continueToken: String? = null
 
@@ -46,7 +46,7 @@ data class StorageVersionMigration(
         val conditions: List<Condition>,
         val resourceVersion: String? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             private var conditions: List<Condition>? = null
             var resourceVersion: String? = null
 
@@ -63,7 +63,7 @@ data class StorageVersionMigration(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         StorageVersionMigration,
         Spec,
         Spec.Builder,

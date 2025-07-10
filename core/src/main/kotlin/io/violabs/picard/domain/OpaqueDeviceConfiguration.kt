@@ -1,13 +1,13 @@
 package io.violabs.picard.domain
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.common.vRequireNotNull
 
 data class OpaqueDeviceConfiguration(
     val driver: String,
     val parameters: Any
 ) {
-    class Builder : DSLBuilder<OpaqueDeviceConfiguration> {
+    class Builder : DslBuilder<OpaqueDeviceConfiguration> {
         var driver: String? = null
         var parameters: Any? = null
 

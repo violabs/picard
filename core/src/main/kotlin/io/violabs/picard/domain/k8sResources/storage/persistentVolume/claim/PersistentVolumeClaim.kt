@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.storage.persistentVolume.claim
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.domain.AccessMode
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
@@ -37,7 +37,7 @@ data class PersistentVolumeClaim(
         val volumeName: String? = null,
         val volumeMode: String? = null,
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var accessModes: List<AccessMode>? = null
             private var selector: LabelSelector? = null
             private var resources: VolumeResourceRequirements? = null
@@ -80,7 +80,7 @@ data class PersistentVolumeClaim(
         val modifyVolumeStatus: ModifyVolumeStatus? = null,
         val phase: String? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             private var accessModes: List<AccessMode>? = null
             private var allocatedResourceStatuses: Map<String, String>? = null
             private var allocatedResources: Map<String, Quantity>? = null
@@ -129,7 +129,7 @@ data class PersistentVolumeClaim(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         PersistentVolumeClaim,
         Spec,
         Spec.Builder,

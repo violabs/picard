@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.policy.networkPolicy
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.ObjectMetadata
@@ -23,7 +23,7 @@ data class NetworkPolicy(
         val policyTypes: List<String>? = null,
         val ingress: List<NetworkPolicyIngressRule>? = null,
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var podSelector: LabelSelector? = null
             private var policyTypes: List<String>? = null
             private var ingress: List<NetworkPolicyIngressRule>? = null
@@ -50,7 +50,7 @@ data class NetworkPolicy(
         }
     }
 
-    class Builder : ResourceSpecDSLBuilder<NetworkPolicy, Spec, Spec.Builder>(Spec.Builder()) {
+    class Builder : ResourceSpecDslBuilder<NetworkPolicy, Spec, Spec.Builder>(Spec.Builder()) {
         override fun build(): NetworkPolicy {
             return NetworkPolicy(
                 metadata = metadata,

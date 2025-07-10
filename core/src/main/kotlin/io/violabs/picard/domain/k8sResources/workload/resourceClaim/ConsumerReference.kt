@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.workload.resourceClaim
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class ConsumerReference(
     val name: String,
@@ -10,7 +10,7 @@ data class ConsumerReference(
     val uid: String,
     val apiGroup: String? = null
 ) {
-    class Builder : DSLBuilder<ConsumerReference> {
+    class Builder : DslBuilder<ConsumerReference> {
         var name: String? = null
         var resource: String? = null
         var uid: String? = null

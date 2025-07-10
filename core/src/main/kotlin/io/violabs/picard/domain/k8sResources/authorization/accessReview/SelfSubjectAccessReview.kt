@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.authorization.accessReview
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.ObjectMetadata
@@ -23,7 +23,7 @@ data class SelfSubjectAccessReview(
         val nonResourceAttributes: NonResourceAttributes? = null,
         val resourceAttributes: ResourceAttributes? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var nonResourceAttributes: NonResourceAttributes? = null
             private var resourceAttributes: ResourceAttributes? = null
 
@@ -41,7 +41,7 @@ data class SelfSubjectAccessReview(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         SelfSubjectAccessReview,
         Spec,
         Spec.Builder,

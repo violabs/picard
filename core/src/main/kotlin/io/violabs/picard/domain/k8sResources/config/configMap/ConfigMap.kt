@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.config.configMap
 
-import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDslBuilder
 import io.violabs.picard.domain.BinaryData
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.TextData
@@ -22,7 +22,7 @@ data class ConfigMap(
 ) : ConfigResource<ConfigMap.Version> {
     interface Version : APIVersion
 
-    class Builder : ResourceDSLBuilder<ConfigMap>() {
+    class Builder : ResourceDslBuilder<ConfigMap>() {
         private var binaryData: BinaryData? = null
         private var data: TextData? = null
         private var immutable: Boolean? = null

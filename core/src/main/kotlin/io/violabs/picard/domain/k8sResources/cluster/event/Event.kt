@@ -3,7 +3,7 @@ package io.violabs.picard.domain.k8sResources.cluster.event
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.ObjectReference
-import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDslBuilder
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
@@ -36,7 +36,7 @@ data class Event(
         Warning;
     }
 
-    class Builder : ResourceDSLBuilder<Event>() {
+    class Builder : ResourceDslBuilder<Event>() {
         var eventTime: Instant? = null
         var action: String? = null
         var deprecatedCount: Int? = null

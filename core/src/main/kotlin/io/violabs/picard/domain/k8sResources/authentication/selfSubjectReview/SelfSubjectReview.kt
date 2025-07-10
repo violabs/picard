@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.authentication.selfSubjectReview
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceStatusDslBuilder
 import io.violabs.picard.domain.BaseStatus
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -19,7 +19,7 @@ data class SelfSubjectReview(
     data class Status(
         val userInfo: UserInfo? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             private var userInfo: UserInfo? = null
 
             fun userInfo(scope: UserInfo.Builder.() -> Unit) {
@@ -34,7 +34,7 @@ data class SelfSubjectReview(
         }
     }
 
-    class Builder : ResourceStatusDSLBuilder<SelfSubjectReview, Status, Status.Builder>(Status.Builder()) {
+    class Builder : ResourceStatusDslBuilder<SelfSubjectReview, Status, Status.Builder>(Status.Builder()) {
         override fun build(): SelfSubjectReview {
             return SelfSubjectReview(
                 status = status,

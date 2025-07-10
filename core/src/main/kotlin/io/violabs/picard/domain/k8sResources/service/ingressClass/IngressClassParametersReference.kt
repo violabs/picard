@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.service.ingressClass
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class IngressClassParametersReference(
     val kind: String,
@@ -10,7 +10,7 @@ data class IngressClassParametersReference(
     val namespace: String? = null,
     val scope: String? = null
 ) {
-    class Builder : DSLBuilder<IngressClassParametersReference> {
+    class Builder : DslBuilder<IngressClassParametersReference> {
         var kind: String? = null
         var name: String? = null
         var apiGroup: String? = null

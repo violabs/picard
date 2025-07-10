@@ -7,11 +7,15 @@ plugins {
     application
     id("io.violabs.plugins.pipeline")
     id("io.violabs.plugins.open.publishing.maven-generated-artifacts") version "0.0.13" apply false
-    id("io.violabs.plugins.open.publishing.digital-ocean-spaces") version "0.0.8" apply false
+    id("io.violabs.plugins.open.publishing.digital-ocean-spaces") version "0.0.9" apply false
+    id("io.violabs.plugins.open.secrets.gradle-loader") version "0.0.3"
 }
 
 group = "io.violabs"
 version = "0.0.1"
+
+extra["coreVersion"] = "0.1.3"
+extra["cmdVersion"] = "0.0.1"
 
 java {
     toolchain {

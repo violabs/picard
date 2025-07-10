@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.authentication.clusterTrustBundle
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.ObjectMetadata
@@ -21,7 +21,7 @@ data class ClusterTrustBundle(
         val trustBundle: String,
         val signerName: String? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             var trustBundle: String? = null
             var signerName: String? = null
 
@@ -34,7 +34,7 @@ data class ClusterTrustBundle(
         }
     }
 
-    class Builder : ResourceSpecDSLBuilder<ClusterTrustBundle, Spec, Spec.Builder>(Spec.Builder()) {
+    class Builder : ResourceSpecDslBuilder<ClusterTrustBundle, Spec, Spec.Builder>(Spec.Builder()) {
         override fun build(): ClusterTrustBundle {
             return ClusterTrustBundle(
                 spec = vRequireNotNull(this::spec),

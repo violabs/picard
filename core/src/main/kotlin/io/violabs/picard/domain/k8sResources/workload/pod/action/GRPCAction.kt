@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.action
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class GRPCAction(
     val port: Int,
     val service: String? = null
 ) {
-    class Builder : DSLBuilder<GRPCAction> {
+    class Builder : DslBuilder<GRPCAction> {
         var port: Int? = null
         var service: String? = null
 

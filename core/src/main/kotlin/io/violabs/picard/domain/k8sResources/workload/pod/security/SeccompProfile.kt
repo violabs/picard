@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.security
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class SeccompProfile(
     val type: SecurityProfileType,
     val localhostProfile: String? = null,
 ) {
-    class Builder : DSLBuilder<SeccompProfile> {
+    class Builder : DslBuilder<SeccompProfile> {
         var type: SecurityProfileType? = null
         var localhostProfile: String? = null
 

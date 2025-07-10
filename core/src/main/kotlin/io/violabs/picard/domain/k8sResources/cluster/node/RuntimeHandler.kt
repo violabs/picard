@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.cluster.node
 
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class RuntimeHandler(
     val features: RuntimeHandlerFeatures? = null,
     val name: String? = null
 ) {
-    class Builder : DSLBuilder<RuntimeHandler> {
+    class Builder : DslBuilder<RuntimeHandler> {
         private var features: RuntimeHandlerFeatures? = null
         var name: String? = null
 

@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.metric
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.Quantity
 
 data class MetricTarget(
@@ -16,7 +16,7 @@ data class MetricTarget(
         AverageValue
     }
 
-    class Builder : DSLBuilder<MetricTarget> {
+    class Builder : DslBuilder<MetricTarget> {
         var type: Type? = null
         var averageUtilization: Int? = null
         private var averageValue: Quantity? = null

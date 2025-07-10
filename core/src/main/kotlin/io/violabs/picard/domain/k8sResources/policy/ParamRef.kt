@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.policy
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.label.LabelSelector
 
 data class ParamRef(
@@ -11,7 +11,7 @@ data class ParamRef(
     val policyName: String? = null,
     val validationActions: List<String>? = null,
 ) {
-    class Builder : DSLBuilder<ParamRef> {
+    class Builder : DslBuilder<ParamRef> {
         var name: String? = null
         var namespace: String? = null
         var parameterNotFoundAction: String? = null

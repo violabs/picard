@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.extend.deviceClass
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.DeviceSelector
@@ -24,7 +24,7 @@ data class DeviceClass(
         val selectors: List<DeviceSelector>? = null,
         val suitableNodes: NodeSelector? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var config: List<DeviceClassConfiguration>? = null
             private var selectors: List<DeviceSelector>? = null
             private var suitableNodes: NodeSelector? = null
@@ -51,7 +51,7 @@ data class DeviceClass(
         }
     }
 
-    class Builder : ResourceSpecDSLBuilder<DeviceClass, Spec, Spec.Builder>(Spec.Builder()) {
+    class Builder : ResourceSpecDslBuilder<DeviceClass, Spec, Spec.Builder>(Spec.Builder()) {
         override fun build(): DeviceClass {
             return DeviceClass(
                 metadata = metadata,

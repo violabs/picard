@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.cluster.componentStatus
 
-import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDslBuilder
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.condition.ComponentCondition
 import io.violabs.picard.domain.condition.ComponentConditionGroup
@@ -17,7 +17,7 @@ data class ComponentStatus(
 
     interface Version : APIVersion
 
-    class Builder : ResourceDSLBuilder<ComponentStatus>() {
+    class Builder : ResourceDslBuilder<ComponentStatus>() {
         private var conditions: List<ComponentCondition>? = null
 
         fun conditions(scope: ComponentConditionGroup.() -> Unit) {

@@ -1,14 +1,14 @@
 package io.violabs.picard.domain.k8sResources.workload.metric
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class PodsMetricStatus(
     val current: MetricValueStatus,
     val metric: MetricIdentifier,
     val resource: ContainerResourceMetricStatus
 ) {
-    class Builder : DSLBuilder<PodsMetricStatus> {
+    class Builder : DslBuilder<PodsMetricStatus> {
         private var current: MetricValueStatus? = null
         private var metric: MetricIdentifier? = null
         private var resource: ContainerResourceMetricStatus? = null

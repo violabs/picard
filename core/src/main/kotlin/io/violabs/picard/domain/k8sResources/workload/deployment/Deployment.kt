@@ -1,8 +1,8 @@
 package io.violabs.picard.domain.k8sResources.workload.deployment
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
@@ -36,7 +36,7 @@ data class Deployment(
         val progressDeadlineSeconds: Int? = null,
         val paused: Boolean? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var selector: LabelSelector? = null
             private var template: PodTemplate.Spec? = null
             var replicas: Int? = null
@@ -87,7 +87,7 @@ data class Deployment(
         val conditions: List<Condition>? = null,
         val observedGeneration: Long? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             var replicas: Int? = null
             var availableReplicas: Int? = null
             var readyReplicas: Int? = null
@@ -116,7 +116,7 @@ data class Deployment(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         Deployment,
         Spec,
         Spec.Builder,

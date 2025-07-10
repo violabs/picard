@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.workload.job
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class PodFailurePolicyRule(
     val action: Action,
@@ -17,7 +17,7 @@ data class PodFailurePolicyRule(
         Ignore
     }
 
-    class Builder : DSLBuilder<PodFailurePolicyRule> {
+    class Builder : DslBuilder<PodFailurePolicyRule> {
         var action: Action? = null
         private var onExitCodes: OnExitCodesRequirement? = null
         private var onPodConditions: List<OnPodConditionsPattern>? = null

@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.config.secret
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
-import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDslBuilder
 import io.violabs.picard.domain.BinaryData
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.TextData
@@ -38,7 +38,7 @@ data class Secret(
         override fun toString(): String = ref
     }
 
-    class Builder : ResourceDSLBuilder<Secret>() {
+    class Builder : ResourceDslBuilder<Secret>() {
         private var data: BinaryData? = null
         private var stringData: TextData? = null
         private var immutable: Boolean? = null

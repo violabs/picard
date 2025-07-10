@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.policy.rule
 
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class ResourcePolicyRule(
     val apiGroups: List<String>,
@@ -11,7 +11,7 @@ data class ResourcePolicyRule(
     val clusterScope: Boolean? = null,
     val namespaces: List<String>? = null
 ) {
-    class Builder : DSLBuilder<ResourcePolicyRule> {
+    class Builder : DslBuilder<ResourcePolicyRule> {
         private var apiGroups: List<String>? = null
         private var resources: List<String>? = null
         private var verbs: List<String>? = null

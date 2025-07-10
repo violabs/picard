@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.manifest
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sAPIResource
@@ -30,7 +30,7 @@ data class PolicyResourceSection(
     override val resources: List<K8sAPIResource<*>>
 ) : ManifestResource {
 
-    class Builder : DSLBuilder<PolicyResourceSection> {
+    class Builder : DslBuilder<PolicyResourceSection> {
         private val resources: MutableList<PolicyResource<*>> = mutableListOf()
         private val lists: MutableList<PolicyListResource<*, *>> = mutableListOf()
 

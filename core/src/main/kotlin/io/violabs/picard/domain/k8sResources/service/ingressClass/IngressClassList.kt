@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.service.ingressClass
 
-import io.violabs.picard.common.ResourceListDSLBuilder
+import io.violabs.picard.common.ResourceListDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -14,7 +14,7 @@ data class IngressClassList(
 ) : ServiceListResource<IngressClassList.Version, IngressClass> {
     interface Version : APIVersion
 
-    class Builder : ResourceListDSLBuilder<
+    class Builder : ResourceListDslBuilder<
         IngressClass,
         IngressClass.Builder,
         IngressClass.Group,

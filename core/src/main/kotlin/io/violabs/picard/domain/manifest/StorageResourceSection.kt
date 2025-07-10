@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.manifest
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sAPIResource
@@ -35,7 +35,7 @@ data class StorageResourceSection(
     class Builder(
         private val resources: MutableList<StorageResource<*>> = mutableListOf(),
         private val lists: MutableList<StorageListResource<*, *>> = mutableListOf()
-    ) : DSLBuilder<StorageResourceSection> {
+    ) : DslBuilder<StorageResourceSection> {
         fun csiDriver(block: CSIDriver.Builder.() -> Unit) {
             resources += CSIDriver.Builder().apply(block).build()
         }

@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.cluster.apiService
 
-import io.violabs.picard.common.ResourceListDSLBuilder
+import io.violabs.picard.common.ResourceListDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -14,7 +14,7 @@ data class APIServiceList(
 ) : ClusterListResource<APIServiceList.Version, APIService> {
     interface Version : APIVersion
 
-    class Builder : ResourceListDSLBuilder<
+    class Builder : ResourceListDslBuilder<
         APIService,
         APIService.Builder,
         APIService.Group,

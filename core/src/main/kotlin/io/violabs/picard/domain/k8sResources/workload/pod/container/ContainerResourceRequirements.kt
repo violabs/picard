@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.Quantity
 
 data class ContainerResourceRequirements(
@@ -9,7 +9,7 @@ data class ContainerResourceRequirements(
     val requests: Map<String, Quantity>? = null,
     val resizePolicy: List<ResizePolicy>? = null
 ) {
-    class Builder : DSLBuilder<ContainerResourceRequirements> {
+    class Builder : DslBuilder<ContainerResourceRequirements> {
         private var claims: List<ContainerResourceClaim>? = null
         private var limits: MutableMap<String, Quantity>? = null
         private var requests: MutableMap<String, Quantity>? = null

@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.workload
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.Quantity
 
 data class DeviceBasic(
     val attributes: Map<String, DeviceAttribute>? = null,
     val capacity: Map<String, Quantity>? = null
 ) {
-    class Builder : DSLBuilder<DeviceBasic> {
+    class Builder : DslBuilder<DeviceBasic> {
         private var attributes: Map<String, DeviceAttribute>? = null
         private var capacity: Map<String, Quantity>? = null
 

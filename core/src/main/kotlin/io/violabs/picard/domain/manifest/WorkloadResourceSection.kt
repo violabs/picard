@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.manifest
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sAPIResource
@@ -47,7 +47,7 @@ data class WorkloadResourceSection(
     class Builder(
         private val resources: MutableList<WorkloadResource<*>> = mutableListOf(),
         private val lists: MutableList<WorkloadListResource<*, *>> = mutableListOf()
-    ) : DSLBuilder<WorkloadResourceSection> {
+    ) : DslBuilder<WorkloadResourceSection> {
 
         fun controllerRevision(block: ControllerRevision.Builder.() -> Unit) {
             resources += ControllerRevision.Builder().apply(block).build()

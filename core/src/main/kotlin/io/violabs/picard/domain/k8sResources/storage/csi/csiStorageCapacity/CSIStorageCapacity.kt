@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.storage.csi.csiStorageCapacity
 
-import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -20,7 +20,7 @@ data class CSIStorageCapacity(
 ) : StorageResource<CSIStorageCapacity.Version> {
     interface Version : APIVersion
 
-    class Builder : ResourceDSLBuilder<CSIStorageCapacity>() {
+    class Builder : ResourceDslBuilder<CSIStorageCapacity>() {
         var storageClassName: String? = null
         private var capacity: Quantity? = null
         private var maximumVolumeSize: Quantity? = null

@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.policy.limitRange
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.Quantity
 
 data class LimitRangeItem(
@@ -13,7 +13,7 @@ data class LimitRangeItem(
     val maxLimitRequestRatio: Map<String, Quantity>? = null,
     val min: Map<String, Quantity>? = null
 ) {
-    class Builder : DSLBuilder<LimitRangeItem> {
+    class Builder : DslBuilder<LimitRangeItem> {
         var type: String? = null
         private var default: Map<String, Quantity>? = null
         private var defaultRequest: Map<String, Quantity>? = null

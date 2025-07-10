@@ -1,14 +1,14 @@
 package io.violabs.picard.domain.k8sResources.extend.customResource
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.extend.webhook.WebhookConversion
 
 data class CustomResourceConversion(
     val strategy: String,
     val webhook: WebhookConversion? = null
 ) {
-    class Builder : DSLBuilder<CustomResourceConversion> {
+    class Builder : DslBuilder<CustomResourceConversion> {
         var strategy: String? = null
         private var webhook: WebhookConversion? = null
 

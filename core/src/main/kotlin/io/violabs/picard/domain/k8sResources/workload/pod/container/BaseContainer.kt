@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.ImagePullPolicy
 import io.violabs.picard.domain.RestartPolicy
 import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeDevice
@@ -37,7 +37,7 @@ interface BaseContainer {
     val stdinOnce: Boolean?
     val tty: Boolean?
 
-    abstract class Builder<T : BaseContainer> : DSLBuilder<T> {
+    abstract class Builder<T : BaseContainer> : DslBuilder<T> {
         var name: String? = null
         var image: String? = null
         var imagePullPolicy: ImagePullPolicy? = null

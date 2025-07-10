@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.authorization
 
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class PolicyRule(
     val verbs: List<String>,
@@ -11,7 +11,7 @@ data class PolicyRule(
     val resourceNames: List<String>? = null,
     val nonResourceURLs: List<String>? = null
 ) {
-    class Builder : DSLBuilder<PolicyRule> {
+    class Builder : DslBuilder<PolicyRule> {
         private var verbs: List<String>? = null
         private var apiGroups: List<String>? = null
         private var resources: List<String>? = null

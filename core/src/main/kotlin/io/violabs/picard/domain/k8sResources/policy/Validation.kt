@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.policy
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class Validation(
     val expression: String,
@@ -10,7 +10,7 @@ data class Validation(
     val messageExpression: String? = null,
     val reason: String? = null
 ) {
-    class Builder : DSLBuilder<Validation> {
+    class Builder : DslBuilder<Validation> {
         var expression: String? = null
         var message: String? = null
         var messageExpression: String? = null

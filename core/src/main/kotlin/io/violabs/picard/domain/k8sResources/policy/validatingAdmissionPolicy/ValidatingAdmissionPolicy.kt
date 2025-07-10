@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.policy.validatingAdmissionPolicy
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
 import io.violabs.picard.domain.ObjectMetadata
@@ -31,7 +31,7 @@ data class ValidatingAdmissionPolicy(
         val validations: List<Validation>? = null,
         val variables: List<Variable>? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var auditAnnotations: List<AuditAnnotation>? = null
             var failurePolicy: String? = null
             private var matchConditions: List<MatchCondition>? = null
@@ -83,7 +83,7 @@ data class ValidatingAdmissionPolicy(
         val observedGeneration: Long? = null,
         val typeChecking: TypeChecking? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             private var conditions: List<ServiceCondition>? = null
             var observedGeneration: Long? = null
             private var typeChecking: TypeChecking? = null
@@ -106,7 +106,7 @@ data class ValidatingAdmissionPolicy(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         ValidatingAdmissionPolicy,
         Spec,
         Spec.Builder,

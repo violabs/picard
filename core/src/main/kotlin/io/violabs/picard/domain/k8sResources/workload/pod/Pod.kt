@@ -1,13 +1,12 @@
 package io.violabs.picard.domain.k8sResources.workload.pod
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.condition.Condition
 import io.violabs.picard.domain.condition.StandardConditionGroup
 import io.violabs.picard.domain.k8sResources.*
-import io.violabs.picard.domain.k8sResources.storage.volume.Volume
 import io.violabs.picard.domain.k8sResources.workload.pod.affinity.Affinity
 import io.violabs.picard.domain.k8sResources.workload.pod.container.*
 import io.violabs.picard.domain.k8sResources.workload.pod.dnsConfig.DNSConfig
@@ -18,6 +17,8 @@ import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceCl
 import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceClaimStatus
 import io.violabs.picard.domain.k8sResources.workload.pod.security.PodSecurityContext
 import io.violabs.picard.domain.manifest.WorkloadResource
+import io.violabs.picard.v2.resources.configstorage.volume.Volume
+import io.violabs.picard.v2.resources.configstorage.volume.VolumeDslBuilder
 import java.time.LocalDateTime
 
 data class Pod(
@@ -77,7 +78,7 @@ data class Pod(
         val resourceClaims: List<PodResourceClaim>? = null,
         val schedulingGates: List<SchedulingGate>? = null,
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var containers: List<Container>? = null
             private var initContainers: List<Container>? = null
             private var ephemeralContainers: List<EphemeralContainer>? = null
@@ -140,8 +141,8 @@ data class Pod(
                 os = PodOS(name)
             }
 
-            fun volumes(scope: Volume.Group.() -> Unit) {
-                volumes = Volume.Group().apply(scope).volumes()
+            fun volumes(scope: VolumeDslBuilder.Group.() -> Unit) {
+                volumes = VolumeDslBuilder.Group().apply(scope).items()
             }
 
             fun nodeSelector(scope: MutableMap<String, String>.() -> Unit) {
@@ -259,7 +260,7 @@ data class Pod(
             }
         }
 
-        class BaseContainerGroup<T : BaseContainer, B : DSLBuilder<T>>(private val builder: B) {
+        class BaseContainerGroup<T : BaseContainer, B : DslBuilder<T>>(private val builder: B) {
             private var containers: MutableList<T> = mutableListOf()
 
             fun containers(): MutableList<T> {
@@ -313,7 +314,7 @@ data class Pod(
         val resize: String? = null
     ) : BaseStatus {
 
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             var nominatedNodeName: String? = null
             var hostIP: String? = null
             private var hostIPs: List<HostIP>? = null
@@ -382,7 +383,7 @@ data class Pod(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         Pod,
         Spec,
         Spec.Builder,

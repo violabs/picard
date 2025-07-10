@@ -1,14 +1,14 @@
 package io.violabs.picard.domain.k8sResources.service.endpoint
 
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class EndpointCondition(
     val ready: Boolean? = null,
     val serving: Boolean? = null,
     val terminating: Boolean? = null
 ) {
-    class Builder : DSLBuilder<EndpointCondition> {
+    class Builder : DslBuilder<EndpointCondition> {
         private var ready: Boolean? = null
         private var serving: Boolean? = null
         private var terminating: Boolean? = null

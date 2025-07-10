@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.workload.resourceClaim
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class DeviceRequestAllocationResult(
     val device: String,
@@ -10,7 +10,7 @@ data class DeviceRequestAllocationResult(
     val pool: String,
     val request: String
 ) {
-    class Builder : DSLBuilder<DeviceRequestAllocationResult> {
+    class Builder : DslBuilder<DeviceRequestAllocationResult> {
         var device: String? = null
         var driver: String? = null
         var pool: String? = null

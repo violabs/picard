@@ -2,13 +2,13 @@ package io.violabs.picard.domain.k8sResources.storage.csi.csiDriver
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class CSIDriverTokenRequest(
     val audience: String,
     val expirationSeconds: Long? = null
 ) {
-    class Builder : DSLBuilder<CSIDriverTokenRequest> {
+    class Builder : DslBuilder<CSIDriverTokenRequest> {
         var audience: String? = null
         var expirationSeconds: Long? = null
 

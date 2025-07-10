@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.workload.metric
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class ExternalMetricStatus(
     val current: MetricValueStatus,
     val metric: MetricIdentifier
 ) {
-    class Builder : DSLBuilder<ExternalMetricStatus> {
+    class Builder : DslBuilder<ExternalMetricStatus> {
         private var current: MetricValueStatus? = null
         private var metric: MetricIdentifier? = null
 

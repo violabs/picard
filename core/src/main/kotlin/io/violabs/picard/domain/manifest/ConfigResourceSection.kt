@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.manifest
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sAPIResource
@@ -21,7 +21,7 @@ data class ConfigResourceSection(
     class Builder(
         private val resources: MutableList<ConfigResource<*>> = mutableListOf(),
         private val lists: MutableList<ConfigListResource<*, *>> = mutableListOf()
-    ) : DSLBuilder<ConfigResourceSection> {
+    ) : DslBuilder<ConfigResourceSection> {
 
         fun configMap(block: ConfigMap.Builder.() -> Unit) {
             val configMap = ConfigMap.Builder().apply(block).build()

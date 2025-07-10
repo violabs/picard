@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class DeviceAttribute(
     val bool: Boolean? = null,
@@ -8,7 +8,7 @@ data class DeviceAttribute(
     val string: String? = null,
     val version: String? = null
 ) {
-    class Builder : DSLBuilder<DeviceAttribute> {
+    class Builder : DslBuilder<DeviceAttribute> {
         private var bool: Boolean? = null
         var int: Long? = null
         var string: String? = null

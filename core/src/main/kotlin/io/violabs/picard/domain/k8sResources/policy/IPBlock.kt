@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.policy
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class IPBlock(
     val cidr: String,
     val except: List<String>? = null
 ) {
-    class Builder : DSLBuilder<IPBlock> {
+    class Builder : DslBuilder<IPBlock> {
         var cidr: String? = null
         private var except: List<String>? = null
 

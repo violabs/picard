@@ -2,13 +2,13 @@ package io.violabs.picard.domain.k8sResources.policy
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class AuditAnnotation(
     val key: String,
     val valueExpression: String
 ) {
-    class Builder : DSLBuilder<AuditAnnotation> {
+    class Builder : DslBuilder<AuditAnnotation> {
         var key: String? = null
         var valueExpression: String? = null
 

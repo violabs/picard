@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.cluster.ipAddress
 
-import io.violabs.picard.common.ResourceListDSLBuilder
+import io.violabs.picard.common.ResourceListDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -14,7 +14,7 @@ data class IPAddressList(
 ) : ClusterListResource<IPAddressList.Version, IPAddress> {
     interface Version : APIVersion
 
-    class Builder : ResourceListDSLBuilder<
+    class Builder : ResourceListDslBuilder<
         IPAddress,
         IPAddress.Builder,
         IPAddress.Group,

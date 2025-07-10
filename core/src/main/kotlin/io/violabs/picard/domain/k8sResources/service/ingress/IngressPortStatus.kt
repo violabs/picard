@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.service.ingress
 
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.Protocol
 
 data class IngressPortStatus(
@@ -9,7 +9,7 @@ data class IngressPortStatus(
     val protocol: Protocol? = null,
     val error: String? = null
 ) {
-    class Builder : DSLBuilder<IngressPortStatus> {
+    class Builder : DslBuilder<IngressPortStatus> {
         var port: Int? = null
         var protocol: Protocol? = null
         var error: String? = null

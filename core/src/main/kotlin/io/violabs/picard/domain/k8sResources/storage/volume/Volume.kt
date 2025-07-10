@@ -2,14 +2,16 @@ package io.violabs.picard.domain.k8sResources.storage.volume
 
 import io.violabs.picard.common.BuilderGroup
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class Volume(
     val name: String,
+    // exposed persistent volumes
     val persistentVolumeClaim: PersistentVolumeClaimVolumeSource? = null,
+    // projections
     val emptyDir: Any? = null
 ) {
-    class Builder : DSLBuilder<Volume> {
+    class Builder : DslBuilder<Volume> {
         var name: String? = null
         private var persistentVolumeClaim: PersistentVolumeClaimVolumeSource? = null
         var emptyDir: Any? = null

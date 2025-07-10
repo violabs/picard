@@ -2,13 +2,13 @@ package io.violabs.picard.domain.k8sResources.workload.pod.security
 
 import io.violabs.picard.common.BuilderGroup
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class Sysctl(
     val name: String,
     val value: String
 ) {
-    class Builder : DSLBuilder<Sysctl> {
+    class Builder : DslBuilder<Sysctl> {
         var name: String? = null
         var value: String? = null
 

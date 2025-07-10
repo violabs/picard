@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.service.ingress
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
 import io.violabs.picard.domain.ObjectMetadata
@@ -25,7 +25,7 @@ data class Ingress(
         val rules: List<IngressRule>? = null,
         val tls: List<IngressTLS>? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var defaultBackend: IngressBackend? = null
             var ingressClassName: String? = null
             private var rules: List<IngressRule>? = null
@@ -57,7 +57,7 @@ data class Ingress(
     data class Status(
         val loadBalancer: IngressLoadBalancerIngress? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             private var loadBalancer: IngressLoadBalancerIngress? = null
 
             fun loadBalancer(scope: IngressLoadBalancerIngress.Builder.() -> Unit) {
@@ -72,7 +72,7 @@ data class Ingress(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         Ingress,
         Spec,
         Spec.Builder,

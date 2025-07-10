@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.policy.networkPolicy
 
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.label.LabelSelector
 import io.violabs.picard.domain.k8sResources.policy.IPBlock
 
@@ -10,7 +10,7 @@ data class NetworkPolicyPeer(
     val namespaceSelector: LabelSelector? = null,
     val podSelector: LabelSelector? = null
 ) {
-    class Builder : DSLBuilder<NetworkPolicyPeer> {
+    class Builder : DslBuilder<NetworkPolicyPeer> {
         private var ipBlock: IPBlock? = null
         private var namespaceSelector: LabelSelector? = null
         private var podSelector: LabelSelector? = null

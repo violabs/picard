@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.policy.limitRange
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.ObjectMetadata
@@ -20,7 +20,7 @@ data class LimitRange(
     data class Spec(
         val limits: List<LimitRangeItem>
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var limits: List<LimitRangeItem>? = null
 
             fun limits(scope: LimitRangeItem.Group.() -> Unit) {
@@ -35,7 +35,7 @@ data class LimitRange(
         }
     }
 
-    class Builder : ResourceSpecDSLBuilder<LimitRange, Spec, Spec.Builder>(Spec.Builder()) {
+    class Builder : ResourceSpecDslBuilder<LimitRange, Spec, Spec.Builder>(Spec.Builder()) {
         override fun build(): LimitRange {
             return LimitRange(
                 metadata = metadata,

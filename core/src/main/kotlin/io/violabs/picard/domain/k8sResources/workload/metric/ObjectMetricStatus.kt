@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.metric
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.workload.CrossVersionObjectReference
 
 data class ObjectMetricStatus(
@@ -10,7 +10,7 @@ data class ObjectMetricStatus(
     val metric: MetricIdentifier,
     val pods: PodsMetricSource
 ) {
-    class Builder : DSLBuilder<ObjectMetricStatus> {
+    class Builder : DslBuilder<ObjectMetricStatus> {
         private var current: MetricValueStatus? = null
         private var describedObject: CrossVersionObjectReference? = null
         private var metric: MetricIdentifier? = null

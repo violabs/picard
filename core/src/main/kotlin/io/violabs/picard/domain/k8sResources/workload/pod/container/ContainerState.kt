@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import java.time.LocalDateTime
 
 data class ContainerState(
@@ -9,7 +9,7 @@ data class ContainerState(
     val waiting: Waiting? = null
 ) {
     data class Running(val startedAt: LocalDateTime? = null) {
-        class Builder : DSLBuilder<Running> {
+        class Builder : DslBuilder<Running> {
             var startedAt: LocalDateTime? = null
 
             override fun build(): Running {
@@ -27,7 +27,7 @@ data class ContainerState(
         val signal: Int? = null,
         val startedAt: LocalDateTime? = null
     ) {
-        class Builder : DSLBuilder<Terminated> {
+        class Builder : DslBuilder<Terminated> {
             var containerID: String? = null
             var exitCode: Int? = null
             var finishedAt: LocalDateTime? = null
@@ -54,7 +54,7 @@ data class ContainerState(
         val message: String? = null,
         val reason: String? = null
     ) {
-        class Builder : DSLBuilder<Waiting> {
+        class Builder : DslBuilder<Waiting> {
             var message: String? = null
             var reason: String? = null
 
@@ -67,7 +67,7 @@ data class ContainerState(
         }
     }
 
-    class Builder : DSLBuilder<ContainerState> {
+    class Builder : DslBuilder<ContainerState> {
         private var running: Running? = null
         private var terminated: Terminated? = null
         private var waiting: Waiting? = null

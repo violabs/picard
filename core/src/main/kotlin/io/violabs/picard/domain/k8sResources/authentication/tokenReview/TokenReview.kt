@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.authentication.tokenReview
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
@@ -24,7 +24,7 @@ data class TokenReview(
         val audiences: List<String>? = null,
         val token: String? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var audiences: List<String>? = null
             var token: String? = null
 
@@ -47,7 +47,7 @@ data class TokenReview(
         val error: String? = null,
         val user: UserInfo? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             private var audiences: List<String>? = null
             private var authenticated: Boolean? = null
             var error: String? = null
@@ -76,7 +76,7 @@ data class TokenReview(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         TokenReview,
         Spec,
         Spec.Builder,

@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.authentication
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class BoundObjectReference(
     val apiVersion: String? = null,
@@ -8,7 +8,7 @@ data class BoundObjectReference(
     val name: String? = null,
     val uid: String? = null
 ) {
-    class Builder : DSLBuilder<BoundObjectReference> {
+    class Builder : DslBuilder<BoundObjectReference> {
         var apiVersion: String? = null
         var kind: String? = null
         var name: String? = null

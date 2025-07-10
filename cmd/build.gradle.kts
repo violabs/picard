@@ -1,5 +1,11 @@
+import io.violabs.plugins.open.secrets.gradleloader.domain.getPropertyOrEnv
+
+val cmdVersion: String by rootProject.extra
+
 plugins {
     `maven-publish`
+    id("io.violabs.plugins.open.publishing.maven-generated-artifacts")
+    id("io.violabs.plugins.open.publishing.digital-ocean-spaces")
 }
 
 application {
@@ -7,27 +13,15 @@ application {
 }
 
 group = "io.violabs.picard"
-version = "0.0.1"
+version = cmdVersion
 
 dependencies {
     implementation(project(":common"))
 }
 
 tasks.jar {
-    archiveBaseName.set("picard-command")
+    archiveBaseName.set("cmd")
 }
-
-publishing {
-    publications {
-        create<MavenPublication>("local") {
-            from(components["java"])
-            groupId    = "io.violabs.picard"
-            artifactId = "command"
-            version    = version
-        }
-    }
-}
-
 
 //region REVISIT
 tasks.register<Exec>("runPod") {
@@ -100,5 +94,43 @@ tasks.register("listLocalMaven") {
             .distinct()
             .sorted()
             .forEach(::println)
+    }
+}
+
+
+digitalOceanSpacesPublishing {
+    bucket = "open-reliquary"
+    accessKey = project.getPropertyOrEnv("spaces.key", "DO_SPACES_API_KEY")
+    secretKey = project.getPropertyOrEnv("spaces.secret", "DO_SPACES_SECRET")
+    publishedVersion = version.toString()
+    dryRun = false
+}
+
+mavenGeneratedArtifacts {
+    publicationName = "digitalOceanSpaces"
+    name = "Picard Command"
+    description = """
+            Convenience command line tool for Picard. This is only for local development and testing currently.
+        """
+    websiteUrl = "https://github.com/violabs/picard/tree/main/cmd"
+
+    licenses {
+        license {
+            name = "Apache License, Version 2.0"
+            url = "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+    }
+
+    developers {
+        developer {
+            id = "violabs"
+            name = "Violabs Team"
+            email = "support@violabs.io"
+            organization = "Violabs Software"
+        }
+    }
+
+    scm {
+        connection = "https://github.com/violabs/picard.git"
     }
 }

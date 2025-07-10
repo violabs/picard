@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.cluster.runtimeClass
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.Toleration
 
 data class RuntimeClassScheduling(
     val nodeSelector: Map<String, String>? = null,
     val tolerations: List<Toleration>? = null
 ) {
-    class Builder : DSLBuilder<RuntimeClassScheduling> {
+    class Builder : DslBuilder<RuntimeClassScheduling> {
         private var nodeSelector: Map<String, String>? = null
         private var tolerations: List<Toleration>? = null
 

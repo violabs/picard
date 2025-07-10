@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.authentication
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class UserInfo(
     val extra: Map<String, List<String>>? = null,
@@ -8,7 +8,7 @@ data class UserInfo(
     val uid: String? = null,
     val username: String? = null
 ) {
-    class Builder : DSLBuilder<UserInfo> {
+    class Builder : DslBuilder<UserInfo> {
         private var extra: Map<String, List<String>>? = null
         private var groups: List<String>? = null
         var uid: String? = null

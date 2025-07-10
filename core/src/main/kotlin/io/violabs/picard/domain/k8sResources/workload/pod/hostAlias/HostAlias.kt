@@ -2,14 +2,14 @@ package io.violabs.picard.domain.k8sResources.workload.pod.hostAlias
 
 import io.violabs.picard.common.BuilderGroup
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class HostAlias(
     val ip: String,
     val hostnames: List<String>? = null
 ) {
 
-    class Builder : DSLBuilder<HostAlias> {
+    class Builder : DslBuilder<HostAlias> {
         var ip: String? = null
         private var hostnames: List<String>? = null
 

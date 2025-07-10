@@ -1,12 +1,12 @@
 package io.violabs.picard.domain.k8sResources.extend.customResource
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class CustomResourceSubresources(
     val scale: CustomResourceSubresourceScale? = null,
     val status: CustomResourceSubresourceStatus? = null
 ) {
-    class Builder : DSLBuilder<CustomResourceSubresources> {
+    class Builder : DslBuilder<CustomResourceSubresources> {
         private var scale: CustomResourceSubresourceScale? = null
         private var status: CustomResourceSubresourceStatus? = null
 

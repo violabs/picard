@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.priorityClass
 
-import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -18,7 +18,7 @@ data class PriorityClass(
 ) : WorkloadResource<PriorityClass.Version> {
     interface Version : APIVersion
 
-    class Builder : ResourceDSLBuilder<PriorityClass>() {
+    class Builder : ResourceDslBuilder<PriorityClass>() {
         var value: Int? = null
         var description: String? = null
         private var globalDefault: Boolean? = null

@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.daemonSet
 
-import io.violabs.picard.common.ResourceListDSLBuilder
+import io.violabs.picard.common.ResourceListDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -15,7 +15,7 @@ data class DaemonSetList(
 ) : WorkloadListResource<DaemonSetList.Version, DaemonSet> {
     interface Version : APIVersion
 
-    class Builder : ResourceListDSLBuilder<
+    class Builder : ResourceListDslBuilder<
         DaemonSet,
         DaemonSet.Builder,
         DaemonSet.Group,

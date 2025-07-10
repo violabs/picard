@@ -1,11 +1,11 @@
 package io.violabs.picard.domain.k8sResources.cluster.node
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class DaemonEndpoints(
     val kubeletEndpoint: DaemonEndpoint? = null
 ) {
-    class Builder : DSLBuilder<DaemonEndpoints> {
+    class Builder : DslBuilder<DaemonEndpoints> {
         private var daemonEndpoint: DaemonEndpoint? = null
 
         fun daemonEndpoint(scope: DaemonEndpoint.Builder.() -> Unit) {

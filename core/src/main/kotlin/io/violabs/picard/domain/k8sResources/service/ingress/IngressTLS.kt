@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.service.ingress
 
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class IngressTLS(
     val hosts: List<String>? = null,
     val secretName: String? = null
 ) {
-    class Builder : DSLBuilder<IngressTLS> {
+    class Builder : DslBuilder<IngressTLS> {
         private var hosts: List<String>? = null
         var secretName: String? = null
 

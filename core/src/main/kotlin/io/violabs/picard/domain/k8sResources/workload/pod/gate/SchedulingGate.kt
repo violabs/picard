@@ -2,10 +2,10 @@ package io.violabs.picard.domain.k8sResources.workload.pod.gate
 
 import io.violabs.picard.common.BuilderGroup
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class SchedulingGate(val name: String) {
-    class Builder : DSLBuilder<SchedulingGate> {
+    class Builder : DslBuilder<SchedulingGate> {
         var name: String? = null
 
         override fun build(): SchedulingGate {

@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.cluster.node
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.condition.NodeCondition
 import io.violabs.picard.domain.condition.NodeConditionGroup
@@ -24,7 +24,7 @@ data class Node(
         val taints: List<Taint>? = null,
         val value: Boolean? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var configSource: NodeConfigSource? = null
             var externalID: String? = null
             var podCIDR: String? = null
@@ -72,7 +72,7 @@ data class Node(
         val volumesAttached: List<AttachedVolume>? = null,
         val volumesInUse: List<String>? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             private var addresses: List<NodeAddress>? = null
             private var allocatable: Map<String, Quantity>? = null
             private var capacity: Map<String, Quantity>? = null
@@ -155,7 +155,7 @@ data class Node(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         Node,
         Spec,
         Spec.Builder,

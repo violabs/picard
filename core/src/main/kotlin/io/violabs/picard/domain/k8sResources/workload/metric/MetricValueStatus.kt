@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.metric
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.Quantity
 
 data class MetricValueStatus(
@@ -8,7 +8,7 @@ data class MetricValueStatus(
     val averageValue: Quantity? = null,
     val value: Quantity? = null
 ) {
-    class Builder : DSLBuilder<MetricValueStatus> {
+    class Builder : DslBuilder<MetricValueStatus> {
         var averageUtilization: Int? = null
         private var averageValue: Quantity? = null
         private var value: Quantity? = null

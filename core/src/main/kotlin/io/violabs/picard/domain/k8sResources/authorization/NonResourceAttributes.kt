@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.authorization
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.HTTPVerb
 
 data class NonResourceAttributes(
     val path: String? = null,
     val verb: HTTPVerb? = null
 ) {
-    class Builder : DSLBuilder<NonResourceAttributes> {
+    class Builder : DslBuilder<NonResourceAttributes> {
         var path: String? = null
         var verb: HTTPVerb? = null
 

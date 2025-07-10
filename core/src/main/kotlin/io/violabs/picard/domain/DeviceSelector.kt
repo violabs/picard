@@ -1,7 +1,7 @@
 package io.violabs.picard.domain
 
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class DeviceSelector(
     val cel: CEL? = null
@@ -10,7 +10,7 @@ data class DeviceSelector(
         val expression: String
     )
 
-    class Builder : DSLBuilder<DeviceSelector> {
+    class Builder : DslBuilder<DeviceSelector> {
         private var cel: CEL? = null
 
         fun cel(expression: String) {

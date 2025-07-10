@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.policy
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.Operator
 
 data class ScopedResourceSelectorRequirement(
@@ -10,7 +10,7 @@ data class ScopedResourceSelectorRequirement(
     val scopeName: String,
     val values: List<String>? = null
 ) {
-    class Builder : DSLBuilder<ScopedResourceSelectorRequirement> {
+    class Builder : DslBuilder<ScopedResourceSelectorRequirement> {
         var operator: Operator? = null
         var scopeName: String? = null
         private var values: List<String>? = null

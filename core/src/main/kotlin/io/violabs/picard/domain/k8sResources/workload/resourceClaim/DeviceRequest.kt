@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.workload.resourceClaim
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.DeviceSelector
 
 data class DeviceRequest(
@@ -13,7 +13,7 @@ data class DeviceRequest(
     val count: Long? = null,
     val selectors: List<DeviceSelector>? = null
 ) {
-    class Builder : DSLBuilder<DeviceRequest> {
+    class Builder : DslBuilder<DeviceRequest> {
         var deviceClassName: String? = null
         var name: String? = null
         private var adminAccess: Boolean? = null

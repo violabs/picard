@@ -2,14 +2,14 @@ package io.violabs.picard.domain.k8sResources.workload.horizontalPodAutoscaler
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class HPAScalingPolicy(
     val type: String,
     val value: Int,
     val periodSeconds: Int
 ) {
-    class Builder : DSLBuilder<HPAScalingPolicy> {
+    class Builder : DslBuilder<HPAScalingPolicy> {
         var type: String? = null
         var value: Int? = null
         var periodSeconds: Int? = null

@@ -1,9 +1,9 @@
 package io.violabs.picard.domain.k8sResources.cluster.lease
 
 import io.violabs.picard.domain.BaseSpec
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.ObjectMetadata
-import io.violabs.picard.common.ResourceSpecDSLBuilder
+import io.violabs.picard.common.ResourceSpecDslBuilder
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
@@ -26,7 +26,7 @@ data class Lease(
         val renewTime: Instant? = null,
         val strategy: String? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             var acquireTime: Instant? = null
             var holderIdentity: String? = null
             var leaseDurationSeconds: Int? = null
@@ -49,7 +49,7 @@ data class Lease(
         }
     }
 
-    class Builder : ResourceSpecDSLBuilder<Lease, Spec, Spec.Builder>(Spec.Builder()) {
+    class Builder : ResourceSpecDslBuilder<Lease, Spec, Spec.Builder>(Spec.Builder()) {
         override fun build(): Lease {
             return Lease(
                 spec = spec,

@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.cluster.ipAddress
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.ObjectMetadata
@@ -18,7 +18,7 @@ data class IPAddress(
     interface Version : APIVersion
 
     data class Spec(val parentRef: ParentReference) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var parentRef: ParentReference? = null
 
             fun parentRef(scope: ParentReference.Builder.() -> Unit) {
@@ -33,7 +33,7 @@ data class IPAddress(
         }
     }
 
-    class Builder : ResourceSpecDSLBuilder<IPAddress, Spec, Spec.Builder>(Spec.Builder()) {
+    class Builder : ResourceSpecDslBuilder<IPAddress, Spec, Spec.Builder>(Spec.Builder()) {
         override fun build(): IPAddress {
             return IPAddress(
                 metadata = metadata,

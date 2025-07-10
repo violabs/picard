@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.resourceSlice
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.ObjectMetadata
@@ -27,7 +27,7 @@ data class ResourceSlice(
         val nodeName: String? = null,
         val nodeSelector: NodeSelector? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             var driver: String? = null
             private var pool: ResourcePool? = null
             private var allNodes: Boolean? = null
@@ -64,7 +64,7 @@ data class ResourceSlice(
         }
     }
 
-    class Builder : ResourceSpecDSLBuilder<ResourceSlice, Spec, Spec.Builder>(Spec.Builder()) {
+    class Builder : ResourceSpecDslBuilder<ResourceSlice, Spec, Spec.Builder>(Spec.Builder()) {
         override fun build(): ResourceSlice {
             return ResourceSlice(
                 spec = vRequireNotNull(this::spec),

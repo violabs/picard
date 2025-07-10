@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.authentication.serviceAccount
 
-import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDslBuilder
 import io.violabs.picard.domain.LocalObjectReference
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.ObjectReference
@@ -18,7 +18,7 @@ data class ServiceAccount(
 ) : AuthenticationResource<ServiceAccount.Version> {
     interface Version : APIVersion
 
-    class Builder : ResourceDSLBuilder<ServiceAccount>() {
+    class Builder : ResourceDslBuilder<ServiceAccount>() {
         private var automountServiceAccountToken: Boolean? = null
         private var imagePullSecrets: List<LocalObjectReference>? = null
         private var secrets: List<ObjectReference>? = null

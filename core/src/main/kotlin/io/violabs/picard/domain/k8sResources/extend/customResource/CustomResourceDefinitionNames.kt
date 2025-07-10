@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.extend.customResource
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class CustomResourceDefinitionNames(
     val kind: String,
@@ -11,7 +11,7 @@ data class CustomResourceDefinitionNames(
     val shortNames: List<String>? = null,
     val singular: String? = null
 ) {
-    class Builder : DSLBuilder<CustomResourceDefinitionNames> {
+    class Builder : DslBuilder<CustomResourceDefinitionNames> {
         var kind: String? = null
         var plural: String? = null
         private var categories: List<String>? = null

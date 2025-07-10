@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.cronJob
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
@@ -38,7 +38,7 @@ data class CronJob(
             Replace
         }
 
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var jobTemplate: Job.Spec? = null
             var schedule: String? = null
             var timeZone: String? = null
@@ -76,7 +76,7 @@ data class CronJob(
         val lastScheduleTime: LocalDateTime? = null,
         val lastSuccessfulTime: LocalDateTime? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             private var active: List<ObjectReference>? = null
             var lastScheduleTime: LocalDateTime? = null
             var lastSuccessfulTime: LocalDateTime? = null
@@ -95,7 +95,7 @@ data class CronJob(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         CronJob,
         Spec,
         Spec.Builder,

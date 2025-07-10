@@ -1,12 +1,12 @@
 package io.violabs.picard.domain
 
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.common.vRequireNotNull
 
 data class TopologySelectorLabelRequirement(val key: String, val values: List<String>) {
-    class Builder : DSLBuilder<TopologySelectorLabelRequirement> {
+    class Builder : DslBuilder<TopologySelectorLabelRequirement> {
         var key: String? = null
         private var values: List<String>? = null
 

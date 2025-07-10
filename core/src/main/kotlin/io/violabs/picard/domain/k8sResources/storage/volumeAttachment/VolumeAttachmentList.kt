@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.storage.volumeAttachment
 
-import io.violabs.picard.common.ResourceListDSLBuilder
+import io.violabs.picard.common.ResourceListDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -13,7 +13,7 @@ data class VolumeAttachmentList(
     override val metadata: ListMeta? = null
 ) : StorageListResource<VolumeAttachmentList.Version, VolumeAttachment> {
     interface Version : APIVersion
-    class Builder : ResourceListDSLBuilder<
+    class Builder : ResourceListDslBuilder<
         VolumeAttachment,
         VolumeAttachment.Builder,
         VolumeAttachment.Group,

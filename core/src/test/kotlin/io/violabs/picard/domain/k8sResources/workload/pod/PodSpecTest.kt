@@ -4,7 +4,8 @@ package io.violabs.picard.domain.k8sResources.workload.pod
 import io.violabs.picard.FullBuildSim
 import io.violabs.picard.domain.LocalObjectReference
 import io.violabs.picard.domain.RestartPolicy
-import io.violabs.picard.domain.k8sResources.storage.volume.Volume
+import io.violabs.picard.domain.k8sResources.KAPIVersion
+//import io.violabs.picard.domain.k8sResources.storage.volume.Volume
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.Toleration
 import io.violabs.picard.domain.k8sResources.workload.pod.affinity.*
@@ -18,6 +19,15 @@ import io.violabs.picard.domain.k8sResources.workload.pod.hostAlias.HostAlias
 import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceClaim
 import io.violabs.picard.domain.k8sResources.workload.pod.security.*
 import io.violabs.picard.possibilities
+import io.violabs.picard.v2.common.ObjectFieldSelector
+import io.violabs.picard.v2.common.ResourceFieldSelector
+import io.violabs.picard.v2.resources.configstorage.volume.ConfigMapVolumeSource
+import io.violabs.picard.v2.resources.configstorage.volume.DownwardApiVolumeFile
+import io.violabs.picard.v2.resources.configstorage.volume.DownwardApiVolumeSource
+import io.violabs.picard.v2.resources.configstorage.volume.KeyToPath
+import io.violabs.picard.v2.resources.configstorage.volume.PersistentVolumeClaimVolumeSource
+import io.violabs.picard.v2.resources.configstorage.volume.SecretVolumeSource
+import io.violabs.picard.v2.resources.configstorage.volume.Volume
 import org.junit.jupiter.api.BeforeAll
 
 class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
@@ -145,6 +155,45 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
             name = "test_scheduling"
         )
 
+        private val VOLUME = Volume(
+            name = PLACEHOLDER,
+            persistentVolumeClaim = PersistentVolumeClaimVolumeSource(
+                claimName = PLACEHOLDER,
+                readOnly = true
+            ),
+            configMap = ConfigMapVolumeSource(
+                name = PLACEHOLDER,
+                items = listOf(KeyToPath(PLACEHOLDER, PLACEHOLDER)),
+                defaultMode = 1,
+                optional = true
+            ),
+            secret = SecretVolumeSource(
+                secretName = PLACEHOLDER,
+                optional = true,
+                defaultMode = 1,
+                items = listOf(KeyToPath(PLACEHOLDER, PLACEHOLDER))
+            ),
+            downwardApi = DownwardApiVolumeSource(
+                defaultMode = 1,
+                items = listOf(
+                    DownwardApiVolumeFile(
+                        path = PLACEHOLDER,
+                        fieldRef = ObjectFieldSelector(
+                            fieldPath = PLACEHOLDER,
+                            apiVersion = KAPIVersion.V1
+                        ),
+                        mode = 1,
+                        resourceFieldRef = ResourceFieldSelector(
+                            resource = PLACEHOLDER,
+                            containerName = PLACEHOLDER,
+                            divisor = Quantity("1")
+                        )
+                    )
+                )
+            ),
+            emptyDir = PLACEHOLDER
+        )
+
         /**
          * Containers are tested separately.
          */
@@ -155,12 +204,7 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
             imagePullSecrets = listOf(LocalObjectReference("image-pull-secret")),
             enableServiceLinks = true,
             os = PodOS("linux"),
-            volumes = listOf(
-                Volume(
-                    "test_volume",
-                    emptyDir = "/test_empty_dir",
-                )
-            ),
+            volumes = listOf(VOLUME),
             nodeSelector = mapOf("nodeSelectorKey" to "nodeSelectorValue"),
             nodeName = "test_node_name",
             affinity = AFFINITY,
@@ -238,9 +282,53 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
                     os("linux")
 
                     volumes {
-                        addVolume {
-                            name = "test_volume"
-                            emptyDir = "/test_empty_dir"
+                        volume {
+                            name = PLACEHOLDER
+                            persistentVolumeClaim {
+                                claimName = PLACEHOLDER
+                                readOnly()
+                            }
+                            configMap {
+                                name = PLACEHOLDER
+                                items {
+                                    keyToPath {
+                                        key = PLACEHOLDER
+                                        path = PLACEHOLDER
+                                    }
+                                }
+                                defaultMode = 1
+                                optional()
+                            }
+                            secret {
+                                secretName = PLACEHOLDER
+                                optional()
+                                defaultMode = 1
+                                items {
+                                    keyToPath {
+                                        key = PLACEHOLDER
+                                        path = PLACEHOLDER
+                                    }
+                                }
+                            }
+                            downwardApi {
+                                defaultMode = 1
+                                items {
+                                    downwardApiVolumeFile {
+                                        path = PLACEHOLDER
+                                        fieldRef {
+                                            fieldPath = PLACEHOLDER
+                                            apiVersion = KAPIVersion.V1
+                                        }
+                                        mode = 1
+                                        resourceFieldRef {
+                                            resource = PLACEHOLDER
+                                            containerName = PLACEHOLDER
+                                            divisor("1")
+                                        }
+                                    }
+                                }
+                            }
+                            emptyDir = PLACEHOLDER
                         }
                     }
 

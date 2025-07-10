@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.extend.webhook.validatingWebhookConfig
 
-import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDslBuilder
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
@@ -14,7 +14,7 @@ data class ValidatingWebhookConfiguration(
 ) : ExtendResource<ValidatingWebhookConfiguration.Version> {
     interface Version : APIVersion
 
-    class Builder : ResourceDSLBuilder<ValidatingWebhookConfiguration>() {
+    class Builder : ResourceDslBuilder<ValidatingWebhookConfiguration>() {
         private var webhooks: List<ValidatingWebhook>? = null
 
         fun webhooks(scope: ValidatingWebhook.Group.() -> Unit) {

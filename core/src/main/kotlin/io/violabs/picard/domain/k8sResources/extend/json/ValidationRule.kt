@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.extend.json
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class ValidationRule(
     val rule: String,
@@ -12,7 +12,7 @@ data class ValidationRule(
     val optionalOldSelf: Boolean? = null,
     val reason: String? = null
 ) {
-    class Builder : DSLBuilder<ValidationRule> {
+    class Builder : DslBuilder<ValidationRule> {
         var rule: String? = null
         var fieldPath: String? = null
         var message: String? = null

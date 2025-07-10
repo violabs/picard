@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.storage.volumeAttachment
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class InlineVolumeSpec(
     val attached: Boolean,
@@ -9,7 +9,7 @@ data class InlineVolumeSpec(
     val attachmentMetadata: Map<String, String>? = null,
     val detachError: VolumeError? = null
 ) {
-    class Builder : DSLBuilder<InlineVolumeSpec> {
+    class Builder : DslBuilder<InlineVolumeSpec> {
         private var attached: Boolean? = null
         private var attachError: VolumeError? = null
         private var attachmentMetadata: Map<String, String>? = null

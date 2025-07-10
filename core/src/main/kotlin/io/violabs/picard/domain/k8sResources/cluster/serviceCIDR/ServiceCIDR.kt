@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.cluster.serviceCIDR
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.condition.ServiceCondition
 import io.violabs.picard.domain.condition.ServiceConditionGroup
@@ -19,7 +19,7 @@ data class ServiceCIDR(
     interface Version : APIVersion
 
     data class Spec(val cidrs: List<String>? = null) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var cidrs: List<String>? = null
 
             fun cidrs(vararg cidrs: String) {
@@ -35,7 +35,7 @@ data class ServiceCIDR(
     data class Status(
         val conditions: List<ServiceCondition>? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             private var conditions: List<ServiceCondition>? = null
 
             fun conditions(scope: ServiceConditionGroup.() -> Unit) {
@@ -48,7 +48,7 @@ data class ServiceCIDR(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         ServiceCIDR,
         Spec,
         Spec.Builder,

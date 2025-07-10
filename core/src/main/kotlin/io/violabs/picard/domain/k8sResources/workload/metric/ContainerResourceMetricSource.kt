@@ -2,14 +2,14 @@ package io.violabs.picard.domain.k8sResources.workload.metric
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseResourceMetricSource
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class ContainerResourceMetricSource(
     val container: String,
     val name: String,
     val target: MetricTarget? = null
 ) : BaseResourceMetricSource {
-    class Builder : DSLBuilder<ContainerResourceMetricSource> {
+    class Builder : DslBuilder<ContainerResourceMetricSource> {
         var container: String? = null
         var name: String? = null
         private var target: MetricTarget? = null

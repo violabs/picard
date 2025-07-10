@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.storage.storageClass
 
-import io.violabs.picard.common.ResourceListDSLBuilder
+import io.violabs.picard.common.ResourceListDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -14,7 +14,7 @@ data class StorageClassList(
 ) : StorageListResource<StorageClassList.Version, StorageClass> {
     interface Version : APIVersion
 
-    class Builder : ResourceListDSLBuilder<
+    class Builder : ResourceListDslBuilder<
         StorageClass,
         StorageClass.Builder,
         StorageClass.Group,

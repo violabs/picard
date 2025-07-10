@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.cluster.event
 
-import io.violabs.picard.common.ResourceListDSLBuilder
+import io.violabs.picard.common.ResourceListDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -14,7 +14,7 @@ data class EventList(
 ) : ClusterListResource<EventList.Version, Event> {
     interface Version : APIVersion
 
-    class Builder : ResourceListDSLBuilder<
+    class Builder : ResourceListDslBuilder<
         Event,
         Event.Builder,
         Event.Group,

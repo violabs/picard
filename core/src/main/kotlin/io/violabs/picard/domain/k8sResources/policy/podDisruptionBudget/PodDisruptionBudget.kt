@@ -1,8 +1,8 @@
 package io.violabs.picard.domain.k8sResources.policy.podDisruptionBudget
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
@@ -33,7 +33,7 @@ data class PodDisruptionBudget(
         val selector: LabelSelector? = null,
         val unhealthyPodEvictionPolicy: String? = null,
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var maxUnavailable: IntOrString? = null
             private var minAvailable: IntOrString? = null
             private var selector: LabelSelector? = null
@@ -79,7 +79,7 @@ data class PodDisruptionBudget(
         val disruptedPods: Map<String, LocalDateTime>? = null,
         val observedGeneration: Long? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             var currentHealthy: Int? = null
             var desiredHealthy: Int? = null
             var disruptionsAllowed: Int? = null
@@ -110,7 +110,7 @@ data class PodDisruptionBudget(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         PodDisruptionBudget,
         Spec,
         Spec.Builder,

@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.manifest
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sAPIResource
@@ -25,7 +25,7 @@ data class ExtendResourceSection(
     class Builder(
         private val resources: MutableList<ExtendResource<*>> = mutableListOf(),
         private val lists: MutableList<ExtendListResource<*, *>> = mutableListOf()
-    ) : DSLBuilder<ExtendResourceSection> {
+    ) : DslBuilder<ExtendResourceSection> {
         fun customResourceDefinition(block: CustomResourceDefinition.Builder.() -> Unit) {
             resources += CustomResourceDefinition.Builder().apply(block).build()
         }

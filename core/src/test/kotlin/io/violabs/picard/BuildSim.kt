@@ -2,9 +2,9 @@ package io.violabs.picard
 
 import io.violabs.geordi.SimulationGroup
 import io.violabs.geordi.UnitSim
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceDSLBuilder
-import io.violabs.picard.common.ResourceListDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceDslBuilder
+import io.violabs.picard.common.ResourceListDslBuilder
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.condition.Condition
 import io.violabs.picard.domain.condition.ConditionGroup
@@ -31,21 +31,21 @@ import java.time.Instant
 import java.time.LocalDateTime
 import kotlin.reflect.KClass
 
-abstract class SuccessBuildSim<T, B : DSLBuilder<T>> : BuildSim<T, B>() {
+abstract class SuccessBuildSim<T, B : DslBuilder<T>> : BuildSim<T, B>() {
     @TestTemplate
     override fun `build happy path - #scenario`(builder: B, result: T) {
         verifyHappyPath(builder, result)
     }
 }
 
-abstract class FailureBuildSim<T, B : DSLBuilder<T>> : BuildSim<T, B>() {
+abstract class FailureBuildSim<T, B : DslBuilder<T>> : BuildSim<T, B>() {
     @TestTemplate
     override fun `build failure path - #scenario`(builder: B, exceptionMessage: ExceptionMessage) {
         verifyRequiredField(builder, exceptionMessage)
     }
 }
 
-abstract class FullBuildSim<T, B : DSLBuilder<T>> : BuildSim<T, B>() {
+abstract class FullBuildSim<T, B : DslBuilder<T>> : BuildSim<T, B>() {
     @TestTemplate
     override fun `build happy path - #scenario`(builder: B, result: T) {
         verifyHappyPath(builder, result)
@@ -62,7 +62,7 @@ abstract class FullBuildSim<T, B : DSLBuilder<T>> : BuildSim<T, B>() {
  * If the functions are overridden they will run based on the [TestTemplate]
  * Use the [BuildSim.buildSetup] function to set up the simulations.
  */
-abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
+abstract class BuildSim<T, B : DslBuilder<T>> : UnitSim() {
     open fun `build happy path - #scenario`(builder: B, result: T) {
 
     }
@@ -72,7 +72,7 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
     }
 
     companion object {
-        fun <S : BuildSim<T, B>, T, B : DSLBuilder<T>> buildSetup(
+        fun <S : BuildSim<T, B>, T, B : DslBuilder<T>> buildSetup(
             klass: KClass<S>,
             successScenariosSet: TestScenarioSet<T, B>? = null,
             failureScenariosSet: TestScenarioSet<T, B>? = null
@@ -110,7 +110,7 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
         val INT_OR_STRING_2 = IntOrString(str = "1")
         val STRING_MAP = mapOf(PLACEHOLDER to PLACEHOLDER)
 
-        fun <T, B : ResourceDSLBuilder<T>> B.sharedMetadata() {
+        fun <T, B : ResourceDslBuilder<T>> B.sharedMetadata() {
             metadata {
                 name = PLACEHOLDER
                 generatedName = PLACEHOLDER
@@ -125,7 +125,7 @@ abstract class BuildSim<T, B : DSLBuilder<T>> : UnitSim() {
             }
         }
 
-        fun <T, L : K8sListResource<*, T>, B : ResourceListDSLBuilder<T, *, *, L>> B.sharedMetadata() {
+        fun <T, L : K8sListResource<*, T>, B : ResourceListDslBuilder<T, *, *, L>> B.sharedMetadata() {
             metadata {
                 continueGather = PLACEHOLDER
                 remainingItemCount = 1

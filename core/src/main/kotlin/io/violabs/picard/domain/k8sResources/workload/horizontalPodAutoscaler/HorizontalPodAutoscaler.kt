@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.horizontalPodAutoscaler
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
@@ -36,7 +36,7 @@ data class HorizontalPodAutoscaler(
         @VersionTarget<KAPIVersion.AutoscalingV2>(KAPIVersion.AutoscalingV2::class)
         val metrics: List<io.violabs.picard.domain.k8sResources.workload.metric.MetricSpec>? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             var maxReplicas: Int? = null
             private var scaleTargetRef: CrossVersionObjectReference? = null
             var minReplicas: Int? = null
@@ -81,7 +81,7 @@ data class HorizontalPodAutoscaler(
         @VersionTarget<KAPIVersion.AutoscalingV2>(KAPIVersion.AutoscalingV2::class)
         val currentMetrics: List<MetricStatus>? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             var currentReplicas: Int? = null
             var desiredReplicas: Int? = null
             var lastScaleTime: LocalDateTime? = null
@@ -112,7 +112,7 @@ data class HorizontalPodAutoscaler(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         HorizontalPodAutoscaler,
         Spec,
         Spec.Builder,

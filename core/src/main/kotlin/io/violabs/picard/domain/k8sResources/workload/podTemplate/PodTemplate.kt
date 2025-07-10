@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.podTemplate
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecDslBuilder
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -21,7 +21,7 @@ data class PodTemplate(
         val metadata: ObjectMetadata? = null,
         val spec: Pod.Spec? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var metadata: ObjectMetadata? = null
             private var spec: Pod.Spec? = null
 
@@ -42,7 +42,7 @@ data class PodTemplate(
         }
     }
 
-    class Builder : ResourceSpecDSLBuilder<PodTemplate, Spec, Spec.Builder>(Spec.Builder()) {
+    class Builder : ResourceSpecDslBuilder<PodTemplate, Spec, Spec.Builder>(Spec.Builder()) {
         override fun build(): PodTemplate {
             return PodTemplate(
                 metadata = metadata,

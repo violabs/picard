@@ -1,12 +1,12 @@
 package io.violabs.picard.domain.k8sResources.workload.resourceClaim
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class DeviceAllocationResult(
     val config: List<DeviceAllocationConfiguration>? = null,
     val results: List<DeviceRequestAllocationResult>? = null
 ) {
-    class Builder : DSLBuilder<DeviceAllocationResult> {
+    class Builder : DslBuilder<DeviceAllocationResult> {
         private var config: List<DeviceAllocationConfiguration>? = null
         private var results: List<DeviceRequestAllocationResult>? = null
 

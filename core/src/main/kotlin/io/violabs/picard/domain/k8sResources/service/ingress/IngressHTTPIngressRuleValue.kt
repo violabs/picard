@@ -1,12 +1,12 @@
 package io.violabs.picard.domain.k8sResources.service.ingress
 
 import io.violabs.picard.common.vRequireNotEmpty
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class IngressHTTPIngressRuleValue(
     val paths: List<IngressHTTPIngressPath>
 ) {
-    class Builder : DSLBuilder<IngressHTTPIngressRuleValue> {
+    class Builder : DslBuilder<IngressHTTPIngressRuleValue> {
         private var paths: List<IngressHTTPIngressPath>? = null
 
         fun paths(scope: IngressHTTPIngressPath.Group.() -> Unit) {

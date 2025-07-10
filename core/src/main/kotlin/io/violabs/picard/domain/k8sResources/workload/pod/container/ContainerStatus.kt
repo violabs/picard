@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.workload.pod.container
 
 import io.violabs.picard.common.BuilderGroup
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.workload.pod.resource.ResourceStatus
 import io.violabs.picard.domain.k8sResources.workload.pod.volume.VolumeMountStatus
@@ -23,7 +23,7 @@ data class ContainerStatus(
     val user: ContainerUser? = null,
     val volumeMounts: VolumeMountStatus? = null
 ) {
-    class Builder : DSLBuilder<ContainerStatus> {
+    class Builder : DslBuilder<ContainerStatus> {
         var imageID: String? = null
         var image: String? = null
         var name: String? = null

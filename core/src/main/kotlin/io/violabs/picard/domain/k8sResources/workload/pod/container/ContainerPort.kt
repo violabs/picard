@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.workload.pod.container
 
 import io.violabs.picard.common.BuilderGroup
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.Protocol
 import io.violabs.picard.validation.RangeLimit
 
@@ -15,7 +15,7 @@ data class ContainerPort(
     val name: String? = null,
     val protocol: Protocol? = null
 ) {
-    class Builder : DSLBuilder<ContainerPort> {
+    class Builder : DslBuilder<ContainerPort> {
         var containerPort: Int? = null
         var hostIp: String? = null
         var hostPort: Int? = null

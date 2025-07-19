@@ -17,7 +17,7 @@ data class SubjectAccessReview(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec,
     val status: Status? = null
-) : AuthorizationResource<SubjectAccessReview.Version> {
+) : AuthorizationResource<SubjectAccessReview.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

@@ -14,7 +14,7 @@ data class PodTemplate(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null
-) : WorkloadResource<PodTemplate.Version> {
+) : WorkloadResource<PodTemplate.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

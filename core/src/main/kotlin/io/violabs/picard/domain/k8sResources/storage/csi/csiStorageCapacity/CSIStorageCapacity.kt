@@ -17,7 +17,7 @@ data class CSIStorageCapacity(
     val capacity: Quantity? = null,
     val maximumVolumeSize: Quantity? = null,
     val nodeTopology: LabelSelector? = null
-) : StorageResource<CSIStorageCapacity.Version> {
+) : StorageResource<CSIStorageCapacity.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     class Builder : ResourceDslBuilder<CSIStorageCapacity>() {

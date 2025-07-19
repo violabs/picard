@@ -13,7 +13,7 @@ data class Role(
     override val apiVersion: Version = KAPIVersion.RBACAuthorizationV1,
     override val metadata: ObjectMetadata? = null,
     override val rules: List<PolicyRule>? = null
-) : AuthorizationResource<Role.Version>, K8sRole {
+) : AuthorizationResource<Role.Version, ObjectMetadata>, K8sRole {
     interface Version : APIVersion
 
     class Builder : ResourceDslBuilder<Role>() {

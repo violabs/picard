@@ -28,7 +28,7 @@ data class Event(
     val reportingInstance: String? = null,
     val series: EventSeries? = null,
     val type: Type? = null
-) : ClusterResource<Event.Version> {
+) : ClusterResource<Event.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     enum class Type {

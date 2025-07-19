@@ -26,7 +26,7 @@ data class Pod(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : WorkloadResource<Pod.Version> {
+) : WorkloadResource<Pod.Version, ObjectMetadata> {
 
     interface Version : APIVersion
 

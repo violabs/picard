@@ -22,7 +22,7 @@ data class HorizontalPodAutoscaler(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : WorkloadResource<HorizontalPodAutoscaler.Version> {
+) : WorkloadResource<HorizontalPodAutoscaler.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

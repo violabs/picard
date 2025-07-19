@@ -21,7 +21,7 @@ data class CustomResourceDefinition(
     val spec: Spec,
     override val metadata: ObjectMetadata? = null,
     val status: Status? = null
-) : ExtendResource<CustomResourceDefinition.Version> {
+) : ExtendResource<CustomResourceDefinition.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

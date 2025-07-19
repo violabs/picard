@@ -17,7 +17,7 @@ data class ResourceQuota(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : PolicyResource<ResourceQuota.Version> {
+) : PolicyResource<ResourceQuota.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

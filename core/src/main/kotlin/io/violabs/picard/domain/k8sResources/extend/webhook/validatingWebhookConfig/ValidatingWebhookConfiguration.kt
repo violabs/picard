@@ -11,7 +11,7 @@ data class ValidatingWebhookConfiguration(
     override val apiVersion: Version = KAPIVersion.AdmissionRegistrationV1,
     override val metadata: ObjectMetadata? = null,
     val webhooks: List<ValidatingWebhook>? = null
-) : ExtendResource<ValidatingWebhookConfiguration.Version> {
+) : ExtendResource<ValidatingWebhookConfiguration.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     class Builder : ResourceDslBuilder<ValidatingWebhookConfiguration>() {

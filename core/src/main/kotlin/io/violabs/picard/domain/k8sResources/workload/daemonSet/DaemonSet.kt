@@ -20,7 +20,7 @@ data class DaemonSet(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : WorkloadResource<DaemonSet.Version> {
+) : WorkloadResource<DaemonSet.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

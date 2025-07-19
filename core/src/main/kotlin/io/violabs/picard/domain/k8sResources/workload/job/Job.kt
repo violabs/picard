@@ -20,7 +20,7 @@ data class Job(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : WorkloadResource<Job.Version> {
+) : WorkloadResource<Job.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

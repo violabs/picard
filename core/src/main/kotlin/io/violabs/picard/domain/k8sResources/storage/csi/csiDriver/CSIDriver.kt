@@ -15,7 +15,7 @@ data class CSIDriver(
     override val apiVersion: Version = KAPIVersion.StorageV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null
-) : StorageResource<CSIDriver.Version> {
+) : StorageResource<CSIDriver.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

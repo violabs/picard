@@ -12,7 +12,7 @@ data class LocalSubjectAccessReview(
     override val metadata: ObjectMetadata? = null,
     val spec: SubjectAccessReview.Spec,
     val status: SubjectAccessReview.Status? = null
-) : AuthorizationResource<LocalSubjectAccessReview.Version> {
+) : AuthorizationResource<LocalSubjectAccessReview.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     class Builder : ResourceSpecStatusDslBuilder<

@@ -15,7 +15,7 @@ data class ResourceClaimTemplate(
     override val apiVersion: Version = KAPIVersion.ResourceV1Beta1,
     val spec: Spec,
     override val metadata: ObjectMetadata? = null,
-) : WorkloadResource<ResourceClaimTemplate.Version> {
+) : WorkloadResource<ResourceClaimTemplate.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

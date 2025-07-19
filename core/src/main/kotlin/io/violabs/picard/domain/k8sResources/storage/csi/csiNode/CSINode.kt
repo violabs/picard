@@ -14,7 +14,7 @@ data class CSINode(
     override val apiVersion: Version = KAPIVersion.StorageV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null
-) : StorageResource<CSINode.Version> {
+) : StorageResource<CSINode.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

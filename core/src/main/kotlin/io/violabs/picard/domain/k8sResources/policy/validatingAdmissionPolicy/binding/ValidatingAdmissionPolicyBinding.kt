@@ -15,7 +15,7 @@ data class ValidatingAdmissionPolicyBinding(
     override val apiVersion: Version = KAPIVersion.AdmissionRegistrationV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null
-) : PolicyResource<ValidatingAdmissionPolicyBinding.Version> {
+) : PolicyResource<ValidatingAdmissionPolicyBinding.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

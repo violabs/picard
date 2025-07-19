@@ -16,7 +16,7 @@ data class ClusterRoleBinding(
     override val roleRef: RoleRef,
     val subjects: List<K8sSubject>? = null,
     override val metadata: ObjectMetadata? = null
-) : AuthorizationResource<ClusterRoleBinding.Version>, K8sRoleBinding {
+) : AuthorizationResource<ClusterRoleBinding.Version, ObjectMetadata>, K8sRoleBinding {
     interface Version : APIVersion
 
     class Builder : ResourceDslBuilder<ClusterRoleBinding>() {

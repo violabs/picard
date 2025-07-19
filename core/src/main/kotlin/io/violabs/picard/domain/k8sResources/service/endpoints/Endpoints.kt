@@ -13,7 +13,7 @@ data class Endpoints(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,
     val subsets: List<EndpointSubset>? = null
-) : ServiceResource<Endpoints.Version> {
+) : ServiceResource<Endpoints.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     class Builder : ResourceDslBuilder<Endpoints>() {

@@ -13,7 +13,7 @@ data class Node(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : ClusterResource<Node.Version> {
+) : ClusterResource<Node.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

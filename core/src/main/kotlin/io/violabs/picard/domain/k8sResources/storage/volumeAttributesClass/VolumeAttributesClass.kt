@@ -12,7 +12,7 @@ data class VolumeAttributesClass(
     override val metadata: ObjectMetadata? = null,
     val driverName: String? = null,
     val parameters: Map<String, String>? = null
-) : StorageResource<VolumeAttributesClass.Version> {
+) : StorageResource<VolumeAttributesClass.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     class Builder : ResourceDslBuilder<VolumeAttributesClass>() {

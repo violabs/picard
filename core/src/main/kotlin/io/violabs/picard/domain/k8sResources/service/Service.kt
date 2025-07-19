@@ -11,7 +11,7 @@ data class Service(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : ServiceResource<Service.Version> {
+) : ServiceResource<Service.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

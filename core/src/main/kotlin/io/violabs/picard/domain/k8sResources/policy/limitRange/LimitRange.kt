@@ -14,7 +14,7 @@ data class LimitRange(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null
-) : PolicyResource<LimitRange.Version> {
+) : PolicyResource<LimitRange.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

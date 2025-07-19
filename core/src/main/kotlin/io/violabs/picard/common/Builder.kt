@@ -59,7 +59,7 @@ abstract class ResourceDslBuilder<T> : DslBuilder<T> {
 }
 
 abstract class ResourceListDslBuilder<
-    T : K8sResource<*>,
+    T : K8sResource<*, *>,
     B : DslBuilder<T>,
     G : K8sListResource.ItemGroup<T, B>,
     L : K8sListResource<*, T>

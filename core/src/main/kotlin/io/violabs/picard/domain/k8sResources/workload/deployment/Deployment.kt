@@ -22,7 +22,7 @@ data class Deployment(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : WorkloadResource<Deployment.Version> {
+) : WorkloadResource<Deployment.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     @JsonPropertyOrder("replicas", "selector", "template")

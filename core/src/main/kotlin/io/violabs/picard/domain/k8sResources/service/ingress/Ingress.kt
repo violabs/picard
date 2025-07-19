@@ -16,7 +16,7 @@ data class Ingress(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : ServiceResource<Ingress.Version> {
+) : ServiceResource<Ingress.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

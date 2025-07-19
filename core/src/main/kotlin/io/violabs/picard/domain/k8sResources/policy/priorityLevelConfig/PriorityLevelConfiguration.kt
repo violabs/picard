@@ -18,7 +18,7 @@ data class PriorityLevelConfiguration(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : PolicyResource<PriorityLevelConfiguration.Version> {
+) : PolicyResource<PriorityLevelConfiguration.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

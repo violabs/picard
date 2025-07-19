@@ -18,7 +18,7 @@ data class StorageVersionMigration(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null,
-) : StorageResource<StorageVersionMigration.Version> {
+) : StorageResource<StorageVersionMigration.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

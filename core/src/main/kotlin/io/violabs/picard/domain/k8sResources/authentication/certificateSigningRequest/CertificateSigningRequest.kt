@@ -20,7 +20,7 @@ data class CertificateSigningRequest(
     val spec: Spec,
     override val metadata: ObjectMetadata? = null,
     val status: Status? = null
-) : AuthenticationResource<CertificateSigningRequest.Version> {
+) : AuthenticationResource<CertificateSigningRequest.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

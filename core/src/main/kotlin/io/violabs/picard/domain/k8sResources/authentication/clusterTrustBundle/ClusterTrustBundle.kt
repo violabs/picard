@@ -14,7 +14,7 @@ data class ClusterTrustBundle(
     override val apiVersion: Version = KAPIVersion.CertificatesV1Alpha1,
     val spec: Spec,
     override val metadata: ObjectMetadata? = null
-) : AuthenticationResource<ClusterTrustBundle.Version> {
+) : AuthenticationResource<ClusterTrustBundle.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

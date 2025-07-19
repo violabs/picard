@@ -13,7 +13,7 @@ data class SelfSubjectReview(
     override val apiVersion: Version = KAPIVersion.AuthenticationV1,
     override val metadata: ObjectMetadata? = null,
     val status: Status? = null
-) : AuthenticationResource<SelfSubjectReview.Version> {
+) : AuthenticationResource<SelfSubjectReview.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Status(

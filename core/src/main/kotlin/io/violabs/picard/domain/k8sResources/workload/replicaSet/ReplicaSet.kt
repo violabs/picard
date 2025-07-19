@@ -19,7 +19,7 @@ data class ReplicaSet(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : WorkloadResource<ReplicaSet.Version> {
+) : WorkloadResource<ReplicaSet.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

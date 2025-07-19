@@ -13,7 +13,7 @@ data class ControllerRevision(
     val revision: Long,
     override val metadata: ObjectMetadata? = null,
     val data: Any? = null
-) : WorkloadResource<ControllerRevision.Version> {
+) : WorkloadResource<ControllerRevision.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     class Builder : ResourceDslBuilder<ControllerRevision>() {

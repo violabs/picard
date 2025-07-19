@@ -12,7 +12,7 @@ data class RuntimeClass(
     override val metadata: ObjectMetadata? = null,
     val overhead: RuntimeClassOverhead? = null,
     val scheduling: RuntimeClassScheduling? = null
-    ) : ClusterResource<RuntimeClass.Version> {
+    ) : ClusterResource<RuntimeClass.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     class Builder : ResourceDslBuilder<RuntimeClass>() {

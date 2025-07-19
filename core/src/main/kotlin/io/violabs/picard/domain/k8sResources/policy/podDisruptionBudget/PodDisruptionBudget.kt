@@ -23,7 +23,7 @@ data class PodDisruptionBudget(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : PolicyResource<PodDisruptionBudget.Version> {
+) : PolicyResource<PodDisruptionBudget.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

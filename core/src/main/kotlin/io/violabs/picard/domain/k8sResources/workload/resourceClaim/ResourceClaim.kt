@@ -16,7 +16,7 @@ data class ResourceClaim(
     val spec: Spec,
     override val metadata: ObjectMetadata? = null,
     val status: Status? = null
-) : WorkloadResource<ResourceClaim.Version> {
+) : WorkloadResource<ResourceClaim.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

@@ -13,7 +13,7 @@ data class ComponentStatus(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,
     val conditions: List<ComponentCondition>? = null
-) : ClusterResource<ComponentStatus.Version> {
+) : ClusterResource<ComponentStatus.Version, ObjectMetadata> {
 
     interface Version : APIVersion
 

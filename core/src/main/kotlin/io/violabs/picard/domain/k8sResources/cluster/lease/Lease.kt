@@ -14,7 +14,7 @@ data class Lease(
     override val apiVersion: Version = KAPIVersion.CoordinationV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null
-) : ClusterResource<Lease.Version> {
+) : ClusterResource<Lease.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

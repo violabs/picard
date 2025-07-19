@@ -37,7 +37,7 @@ import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourceSlic
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSet
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSetList
 
-interface WorkloadResource<T : APIVersion> : K8sResource<T>
+interface WorkloadResource<T : APIVersion, META> : K8sResource<T, META>
 interface WorkloadListResource<T : APIVersion, E> : K8sListResource<T, E>
 
 data class WorkloadResourceSection(
@@ -45,7 +45,7 @@ data class WorkloadResourceSection(
 ) : ManifestResource {
 
     class Builder(
-        private val resources: MutableList<WorkloadResource<*>> = mutableListOf(),
+        private val resources: MutableList<WorkloadResource<*, *>> = mutableListOf(),
         private val lists: MutableList<WorkloadListResource<*, *>> = mutableListOf()
     ) : DslBuilder<WorkloadResourceSection> {
 

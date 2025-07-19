@@ -15,7 +15,7 @@ data class PriorityClass(
     val description: String? = null,
     val globalDefault: Boolean? = null,
     val preemptionPolicy: String? = null
-) : WorkloadResource<PriorityClass.Version> {
+) : WorkloadResource<PriorityClass.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     class Builder : ResourceDslBuilder<PriorityClass>() {

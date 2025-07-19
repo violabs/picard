@@ -15,7 +15,7 @@ data class ServiceAccount(
     val automountServiceAccountToken: Boolean? = null,
     val imagePullSecrets: List<LocalObjectReference>? = null,
     val secrets: List<ObjectReference>? = null
-) : AuthenticationResource<ServiceAccount.Version> {
+) : AuthenticationResource<ServiceAccount.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     class Builder : ResourceDslBuilder<ServiceAccount>() {

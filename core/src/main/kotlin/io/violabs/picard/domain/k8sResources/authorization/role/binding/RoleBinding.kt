@@ -16,7 +16,7 @@ data class RoleBinding(
     override val metadata: ObjectMetadata? = null,
     override val roleRef: RoleRef,
     val subjects: List<K8sSubject>? = null
-) : AuthorizationResource<RoleBinding.Version>, K8sRoleBinding {
+) : AuthorizationResource<RoleBinding.Version, ObjectMetadata>, K8sRoleBinding {
     interface Version : APIVersion
 
     class Builder : ResourceDslBuilder<RoleBinding>() {

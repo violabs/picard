@@ -14,7 +14,7 @@ data class VolumeAttachment(
     override val apiVersion: Version = KAPIVersion.StorageV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null
-) : StorageResource<VolumeAttachment.Version> {
+) : StorageResource<VolumeAttachment.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

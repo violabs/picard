@@ -15,7 +15,7 @@ data class ClusterRole(
     override val metadata: ObjectMetadata? = null,
     val aggregationRule: AggregationRule? = null,
     override val rules: List<PolicyRule>? = null
-) : AuthorizationResource<ClusterRole.Version>, K8sRole {
+) : AuthorizationResource<ClusterRole.Version, ObjectMetadata>, K8sRole {
     interface Version : APIVersion
 
     class Builder : ResourceDslBuilder<ClusterRole>() {

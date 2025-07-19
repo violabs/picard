@@ -17,7 +17,7 @@ data class TokenReview(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec,
     val status: Status? = null
-) : AuthenticationResource<TokenReview.Version> {
+) : AuthenticationResource<TokenReview.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

@@ -20,8 +20,8 @@ interface K8sAPIResource<T : APIVersion> : BaseK8s {
  * Kind is implied by the class name.
  */
 @JsonPropertyOrder("apiVersion", "kind", "metadata", "spec", "status")
-interface K8sResource<T : APIVersion> : K8sAPIResource<T> {
-    val metadata: ObjectMetadata?
+interface K8sResource<T : APIVersion, M> : K8sAPIResource<T> {
+    val metadata: M?
 }
 
 @JsonPropertyOrder("apiVersion", "kind", "metadata", "items")

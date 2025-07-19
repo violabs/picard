@@ -19,7 +19,7 @@ data class ReplicationController(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : WorkloadResource<ReplicationController.Version> {
+) : WorkloadResource<ReplicationController.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

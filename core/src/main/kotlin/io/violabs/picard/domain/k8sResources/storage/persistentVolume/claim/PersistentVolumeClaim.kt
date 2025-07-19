@@ -26,7 +26,7 @@ data class PersistentVolumeClaim(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : StorageResource<PersistentVolumeClaim.Version> {
+) : StorageResource<PersistentVolumeClaim.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

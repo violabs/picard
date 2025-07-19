@@ -14,7 +14,7 @@ data class IngressClass(
     override val apiVersion: Version = KAPIVersion.NetworkingV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
-) : ServiceResource<IngressClass.Version> {
+) : ServiceResource<IngressClass.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

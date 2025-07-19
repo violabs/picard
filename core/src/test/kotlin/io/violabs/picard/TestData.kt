@@ -1,9 +1,12 @@
 package io.violabs.picard
 
 import io.violabs.picard.BuildSim.Companion.PLACEHOLDER
+import io.violabs.picard.domain.BooleanType
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.v2.common.*
+import io.violabs.picard.v2.resources.configstorage.persistent.volume.claim.PersistentVolumeClaimCondition
+import io.violabs.picard.v2.resources.configstorage.persistent.volume.claim.PersistentVolumeClaimConditionDslBuilder
 import io.violabs.picard.v2.resources.configstorage.persistent.volume.claim.PersistentVolumeClaimV2
 import io.violabs.picard.v2.resources.configstorage.volume.KeyToPath
 import io.violabs.picard.v2.resources.configstorage.volume.Volume
@@ -13,22 +16,71 @@ import io.violabs.picard.v2.resources.configstorage.volume.source.*
 import io.violabs.picard.v2.resources.configstorage.volume.template.PersistentVolumeClaimTemplate
 
 
-val LABEL_SELECTOR_V2 = LabelSelector(
-    matchExpressions = listOf(
-        LabelSelectorRequirement(
-            key = PLACEHOLDER,
-            operator = PLACEHOLDER,
-            values = listOf(PLACEHOLDER)
-        )
-    ),
-    matchLabels = mapOf(PLACEHOLDER to PLACEHOLDER)
-)
+object Common {
+    val OBJECT_META = ObjectMeta(
+        name = PLACEHOLDER,
+        namespace = PLACEHOLDER,
+        labels = mapOf(PLACEHOLDER to PLACEHOLDER),
+        annotations = mapOf(PLACEHOLDER to PLACEHOLDER)
+    )
+
+    fun ObjectMetaDslBuilder.sharedObjectMeta() {
+        name = PLACEHOLDER
+        generateName = PLACEHOLDER
+        namespace = PLACEHOLDER
+        labels(PLACEHOLDER to PLACEHOLDER)
+
+        annotations(PLACEHOLDER to PLACEHOLDER)
+    }
+
+    val LABEL_SELECTOR = LabelSelector(
+        matchExpressions = listOf(
+            LabelSelectorRequirement(
+                key = PLACEHOLDER,
+                operator = PLACEHOLDER,
+                values = listOf(PLACEHOLDER)
+            )
+        ),
+        matchLabels = mapOf(PLACEHOLDER to PLACEHOLDER)
+    )
+
+    fun LabelSelectorDslBuilder.sharedSelector() {
+        matchExpressions {
+            labelSelectorRequirement {
+                key = PLACEHOLDER
+                operator = PLACEHOLDER
+                values(PLACEHOLDER)
+            }
+        }
+        matchLabels(PLACEHOLDER to PLACEHOLDER)
+    }
+}
+
+object Conditions {
+    val PERSISTENT_VOLUME_CLAIM_CONDITION = PersistentVolumeClaimCondition(
+        type = PLACEHOLDER,
+        status = BooleanType.True,
+        lastProbeTime = PLACEHOLDER,
+        lastTransitionTime = PLACEHOLDER,
+        reason = PLACEHOLDER,
+        message = PLACEHOLDER
+    )
+
+    fun PersistentVolumeClaimConditionDslBuilder.sharedPersistentVolumeClaimCondition() {
+        type = PLACEHOLDER
+        status = BooleanType.True
+        lastProbeTime = PLACEHOLDER
+        lastTransitionTime = PLACEHOLDER
+        reason = PLACEHOLDER
+        message = PLACEHOLDER
+    }
+}
 
 object Volumes {
     val CLUSTER_TRUST_BUNDLE_PROJECTION = ClusterTrustBundleProjection(
         name = PLACEHOLDER,
         path = PLACEHOLDER,
-        labelSelector = LABEL_SELECTOR_V2,
+        labelSelector = Common.LABEL_SELECTOR,
         signerName = PLACEHOLDER,
         optional = true
     )

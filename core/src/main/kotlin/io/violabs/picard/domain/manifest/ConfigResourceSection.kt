@@ -11,7 +11,7 @@ import io.violabs.picard.domain.k8sResources.config.configMap.ConfigMapList
 import io.violabs.picard.domain.k8sResources.config.secret.Secret
 import io.violabs.picard.domain.k8sResources.config.secret.SecretList
 
-interface ConfigResource<T : APIVersion> : K8sResource<T>
+interface ConfigResource<T : APIVersion, META> : K8sResource<T, META>
 interface ConfigListResource<T : APIVersion, E> : K8sListResource<T, E>
 
 data class ConfigResourceSection(
@@ -19,7 +19,7 @@ data class ConfigResourceSection(
 ) : ManifestResource {
 
     class Builder(
-        private val resources: MutableList<ConfigResource<*>> = mutableListOf(),
+        private val resources: MutableList<ConfigResource<*, *>> = mutableListOf(),
         private val lists: MutableList<ConfigListResource<*, *>> = mutableListOf()
     ) : DslBuilder<ConfigResourceSection> {
 

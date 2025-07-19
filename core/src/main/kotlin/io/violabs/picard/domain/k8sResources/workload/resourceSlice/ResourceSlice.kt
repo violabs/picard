@@ -16,7 +16,7 @@ data class ResourceSlice(
     override val apiVersion: Version = KAPIVersion.ResourceV1Beta1,
     val spec: Spec,
     override val metadata: ObjectMetadata? = null,
-) : WorkloadResource<ResourceSlice.Version> {
+) : WorkloadResource<ResourceSlice.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

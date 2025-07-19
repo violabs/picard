@@ -14,7 +14,7 @@ data class IPAddress(
     override val apiVersion: Version = KAPIVersion.NetworkingV1Beta1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null
-) : ClusterResource<IPAddress.Version> {
+) : ClusterResource<IPAddress.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(val parentRef: ParentReference) : BaseSpec {

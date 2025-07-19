@@ -7,9 +7,9 @@ import io.violabs.picard.domain.BaseStatus
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.Quantity
+import io.violabs.picard.domain.manifest.StorageResource
 import io.violabs.picard.v2.common.LabelSelector
 import io.violabs.picard.v2.common.ObjectMeta
-import io.violabs.picard.v2.framework.section.StorageResource
 
 /**
  * https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/persistent-volume-claim-v1/
@@ -18,11 +18,11 @@ import io.violabs.picard.v2.framework.section.StorageResource
  */
 @GeneratedDsl
 data class PersistentVolumeClaimV2(
-    val apiVersion: Version = KAPIVersion.V1,
-    val metadata: ObjectMeta? = null,
+    override val apiVersion: Version = KAPIVersion.V1,
+    override val metadata: ObjectMeta? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : StorageResource {
+) : StorageResource<PersistentVolumeClaimV2.Version, ObjectMeta> {
     interface Version : APIVersion
 
     /**

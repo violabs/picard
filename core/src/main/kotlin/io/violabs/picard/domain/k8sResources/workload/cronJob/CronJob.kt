@@ -19,7 +19,7 @@ data class CronJob(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : WorkloadResource<CronJob.Version> {
+) : WorkloadResource<CronJob.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

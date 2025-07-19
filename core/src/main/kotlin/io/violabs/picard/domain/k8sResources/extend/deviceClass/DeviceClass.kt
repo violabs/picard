@@ -16,7 +16,7 @@ data class DeviceClass(
     override val apiVersion: Version = KAPIVersion.ResourceV1Beta1,
     val spec: Spec,
     override val metadata: ObjectMetadata? = null
-) : ExtendResource<DeviceClass.Version> {
+) : ExtendResource<DeviceClass.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

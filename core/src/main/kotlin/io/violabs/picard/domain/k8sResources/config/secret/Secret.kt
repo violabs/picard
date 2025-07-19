@@ -22,7 +22,7 @@ data class Secret(
     val stringData: TextData? = null,
     val immutable: Boolean? = null,
     val type: Type? = null
-) : ConfigResource<Secret.Version> {
+) : ConfigResource<Secret.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     enum class Type(private val ref: String) {

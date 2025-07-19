@@ -18,7 +18,7 @@ data class SelfSubjectRulesReview(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec,
     val status: Status? = null
-) : AuthorizationResource<SelfSubjectRulesReview.Version> {
+) : AuthorizationResource<SelfSubjectRulesReview.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(val namespace: String) : BaseSpec {

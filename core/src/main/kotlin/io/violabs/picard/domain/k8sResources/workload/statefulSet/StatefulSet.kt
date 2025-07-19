@@ -21,7 +21,7 @@ data class StatefulSet(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : WorkloadResource<StatefulSet.Version> {
+) : WorkloadResource<StatefulSet.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

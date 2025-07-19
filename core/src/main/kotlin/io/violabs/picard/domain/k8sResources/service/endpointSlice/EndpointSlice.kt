@@ -15,7 +15,7 @@ data class EndpointSlice(
     override val metadata: ObjectMetadata? = null,
     val endpoints: List<Endpoint>? = null,
     val ports: List<EndpointPort>? = null
-) : ServiceResource<EndpointSlice.Version> {
+) : ServiceResource<EndpointSlice.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     class Builder : ResourceDslBuilder<EndpointSlice>() {

@@ -20,7 +20,7 @@ data class StorageClass(
     val parameters: Map<String, String>? = null,
     val reclaimPolicy: String? = null,
     val volumeBindingMode: String? = null,
-) : StorageResource<StorageClass.Version> {
+) : StorageResource<StorageClass.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     class Builder : ResourceDslBuilder<StorageClass>() {

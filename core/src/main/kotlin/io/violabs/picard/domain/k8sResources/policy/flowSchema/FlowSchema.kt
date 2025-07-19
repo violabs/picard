@@ -22,7 +22,7 @@ data class FlowSchema(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : PolicyResource<FlowSchema.Version> {
+) : PolicyResource<FlowSchema.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

@@ -19,7 +19,7 @@ data class ConfigMap(
     val binaryData: BinaryData? = null,
     val data: TextData? = null,
     val immutable: Boolean? = null
-) : ConfigResource<ConfigMap.Version> {
+) : ConfigResource<ConfigMap.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     class Builder : ResourceDslBuilder<ConfigMap>() {

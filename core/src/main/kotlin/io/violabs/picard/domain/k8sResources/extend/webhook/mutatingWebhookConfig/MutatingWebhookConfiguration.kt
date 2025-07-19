@@ -11,7 +11,7 @@ data class MutatingWebhookConfiguration(
     override val apiVersion: Version = KAPIVersion.AdmissionRegistrationV1,
     override val metadata: ObjectMetadata? = null,
     val webhooks: List<MutatingWebhook>? = null
-) : ExtendResource<MutatingWebhookConfiguration.Version> {
+) : ExtendResource<MutatingWebhookConfiguration.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     class Builder : ResourceDslBuilder<MutatingWebhookConfiguration>() {

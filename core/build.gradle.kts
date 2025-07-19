@@ -17,8 +17,8 @@ dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.19.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.19.0")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.19.0")
-    ksp("io.violabs.konstellation:dsl:0.0.1")
-    implementation("io.violabs.konstellation:meta-dsl:0.0.1")
+    ksp("io.violabs.konstellation:dsl:0.0.2")
+    implementation("io.violabs.konstellation:meta-dsl:0.0.2")
 
     testImplementation(project(":core-test"))
     testImplementation("com.fasterxml.jackson.core:jackson-core:2.19.0")

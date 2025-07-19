@@ -18,7 +18,7 @@ data class APIService(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : ClusterResource<APIService.Version> {
+) : ClusterResource<APIService.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(

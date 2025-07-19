@@ -23,7 +23,7 @@ import io.violabs.picard.domain.k8sResources.policy.validatingAdmissionPolicy.Va
 import io.violabs.picard.domain.k8sResources.policy.validatingAdmissionPolicy.binding.ValidatingAdmissionPolicyBinding
 import io.violabs.picard.domain.k8sResources.policy.validatingAdmissionPolicy.binding.ValidatingAdmissionPolicyBindingList
 
-interface PolicyResource<T : APIVersion> : K8sResource<T>
+interface PolicyResource<T : APIVersion, META> : K8sResource<T, META>
 interface PolicyListResource<T : APIVersion, E> : K8sListResource<T, E>
 
 data class PolicyResourceSection(
@@ -31,7 +31,7 @@ data class PolicyResourceSection(
 ) : ManifestResource {
 
     class Builder : DslBuilder<PolicyResourceSection> {
-        private val resources: MutableList<PolicyResource<*>> = mutableListOf()
+        private val resources: MutableList<PolicyResource<*, *>> = mutableListOf()
         private val lists: MutableList<PolicyListResource<*, *>> = mutableListOf()
 
         fun flowSchema(init: FlowSchema.Builder.() -> Unit) {

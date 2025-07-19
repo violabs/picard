@@ -15,7 +15,7 @@ data class ServiceCIDR(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : ClusterResource<ServiceCIDR.Version> {
+) : ClusterResource<ServiceCIDR.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(val cidrs: List<String>? = null) : BaseSpec {

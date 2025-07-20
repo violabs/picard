@@ -129,6 +129,7 @@ import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourceSlic
 import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourceSliceList
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSet
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSetList
+import io.violabs.picard.v2.resources.config.map.ConfigMapV2
 import io.violabs.picard.v2.resources.configstorage.persistent.volume.claim.PersistentVolumeClaimV2
 
 interface APIVersion {
@@ -147,6 +148,7 @@ open class KAPIVersion(
         ComponentStatus.Version,
         ComponentStatusList.Version,
         ConfigMap.Version,
+        ConfigMapV2.Version,
         ConfigMapList.Version,
         Endpoints.Version,
         EndpointsList.Version,

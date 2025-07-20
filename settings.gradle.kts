@@ -42,9 +42,6 @@ includeModules(
     "core",
     "core-test",
     "sandbox",
-    "star-charts".subModules(
-        "loki"
-    ),
     "tutorial"
 )
 

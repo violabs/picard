@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.v2.resources.storage.persistent.volume.claim
+package io.violabs.picard.v2.resources.storage.persistent.volume.claim
 
 
 import io.violabs.picard.Common
@@ -9,12 +9,6 @@ import io.violabs.picard.Conditions.sharedPersistentVolumeClaimCondition
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.AccessMode
 import io.violabs.picard.possibilities
-import io.violabs.picard.v2.resources.storage.persistent.volume.claim.ModifyVolumeStatus
-import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimV2
-import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimSpec
-import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimStatus
-import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimV2DslBuilder
-import io.violabs.picard.v2.resources.storage.persistent.volume.claim.VolumeResourceRequirements
 import org.junit.jupiter.api.BeforeAll
 
 class PersistentVolumeClaimTest : SuccessBuildSim<PersistentVolumeClaimV2, PersistentVolumeClaimV2DslBuilder>() {

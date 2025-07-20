@@ -11,6 +11,7 @@ import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.StorageResource
 
+@Deprecated("Use v2", ReplaceWith("io.violabs.picard.v2.resources.storage.csi.driver.CsiDriverV2"))
 data class CSIDriver(
     override val apiVersion: Version = KAPIVersion.StorageV1,
     override val metadata: ObjectMetadata? = null,

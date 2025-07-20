@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.storage.volume
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 class PersistentVolumeClaimVolumeSource(
     val claimName: String,
     val readOnly: Boolean? = null
 ) {
 
-    class Builder : DSLBuilder<PersistentVolumeClaimVolumeSource> {
+    class Builder : DslBuilder<PersistentVolumeClaimVolumeSource> {
         var claimName: String? = null
         private var readOnly: Boolean? = null
 

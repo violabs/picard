@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.storage.persistentVolume
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
 import io.violabs.picard.domain.ObjectMetadata
@@ -23,7 +23,7 @@ data class PersistentVolume(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : StorageResource<PersistentVolume.Version> {
+) : StorageResource<PersistentVolume.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(
@@ -37,7 +37,7 @@ data class PersistentVolume(
         val volumeAttributesClassName: String? = null,
         val volumeMode: String? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             var accessModes: String? = null
             private var capacity: Map<String, Quantity>? = null
             private var claimRef: ObjectReference? = null
@@ -86,7 +86,7 @@ data class PersistentVolume(
         val phase: String? = null,
         val reason: String? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             var lastPhaseTransitionTime: LocalDateTime? = null
             var message: String? = null
             var phase: String? = null
@@ -103,7 +103,7 @@ data class PersistentVolume(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         PersistentVolume,
         Spec,
         Spec.Builder,

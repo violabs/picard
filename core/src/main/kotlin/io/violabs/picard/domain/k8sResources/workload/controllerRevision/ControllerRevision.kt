@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.controllerRevision
 
-import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -13,10 +13,10 @@ data class ControllerRevision(
     val revision: Long,
     override val metadata: ObjectMetadata? = null,
     val data: Any? = null
-) : WorkloadResource<ControllerRevision.Version> {
+) : WorkloadResource<ControllerRevision.Version, ObjectMetadata> {
     interface Version : APIVersion
 
-    class Builder : ResourceDSLBuilder<ControllerRevision>() {
+    class Builder : ResourceDslBuilder<ControllerRevision>() {
         var revision: Long? = null
         private var data: Any? = null
 

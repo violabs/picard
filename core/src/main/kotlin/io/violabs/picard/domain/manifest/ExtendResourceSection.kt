@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.manifest
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sAPIResource
@@ -15,7 +15,7 @@ import io.violabs.picard.domain.k8sResources.extend.webhook.mutatingWebhookConfi
 import io.violabs.picard.domain.k8sResources.extend.webhook.validatingWebhookConfig.ValidatingWebhookConfiguration
 import io.violabs.picard.domain.k8sResources.extend.webhook.validatingWebhookConfig.ValidatingWebhookConfigurationList
 
-interface ExtendResource<T : APIVersion> : K8sResource<T>
+interface ExtendResource<T : APIVersion, META> : K8sResource<T, META>
 interface ExtendListResource<T : APIVersion, E> : K8sListResource<T, E>
 
 data class ExtendResourceSection(
@@ -23,9 +23,9 @@ data class ExtendResourceSection(
 ) : ManifestResource {
 
     class Builder(
-        private val resources: MutableList<ExtendResource<*>> = mutableListOf(),
+        private val resources: MutableList<ExtendResource<*, *>> = mutableListOf(),
         private val lists: MutableList<ExtendListResource<*, *>> = mutableListOf()
-    ) : DSLBuilder<ExtendResourceSection> {
+    ) : DslBuilder<ExtendResourceSection> {
         fun customResourceDefinition(block: CustomResourceDefinition.Builder.() -> Unit) {
             resources += CustomResourceDefinition.Builder().apply(block).build()
         }

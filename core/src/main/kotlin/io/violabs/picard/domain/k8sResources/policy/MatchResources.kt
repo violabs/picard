@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.policy
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.label.LabelSelector
 
 data class MatchResources(
@@ -10,7 +10,7 @@ data class MatchResources(
     val objectSelector: LabelSelector? = null,
     val resourceRules: List<NamedRuleWithOperations>? = null
 ) {
-    class Builder : DSLBuilder<MatchResources> {
+    class Builder : DslBuilder<MatchResources> {
         private var excludeResourceRules: List<NamedRuleWithOperations>? = null
         var matchPolicy: String? = null
         private var namespaceSelector: LabelSelector? = null

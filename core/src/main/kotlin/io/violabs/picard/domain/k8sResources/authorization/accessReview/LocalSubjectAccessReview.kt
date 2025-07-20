@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.authorization.accessReview
 
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -12,10 +12,10 @@ data class LocalSubjectAccessReview(
     override val metadata: ObjectMetadata? = null,
     val spec: SubjectAccessReview.Spec,
     val status: SubjectAccessReview.Status? = null
-) : AuthorizationResource<LocalSubjectAccessReview.Version> {
+) : AuthorizationResource<LocalSubjectAccessReview.Version, ObjectMetadata> {
     interface Version : APIVersion
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         LocalSubjectAccessReview,
         SubjectAccessReview.Spec,
         SubjectAccessReview.Spec.Builder,

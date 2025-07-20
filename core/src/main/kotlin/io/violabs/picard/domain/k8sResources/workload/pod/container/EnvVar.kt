@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.workload.pod.container
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.serialization.RetainQuotesSerializer
 
 data class EnvVar(
@@ -11,7 +11,7 @@ data class EnvVar(
     val value: String? = null,
     val valueFrom: EnvVarSource? = null
 ) {
-    class Builder : DSLBuilder<EnvVar> {
+    class Builder : DslBuilder<EnvVar> {
         var name: String? = null
         var value: String? = null
         private var valueFrom: EnvVarSource? = null

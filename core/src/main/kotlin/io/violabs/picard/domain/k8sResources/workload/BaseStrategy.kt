@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload
 
 import io.violabs.picard.domain.BaseK8s
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 interface BaseStrategy : BaseK8s {
     val type: Type?
@@ -16,7 +16,7 @@ interface BaseStrategy : BaseK8s {
         val maxSurge: Int? = null,
         val maxUnavailable: Int? = null
     ) {
-        class Builder : DSLBuilder<RollingUpdate> {
+        class Builder : DslBuilder<RollingUpdate> {
             private var maxSurge: Int? = null
             private var maxUnavailable: Int? = null
 

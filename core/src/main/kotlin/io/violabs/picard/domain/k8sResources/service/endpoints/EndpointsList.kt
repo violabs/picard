@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.service.endpoints
 
-import io.violabs.picard.common.ResourceListDSLBuilder
+import io.violabs.picard.common.ResourceListDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -14,7 +14,7 @@ data class EndpointsList(
 ) : ServiceListResource<EndpointsList.Version, Endpoints> {
     interface Version : APIVersion
 
-    class Builder : ResourceListDSLBuilder<
+    class Builder : ResourceListDslBuilder<
         Endpoints,
         Endpoints.Builder,
         Endpoints.Group,

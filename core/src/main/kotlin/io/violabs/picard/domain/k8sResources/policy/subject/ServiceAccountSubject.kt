@@ -2,13 +2,13 @@ package io.violabs.picard.domain.k8sResources.policy.subject
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSubject
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class ServiceAccountSubject(
     val name: String,
     val namespace: String
 ) : BaseSubject {
-    class Builder : DSLBuilder<ServiceAccountSubject> {
+    class Builder : DslBuilder<ServiceAccountSubject> {
         var name: String? = null
         var namespace: String? = null
 

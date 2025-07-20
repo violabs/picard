@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.daemonSet
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
@@ -20,7 +20,7 @@ data class DaemonSet(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : WorkloadResource<DaemonSet.Version> {
+) : WorkloadResource<DaemonSet.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(
@@ -30,7 +30,7 @@ data class DaemonSet(
         val updateStrategy: UpdateStrategy? = null,
         val revisionHistoryLimit: Int? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var selector: LabelSelector? = null
             private var template: PodTemplate.Spec? = null
             var minReadySeconds: Int? = null
@@ -73,7 +73,7 @@ data class DaemonSet(
         val conditions: List<Condition>? = null,
         val observedGeneration: Long? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             var numberReady: Int = 0
             var numberAvailable: Int? = null
             var numberUnavailable: Int? = null
@@ -106,7 +106,7 @@ data class DaemonSet(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         DaemonSet,
         Spec,
         Spec.Builder,

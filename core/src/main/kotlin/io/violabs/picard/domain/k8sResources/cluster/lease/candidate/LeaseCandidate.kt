@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.cluster.lease.candidate
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
@@ -16,7 +16,7 @@ data class LeaseCandidate(
     override val apiVersion: Version = KAPIVersion.CoordinationV1Alpha1,
     val spec: Spec,
     override val metadata: ObjectMetadata? = null
-) : ClusterResource<LeaseCandidate.Version> {
+) : ClusterResource<LeaseCandidate.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(
@@ -27,7 +27,7 @@ data class LeaseCandidate(
         val pingTime: Instant? = null,
         val renewTime: Instant? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             var leaseName: String? = null
             private var preferredStrategies: List<String>? = null
             var binaryVersion: String? = null
@@ -52,7 +52,7 @@ data class LeaseCandidate(
         }
     }
 
-    class Builder : ResourceSpecDSLBuilder<LeaseCandidate, Spec, Spec.Builder>(Spec.Builder()) {
+    class Builder : ResourceSpecDslBuilder<LeaseCandidate, Spec, Spec.Builder>(Spec.Builder()) {
         override fun build(): LeaseCandidate {
             return LeaseCandidate(
                 spec = vRequireNotNull(this::spec), metadata = metadata

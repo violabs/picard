@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.storage.volumeAttachment
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.ObjectMetadata
@@ -14,7 +14,7 @@ data class VolumeAttachment(
     override val apiVersion: Version = KAPIVersion.StorageV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null
-) : StorageResource<VolumeAttachment.Version> {
+) : StorageResource<VolumeAttachment.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(
@@ -23,7 +23,7 @@ data class VolumeAttachment(
         val source: VolumeAttachmentSource? = null,
         val volumeAttachmentSource: VolumeAttachmentSource? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             var attacher: String? = null
             var nodeName: String? = null
             private var source: VolumeAttachmentSource? = null
@@ -48,7 +48,7 @@ data class VolumeAttachment(
         }
     }
 
-    class Builder : ResourceSpecDSLBuilder<VolumeAttachment, Spec, Spec.Builder>(Spec.Builder()) {
+    class Builder : ResourceSpecDslBuilder<VolumeAttachment, Spec, Spec.Builder>(Spec.Builder()) {
         override fun build(): VolumeAttachment {
             return VolumeAttachment(
                 metadata = metadata,

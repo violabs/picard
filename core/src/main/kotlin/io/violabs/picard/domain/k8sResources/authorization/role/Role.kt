@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.authorization.role
 
 import io.violabs.picard.domain.ObjectMetadata
-import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDslBuilder
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
@@ -13,10 +13,10 @@ data class Role(
     override val apiVersion: Version = KAPIVersion.RBACAuthorizationV1,
     override val metadata: ObjectMetadata? = null,
     override val rules: List<PolicyRule>? = null
-) : AuthorizationResource<Role.Version>, K8sRole {
+) : AuthorizationResource<Role.Version, ObjectMetadata>, K8sRole {
     interface Version : APIVersion
 
-    class Builder : ResourceDSLBuilder<Role>() {
+    class Builder : ResourceDslBuilder<Role>() {
         private var rules: List<PolicyRule>? = null
 
         fun rules(scope: PolicyRule.Group.() -> Unit) {

@@ -1,14 +1,14 @@
 package io.violabs.picard.domain.k8sResources.workload
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class CrossVersionObjectReference(
     val kind: String,
     val name: String,
     val apiVersion: String? = null
 ) {
-    class Builder : DSLBuilder<CrossVersionObjectReference> {
+    class Builder : DslBuilder<CrossVersionObjectReference> {
         var kind: String? = null
         var name: String? = null
         var apiVersion: String? = null

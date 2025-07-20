@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.job
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
 import io.violabs.picard.domain.ObjectMetadata
@@ -20,7 +20,7 @@ data class Job(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : WorkloadResource<Job.Version> {
+) : WorkloadResource<Job.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(
@@ -51,7 +51,7 @@ data class Job(
             NonIndexed
         }
 
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var template: PodTemplate.Spec? = null
             var parallelism: Int? = null
             var completions: Int? = null
@@ -132,7 +132,7 @@ data class Job(
         val failedIndexes: String? = null,
         val terminating: Int? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             var startTime: LocalDateTime? = null
             var completionTime: LocalDateTime? = null
             var active: Int? = null
@@ -171,7 +171,7 @@ data class Job(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         Job,
         Spec,
         Spec.Builder,

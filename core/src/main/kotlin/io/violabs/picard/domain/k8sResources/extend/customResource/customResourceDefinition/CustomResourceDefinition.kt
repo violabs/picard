@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.extend.customResource.customResourceDefinition
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
@@ -21,7 +21,7 @@ data class CustomResourceDefinition(
     val spec: Spec,
     override val metadata: ObjectMetadata? = null,
     val status: Status? = null
-) : ExtendResource<CustomResourceDefinition.Version> {
+) : ExtendResource<CustomResourceDefinition.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(
@@ -32,7 +32,7 @@ data class CustomResourceDefinition(
         val conversion: CustomResourceConversion? = null,
         val preserveUnknownFields: Boolean? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             var group: String? = null
             private var names: CustomResourceDefinitionNames? = null
             var scope: String? = null
@@ -74,7 +74,7 @@ data class CustomResourceDefinition(
         val conditions: List<Condition>? = null,
         val storedVersions: List<String>? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             private var acceptedNames: CustomResourceDefinitionNames? = null
             private var conditions: List<Condition>? = null
             private var storedVersions: List<String>? = null
@@ -101,7 +101,7 @@ data class CustomResourceDefinition(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         CustomResourceDefinition,
         Spec,
         Spec.Builder,

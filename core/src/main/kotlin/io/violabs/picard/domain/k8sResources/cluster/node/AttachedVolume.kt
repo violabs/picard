@@ -2,13 +2,13 @@ package io.violabs.picard.domain.k8sResources.cluster.node
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class AttachedVolume(
     val devicePath: String,
     val name: String
 ) {
-    class Builder : DSLBuilder<AttachedVolume> {
+    class Builder : DslBuilder<AttachedVolume> {
         var devicePath: String? = null
         var name: String? = null
 

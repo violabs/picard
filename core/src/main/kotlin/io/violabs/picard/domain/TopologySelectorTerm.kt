@@ -1,12 +1,12 @@
 package io.violabs.picard.domain
 
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class TopologySelectorTerm(
     val matchLabelExpressions: List<TopologySelectorLabelRequirement>? = null
 ) {
-    class Builder : DSLBuilder<TopologySelectorTerm> {
+    class Builder : DslBuilder<TopologySelectorTerm> {
         private var matchLabelExpressions: List<TopologySelectorLabelRequirement>? = null
 
         fun matchLabelExpressions(scope: TopologySelectorLabelRequirement.Group.() -> Unit) {

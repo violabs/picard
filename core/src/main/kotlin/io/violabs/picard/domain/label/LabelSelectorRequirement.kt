@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.label
 
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.common.vRequireNotNull
 
 data class LabelSelectorRequirement(
@@ -9,7 +9,7 @@ data class LabelSelectorRequirement(
     val operator: String,
     val values: List<String>? = null
 ) {
-    class Builder : DSLBuilder<LabelSelectorRequirement> {
+    class Builder : DslBuilder<LabelSelectorRequirement> {
         var key: String? = null
         var operator: String? = null
         private var values: List<String>? = null

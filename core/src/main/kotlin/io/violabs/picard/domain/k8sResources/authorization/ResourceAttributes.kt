@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.authorization
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class ResourceAttributes(
     val fieldSelector: FieldSelectorAttributes? = null,
@@ -13,7 +13,7 @@ data class ResourceAttributes(
     val verb: K8sVerb? = null,
     val version: String? = null
 ) {
-    class Builder : DSLBuilder<ResourceAttributes> {
+    class Builder : DslBuilder<ResourceAttributes> {
         private var fieldSelector: FieldSelectorAttributes? = null
         var group: String? = null
         private var labelSelector: LabelSelectorAttributes? = null

@@ -1,14 +1,14 @@
 package io.violabs.picard.domain.k8sResources.service.ingress
 
 import io.violabs.picard.domain.BaseLoadBalancerIngress
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class IngressLoadBalancerIngress(
     val hostname: String? = null,
     val ip: String? = null,
     val ports: List<IngressPortStatus>? = null
 ) : BaseLoadBalancerIngress {
-    class Builder : DSLBuilder<IngressLoadBalancerIngress> {
+    class Builder : DslBuilder<IngressLoadBalancerIngress> {
         var hostname: String? = null
         var ip: String? = null
         private var ports: List<IngressPortStatus>? = null

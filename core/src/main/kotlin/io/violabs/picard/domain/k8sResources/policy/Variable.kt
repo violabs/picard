@@ -2,13 +2,13 @@ package io.violabs.picard.domain.k8sResources.policy
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class Variable(
     val expression: String,
     val name: String
 ) {
-    class Builder : DSLBuilder<Variable> {
+    class Builder : DslBuilder<Variable> {
         var expression: String? = null
         var name: String? = null
 

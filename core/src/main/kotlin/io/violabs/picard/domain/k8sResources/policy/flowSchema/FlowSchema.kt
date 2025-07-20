@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.policy.flowSchema
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
@@ -22,7 +22,7 @@ data class FlowSchema(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : PolicyResource<FlowSchema.Version> {
+) : PolicyResource<FlowSchema.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(
@@ -31,7 +31,7 @@ data class FlowSchema(
         val matchingPrecedence: Int? = null,
         val rules: List<PolicyRulesWithSubjects>? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var priorityLevelConfiguration: PriorityLevelConfigurationReference? = null
             private var distinguisherMethod: FlowDistinguisherMethod? = null
             var matchingPrecedence: Int? = null
@@ -63,7 +63,7 @@ data class FlowSchema(
     data class Status(
         val conditions: List<Condition>
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             private var conditions: List<Condition>? = null
 
             fun conditions(scope: StandardConditionGroup.() -> Unit) {
@@ -78,7 +78,7 @@ data class FlowSchema(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         FlowSchema,
         Spec,
         Spec.Builder,

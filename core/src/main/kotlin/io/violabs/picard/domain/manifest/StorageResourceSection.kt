@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.manifest
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sAPIResource
@@ -25,7 +25,7 @@ import io.violabs.picard.domain.k8sResources.storage.volumeAttachment.VolumeAtta
 import io.violabs.picard.domain.k8sResources.storage.volumeAttributesClass.VolumeAttributesClass
 import io.violabs.picard.domain.k8sResources.storage.volumeAttributesClass.VolumeAttributesClassList
 
-interface StorageResource<T : APIVersion> : K8sResource<T>
+interface StorageResource<T : APIVersion, META> : K8sResource<T, META>
 interface StorageListResource<T : APIVersion, E> : K8sListResource<T, E>
 
 data class StorageResourceSection(
@@ -33,9 +33,9 @@ data class StorageResourceSection(
 ) : ManifestResource {
 
     class Builder(
-        private val resources: MutableList<StorageResource<*>> = mutableListOf(),
+        private val resources: MutableList<StorageResource<*, *>> = mutableListOf(),
         private val lists: MutableList<StorageListResource<*, *>> = mutableListOf()
-    ) : DSLBuilder<StorageResourceSection> {
+    ) : DslBuilder<StorageResourceSection> {
         fun csiDriver(block: CSIDriver.Builder.() -> Unit) {
             resources += CSIDriver.Builder().apply(block).build()
         }

@@ -3,7 +3,7 @@ package io.violabs.picard.domain.k8sResources
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.BaseK8s
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.ObjectMetadata
@@ -20,8 +20,8 @@ interface K8sAPIResource<T : APIVersion> : BaseK8s {
  * Kind is implied by the class name.
  */
 @JsonPropertyOrder("apiVersion", "kind", "metadata", "spec", "status")
-interface K8sResource<T : APIVersion> : K8sAPIResource<T> {
-    val metadata: ObjectMetadata?
+interface K8sResource<T : APIVersion, M> : K8sAPIResource<T> {
+    val metadata: M?
 }
 
 @JsonPropertyOrder("apiVersion", "kind", "metadata", "items")
@@ -29,7 +29,7 @@ interface K8sListResource<T : APIVersion, E> : K8sAPIResource<T> {
     val items: List<E>
     val metadata: ListMeta?
 
-    open class ItemGroup<E, B : DSLBuilder<E>>(builder: B) : BuilderGroup<E, B>(builder) {
+    open class ItemGroup<E, B : DslBuilder<E>>(builder: B) : BuilderGroup<E, B>(builder) {
         fun listItems(): List<E>? = items()
 
         fun item(scope: B.() -> Unit) {

@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.config.configMap.ConfigMapEnvSource
 import io.violabs.picard.domain.k8sResources.config.secret.SecretEnvSource
 
@@ -9,7 +9,7 @@ data class EnvFromSource(
     val prefix: String? = null,
     val secretRef: SecretEnvSource? = null
 ) {
-    class Builder : DSLBuilder<EnvFromSource> {
+    class Builder : DslBuilder<EnvFromSource> {
         private var configMapRef: ConfigMapEnvSource? = null
         var prefix: String? = null
         private var secretRef: SecretEnvSource? = null

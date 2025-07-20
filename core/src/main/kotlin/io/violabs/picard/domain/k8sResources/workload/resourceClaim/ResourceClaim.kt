@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.resourceClaim
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
@@ -16,14 +16,14 @@ data class ResourceClaim(
     val spec: Spec,
     override val metadata: ObjectMetadata? = null,
     val status: Status? = null
-) : WorkloadResource<ResourceClaim.Version> {
+) : WorkloadResource<ResourceClaim.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(
         val controller: String? = null,
         val devices: DeviceClaim? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             var controller: String? = null
             private var devices: DeviceClaim? = null
 
@@ -45,7 +45,7 @@ data class ResourceClaim(
         val deallocationRequested: Boolean? = null,
         val reservedFor: List<ConsumerReference>? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             private var allocation: AllocationResult? = null
             private var deallocationRequested: Boolean? = null
             private var reservedFor: List<ConsumerReference>? = null
@@ -72,7 +72,7 @@ data class ResourceClaim(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         ResourceClaim,
         Spec,
         Spec.Builder,

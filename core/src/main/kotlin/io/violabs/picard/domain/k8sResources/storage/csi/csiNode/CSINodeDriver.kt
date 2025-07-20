@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.storage.csi.csiNode
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class CSINodeDriver(
     val name: String,
@@ -12,7 +12,7 @@ data class CSINodeDriver(
 ) {
     data class Allocatable(val count: Long)
 
-    class Builder : DSLBuilder<CSINodeDriver> {
+    class Builder : DslBuilder<CSINodeDriver> {
         var name: String? = null
         var nodeID: String? = null
         private var allocatable: Allocatable? = null

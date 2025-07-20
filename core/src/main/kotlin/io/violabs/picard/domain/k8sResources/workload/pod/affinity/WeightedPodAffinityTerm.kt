@@ -3,13 +3,13 @@ package io.violabs.picard.domain.k8sResources.workload.pod.affinity
 import io.violabs.picard.common.BuilderGroup
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseAffinityTerm
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class WeightedPodAffinityTerm(
     val podAffinityTerm: PodAffinityTerm,
     val weight: Int
 ) : BaseAffinityTerm {
-    class Builder : DSLBuilder<WeightedPodAffinityTerm> {
+    class Builder : DslBuilder<WeightedPodAffinityTerm> {
         private var podAffinityTerm: PodAffinityTerm? = null
         var weight: Int? = null
 

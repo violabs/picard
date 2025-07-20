@@ -2,14 +2,14 @@ package io.violabs.picard.domain.k8sResources.authorization
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class FieldSelectorRequirement(
     val key: String,
     val requirements: String,
     val values: List<String>? = null
 ) {
-    class Builder : DSLBuilder<FieldSelectorRequirement> {
+    class Builder : DslBuilder<FieldSelectorRequirement> {
         var key: String? = null
         var requirements: String? = null
         private var values: List<String>? = null

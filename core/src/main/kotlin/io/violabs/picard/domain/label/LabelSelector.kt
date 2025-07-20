@@ -2,7 +2,7 @@ package io.violabs.picard.domain.label
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.serialization.ListAsMapSerializer
 
 /**
@@ -15,7 +15,7 @@ data class LabelSelector(
     val matchLabels: List<Label>? = null
 ) {
 
-    class Builder : DSLBuilder<LabelSelector> {
+    class Builder : DslBuilder<LabelSelector> {
         private var matchExpressions: List<LabelSelectorRequirement>? = null
         private var matchLabels: List<Label>? = null
 

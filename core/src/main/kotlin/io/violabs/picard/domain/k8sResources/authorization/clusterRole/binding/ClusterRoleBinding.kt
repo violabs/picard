@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.authorization.clusterRole.binding
 
-import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -16,10 +16,10 @@ data class ClusterRoleBinding(
     override val roleRef: RoleRef,
     val subjects: List<K8sSubject>? = null,
     override val metadata: ObjectMetadata? = null
-) : AuthorizationResource<ClusterRoleBinding.Version>, K8sRoleBinding {
+) : AuthorizationResource<ClusterRoleBinding.Version, ObjectMetadata>, K8sRoleBinding {
     interface Version : APIVersion
 
-    class Builder : ResourceDSLBuilder<ClusterRoleBinding>() {
+    class Builder : ResourceDslBuilder<ClusterRoleBinding>() {
         private var roleRef: RoleRef? = null
         private var subjects: List<K8sSubject>? = null
 

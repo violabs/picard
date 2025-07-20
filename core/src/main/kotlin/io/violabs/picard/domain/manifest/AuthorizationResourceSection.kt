@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.manifest
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sAPIResource
@@ -19,16 +19,16 @@ import io.violabs.picard.domain.k8sResources.authorization.role.RoleList
 import io.violabs.picard.domain.k8sResources.authorization.role.binding.RoleBinding
 import io.violabs.picard.domain.k8sResources.authorization.role.binding.RoleBindingList
 
-interface AuthorizationResource<T : APIVersion> : K8sResource<T>
+interface AuthorizationResource<T : APIVersion, META> : K8sResource<T, META>
 interface AuthorizationListResource<T : APIVersion, E> : K8sListResource<T, E>
 
 data class AuthorizationResourceSection(
     override val resources: List<K8sAPIResource<*>>
 ) : ManifestResource {
     class Builder(
-        private val resources: MutableList<AuthorizationResource<*>> = mutableListOf(),
+        private val resources: MutableList<AuthorizationResource<*, *>> = mutableListOf(),
         private val lists: MutableList<AuthorizationListResource<*, *>> = mutableListOf()
-    ) : DSLBuilder<AuthorizationResourceSection> {
+    ) : DslBuilder<AuthorizationResourceSection> {
         fun localSubjectAccessReview(block: LocalSubjectAccessReview.Builder.() -> Unit) {
             val resource = LocalSubjectAccessReview.Builder().apply(block).build()
             resources.add(resource)

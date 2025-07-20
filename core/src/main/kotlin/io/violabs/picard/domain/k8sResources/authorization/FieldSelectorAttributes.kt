@@ -1,12 +1,12 @@
 package io.violabs.picard.domain.k8sResources.authorization
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class FieldSelectorAttributes(
     val rawSelector: String? = null,
     val resourceAttributes: List<FieldSelectorRequirement>? = null
 ) {
-    class Builder : DSLBuilder<FieldSelectorAttributes> {
+    class Builder : DslBuilder<FieldSelectorAttributes> {
         var rawSelector: String? = null
         private var resourceAttributes: List<FieldSelectorRequirement>? = null
 

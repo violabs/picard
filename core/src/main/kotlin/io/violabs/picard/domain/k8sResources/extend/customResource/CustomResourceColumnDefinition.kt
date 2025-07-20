@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.extend.customResource
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class CustomResourceColumnDefinition(
     val jsonPath: String,
@@ -12,7 +12,7 @@ data class CustomResourceColumnDefinition(
     val format: String? = null,
     val priority: Int? = null
 ) {
-    class Builder : DSLBuilder<CustomResourceColumnDefinition> {
+    class Builder : DslBuilder<CustomResourceColumnDefinition> {
         var jsonPath: String? = null
         var name: String? = null
         var type: String? = null

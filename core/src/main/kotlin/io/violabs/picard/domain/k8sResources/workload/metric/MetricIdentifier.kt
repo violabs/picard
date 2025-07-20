@@ -1,14 +1,14 @@
 package io.violabs.picard.domain.k8sResources.workload.metric
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.label.LabelSelector
 
 data class MetricIdentifier(
     val name: String,
     val selector: LabelSelector? = null
 ) {
-    class Builder : DSLBuilder<MetricIdentifier> {
+    class Builder : DslBuilder<MetricIdentifier> {
         var name: String? = null
         private var selector: LabelSelector? = null
 

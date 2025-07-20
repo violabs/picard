@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.cluster.ipAddress
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class ParentReference(
     val name: String,
@@ -9,7 +9,7 @@ data class ParentReference(
     val group: String? = null,
     val namespace: String? = null
 ) {
-    class Builder : DSLBuilder<ParentReference> {
+    class Builder : DslBuilder<ParentReference> {
         var name: String? = null
         var resource: String? = null
         var group: String? = null

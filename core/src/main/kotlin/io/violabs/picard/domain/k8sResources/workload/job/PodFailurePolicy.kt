@@ -1,10 +1,10 @@
 package io.violabs.picard.domain.k8sResources.workload.job
 
 import io.violabs.picard.common.vRequireNotEmpty
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class PodFailurePolicy(val rules: List<PodFailurePolicyRule>) {
-    class Builder : DSLBuilder<PodFailurePolicy> {
+    class Builder : DslBuilder<PodFailurePolicy> {
         private var rules: List<PodFailurePolicyRule>? = null
 
         fun rules(block: PodFailurePolicyRule.Group.() -> Unit) {

@@ -1,7 +1,7 @@
 package io.violabs.picard.domain
 
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.APIVersion
 
 data class ObjectReference(
@@ -13,7 +13,7 @@ data class ObjectReference(
     val resourceVersion: String? = null,
     val uid: String? = null
 ) {
-    class Builder : DSLBuilder<ObjectReference> {
+    class Builder : DslBuilder<ObjectReference> {
         var apiVersion: APIVersion? = null
         var fieldPath: String? = null
         var kind: String? = null

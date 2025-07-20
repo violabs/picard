@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.manifest
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sAPIResource
@@ -27,16 +27,16 @@ import io.violabs.picard.domain.k8sResources.cluster.runtimeClass.RuntimeClassLi
 import io.violabs.picard.domain.k8sResources.cluster.serviceCIDR.ServiceCIDR
 import io.violabs.picard.domain.k8sResources.cluster.serviceCIDR.ServiceCIDRList
 
-interface ClusterResource<T : APIVersion> : K8sResource<T>
+interface ClusterResource<T : APIVersion, META> : K8sResource<T, META>
 interface ClusterListResource<T : APIVersion, E> : K8sListResource<T, E>
 
 data class ClusterResourceSection(
     override val resources: List<K8sAPIResource<*>>
 ): ManifestResource {
     class Builder(
-        private val resources: MutableList<ClusterResource<*>> = mutableListOf(),
+        private val resources: MutableList<ClusterResource<*, *>> = mutableListOf(),
         private val lists: MutableList<ClusterListResource<*, *>> = mutableListOf()
-    ) : DSLBuilder<ClusterResourceSection> {
+    ) : DslBuilder<ClusterResourceSection> {
         fun apiService(block: APIService.Builder.() -> Unit) {
             val apiService = APIService.Builder().apply(block).build()
             resources.add(apiService)

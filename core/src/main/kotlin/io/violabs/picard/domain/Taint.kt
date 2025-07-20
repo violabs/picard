@@ -1,7 +1,7 @@
 package io.violabs.picard.domain
 
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.common.vRequireNotNull
 
 data class Taint(
@@ -13,7 +13,7 @@ data class Taint(
         NoExecute
     }
 
-    class Builder : DSLBuilder<Taint> {
+    class Builder : DslBuilder<Taint> {
         var effect: Effect? = null
 
         override fun build(): Taint {

@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.ObjectFieldSelector
 import io.violabs.picard.domain.ResourceFieldSelector
 import io.violabs.picard.domain.k8sResources.config.configMap.ConfigMapKeySelector
@@ -12,7 +12,7 @@ data class EnvVarSource(
     val resourceFieldRef: ResourceFieldSelector? = null,
     val secretKeyRef: SecretKeySelector? = null
 ) {
-    class Builder : DSLBuilder<EnvVarSource> {
+    class Builder : DslBuilder<EnvVarSource> {
         private var configMapKeyRef: ConfigMapKeySelector? = null
         private var fieldRef: ObjectFieldSelector? = null
         private var resourceFieldRef: ResourceFieldSelector? = null

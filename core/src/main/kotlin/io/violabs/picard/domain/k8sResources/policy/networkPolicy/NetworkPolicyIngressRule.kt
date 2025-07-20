@@ -1,14 +1,14 @@
 package io.violabs.picard.domain.k8sResources.policy.networkPolicy
 
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class NetworkPolicyIngressRule(
     val from: List<NetworkPolicyPeer>? = null,
     val ports: List<NetworkPolicyPort>? = null,
     val egress: List<NetworkPolicyEgressRule>? = null
 ) {
-    class Builder : DSLBuilder<NetworkPolicyIngressRule> {
+    class Builder : DslBuilder<NetworkPolicyIngressRule> {
         private var from: List<NetworkPolicyPeer>? = null
         private var ports: List<NetworkPolicyPort>? = null
         private var egress: List<NetworkPolicyEgressRule>? = null

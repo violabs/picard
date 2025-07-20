@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.replicationController
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
@@ -19,7 +19,7 @@ data class ReplicationController(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : WorkloadResource<ReplicationController.Version> {
+) : WorkloadResource<ReplicationController.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(
@@ -28,7 +28,7 @@ data class ReplicationController(
         val replicas: Int? = null,
         val minReadySeconds: Int? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var selector: Map<String, String>? = null
             private var template: PodTemplate.Spec? = null
             var replicas: Int? = null
@@ -61,7 +61,7 @@ data class ReplicationController(
         val conditions: List<Condition>? = null,
         val observedGeneration: Long? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             var replicas: Int? = null
             var availableReplicas: Int? = null
             var readyReplicas: Int? = null
@@ -86,7 +86,7 @@ data class ReplicationController(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         ReplicationController,
         Spec,
         Spec.Builder,

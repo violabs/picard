@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.extend.webhook
 
 import io.violabs.picard.common.vRequireNotEmpty
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class WebhookConversion(
     val conversionReviewVersions: List<String>,
     val clientConfig: WebhookClientConfig? = null
 ) {
-    class Builder : DSLBuilder<WebhookConversion> {
+    class Builder : DslBuilder<WebhookConversion> {
         private var conversionReviewVersions: List<String>? = null
         private var clientConfig: WebhookClientConfig? = null
 

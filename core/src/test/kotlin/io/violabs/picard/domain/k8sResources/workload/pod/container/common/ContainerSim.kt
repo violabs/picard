@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.workload.pod.container.common
 
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.TestScenarioSet
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.domain.k8sResources.KAPIVersion
@@ -23,7 +23,7 @@ import io.violabs.picard.verifyRequiredField
 import org.junit.jupiter.api.Test
 import kotlin.reflect.KClass
 
-abstract class ContainerSim<T : BaseContainer, B : DSLBuilder<T>>(
+abstract class ContainerSim<T : BaseContainer, B : DslBuilder<T>>(
     private val exceptionBuilder: B
 ) : SuccessBuildSim<T, B>() {
     @Test
@@ -33,7 +33,7 @@ abstract class ContainerSim<T : BaseContainer, B : DSLBuilder<T>>(
     )
 
     companion object {
-        fun <S : ContainerSim<T, B>, T : BaseContainer, B : DSLBuilder<T>> containerSetup(
+        fun <S : ContainerSim<T, B>, T : BaseContainer, B : DslBuilder<T>> containerSetup(
             klass: KClass<S>, scenariosSet: TestScenarioSet<T, B>
         ) {
             buildSetup(klass, scenariosSet)

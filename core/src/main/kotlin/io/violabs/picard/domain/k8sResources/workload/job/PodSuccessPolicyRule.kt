@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.workload.job
 
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class PodSuccessPolicyRule(
     val succeededCount: Int? = null,
     val succeededIndexes: String? = null
 ) {
-    class Builder : DSLBuilder<PodSuccessPolicyRule> {
+    class Builder : DslBuilder<PodSuccessPolicyRule> {
         var succeededCount: Int? = null
         var succeededIndexes: String? = null
 

@@ -2,13 +2,13 @@ package io.violabs.picard.domain.k8sResources.workload
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class Device(
     val name: String,
     val basic: DeviceBasic? = null
 ) {
-    class Builder : DSLBuilder<Device> {
+    class Builder : DslBuilder<Device> {
         var name: String? = null
         private var basic: DeviceBasic? = null
 

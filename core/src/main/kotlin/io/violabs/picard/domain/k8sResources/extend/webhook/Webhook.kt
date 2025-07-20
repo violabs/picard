@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.extend.webhook
 
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.label.LabelSelector
 
 interface Webhook {
@@ -17,7 +17,7 @@ interface Webhook {
     val rules: List<RuleWithOperations>?
     val timeoutSeconds: Int?
 
-    abstract class Builder<T : Webhook> : DSLBuilder<T> {
+    abstract class Builder<T : Webhook> : DslBuilder<T> {
         protected var admissionReviewVersions: List<String>? = null
         protected var clientConfig: WebhookClientConfig? = null
         var name: String? = null

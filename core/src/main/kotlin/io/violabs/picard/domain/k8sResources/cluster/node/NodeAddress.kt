@@ -2,13 +2,13 @@ package io.violabs.picard.domain.k8sResources.cluster.node
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class NodeAddress(
     val address: String,
     val type: String
 ) {
-    class Builder : DSLBuilder<NodeAddress> {
+    class Builder : DslBuilder<NodeAddress> {
         var address: String? = null
         var type: String? = null
 

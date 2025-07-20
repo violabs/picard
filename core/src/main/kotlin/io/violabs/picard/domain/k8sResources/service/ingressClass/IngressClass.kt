@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.service.ingressClass
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecDslBuilder
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -14,14 +14,14 @@ data class IngressClass(
     override val apiVersion: Version = KAPIVersion.NetworkingV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
-) : ServiceResource<IngressClass.Version> {
+) : ServiceResource<IngressClass.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(
         val controller: String? = null,
         val parameters: IngressClassParametersReference? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             var controller: String? = null
             private var parameters: IngressClassParametersReference? = null
 
@@ -38,7 +38,7 @@ data class IngressClass(
         }
     }
 
-    class Builder : ResourceSpecDSLBuilder<IngressClass, Spec, Spec.Builder>(Spec.Builder()) {
+    class Builder : ResourceSpecDslBuilder<IngressClass, Spec, Spec.Builder>(Spec.Builder()) {
         override fun build(): IngressClass {
             return IngressClass(
                 metadata = metadata,

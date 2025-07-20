@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.service.ingress
 
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class IngressRule(
     val host: String? = null,
     val http: IngressHTTPIngressRuleValue? = null
 ) {
-    class Builder : DSLBuilder<IngressRule> {
+    class Builder : DslBuilder<IngressRule> {
         var host: String? = null
         private var http: IngressHTTPIngressRuleValue? = null
 

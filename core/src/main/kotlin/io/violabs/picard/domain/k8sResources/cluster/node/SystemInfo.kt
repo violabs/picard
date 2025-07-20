@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.cluster.node
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class SystemInfo(
     val architecture: String,
@@ -15,7 +15,7 @@ data class SystemInfo(
     val osImage: String,
     val systemUUID: String
 ) {
-    class Builder : DSLBuilder<SystemInfo> {
+    class Builder : DslBuilder<SystemInfo> {
         var architecture: String? = null
         var bootID: String? = null
         var containerRuntimeVersion: String? = null

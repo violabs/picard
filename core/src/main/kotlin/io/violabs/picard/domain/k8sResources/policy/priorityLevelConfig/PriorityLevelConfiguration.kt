@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.policy.priorityLevelConfig
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
@@ -18,7 +18,7 @@ data class PriorityLevelConfiguration(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : PolicyResource<PriorityLevelConfiguration.Version> {
+) : PolicyResource<PriorityLevelConfiguration.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(
@@ -26,7 +26,7 @@ data class PriorityLevelConfiguration(
         val exempt: ExemptPriorityLevelConfiguration? = null,
         val limited: LimitedPriorityLevelConfiguration? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             var type: Type? = null
             private var exempt: ExemptPriorityLevelConfiguration? = null
             private var limited: LimitedPriorityLevelConfiguration? = null
@@ -52,7 +52,7 @@ data class PriorityLevelConfiguration(
     data class Status(
         val conditions: List<Condition>? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             private var conditions: List<Condition>? = null
 
             fun conditions(scope: StandardConditionGroup.() -> Unit) {
@@ -72,7 +72,7 @@ data class PriorityLevelConfiguration(
         Limited
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         PriorityLevelConfiguration,
         Spec,
         Spec.Builder,

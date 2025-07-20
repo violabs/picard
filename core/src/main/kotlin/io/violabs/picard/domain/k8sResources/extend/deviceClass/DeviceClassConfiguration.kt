@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.k8sResources.extend.deviceClass
 
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.OpaqueDeviceConfiguration
 
 data class DeviceClassConfiguration(
     val opaque: OpaqueDeviceConfiguration? = null
 ) {
-    class Builder : DSLBuilder<DeviceClassConfiguration> {
+    class Builder : DslBuilder<DeviceClassConfiguration> {
         private var opaque: OpaqueDeviceConfiguration? = null
 
         fun opaque(opaque: OpaqueDeviceConfiguration.Builder.() -> Unit) {

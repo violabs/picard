@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.replicaSet
 
-import io.violabs.picard.common.ResourceListDSLBuilder
+import io.violabs.picard.common.ResourceListDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -14,7 +14,7 @@ data class ReplicaSetList(
 ) : WorkloadListResource<ReplicaSetList.Version, ReplicaSet> {
     interface Version : APIVersion
 
-    class Builder : ResourceListDSLBuilder<
+    class Builder : ResourceListDslBuilder<
         ReplicaSet,
         ReplicaSet.Builder,
         ReplicaSet.Group,

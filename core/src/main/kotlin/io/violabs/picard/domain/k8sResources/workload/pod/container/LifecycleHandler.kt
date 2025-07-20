@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.workload.pod.action.ExecAction
 import io.violabs.picard.domain.k8sResources.workload.pod.action.HTTPGetAction
 import io.violabs.picard.domain.k8sResources.workload.pod.action.SleepAction
@@ -12,7 +12,7 @@ data class LifecycleHandler(
     val sleep: SleepAction? = null,
     val tcpSocket: TCPSocketAction? = null
 ) {
-    class Builder : DSLBuilder<LifecycleHandler> {
+    class Builder : DslBuilder<LifecycleHandler> {
         private var exec: ExecAction? = null
         private var httpGet: HTTPGetAction? = null
         private var sleep: SleepAction? = null

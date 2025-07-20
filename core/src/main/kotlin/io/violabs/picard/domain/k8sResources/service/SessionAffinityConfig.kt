@@ -1,11 +1,11 @@
 package io.violabs.picard.domain.k8sResources.service
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class SessionAffinityConfig(
     val clientIP: ClientIPConfig? = null
 ) {
-    class Builder : DSLBuilder<SessionAffinityConfig> {
+    class Builder : DslBuilder<SessionAffinityConfig> {
         private var clientIP: ClientIPConfig? = null
 
         fun clientIP(scope: ClientIPConfig.Builder.() -> Unit) {

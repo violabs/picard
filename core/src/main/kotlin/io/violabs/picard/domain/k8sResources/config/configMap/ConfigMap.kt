@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.config.configMap
 
-import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDslBuilder
 import io.violabs.picard.domain.BinaryData
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.TextData
@@ -13,16 +13,17 @@ import io.violabs.picard.domain.manifest.ConfigResource
 /**
  * https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/config-map-v1/
  */
+@Deprecated("Use v2 version", ReplaceWith("io.violabs.picard.v2.resources.config.map.ConfigMapV2"))
 data class ConfigMap(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,
     val binaryData: BinaryData? = null,
     val data: TextData? = null,
     val immutable: Boolean? = null
-) : ConfigResource<ConfigMap.Version> {
+) : ConfigResource<ConfigMap.Version, ObjectMetadata> {
     interface Version : APIVersion
 
-    class Builder : ResourceDSLBuilder<ConfigMap>() {
+    class Builder : ResourceDslBuilder<ConfigMap>() {
         private var binaryData: BinaryData? = null
         private var data: TextData? = null
         private var immutable: Boolean? = null

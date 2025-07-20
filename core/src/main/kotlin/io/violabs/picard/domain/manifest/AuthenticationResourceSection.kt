@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.manifest
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sAPIResource
@@ -16,7 +16,7 @@ import io.violabs.picard.domain.k8sResources.authentication.tokenRequest.TokenRe
 import io.violabs.picard.domain.k8sResources.authentication.tokenReview.TokenReview
 import io.violabs.picard.domain.k8sResources.authentication.tokenReview.TokenReviewList
 
-interface AuthenticationResource<T : APIVersion> : K8sResource<T>
+interface AuthenticationResource<T : APIVersion, META> : K8sResource<T, META>
 interface AuthenticationListResource<T : APIVersion, E> : K8sListResource<T, E>
 
 data class AuthenticationResourceSection(
@@ -24,9 +24,9 @@ data class AuthenticationResourceSection(
 ): ManifestResource {
 
     class Builder(
-        private val resources: MutableList<AuthenticationResource<*>> = mutableListOf(),
+        private val resources: MutableList<AuthenticationResource<*, *>> = mutableListOf(),
         private val lists: MutableList<AuthenticationListResource<*, *>> = mutableListOf()
-    ) : DSLBuilder<AuthenticationResourceSection> {
+    ) : DslBuilder<AuthenticationResourceSection> {
 
         fun certificateSigningRequest(block: CertificateSigningRequest.Builder.() -> Unit) {
             val request = CertificateSigningRequest.Builder().apply(block).build()

@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.extend.webhook.mutatingWebhookConfig
 
-import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDslBuilder
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
@@ -11,10 +11,10 @@ data class MutatingWebhookConfiguration(
     override val apiVersion: Version = KAPIVersion.AdmissionRegistrationV1,
     override val metadata: ObjectMetadata? = null,
     val webhooks: List<MutatingWebhook>? = null
-) : ExtendResource<MutatingWebhookConfiguration.Version> {
+) : ExtendResource<MutatingWebhookConfiguration.Version, ObjectMetadata> {
     interface Version : APIVersion
 
-    class Builder : ResourceDSLBuilder<MutatingWebhookConfiguration>() {
+    class Builder : ResourceDslBuilder<MutatingWebhookConfiguration>() {
         private var webhooks: List<MutatingWebhook>? = null
 
         fun webhooks(scope: MutatingWebhook.Group.() -> Unit) {

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BasePort
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.domain.k8sResources.Protocol
 import io.violabs.picard.serialization.IntOrStringSerializer
@@ -18,7 +18,7 @@ data class ServicePort(
     val nodePort: Int? = null,
     val appProtocol: String? = null
 ) : BasePort {
-    class Builder : DSLBuilder<ServicePort> {
+    class Builder : DslBuilder<ServicePort> {
         var port: Int? = null
         private var targetPort: IntOrString? = null
         var protocol: Protocol? = null

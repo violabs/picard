@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.manifest
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sAPIResource
@@ -17,7 +17,7 @@ import io.violabs.picard.domain.k8sResources.service.ingress.IngressList
 import io.violabs.picard.domain.k8sResources.service.ingressClass.IngressClass
 import io.violabs.picard.domain.k8sResources.service.ingressClass.IngressClassList
 
-interface ServiceResource<T : APIVersion> : K8sResource<T>
+interface ServiceResource<T : APIVersion, META> : K8sResource<T, META>
 interface ServiceListResource<T : APIVersion, E> : K8sListResource<T, E>
 
 data class ServiceResourceSection(
@@ -25,9 +25,9 @@ data class ServiceResourceSection(
 ) : ManifestResource {
 
     class Builder(
-        private val resources: MutableList<ServiceResource<*>> = mutableListOf(),
+        private val resources: MutableList<ServiceResource<*, *>> = mutableListOf(),
         private val lists: MutableList<ServiceListResource<*, *>> = mutableListOf()
-    ) : DSLBuilder<ServiceResourceSection> {
+    ) : DslBuilder<ServiceResourceSection> {
         fun endpoints(block: Endpoints.Builder.() -> Unit) {
             resources += Endpoints.Builder().apply(block).build()
         }

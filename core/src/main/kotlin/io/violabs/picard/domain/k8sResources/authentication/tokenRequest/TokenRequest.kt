@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.authentication.tokenRequest
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
@@ -19,7 +19,7 @@ data class TokenRequest(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : AuthenticationResource<TokenRequest.Version> {
+) : AuthenticationResource<TokenRequest.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(
@@ -27,7 +27,7 @@ data class TokenRequest(
         val boundObjectRef: BoundObjectReference? = null,
         val expirationSeconds: Long? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var audiences: List<String>? = null
             private var boundObjectRef: BoundObjectReference? = null
             var expirationSeconds: Long? = null
@@ -54,7 +54,7 @@ data class TokenRequest(
         val expirationTimestamp: LocalDateTime,
         val token: String
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             var expirationTimestamp: LocalDateTime? = null
             var token: String? = null
 
@@ -67,7 +67,7 @@ data class TokenRequest(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<TokenRequest, Spec, Spec.Builder, Status, Status.Builder>(
+    class Builder : ResourceSpecStatusDslBuilder<TokenRequest, Spec, Spec.Builder, Status, Status.Builder>(
         Spec.Builder(),
         Status.Builder()
     ) {

@@ -1,12 +1,12 @@
 package io.violabs.picard.domain.k8sResources.service.ingress
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class IngressBackend(
     val resource: TypedLocalObjectReference? = null,
     val service: IngressServiceBackend? = null
 ) {
-    class Builder : DSLBuilder<IngressBackend> {
+    class Builder : DslBuilder<IngressBackend> {
         private var resource: TypedLocalObjectReference? = null
         private var service: IngressServiceBackend? = null
 

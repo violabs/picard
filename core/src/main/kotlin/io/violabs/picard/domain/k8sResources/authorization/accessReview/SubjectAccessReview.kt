@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.authorization.accessReview
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
@@ -17,7 +17,7 @@ data class SubjectAccessReview(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec,
     val status: Status? = null
-) : AuthorizationResource<SubjectAccessReview.Version> {
+) : AuthorizationResource<SubjectAccessReview.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(
@@ -28,7 +28,7 @@ data class SubjectAccessReview(
         val uid: String? = null,
         val user: String? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var extra: Map<String, List<String>>? = null
             private var groups: List<String>? = null
             private var nonResourceAttributes: NonResourceAttributes? = null
@@ -71,7 +71,7 @@ data class SubjectAccessReview(
         val evaluationError: String? = null,
         val reason: String? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             private var allowed: Boolean? = null
             private var denied: Boolean? = null
             var evaluationError: String? = null
@@ -96,7 +96,7 @@ data class SubjectAccessReview(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         SubjectAccessReview,
         Spec,
         Spec.Builder,

@@ -1,7 +1,7 @@
 package io.violabs.picard.domain
 
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.common.vRequireNotNull
 
 data class NodeSelectorRequirement(
@@ -9,7 +9,7 @@ data class NodeSelectorRequirement(
     val operator: String,
     val values: List<String>? = null
 ) {
-    class Builder : DSLBuilder<NodeSelectorRequirement> {
+    class Builder : DslBuilder<NodeSelectorRequirement> {
         var key: String? = null
         var operator: String? = null
         private var _values: List<String>? = null

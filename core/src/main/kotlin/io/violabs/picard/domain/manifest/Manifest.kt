@@ -1,13 +1,13 @@
 package io.violabs.picard.domain.manifest
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 
 data class Manifest(
     val resources: List<ManifestResource>
 ) {
 
-    class Builder : DSLBuilder<Manifest> {
+    class Builder : DslBuilder<Manifest> {
         private val resources: MutableList<ManifestResource> = mutableListOf()
 
         /**

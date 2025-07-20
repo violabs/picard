@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.storage.storageClass
 
-import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.TopologySelectorTerm
@@ -20,10 +20,10 @@ data class StorageClass(
     val parameters: Map<String, String>? = null,
     val reclaimPolicy: String? = null,
     val volumeBindingMode: String? = null,
-) : StorageResource<StorageClass.Version> {
+) : StorageResource<StorageClass.Version, ObjectMetadata> {
     interface Version : APIVersion
 
-    class Builder : ResourceDSLBuilder<StorageClass>() {
+    class Builder : ResourceDslBuilder<StorageClass>() {
         var provisioner: String? = null
         private var allowVolumeExpansion: Boolean? = null
         private var allowedTopologies: List<TopologySelectorTerm>? = null

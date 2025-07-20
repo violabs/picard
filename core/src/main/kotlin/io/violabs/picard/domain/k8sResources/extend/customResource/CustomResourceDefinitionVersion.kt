@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.extend.customResource
 
 import io.violabs.picard.common.BuilderGroup
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.extend.json.SelectableField
 
 data class CustomResourceDefinitionVersion(
@@ -16,7 +16,7 @@ data class CustomResourceDefinitionVersion(
     val selectableFields: List<SelectableField>? = null,
     val subresources: CustomResourceSubresources? = null
 ) {
-    class Builder : DSLBuilder<CustomResourceDefinitionVersion> {
+    class Builder : DslBuilder<CustomResourceDefinitionVersion> {
         var name: String? = null
         private var served: Boolean? = null
         private var storage: Boolean? = null

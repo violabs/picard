@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.policy.priorityLevelConfig
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.policy.LimitResponse
 
 data class LimitedPriorityLevelConfiguration(
@@ -9,7 +9,7 @@ data class LimitedPriorityLevelConfiguration(
     val limitResponse: LimitResponse? = null,
     val nominalConcurrencyShares: Int? = null,
 ) {
-    class Builder : DSLBuilder<LimitedPriorityLevelConfiguration> {
+    class Builder : DslBuilder<LimitedPriorityLevelConfiguration> {
         var borrowingLimitPercent: Int? = null
         var lendablePercent: Int? = null
         private var limitResponse: LimitResponse? = null

@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.cluster.runtimeClass
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.ObjectMetadata
-import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDslBuilder
 import io.violabs.picard.domain.k8sResources.*
 import io.violabs.picard.domain.manifest.ClusterResource
 
@@ -12,10 +12,10 @@ data class RuntimeClass(
     override val metadata: ObjectMetadata? = null,
     val overhead: RuntimeClassOverhead? = null,
     val scheduling: RuntimeClassScheduling? = null
-    ) : ClusterResource<RuntimeClass.Version> {
+    ) : ClusterResource<RuntimeClass.Version, ObjectMetadata> {
     interface Version : APIVersion
 
-    class Builder : ResourceDSLBuilder<RuntimeClass>() {
+    class Builder : ResourceDslBuilder<RuntimeClass>() {
         var handler: String? = null
         private var overhead: RuntimeClassOverhead? = null
         private var scheduling: RuntimeClassScheduling? = null

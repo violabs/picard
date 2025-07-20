@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.storage.csi.csiDriver
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
@@ -11,11 +11,12 @@ import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.StorageResource
 
+@Deprecated("Use v2", ReplaceWith("io.violabs.picard.v2.resources.storage.csi.driver.CsiDriverV2"))
 data class CSIDriver(
     override val apiVersion: Version = KAPIVersion.StorageV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null
-) : StorageResource<CSIDriver.Version> {
+) : StorageResource<CSIDriver.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(
@@ -28,7 +29,7 @@ data class CSIDriver(
         val tokenRequests: List<CSIDriverTokenRequest>,
         val volumeLifecycleModes: List<String>
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var attachRequired: Boolean? = null
             private var podInfoOnMount: Boolean? = null
             private var requiresRepublish: Boolean? = null
@@ -77,7 +78,7 @@ data class CSIDriver(
         }
     }
 
-    class Builder : ResourceSpecDSLBuilder<CSIDriver, Spec, Spec.Builder>(Spec.Builder()) {
+    class Builder : ResourceSpecDslBuilder<CSIDriver, Spec, Spec.Builder>(Spec.Builder()) {
         override fun build(): CSIDriver {
             return CSIDriver(
                 metadata = metadata,

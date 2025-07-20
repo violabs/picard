@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.extend.json
 
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.KeyTransform
 
 data class JSONSchemaProps(
@@ -56,7 +56,7 @@ data class JSONSchemaProps(
     @KeyTransform("x-kubernetes-validations")
     val xKubernetesValidations: List<ValidationRule>? = null
 ) {
-    class Builder : DSLBuilder<JSONSchemaProps> {
+    class Builder : DslBuilder<JSONSchemaProps> {
         var ref: String? = null
         var schema: String? = null
         private var additionalItems: JSONSchemaPropsOrBool? = null

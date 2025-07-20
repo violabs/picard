@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.service.endpoints
 
-import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDslBuilder
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sListResource
@@ -13,10 +13,10 @@ data class Endpoints(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,
     val subsets: List<EndpointSubset>? = null
-) : ServiceResource<Endpoints.Version> {
+) : ServiceResource<Endpoints.Version, ObjectMetadata> {
     interface Version : APIVersion
 
-    class Builder : ResourceDSLBuilder<Endpoints>() {
+    class Builder : ResourceDslBuilder<Endpoints>() {
         private var subsets: List<EndpointSubset>? = null
 
         fun subsets(scope: EndpointSubset.Group.() -> Unit) {

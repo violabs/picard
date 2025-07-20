@@ -1,12 +1,12 @@
 package io.violabs.picard.domain.k8sResources.workload.horizontalPodAutoscaler
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class HorizontalPodAutoscalerBehavior(
     val scaleDown: HPAScalingRules? = null,
     val scaleUp: HPAScalingRules? = null
 ) {
-    class Builder : DSLBuilder<HorizontalPodAutoscalerBehavior> {
+    class Builder : DslBuilder<HorizontalPodAutoscalerBehavior> {
         private var scaleDown: HPAScalingRules? = null
         private var scaleUp: HPAScalingRules? = null
 

@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.storage.csi.csiNode
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.ObjectMetadata
@@ -10,17 +10,18 @@ import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.StorageResource
 
+@Deprecated("Use v2", ReplaceWith("io.violabs.picard.v2.resources.storage.csi.node.CsiNodeV2"))
 data class CSINode(
     override val apiVersion: Version = KAPIVersion.StorageV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null
-) : StorageResource<CSINode.Version> {
+) : StorageResource<CSINode.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(
         val drivers: List<CSINodeDriver>
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var drivers: List<CSINodeDriver>? = null
 
             fun drivers(scope: CSINodeDriver.Group.() -> Unit) {
@@ -35,7 +36,7 @@ data class CSINode(
         }
     }
 
-    class Builder : ResourceSpecDSLBuilder<CSINode, Spec, Spec.Builder>(Spec.Builder()) {
+    class Builder : ResourceSpecDslBuilder<CSINode, Spec, Spec.Builder>(Spec.Builder()) {
         override fun build(): CSINode {
             return CSINode(
                 metadata = metadata,

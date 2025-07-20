@@ -1,14 +1,14 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.affinity
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelectorTerm
 
 data class NodeAffinityPreferredSchedulingTerm(
     val preference: NodeSelectorTerm,
     val weight: Int
 ) {
-    class Builder : DSLBuilder<NodeAffinityPreferredSchedulingTerm> {
+    class Builder : DslBuilder<NodeAffinityPreferredSchedulingTerm> {
         private var preference: NodeSelectorTerm? = null
         var weight: Int? = null
 

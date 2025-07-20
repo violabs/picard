@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.authorization.role.binding
 
-import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -16,10 +16,10 @@ data class RoleBinding(
     override val metadata: ObjectMetadata? = null,
     override val roleRef: RoleRef,
     val subjects: List<K8sSubject>? = null
-) : AuthorizationResource<RoleBinding.Version>, K8sRoleBinding {
+) : AuthorizationResource<RoleBinding.Version, ObjectMetadata>, K8sRoleBinding {
     interface Version : APIVersion
 
-    class Builder : ResourceDSLBuilder<RoleBinding>() {
+    class Builder : ResourceDslBuilder<RoleBinding>() {
         private var roleRef: RoleRef? = null
         private var subjects: List<K8sSubject>? = null
 

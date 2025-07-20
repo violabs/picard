@@ -1,11 +1,11 @@
 package io.violabs.picard.domain.k8sResources.policy
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class TypeChecking(
     val expressionWarnings: List<ExpressionWarning>? = null
 ) {
-    class Builder : DSLBuilder<TypeChecking> {
+    class Builder : DslBuilder<TypeChecking> {
         private var expressionWarnings: List<ExpressionWarning>? = null
 
         fun expressionWarnings(scope: ExpressionWarning.Group.() -> Unit) {

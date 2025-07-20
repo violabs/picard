@@ -1,6 +1,6 @@
 package io.violabs.picard.domain
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 /**
  * https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/list-meta/#ListMeta
@@ -14,7 +14,7 @@ data class ListMeta(
 ) {
     val `continue`: String? by lazy { continueGather }
 
-    class Builder : DSLBuilder<ListMeta> {
+    class Builder : DslBuilder<ListMeta> {
         var continueGather: String? = null
         var remainingItemCount: Long? = null
         var resourceVersion: String? = null

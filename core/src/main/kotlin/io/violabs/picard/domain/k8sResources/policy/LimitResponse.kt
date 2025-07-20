@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.policy
 
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class LimitResponse(
     val type: Type,
@@ -12,7 +12,7 @@ data class LimitResponse(
         Reject
     }
 
-    class Builder : DSLBuilder<LimitResponse> {
+    class Builder : DslBuilder<LimitResponse> {
         var type: Type? = null
         private var queuing: QueuingConfiguration? = null
 

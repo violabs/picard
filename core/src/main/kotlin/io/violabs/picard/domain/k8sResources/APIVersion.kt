@@ -129,6 +129,11 @@ import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourceSlic
 import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourceSliceList
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSet
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSetList
+import io.violabs.picard.v2.resources.config.map.ConfigMapV2
+import io.violabs.picard.v2.resources.config.secret.SecretV2
+import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimV2
+import io.violabs.picard.v2.resources.storage.csi.driver.CsiDriverV2
+import io.violabs.picard.v2.resources.storage.csi.node.CsiNodeV2
 
 interface APIVersion {
     fun refString(): String
@@ -146,6 +151,7 @@ open class KAPIVersion(
         ComponentStatus.Version,
         ComponentStatusList.Version,
         ConfigMap.Version,
+        ConfigMapV2.Version,
         ConfigMapList.Version,
         Endpoints.Version,
         EndpointsList.Version,
@@ -158,6 +164,7 @@ open class KAPIVersion(
         PersistentVolume.Version,
         PersistentVolumeList.Version,
         PersistentVolumeClaim.Version,
+        PersistentVolumeClaimV2.Version,
         PersistentVolumeClaimList.Version,
         Pod.Version,
         PodList.Version,
@@ -168,6 +175,7 @@ open class KAPIVersion(
         ResourceQuota.Version,
         ResourceQuotaList.Version,
         Secret.Version,
+        SecretV2.Version,
         SecretList.Version,
         Service.Version,
         ServiceList.Version,
@@ -319,8 +327,10 @@ open class KAPIVersion(
 
     object StorageV1 : KAPIVersion("storage.k8s.io/v1"),
         CSIDriver.Version,
+        CsiDriverV2.Version,
         CSIDriverList.Version,
         CSINode.Version,
+        CsiNodeV2.Version,
         CSINodeList.Version,
         CSIStorageCapacity.Version,
         CSIStorageCapacityList.Version,

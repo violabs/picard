@@ -1,14 +1,14 @@
 package io.violabs.picard.domain.k8sResources.service.endpoint
 
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class EndpointSubset(
     val addresses: List<EndpointAddress>? = null,
     val notReadyAddresses: List<EndpointAddress>? = null,
     val ports: List<EndpointPort>? = null
 ) {
-    class Builder : DSLBuilder<EndpointSubset> {
+    class Builder : DslBuilder<EndpointSubset> {
         private var addresses: List<EndpointAddress>? = null
         private var notReadyAddresses: List<EndpointAddress>? = null
         private var ports: List<EndpointPort>? = null

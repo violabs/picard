@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.authentication.serviceAccount
 
-import io.violabs.picard.common.ResourceListDSLBuilder
+import io.violabs.picard.common.ResourceListDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -14,7 +14,7 @@ data class ServiceAccountList(
 ) : AuthenticationListResource<ServiceAccountList.Version, ServiceAccount> {
     interface Version : APIVersion
 
-    class Builder : ResourceListDSLBuilder<
+    class Builder : ResourceListDslBuilder<
         ServiceAccount,
         ServiceAccount.Builder,
         ServiceAccount.Group,

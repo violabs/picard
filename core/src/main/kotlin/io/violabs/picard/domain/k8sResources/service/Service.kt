@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.service
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.*
 import io.violabs.picard.domain.manifest.ServiceResource
@@ -11,7 +11,7 @@ data class Service(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : ServiceResource<Service.Version> {
+) : ServiceResource<Service.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(
@@ -43,7 +43,7 @@ data class Service(
             LoadBalancer
         }
 
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var selector: Map<String, String>? = null
             private var ports: List<ServicePort>? = null
             var type: Type? = null
@@ -131,7 +131,7 @@ data class Service(
     data class Status(
         val loadBalancer: LoadBalancerStatus? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             private var loadBalancer: LoadBalancerStatus? = null
 
             fun loadBalancer(scope: LoadBalancerStatus.Builder.() -> Unit) {
@@ -146,7 +146,7 @@ data class Service(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         Service,
         Spec,
         Spec.Builder,

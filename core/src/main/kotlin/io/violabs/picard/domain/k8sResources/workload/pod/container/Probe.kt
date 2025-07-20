@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.workload.pod.container
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.workload.pod.action.ExecAction
 import io.violabs.picard.domain.k8sResources.workload.pod.action.GRPCAction
 import io.violabs.picard.domain.k8sResources.workload.pod.action.HTTPGetAction
@@ -18,7 +18,7 @@ data class Probe(
     val successThreshold: Int? = null,
     val failureThreshold: Int? = null
 ) {
-    class Builder : DSLBuilder<Probe> {
+    class Builder : DslBuilder<Probe> {
         private var exec: ExecAction? = null
         private var httpGet: HTTPGetAction? = null
         private var tcpSocket: TCPSocketAction? = null

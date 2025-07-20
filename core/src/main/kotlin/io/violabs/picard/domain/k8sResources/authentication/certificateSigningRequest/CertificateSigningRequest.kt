@@ -1,8 +1,8 @@
 package io.violabs.picard.domain.k8sResources.authentication.certificateSigningRequest
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.common.PicardDsl
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
@@ -20,7 +20,7 @@ data class CertificateSigningRequest(
     val spec: Spec,
     override val metadata: ObjectMetadata? = null,
     val status: Status? = null
-) : AuthenticationResource<CertificateSigningRequest.Version> {
+) : AuthenticationResource<CertificateSigningRequest.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(
@@ -34,7 +34,7 @@ data class CertificateSigningRequest(
         val username: String? = null
     ) : BaseSpec {
         @PicardDsl
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var request: List<Byte>? = null
             var signerName: String? = null
             var expirationSeconds: Int? = null
@@ -79,7 +79,7 @@ data class CertificateSigningRequest(
         val certificate: List<Byte>? = null,
         val conditions: List<SigningRequestCondition>? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             private var certificate: List<Byte>? = null
             private var conditions: List<SigningRequestCondition>? = null
 
@@ -100,7 +100,7 @@ data class CertificateSigningRequest(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         CertificateSigningRequest,
         Spec, Spec.Builder,
         Status, Status.Builder

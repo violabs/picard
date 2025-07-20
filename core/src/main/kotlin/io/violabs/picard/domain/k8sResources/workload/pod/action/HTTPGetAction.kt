@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.workload.pod.action
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.serialization.IntOrStringSerializer
 
@@ -14,7 +14,7 @@ data class HTTPGetAction(
     val path: String? = null,
     val scheme: String? = null
 ) {
-    class Builder() : DSLBuilder<HTTPGetAction> {
+    class Builder() : DslBuilder<HTTPGetAction> {
         private var port: IntOrString? = null
         private var httpHeaders: MutableList<HttpHeader>? = null
         var host: String? = null

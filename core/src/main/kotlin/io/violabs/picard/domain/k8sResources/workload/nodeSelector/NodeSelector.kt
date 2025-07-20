@@ -2,13 +2,13 @@ package io.violabs.picard.domain.k8sResources.workload.nodeSelector
 
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.domain.BaseNodeSelector
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class NodeSelector(
     val nodeSelectorTerms: List<NodeSelectorTerm>
 ) : BaseNodeSelector {
 
-    class Builder : DSLBuilder<NodeSelector> {
+    class Builder : DslBuilder<NodeSelector> {
         private var nodeSelectorTerms: List<NodeSelectorTerm>? = null
 
         fun terms(scope: NodeSelectorTerm.Group.() -> Unit) {

@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.workload.job
 
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.common.vRequireNotNull
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.Operator
 
 data class OnExitCodesRequirement(
@@ -10,7 +10,7 @@ data class OnExitCodesRequirement(
     val values: List<Int>,
     val containerName: String? = null
 ) {
-    class Builder : DSLBuilder<OnExitCodesRequirement> {
+    class Builder : DslBuilder<OnExitCodesRequirement> {
         var operator: Operator? = null
         private var values: List<Int>? = null
         var containerName: String? = null

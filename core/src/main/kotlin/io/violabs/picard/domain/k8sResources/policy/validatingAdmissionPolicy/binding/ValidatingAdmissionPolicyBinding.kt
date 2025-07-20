@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.policy.validatingAdmissionPolicy.binding
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecDslBuilder
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.k8sResources.APIVersion
@@ -15,14 +15,14 @@ data class ValidatingAdmissionPolicyBinding(
     override val apiVersion: Version = KAPIVersion.AdmissionRegistrationV1,
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null
-) : PolicyResource<ValidatingAdmissionPolicyBinding.Version> {
+) : PolicyResource<ValidatingAdmissionPolicyBinding.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(
         val matchResources: MatchResources? = null,
         val paramRef: ParamRef? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var matchResources: MatchResources? = null
             private var paramRef: ParamRef? = null
 
@@ -43,7 +43,7 @@ data class ValidatingAdmissionPolicyBinding(
         }
     }
 
-    class Builder : ResourceSpecDSLBuilder<ValidatingAdmissionPolicyBinding, Spec, Spec.Builder>(Spec.Builder()) {
+    class Builder : ResourceSpecDslBuilder<ValidatingAdmissionPolicyBinding, Spec, Spec.Builder>(Spec.Builder()) {
         override fun build(): ValidatingAdmissionPolicyBinding {
             return ValidatingAdmissionPolicyBinding(
                 metadata = metadata,

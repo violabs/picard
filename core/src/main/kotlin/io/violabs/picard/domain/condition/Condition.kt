@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.condition
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseCondition
 import io.violabs.picard.domain.BooleanType
@@ -15,7 +15,7 @@ data class Condition(
     val message: String? = null,
     val reason: String? = null
 ) : BaseCondition {
-    class Builder : DSLBuilder<Condition> {
+    class Builder : DslBuilder<Condition> {
         var status: BooleanType? = null
         var type: String? = null
         var lastTransitionTime: LocalDateTime? = null
@@ -49,7 +49,7 @@ data class NodeCondition(
     val message: String? = null,
     val reason: String? = null
 ) : BaseCondition {
-    class Builder : DSLBuilder<NodeCondition> {
+    class Builder : DslBuilder<NodeCondition> {
         var status: BooleanType? = null
         var type: String? = null
         var lastProbeTime: LocalDateTime? = null
@@ -85,7 +85,7 @@ data class ServiceCondition(
     val reason: String? = null,
     val observedGeneration: Long? = null
 ) : BaseCondition {
-    class Builder : DSLBuilder<ServiceCondition> {
+    class Builder : DslBuilder<ServiceCondition> {
         var status: BooleanType? = null
         var type: String? = null
         var lastTransitionTime: LocalDateTime? = null
@@ -119,7 +119,7 @@ data class ComponentCondition(
     val message: String? = null,
     val reason: String? = null
 ) : BaseCondition {
-    class Builder : DSLBuilder<ComponentCondition> {
+    class Builder : DslBuilder<ComponentCondition> {
         var status: BooleanType? = null
         var type: String? = null
         var message: String? = null
@@ -151,7 +151,7 @@ data class SigningRequestCondition(
     val message: String? = null,
     val reason: String? = null
 ) : BaseCondition {
-    class Builder : DSLBuilder<SigningRequestCondition> {
+    class Builder : DslBuilder<SigningRequestCondition> {
         var status: BooleanType? = null
         var type: String? = null
         var lastTransitionTime: LocalDateTime? = null

@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.statefulSet
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
@@ -21,7 +21,7 @@ data class StatefulSet(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : WorkloadResource<StatefulSet.Version> {
+) : WorkloadResource<StatefulSet.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(
@@ -37,7 +37,7 @@ data class StatefulSet(
         val persistentVolumeClaimRetentionPolicy: PersistentVolumeClaimRetentionPolicy? = null,
         val ordinals: Ordinals? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             var serviceName: String? = null
             private var selector: LabelSelector? = null
             private var template: PodTemplate.Spec? = null
@@ -105,7 +105,7 @@ data class StatefulSet(
         val updateRevision: String? = null,
         val observedGeneration: Long? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             var replicas: Int? = null
             var readyReplicas: Int? = null
             var currentReplicas: Int? = null
@@ -138,7 +138,7 @@ data class StatefulSet(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         StatefulSet,
         Spec,
         Spec.Builder,

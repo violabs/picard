@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.config.secret
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
-import io.violabs.picard.common.ResourceDSLBuilder
+import io.violabs.picard.common.ResourceDslBuilder
 import io.violabs.picard.domain.BinaryData
 import io.violabs.picard.domain.ObjectMetadata
 import io.violabs.picard.domain.TextData
@@ -14,6 +14,7 @@ import io.violabs.picard.domain.manifest.ConfigResource
  * https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/secret-v1/
  * base64 encoded string data
  */
+@Deprecated("Use v2 version", ReplaceWith("io.violabs.picard.v2.resources.config.secret.SecretV2"))
 @JsonPropertyOrder("apiVersion", "kind", "metadata", "type", "data", "immutable")
 data class Secret(
     override val apiVersion: Version = KAPIVersion.V1,
@@ -22,7 +23,7 @@ data class Secret(
     val stringData: TextData? = null,
     val immutable: Boolean? = null,
     val type: Type? = null
-) : ConfigResource<Secret.Version> {
+) : ConfigResource<Secret.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     enum class Type(private val ref: String) {
@@ -38,7 +39,7 @@ data class Secret(
         override fun toString(): String = ref
     }
 
-    class Builder : ResourceDSLBuilder<Secret>() {
+    class Builder : ResourceDslBuilder<Secret>() {
         private var data: BinaryData? = null
         private var stringData: TextData? = null
         private var immutable: Boolean? = null

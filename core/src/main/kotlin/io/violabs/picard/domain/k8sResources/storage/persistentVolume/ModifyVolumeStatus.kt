@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.storage.persistentVolume
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class ModifyVolumeStatus(
     val status: String,
@@ -12,7 +12,7 @@ data class ModifyVolumeStatus(
         Infeasible
     }
 
-    class Builder : DSLBuilder<ModifyVolumeStatus> {
+    class Builder : DslBuilder<ModifyVolumeStatus> {
         var status: Name? = null
         var targetVolumeAttributesClassName: String? = null
 

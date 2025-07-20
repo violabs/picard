@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.cluster.apiService
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.BaseStatus
@@ -18,7 +18,7 @@ data class APIService(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec? = null,
     val status: Status? = null
-) : ClusterResource<APIService.Version> {
+) : ClusterResource<APIService.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(
@@ -30,7 +30,7 @@ data class APIService(
         val service: ServiceReference? = null,
         val version: String? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             var groupPriorityMinimum: Int? = null
             var versionPriority: Int? = null
             private var caBundle: List<Byte>? = null
@@ -68,7 +68,7 @@ data class APIService(
     data class Status(
         val conditions: List<Condition>? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             private var conditions: List<Condition>? = null
 
             fun conditions(scope: StandardConditionGroup.() -> Unit) {
@@ -83,7 +83,7 @@ data class APIService(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         APIService,
         Spec,
         Spec.Builder,

@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.authorization.accessReview
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecStatusDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecStatusDslBuilder
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
@@ -18,11 +18,11 @@ data class SelfSubjectRulesReview(
     override val metadata: ObjectMetadata? = null,
     val spec: Spec,
     val status: Status? = null
-) : AuthorizationResource<SelfSubjectRulesReview.Version> {
+) : AuthorizationResource<SelfSubjectRulesReview.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(val namespace: String) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             var namespace: String? = null
             override fun build(): Spec {
                 return Spec(vRequireNotNull(this::namespace))
@@ -36,7 +36,7 @@ data class SelfSubjectRulesReview(
         val resourceRules: List<ResourceRule>,
         val evaluationError: String? = null
     ) : BaseStatus {
-        class Builder : DSLBuilder<Status> {
+        class Builder : DslBuilder<Status> {
             private var incomplete: Boolean? = null
             private var nonResourceRules: List<NonResourceRule>? = null
             private var resourceRules: List<ResourceRule>? = null
@@ -65,7 +65,7 @@ data class SelfSubjectRulesReview(
         }
     }
 
-    class Builder : ResourceSpecStatusDSLBuilder<
+    class Builder : ResourceSpecStatusDslBuilder<
         SelfSubjectRulesReview,
         Spec,
         Spec.Builder,

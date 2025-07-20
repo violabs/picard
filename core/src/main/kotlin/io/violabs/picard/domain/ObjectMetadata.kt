@@ -1,7 +1,7 @@
 package io.violabs.picard.domain
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.label.Label
 import io.violabs.picard.serialization.ListAsMapSerializer
 import io.violabs.picard.serialization.ListAsRetainedQuotesValueMapSerializer
@@ -24,7 +24,7 @@ data class ObjectMetadata(
     @JsonSerialize(using = ListAsRetainedQuotesValueMapSerializer::class)
     val annotations: List<K8sAnnotation>? = null
 ) {
-    class Builder : DSLBuilder<ObjectMetadata> {
+    class Builder : DslBuilder<ObjectMetadata> {
         var name: String? = null
         var generatedName: String? = null
         var namespace: String? = null

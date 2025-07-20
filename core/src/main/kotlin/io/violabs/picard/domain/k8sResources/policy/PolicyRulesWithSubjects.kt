@@ -2,7 +2,7 @@ package io.violabs.picard.domain.k8sResources.policy
 
 import io.violabs.picard.common.vRequireNotEmpty
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.k8sResources.policy.rule.NonResourcePolicyRule
 import io.violabs.picard.domain.k8sResources.policy.rule.ResourcePolicyRule
 
@@ -11,7 +11,7 @@ data class PolicyRulesWithSubjects(
     val nonResourceRules: List<NonResourcePolicyRule>? = null,
     val resourceRules: List<ResourcePolicyRule>? = null
 ) {
-    class Builder : DSLBuilder<PolicyRulesWithSubjects> {
+    class Builder : DslBuilder<PolicyRulesWithSubjects> {
         private var subjects: List<PolicyRuleSubject>? = null
         private var nonResourceRules: List<NonResourcePolicyRule>? = null
         private var resourceRules: List<ResourcePolicyRule>? = null

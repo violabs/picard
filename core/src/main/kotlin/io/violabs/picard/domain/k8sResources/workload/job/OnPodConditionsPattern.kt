@@ -3,13 +3,13 @@ package io.violabs.picard.domain.k8sResources.workload.job
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BooleanType
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class OnPodConditionsPattern(
     val status: BooleanType,
     val type: String
 ) {
-    class Builder : DSLBuilder<OnPodConditionsPattern> {
+    class Builder : DslBuilder<OnPodConditionsPattern> {
         var status: BooleanType? = null
         var type: String? = null
 

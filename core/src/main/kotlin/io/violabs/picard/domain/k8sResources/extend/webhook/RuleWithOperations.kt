@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.extend.webhook
 
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class RuleWithOperations(
     val apiGroups: List<String>? = null,
@@ -10,7 +10,7 @@ data class RuleWithOperations(
     val resources: List<String>? = null,
     val scope: String? = null
 ) {
-    class Builder : DSLBuilder<RuleWithOperations> {
+    class Builder : DslBuilder<RuleWithOperations> {
         private var apiGroups: List<String>? = null
         private var apiVersions: List<String>? = null
         private var operations: List<String>? = null

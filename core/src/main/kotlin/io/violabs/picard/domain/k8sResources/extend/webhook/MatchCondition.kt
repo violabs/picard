@@ -2,13 +2,13 @@ package io.violabs.picard.domain.k8sResources.extend.webhook
 
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class MatchCondition(
     val expression: String,
     val name: String
 ) {
-    class Builder : DSLBuilder<MatchCondition> {
+    class Builder : DslBuilder<MatchCondition> {
         var expression: String? = null
         var name: String? = null
 

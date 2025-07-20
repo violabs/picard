@@ -1,6 +1,6 @@
 package io.violabs.picard.domain.k8sResources.cluster.node
 
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 
 data class NodeConfigStatus(
     val active: NodeConfigSource? = null,
@@ -8,7 +8,7 @@ data class NodeConfigStatus(
     val error: String? = null,
     val lastKnownGood: NodeConfigSource? = null,
 ) {
-    class Builder : DSLBuilder<NodeConfigStatus> {
+    class Builder : DslBuilder<NodeConfigStatus> {
         private var active: NodeConfigSource? = null
         private var assigned: NodeConfigSource? = null
         var error: String? = null

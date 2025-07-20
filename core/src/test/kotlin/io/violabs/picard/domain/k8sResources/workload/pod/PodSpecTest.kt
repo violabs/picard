@@ -1,10 +1,12 @@
 package io.violabs.picard.domain.k8sResources.workload.pod
 
 
+//import io.violabs.picard.domain.k8sResources.storage.volume.Volume
 import io.violabs.picard.FullBuildSim
+import io.violabs.picard.Volumes
 import io.violabs.picard.domain.LocalObjectReference
 import io.violabs.picard.domain.RestartPolicy
-import io.violabs.picard.domain.k8sResources.storage.volume.Volume
+import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.k8sResources.Toleration
 import io.violabs.picard.domain.k8sResources.workload.pod.affinity.*
@@ -155,12 +157,7 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
             imagePullSecrets = listOf(LocalObjectReference("image-pull-secret")),
             enableServiceLinks = true,
             os = PodOS("linux"),
-            volumes = listOf(
-                Volume(
-                    "test_volume",
-                    emptyDir = "/test_empty_dir",
-                )
-            ),
+            volumes = listOf(Volumes.VOLUME),
             nodeSelector = mapOf("nodeSelectorKey" to "nodeSelectorValue"),
             nodeName = "test_node_name",
             affinity = AFFINITY,
@@ -238,9 +235,187 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
                     os("linux")
 
                     volumes {
-                        addVolume {
-                            name = "test_volume"
-                            emptyDir = "/test_empty_dir"
+                        volume {
+                            name = PLACEHOLDER
+                            persistentVolumeClaim {
+                                claimName = PLACEHOLDER
+                                readOnly()
+                            }
+
+                            configMap {
+                                name = PLACEHOLDER
+                                items {
+                                    keyToPath {
+                                        key = PLACEHOLDER
+                                        path = PLACEHOLDER
+                                    }
+                                }
+                                defaultMode = 1
+                                optional()
+                            }
+
+                            secret {
+                                secretName = PLACEHOLDER
+                                optional()
+                                defaultMode = 1
+                                items {
+                                    keyToPath {
+                                        key = PLACEHOLDER
+                                        path = PLACEHOLDER
+                                    }
+                                }
+                            }
+
+                            downwardApi {
+                                defaultMode = 1
+                                items {
+                                    downwardApiVolumeFile {
+                                        path = PLACEHOLDER
+                                        fieldRef {
+                                            fieldPath = PLACEHOLDER
+                                            apiVersion = KAPIVersion.V1
+                                        }
+                                        mode = 1
+                                        resourceFieldRef {
+                                            resource = PLACEHOLDER
+                                            containerName = PLACEHOLDER
+                                            divisor("1")
+                                        }
+                                    }
+                                }
+                            }
+
+                            projected {
+                                defaultMode = 1
+                                sources {
+                                    volumeProjection {
+                                        clusterTrustBundle {
+                                            name = PLACEHOLDER
+                                            path = PLACEHOLDER
+                                            labelSelector {
+                                                matchExpressions {
+                                                    labelSelectorRequirement {
+                                                        key = PLACEHOLDER
+                                                        operator = PLACEHOLDER
+                                                        values(PLACEHOLDER)
+                                                    }
+                                                }
+                                                matchLabels(PLACEHOLDER to PLACEHOLDER)
+                                            }
+                                            signerName = PLACEHOLDER
+                                            optional()
+                                        }
+
+                                        configMap {
+                                            name = PLACEHOLDER
+                                            optional()
+                                            items {
+                                                keyToPath {
+                                                    key = PLACEHOLDER
+                                                    path = PLACEHOLDER
+                                                }
+                                            }
+                                        }
+
+                                        downwardApi {
+                                            items {
+                                                downwardApiVolumeFile {
+                                                    path = PLACEHOLDER
+                                                    fieldRef {
+                                                        fieldPath = PLACEHOLDER
+                                                        apiVersion = KAPIVersion.V1
+                                                    }
+                                                    mode = 1
+                                                    resourceFieldRef {
+                                                        resource = PLACEHOLDER
+                                                        containerName = PLACEHOLDER
+                                                        divisor("1")
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        secret {
+                                            name = PLACEHOLDER
+                                            optional()
+                                            items {
+                                                keyToPath {
+                                                    key = PLACEHOLDER
+                                                    path = PLACEHOLDER
+                                                }
+                                            }
+                                        }
+
+                                        serviceAccountToken {
+                                            audience = PLACEHOLDER
+                                            expirationSeconds = 1L
+                                            path = PLACEHOLDER
+                                        }
+                                    }
+                                }
+                            }
+
+                            emptyDir {
+                                medium = PLACEHOLDER
+                                sizeLimit("1")
+                            }
+
+                            hostPath {
+                                path = PLACEHOLDER
+                                type = PLACEHOLDER
+                            }
+
+                            csi {
+                                driver = PLACEHOLDER
+                                fsType = PLACEHOLDER
+                                readOnly()
+                                nodePublishSecretRef {
+                                    name = PLACEHOLDER
+                                }
+                                volumeAttributes(PLACEHOLDER to PLACEHOLDER)
+                            }
+
+                            ephemeral {
+                                volumeClaimTemplate {
+                                    spec { }
+                                    metadata { }
+                                }
+                            }
+
+                            fc {
+                                fsType = PLACEHOLDER
+                                lun = 1
+                                readOnly()
+                                targetWwns(PLACEHOLDER)
+                                wwids(PLACEHOLDER)
+                            }
+
+                            iscsi {
+                                iqn = PLACEHOLDER
+                                lun = 1
+                                targetPortal = PLACEHOLDER
+                                chapAuthDiscovery()
+                                chapAuthSession()
+                                fsType = PLACEHOLDER
+                                initiatorName = PLACEHOLDER
+                                iscsiInterface = PLACEHOLDER
+                                portals(PLACEHOLDER)
+                                readOnly()
+                                secretRef {
+                                    name = PLACEHOLDER
+                                }
+                            }
+
+                            image {
+                                imagePullPolicy = PLACEHOLDER
+                                reference = PLACEHOLDER
+                            }
+
+                            nfs {
+                                server = PLACEHOLDER
+                                path = PLACEHOLDER
+                                readOnly()
+                            }
                         }
                     }
 

@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.workload.resourceClaimTemplate
 
-import io.violabs.picard.common.DSLBuilder
-import io.violabs.picard.common.ResourceSpecDSLBuilder
+import io.violabs.picard.common.DslBuilder
+import io.violabs.picard.common.ResourceSpecDslBuilder
 import io.violabs.picard.common.vRequireNotNull
 import io.violabs.picard.domain.BaseSpec
 import io.violabs.picard.domain.ObjectMetadata
@@ -15,14 +15,14 @@ data class ResourceClaimTemplate(
     override val apiVersion: Version = KAPIVersion.ResourceV1Beta1,
     val spec: Spec,
     override val metadata: ObjectMetadata? = null,
-) : WorkloadResource<ResourceClaimTemplate.Version> {
+) : WorkloadResource<ResourceClaimTemplate.Version, ObjectMetadata> {
     interface Version : APIVersion
 
     data class Spec(
         val spec: ResourceClaim.Spec,
         val metadata: ObjectMetadata? = null
     ) : BaseSpec {
-        class Builder : DSLBuilder<Spec> {
+        class Builder : DslBuilder<Spec> {
             private var spec: ResourceClaim.Spec? = null
             private var metadata: ObjectMetadata? = null
 
@@ -43,7 +43,7 @@ data class ResourceClaimTemplate(
         }
     }
 
-    class Builder : ResourceSpecDSLBuilder<ResourceClaimTemplate, Spec, Spec.Builder>(Spec.Builder()) {
+    class Builder : ResourceSpecDslBuilder<ResourceClaimTemplate, Spec, Spec.Builder>(Spec.Builder()) {
         override fun build(): ResourceClaimTemplate {
             return ResourceClaimTemplate(
                 spec = vRequireNotNull(this::spec),

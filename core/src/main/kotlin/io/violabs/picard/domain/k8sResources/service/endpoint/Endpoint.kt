@@ -1,7 +1,7 @@
 package io.violabs.picard.domain.k8sResources.service.endpoint
 
 import io.violabs.picard.common.BuilderGroup
-import io.violabs.picard.common.DSLBuilder
+import io.violabs.picard.common.DslBuilder
 import io.violabs.picard.domain.ObjectReference
 
 
@@ -14,7 +14,7 @@ data class Endpoint(
     val targetRef: ObjectReference? = null,
     val zone: String? = null
 ) {
-    class Builder : DSLBuilder<Endpoint> {
+    class Builder : DslBuilder<Endpoint> {
         private var addresses: List<String>? = null
         private var conditions: List<EndpointCondition>? = null
         private var hints: EndpointHints? = null

@@ -19,6 +19,7 @@ import io.violabs.picard.v2.resources.configstorage.volume.template.PersistentVo
 object Common {
     val OBJECT_META = ObjectMeta(
         name = PLACEHOLDER,
+        generateName = PLACEHOLDER,
         namespace = PLACEHOLDER,
         labels = mapOf(PLACEHOLDER to PLACEHOLDER),
         annotations = mapOf(PLACEHOLDER to PLACEHOLDER)

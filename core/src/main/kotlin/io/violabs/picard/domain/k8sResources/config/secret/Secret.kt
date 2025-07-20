@@ -14,6 +14,7 @@ import io.violabs.picard.domain.manifest.ConfigResource
  * https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/secret-v1/
  * base64 encoded string data
  */
+@Deprecated("Use v2 version", ReplaceWith("io.violabs.picard.v2.resources.config.secret.SecretV2"))
 @JsonPropertyOrder("apiVersion", "kind", "metadata", "type", "data", "immutable")
 data class Secret(
     override val apiVersion: Version = KAPIVersion.V1,

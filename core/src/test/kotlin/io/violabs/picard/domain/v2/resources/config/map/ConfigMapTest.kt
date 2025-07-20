@@ -13,12 +13,12 @@ import io.violabs.picard.v2.resources.config.map.binaryData
 import io.violabs.picard.v2.resources.config.map.data
 import org.junit.jupiter.api.BeforeAll
 
-class ConfigMapV2Test : SuccessBuildSim<ConfigMapV2, ConfigMapV2DslBuilder>() {
+class ConfigMapTest : SuccessBuildSim<ConfigMapV2, ConfigMapV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
         fun setup() = buildSetup(
-            ConfigMapV2Test::class,
+            ConfigMapTest::class,
             SUCCESS_POSSIBILITIES
         )
 

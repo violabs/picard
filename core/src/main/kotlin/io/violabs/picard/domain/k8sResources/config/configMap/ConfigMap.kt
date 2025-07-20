@@ -13,6 +13,7 @@ import io.violabs.picard.domain.manifest.ConfigResource
 /**
  * https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/config-map-v1/
  */
+@Deprecated("Use v2 version", ReplaceWith("io.violabs.picard.v2.resources.config.map.ConfigMapV2"))
 data class ConfigMap(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,

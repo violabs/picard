@@ -1,22 +1,18 @@
-package io.violabs.picard.domain.v2.resources.storage.csi
+package io.violabs.picard.v2.resources.storage.csi.driver
 
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
-import io.violabs.picard.v2.resources.storage.csi.driver.CsiDriverSpec
-import io.violabs.picard.v2.resources.storage.csi.driver.CsiDriverV2
-import io.violabs.picard.v2.resources.storage.csi.driver.CsiDriverV2DslBuilder
-import io.violabs.picard.v2.resources.storage.csi.driver.TokenRequest
 import org.junit.jupiter.api.BeforeAll
 
-class CSIDriverTest : SuccessBuildSim<CsiDriverV2, CsiDriverV2DslBuilder>() {
+class CsiDriverTest : SuccessBuildSim<CsiDriverV2, CsiDriverV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
         fun setup() = buildSetup(
-            CSIDriverTest::class,
+            CsiDriverTest::class,
             SUCCESS_POSSIBILITIES
         )
 

@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.v2.resources.config.secret
+package io.violabs.picard.v2.resources.config.secret
 
 
 import io.violabs.picard.Common
@@ -6,13 +6,7 @@ import io.violabs.picard.Common.sharedObjectMeta
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.BinaryData
 import io.violabs.picard.domain.TextData
-import io.violabs.picard.domain.k8sResources.config.secret.Secret
 import io.violabs.picard.possibilities
-import io.violabs.picard.v2.resources.config.secret.SecretType
-import io.violabs.picard.v2.resources.config.secret.SecretV2
-import io.violabs.picard.v2.resources.config.secret.SecretV2DslBuilder
-import io.violabs.picard.v2.resources.config.secret.data
-import io.violabs.picard.v2.resources.config.secret.stringData
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 

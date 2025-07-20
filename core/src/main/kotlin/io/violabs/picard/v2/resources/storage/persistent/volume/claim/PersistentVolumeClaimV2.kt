@@ -11,6 +11,7 @@ import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.manifest.StorageResource
 import io.violabs.picard.v2.common.LabelSelector
 import io.violabs.picard.v2.common.ObjectMeta
+import io.violabs.picard.v2.resources.storage.persistent.volume.claim.ModifyVolumeStatus
 
 /**
  * https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/persistent-volume-claim-v1/

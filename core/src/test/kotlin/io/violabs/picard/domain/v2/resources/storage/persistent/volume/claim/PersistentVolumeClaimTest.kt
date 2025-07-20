@@ -9,7 +9,7 @@ import io.violabs.picard.Conditions.sharedPersistentVolumeClaimCondition
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.AccessMode
 import io.violabs.picard.possibilities
-import io.violabs.picard.v2.resources.configstorage.persistent.volume.claim.ModifyVolumeStatus
+import io.violabs.picard.v2.resources.storage.persistent.volume.claim.ModifyVolumeStatus
 import io.violabs.picard.v2.resources.configstorage.persistent.volume.claim.PersistentVolumeClaimV2
 import io.violabs.picard.v2.resources.configstorage.persistent.volume.claim.PersistentVolumeClaimV2DslBuilder
 import io.violabs.picard.v2.resources.configstorage.persistent.volume.claim.VolumeResourceRequirements

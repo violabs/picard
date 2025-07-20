@@ -1,5 +1,6 @@
 package io.violabs.picard.v2.resources.configstorage.persistent.volume.claim
 
+import io.violabs.konstellation.metaDsl.annotation.DefaultValue
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.domain.AccessMode
 import io.violabs.picard.domain.BaseSpec
@@ -18,6 +19,11 @@ import io.violabs.picard.v2.common.ObjectMeta
  */
 @GeneratedDsl
 data class PersistentVolumeClaimV2(
+    @DefaultValue(
+        "KAPIVersion.V1",
+        packageName = "io.violabs.picard.domain.k8sResources",
+        className = "KAPIVersion"
+    )
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMeta? = null,
     val spec: Spec? = null,

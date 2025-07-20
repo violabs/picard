@@ -1,3 +1,7 @@
+
+val dslVersion: String by project
+val metaDslVersion: String by project
+
 plugins {
     `maven-publish`
     id("com.google.devtools.ksp")
@@ -9,8 +13,8 @@ version = "0.0.1-SNAPSHOT"
 dependencies {
     implementation(project(":star-charts"))
     implementation("io.violabs.picard:command:0.0.1")
-    ksp("io.violabs.konstellation:dsl:0.0.1")
-    implementation("io.violabs.konstellation:meta-dsl:0.0.1")
+    ksp("io.violabs.konstellation:dsl:$dslVersion")
+    implementation("io.violabs.konstellation:meta-dsl:$metaDslVersion")
 }
 
 application {

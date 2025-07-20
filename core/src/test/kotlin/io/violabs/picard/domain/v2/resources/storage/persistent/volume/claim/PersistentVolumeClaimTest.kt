@@ -10,9 +10,11 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.AccessMode
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.storage.persistent.volume.claim.ModifyVolumeStatus
-import io.violabs.picard.v2.resources.configstorage.persistent.volume.claim.PersistentVolumeClaimV2
-import io.violabs.picard.v2.resources.configstorage.persistent.volume.claim.PersistentVolumeClaimV2DslBuilder
-import io.violabs.picard.v2.resources.configstorage.persistent.volume.claim.VolumeResourceRequirements
+import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimV2
+import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimSpec
+import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimStatus
+import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimV2DslBuilder
+import io.violabs.picard.v2.resources.storage.persistent.volume.claim.VolumeResourceRequirements
 import org.junit.jupiter.api.BeforeAll
 
 class PersistentVolumeClaimTest : SuccessBuildSim<PersistentVolumeClaimV2, PersistentVolumeClaimV2DslBuilder>() {
@@ -77,7 +79,7 @@ class PersistentVolumeClaimTest : SuccessBuildSim<PersistentVolumeClaimV2, Persi
                 }
                 expected = PersistentVolumeClaimV2(
                     metadata = Common.OBJECT_META,
-                    spec = PersistentVolumeClaimV2.Spec(
+                    spec = PersistentVolumeClaimSpec(
                         accessModes = listOf(AccessMode.ReadWriteOnce),
                         selector = Common.LABEL_SELECTOR,
                         resources = VOLUME_RESOURCE_REQUIREMENTS,
@@ -85,7 +87,7 @@ class PersistentVolumeClaimTest : SuccessBuildSim<PersistentVolumeClaimV2, Persi
                         volumeName = PLACEHOLDER,
                         volumeMode = PLACEHOLDER
                     ),
-                    status = PersistentVolumeClaimV2.Status(
+                    status = PersistentVolumeClaimStatus(
                         accessModes = listOf(AccessMode.ReadWriteOnce),
                         allocatedResourceStatuses = STRING_MAP,
                         allocatedResources = QUANTITY_MAP,

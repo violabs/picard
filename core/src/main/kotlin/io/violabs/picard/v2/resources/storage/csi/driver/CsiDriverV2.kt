@@ -1,0 +1,34 @@
+package io.violabs.picard.v2.resources.storage.csi.driver
+
+import io.violabs.konstellation.metaDsl.annotation.DefaultValue
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
+import io.violabs.picard.common.AppConstants
+import io.violabs.picard.domain.k8sResources.APIVersion
+import io.violabs.picard.domain.k8sResources.KAPIVersion
+import io.violabs.picard.domain.manifest.ConfigResource
+import io.violabs.picard.v2.common.ObjectMeta
+
+/**
+ * CSIDriver captures information about a Container Storage Interface (CSI) volume driver deployed on the cluster.
+ * apiVersion: storage.k8s.io/v1
+ *
+ * import "k8s.io/api/storage/v1"
+ *
+ * https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/csi-driver-v1/
+ */
+@GeneratedDsl
+data class CsiDriverV2(
+    @DefaultValue(
+        "KAPIVersion.StorageV1",
+        AppConstants.DefaultValue.KAPI_VERSION_PACKAGE,
+        AppConstants.DefaultValue.KAPI_VERSION_CLASS
+    )
+    override val apiVersion: Version = KAPIVersion.StorageV1,
+    /**
+     * Standard object's metadata.
+     * More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+     */
+    override val metadata: ObjectMeta? = null
+) : ConfigResource<CsiDriverV2.Version, ObjectMeta> {
+    interface Version : APIVersion
+}

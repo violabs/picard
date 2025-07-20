@@ -1,4 +1,4 @@
-package io.violabs.picard.v2.resources.configstorage.persistent.volume.claim
+package io.violabs.picard.v2.resources.storage.persistent.volume.claim
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.domain.k8sResources.Quantity

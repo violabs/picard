@@ -1,8 +1,8 @@
-package io.violabs.picard.v2.resources.configstorage.volume.template
+package io.violabs.picard.v2.resources.storage.volume.template
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.v2.common.ObjectMeta
-import io.violabs.picard.v2.resources.configstorage.persistent.volume.claim.PersistentVolumeClaimV2
+import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimSpec
 
 //todo: update with v2
 /**
@@ -27,7 +27,7 @@ data class PersistentVolumeClaimTemplate(
      * into the PVC that gets created from this template. The same fields as in a PersistentVolumeClaim
      * are also valid here.
      */
-    val spec: PersistentVolumeClaimV2.Spec,
+    val spec: PersistentVolumeClaimSpec,
     /**
      * May contain labels and annotations that will be copied into the PVC when creating it. No other
      * fields are allowed and will be rejected during validation.

@@ -131,7 +131,8 @@ import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSet
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSetList
 import io.violabs.picard.v2.resources.config.map.ConfigMapV2
 import io.violabs.picard.v2.resources.config.secret.SecretV2
-import io.violabs.picard.v2.resources.configstorage.persistent.volume.claim.PersistentVolumeClaimV2
+import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimV2
+import io.violabs.picard.v2.resources.storage.csi.driver.CsiDriverV2
 
 interface APIVersion {
     fun refString(): String
@@ -325,6 +326,7 @@ open class KAPIVersion(
 
     object StorageV1 : KAPIVersion("storage.k8s.io/v1"),
         CSIDriver.Version,
+        CsiDriverV2.Version,
         CSIDriverList.Version,
         CSINode.Version,
         CSINodeList.Version,

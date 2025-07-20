@@ -5,15 +5,15 @@ import io.violabs.picard.domain.BooleanType
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.v2.common.*
-import io.violabs.picard.v2.resources.configstorage.persistent.volume.claim.PersistentVolumeClaimCondition
-import io.violabs.picard.v2.resources.configstorage.persistent.volume.claim.PersistentVolumeClaimConditionDslBuilder
-import io.violabs.picard.v2.resources.configstorage.persistent.volume.claim.PersistentVolumeClaimV2
+import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimCondition
 import io.violabs.picard.v2.resources.configstorage.volume.KeyToPath
 import io.violabs.picard.v2.resources.configstorage.volume.Volume
 import io.violabs.picard.v2.resources.configstorage.volume.file.DownwardApiVolumeFile
 import io.violabs.picard.v2.resources.configstorage.volume.projection.*
 import io.violabs.picard.v2.resources.configstorage.volume.source.*
-import io.violabs.picard.v2.resources.configstorage.volume.template.PersistentVolumeClaimTemplate
+import io.violabs.picard.v2.resources.storage.volume.template.PersistentVolumeClaimTemplate
+import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimConditionDslBuilder
+import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimSpec
 
 
 object Common {
@@ -151,7 +151,7 @@ object Volumes {
 
     val EPHEMERAL_VOLUME_SOURCE = EphemeralVolumeSource(
         volumeClaimTemplate = PersistentVolumeClaimTemplate(
-            spec = PersistentVolumeClaimV2.Spec(),
+            spec = PersistentVolumeClaimSpec(),
             metadata = ObjectMeta()
         )
     )

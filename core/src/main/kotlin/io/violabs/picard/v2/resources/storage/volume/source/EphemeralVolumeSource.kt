@@ -1,7 +1,7 @@
 package io.violabs.picard.v2.resources.configstorage.volume.source
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
-import io.violabs.picard.v2.resources.configstorage.volume.template.PersistentVolumeClaimTemplate
+import io.violabs.picard.v2.resources.storage.volume.template.PersistentVolumeClaimTemplate
 
 /**
  * Represents a volume that is handled by a cluster storage driver. The volume's lifecycle

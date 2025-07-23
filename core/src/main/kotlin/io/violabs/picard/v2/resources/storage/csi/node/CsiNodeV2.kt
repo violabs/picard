@@ -7,6 +7,7 @@ import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.ConfigResource
 import io.violabs.picard.v2.common.ObjectMeta
+import io.violabs.picard.v2.resources.storage.csi.driver.CsiDriverV2
 
 /**
  * CSINode holds information about all CSI drivers installed on a node.
@@ -30,12 +31,12 @@ data class CsiNodeV2(
         AppConstants.DefaultValue.KAPI_VERSION_PACKAGE,
         AppConstants.DefaultValue.KAPI_VERSION_CLASS
     )
-    override val apiVersion: Version = KAPIVersion.StorageV1,
-    val spec: CsiNodeSpec,
+    override val apiVersion: CsiDriverV2.Version = KAPIVersion.StorageV1,
+    override val metadata: ObjectMeta? = null,
     /**
-     * Standard object's metadata. metadata.name must be the Kubernetes node name.
+     * spec is the specification of CSINode
      */
-    override val metadata: ObjectMeta? = null
-) : ConfigResource<CsiNodeV2.Version, ObjectMeta> {
+    val spec: CsiNodeSpec
+) : ConfigResource<CsiDriverV2.Version, ObjectMeta> {
     interface Version : APIVersion
 }

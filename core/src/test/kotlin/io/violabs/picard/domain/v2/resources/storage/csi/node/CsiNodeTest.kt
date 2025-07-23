@@ -1,10 +1,11 @@
-package io.violabs.picard.v2.resources.storage.csi.node
+package io.violabs.picard.domain.v2.resources.storage.csi.node
 
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
 import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
+import io.violabs.picard.v2.resources.storage.csi.node.*
 import org.junit.jupiter.api.BeforeAll
 
 class CsiNodeTest : FullBuildSim<CsiNodeV2, CsiNodeV2DslBuilder>() {

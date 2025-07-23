@@ -58,7 +58,7 @@ class CsiNodeTest : FullBuildSim<CsiNodeV2, CsiNodeV2DslBuilder>() {
                             CsiNodeDriver(
                                 name = PLACEHOLDER,
                                 nodeId = PLACEHOLDER,
-                                allocatable = VolumeNodeResource(1),
+                                allocatable = VolumeNodeResources(1),
                                 topologyKeys = PLACEHOLDER_LIST
                             )
                         )

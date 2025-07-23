@@ -1,5 +1,4 @@
-package io.violabs.picard.domain.v2.resources.storage.csi
-
+package io.violabs.picard.domain.v2.resources.storage.csi.driver
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta

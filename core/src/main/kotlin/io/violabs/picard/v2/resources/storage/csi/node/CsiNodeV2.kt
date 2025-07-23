@@ -33,6 +33,10 @@ data class CsiNodeV2(
     )
     override val apiVersion: CsiDriverV2.Version = KAPIVersion.StorageV1,
     override val metadata: ObjectMeta? = null,
+    /**
+     * spec is the specification of CSINode
+     */
+    val spec: CsiNodeSpec
 ) : ConfigResource<CsiDriverV2.Version, ObjectMeta> {
     interface Version : APIVersion
 }

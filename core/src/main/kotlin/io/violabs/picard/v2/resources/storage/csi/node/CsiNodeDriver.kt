@@ -25,7 +25,7 @@ data class CsiNodeDriver(
      * allocatable represents the volume resources of a node that are available for
      * scheduling. This field is beta.
      */
-    val allocatable: VolumeNodeResource? = null,
+    val allocatable: VolumeNodeResources? = null,
     /**
      * Atomic: will be replaced during a merge
      *

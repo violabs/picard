@@ -38,4 +38,8 @@ data class CsiNodeV2(
     override val metadata: ObjectMeta? = null
 ) : ConfigResource<CsiNodeV2.Version, ObjectMeta> {
     interface Version : APIVersion
+
+    override fun getKind(): String {
+        return "CSINode"
+    }
 }

@@ -134,6 +134,7 @@ import io.violabs.picard.v2.resources.config.secret.SecretV2
 import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimV2
 import io.violabs.picard.v2.resources.storage.csi.driver.CsiDriverV2
 import io.violabs.picard.v2.resources.storage.csi.node.CsiNodeV2
+import io.violabs.picard.v2.resources.storage.csi.storage.capacity.CsiStorageCapacityV2
 
 interface APIVersion {
     fun refString(): String
@@ -333,6 +334,7 @@ open class KAPIVersion(
         CsiNodeV2.Version,
         CSINodeList.Version,
         CSIStorageCapacity.Version,
+        CsiStorageCapacityV2.Version,
         CSIStorageCapacityList.Version,
         StorageClass.Version,
         StorageClassList.Version,

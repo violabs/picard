@@ -51,43 +51,6 @@ jobs:
       - uses: actions/checkout@v4
         name: Checkout code
 
-      - name: Determine if module needs konstellation modules
-        id: set-matrix
-        run: |
-          echo "needsKonstellation=$(./gradlew -q ${{ matrix.module-namespace.module }}:detectModuleContainsDependencies --depGroup=io.violabs.konstellation | grep 'HAS_DEPENDENCY=' | cut -d'=' -f2-)" >> "$GITHUB_OUTPUT"
-
-      - name: Debug konstellation check
-        run: |
-          echo "Needs Konstellation: ${{ fromJson(steps.set-matrix.outputs.needsKonstellation) }}"
-
-      - name: Build konstellation library
-        if: steps.set-matrix.outputs.needsKonstellation == 'true'
-        run: |
-          echo "Building konstellation for ${{ matrix.module-namespace.module }}"
-          git clone https://github.com/violabs/konstellation.git temp-konstellation
-          cd temp-konstellation
-          ./gradlew publishToMavenLocal
-          cd ..
-          rm -rf temp-konstellation
-
-      - name: Build picard-command library
-        run: |
-          echo "Building picard-command for ${{ matrix.module-namespace.module }}"
-          ./gradlew cmd:publishToMavenLocal
-
-      - name: Cache Gradle packages
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            .gradle
-            build
-            */build
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
       - uses: actions/setup-java@v4
         name: Set up JDK 21
         with:

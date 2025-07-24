@@ -138,6 +138,7 @@ import io.violabs.picard.v2.resources.storage.csi.driver.CsiDriverV2
 import io.violabs.picard.v2.resources.storage.csi.node.CsiNodeV2
 import io.violabs.picard.v2.resources.storage.csi.storage.capacity.CsiStorageCapacityV2
 import io.violabs.picard.v2.resources.storage.persistent.volume.PersistentVolumeV2
+import io.violabs.picard.v2.resources.storage.volume.VolumeAttributesClassV2
 import io.violabs.picard.v2.resources.storage.volume.attachment.VolumeAttachmentV2
 
 interface APIVersion {
@@ -350,6 +351,7 @@ open class KAPIVersion(
 
     object StorageV1Beta1 : KAPIVersion("storage.k8s.io/v1beta1"),
         VolumeAttributesClass.Version,
+        VolumeAttributesClassV2.Version,
         VolumeAttributesClassList.Version
 
     object StorageMigrationV1Alpha1 : KAPIVersion("storagemigration.k8s.io/v1alpha1"),

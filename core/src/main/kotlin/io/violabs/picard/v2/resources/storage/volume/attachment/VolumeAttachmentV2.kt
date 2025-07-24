@@ -35,6 +35,6 @@ data class VolumeAttachmentV2(
      * entity completing the attach or detach operation, i.e. the external-attacher.
      */
     val status: VolumeAttachmentStatus? = null
-    ) : ConfigResource<VolumeAttachmentV2.Version, ObjectMeta> {
+) : ConfigResource<VolumeAttachmentV2.Version, ObjectMeta> {
     interface Version : APIVersion
 }

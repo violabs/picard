@@ -1,7 +1,7 @@
-package io.violabs.picard.v2.resources.configstorage.volume.source
+package io.violabs.picard.v2.resources.storage.volume.source
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
-import io.violabs.picard.v2.resources.configstorage.volume.file.DownwardApiVolumeFile
+import io.violabs.picard.v2.resources.storage.volume.DownwardApiVolumeFile
 
 /**
  * downwardAPI represents downward API about the pod that should populate this volume

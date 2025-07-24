@@ -1,4 +1,4 @@
-package io.violabs.picard.v2.resources.configstorage.volume.source
+package io.violabs.picard.v2.resources.storage.volume.source
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl

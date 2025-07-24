@@ -1,4 +1,4 @@
-package io.violabs.picard.v2.resources.configstorage.volume.file
+package io.violabs.picard.v2.resources.storage.volume
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.v2.common.ObjectFieldSelector

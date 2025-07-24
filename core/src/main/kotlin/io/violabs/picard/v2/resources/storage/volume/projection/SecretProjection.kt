@@ -1,7 +1,7 @@
-package io.violabs.picard.v2.resources.configstorage.volume.projection
+package io.violabs.picard.v2.resources.storage.volume.projection
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
-import io.violabs.picard.v2.resources.configstorage.volume.KeyToPath
+import io.violabs.picard.v2.resources.storage.volume.KeyToPath
 
 /**
  * Information about the secret data to project

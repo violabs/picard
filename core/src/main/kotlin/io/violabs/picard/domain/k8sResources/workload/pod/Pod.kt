@@ -17,8 +17,8 @@ import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceCl
 import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceClaimStatus
 import io.violabs.picard.domain.k8sResources.workload.pod.security.PodSecurityContext
 import io.violabs.picard.domain.manifest.WorkloadResource
-import io.violabs.picard.v2.resources.configstorage.volume.Volume
-import io.violabs.picard.v2.resources.configstorage.volume.VolumeDslBuilder
+import io.violabs.picard.v2.resources.storage.volume.Volume
+import io.violabs.picard.v2.resources.storage.volume.VolumeDslBuilder
 import java.time.LocalDateTime
 
 data class Pod(

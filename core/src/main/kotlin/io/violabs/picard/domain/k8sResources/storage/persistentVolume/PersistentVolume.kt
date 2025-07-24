@@ -18,6 +18,7 @@ import java.time.LocalDateTime
  *
  * import "k8s.io/api/core/v1"
  */
+@Deprecated("Use v2", ReplaceWith("io.violabs.picard.v2.resources.storage.persistent.volume.PersistentVolumeV2"))
 data class PersistentVolume(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,

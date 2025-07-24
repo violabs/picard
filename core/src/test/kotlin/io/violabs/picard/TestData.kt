@@ -6,14 +6,31 @@ import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.v2.common.*
 import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimCondition
-import io.violabs.picard.v2.resources.configstorage.volume.KeyToPath
-import io.violabs.picard.v2.resources.configstorage.volume.Volume
-import io.violabs.picard.v2.resources.configstorage.volume.file.DownwardApiVolumeFile
+import io.violabs.picard.v2.resources.storage.volume.KeyToPath
+import io.violabs.picard.v2.resources.storage.volume.Volume
+import io.violabs.picard.v2.resources.storage.volume.DownwardApiVolumeFile
 import io.violabs.picard.v2.resources.configstorage.volume.projection.*
-import io.violabs.picard.v2.resources.configstorage.volume.source.*
-import io.violabs.picard.v2.resources.storage.volume.template.PersistentVolumeClaimTemplate
+import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimTemplate
 import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimConditionDslBuilder
 import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimSpec
+import io.violabs.picard.v2.resources.storage.volume.projection.ClusterTrustBundleProjection
+import io.violabs.picard.v2.resources.storage.volume.projection.ConfigMapProjection
+import io.violabs.picard.v2.resources.storage.volume.projection.DownwardApiProjection
+import io.violabs.picard.v2.resources.storage.volume.projection.SecretProjection
+import io.violabs.picard.v2.resources.storage.volume.projection.ServiceAccountTokenProjection
+import io.violabs.picard.v2.resources.storage.volume.source.ConfigMapVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.CsiVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.DownwardApiVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.EmptyDirVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.EphemeralVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.FcVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.HostPathVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.ImageVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.IscsiVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.NfsVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.PersistentVolumeClaimVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.ProjectedVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.SecretVolumeSource
 
 
 object Common {

@@ -131,6 +131,7 @@ import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSet
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSetList
 import io.violabs.picard.v2.resources.config.map.ConfigMapV2
 import io.violabs.picard.v2.resources.config.secret.SecretV2
+import io.violabs.picard.v2.resources.storage.StorageClassV2
 import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimV2
 import io.violabs.picard.v2.resources.storage.csi.driver.CsiDriverV2
 import io.violabs.picard.v2.resources.storage.csi.node.CsiNodeV2
@@ -339,6 +340,7 @@ open class KAPIVersion(
         CsiStorageCapacityV2.Version,
         CSIStorageCapacityList.Version,
         StorageClass.Version,
+        StorageClassV2.Version,
         StorageClassList.Version,
         VolumeAttachment.Version,
         VolumeAttachmentList.Version

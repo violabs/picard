@@ -129,6 +129,7 @@ import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourceSlic
 import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourceSliceList
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSet
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSetList
+import io.violabs.picard.v2.resources.authentication.certificate.CertificateSigningRequestV2
 import io.violabs.picard.v2.resources.authentication.service.account.ServiceAccountV2
 import io.violabs.picard.v2.resources.authentication.token.request.TokenRequestV2
 import io.violabs.picard.v2.resources.authentication.token.review.TokenReviewV2
@@ -254,6 +255,7 @@ open class KAPIVersion(
 
     object CertificatesV1 : KAPIVersion("certificates.k8s.io/v1"),
         CertificateSigningRequest.Version,
+        CertificateSigningRequestV2.Version,
         CertificateSigningRequestList.Version
 
     object CertificatesV1Alpha1 : KAPIVersion("certificates.k8s.io/v1alpha1"),

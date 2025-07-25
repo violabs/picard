@@ -1,4 +1,4 @@
-package io.violabs.picard.v2.resources.authentication.certificate.trust.bundle
+package io.violabs.picard.v2.resources.authentication.cluster
 
 import io.violabs.konstellation.metaDsl.annotation.DefaultValue
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl

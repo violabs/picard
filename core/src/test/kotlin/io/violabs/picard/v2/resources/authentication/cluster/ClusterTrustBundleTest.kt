@@ -1,5 +1,4 @@
-package io.violabs.picard.v2.resources.authentication.certificate.trust.bundle
-
+package io.violabs.picard.v2.resources.authentication.cluster
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta

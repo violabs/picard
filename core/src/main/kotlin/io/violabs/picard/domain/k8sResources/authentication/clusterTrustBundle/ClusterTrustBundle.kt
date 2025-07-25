@@ -10,7 +10,7 @@ import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.AuthenticationResource
 
-@Deprecated("Use v2", ReplaceWith("io.violabs.picard.v2.resources.authentication.certificate.trust.bundle.ClusterTrustBundleV2"))
+@Deprecated("Use v2", ReplaceWith("io.violabs.picard.v2.resources.authentication.cluster.ClusterTrustBundleV2"))
 data class ClusterTrustBundle(
     override val apiVersion: Version = KAPIVersion.CertificatesV1Alpha1,
     val spec: Spec,

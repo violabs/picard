@@ -129,8 +129,9 @@ import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourceSlic
 import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourceSliceList
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSet
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSetList
-import io.violabs.picard.v2.resources.authentication.certificate.signing.request.CertificateSigningRequestV2
-import io.violabs.picard.v2.resources.authentication.certificate.trust.bundle.ClusterTrustBundleV2
+import io.violabs.picard.v2.resources.authentication.certificate.CertificateSigningRequestV2
+import io.violabs.picard.v2.resources.authentication.cluster.ClusterTrustBundleV2
+import io.violabs.picard.v2.resources.authentication.self.SelfSubjectReviewV2
 import io.violabs.picard.v2.resources.authentication.service.account.ServiceAccountV2
 import io.violabs.picard.v2.resources.authentication.token.request.TokenRequestV2
 import io.violabs.picard.v2.resources.authentication.token.review.TokenReviewV2
@@ -232,7 +233,8 @@ open class KAPIVersion(
         TokenReview.Version,
         TokenReviewV2.Version,
         TokenReviewList.Version,
-        SelfSubjectReview.Version
+        SelfSubjectReview.Version,
+        SelfSubjectReviewV2.Version
 
     object AuthorizationV1 : KAPIVersion("authorization.k8s.io/v1"),
         LocalSubjectAccessReview.Version,

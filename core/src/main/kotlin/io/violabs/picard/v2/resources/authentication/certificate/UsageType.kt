@@ -1,4 +1,4 @@
-package io.violabs.picard.v2.resources.authentication.certificate.signing.request
+package io.violabs.picard.v2.resources.authentication.certificate
 
 enum class UsageType(val reference: String) {
     Signing("signing"),

@@ -12,7 +12,7 @@ import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.StorageResource
 
-
+@Deprecated("use v2", ReplaceWith("io.violabs.picard.v2.resources.storage.version.migration.StorageVersionMigrationV2"))
 data class StorageVersionMigration(
     override val apiVersion: Version = KAPIVersion.StorageMigrationV1Alpha1,
     override val metadata: ObjectMetadata? = null,

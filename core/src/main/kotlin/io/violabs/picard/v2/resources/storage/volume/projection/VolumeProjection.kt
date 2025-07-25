@@ -1,6 +1,11 @@
 package io.violabs.picard.v2.resources.configstorage.volume.projection
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
+import io.violabs.picard.v2.resources.storage.volume.projection.ClusterTrustBundleProjection
+import io.violabs.picard.v2.resources.storage.volume.projection.ConfigMapProjection
+import io.violabs.picard.v2.resources.storage.volume.projection.DownwardApiProjection
+import io.violabs.picard.v2.resources.storage.volume.projection.SecretProjection
+import io.violabs.picard.v2.resources.storage.volume.projection.ServiceAccountTokenProjection
 
 @GeneratedDsl(withListGroup = true)
 data class VolumeProjection(

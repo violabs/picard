@@ -36,4 +36,8 @@ data class CsiDriverV2(
     val spec: CsiDriverSpec? = null
 ) : ConfigResource<CsiDriverV2.Version, ObjectMeta> {
     interface Version : APIVersion
+
+    override fun getKind(): String {
+        return "CSIDriver"
+    }
 }

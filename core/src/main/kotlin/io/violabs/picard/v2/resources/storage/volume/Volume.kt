@@ -1,19 +1,19 @@
-package io.violabs.picard.v2.resources.configstorage.volume
+package io.violabs.picard.v2.resources.storage.volume
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
-import io.violabs.picard.v2.resources.configstorage.volume.source.ConfigMapVolumeSource
-import io.violabs.picard.v2.resources.configstorage.volume.source.CsiVolumeSource
-import io.violabs.picard.v2.resources.configstorage.volume.source.DownwardApiVolumeSource
-import io.violabs.picard.v2.resources.configstorage.volume.source.EmptyDirVolumeSource
-import io.violabs.picard.v2.resources.configstorage.volume.source.EphemeralVolumeSource
-import io.violabs.picard.v2.resources.configstorage.volume.source.FcVolumeSource
-import io.violabs.picard.v2.resources.configstorage.volume.source.HostPathVolumeSource
-import io.violabs.picard.v2.resources.configstorage.volume.source.ImageVolumeSource
-import io.violabs.picard.v2.resources.configstorage.volume.source.IscsiVolumeSource
-import io.violabs.picard.v2.resources.configstorage.volume.source.NfsVolumeSource
-import io.violabs.picard.v2.resources.configstorage.volume.source.PersistentVolumeClaimVolumeSource
-import io.violabs.picard.v2.resources.configstorage.volume.source.ProjectedVolumeSource
-import io.violabs.picard.v2.resources.configstorage.volume.source.SecretVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.ConfigMapVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.CsiVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.DownwardApiVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.EmptyDirVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.EphemeralVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.FcVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.HostPathVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.ImageVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.IscsiVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.NfsVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.PersistentVolumeClaimVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.ProjectedVolumeSource
+import io.violabs.picard.v2.resources.storage.volume.source.SecretVolumeSource
 
 /**
  * https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/volume/

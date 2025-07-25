@@ -1,10 +1,8 @@
-package io.violabs.picard.v2.resources.storage.volume.template
+package io.violabs.picard.v2.resources.storage.persistent.volume.claim
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.v2.common.ObjectMeta
-import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimSpec
 
-//todo: update with v2
 /**
  * Will be used to create a stand-alone PVC to provision the volume. The pod in which this
  * EphemeralVolumeSource is embedded will be the owner of the PVC, i.e. the PVC will be deleted

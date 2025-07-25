@@ -1,4 +1,4 @@
-package io.violabs.picard.v2.resources.configstorage.volume.projection
+package io.violabs.picard.v2.resources.storage.volume.projection
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.v2.common.LabelSelector

@@ -39,4 +39,8 @@ data class CsiNodeV2(
     val spec: CsiNodeSpec
 ) : ConfigResource<CsiDriverV2.Version, ObjectMeta> {
     interface Version : APIVersion
+
+    override fun getKind(): String {
+        return "CSINode"
+    }
 }

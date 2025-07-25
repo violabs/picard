@@ -10,6 +10,7 @@ import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.label.LabelSelector
 import io.violabs.picard.domain.manifest.StorageResource
 
+@Deprecated("Use v2", ReplaceWith("io.violabs.picard.v2.resources.storage.csi.storage.capacity.CsiStorageCapacityV2"))
 data class CSIStorageCapacity(
     override val apiVersion: Version = KAPIVersion.StorageV1,
     val storageClassName: String,

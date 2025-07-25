@@ -131,9 +131,15 @@ import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSet
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSetList
 import io.violabs.picard.v2.resources.config.map.ConfigMapV2
 import io.violabs.picard.v2.resources.config.secret.SecretV2
+import io.violabs.picard.v2.resources.storage.StorageClassV2
+import io.violabs.picard.v2.resources.storage.version.migration.StorageVersionMigrationV2
 import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimV2
 import io.violabs.picard.v2.resources.storage.csi.driver.CsiDriverV2
 import io.violabs.picard.v2.resources.storage.csi.node.CsiNodeV2
+import io.violabs.picard.v2.resources.storage.csi.storage.capacity.CsiStorageCapacityV2
+import io.violabs.picard.v2.resources.storage.persistent.volume.PersistentVolumeV2
+import io.violabs.picard.v2.resources.storage.volume.VolumeAttributesClassV2
+import io.violabs.picard.v2.resources.storage.volume.attachment.VolumeAttachmentV2
 
 interface APIVersion {
     fun refString(): String
@@ -162,6 +168,7 @@ open class KAPIVersion(
         Node.Version,
         NodeList.Version,
         PersistentVolume.Version,
+        PersistentVolumeV2.Version,
         PersistentVolumeList.Version,
         PersistentVolumeClaim.Version,
         PersistentVolumeClaimV2.Version,
@@ -333,17 +340,22 @@ open class KAPIVersion(
         CsiNodeV2.Version,
         CSINodeList.Version,
         CSIStorageCapacity.Version,
+        CsiStorageCapacityV2.Version,
         CSIStorageCapacityList.Version,
         StorageClass.Version,
+        StorageClassV2.Version,
         StorageClassList.Version,
         VolumeAttachment.Version,
+        VolumeAttachmentV2.Version,
         VolumeAttachmentList.Version
 
     object StorageV1Beta1 : KAPIVersion("storage.k8s.io/v1beta1"),
         VolumeAttributesClass.Version,
+        VolumeAttributesClassV2.Version,
         VolumeAttributesClassList.Version
 
     object StorageMigrationV1Alpha1 : KAPIVersion("storagemigration.k8s.io/v1alpha1"),
         StorageVersionMigration.Version,
+        StorageVersionMigrationV2.Version,
         StorageVersionMigrationList.Version
 }

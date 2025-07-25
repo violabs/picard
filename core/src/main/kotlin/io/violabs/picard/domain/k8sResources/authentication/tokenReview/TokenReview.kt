@@ -12,6 +12,7 @@ import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.authentication.UserInfo
 import io.violabs.picard.domain.manifest.AuthenticationResource
 
+@Deprecated("Use v2", ReplaceWith("io.violabs.picard.v2.resources.authentication.token.review.TokenReviewV2"))
 data class TokenReview(
     override val apiVersion: Version = KAPIVersion.AuthenticationV1,
     override val metadata: ObjectMetadata? = null,

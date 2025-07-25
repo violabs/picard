@@ -9,6 +9,7 @@ import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.AuthenticationResource
 
+@Deprecated("use V2", ReplaceWith("io.violabs.picard.v2.resources.authentication.serviceAccount.ServiceAccountV2"))
 data class ServiceAccount(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,

@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="FULL TEST" type="CompoundRunConfigurationType">
+    <toRun name="[TEST]" type="GradleRunConfiguration" />
+    <toRun name="clean build" type="GradleRunConfiguration" />
+    <method v="2" />
+  </configuration>
+</component>

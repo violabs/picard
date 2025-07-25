@@ -14,6 +14,7 @@ import io.violabs.picard.domain.k8sResources.authentication.BoundObjectReference
 import io.violabs.picard.domain.manifest.AuthenticationResource
 import java.time.LocalDateTime
 
+@Deprecated("Use v2", ReplaceWith("io.violabs.picard.v2.resources.authentication.token.request.TokenRequestV2"))
 data class TokenRequest(
     override val apiVersion: Version = KAPIVersion.AuthenticationV1,
     override val metadata: ObjectMetadata? = null,

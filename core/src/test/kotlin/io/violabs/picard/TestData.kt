@@ -51,6 +51,26 @@ object Common {
         annotations(PLACEHOLDER to PLACEHOLDER)
     }
 
+    val OBJECT_REFERENCE = ObjectReference(
+        apiVersion = KAPIVersion.V1,
+        fieldPath = PLACEHOLDER,
+        kind = PLACEHOLDER,
+        name = PLACEHOLDER,
+        namespace = PLACEHOLDER,
+        resourceVersion = PLACEHOLDER,
+        uid = PLACEHOLDER
+    )
+
+    fun ObjectReferenceDslBuilder.sharedObjectReference() {
+        apiVersion = KAPIVersion.V1
+        fieldPath = PLACEHOLDER
+        kind = PLACEHOLDER
+        name = PLACEHOLDER
+        namespace = PLACEHOLDER
+        resourceVersion = PLACEHOLDER
+        uid = PLACEHOLDER
+    }
+
     val LABEL_SELECTOR = LabelSelector(
         matchExpressions = listOf(
             LabelSelectorRequirement(

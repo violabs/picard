@@ -129,6 +129,12 @@ import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourceSlic
 import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourceSliceList
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSet
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSetList
+import io.violabs.picard.v2.resources.authentication.certificate.CertificateSigningRequestV2
+import io.violabs.picard.v2.resources.authentication.cluster.ClusterTrustBundleV2
+import io.violabs.picard.v2.resources.authentication.self.SelfSubjectReviewV2
+import io.violabs.picard.v2.resources.authentication.service.account.ServiceAccountV2
+import io.violabs.picard.v2.resources.authentication.token.request.TokenRequestV2
+import io.violabs.picard.v2.resources.authentication.token.review.TokenReviewV2
 import io.violabs.picard.v2.resources.config.map.ConfigMapV2
 import io.violabs.picard.v2.resources.config.secret.SecretV2
 import io.violabs.picard.v2.resources.storage.StorageClassV2
@@ -187,6 +193,7 @@ open class KAPIVersion(
         Service.Version,
         ServiceList.Version,
         ServiceAccount.Version,
+        ServiceAccountV2.Version,
         ServiceAccountList.Version
 
     object AdmissionRegistrationV1 : KAPIVersion("admissionregistration.k8s.io/v1"),
@@ -221,10 +228,13 @@ open class KAPIVersion(
 
     object AuthenticationV1 : KAPIVersion("authentication.k8s.io/v1"),
         TokenRequest.Version,
+        TokenRequestV2.Version,
         TokenRequestList.Version,
         TokenReview.Version,
+        TokenReviewV2.Version,
         TokenReviewList.Version,
-        SelfSubjectReview.Version
+        SelfSubjectReview.Version,
+        SelfSubjectReviewV2.Version
 
     object AuthorizationV1 : KAPIVersion("authorization.k8s.io/v1"),
         LocalSubjectAccessReview.Version,
@@ -248,10 +258,16 @@ open class KAPIVersion(
 
     object CertificatesV1 : KAPIVersion("certificates.k8s.io/v1"),
         CertificateSigningRequest.Version,
+        CertificateSigningRequestV2.Version,
         CertificateSigningRequestList.Version
 
     object CertificatesV1Alpha1 : KAPIVersion("certificates.k8s.io/v1alpha1"),
         ClusterTrustBundle.Version,
+        ClusterTrustBundleList.Version
+
+    object CertificatesV1Beta1 : KAPIVersion("certificates.k8s.io/v1beta1"),
+        ClusterTrustBundle.Version,
+        ClusterTrustBundleV2.Version,
         ClusterTrustBundleList.Version
 
     object CoordinationV1 : KAPIVersion("coordination.k8s.io/v1"),

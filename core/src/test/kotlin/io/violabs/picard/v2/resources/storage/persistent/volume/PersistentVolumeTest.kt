@@ -3,11 +3,10 @@ package io.violabs.picard.v2.resources.storage.persistent.volume
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
+import io.violabs.picard.Common.sharedObjectReference
 import io.violabs.picard.SuccessBuildSim
-import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.common.NodeSelectorRequirement
-import io.violabs.picard.v2.common.ObjectReference
 import org.junit.jupiter.api.BeforeAll
 
 class PersistentVolumeTest : SuccessBuildSim<PersistentVolumeV2, PersistentVolumeV2DslBuilder>() {
@@ -37,13 +36,7 @@ class PersistentVolumeTest : SuccessBuildSim<PersistentVolumeV2, PersistentVolum
                         accessModes(PLACEHOLDER)
                         capacity(PLACEHOLDER to QUANTITY)
                         claimRef {
-                            apiVersion = KAPIVersion.V1
-                            fieldPath = PLACEHOLDER
-                            kind = PLACEHOLDER
-                            name = PLACEHOLDER
-                            namespace = PLACEHOLDER
-                            resourceVersion = PLACEHOLDER
-                            uid = PLACEHOLDER
+                            sharedObjectReference()
                         }
                         mountOptions(PLACEHOLDER)
                         nodeAffinity {
@@ -85,15 +78,7 @@ class PersistentVolumeTest : SuccessBuildSim<PersistentVolumeV2, PersistentVolum
                     spec = PersistentVolumeSpec(
                         accessModes = listOf(PLACEHOLDER),
                         capacity = QUANTITY_MAP,
-                        claimRef = ObjectReference(
-                            apiVersion = KAPIVersion.V1,
-                            fieldPath = PLACEHOLDER,
-                            kind = PLACEHOLDER,
-                            name = PLACEHOLDER,
-                            namespace = PLACEHOLDER,
-                            resourceVersion = PLACEHOLDER,
-                            uid = PLACEHOLDER
-                        ),
+                        claimRef = Common.OBJECT_REFERENCE,
                         mountOptions = PLACEHOLDER_LIST,
                         nodeAffinity = VolumeNodeAffinity(
                             required = NodeSelector(

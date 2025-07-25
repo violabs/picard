@@ -8,7 +8,7 @@ import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
  *
  * Contains enough information to let you locate the referenced object inside the same namespace.
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class LocalObjectReference(
     /**
      * Name of the referent. This field is effectively required, but due to backwards

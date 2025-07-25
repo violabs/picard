@@ -129,6 +129,7 @@ import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourceSlic
 import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourceSliceList
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSet
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSetList
+import io.violabs.picard.v2.resources.authentication.service.account.ServiceAccountV2
 import io.violabs.picard.v2.resources.config.map.ConfigMapV2
 import io.violabs.picard.v2.resources.config.secret.SecretV2
 import io.violabs.picard.v2.resources.storage.StorageClassV2
@@ -187,6 +188,7 @@ open class KAPIVersion(
         Service.Version,
         ServiceList.Version,
         ServiceAccount.Version,
+        ServiceAccountV2.Version,
         ServiceAccountList.Version
 
     object AdmissionRegistrationV1 : KAPIVersion("admissionregistration.k8s.io/v1"),

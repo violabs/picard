@@ -11,7 +11,7 @@ import io.violabs.picard.domain.k8sResources.APIVersion
  *
  * https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/object-reference/#ObjectReference
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class ObjectReference(
     /**
      * API version of the referent.

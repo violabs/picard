@@ -129,7 +129,8 @@ import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourceSlic
 import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourceSliceList
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSet
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSetList
-import io.violabs.picard.v2.resources.authentication.certificate.CertificateSigningRequestV2
+import io.violabs.picard.v2.resources.authentication.certificate.signing.request.CertificateSigningRequestV2
+import io.violabs.picard.v2.resources.authentication.certificate.trust.bundle.ClusterTrustBundleV2
 import io.violabs.picard.v2.resources.authentication.service.account.ServiceAccountV2
 import io.violabs.picard.v2.resources.authentication.token.request.TokenRequestV2
 import io.violabs.picard.v2.resources.authentication.token.review.TokenReviewV2
@@ -260,6 +261,11 @@ open class KAPIVersion(
 
     object CertificatesV1Alpha1 : KAPIVersion("certificates.k8s.io/v1alpha1"),
         ClusterTrustBundle.Version,
+        ClusterTrustBundleList.Version
+
+    object CertificatesV1Beta1 : KAPIVersion("certificates.k8s.io/v1beta1"),
+        ClusterTrustBundle.Version,
+        ClusterTrustBundleV2.Version,
         ClusterTrustBundleList.Version
 
     object CoordinationV1 : KAPIVersion("coordination.k8s.io/v1"),

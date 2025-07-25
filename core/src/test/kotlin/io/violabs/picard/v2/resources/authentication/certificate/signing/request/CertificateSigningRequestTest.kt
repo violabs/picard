@@ -1,5 +1,4 @@
-package io.violabs.picard.v2.resources.authentication.certificate
-
+package io.violabs.picard.v2.resources.authentication.certificate.signing.request
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta

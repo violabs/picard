@@ -7,6 +7,7 @@ import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.AuthorizationResource
 
+@Deprecated("Use v2", ReplaceWith("io.violabs.picard.v2.resources.authorization.review.access.subject.local.LocalSubjectAccessReviewV2"))
 data class LocalSubjectAccessReview(
     override val apiVersion: Version = KAPIVersion.AuthorizationV1,
     override val metadata: ObjectMetadata? = null,

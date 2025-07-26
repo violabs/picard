@@ -135,6 +135,8 @@ import io.violabs.picard.v2.resources.authentication.self.SelfSubjectReviewV2
 import io.violabs.picard.v2.resources.authentication.service.account.ServiceAccountV2
 import io.violabs.picard.v2.resources.authentication.token.request.TokenRequestV2
 import io.violabs.picard.v2.resources.authentication.token.review.TokenReviewV2
+import io.violabs.picard.v2.resources.authorization.review.access.subject.SubjectAccessReviewV2
+import io.violabs.picard.v2.resources.authorization.review.access.subject.local.LocalSubjectAccessReviewV2
 import io.violabs.picard.v2.resources.config.map.ConfigMapV2
 import io.violabs.picard.v2.resources.config.secret.SecretV2
 import io.violabs.picard.v2.resources.storage.StorageClassV2
@@ -238,9 +240,11 @@ open class KAPIVersion(
 
     object AuthorizationV1 : KAPIVersion("authorization.k8s.io/v1"),
         LocalSubjectAccessReview.Version,
+        LocalSubjectAccessReviewV2.Version,
         SelfSubjectAccessReview.Version,
         SelfSubjectRulesReview.Version,
-        SubjectAccessReview.Version
+        SubjectAccessReview.Version,
+        SubjectAccessReviewV2.Version
 
     object AutoscalingV1 : KAPIVersion("autoscaling/v1"),
         HorizontalPodAutoscaler.Version,

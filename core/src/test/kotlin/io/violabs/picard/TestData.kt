@@ -34,6 +34,9 @@ import io.violabs.picard.v2.resources.storage.volume.source.SecretVolumeSource
 
 
 object Common {
+    const val PLACEHOLDER = "placeholder"
+    val PLACEHOLDER_LIST = listOf(PLACEHOLDER)
+
     val OBJECT_META = ObjectMeta(
         name = PLACEHOLDER,
         generateName = PLACEHOLDER,

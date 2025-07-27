@@ -10,8 +10,9 @@ import io.violabs.picard.domain.k8sResources.authorization.K8sRole
 import io.violabs.picard.domain.k8sResources.authorization.PolicyRule
 import io.violabs.picard.domain.manifest.AuthorizationResource
 
+@Deprecated("Use v2", ReplaceWith("io.violabs.picard.v2.resources.authorization.role.ClusterRoleV2"))
 data class ClusterRole(
-    override val apiVersion: Version = KAPIVersion.RBACAuthorizationV1,
+    override val apiVersion: Version = KAPIVersion.RbacAuthorizationV1,
     override val metadata: ObjectMetadata? = null,
     val aggregationRule: AggregationRule? = null,
     override val rules: List<PolicyRule>? = null

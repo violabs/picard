@@ -10,7 +10,7 @@ import io.violabs.picard.domain.k8sResources.authorization.PolicyRule
 import io.violabs.picard.domain.manifest.AuthorizationResource
 
 data class Role(
-    override val apiVersion: Version = KAPIVersion.RBACAuthorizationV1,
+    override val apiVersion: Version = KAPIVersion.RbacAuthorizationV1,
     override val metadata: ObjectMetadata? = null,
     override val rules: List<PolicyRule>? = null
 ) : AuthorizationResource<Role.Version, ObjectMetadata>, K8sRole {

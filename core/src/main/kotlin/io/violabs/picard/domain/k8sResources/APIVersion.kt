@@ -139,6 +139,7 @@ import io.violabs.picard.v2.resources.authorization.review.access.subject.Subjec
 import io.violabs.picard.v2.resources.authorization.review.access.subject.local.LocalSubjectAccessReviewV2
 import io.violabs.picard.v2.resources.authorization.review.access.subject.self.SelfSubjectAccessReviewV2
 import io.violabs.picard.v2.resources.authorization.review.rules.SelfSubjectRulesReviewV2
+import io.violabs.picard.v2.resources.authorization.role.ClusterRoleV2
 import io.violabs.picard.v2.resources.config.map.ConfigMapV2
 import io.violabs.picard.v2.resources.config.secret.SecretV2
 import io.violabs.picard.v2.resources.storage.StorageClassV2
@@ -322,8 +323,9 @@ open class KAPIVersion(
         PodDisruptionBudget.Version,
         PodDisruptionBudgetList.Version
 
-    object RBACAuthorizationV1 : KAPIVersion("rbac.authorization.k8s.io/v1"),
+    object RbacAuthorizationV1 : KAPIVersion("rbac.authorization.k8s.io/v1"),
         ClusterRole.Version,
+        ClusterRoleV2.Version,
         ClusterRoleList.Version,
         ClusterRoleBinding.Version,
         ClusterRoleBindingList.Version,

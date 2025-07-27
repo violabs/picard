@@ -12,7 +12,7 @@ import io.violabs.picard.domain.k8sResources.authorization.RoleRef
 import io.violabs.picard.domain.manifest.AuthorizationResource
 
 data class RoleBinding(
-    override val apiVersion: Version = KAPIVersion.RBACAuthorizationV1,
+    override val apiVersion: Version = KAPIVersion.RbacAuthorizationV1,
     override val metadata: ObjectMetadata? = null,
     override val roleRef: RoleRef,
     val subjects: List<K8sSubject>? = null

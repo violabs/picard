@@ -1,0 +1,57 @@
+package io.violabs.picard.v2.resources.authorization.role
+
+
+import io.violabs.picard.Common
+import io.violabs.picard.Common.sharedObjectMeta
+import io.violabs.picard.Common.sharedSelector
+import io.violabs.picard.SuccessBuildSim
+import io.violabs.picard.possibilities
+import org.junit.jupiter.api.BeforeAll
+
+class ClusterRoleTest : SuccessBuildSim<ClusterRoleV2, ClusterRoleV2DslBuilder>() {
+    companion object : RoleTest {
+        @JvmStatic
+        @BeforeAll
+        fun setup() = buildSetup(
+            ClusterRoleTest::class,
+            SUCCESS_POSSIBILITIES
+        )
+
+
+        private val SUCCESS_POSSIBILITIES = possibilities<ClusterRoleV2, ClusterRoleV2DslBuilder> {
+            scenario {
+                id = "minimum"
+                given(ClusterRoleV2DslBuilder())
+                expected = ClusterRoleV2()
+            }
+
+            scenario {
+                id = "full"
+                given(ClusterRoleV2DslBuilder()) {
+                    metadata {
+                        sharedObjectMeta()
+                    }
+
+                    aggregationRule {
+                        clusterRoleSelectors {
+                            labelSelector {
+                                sharedSelector()
+                            }
+                        }
+                    }
+
+                    rules {
+                        sharedPolicyRule()
+                    }
+                }
+                expected = ClusterRoleV2(
+                    metadata = Common.OBJECT_META,
+                    aggregationRule = AggregationRule(
+                        clusterRoleSelectors = listOf(Common.LABEL_SELECTOR)
+                    ),
+                    rules = listOf(policyRule)
+                )
+            }
+        }
+    }
+}

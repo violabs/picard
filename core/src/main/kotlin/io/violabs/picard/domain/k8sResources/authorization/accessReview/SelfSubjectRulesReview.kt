@@ -13,6 +13,10 @@ import io.violabs.picard.domain.k8sResources.authorization.NonResourceRule
 import io.violabs.picard.domain.k8sResources.authorization.ResourceRule
 import io.violabs.picard.domain.manifest.AuthorizationResource
 
+@Deprecated(
+    "Use v2",
+    ReplaceWith("io.violabs.picard.v2.resources.authorization.review.rules.SelfSubjectRulesReviewV2")
+)
 data class SelfSubjectRulesReview(
     override val apiVersion: Version = KAPIVersion.AuthorizationV1,
     override val metadata: ObjectMetadata? = null,

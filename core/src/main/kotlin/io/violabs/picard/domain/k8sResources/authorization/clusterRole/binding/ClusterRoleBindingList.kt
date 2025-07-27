@@ -8,7 +8,7 @@ import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.AuthorizationListResource
 
 data class ClusterRoleBindingList(
-    override val apiVersion: Version = KAPIVersion.RBACAuthorizationV1,
+    override val apiVersion: Version = KAPIVersion.RbacAuthorizationV1,
     override val items: List<ClusterRoleBinding>,
     override val metadata: ListMeta? = null
 ) : AuthorizationListResource<ClusterRoleBindingList.Version, ClusterRoleBinding> {

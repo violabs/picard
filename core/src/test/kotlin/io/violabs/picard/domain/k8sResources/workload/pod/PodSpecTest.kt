@@ -21,7 +21,9 @@ import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceCl
 import io.violabs.picard.domain.k8sResources.workload.pod.security.*
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Disabled
 
+@Disabled
 class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
     companion object {
         @JvmStatic

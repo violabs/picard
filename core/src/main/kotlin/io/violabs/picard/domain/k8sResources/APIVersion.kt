@@ -135,6 +135,14 @@ import io.violabs.picard.v2.resources.authentication.self.SelfSubjectReviewV2
 import io.violabs.picard.v2.resources.authentication.service.account.ServiceAccountV2
 import io.violabs.picard.v2.resources.authentication.token.request.TokenRequestV2
 import io.violabs.picard.v2.resources.authentication.token.review.TokenReviewV2
+import io.violabs.picard.v2.resources.authorization.review.access.subject.SubjectAccessReviewV2
+import io.violabs.picard.v2.resources.authorization.review.access.subject.local.LocalSubjectAccessReviewV2
+import io.violabs.picard.v2.resources.authorization.review.access.subject.self.SelfSubjectAccessReviewV2
+import io.violabs.picard.v2.resources.authorization.review.rules.SelfSubjectRulesReviewV2
+import io.violabs.picard.v2.resources.authorization.role.ClusterRoleV2
+import io.violabs.picard.v2.resources.authorization.role.RoleV2
+import io.violabs.picard.v2.resources.authorization.role.binding.ClusterRoleBindingV2
+import io.violabs.picard.v2.resources.authorization.role.binding.RoleBindingV2
 import io.violabs.picard.v2.resources.config.map.ConfigMapV2
 import io.violabs.picard.v2.resources.config.secret.SecretV2
 import io.violabs.picard.v2.resources.storage.StorageClassV2
@@ -238,9 +246,13 @@ open class KAPIVersion(
 
     object AuthorizationV1 : KAPIVersion("authorization.k8s.io/v1"),
         LocalSubjectAccessReview.Version,
+        LocalSubjectAccessReviewV2.Version,
         SelfSubjectAccessReview.Version,
+        SelfSubjectAccessReviewV2.Version,
         SelfSubjectRulesReview.Version,
-        SubjectAccessReview.Version
+        SelfSubjectRulesReviewV2.Version,
+        SubjectAccessReview.Version,
+        SubjectAccessReviewV2.Version
 
     object AutoscalingV1 : KAPIVersion("autoscaling/v1"),
         HorizontalPodAutoscaler.Version,
@@ -314,13 +326,17 @@ open class KAPIVersion(
         PodDisruptionBudget.Version,
         PodDisruptionBudgetList.Version
 
-    object RBACAuthorizationV1 : KAPIVersion("rbac.authorization.k8s.io/v1"),
+    object RbacAuthorizationV1 : KAPIVersion("rbac.authorization.k8s.io/v1"),
         ClusterRole.Version,
+        ClusterRoleV2.Version,
         ClusterRoleList.Version,
         ClusterRoleBinding.Version,
+        ClusterRoleBindingV2.Version,
         ClusterRoleBindingList.Version,
         Role.Version,
+        RoleV2.Version,
         RoleList.Version,
+        RoleBindingV2.Version,
         RoleBinding.Version,
         RoleBindingList.Version
 

@@ -9,8 +9,9 @@ import io.violabs.picard.domain.k8sResources.authorization.K8sRole
 import io.violabs.picard.domain.k8sResources.authorization.PolicyRule
 import io.violabs.picard.domain.manifest.AuthorizationResource
 
+@Deprecated("Use v2", ReplaceWith("io.violabs.picard.v2.resources.authorization.role.RoleV2"))
 data class Role(
-    override val apiVersion: Version = KAPIVersion.RBACAuthorizationV1,
+    override val apiVersion: Version = KAPIVersion.RbacAuthorizationV1,
     override val metadata: ObjectMetadata? = null,
     override val rules: List<PolicyRule>? = null
 ) : AuthorizationResource<Role.Version, ObjectMetadata>, K8sRole {

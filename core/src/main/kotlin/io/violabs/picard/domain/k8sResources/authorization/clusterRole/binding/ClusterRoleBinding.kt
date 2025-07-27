@@ -11,8 +11,12 @@ import io.violabs.picard.domain.k8sResources.authorization.K8sSubject
 import io.violabs.picard.domain.k8sResources.authorization.RoleRef
 import io.violabs.picard.domain.manifest.AuthorizationResource
 
+@Deprecated(
+    "Use v2",
+    ReplaceWith("io.violabs.picard.v2.resources.authorization.clusterRole.binding.ClusterRoleBindingV2")
+)
 data class ClusterRoleBinding(
-    override val apiVersion: Version = KAPIVersion.RBACAuthorizationV1,
+    override val apiVersion: Version = KAPIVersion.RbacAuthorizationV1,
     override val roleRef: RoleRef,
     val subjects: List<K8sSubject>? = null,
     override val metadata: ObjectMetadata? = null

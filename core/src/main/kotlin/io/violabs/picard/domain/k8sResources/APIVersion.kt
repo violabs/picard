@@ -145,6 +145,7 @@ import io.violabs.picard.v2.resources.authorization.role.binding.ClusterRoleBind
 import io.violabs.picard.v2.resources.authorization.role.binding.RoleBindingV2
 import io.violabs.picard.v2.resources.config.map.ConfigMapV2
 import io.violabs.picard.v2.resources.config.secret.SecretV2
+import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchemaV2
 import io.violabs.picard.v2.resources.storage.StorageClassV2
 import io.violabs.picard.v2.resources.storage.version.migration.StorageVersionMigrationV2
 import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimV2
@@ -300,6 +301,7 @@ open class KAPIVersion(
 
     object FlowControlApiServerV1 : KAPIVersion("flowcontrol.apiserver.k8s.io/v1"),
         FlowSchema.Version,
+        FlowSchemaV2.Version,
         FlowSchemaList.Version,
         PriorityLevelConfiguration.Version,
         PriorityLevelConfigurationList.Version

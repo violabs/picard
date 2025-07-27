@@ -1,4 +1,4 @@
-package io.violabs.picard.v2.resources.authorization.review.access.subject
+package io.violabs.picard.v2.resources.authorization.review.access.subject.attributes
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.v2.common.LabelSelectorRequirement

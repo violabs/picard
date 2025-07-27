@@ -2,6 +2,13 @@ package io.violabs.picard.v2.resources.authorization.review.access.subject
 
 import io.violabs.picard.BuildSim.Companion.PLACEHOLDER
 import io.violabs.picard.v2.common.LabelSelectorRequirement
+import io.violabs.picard.v2.resources.authorization.review.access.subject.attributes.FieldSelectorAttributes
+import io.violabs.picard.v2.resources.authorization.review.access.subject.attributes.FieldSelectorRequirement
+import io.violabs.picard.v2.resources.authorization.review.access.subject.attributes.LabelSelectorAttributes
+import io.violabs.picard.v2.resources.authorization.review.access.subject.attributes.NonResourceAttributes
+import io.violabs.picard.v2.resources.authorization.review.access.subject.attributes.NonResourceAttributesDslBuilder
+import io.violabs.picard.v2.resources.authorization.review.access.subject.attributes.ResourceAttributes
+import io.violabs.picard.v2.resources.authorization.review.access.subject.attributes.ResourceAttributesDslBuilder
 
 interface AccessReviewTest {
     fun sharedSubjectAccessReviewSpec(): SubjectAccessReviewSpec {

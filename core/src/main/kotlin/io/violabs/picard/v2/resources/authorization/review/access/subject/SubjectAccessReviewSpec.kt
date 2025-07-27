@@ -1,6 +1,8 @@
 package io.violabs.picard.v2.resources.authorization.review.access.subject
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
+import io.violabs.picard.v2.resources.authorization.review.access.subject.attributes.NonResourceAttributes
+import io.violabs.picard.v2.resources.authorization.review.access.subject.attributes.ResourceAttributes
 
 /**
  * SubjectAccessReviewSpec is a description of the access request.

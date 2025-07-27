@@ -10,7 +10,7 @@ import io.violabs.picard.v2.resources.authorization.review.access.subject.attrib
 import io.violabs.picard.v2.resources.authorization.review.access.subject.attributes.ResourceAttributes
 import io.violabs.picard.v2.resources.authorization.review.access.subject.attributes.ResourceAttributesDslBuilder
 
-interface AccessReviewTest {
+interface AccessReviewTestConfig {
     fun sharedSubjectAccessReviewSpec(): SubjectAccessReviewSpec {
         return SPEC
     }

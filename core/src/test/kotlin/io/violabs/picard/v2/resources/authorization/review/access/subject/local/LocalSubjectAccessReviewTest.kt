@@ -5,12 +5,12 @@ import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
 import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
-import io.violabs.picard.v2.resources.authorization.review.access.subject.AccessReviewTest
+import io.violabs.picard.v2.resources.authorization.review.access.subject.AccessReviewTestConfig
 import io.violabs.picard.v2.resources.authorization.review.access.subject.SubjectAccessReviewSpec
 import org.junit.jupiter.api.BeforeAll
 
 class LocalSubjectAccessReviewTest : FullBuildSim<LocalSubjectAccessReviewV2, LocalSubjectAccessReviewV2DslBuilder>() {
-    companion object : AccessReviewTest {
+    companion object : AccessReviewTestConfig {
         @JvmStatic
         @BeforeAll
         fun setup() = buildSetup(

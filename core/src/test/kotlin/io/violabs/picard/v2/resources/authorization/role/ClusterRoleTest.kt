@@ -9,7 +9,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class ClusterRoleTest : SuccessBuildSim<ClusterRoleV2, ClusterRoleV2DslBuilder>() {
-    companion object : RoleTest {
+    companion object : RoleTestConfig {
         @JvmStatic
         @BeforeAll
         fun setup() = buildSetup(

@@ -8,7 +8,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class SubjectAccessReviewTest : FullBuildSim<SubjectAccessReviewV2, SubjectAccessReviewV2DslBuilder>() {
-    companion object : AccessReviewTest {
+    companion object : AccessReviewTestConfig {
         @JvmStatic
         @BeforeAll
         fun setup() = buildSetup(

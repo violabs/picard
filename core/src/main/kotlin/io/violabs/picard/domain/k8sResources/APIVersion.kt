@@ -140,6 +140,7 @@ import io.violabs.picard.v2.resources.authorization.review.access.subject.local.
 import io.violabs.picard.v2.resources.authorization.review.access.subject.self.SelfSubjectAccessReviewV2
 import io.violabs.picard.v2.resources.authorization.review.rules.SelfSubjectRulesReviewV2
 import io.violabs.picard.v2.resources.authorization.role.ClusterRoleV2
+import io.violabs.picard.v2.resources.authorization.role.RoleV2
 import io.violabs.picard.v2.resources.config.map.ConfigMapV2
 import io.violabs.picard.v2.resources.config.secret.SecretV2
 import io.violabs.picard.v2.resources.storage.StorageClassV2
@@ -330,6 +331,7 @@ open class KAPIVersion(
         ClusterRoleBinding.Version,
         ClusterRoleBindingList.Version,
         Role.Version,
+        RoleV2.Version,
         RoleList.Version,
         RoleBinding.Version,
         RoleBindingList.Version

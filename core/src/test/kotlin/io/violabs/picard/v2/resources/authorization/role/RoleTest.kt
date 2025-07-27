@@ -1,22 +1,45 @@
 package io.violabs.picard.v2.resources.authorization.role
 
+
 import io.violabs.picard.Common
+import io.violabs.picard.Common.sharedObjectMeta
+import io.violabs.picard.SuccessBuildSim
+import io.violabs.picard.possibilities
+import org.junit.jupiter.api.BeforeAll
 
-interface RoleTest {
-    fun PolicyRuleDslBuilder.Group.sharedPolicyRule() = policyRule {
-        verbs(Common.PLACEHOLDER)
-        apiGroups(Common.PLACEHOLDER)
-        resources(Common.PLACEHOLDER)
-        resourceNames(Common.PLACEHOLDER)
-        nonResourceURLs(Common.PLACEHOLDER)
-    }
-
-    val policyRule: PolicyRule
-        get() = PolicyRule(
-            verbs = Common.PLACEHOLDER_LIST,
-            apiGroups = Common.PLACEHOLDER_LIST,
-            resources = Common.PLACEHOLDER_LIST,
-            resourceNames = Common.PLACEHOLDER_LIST,
-            nonResourceURLs = Common.PLACEHOLDER_LIST
+class RoleTest : SuccessBuildSim<RoleV2, RoleV2DslBuilder>() {
+    companion object : RoleTestConfig {
+        @JvmStatic
+        @BeforeAll
+        fun setup() = buildSetup(
+            RoleTest::class,
+            SUCCESS_POSSIBILITIES
         )
+
+
+        private val SUCCESS_POSSIBILITIES = possibilities<RoleV2, RoleV2DslBuilder> {
+            scenario {
+                id = "minimum"
+                given(RoleV2DslBuilder())
+                expected = RoleV2()
+            }
+
+            scenario {
+                id = "full"
+                given(RoleV2DslBuilder()) {
+                    metadata {
+                        sharedObjectMeta()
+                    }
+
+                    rules {
+                        sharedPolicyRule()
+                    }
+                }
+                expected = RoleV2(
+                    metadata = Common.OBJECT_META,
+                    rules = listOf(policyRule)
+                )
+            }
+        }
+    }
 }

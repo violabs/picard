@@ -159,6 +159,7 @@ import io.violabs.picard.v2.resources.storage.csi.storage.capacity.CsiStorageCap
 import io.violabs.picard.v2.resources.storage.persistent.volume.PersistentVolumeV2
 import io.violabs.picard.v2.resources.storage.volume.VolumeAttributesClassV2
 import io.violabs.picard.v2.resources.storage.volume.attachment.VolumeAttachmentV2
+import io.violabs.picard.v2.resources.policy.level.PriorityLevelConfigurationV2
 
 interface APIVersion {
     fun refString(): String
@@ -310,6 +311,7 @@ open class KAPIVersion(
         FlowSchemaV2.Version,
         FlowSchemaList.Version,
         PriorityLevelConfiguration.Version,
+        PriorityLevelConfigurationV2.Version,
         PriorityLevelConfigurationList.Version
 
     object NetworkingV1 : KAPIVersion("networking.k8s.io/v1"),

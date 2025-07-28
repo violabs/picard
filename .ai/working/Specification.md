@@ -18,128 +18,156 @@ Finally, update the v1 to have `@Deprecated("Use v2", ReplaceWith(<package for v
 
 ## Documentation
 
-PodDisruptionBudget
-PodDisruptionBudget is an object to define the max disruption that can be caused to a collection of pods.
-apiVersion: policy/v1
+PriorityLevelConfiguration
+PriorityLevelConfiguration represents the configuration of a priority level.
+apiVersion: flowcontrol.apiserver.k8s.io/v1
 
-import "k8s.io/api/policy/v1"
+import "k8s.io/api/flowcontrol/v1"
 
-PodDisruptionBudget
-PodDisruptionBudget is an object to define the max disruption that can be caused to a collection of pods
+PriorityLevelConfiguration
+PriorityLevelConfiguration represents the configuration of a priority level.
 
-apiVersion: policy/v1
+apiVersion: flowcontrol.apiserver.k8s.io/v1
 
-kind: PodDisruptionBudget
+kind: PriorityLevelConfiguration
 
 metadata (ObjectMeta)
 
-Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+metadata is the standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 
-spec (PodDisruptionBudgetSpec)
+spec (PriorityLevelConfigurationSpec)
 
-Specification of the desired behavior of the PodDisruptionBudget.
+spec is the specification of the desired behavior of a "request-priority". More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 
-status (PodDisruptionBudgetStatus)
+status (PriorityLevelConfigurationStatus)
 
-Most recently observed status of the PodDisruptionBudget.
+status is the current status of a "request-priority". More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 
-PodDisruptionBudgetSpec
-PodDisruptionBudgetSpec is a description of a PodDisruptionBudget.
+PriorityLevelConfigurationSpec
+PriorityLevelConfigurationSpec specifies the configuration of a priority level.
 
-maxUnavailable (IntOrString)
+exempt (ExemptPriorityLevelConfiguration)
 
-An eviction is allowed if at most "maxUnavailable" pods selected by "selector" are unavailable after the eviction, i.e. even in absence of the evicted pod. For example, one can prevent all voluntary evictions by specifying 0. This is a mutually exclusive setting with "minAvailable".
+exempt specifies how requests are handled for an exempt priority level. This field MUST be empty if type is "Limited". This field MAY be non-empty if type is "Exempt". If empty and type is "Exempt" then the default values for ExemptPriorityLevelConfiguration apply.
 
-IntOrString is a type that can hold an int32 or a string. When used in JSON or YAML marshalling and unmarshalling, it produces or consumes the inner type. This allows you to have, for example, a JSON field that can accept a name or number.
+ExemptPriorityLevelConfiguration describes the configurable aspects of the handling of exempt requests. In the mandatory exempt configuration object the values in the fields here can be modified by authorized users, unlike the rest of the spec.
 
-minAvailable (IntOrString)
+exempt.lendablePercent (int32)
 
-An eviction is allowed if at least "minAvailable" pods selected by "selector" will still be available after the eviction, i.e. even in the absence of the evicted pod. So for example you can prevent all voluntary evictions by specifying "100%".
+lendablePercent prescribes the fraction of the level's NominalCL that can be borrowed by other priority levels. This value of this field must be between 0 and 100, inclusive, and it defaults to 0. The number of seats that other levels can borrow from this level, known as this level's LendableConcurrencyLimit (LendableCL), is defined as follows.
 
-IntOrString is a type that can hold an int32 or a string. When used in JSON or YAML marshalling and unmarshalling, it produces or consumes the inner type. This allows you to have, for example, a JSON field that can accept a name or number.
+LendableCL(i) = round( NominalCL(i) * lendablePercent(i)/100.0 )
 
-selector (LabelSelector)
+exempt.nominalConcurrencyShares (int32)
 
-Label query over pods whose evictions are managed by the disruption budget. A null selector will match no pods, while an empty ({}) selector will select all pods within the namespace.
+nominalConcurrencyShares (NCS) contributes to the computation of the NominalConcurrencyLimit (NominalCL) of this level. This is the number of execution seats nominally reserved for this priority level. This DOES NOT limit the dispatching from this priority level but affects the other priority levels through the borrowing mechanism. The server's concurrency limit (ServerCL) is divided among all the priority levels in proportion to their NCS values:
 
-unhealthyPodEvictionPolicy (string)
+NominalCL(i) = ceil( ServerCL * NCS(i) / sum_ncs ) sum_ncs = sum[priority level k] NCS(k)
 
-UnhealthyPodEvictionPolicy defines the criteria for when unhealthy pods should be considered for eviction. Current implementation considers healthy pods, as pods that have status.conditions item with type="Ready",status="True".
+Bigger numbers mean a larger nominal concurrency limit, at the expense of every other priority level. This field has a default value of zero.
 
-Valid policies are IfHealthyBudget and AlwaysAllow. If no policy is specified, the default behavior will be used, which corresponds to the IfHealthyBudget policy.
+limited (LimitedPriorityLevelConfiguration)
 
-IfHealthyBudget policy means that running pods (status.phase="Running"), but not yet healthy can be evicted only if the guarded application is not disrupted (status.currentHealthy is at least equal to status.desiredHealthy). Healthy pods will be subject to the PDB for eviction.
+limited specifies how requests are handled for a Limited priority level. This field must be non-empty if and only if type is "Limited".
 
-AlwaysAllow policy means that all running pods (status.phase="Running"), but not yet healthy are considered disrupted and can be evicted regardless of whether the criteria in a PDB is met. This means perspective running pods of a disrupted application might not get a chance to become healthy. Healthy pods will be subject to the PDB for eviction.
+*LimitedPriorityLevelConfiguration specifies how to handle requests that are subject to limits. It addresses two issues:
 
-Additional policies may be added in the future. Clients making eviction decisions should disallow eviction of unhealthy pods if they encounter an unrecognized policy in this field.
+How are requests for this priority level limited?
 
-PodDisruptionBudgetStatus
-PodDisruptionBudgetStatus represents information about the status of a PodDisruptionBudget. Status may trail the actual state of a system.
+What should be done with requests that exceed the limit?*
 
-currentHealthy (int32), required
+limited.borrowingLimitPercent (int32)
 
-current number of healthy pods
+borrowingLimitPercent, if present, configures a limit on how many seats this priority level can borrow from other priority levels. The limit is known as this level's BorrowingConcurrencyLimit (BorrowingCL) and is a limit on the total number of seats that this level may borrow at any one time. This field holds the ratio of that limit to the level's nominal concurrency limit. When this field is non-nil, it must hold a non-negative integer and the limit is calculated as follows.
 
-desiredHealthy (int32), required
+BorrowingCL(i) = round( NominalCL(i) * borrowingLimitPercent(i)/100.0 )
 
-minimum desired number of healthy pods
+The value of this field can be more than 100, implying that this priority level can borrow a number of seats that is greater than its own nominal concurrency limit (NominalCL). When this field is left nil, the limit is effectively infinite.
 
-disruptionsAllowed (int32), required
+limited.lendablePercent (int32)
 
-Number of pod disruptions that are currently allowed.
+lendablePercent prescribes the fraction of the level's NominalCL that can be borrowed by other priority levels. The value of this field must be between 0 and 100, inclusive, and it defaults to 0. The number of seats that other levels can borrow from this level, known as this level's LendableConcurrencyLimit (LendableCL), is defined as follows.
 
-expectedPods (int32), required
+LendableCL(i) = round( NominalCL(i) * lendablePercent(i)/100.0 )
 
-total number of pods counted by this disruption budget
+limited.limitResponse (LimitResponse)
 
-conditions ([]Condition)
+limitResponse indicates what to do with requests that can not be executed right now
+
+LimitResponse defines how to handle requests that can not be executed right now.
+
+limited.limitResponse.type (string), required
+
+type is "Queue" or "Reject". "Queue" means that requests that can not be executed upon arrival are held in a queue until they can be executed or a queuing limit is reached. "Reject" means that requests that can not be executed upon arrival are rejected. Required.
+
+limited.limitResponse.queuing (QueuingConfiguration)
+
+queuing holds the configuration parameters for queuing. This field may be non-empty only if type is "Queue".
+
+QueuingConfiguration holds the configuration parameters for queuing
+
+limited.limitResponse.queuing.handSize (int32)
+
+handSize is a small positive number that configures the shuffle sharding of requests into queues. When enqueuing a request at this priority level the request's flow identifier (a string pair) is hashed and the hash value is used to shuffle the list of queues and deal a hand of the size specified here. The request is put into one of the shortest queues in that hand. handSize must be no larger than queues, and should be significantly smaller (so that a few heavy flows do not saturate most of the queues). See the user-facing documentation for more extensive guidance on setting this field. This field has a default value of 8.
+
+limited.limitResponse.queuing.queueLengthLimit (int32)
+
+queueLengthLimit is the maximum number of requests allowed to be waiting in a given queue of this priority level at a time; excess requests are rejected. This value must be positive. If not specified, it will be defaulted to 50.
+
+limited.limitResponse.queuing.queues (int32)
+
+queues is the number of queues for this priority level. The queues exist independently at each apiserver. The value must be positive. Setting it to 1 effectively precludes shufflesharding and thus makes the distinguisher method of associated flow schemas irrelevant. This field has a default value of 64.
+
+limited.nominalConcurrencyShares (int32)
+
+nominalConcurrencyShares (NCS) contributes to the computation of the NominalConcurrencyLimit (NominalCL) of this level. This is the number of execution seats available at this priority level. This is used both for requests dispatched from this priority level as well as requests dispatched from other priority levels borrowing seats from this level. The server's concurrency limit (ServerCL) is divided among the Limited priority levels in proportion to their NCS values:
+
+NominalCL(i) = ceil( ServerCL * NCS(i) / sum_ncs ) sum_ncs = sum[priority level k] NCS(k)
+
+Bigger numbers mean a larger nominal concurrency limit, at the expense of every other priority level.
+
+If not specified, this field defaults to a value of 30.
+
+Setting this field to zero supports the construction of a "jail" for this priority level that is used to hold some request(s)
+
+type (string), required
+
+type indicates whether this priority level is subject to limitation on request execution. A value of "Exempt" means that requests of this priority level are not subject to a limit (and thus are never queued) and do not detract from the capacity made available to other priority levels. A value of "Limited" means that (a) requests of this priority level are subject to limits and (b) some of the server's limited capacity is made available exclusively to this priority level. Required.
+
+PriorityLevelConfigurationStatus
+PriorityLevelConfigurationStatus represents the current state of a "request-priority".
+
+conditions ([]PriorityLevelConfigurationCondition)
 
 Patch strategy: merge on key type
 
 Map: unique values on key type will be kept during a merge
 
-Conditions contain conditions for PDB. The disruption controller sets the DisruptionAllowed condition. The following are known values for the reason field (additional reasons could be added in the future): - SyncFailed: The controller encountered an error and wasn't able to compute the number of allowed disruptions. Therefore no disruptions are allowed and the status of the condition will be False.
+conditions is the current state of "request-priority".
 
-InsufficientPods: The number of pods are either at or below the number required by the PodDisruptionBudget. No disruptions are allowed and the status of the condition will be False.
-SufficientPods: There are more pods than required by the PodDisruptionBudget. The condition will be True, and the number of allowed disruptions are provided by the disruptionsAllowed property.
-Condition contains details for one aspect of the current state of this API Resource.
+PriorityLevelConfigurationCondition defines the condition of priority level.
 
-conditions.lastTransitionTime (Time), required
+conditions.lastTransitionTime (Time)
 
-lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed. If that is not known, then using the time when the API field changed is acceptable.
+lastTransitionTime is the last time the condition transitioned from one status to another.
 
 Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON. Wrappers are provided for many of the factory methods that the time package offers.
 
-conditions.message (string), required
+conditions.message (string)
 
-message is a human readable message indicating details about the transition. This may be an empty string.
+message is a human-readable message indicating details about last transition.
 
-conditions.reason (string), required
+conditions.reason (string)
 
-reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
+reason is a unique, one-word, CamelCase reason for the condition's last transition.
 
-conditions.status (string), required
+conditions.status (string)
 
-status of the condition, one of True, False, Unknown.
+status is the status of the condition. Can be True, False, Unknown. Required.
 
-conditions.type (string), required
+conditions.type (string)
 
-type of condition in CamelCase or in foo.example.com/CamelCase.
-
-conditions.observedGeneration (int64)
-
-observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
-
-disruptedPods (map[string]Time)
-
-DisruptedPods contains information about pods whose eviction was processed by the API server eviction subresource handler but has not yet been observed by the PodDisruptionBudget controller. A pod will be in this map from the time when the API server processed the eviction request to the time when the pod is seen by PDB controller as having been marked for deletion (or after a timeout). The key in the map is the name of the pod and the value is the time when the API server processed the eviction request. If the deletion didn't occur and a pod is still there it will be removed from the list automatically by PodDisruptionBudget controller after some time. If everything goes smooth this map should be empty for the most of the time. Large number of entries in the map may indicate problems with pod deletions.
-
-Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON. Wrappers are provided for many of the factory methods that the time package offers.
-
-observedGeneration (int64)
-
-Most recent generation observed when updating this PDB status. DisruptionsAllowed and other status information is valid only if observedGeneration equals to PDB's object generation.
+type is the type of the condition. Required.
 
 
 

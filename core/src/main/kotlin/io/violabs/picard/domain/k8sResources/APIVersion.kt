@@ -145,6 +145,7 @@ import io.violabs.picard.v2.resources.authorization.role.binding.ClusterRoleBind
 import io.violabs.picard.v2.resources.authorization.role.binding.RoleBindingV2
 import io.violabs.picard.v2.resources.config.map.ConfigMapV2
 import io.violabs.picard.v2.resources.config.secret.SecretV2
+import io.violabs.picard.v2.resources.policy.resource.quota.ResourceQuotaV2
 import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchemaV2
 import io.violabs.picard.v2.resources.storage.StorageClassV2
 import io.violabs.picard.v2.resources.storage.version.migration.StorageVersionMigrationV2
@@ -195,6 +196,7 @@ open class KAPIVersion(
         ReplicationController.Version,
         ReplicationControllerList.Version,
         ResourceQuota.Version,
+        ResourceQuotaV2.Version,
         ResourceQuotaList.Version,
         Secret.Version,
         SecretV2.Version,

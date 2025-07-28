@@ -146,6 +146,7 @@ import io.violabs.picard.v2.resources.authorization.role.binding.RoleBindingV2
 import io.violabs.picard.v2.resources.config.map.ConfigMapV2
 import io.violabs.picard.v2.resources.config.secret.SecretV2
 import io.violabs.picard.v2.resources.policy.resource.quota.ResourceQuotaV2
+import io.violabs.picard.v2.resources.policy.limit.LimitRangeV2
 import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchemaV2
 import io.violabs.picard.v2.resources.storage.StorageClassV2
 import io.violabs.picard.v2.resources.storage.version.migration.StorageVersionMigrationV2
@@ -178,6 +179,7 @@ open class KAPIVersion(
         Endpoints.Version,
         EndpointsList.Version,
         LimitRange.Version,
+        LimitRangeV2.Version,
         LimitRangeList.Version,
         Namespace.Version,
         NamespaceList.Version,

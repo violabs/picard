@@ -161,6 +161,7 @@ import io.violabs.picard.v2.resources.storage.volume.VolumeAttributesClassV2
 import io.violabs.picard.v2.resources.storage.volume.attachment.VolumeAttachmentV2
 import io.violabs.picard.v2.resources.policy.level.PriorityLevelConfigurationV2
 import io.violabs.picard.v2.resources.policy.admission.validating.ValidatingAdmissionPolicyV2
+import io.violabs.picard.v2.resources.policy.admission.validating.ValidatingAdmissionPolicyBindingV2
 import io.violabs.picard.v2.resources.policy.admission.mutating.MutatingAdmissionPolicyV2
 
 interface APIVersion {
@@ -221,6 +222,7 @@ open class KAPIVersion(
         ValidatingAdmissionPolicyV2.Version,
         ValidatingAdmissionPolicyList.Version,
         ValidatingAdmissionPolicyBinding.Version,
+        ValidatingAdmissionPolicyBindingV2.Version,
         ValidatingAdmissionPolicyBindingList.Version,
         ValidatingWebhookConfiguration.Version,
         ValidatingWebhookConfigurationList.Version

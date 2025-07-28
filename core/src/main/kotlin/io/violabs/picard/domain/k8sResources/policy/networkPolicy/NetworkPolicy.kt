@@ -11,6 +11,7 @@ import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.label.LabelSelector
 import io.violabs.picard.domain.manifest.PolicyResource
 
+@Deprecated("Use v2", ReplaceWith("NetworkPolicyV2", "io.violabs.picard.v2.resources.policy.network.NetworkPolicyV2"))
 data class NetworkPolicy(
     override val apiVersion: Version = KAPIVersion.NetworkingV1,
     override val metadata: ObjectMetadata? = null,

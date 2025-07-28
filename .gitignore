@@ -6,4 +6,4 @@
 **/.gradle/**
 
 secret.properties
-.claude/working
+.claude

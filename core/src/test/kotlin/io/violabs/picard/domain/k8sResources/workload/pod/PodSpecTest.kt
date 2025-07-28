@@ -20,6 +20,7 @@ import io.violabs.picard.domain.k8sResources.workload.pod.hostAlias.HostAlias
 import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceClaim
 import io.violabs.picard.domain.k8sResources.workload.pod.security.*
 import io.violabs.picard.possibilities
+import io.violabs.picard.v2.common.LabelSelectorRequirement
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Disabled
 
@@ -298,7 +299,7 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
                                                 matchExpressions {
                                                     labelSelectorRequirement {
                                                         key = PLACEHOLDER
-                                                        operator = PLACEHOLDER
+                                                        operator = LabelSelectorRequirement.Operator.In
                                                         values(PLACEHOLDER)
                                                     }
                                                 }

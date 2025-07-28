@@ -8,23 +8,30 @@ import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 @GeneratedDsl(withListGroup = true)
 data class LabelSelectorRequirement(
     /**
-     * matchExpressions.key (string), required
+     * key is the label key that the selector applies to.
      */
     val key: String,
     /**
-     * key is the label key that the selector applies to.
-     *
-     * matchExpressions.operator (string), required
+     * operator represents a key's relationship to a set of values.
+     * Valid operators are In, NotIn, Exists and DoesNotExist.
      */
-    val operator: String,
+    val operator: Operator,
     /**
-     * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
      *
      * matchExpressions.values ([]string)
      *
      * Atomic: will be replaced during a merge
      *
-     * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+     * values is an array of string values. If the operator is In or NotIn,
+     * the values array must be non-empty. If the operator is Exists or DoesNotExist,
+     * the values array must be empty. This array is replaced during a strategic merge patch.
      */
     val values: List<String>? = null
-)
+) {
+    enum class Operator {
+        In,
+        NotIn,
+        Exists,
+        DoesNotExist
+    }
+}

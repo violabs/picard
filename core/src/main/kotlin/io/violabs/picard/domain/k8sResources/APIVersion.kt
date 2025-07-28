@@ -148,6 +148,7 @@ import io.violabs.picard.v2.resources.config.secret.SecretV2
 import io.violabs.picard.v2.resources.policy.resource.quota.ResourceQuotaV2
 import io.violabs.picard.v2.resources.policy.limit.LimitRangeV2
 import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchemaV2
+import io.violabs.picard.v2.resources.policy.network.NetworkPolicyV2
 import io.violabs.picard.v2.resources.storage.StorageClassV2
 import io.violabs.picard.v2.resources.storage.version.migration.StorageVersionMigrationV2
 import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimV2
@@ -316,6 +317,7 @@ open class KAPIVersion(
         IngressClass.Version,
         IngressClassList.Version,
         NetworkPolicy.Version,
+        NetworkPolicyV2.Version,
         NetworkPolicyList.Version
 
     object NetworkingV1Beta1 : KAPIVersion("networking.k8s.io/v1"),

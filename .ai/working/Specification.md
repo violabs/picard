@@ -18,64 +18,36 @@ Finally, update the v1 to have `@Deprecated("Use v2", ReplaceWith(<package for v
 
 ## Documentation
 
-ValidatingAdmissionPolicy
-ValidatingAdmissionPolicy describes the definition of an admission validation policy that accepts or rejects an object without changing it.
-apiVersion: admissionregistration.k8s.io/v1
+MutatingAdmissionPolicy v1alpha1
+MutatingAdmissionPolicy describes the definition of an admission mutation policy that mutates the object coming into admission chain.
+apiVersion: admissionregistration.k8s.io/v1alpha1
 
-import "k8s.io/api/admissionregistration/v1"
+import "k8s.io/api/admissionregistration/v1alpha1"
 
-ValidatingAdmissionPolicy
-ValidatingAdmissionPolicy describes the definition of an admission validation policy that accepts or rejects an object without changing it.
+MutatingAdmissionPolicy
+MutatingAdmissionPolicy describes the definition of an admission mutation policy that mutates the object coming into admission chain.
 
-apiVersion: admissionregistration.k8s.io/v1
+apiVersion: admissionregistration.k8s.io/v1alpha1
 
-kind: ValidatingAdmissionPolicy
+kind: MutatingAdmissionPolicy
 
 metadata (ObjectMeta)
 
 Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
 
-spec (ValidatingAdmissionPolicySpec)
+spec (MutatingAdmissionPolicySpec)
 
-Specification of the desired behavior of the ValidatingAdmissionPolicy.
+Specification of the desired behavior of the MutatingAdmissionPolicy.
 
-ValidatingAdmissionPolicySpec is the specification of the desired behavior of the AdmissionPolicy.
-
-spec.auditAnnotations ([]AuditAnnotation)
-
-Atomic: will be replaced during a merge
-
-auditAnnotations contains CEL expressions which are used to produce audit annotations for the audit event of the API request. validations and auditAnnotations may not both be empty; a least one of validations or auditAnnotations is required.
-
-AuditAnnotation describes how to produce an audit annotation for an API request.
-
-spec.auditAnnotations.key (string), required
-
-key specifies the audit annotation key. The audit annotation keys of a ValidatingAdmissionPolicy must be unique. The key must be a qualified name ([A-Za-z0-9][-A-Za-z0-9_.]*) no more than 63 bytes in length.
-
-The key is combined with the resource name of the ValidatingAdmissionPolicy to construct an audit annotation key: "{ValidatingAdmissionPolicy name}/{key}".
-
-If an admission webhook uses the same resource name as this ValidatingAdmissionPolicy and the same audit annotation key, the annotation key will be identical. In this case, the first annotation written with the key will be included in the audit event and all subsequent annotations with the same key will be discarded.
-
-Required.
-
-spec.auditAnnotations.valueExpression (string), required
-
-valueExpression represents the expression which is evaluated by CEL to produce an audit annotation value. The expression must evaluate to either a string or null value. If the expression evaluates to a string, the audit annotation is included with the string value. If the expression evaluates to null or empty string the audit annotation will be omitted. The valueExpression may be no longer than 5kb in length. If the result of the valueExpression is more than 10kb in length, it will be truncated to 10kb.
-
-If multiple ValidatingAdmissionPolicyBinding resources match an API request, then the valueExpression will be evaluated for each binding. All unique values produced by the valueExpressions will be joined together in a comma-separated list.
-
-Required.
+MutatingAdmissionPolicySpec is the specification of the desired behavior of the admission policy.
 
 spec.failurePolicy (string)
 
 failurePolicy defines how to handle failures for the admission policy. Failures can occur from CEL expression parse errors, type check errors, runtime errors and invalid or mis-configured policy definitions or bindings.
 
-A policy is invalid if spec.paramKind refers to a non-existent Kind. A binding is invalid if spec.paramRef.name refers to a non-existent resource.
+A policy is invalid if paramKind refers to a non-existent Kind. A binding is invalid if paramRef.name refers to a non-existent resource.
 
 failurePolicy does not define how validations that evaluate to false are handled.
-
-When failurePolicy is set to Fail, ValidatingAdmissionPolicyBinding validationActions define how failures are enforced.
 
 Allowed values are Ignore or Fail. Defaults to Fail.
 
@@ -85,7 +57,7 @@ Patch strategy: merge on key name
 
 Map: unique values on key name will be kept during a merge
 
-MatchConditions is a list of conditions that must be met for a request to be validated. Match conditions filter requests that have already been matched by the rules, namespaceSelector, and objectSelector. An empty list of matchConditions matches all requests. There are a maximum of 64 match conditions allowed.
+matchConditions is a list of conditions that must be met for a request to be validated. Match conditions filter requests that have already been matched by the matchConstraints. An empty list of matchConditions matches all requests. There are a maximum of 64 match conditions allowed.
 
 If a parameter object is provided, it can be accessed via the params handle in the same manner as validation expressions.
 
@@ -96,7 +68,7 @@ If ALL matchConditions evaluate to TRUE, the policy is evaluated.
 If any matchCondition evaluates to an error (but none are FALSE):
 If failurePolicy=Fail, reject the request
 If failurePolicy=Ignore, the policy is skipped
-MatchCondition represents a condition which must by fulfilled for a request to be sent to a webhook.
+**
 
 spec.matchConditions.expression (string), required
 
@@ -114,7 +86,7 @@ Required.
 
 spec.matchConstraints (MatchResources)
 
-MatchConstraints specifies what resources this policy is designed to validate. The AdmissionPolicy cares about a request if it matches all Constraints. However, in order to prevent clusters from being put into an unstable state that cannot be recovered from via the API ValidatingAdmissionPolicy cannot match ValidatingAdmissionPolicy and ValidatingAdmissionPolicyBinding. Required.
+matchConstraints specifies what resources this policy is designed to validate. The MutatingAdmissionPolicy cares about a request if it matches all Constraints. However, in order to prevent clusters from being put into an unstable state that cannot be recovered from via the API MutatingAdmissionPolicy cannot match MutatingAdmissionPolicy and MutatingAdmissionPolicyBinding. The CREATE, UPDATE and CONNECT operations are allowed. The DELETE operation may not be matched. '*' matches CREATE, UPDATE and CONNECT. Required.
 
 MatchResources decides whether to run the admission control policy on an object based on whether it meets the match criteria. The exclude rules take precedence over include rules (if a resource matches both, it is excluded)
 
@@ -122,7 +94,7 @@ spec.matchConstraints.excludeResourceRules ([]NamedRuleWithOperations)
 
 Atomic: will be replaced during a merge
 
-ExcludeResourceRules describes what operations on what resources/subresources the ValidatingAdmissionPolicy should not care about. The exclude rules take precedence over include rules (if a resource matches both, it is excluded)
+ExcludeResourceRules describes what operations on what resources/subresources the policy should not care about. The exclude rules take precedence over include rules (if a resource matches both, it is excluded)
 
 NamedRuleWithOperations is a tuple of Operations and Resources with ResourceNames.
 
@@ -170,9 +142,9 @@ spec.matchConstraints.matchPolicy (string)
 
 matchPolicy defines how the "MatchResources" list is used to match incoming requests. Allowed values are "Exact" or "Equivalent".
 
-Exact: match a request only if it exactly matches a specified rule. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules" only included apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"], a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the ValidatingAdmissionPolicy.
+Exact: match a request only if it exactly matches a specified rule. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules" only included apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"], the admission policy does not consider requests to apps/v1beta1 or extensions/v1beta1 API groups.
 
-Equivalent: match a request if modifies a resource listed in rules, even via another API group or version. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, and "rules" only included apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"], a request to apps/v1beta1 or extensions/v1beta1 would be converted to apps/v1 and sent to the ValidatingAdmissionPolicy.
+Equivalent: match a request if modifies a resource listed in rules, even via another API group or version. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, and "rules" only included apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"], the admission policy does consider requests made to apps/v1beta1 or extensions/v1beta1 API groups. The API server translates the request to a matched resource API if necessary.
 
 Defaults to "Equivalent"
 
@@ -190,13 +162,13 @@ Default to the empty LabelSelector, which matches everything.
 
 spec.matchConstraints.objectSelector (LabelSelector)
 
-ObjectSelector decides whether to run the validation based on if the object has matching labels. objectSelector is evaluated against both the oldObject and newObject that would be sent to the cel validation, and is considered to match if either object matches the selector. A null object (oldObject in the case of create, or newObject in the case of delete) or an object that cannot have labels (like a DeploymentRollback or a PodProxyOptions object) is not considered to match. Use the object selector only if the webhook is opt-in, because end users may skip the admission webhook by setting the labels. Default to the empty LabelSelector, which matches everything.
+ObjectSelector decides whether to run the policy based on if the object has matching labels. objectSelector is evaluated against both the oldObject and newObject that would be sent to the policy's expression (CEL), and is considered to match if either object matches the selector. A null object (oldObject in the case of create, or newObject in the case of delete) or an object that cannot have labels (like a DeploymentRollback or a PodProxyOptions object) is not considered to match. Use the object selector only if the webhook is opt-in, because end users may skip the admission webhook by setting the labels. Default to the empty LabelSelector, which matches everything.
 
 spec.matchConstraints.resourceRules ([]NamedRuleWithOperations)
 
 Atomic: will be replaced during a merge
 
-ResourceRules describes what operations on what resources/subresources the ValidatingAdmissionPolicy matches. The policy cares about an operation if it matches any Rule.
+ResourceRules describes what operations on what resources/subresources the admission policy matches. The policy cares about an operation if it matches any Rule.
 
 NamedRuleWithOperations is a tuple of Operations and Resources with ResourceNames.
 
@@ -240,9 +212,102 @@ spec.matchConstraints.resourceRules.scope (string)
 
 scope specifies the scope of this rule. Valid values are "Cluster", "Namespaced", and "" "Cluster" means that only cluster-scoped resources will match this rule. Namespace API objects are cluster-scoped. "Namespaced" means that only namespaced resources will match this rule. "" means that there are no scope restrictions. Subresources match the scope of their parent resource. Default is "*".
 
+spec.mutations ([]Mutation)
+
+Atomic: will be replaced during a merge
+
+mutations contain operations to perform on matching objects. mutations may not be empty; a minimum of one mutation is required. mutations are evaluated in order, and are reinvoked according to the reinvocationPolicy. The mutations of a policy are invoked for each binding of this policy and reinvocation of mutations occurs on a per binding basis.
+
+Mutation specifies the CEL expression which is used to apply the Mutation.
+
+spec.mutations.patchType (string), required
+
+patchType indicates the patch strategy used. Allowed values are "ApplyConfiguration" and "JSONPatch". Required.
+
+spec.mutations.applyConfiguration (ApplyConfiguration)
+
+applyConfiguration defines the desired configuration values of an object. The configuration is applied to the admission object using structured merge diff. A CEL expression is used to create apply configuration.
+
+ApplyConfiguration defines the desired configuration values of an object.
+
+spec.mutations.applyConfiguration.expression (string)
+
+expression will be evaluated by CEL to create an apply configuration. ref: https://github.com/google/cel-spec
+
+Apply configurations are declared in CEL using object initialization. For example, this CEL expression returns an apply configuration to set a single field:
+
+Object{
+spec: Object.spec{
+serviceAccountName: "example"
+}
+}
+Apply configurations may not modify atomic structs, maps or arrays due to the risk of accidental deletion of values not included in the apply configuration.
+
+CEL expressions have access to the object types needed to create apply configurations:
+
+'Object' - CEL type of the resource object. - 'Object.<fieldName>' - CEL type of object field (such as 'Object.spec') - 'Object.<fieldName1>.<fieldName2>...<fieldNameN>` - CEL type of nested field (such as 'Object.spec.containers')
+CEL expressions have access to the contents of the API request, organized into CEL variables as well as some other useful variables:
+
+'object' - The object from the incoming request. The value is null for DELETE requests. - 'oldObject' - The existing object. The value is null for CREATE requests. - 'request' - Attributes of the API request(ref). - 'params' - Parameter resource referred to by the policy binding being evaluated. Only populated if the policy has a ParamKind. - 'namespaceObject' - The namespace object that the incoming object belongs to. The value is null for cluster-scoped resources. - 'variables' - Map of composited variables, from its name to its lazily evaluated value. For example, a variable named 'foo' can be accessed as 'variables.foo'.
+'authorizer' - A CEL Authorizer. May be used to perform authorization checks for the principal (user or service account) of the request. See https://pkg.go.dev/k8s.io/apiserver/pkg/cel/library#Authz
+'authorizer.requestResource' - A CEL ResourceCheck constructed from the 'authorizer' and configured with the request resource.
+The apiVersion, kind, metadata.name and metadata.generateName are always accessible from the root of the object. No other metadata properties are accessible.
+
+Only property names of the form [a-zA-Z_.-/][a-zA-Z0-9_.-/]* are accessible. Required.
+
+spec.mutations.jsonPatch (JSONPatch)
+
+jsonPatch defines a JSON patch operation to perform a mutation to the object. A CEL expression is used to create the JSON patch.
+
+JSONPatch defines a JSON Patch.
+
+spec.mutations.jsonPatch.expression (string)
+
+expression will be evaluated by CEL to create a JSON patch. ref: https://github.com/google/cel-spec
+
+expression must return an array of JSONPatch values.
+
+For example, this CEL expression returns a JSON patch to conditionally modify a value:
+
+[
+JSONPatch{op: "test", path: "/spec/example", value: "Red"},
+JSONPatch{op: "replace", path: "/spec/example", value: "Green"}
+]
+To define an object for the patch value, use Object types. For example:
+
+[
+JSONPatch{
+op: "add",
+path: "/spec/selector",
+value: Object.spec.selector{matchLabels: {"environment": "test"}}
+}
+]
+To use strings containing '/' and '~' as JSONPatch path keys, use "jsonpatch.escapeKey". For example:
+
+[
+JSONPatch{
+op: "add",
+path: "/metadata/labels/" + jsonpatch.escapeKey("example.com/environment"),
+value: "test"
+},
+]
+CEL expressions have access to the types needed to create JSON patches and objects:
+
+'JSONPatch' - CEL type of JSON Patch operations. JSONPatch has the fields 'op', 'from', 'path' and 'value'. See JSON patch for more details. The 'value' field may be set to any of: string, integer, array, map or object. If set, the 'path' and 'from' fields must be set to a JSON pointer string, where the 'jsonpatch.escapeKey()' CEL function may be used to escape path keys containing '/' and '~'.
+'Object' - CEL type of the resource object. - 'Object.<fieldName>' - CEL type of object field (such as 'Object.spec') - 'Object.<fieldName1>.<fieldName2>...<fieldNameN>` - CEL type of nested field (such as 'Object.spec.containers')
+CEL expressions have access to the contents of the API request, organized into CEL variables as well as some other useful variables:
+
+'object' - The object from the incoming request. The value is null for DELETE requests. - 'oldObject' - The existing object. The value is null for CREATE requests. - 'request' - Attributes of the API request(ref). - 'params' - Parameter resource referred to by the policy binding being evaluated. Only populated if the policy has a ParamKind. - 'namespaceObject' - The namespace object that the incoming object belongs to. The value is null for cluster-scoped resources. - 'variables' - Map of composited variables, from its name to its lazily evaluated value. For example, a variable named 'foo' can be accessed as 'variables.foo'.
+'authorizer' - A CEL Authorizer. May be used to perform authorization checks for the principal (user or service account) of the request. See https://pkg.go.dev/k8s.io/apiserver/pkg/cel/library#Authz
+'authorizer.requestResource' - A CEL ResourceCheck constructed from the 'authorizer' and configured with the request resource.
+CEL expressions have access to Kubernetes CEL function libraries as well as:
+
+'jsonpatch.escapeKey' - Performs JSONPatch key escaping. '~' and '/' are escaped as '~0' and `~1' respectively).
+Only property names of the form [a-zA-Z_.-/][a-zA-Z0-9_.-/]* are accessible. Required.
+
 spec.paramKind (ParamKind)
 
-ParamKind specifies the kind of resources used to parameterize this policy. If absent, there are no parameters for this policy and the param CEL variable will not be provided to validation expressions. If ParamKind refers to a non-existent kind, this policy definition is mis-configured and the FailurePolicy is applied. If paramKind is specified but paramRef is unset in ValidatingAdmissionPolicyBinding, the params variable will be null.
+paramKind specifies the kind of resources used to parameterize this policy. If absent, there are no parameters for this policy and the param CEL variable will not be provided to validation expressions. If paramKind refers to a non-existent kind, this policy definition is mis-configured and the FailurePolicy is applied. If paramKind is specified but paramRef is unset in MutatingAdmissionPolicyBinding, the params variable will be null.
 
 ParamKind is a tuple of Group Kind and Version.
 
@@ -254,55 +319,23 @@ spec.paramKind.kind (string)
 
 Kind is the API kind the resources belong to. Required.
 
-spec.validations ([]Validation)
+spec.reinvocationPolicy (string)
 
-Atomic: will be replaced during a merge
+reinvocationPolicy indicates whether mutations may be called multiple times per MutatingAdmissionPolicyBinding as part of a single admission evaluation. Allowed values are "Never" and "IfNeeded".
 
-Validations contain CEL expressions which is used to apply the validation. Validations and AuditAnnotations may not both be empty; a minimum of one Validations or AuditAnnotations is required.
+Never: These mutations will not be called more than once per binding in a single admission evaluation.
 
-Validation specifies the CEL expression which is used to apply the validation.
-
-spec.validations.expression (string), required
-
-Expression represents the expression which will be evaluated by CEL. ref: https://github.com/google/cel-spec CEL expressions have access to the contents of the API request/response, organized into CEL variables as well as some other useful variables:
-
-'object' - The object from the incoming request. The value is null for DELETE requests. - 'oldObject' - The existing object. The value is null for CREATE requests. - 'request' - Attributes of the API request(ref). - 'params' - Parameter resource referred to by the policy binding being evaluated. Only populated if the policy has a ParamKind. - 'namespaceObject' - The namespace object that the incoming object belongs to. The value is null for cluster-scoped resources. - 'variables' - Map of composited variables, from its name to its lazily evaluated value. For example, a variable named 'foo' can be accessed as 'variables.foo'.
-'authorizer' - A CEL Authorizer. May be used to perform authorization checks for the principal (user or service account) of the request. See https://pkg.go.dev/k8s.io/apiserver/pkg/cel/library#Authz
-'authorizer.requestResource' - A CEL ResourceCheck constructed from the 'authorizer' and configured with the request resource.
-The apiVersion, kind, metadata.name and metadata.generateName are always accessible from the root of the object. No other metadata properties are accessible.
-
-Only property names of the form [a-zA-Z_.-/][a-zA-Z0-9_.-/]* are accessible. Accessible property names are escaped according to the following rules when accessed in the expression: - '' escapes to 'underscores' - '.' escapes to 'dot' - '-' escapes to 'dash' - '/' escapes to 'slash' - Property names that exactly match a CEL RESERVED keyword escape to '{keyword}__'. The keywords are: "true", "false", "null", "in", "as", "break", "const", "continue", "else", "for", "function", "if", "import", "let", "loop", "package", "namespace", "return". Examples:
-
-Expression accessing a property named "namespace": {"Expression": "object.namespace > 0"}
-Expression accessing a property named "x-prop": {"Expression": "object.x__dash__prop > 0"}
-Expression accessing a property named "redact__d": {"Expression": "object.redact__underscores__d > 0"}
-Equality on arrays with list type of 'set' or 'map' ignores element order, i.e. [1, 2] == [2, 1]. Concatenation on arrays with x-kubernetes-list-type use the semantics of the list type:
-
-'set': X + Y performs a union where the array positions of all elements in X are preserved and non-intersecting elements in Y are appended, retaining their partial order.
-'map': X + Y performs a merge where the array positions of all keys in X are preserved but the values are overwritten by values in Y when the key sets of X and Y intersect. Elements in Y with non-intersecting keys are appended, retaining their partial order. Required.
-spec.validations.message (string)
-
-Message represents the message displayed when validation fails. The message is required if the Expression contains line breaks. The message must not contain line breaks. If unset, the message is "failed rule: {Rule}". e.g. "must be a URL with the host matching spec.host" If the Expression contains line breaks. Message is required. The message must not contain line breaks. If unset, the message is "failed Expression: {Expression}".
-
-spec.validations.messageExpression (string)
-
-messageExpression declares a CEL expression that evaluates to the validation failure message that is returned when this rule fails. Since messageExpression is used as a failure message, it must evaluate to a string. If both message and messageExpression are present on a validation, then messageExpression will be used if validation fails. If messageExpression results in a runtime error, the runtime error is logged, and the validation failure message is produced as if the messageExpression field were unset. If messageExpression evaluates to an empty string, a string with only spaces, or a string that contains line breaks, then the validation failure message will also be produced as if the messageExpression field were unset, and the fact that messageExpression produced an empty string/string with only spaces/string with line breaks will be logged. messageExpression has access to all the same variables as the expression except for 'authorizer' and 'authorizer.requestResource'. Example: "object.x must be less than max ("+string(params.max)+")"
-
-spec.validations.reason (string)
-
-Reason represents a machine-readable description of why this validation failed. If this is the first validation in the list to fail, this reason, as well as the corresponding HTTP response code, are used in the HTTP response to the client. The currently supported reasons are: "Unauthorized", "Forbidden", "Invalid", "RequestEntityTooLarge". If not set, StatusReasonInvalid is used in the response to the client.
+IfNeeded: These mutations may be invoked more than once per binding for a single admission request and there is no guarantee of order with respect to other admission plugins, admission webhooks, bindings of this policy and admission policies. Mutations are only reinvoked when mutations change the object after this mutation is invoked. Required.
 
 spec.variables ([]Variable)
 
-Patch strategy: merge on key name
+Atomic: will be replaced during a merge
 
-Map: unique values on key name will be kept during a merge
+variables contain definitions of variables that can be used in composition of other expressions. Each variable is defined as a named CEL expression. The variables defined here will be available under variables in other expressions of the policy except matchConditions because matchConditions are evaluated before the rest of the policy.
 
-Variables contain definitions of variables that can be used in composition of other expressions. Each variable is defined as a named CEL expression. The variables defined here will be available under variables in other expressions of the policy except MatchConditions because MatchConditions are evaluated before the rest of the policy.
+The expression of a variable can refer to other variables defined earlier in the list but not those after. Thus, variables must be sorted by the order of first appearance and acyclic.
 
-The expression of a variable can refer to other variables defined earlier in the list but not those after. Thus, Variables must be sorted by the order of first appearance and acyclic.
-
-Variable is the definition of a variable that is used for composition. A variable is defined as a named expression.
+Variable is the definition of a variable that is used for composition.
 
 spec.variables.expression (string), required
 
@@ -312,71 +345,6 @@ spec.variables.name (string), required
 
 Name is the name of the variable. The name must be a valid CEL identifier and unique among all variables. The variable can be accessed in other expressions through variables For example, if name is "foo", the variable will be available as variables.foo
 
-status (ValidatingAdmissionPolicyStatus)
-
-The status of the ValidatingAdmissionPolicy, including warnings that are useful to determine if the policy behaves in the expected way. Populated by the system. Read-only.
-
-ValidatingAdmissionPolicyStatus represents the status of an admission validation policy.
-
-status.conditions ([]Condition)
-
-Map: unique values on key type will be kept during a merge
-
-The conditions represent the latest available observations of a policy's current state.
-
-Condition contains details for one aspect of the current state of this API Resource.
-
-status.conditions.lastTransitionTime (Time), required
-
-lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed. If that is not known, then using the time when the API field changed is acceptable.
-
-Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON. Wrappers are provided for many of the factory methods that the time package offers.
-
-status.conditions.message (string), required
-
-message is a human readable message indicating details about the transition. This may be an empty string.
-
-status.conditions.reason (string), required
-
-reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
-
-status.conditions.status (string), required
-
-status of the condition, one of True, False, Unknown.
-
-status.conditions.type (string), required
-
-type of condition in CamelCase or in foo.example.com/CamelCase.
-
-status.conditions.observedGeneration (int64)
-
-observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
-
-status.observedGeneration (int64)
-
-The generation observed by the controller.
-
-status.typeChecking (TypeChecking)
-
-The results of type checking for each expression. Presence of this field indicates the completion of the type checking.
-
-TypeChecking contains results of type checking the expressions in the ValidatingAdmissionPolicy
-
-status.typeChecking.expressionWarnings ([]ExpressionWarning)
-
-Atomic: will be replaced during a merge
-
-The type checking warnings for each expression.
-
-ExpressionWarning is a warning information that targets a specific expression.
-
-status.typeChecking.expressionWarnings.fieldRef (string), required
-
-The path to the field that refers the expression. For example, the reference to the expression of the first item of validations is "spec.validations[0].expression"
-
-status.typeChecking.expressionWarnings.warning (string), required
-
-The content of type checking information in a human-readable form. Each line of the warning contains the type that the expression is checked against, followed by the type check error from the compiler.
 
 
 

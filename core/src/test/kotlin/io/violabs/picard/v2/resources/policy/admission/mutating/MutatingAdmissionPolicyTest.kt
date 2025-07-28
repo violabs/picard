@@ -1,25 +1,25 @@
-package io.violabs.picard.v2.resources.policy.admission.validating
+package io.violabs.picard.v2.resources.policy.admission.mutating
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
 import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
+import io.violabs.picard.v2.resources.policy.admission.validating.MatchCondition
+import io.violabs.picard.v2.resources.policy.admission.validating.MatchResources
+import io.violabs.picard.v2.resources.policy.admission.validating.NamedRuleWithOperations
+import io.violabs.picard.v2.resources.policy.admission.validating.ParamKind
+import io.violabs.picard.v2.resources.policy.admission.validating.Variable
 import org.junit.jupiter.api.BeforeAll
 
-class ValidatingAdmissionPolicyTest :
-    SuccessBuildSim<ValidatingAdmissionPolicyV2, ValidatingAdmissionPolicyV2DslBuilder>() {
+class MutatingAdmissionPolicyTest :
+    SuccessBuildSim<MutatingAdmissionPolicyV2, MutatingAdmissionPolicyV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
         fun setup() = buildSetup(
-            ValidatingAdmissionPolicyTest::class,
+            MutatingAdmissionPolicyTest::class,
             SUCCESS_POSSIBILITIES
-        )
-
-        private val AUDIT_ANNOTATION = AuditAnnotation(
-            key = PLACEHOLDER,
-            valueExpression = PLACEHOLDER
         )
 
         private val MATCH_CONDITION = MatchCondition(
@@ -32,57 +32,36 @@ class ValidatingAdmissionPolicyTest :
             kind = PLACEHOLDER
         )
 
-        private val VALIDATION = Validation(
-            messageExpression = PLACEHOLDER,
-            expression = PLACEHOLDER,
-            message = PLACEHOLDER,
-            reason = PLACEHOLDER
-        )
-
         private val VARIABLE = Variable(
             name = PLACEHOLDER,
             expression = PLACEHOLDER
         )
 
-        private val CONDITION = ValidatingAdmissionPolicyCondition(
-            lastTransitionTime = NOW,
-            message = PLACEHOLDER,
-            observedGeneration = 1,
-            reason = PLACEHOLDER,
-            status = PLACEHOLDER,
-            type = PLACEHOLDER
-        )
-
-        private val TYPE_CHECKING = TypeChecking(
-            expressionWarnings = listOf(
-                ExpressionWarning(
-                    fieldRef = PLACEHOLDER,
-                    warning = PLACEHOLDER
-                )
+        private val MUTATION = Mutation(
+            patchType = PLACEHOLDER,
+            applyConfiguration = ApplyConfiguration(
+                expression = PLACEHOLDER
+            ),
+            jsonPatch = JsonPatch(
+                expression = PLACEHOLDER
             )
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<ValidatingAdmissionPolicyV2, ValidatingAdmissionPolicyV2DslBuilder> {
+            possibilities<MutatingAdmissionPolicyV2, MutatingAdmissionPolicyV2DslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(ValidatingAdmissionPolicyV2DslBuilder())
-                    expected = ValidatingAdmissionPolicyV2()
+                    given(MutatingAdmissionPolicyV2DslBuilder())
+                    expected = MutatingAdmissionPolicyV2()
                 }
 
                 scenario {
                     id = "full"
-                    given(ValidatingAdmissionPolicyV2DslBuilder()) {
+                    given(MutatingAdmissionPolicyV2DslBuilder()) {
                         metadata {
                             sharedObjectMeta()
                         }
                         spec {
-                            auditAnnotations {
-                                auditAnnotation {
-                                    key = PLACEHOLDER
-                                    valueExpression = PLACEHOLDER
-                                }
-                            }
                             failurePolicy = PLACEHOLDER
                             matchConditions {
                                 matchCondition {
@@ -119,18 +98,22 @@ class ValidatingAdmissionPolicyTest :
                                     }
                                 }
                             }
+                            mutations {
+                                mutation {
+                                    patchType = PLACEHOLDER
+                                    applyConfiguration {
+                                        expression = PLACEHOLDER
+                                    }
+                                    jsonPatch {
+                                        expression = PLACEHOLDER
+                                    }
+                                }
+                            }
                             paramKind {
                                 apiVersion = PLACEHOLDER
                                 kind = PLACEHOLDER
                             }
-                            validations {
-                                validation {
-                                    messageExpression = PLACEHOLDER
-                                    expression = PLACEHOLDER
-                                    message = PLACEHOLDER
-                                    reason = PLACEHOLDER
-                                }
-                            }
+                            reinvocationPolicy = PLACEHOLDER
                             variables {
                                 variable {
                                     name = PLACEHOLDER
@@ -138,32 +121,10 @@ class ValidatingAdmissionPolicyTest :
                                 }
                             }
                         }
-                        status {
-                            conditions {
-                                validatingAdmissionPolicyCondition {
-                                    lastTransitionTime = NOW
-                                    message = PLACEHOLDER
-                                    observedGeneration = 1
-                                    reason = PLACEHOLDER
-                                    status = PLACEHOLDER
-                                    type = PLACEHOLDER
-                                }
-                            }
-                            observedGeneration = 1
-                            typeChecking {
-                                expressionWarnings {
-                                    expressionWarning {
-                                        fieldRef = PLACEHOLDER
-                                        warning = PLACEHOLDER
-                                    }
-                                }
-                            }
-                        }
                     }
-                    expected = ValidatingAdmissionPolicyV2(
+                    expected = MutatingAdmissionPolicyV2(
                         metadata = Common.OBJECT_META,
-                        spec = ValidatingAdmissionPolicySpec(
-                            auditAnnotations = listOf(AUDIT_ANNOTATION),
+                        spec = MutatingAdmissionPolicySpec(
                             failurePolicy = PLACEHOLDER,
                             matchConditions = listOf(MATCH_CONDITION),
                             matchConstraints = MatchResources(
@@ -191,14 +152,10 @@ class ValidatingAdmissionPolicyTest :
                                     )
                                 )
                             ),
+                            mutations = listOf(MUTATION),
                             paramKind = PARAM_KIND,
-                            validations = listOf(VALIDATION),
+                            reinvocationPolicy = PLACEHOLDER,
                             variables = listOf(VARIABLE)
-                        ),
-                        status = ValidatingAdmissionPolicyStatus(
-                            conditions = listOf(CONDITION),
-                            observedGeneration = 1,
-                            typeChecking = TYPE_CHECKING
                         )
                     )
                 }

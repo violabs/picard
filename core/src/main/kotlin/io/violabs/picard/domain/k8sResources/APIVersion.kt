@@ -161,6 +161,7 @@ import io.violabs.picard.v2.resources.storage.volume.VolumeAttributesClassV2
 import io.violabs.picard.v2.resources.storage.volume.attachment.VolumeAttachmentV2
 import io.violabs.picard.v2.resources.policy.level.PriorityLevelConfigurationV2
 import io.violabs.picard.v2.resources.policy.admission.validating.ValidatingAdmissionPolicyV2
+import io.violabs.picard.v2.resources.policy.admission.mutating.MutatingAdmissionPolicyV2
 
 interface APIVersion {
     fun refString(): String
@@ -223,6 +224,9 @@ open class KAPIVersion(
         ValidatingAdmissionPolicyBindingList.Version,
         ValidatingWebhookConfiguration.Version,
         ValidatingWebhookConfigurationList.Version
+
+    object AdmissionRegistrationV1Alpha1 : KAPIVersion("admissionregistration.k8s.io/v1alpha1"),
+        MutatingAdmissionPolicyV2.Version
 
     object APIExtensionsV1 : KAPIVersion("apiextensions.k8s.io/v1"),
         CustomResourceDefinition.Version,

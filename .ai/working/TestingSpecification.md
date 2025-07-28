@@ -17,6 +17,8 @@ import io.violabs.picard.Common.sharedObjectMeta
     //.. other code
 ```
 
+Also available `sharedSelector()` from `Common` object
+
 # Example Spec
 
 codeLocation: core/src/main/kotlin/io/violabs/picard/v2/resources/policy/resource/quota/ResourceQuotaV2.kt

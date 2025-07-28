@@ -18,171 +18,130 @@ Finally, update the v1 to have `@Deprecated("Use v2", ReplaceWith(<package for v
 
 ## Documentation
 
-NetworkPolicy
-NetworkPolicy describes what network traffic is allowed for a set of Pods.
-apiVersion: networking.k8s.io/v1
+PodDisruptionBudget
+PodDisruptionBudget is an object to define the max disruption that can be caused to a collection of pods.
+apiVersion: policy/v1
 
-import "k8s.io/api/networking/v1"
+import "k8s.io/api/policy/v1"
 
-NetworkPolicy
-NetworkPolicy describes what network traffic is allowed for a set of Pods
+PodDisruptionBudget
+PodDisruptionBudget is an object to define the max disruption that can be caused to a collection of pods
 
-apiVersion: networking.k8s.io/v1
+apiVersion: policy/v1
 
-kind: NetworkPolicy
+kind: PodDisruptionBudget
 
 metadata (ObjectMeta)
 
 Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 
-spec (NetworkPolicySpec)
+spec (PodDisruptionBudgetSpec)
 
-spec represents the specification of the desired behavior for this NetworkPolicy.
+Specification of the desired behavior of the PodDisruptionBudget.
 
-NetworkPolicySpec
-NetworkPolicySpec provides the specification of a NetworkPolicy
+status (PodDisruptionBudgetStatus)
 
-podSelector (LabelSelector), required
+Most recently observed status of the PodDisruptionBudget.
 
-podSelector selects the pods to which this NetworkPolicy object applies. The array of ingress rules is applied to any pods selected by this field. Multiple network policies can select the same set of pods. In this case, the ingress rules for each are combined additively. This field is NOT optional and follows standard label selector semantics. An empty podSelector matches all pods in this namespace.
+PodDisruptionBudgetSpec
+PodDisruptionBudgetSpec is a description of a PodDisruptionBudget.
 
-policyTypes ([]string)
+maxUnavailable (IntOrString)
 
-Atomic: will be replaced during a merge
-
-policyTypes is a list of rule types that the NetworkPolicy relates to. Valid options are ["Ingress"], ["Egress"], or ["Ingress", "Egress"]. If this field is not specified, it will default based on the existence of ingress or egress rules; policies that contain an egress section are assumed to affect egress, and all policies (whether or not they contain an ingress section) are assumed to affect ingress. If you want to write an egress-only policy, you must explicitly specify policyTypes [ "Egress" ]. Likewise, if you want to write a policy that specifies that no egress is allowed, you must specify a policyTypes value that include "Egress" (since such a policy would not include an egress section and would otherwise default to just [ "Ingress" ]). This field is beta-level in 1.8
-
-ingress ([]NetworkPolicyIngressRule)
-
-Atomic: will be replaced during a merge
-
-ingress is a list of ingress rules to be applied to the selected pods. Traffic is allowed to a pod if there are no NetworkPolicies selecting the pod (and cluster policy otherwise allows the traffic), OR if the traffic source is the pod's local node, OR if the traffic matches at least one ingress rule across all of the NetworkPolicy objects whose podSelector matches the pod. If this field is empty then this NetworkPolicy does not allow any traffic (and serves solely to ensure that the pods it selects are isolated by default)
-
-NetworkPolicyIngressRule describes a particular set of traffic that is allowed to the pods matched by a NetworkPolicySpec's podSelector. The traffic must match both ports and from.
-
-ingress.from ([]NetworkPolicyPeer)
-
-Atomic: will be replaced during a merge
-
-from is a list of sources which should be able to access the pods selected for this rule. Items in this list are combined using a logical OR operation. If this field is empty or missing, this rule matches all sources (traffic not restricted by source). If this field is present and contains at least one item, this rule allows traffic only if the traffic matches at least one item in the from list.
-
-NetworkPolicyPeer describes a peer to allow traffic to/from. Only certain combinations of fields are allowed
-
-ingress.from.ipBlock (IPBlock)
-
-ipBlock defines policy on a particular IPBlock. If this field is set then neither of the other fields can be.
-
-IPBlock describes a particular CIDR (Ex. "192.168.1.0/24","2001:db8::/64") that is allowed to the pods matched by a NetworkPolicySpec's podSelector. The except entry describes CIDRs that should not be included within this rule.
-
-ingress.from.ipBlock.cidr (string), required
-
-cidr is a string representing the IPBlock Valid examples are "192.168.1.0/24" or "2001:db8::/64"
-
-ingress.from.ipBlock.except ([]string)
-
-Atomic: will be replaced during a merge
-
-except is a slice of CIDRs that should not be included within an IPBlock Valid examples are "192.168.1.0/24" or "2001:db8::/64" Except values will be rejected if they are outside the cidr range
-
-ingress.from.namespaceSelector (LabelSelector)
-
-namespaceSelector selects namespaces using cluster-scoped labels. This field follows standard label selector semantics; if present but empty, it selects all namespaces.
-
-If podSelector is also set, then the NetworkPolicyPeer as a whole selects the pods matching podSelector in the namespaces selected by namespaceSelector. Otherwise it selects all pods in the namespaces selected by namespaceSelector.
-
-ingress.from.podSelector (LabelSelector)
-
-podSelector is a label selector which selects pods. This field follows standard label selector semantics; if present but empty, it selects all pods.
-
-If namespaceSelector is also set, then the NetworkPolicyPeer as a whole selects the pods matching podSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects the pods matching podSelector in the policy's own namespace.
-
-ingress.ports ([]NetworkPolicyPort)
-
-Atomic: will be replaced during a merge
-
-ports is a list of ports which should be made accessible on the pods selected for this rule. Each item in this list is combined using a logical OR. If this field is empty or missing, this rule matches all ports (traffic not restricted by port). If this field is present and contains at least one item, then this rule allows traffic only if the traffic matches at least one port in the list.
-
-NetworkPolicyPort describes a port to allow traffic on
-
-ingress.ports.port (IntOrString)
-
-port represents the port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers. If present, only traffic on the specified protocol AND port will be matched.
+An eviction is allowed if at most "maxUnavailable" pods selected by "selector" are unavailable after the eviction, i.e. even in absence of the evicted pod. For example, one can prevent all voluntary evictions by specifying 0. This is a mutually exclusive setting with "minAvailable".
 
 IntOrString is a type that can hold an int32 or a string. When used in JSON or YAML marshalling and unmarshalling, it produces or consumes the inner type. This allows you to have, for example, a JSON field that can accept a name or number.
 
-ingress.ports.endPort (int32)
+minAvailable (IntOrString)
 
-endPort indicates that the range of ports from port to endPort if set, inclusive, should be allowed by the policy. This field cannot be defined if the port field is not defined or if the port field is defined as a named (string) port. The endPort must be equal or greater than port.
-
-ingress.ports.protocol (string)
-
-protocol represents the protocol (TCP, UDP, or SCTP) which traffic must match. If not specified, this field defaults to TCP.
-
-egress ([]NetworkPolicyEgressRule)
-
-Atomic: will be replaced during a merge
-
-egress is a list of egress rules to be applied to the selected pods. Outgoing traffic is allowed if there are no NetworkPolicies selecting the pod (and cluster policy otherwise allows the traffic), OR if the traffic matches at least one egress rule across all of the NetworkPolicy objects whose podSelector matches the pod. If this field is empty then this NetworkPolicy limits all outgoing traffic (and serves solely to ensure that the pods it selects are isolated by default). This field is beta-level in 1.8
-
-NetworkPolicyEgressRule describes a particular set of traffic that is allowed out of pods matched by a NetworkPolicySpec's podSelector. The traffic must match both ports and to. This type is beta-level in 1.8
-
-egress.to ([]NetworkPolicyPeer)
-
-Atomic: will be replaced during a merge
-
-to is a list of destinations for outgoing traffic of pods selected for this rule. Items in this list are combined using a logical OR operation. If this field is empty or missing, this rule matches all destinations (traffic not restricted by destination). If this field is present and contains at least one item, this rule allows traffic only if the traffic matches at least one item in the to list.
-
-NetworkPolicyPeer describes a peer to allow traffic to/from. Only certain combinations of fields are allowed
-
-egress.to.ipBlock (IPBlock)
-
-ipBlock defines policy on a particular IPBlock. If this field is set then neither of the other fields can be.
-
-IPBlock describes a particular CIDR (Ex. "192.168.1.0/24","2001:db8::/64") that is allowed to the pods matched by a NetworkPolicySpec's podSelector. The except entry describes CIDRs that should not be included within this rule.
-
-egress.to.ipBlock.cidr (string), required
-
-cidr is a string representing the IPBlock Valid examples are "192.168.1.0/24" or "2001:db8::/64"
-
-egress.to.ipBlock.except ([]string)
-
-Atomic: will be replaced during a merge
-
-except is a slice of CIDRs that should not be included within an IPBlock Valid examples are "192.168.1.0/24" or "2001:db8::/64" Except values will be rejected if they are outside the cidr range
-
-egress.to.namespaceSelector (LabelSelector)
-
-namespaceSelector selects namespaces using cluster-scoped labels. This field follows standard label selector semantics; if present but empty, it selects all namespaces.
-
-If podSelector is also set, then the NetworkPolicyPeer as a whole selects the pods matching podSelector in the namespaces selected by namespaceSelector. Otherwise it selects all pods in the namespaces selected by namespaceSelector.
-
-egress.to.podSelector (LabelSelector)
-
-podSelector is a label selector which selects pods. This field follows standard label selector semantics; if present but empty, it selects all pods.
-
-If namespaceSelector is also set, then the NetworkPolicyPeer as a whole selects the pods matching podSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects the pods matching podSelector in the policy's own namespace.
-
-egress.ports ([]NetworkPolicyPort)
-
-Atomic: will be replaced during a merge
-
-ports is a list of destination ports for outgoing traffic. Each item in this list is combined using a logical OR. If this field is empty or missing, this rule matches all ports (traffic not restricted by port). If this field is present and contains at least one item, then this rule allows traffic only if the traffic matches at least one port in the list.
-
-NetworkPolicyPort describes a port to allow traffic on
-
-egress.ports.port (IntOrString)
-
-port represents the port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers. If present, only traffic on the specified protocol AND port will be matched.
+An eviction is allowed if at least "minAvailable" pods selected by "selector" will still be available after the eviction, i.e. even in the absence of the evicted pod. So for example you can prevent all voluntary evictions by specifying "100%".
 
 IntOrString is a type that can hold an int32 or a string. When used in JSON or YAML marshalling and unmarshalling, it produces or consumes the inner type. This allows you to have, for example, a JSON field that can accept a name or number.
 
-egress.ports.endPort (int32)
+selector (LabelSelector)
 
-endPort indicates that the range of ports from port to endPort if set, inclusive, should be allowed by the policy. This field cannot be defined if the port field is not defined or if the port field is defined as a named (string) port. The endPort must be equal or greater than port.
+Label query over pods whose evictions are managed by the disruption budget. A null selector will match no pods, while an empty ({}) selector will select all pods within the namespace.
 
-egress.ports.protocol (string)
+unhealthyPodEvictionPolicy (string)
 
-protocol represents the protocol (TCP, UDP, or SCTP) which traffic must match. If not specified, this field defaults to TCP.
+UnhealthyPodEvictionPolicy defines the criteria for when unhealthy pods should be considered for eviction. Current implementation considers healthy pods, as pods that have status.conditions item with type="Ready",status="True".
+
+Valid policies are IfHealthyBudget and AlwaysAllow. If no policy is specified, the default behavior will be used, which corresponds to the IfHealthyBudget policy.
+
+IfHealthyBudget policy means that running pods (status.phase="Running"), but not yet healthy can be evicted only if the guarded application is not disrupted (status.currentHealthy is at least equal to status.desiredHealthy). Healthy pods will be subject to the PDB for eviction.
+
+AlwaysAllow policy means that all running pods (status.phase="Running"), but not yet healthy are considered disrupted and can be evicted regardless of whether the criteria in a PDB is met. This means perspective running pods of a disrupted application might not get a chance to become healthy. Healthy pods will be subject to the PDB for eviction.
+
+Additional policies may be added in the future. Clients making eviction decisions should disallow eviction of unhealthy pods if they encounter an unrecognized policy in this field.
+
+PodDisruptionBudgetStatus
+PodDisruptionBudgetStatus represents information about the status of a PodDisruptionBudget. Status may trail the actual state of a system.
+
+currentHealthy (int32), required
+
+current number of healthy pods
+
+desiredHealthy (int32), required
+
+minimum desired number of healthy pods
+
+disruptionsAllowed (int32), required
+
+Number of pod disruptions that are currently allowed.
+
+expectedPods (int32), required
+
+total number of pods counted by this disruption budget
+
+conditions ([]Condition)
+
+Patch strategy: merge on key type
+
+Map: unique values on key type will be kept during a merge
+
+Conditions contain conditions for PDB. The disruption controller sets the DisruptionAllowed condition. The following are known values for the reason field (additional reasons could be added in the future): - SyncFailed: The controller encountered an error and wasn't able to compute the number of allowed disruptions. Therefore no disruptions are allowed and the status of the condition will be False.
+
+InsufficientPods: The number of pods are either at or below the number required by the PodDisruptionBudget. No disruptions are allowed and the status of the condition will be False.
+SufficientPods: There are more pods than required by the PodDisruptionBudget. The condition will be True, and the number of allowed disruptions are provided by the disruptionsAllowed property.
+Condition contains details for one aspect of the current state of this API Resource.
+
+conditions.lastTransitionTime (Time), required
+
+lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed. If that is not known, then using the time when the API field changed is acceptable.
+
+Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON. Wrappers are provided for many of the factory methods that the time package offers.
+
+conditions.message (string), required
+
+message is a human readable message indicating details about the transition. This may be an empty string.
+
+conditions.reason (string), required
+
+reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
+
+conditions.status (string), required
+
+status of the condition, one of True, False, Unknown.
+
+conditions.type (string), required
+
+type of condition in CamelCase or in foo.example.com/CamelCase.
+
+conditions.observedGeneration (int64)
+
+observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
+
+disruptedPods (map[string]Time)
+
+DisruptedPods contains information about pods whose eviction was processed by the API server eviction subresource handler but has not yet been observed by the PodDisruptionBudget controller. A pod will be in this map from the time when the API server processed the eviction request to the time when the pod is seen by PDB controller as having been marked for deletion (or after a timeout). The key in the map is the name of the pod and the value is the time when the API server processed the eviction request. If the deletion didn't occur and a pod is still there it will be removed from the list automatically by PodDisruptionBudget controller after some time. If everything goes smooth this map should be empty for the most of the time. Large number of entries in the map may indicate problems with pod deletions.
+
+Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON. Wrappers are provided for many of the factory methods that the time package offers.
+
+observedGeneration (int64)
+
+Most recent generation observed when updating this PDB status. DisruptionsAllowed and other status information is valid only if observedGeneration equals to PDB's object generation.
+
+
 
 
 

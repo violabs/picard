@@ -5,6 +5,9 @@ import io.violabs.picard.Common.sharedObjectMeta
 import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
+import io.violabs.picard.v2.resources.policy.admission.MatchCondition
+import io.violabs.picard.v2.resources.policy.admission.MatchResources
+import io.violabs.picard.v2.resources.policy.admission.Variable
 import org.junit.jupiter.api.BeforeAll
 
 class ValidatingAdmissionPolicyTest :

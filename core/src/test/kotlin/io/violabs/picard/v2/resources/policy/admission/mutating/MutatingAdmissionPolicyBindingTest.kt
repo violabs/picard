@@ -1,4 +1,4 @@
-package io.violabs.picard.v2.resources.policy.admission.validating
+package io.violabs.picard.v2.resources.policy.admission.mutating
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
@@ -7,15 +7,16 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.policy.admission.MatchResources
 import io.violabs.picard.v2.resources.policy.admission.ParamRef
+import io.violabs.picard.v2.resources.policy.admission.validating.NamedRuleWithOperations
 import org.junit.jupiter.api.BeforeAll
 
-class ValidatingAdmissionPolicyBindingTest :
-    SuccessBuildSim<ValidatingAdmissionPolicyBindingV2, ValidatingAdmissionPolicyBindingV2DslBuilder>() {
+class MutatingAdmissionPolicyBindingTest :
+    SuccessBuildSim<MutatingAdmissionPolicyBindingV2, MutatingAdmissionPolicyBindingV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
         fun setup() = buildSetup(
-            ValidatingAdmissionPolicyBindingTest::class,
+            MutatingAdmissionPolicyBindingTest::class,
             SUCCESS_POSSIBILITIES
         )
 
@@ -53,16 +54,16 @@ class ValidatingAdmissionPolicyBindingTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<ValidatingAdmissionPolicyBindingV2, ValidatingAdmissionPolicyBindingV2DslBuilder> {
+            possibilities<MutatingAdmissionPolicyBindingV2, MutatingAdmissionPolicyBindingV2DslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(ValidatingAdmissionPolicyBindingV2DslBuilder())
-                    expected = ValidatingAdmissionPolicyBindingV2()
+                    given(MutatingAdmissionPolicyBindingV2DslBuilder())
+                    expected = MutatingAdmissionPolicyBindingV2()
                 }
 
                 scenario {
                     id = "full"
-                    given(ValidatingAdmissionPolicyBindingV2DslBuilder()) {
+                    given(MutatingAdmissionPolicyBindingV2DslBuilder()) {
                         metadata {
                             sharedObjectMeta()
                         }
@@ -105,16 +106,14 @@ class ValidatingAdmissionPolicyBindingTest :
                                 }
                             }
                             policyName = PLACEHOLDER
-                            validationActions(PLACEHOLDER)
                         }
                     }
-                    expected = ValidatingAdmissionPolicyBindingV2(
+                    expected = MutatingAdmissionPolicyBindingV2(
                         metadata = Common.OBJECT_META,
-                        spec = ValidatingAdmissionPolicyBindingSpec(
+                        spec = MutatingAdmissionPolicyBindingSpec(
                             matchResources = MATCH_RESOURCES,
                             paramRef = PARAM_REF,
-                            policyName = PLACEHOLDER,
-                            validationActions = listOf(PLACEHOLDER)
+                            policyName = PLACEHOLDER
                         )
                     )
                 }

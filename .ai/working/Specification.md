@@ -18,36 +18,36 @@ Finally, update the v1 to have `@Deprecated("Use v2", ReplaceWith(<package for v
 
 ## Documentation
 
-ValidatingAdmissionPolicyBinding
-ValidatingAdmissionPolicyBinding binds the ValidatingAdmissionPolicy with paramerized resources.
-apiVersion: admissionregistration.k8s.io/v1
+MutatingAdmissionPolicyBinding v1alpha1
+MutatingAdmissionPolicyBinding binds the MutatingAdmissionPolicy with parametrized resources.
+apiVersion: admissionregistration.k8s.io/v1alpha1
 
-import "k8s.io/api/admissionregistration/v1"
+import "k8s.io/api/admissionregistration/v1alpha1"
 
-ValidatingAdmissionPolicyBinding
-ValidatingAdmissionPolicyBinding binds the ValidatingAdmissionPolicy with paramerized resources. ValidatingAdmissionPolicyBinding and parameter CRDs together define how cluster administrators configure policies for clusters.
+MutatingAdmissionPolicyBinding
+MutatingAdmissionPolicyBinding binds the MutatingAdmissionPolicy with parametrized resources. MutatingAdmissionPolicyBinding and the optional parameter resource together define how cluster administrators configure policies for clusters.
 
-For a given admission request, each binding will cause its policy to be evaluated N times, where N is 1 for policies/bindings that don't use params, otherwise N is the number of parameters selected by the binding.
+For a given admission request, each binding will cause its policy to be evaluated N times, where N is 1 for policies/bindings that don't use params, otherwise N is the number of parameters selected by the binding. Each evaluation is constrained by a runtime cost budget.
 
-The CEL expressions of a policy must have a computed CEL cost below the maximum CEL budget. Each evaluation of the policy is given an independent CEL cost budget. Adding/removing policies, bindings, or params can not affect whether a given (policy, binding, param) combination is within its own CEL budget.
+Adding/removing policies, bindings, or params can not affect whether a given (policy, binding, param) combination is within its own CEL budget.
 
-apiVersion: admissionregistration.k8s.io/v1
+apiVersion: admissionregistration.k8s.io/v1alpha1
 
-kind: ValidatingAdmissionPolicyBinding
+kind: MutatingAdmissionPolicyBinding
 
 metadata (ObjectMeta)
 
 Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
 
-spec (ValidatingAdmissionPolicyBindingSpec)
+spec (MutatingAdmissionPolicyBindingSpec)
 
-Specification of the desired behavior of the ValidatingAdmissionPolicyBinding.
+Specification of the desired behavior of the MutatingAdmissionPolicyBinding.
 
-ValidatingAdmissionPolicyBindingSpec is the specification of the ValidatingAdmissionPolicyBinding.
+MutatingAdmissionPolicyBindingSpec is the specification of the MutatingAdmissionPolicyBinding.
 
 spec.matchResources (MatchResources)
 
-MatchResources declares what resources match this binding and will be validated by it. Note that this is intersected with the policy's matchConstraints, so only requests that are matched by the policy can be selected by this. If this is unset, all resources matched by the policy are validated by this binding When resourceRules is unset, it does not constrain resource matching. If a resource is matched by the other fields of this object, it will be validated. Note that this is differs from ValidatingAdmissionPolicy matchConstraints, where resourceRules are required.
+matchResources limits what resources match this binding and may be mutated by it. Note that if matchResources matches a resource, the resource must also match a policy's matchConstraints and matchConditions before the resource may be mutated. When matchResources is unset, it does not constrain resource matching, and only the policy's matchConstraints and matchConditions must match for the resource to be mutated. Additionally, matchResources.resourceRules are optional and do not constraint matching when unset. Note that this is differs from MutatingAdmissionPolicy matchConstraints, where resourceRules are required. The CREATE, UPDATE and CONNECT operations are allowed. The DELETE operation may not be matched. '*' matches CREATE, UPDATE and CONNECT.
 
 MatchResources decides whether to run the admission control policy on an object based on whether it meets the match criteria. The exclude rules take precedence over include rules (if a resource matches both, it is excluded)
 
@@ -55,7 +55,7 @@ spec.matchResources.excludeResourceRules ([]NamedRuleWithOperations)
 
 Atomic: will be replaced during a merge
 
-ExcludeResourceRules describes what operations on what resources/subresources the ValidatingAdmissionPolicy should not care about. The exclude rules take precedence over include rules (if a resource matches both, it is excluded)
+ExcludeResourceRules describes what operations on what resources/subresources the policy should not care about. The exclude rules take precedence over include rules (if a resource matches both, it is excluded)
 
 NamedRuleWithOperations is a tuple of Operations and Resources with ResourceNames.
 
@@ -103,9 +103,9 @@ spec.matchResources.matchPolicy (string)
 
 matchPolicy defines how the "MatchResources" list is used to match incoming requests. Allowed values are "Exact" or "Equivalent".
 
-Exact: match a request only if it exactly matches a specified rule. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules" only included apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"], a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the ValidatingAdmissionPolicy.
+Exact: match a request only if it exactly matches a specified rule. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules" only included apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"], the admission policy does not consider requests to apps/v1beta1 or extensions/v1beta1 API groups.
 
-Equivalent: match a request if modifies a resource listed in rules, even via another API group or version. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, and "rules" only included apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"], a request to apps/v1beta1 or extensions/v1beta1 would be converted to apps/v1 and sent to the ValidatingAdmissionPolicy.
+Equivalent: match a request if modifies a resource listed in rules, even via another API group or version. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, and "rules" only included apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"], the admission policy does consider requests made to apps/v1beta1 or extensions/v1beta1 API groups. The API server translates the request to a matched resource API if necessary.
 
 Defaults to "Equivalent"
 
@@ -123,13 +123,13 @@ Default to the empty LabelSelector, which matches everything.
 
 spec.matchResources.objectSelector (LabelSelector)
 
-ObjectSelector decides whether to run the validation based on if the object has matching labels. objectSelector is evaluated against both the oldObject and newObject that would be sent to the cel validation, and is considered to match if either object matches the selector. A null object (oldObject in the case of create, or newObject in the case of delete) or an object that cannot have labels (like a DeploymentRollback or a PodProxyOptions object) is not considered to match. Use the object selector only if the webhook is opt-in, because end users may skip the admission webhook by setting the labels. Default to the empty LabelSelector, which matches everything.
+ObjectSelector decides whether to run the policy based on if the object has matching labels. objectSelector is evaluated against both the oldObject and newObject that would be sent to the policy's expression (CEL), and is considered to match if either object matches the selector. A null object (oldObject in the case of create, or newObject in the case of delete) or an object that cannot have labels (like a DeploymentRollback or a PodProxyOptions object) is not considered to match. Use the object selector only if the webhook is opt-in, because end users may skip the admission webhook by setting the labels. Default to the empty LabelSelector, which matches everything.
 
 spec.matchResources.resourceRules ([]NamedRuleWithOperations)
 
 Atomic: will be replaced during a merge
 
-ResourceRules describes what operations on what resources/subresources the ValidatingAdmissionPolicy matches. The policy cares about an operation if it matches any Rule.
+ResourceRules describes what operations on what resources/subresources the admission policy matches. The policy cares about an operation if it matches any Rule.
 
 NamedRuleWithOperations is a tuple of Operations and Resources with ResourceNames.
 
@@ -175,7 +175,7 @@ scope specifies the scope of this rule. Valid values are "Cluster", "Namespaced"
 
 spec.paramRef (ParamRef)
 
-paramRef specifies the parameter resource used to configure the admission control policy. It should point to a resource of the type specified in ParamKind of the bound ValidatingAdmissionPolicy. If the policy specifies a ParamKind and the resource referred to by ParamRef does not exist, this binding is considered mis-configured and the FailurePolicy of the ValidatingAdmissionPolicy applied. If the policy does not specify a ParamKind then this field is ignored, and the rules are evaluated without a param.
+paramRef specifies the parameter resource used to configure the admission control policy. It should point to a resource of the type specified in spec.ParamKind of the bound MutatingAdmissionPolicy. If the policy specifies a ParamKind and the resource referred to by ParamRef does not exist, this binding is considered mis-configured and the FailurePolicy of the MutatingAdmissionPolicy applied. If the policy does not specify a ParamKind then this field is ignored, and the rules are evaluated without a param.
 
 ParamRef describes how to locate the params to be used as input to expressions of rules applied by a policy binding.
 
@@ -183,9 +183,7 @@ spec.paramRef.name (string)
 
 name is the name of the resource being referenced.
 
-One of name or selector must be set, but name and selector are mutually exclusive properties. If one is set, the other must be unset.
-
-A single parameter used for all admission requests can be configured by setting the name field, leaving selector blank, and setting namespace if paramKind is namespace-scoped.
+name and selector are mutually exclusive properties. If one is set, the other must be unset.
 
 spec.paramRef.namespace (string)
 
@@ -201,9 +199,7 @@ spec.paramRef.parameterNotFoundAction (string)
 
 parameterNotFoundAction controls the behavior of the binding when the resource exists, and name or selector is valid, but there are no parameters matched by the binding. If the value is set to Allow, then no matched parameters will be treated as successful validation by the binding. If set to Deny, then no matched parameters will be subject to the failurePolicy of the policy.
 
-Allowed values are Allow or Deny
-
-Required
+Allowed values are Allow or Deny Default to Deny
 
 spec.paramRef.selector (LabelSelector)
 
@@ -215,31 +211,9 @@ One of name or selector must be set, but name and selector are mutually exclusiv
 
 spec.policyName (string)
 
-PolicyName references a ValidatingAdmissionPolicy name which the ValidatingAdmissionPolicyBinding binds to. If the referenced resource does not exist, this binding is considered invalid and will be ignored Required.
+policyName references a MutatingAdmissionPolicy name which the MutatingAdmissionPolicyBinding binds to. If the referenced resource does not exist, this binding is considered invalid and will be ignored Required.
 
-spec.validationActions ([]string)
 
-Set: unique values will be kept during a merge
-
-validationActions declares how Validations of the referenced ValidatingAdmissionPolicy are enforced. If a validation evaluates to false it is always enforced according to these actions.
-
-Failures defined by the ValidatingAdmissionPolicy's FailurePolicy are enforced according to these actions only if the FailurePolicy is set to Fail, otherwise the failures are ignored. This includes compilation errors, runtime errors and misconfigurations of the policy.
-
-validationActions is declared as a set of action values. Order does not matter. validationActions may not contain duplicates of the same action.
-
-The supported actions values are:
-
-"Deny" specifies that a validation failure results in a denied request.
-
-"Warn" specifies that a validation failure is reported to the request client in HTTP Warning headers, with a warning code of 299. Warnings can be sent both for allowed or denied admission responses.
-
-"Audit" specifies that a validation failure is included in the published audit event for the request. The audit event will contain a validation.policy.admission.k8s.io/validation_failure audit annotation with a value containing the details of the validation failures, formatted as a JSON list of objects, each with the following fields: - message: The validation failure message string - policy: The resource name of the ValidatingAdmissionPolicy - binding: The resource name of the ValidatingAdmissionPolicyBinding - expressionIndex: The index of the failed validations in the ValidatingAdmissionPolicy - validationActions: The enforcement actions enacted for the validation failure Example audit annotation: "validation.policy.admission.k8s.io/validation_failure": "[{\"message\": \"Invalid value\", {\"policy\": \"policy.example.com\", {\"binding\": \"policybinding.example.com\", {\"expressionIndex\": \"1\", {\"validationActions\": [\"Audit\"]}]"
-
-Clients should expect to handle additional values by ignoring any values not recognized.
-
-"Deny" and "Warn" may not be used together since this combination needlessly duplicates the validation failure both in the API response body and the HTTP warning headers.
-
-Required.
 
 
 

@@ -1,10 +1,10 @@
 package io.violabs.picard.v2.resources.policy.admission.mutating
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
-import io.violabs.picard.v2.resources.policy.admission.validating.MatchCondition
-import io.violabs.picard.v2.resources.policy.admission.validating.MatchResources
+import io.violabs.picard.v2.resources.policy.admission.MatchCondition
+import io.violabs.picard.v2.resources.policy.admission.MatchResources
 import io.violabs.picard.v2.resources.policy.admission.validating.ParamKind
-import io.violabs.picard.v2.resources.policy.admission.validating.Variable
+import io.violabs.picard.v2.resources.policy.admission.Variable
 
 /**
  * MutatingAdmissionPolicySpec is the specification of the desired behavior of the admission policy.

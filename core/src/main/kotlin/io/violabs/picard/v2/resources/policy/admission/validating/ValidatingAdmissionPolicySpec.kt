@@ -1,6 +1,9 @@
 package io.violabs.picard.v2.resources.policy.admission.validating
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
+import io.violabs.picard.v2.resources.policy.admission.MatchCondition
+import io.violabs.picard.v2.resources.policy.admission.MatchResources
+import io.violabs.picard.v2.resources.policy.admission.Variable
 
 /**
  * ValidatingAdmissionPolicySpec is the specification of the desired behavior of the AdmissionPolicy.

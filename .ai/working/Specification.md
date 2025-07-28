@@ -18,159 +18,365 @@ Finally, update the v1 to have `@Deprecated("Use v2", ReplaceWith(<package for v
 
 ## Documentation
 
-PriorityLevelConfiguration
-PriorityLevelConfiguration represents the configuration of a priority level.
-apiVersion: flowcontrol.apiserver.k8s.io/v1
+ValidatingAdmissionPolicy
+ValidatingAdmissionPolicy describes the definition of an admission validation policy that accepts or rejects an object without changing it.
+apiVersion: admissionregistration.k8s.io/v1
 
-import "k8s.io/api/flowcontrol/v1"
+import "k8s.io/api/admissionregistration/v1"
 
-PriorityLevelConfiguration
-PriorityLevelConfiguration represents the configuration of a priority level.
+ValidatingAdmissionPolicy
+ValidatingAdmissionPolicy describes the definition of an admission validation policy that accepts or rejects an object without changing it.
 
-apiVersion: flowcontrol.apiserver.k8s.io/v1
+apiVersion: admissionregistration.k8s.io/v1
 
-kind: PriorityLevelConfiguration
+kind: ValidatingAdmissionPolicy
 
 metadata (ObjectMeta)
 
-metadata is the standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
 
-spec (PriorityLevelConfigurationSpec)
+spec (ValidatingAdmissionPolicySpec)
 
-spec is the specification of the desired behavior of a "request-priority". More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+Specification of the desired behavior of the ValidatingAdmissionPolicy.
 
-status (PriorityLevelConfigurationStatus)
+ValidatingAdmissionPolicySpec is the specification of the desired behavior of the AdmissionPolicy.
 
-status is the current status of a "request-priority". More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+spec.auditAnnotations ([]AuditAnnotation)
 
-PriorityLevelConfigurationSpec
-PriorityLevelConfigurationSpec specifies the configuration of a priority level.
+Atomic: will be replaced during a merge
 
-exempt (ExemptPriorityLevelConfiguration)
+auditAnnotations contains CEL expressions which are used to produce audit annotations for the audit event of the API request. validations and auditAnnotations may not both be empty; a least one of validations or auditAnnotations is required.
 
-exempt specifies how requests are handled for an exempt priority level. This field MUST be empty if type is "Limited". This field MAY be non-empty if type is "Exempt". If empty and type is "Exempt" then the default values for ExemptPriorityLevelConfiguration apply.
+AuditAnnotation describes how to produce an audit annotation for an API request.
 
-ExemptPriorityLevelConfiguration describes the configurable aspects of the handling of exempt requests. In the mandatory exempt configuration object the values in the fields here can be modified by authorized users, unlike the rest of the spec.
+spec.auditAnnotations.key (string), required
 
-exempt.lendablePercent (int32)
+key specifies the audit annotation key. The audit annotation keys of a ValidatingAdmissionPolicy must be unique. The key must be a qualified name ([A-Za-z0-9][-A-Za-z0-9_.]*) no more than 63 bytes in length.
 
-lendablePercent prescribes the fraction of the level's NominalCL that can be borrowed by other priority levels. This value of this field must be between 0 and 100, inclusive, and it defaults to 0. The number of seats that other levels can borrow from this level, known as this level's LendableConcurrencyLimit (LendableCL), is defined as follows.
+The key is combined with the resource name of the ValidatingAdmissionPolicy to construct an audit annotation key: "{ValidatingAdmissionPolicy name}/{key}".
 
-LendableCL(i) = round( NominalCL(i) * lendablePercent(i)/100.0 )
+If an admission webhook uses the same resource name as this ValidatingAdmissionPolicy and the same audit annotation key, the annotation key will be identical. In this case, the first annotation written with the key will be included in the audit event and all subsequent annotations with the same key will be discarded.
 
-exempt.nominalConcurrencyShares (int32)
+Required.
 
-nominalConcurrencyShares (NCS) contributes to the computation of the NominalConcurrencyLimit (NominalCL) of this level. This is the number of execution seats nominally reserved for this priority level. This DOES NOT limit the dispatching from this priority level but affects the other priority levels through the borrowing mechanism. The server's concurrency limit (ServerCL) is divided among all the priority levels in proportion to their NCS values:
+spec.auditAnnotations.valueExpression (string), required
 
-NominalCL(i) = ceil( ServerCL * NCS(i) / sum_ncs ) sum_ncs = sum[priority level k] NCS(k)
+valueExpression represents the expression which is evaluated by CEL to produce an audit annotation value. The expression must evaluate to either a string or null value. If the expression evaluates to a string, the audit annotation is included with the string value. If the expression evaluates to null or empty string the audit annotation will be omitted. The valueExpression may be no longer than 5kb in length. If the result of the valueExpression is more than 10kb in length, it will be truncated to 10kb.
 
-Bigger numbers mean a larger nominal concurrency limit, at the expense of every other priority level. This field has a default value of zero.
+If multiple ValidatingAdmissionPolicyBinding resources match an API request, then the valueExpression will be evaluated for each binding. All unique values produced by the valueExpressions will be joined together in a comma-separated list.
 
-limited (LimitedPriorityLevelConfiguration)
+Required.
 
-limited specifies how requests are handled for a Limited priority level. This field must be non-empty if and only if type is "Limited".
+spec.failurePolicy (string)
 
-*LimitedPriorityLevelConfiguration specifies how to handle requests that are subject to limits. It addresses two issues:
+failurePolicy defines how to handle failures for the admission policy. Failures can occur from CEL expression parse errors, type check errors, runtime errors and invalid or mis-configured policy definitions or bindings.
 
-How are requests for this priority level limited?
+A policy is invalid if spec.paramKind refers to a non-existent Kind. A binding is invalid if spec.paramRef.name refers to a non-existent resource.
 
-What should be done with requests that exceed the limit?*
+failurePolicy does not define how validations that evaluate to false are handled.
 
-limited.borrowingLimitPercent (int32)
+When failurePolicy is set to Fail, ValidatingAdmissionPolicyBinding validationActions define how failures are enforced.
 
-borrowingLimitPercent, if present, configures a limit on how many seats this priority level can borrow from other priority levels. The limit is known as this level's BorrowingConcurrencyLimit (BorrowingCL) and is a limit on the total number of seats that this level may borrow at any one time. This field holds the ratio of that limit to the level's nominal concurrency limit. When this field is non-nil, it must hold a non-negative integer and the limit is calculated as follows.
+Allowed values are Ignore or Fail. Defaults to Fail.
 
-BorrowingCL(i) = round( NominalCL(i) * borrowingLimitPercent(i)/100.0 )
+spec.matchConditions ([]MatchCondition)
 
-The value of this field can be more than 100, implying that this priority level can borrow a number of seats that is greater than its own nominal concurrency limit (NominalCL). When this field is left nil, the limit is effectively infinite.
+Patch strategy: merge on key name
 
-limited.lendablePercent (int32)
+Map: unique values on key name will be kept during a merge
 
-lendablePercent prescribes the fraction of the level's NominalCL that can be borrowed by other priority levels. The value of this field must be between 0 and 100, inclusive, and it defaults to 0. The number of seats that other levels can borrow from this level, known as this level's LendableConcurrencyLimit (LendableCL), is defined as follows.
+MatchConditions is a list of conditions that must be met for a request to be validated. Match conditions filter requests that have already been matched by the rules, namespaceSelector, and objectSelector. An empty list of matchConditions matches all requests. There are a maximum of 64 match conditions allowed.
 
-LendableCL(i) = round( NominalCL(i) * lendablePercent(i)/100.0 )
+If a parameter object is provided, it can be accessed via the params handle in the same manner as validation expressions.
 
-limited.limitResponse (LimitResponse)
+The exact matching logic is (in order):
 
-limitResponse indicates what to do with requests that can not be executed right now
+If ANY matchCondition evaluates to FALSE, the policy is skipped.
+If ALL matchConditions evaluate to TRUE, the policy is evaluated.
+If any matchCondition evaluates to an error (but none are FALSE):
+If failurePolicy=Fail, reject the request
+If failurePolicy=Ignore, the policy is skipped
+MatchCondition represents a condition which must by fulfilled for a request to be sent to a webhook.
 
-LimitResponse defines how to handle requests that can not be executed right now.
+spec.matchConditions.expression (string), required
 
-limited.limitResponse.type (string), required
+Expression represents the expression which will be evaluated by CEL. Must evaluate to bool. CEL expressions have access to the contents of the AdmissionRequest and Authorizer, organized into CEL variables:
 
-type is "Queue" or "Reject". "Queue" means that requests that can not be executed upon arrival are held in a queue until they can be executed or a queuing limit is reached. "Reject" means that requests that can not be executed upon arrival are rejected. Required.
+'object' - The object from the incoming request. The value is null for DELETE requests. 'oldObject' - The existing object. The value is null for CREATE requests. 'request' - Attributes of the admission request(/pkg/apis/admission/types.go#AdmissionRequest). 'authorizer' - A CEL Authorizer. May be used to perform authorization checks for the principal (user or service account) of the request. See https://pkg.go.dev/k8s.io/apiserver/pkg/cel/library#Authz 'authorizer.requestResource' - A CEL ResourceCheck constructed from the 'authorizer' and configured with the request resource. Documentation on CEL: https://kubernetes.io/docs/reference/using-api/cel/
 
-limited.limitResponse.queuing (QueuingConfiguration)
+Required.
 
-queuing holds the configuration parameters for queuing. This field may be non-empty only if type is "Queue".
+spec.matchConditions.name (string), required
 
-QueuingConfiguration holds the configuration parameters for queuing
+Name is an identifier for this match condition, used for strategic merging of MatchConditions, as well as providing an identifier for logging purposes. A good name should be descriptive of the associated expression. Name must be a qualified name consisting of alphanumeric characters, '-', '' or '.', and must start and end with an alphanumeric character (e.g. 'MyName', or 'my.name', or '123-abc', regex used for validation is '([A-Za-z0-9][-A-Za-z0-9.]*)?[A-Za-z0-9]') with an optional DNS subdomain prefix and '/' (e.g. 'example.com/MyName')
 
-limited.limitResponse.queuing.handSize (int32)
+Required.
 
-handSize is a small positive number that configures the shuffle sharding of requests into queues. When enqueuing a request at this priority level the request's flow identifier (a string pair) is hashed and the hash value is used to shuffle the list of queues and deal a hand of the size specified here. The request is put into one of the shortest queues in that hand. handSize must be no larger than queues, and should be significantly smaller (so that a few heavy flows do not saturate most of the queues). See the user-facing documentation for more extensive guidance on setting this field. This field has a default value of 8.
+spec.matchConstraints (MatchResources)
 
-limited.limitResponse.queuing.queueLengthLimit (int32)
+MatchConstraints specifies what resources this policy is designed to validate. The AdmissionPolicy cares about a request if it matches all Constraints. However, in order to prevent clusters from being put into an unstable state that cannot be recovered from via the API ValidatingAdmissionPolicy cannot match ValidatingAdmissionPolicy and ValidatingAdmissionPolicyBinding. Required.
 
-queueLengthLimit is the maximum number of requests allowed to be waiting in a given queue of this priority level at a time; excess requests are rejected. This value must be positive. If not specified, it will be defaulted to 50.
+MatchResources decides whether to run the admission control policy on an object based on whether it meets the match criteria. The exclude rules take precedence over include rules (if a resource matches both, it is excluded)
 
-limited.limitResponse.queuing.queues (int32)
+spec.matchConstraints.excludeResourceRules ([]NamedRuleWithOperations)
 
-queues is the number of queues for this priority level. The queues exist independently at each apiserver. The value must be positive. Setting it to 1 effectively precludes shufflesharding and thus makes the distinguisher method of associated flow schemas irrelevant. This field has a default value of 64.
+Atomic: will be replaced during a merge
 
-limited.nominalConcurrencyShares (int32)
+ExcludeResourceRules describes what operations on what resources/subresources the ValidatingAdmissionPolicy should not care about. The exclude rules take precedence over include rules (if a resource matches both, it is excluded)
 
-nominalConcurrencyShares (NCS) contributes to the computation of the NominalConcurrencyLimit (NominalCL) of this level. This is the number of execution seats available at this priority level. This is used both for requests dispatched from this priority level as well as requests dispatched from other priority levels borrowing seats from this level. The server's concurrency limit (ServerCL) is divided among the Limited priority levels in proportion to their NCS values:
+NamedRuleWithOperations is a tuple of Operations and Resources with ResourceNames.
 
-NominalCL(i) = ceil( ServerCL * NCS(i) / sum_ncs ) sum_ncs = sum[priority level k] NCS(k)
+spec.matchConstraints.excludeResourceRules.apiGroups ([]string)
 
-Bigger numbers mean a larger nominal concurrency limit, at the expense of every other priority level.
+Atomic: will be replaced during a merge
 
-If not specified, this field defaults to a value of 30.
+APIGroups is the API groups the resources belong to. '' is all groups. If '' is present, the length of the slice must be one. Required.
 
-Setting this field to zero supports the construction of a "jail" for this priority level that is used to hold some request(s)
+spec.matchConstraints.excludeResourceRules.apiVersions ([]string)
 
-type (string), required
+Atomic: will be replaced during a merge
 
-type indicates whether this priority level is subject to limitation on request execution. A value of "Exempt" means that requests of this priority level are not subject to a limit (and thus are never queued) and do not detract from the capacity made available to other priority levels. A value of "Limited" means that (a) requests of this priority level are subject to limits and (b) some of the server's limited capacity is made available exclusively to this priority level. Required.
+APIVersions is the API versions the resources belong to. '' is all versions. If '' is present, the length of the slice must be one. Required.
 
-PriorityLevelConfigurationStatus
-PriorityLevelConfigurationStatus represents the current state of a "request-priority".
+spec.matchConstraints.excludeResourceRules.operations ([]string)
 
-conditions ([]PriorityLevelConfigurationCondition)
+Atomic: will be replaced during a merge
 
-Patch strategy: merge on key type
+Operations is the operations the admission hook cares about - CREATE, UPDATE, DELETE, CONNECT or * for all of those operations and any future admission operations that are added. If '*' is present, the length of the slice must be one. Required.
+
+spec.matchConstraints.excludeResourceRules.resourceNames ([]string)
+
+Atomic: will be replaced during a merge
+
+ResourceNames is an optional white list of names that the rule applies to. An empty set means that everything is allowed.
+
+spec.matchConstraints.excludeResourceRules.resources ([]string)
+
+Atomic: will be replaced during a merge
+
+Resources is a list of resources this rule applies to.
+
+For example: 'pods' means pods. 'pods/log' means the log subresource of pods. '' means all resources, but not subresources. 'pods/' means all subresources of pods. '/scale' means all scale subresources. '/*' means all resources and their subresources.
+
+If wildcard is present, the validation rule will ensure resources do not overlap with each other.
+
+Depending on the enclosing object, subresources might not be allowed. Required.
+
+spec.matchConstraints.excludeResourceRules.scope (string)
+
+scope specifies the scope of this rule. Valid values are "Cluster", "Namespaced", and "" "Cluster" means that only cluster-scoped resources will match this rule. Namespace API objects are cluster-scoped. "Namespaced" means that only namespaced resources will match this rule. "" means that there are no scope restrictions. Subresources match the scope of their parent resource. Default is "*".
+
+spec.matchConstraints.matchPolicy (string)
+
+matchPolicy defines how the "MatchResources" list is used to match incoming requests. Allowed values are "Exact" or "Equivalent".
+
+Exact: match a request only if it exactly matches a specified rule. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules" only included apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"], a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the ValidatingAdmissionPolicy.
+
+Equivalent: match a request if modifies a resource listed in rules, even via another API group or version. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, and "rules" only included apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"], a request to apps/v1beta1 or extensions/v1beta1 would be converted to apps/v1 and sent to the ValidatingAdmissionPolicy.
+
+Defaults to "Equivalent"
+
+spec.matchConstraints.namespaceSelector (LabelSelector)
+
+NamespaceSelector decides whether to run the admission control policy on an object based on whether the namespace for that object matches the selector. If the object itself is a namespace, the matching is performed on object.metadata.labels. If the object is another cluster scoped resource, it never skips the policy.
+
+For example, to run the webhook on any objects whose namespace is not associated with "runlevel" of "0" or "1"; you will set the selector as follows: "namespaceSelector": { "matchExpressions": [ { "key": "runlevel", "operator": "NotIn", "values": [ "0", "1" ] } ] }
+
+If instead you want to only run the policy on any objects whose namespace is associated with the "environment" of "prod" or "staging"; you will set the selector as follows: "namespaceSelector": { "matchExpressions": [ { "key": "environment", "operator": "In", "values": [ "prod", "staging" ] } ] }
+
+See https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more examples of label selectors.
+
+Default to the empty LabelSelector, which matches everything.
+
+spec.matchConstraints.objectSelector (LabelSelector)
+
+ObjectSelector decides whether to run the validation based on if the object has matching labels. objectSelector is evaluated against both the oldObject and newObject that would be sent to the cel validation, and is considered to match if either object matches the selector. A null object (oldObject in the case of create, or newObject in the case of delete) or an object that cannot have labels (like a DeploymentRollback or a PodProxyOptions object) is not considered to match. Use the object selector only if the webhook is opt-in, because end users may skip the admission webhook by setting the labels. Default to the empty LabelSelector, which matches everything.
+
+spec.matchConstraints.resourceRules ([]NamedRuleWithOperations)
+
+Atomic: will be replaced during a merge
+
+ResourceRules describes what operations on what resources/subresources the ValidatingAdmissionPolicy matches. The policy cares about an operation if it matches any Rule.
+
+NamedRuleWithOperations is a tuple of Operations and Resources with ResourceNames.
+
+spec.matchConstraints.resourceRules.apiGroups ([]string)
+
+Atomic: will be replaced during a merge
+
+APIGroups is the API groups the resources belong to. '' is all groups. If '' is present, the length of the slice must be one. Required.
+
+spec.matchConstraints.resourceRules.apiVersions ([]string)
+
+Atomic: will be replaced during a merge
+
+APIVersions is the API versions the resources belong to. '' is all versions. If '' is present, the length of the slice must be one. Required.
+
+spec.matchConstraints.resourceRules.operations ([]string)
+
+Atomic: will be replaced during a merge
+
+Operations is the operations the admission hook cares about - CREATE, UPDATE, DELETE, CONNECT or * for all of those operations and any future admission operations that are added. If '*' is present, the length of the slice must be one. Required.
+
+spec.matchConstraints.resourceRules.resourceNames ([]string)
+
+Atomic: will be replaced during a merge
+
+ResourceNames is an optional white list of names that the rule applies to. An empty set means that everything is allowed.
+
+spec.matchConstraints.resourceRules.resources ([]string)
+
+Atomic: will be replaced during a merge
+
+Resources is a list of resources this rule applies to.
+
+For example: 'pods' means pods. 'pods/log' means the log subresource of pods. '' means all resources, but not subresources. 'pods/' means all subresources of pods. '/scale' means all scale subresources. '/*' means all resources and their subresources.
+
+If wildcard is present, the validation rule will ensure resources do not overlap with each other.
+
+Depending on the enclosing object, subresources might not be allowed. Required.
+
+spec.matchConstraints.resourceRules.scope (string)
+
+scope specifies the scope of this rule. Valid values are "Cluster", "Namespaced", and "" "Cluster" means that only cluster-scoped resources will match this rule. Namespace API objects are cluster-scoped. "Namespaced" means that only namespaced resources will match this rule. "" means that there are no scope restrictions. Subresources match the scope of their parent resource. Default is "*".
+
+spec.paramKind (ParamKind)
+
+ParamKind specifies the kind of resources used to parameterize this policy. If absent, there are no parameters for this policy and the param CEL variable will not be provided to validation expressions. If ParamKind refers to a non-existent kind, this policy definition is mis-configured and the FailurePolicy is applied. If paramKind is specified but paramRef is unset in ValidatingAdmissionPolicyBinding, the params variable will be null.
+
+ParamKind is a tuple of Group Kind and Version.
+
+spec.paramKind.apiVersion (string)
+
+APIVersion is the API group version the resources belong to. In format of "group/version". Required.
+
+spec.paramKind.kind (string)
+
+Kind is the API kind the resources belong to. Required.
+
+spec.validations ([]Validation)
+
+Atomic: will be replaced during a merge
+
+Validations contain CEL expressions which is used to apply the validation. Validations and AuditAnnotations may not both be empty; a minimum of one Validations or AuditAnnotations is required.
+
+Validation specifies the CEL expression which is used to apply the validation.
+
+spec.validations.expression (string), required
+
+Expression represents the expression which will be evaluated by CEL. ref: https://github.com/google/cel-spec CEL expressions have access to the contents of the API request/response, organized into CEL variables as well as some other useful variables:
+
+'object' - The object from the incoming request. The value is null for DELETE requests. - 'oldObject' - The existing object. The value is null for CREATE requests. - 'request' - Attributes of the API request(ref). - 'params' - Parameter resource referred to by the policy binding being evaluated. Only populated if the policy has a ParamKind. - 'namespaceObject' - The namespace object that the incoming object belongs to. The value is null for cluster-scoped resources. - 'variables' - Map of composited variables, from its name to its lazily evaluated value. For example, a variable named 'foo' can be accessed as 'variables.foo'.
+'authorizer' - A CEL Authorizer. May be used to perform authorization checks for the principal (user or service account) of the request. See https://pkg.go.dev/k8s.io/apiserver/pkg/cel/library#Authz
+'authorizer.requestResource' - A CEL ResourceCheck constructed from the 'authorizer' and configured with the request resource.
+The apiVersion, kind, metadata.name and metadata.generateName are always accessible from the root of the object. No other metadata properties are accessible.
+
+Only property names of the form [a-zA-Z_.-/][a-zA-Z0-9_.-/]* are accessible. Accessible property names are escaped according to the following rules when accessed in the expression: - '' escapes to 'underscores' - '.' escapes to 'dot' - '-' escapes to 'dash' - '/' escapes to 'slash' - Property names that exactly match a CEL RESERVED keyword escape to '{keyword}__'. The keywords are: "true", "false", "null", "in", "as", "break", "const", "continue", "else", "for", "function", "if", "import", "let", "loop", "package", "namespace", "return". Examples:
+
+Expression accessing a property named "namespace": {"Expression": "object.namespace > 0"}
+Expression accessing a property named "x-prop": {"Expression": "object.x__dash__prop > 0"}
+Expression accessing a property named "redact__d": {"Expression": "object.redact__underscores__d > 0"}
+Equality on arrays with list type of 'set' or 'map' ignores element order, i.e. [1, 2] == [2, 1]. Concatenation on arrays with x-kubernetes-list-type use the semantics of the list type:
+
+'set': X + Y performs a union where the array positions of all elements in X are preserved and non-intersecting elements in Y are appended, retaining their partial order.
+'map': X + Y performs a merge where the array positions of all keys in X are preserved but the values are overwritten by values in Y when the key sets of X and Y intersect. Elements in Y with non-intersecting keys are appended, retaining their partial order. Required.
+spec.validations.message (string)
+
+Message represents the message displayed when validation fails. The message is required if the Expression contains line breaks. The message must not contain line breaks. If unset, the message is "failed rule: {Rule}". e.g. "must be a URL with the host matching spec.host" If the Expression contains line breaks. Message is required. The message must not contain line breaks. If unset, the message is "failed Expression: {Expression}".
+
+spec.validations.messageExpression (string)
+
+messageExpression declares a CEL expression that evaluates to the validation failure message that is returned when this rule fails. Since messageExpression is used as a failure message, it must evaluate to a string. If both message and messageExpression are present on a validation, then messageExpression will be used if validation fails. If messageExpression results in a runtime error, the runtime error is logged, and the validation failure message is produced as if the messageExpression field were unset. If messageExpression evaluates to an empty string, a string with only spaces, or a string that contains line breaks, then the validation failure message will also be produced as if the messageExpression field were unset, and the fact that messageExpression produced an empty string/string with only spaces/string with line breaks will be logged. messageExpression has access to all the same variables as the expression except for 'authorizer' and 'authorizer.requestResource'. Example: "object.x must be less than max ("+string(params.max)+")"
+
+spec.validations.reason (string)
+
+Reason represents a machine-readable description of why this validation failed. If this is the first validation in the list to fail, this reason, as well as the corresponding HTTP response code, are used in the HTTP response to the client. The currently supported reasons are: "Unauthorized", "Forbidden", "Invalid", "RequestEntityTooLarge". If not set, StatusReasonInvalid is used in the response to the client.
+
+spec.variables ([]Variable)
+
+Patch strategy: merge on key name
+
+Map: unique values on key name will be kept during a merge
+
+Variables contain definitions of variables that can be used in composition of other expressions. Each variable is defined as a named CEL expression. The variables defined here will be available under variables in other expressions of the policy except MatchConditions because MatchConditions are evaluated before the rest of the policy.
+
+The expression of a variable can refer to other variables defined earlier in the list but not those after. Thus, Variables must be sorted by the order of first appearance and acyclic.
+
+Variable is the definition of a variable that is used for composition. A variable is defined as a named expression.
+
+spec.variables.expression (string), required
+
+Expression is the expression that will be evaluated as the value of the variable. The CEL expression has access to the same identifiers as the CEL expressions in Validation.
+
+spec.variables.name (string), required
+
+Name is the name of the variable. The name must be a valid CEL identifier and unique among all variables. The variable can be accessed in other expressions through variables For example, if name is "foo", the variable will be available as variables.foo
+
+status (ValidatingAdmissionPolicyStatus)
+
+The status of the ValidatingAdmissionPolicy, including warnings that are useful to determine if the policy behaves in the expected way. Populated by the system. Read-only.
+
+ValidatingAdmissionPolicyStatus represents the status of an admission validation policy.
+
+status.conditions ([]Condition)
 
 Map: unique values on key type will be kept during a merge
 
-conditions is the current state of "request-priority".
+The conditions represent the latest available observations of a policy's current state.
 
-PriorityLevelConfigurationCondition defines the condition of priority level.
+Condition contains details for one aspect of the current state of this API Resource.
 
-conditions.lastTransitionTime (Time)
+status.conditions.lastTransitionTime (Time), required
 
-lastTransitionTime is the last time the condition transitioned from one status to another.
+lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed. If that is not known, then using the time when the API field changed is acceptable.
 
 Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON. Wrappers are provided for many of the factory methods that the time package offers.
 
-conditions.message (string)
+status.conditions.message (string), required
 
-message is a human-readable message indicating details about last transition.
+message is a human readable message indicating details about the transition. This may be an empty string.
 
-conditions.reason (string)
+status.conditions.reason (string), required
 
-reason is a unique, one-word, CamelCase reason for the condition's last transition.
+reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
 
-conditions.status (string)
+status.conditions.status (string), required
 
-status is the status of the condition. Can be True, False, Unknown. Required.
+status of the condition, one of True, False, Unknown.
 
-conditions.type (string)
+status.conditions.type (string), required
 
-type is the type of the condition. Required.
+type of condition in CamelCase or in foo.example.com/CamelCase.
 
+status.conditions.observedGeneration (int64)
 
+observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
 
+status.observedGeneration (int64)
+
+The generation observed by the controller.
+
+status.typeChecking (TypeChecking)
+
+The results of type checking for each expression. Presence of this field indicates the completion of the type checking.
+
+TypeChecking contains results of type checking the expressions in the ValidatingAdmissionPolicy
+
+status.typeChecking.expressionWarnings ([]ExpressionWarning)
+
+Atomic: will be replaced during a merge
+
+The type checking warnings for each expression.
+
+ExpressionWarning is a warning information that targets a specific expression.
+
+status.typeChecking.expressionWarnings.fieldRef (string), required
+
+The path to the field that refers the expression. For example, the reference to the expression of the first item of validations is "spec.validations[0].expression"
+
+status.typeChecking.expressionWarnings.warning (string), required
+
+The content of type checking information in a human-readable form. Each line of the warning contains the type that the expression is checked against, followed by the type check error from the compiler.
 
 
 

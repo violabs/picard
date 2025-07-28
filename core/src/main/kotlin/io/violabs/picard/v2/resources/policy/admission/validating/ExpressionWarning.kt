@@ -1,0 +1,21 @@
+package io.violabs.picard.v2.resources.policy.admission.validating
+
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
+
+/**
+ * ExpressionWarning is a warning information that targets a specific expression.
+ */
+@GeneratedDsl(withListGroup = true)
+data class ExpressionWarning(
+    /**
+     * The path to the field that refers the expression. For example, the reference to the 
+     * expression of the first item of validations is "spec.validations[0].expression"
+     */
+    val fieldRef: String,
+    /**
+     * The content of type checking information in a human-readable form. Each line of the 
+     * warning contains the type that the expression is checked against, followed by the 
+     * type check error from the compiler.
+     */
+    val warning: String
+)

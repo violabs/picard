@@ -11,6 +11,7 @@ import io.violabs.picard.domain.k8sResources.policy.MatchResources
 import io.violabs.picard.domain.k8sResources.policy.ParamRef
 import io.violabs.picard.domain.manifest.PolicyResource
 
+@Deprecated("Use ValidatingAdmissionPolicyBindingV2", ReplaceWith("ValidatingAdmissionPolicyBindingV2", "io.violabs.picard.v2.resources.policy.admission.validating.ValidatingAdmissionPolicyBindingV2"))
 data class ValidatingAdmissionPolicyBinding(
     override val apiVersion: Version = KAPIVersion.AdmissionRegistrationV1,
     override val metadata: ObjectMetadata? = null,

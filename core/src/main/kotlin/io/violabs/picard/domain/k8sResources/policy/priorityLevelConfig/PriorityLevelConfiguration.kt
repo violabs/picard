@@ -13,6 +13,7 @@ import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.PolicyResource
 
+@Deprecated("Use v2", ReplaceWith("PriorityLevelConfigurationV2", "io.violabs.picard.v2.resources.policy.level.PriorityLevelConfigurationV2"))
 data class PriorityLevelConfiguration(
     override val apiVersion: Version = KAPIVersion.FlowControlApiServerV1,
     override val metadata: ObjectMetadata? = null,

@@ -59,7 +59,7 @@ interface AccessReviewTestConfig {
             requirements {
                 labelSelectorRequirement {
                     key = PLACEHOLDER
-                    operator = PLACEHOLDER
+                    operator = LabelSelectorRequirement.Operator.In
                     values(PLACEHOLDER)
                 }
             }
@@ -107,7 +107,7 @@ interface AccessReviewTestConfig {
                 requirements = listOf(
                     LabelSelectorRequirement(
                         key = PLACEHOLDER,
-                        operator = PLACEHOLDER,
+                        operator = LabelSelectorRequirement.Operator.In,
                         values = listOf(PLACEHOLDER)
                     )
                 )

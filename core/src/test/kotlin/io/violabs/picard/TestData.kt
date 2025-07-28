@@ -34,7 +34,7 @@ import io.violabs.picard.v2.resources.storage.volume.source.SecretVolumeSource
 
 
 object Common {
-    const val PLACEHOLDER = "placeholder"
+    const val PLACEHOLDER = "test_placeholder"
     val PLACEHOLDER_LIST = listOf(PLACEHOLDER)
 
     val OBJECT_META = ObjectMeta(
@@ -78,7 +78,7 @@ object Common {
         matchExpressions = listOf(
             LabelSelectorRequirement(
                 key = PLACEHOLDER,
-                operator = PLACEHOLDER,
+                operator = LabelSelectorRequirement.Operator.In,
                 values = listOf(PLACEHOLDER)
             )
         ),
@@ -89,7 +89,7 @@ object Common {
         matchExpressions {
             labelSelectorRequirement {
                 key = PLACEHOLDER
-                operator = PLACEHOLDER
+                operator = LabelSelectorRequirement.Operator.In
                 values(PLACEHOLDER)
             }
         }

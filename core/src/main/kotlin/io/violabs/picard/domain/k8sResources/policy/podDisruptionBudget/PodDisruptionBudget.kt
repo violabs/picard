@@ -18,6 +18,7 @@ import io.violabs.picard.domain.manifest.PolicyResource
 import io.violabs.picard.serialization.IntOrStringSerializer
 import java.time.LocalDateTime
 
+@Deprecated("Use v2", ReplaceWith("PodDisruptionBudgetV2", "io.violabs.picard.v2.resources.policy.disruption.PodDisruptionBudgetV2"))
 data class PodDisruptionBudget(
     override val apiVersion: Version = KAPIVersion.PolicyV1,
     override val metadata: ObjectMetadata? = null,

@@ -145,7 +145,11 @@ import io.violabs.picard.v2.resources.authorization.role.binding.ClusterRoleBind
 import io.violabs.picard.v2.resources.authorization.role.binding.RoleBindingV2
 import io.violabs.picard.v2.resources.config.map.ConfigMapV2
 import io.violabs.picard.v2.resources.config.secret.SecretV2
+import io.violabs.picard.v2.resources.policy.resource.quota.ResourceQuotaV2
+import io.violabs.picard.v2.resources.policy.limit.LimitRangeV2
 import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchemaV2
+import io.violabs.picard.v2.resources.policy.network.NetworkPolicyV2
+import io.violabs.picard.v2.resources.policy.disruption.PodDisruptionBudgetV2
 import io.violabs.picard.v2.resources.storage.StorageClassV2
 import io.violabs.picard.v2.resources.storage.version.migration.StorageVersionMigrationV2
 import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimV2
@@ -155,6 +159,11 @@ import io.violabs.picard.v2.resources.storage.csi.storage.capacity.CsiStorageCap
 import io.violabs.picard.v2.resources.storage.persistent.volume.PersistentVolumeV2
 import io.violabs.picard.v2.resources.storage.volume.VolumeAttributesClassV2
 import io.violabs.picard.v2.resources.storage.volume.attachment.VolumeAttachmentV2
+import io.violabs.picard.v2.resources.policy.level.PriorityLevelConfigurationV2
+import io.violabs.picard.v2.resources.policy.admission.validating.ValidatingAdmissionPolicyV2
+import io.violabs.picard.v2.resources.policy.admission.validating.ValidatingAdmissionPolicyBindingV2
+import io.violabs.picard.v2.resources.policy.admission.mutating.MutatingAdmissionPolicyV2
+import io.violabs.picard.v2.resources.policy.admission.mutating.MutatingAdmissionPolicyBindingV2
 
 interface APIVersion {
     fun refString(): String
@@ -177,6 +186,7 @@ open class KAPIVersion(
         Endpoints.Version,
         EndpointsList.Version,
         LimitRange.Version,
+        LimitRangeV2.Version,
         LimitRangeList.Version,
         Namespace.Version,
         NamespaceList.Version,
@@ -195,6 +205,7 @@ open class KAPIVersion(
         ReplicationController.Version,
         ReplicationControllerList.Version,
         ResourceQuota.Version,
+        ResourceQuotaV2.Version,
         ResourceQuotaList.Version,
         Secret.Version,
         SecretV2.Version,
@@ -209,11 +220,17 @@ open class KAPIVersion(
         MutatingWebhookConfiguration.Version,
         MutatingWebhookConfigurationList.Version,
         ValidatingAdmissionPolicy.Version,
+        ValidatingAdmissionPolicyV2.Version,
         ValidatingAdmissionPolicyList.Version,
         ValidatingAdmissionPolicyBinding.Version,
+        ValidatingAdmissionPolicyBindingV2.Version,
         ValidatingAdmissionPolicyBindingList.Version,
         ValidatingWebhookConfiguration.Version,
         ValidatingWebhookConfigurationList.Version
+
+    object AdmissionRegistrationV1Alpha1 : KAPIVersion("admissionregistration.k8s.io/v1alpha1"),
+        MutatingAdmissionPolicyV2.Version,
+        MutatingAdmissionPolicyBindingV2.Version
 
     object APIExtensionsV1 : KAPIVersion("apiextensions.k8s.io/v1"),
         CustomResourceDefinition.Version,
@@ -304,6 +321,7 @@ open class KAPIVersion(
         FlowSchemaV2.Version,
         FlowSchemaList.Version,
         PriorityLevelConfiguration.Version,
+        PriorityLevelConfigurationV2.Version,
         PriorityLevelConfigurationList.Version
 
     object NetworkingV1 : KAPIVersion("networking.k8s.io/v1"),
@@ -312,6 +330,7 @@ open class KAPIVersion(
         IngressClass.Version,
         IngressClassList.Version,
         NetworkPolicy.Version,
+        NetworkPolicyV2.Version,
         NetworkPolicyList.Version
 
     object NetworkingV1Beta1 : KAPIVersion("networking.k8s.io/v1"),
@@ -326,6 +345,7 @@ open class KAPIVersion(
 
     object PolicyV1 : KAPIVersion("policy/v1"),
         PodDisruptionBudget.Version,
+        PodDisruptionBudgetV2.Version,
         PodDisruptionBudgetList.Version
 
     object RbacAuthorizationV1 : KAPIVersion("rbac.authorization.k8s.io/v1"),

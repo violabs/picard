@@ -10,6 +10,7 @@ import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.PolicyResource
 
+@Deprecated("Use v2", ReplaceWith("LimitRangeV2", "io.violabs.picard.v2.resources.policy.resource.limit.LimitRangeV2"))
 data class LimitRange(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,

@@ -12,6 +12,7 @@ import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelector
 import io.violabs.picard.domain.manifest.ExtendResource
 
+@Deprecated("Use v2", ReplaceWith("DeviceClassV2", "io.violabs.picard.v2.resources.extend.deviceclass.DeviceClassV2"))
 data class DeviceClass(
     override val apiVersion: Version = KAPIVersion.ResourceV1Beta1,
     val spec: Spec,

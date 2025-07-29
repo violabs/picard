@@ -164,6 +164,10 @@ import io.violabs.picard.v2.resources.policy.admission.validating.ValidatingAdmi
 import io.violabs.picard.v2.resources.policy.admission.validating.ValidatingAdmissionPolicyBindingV2
 import io.violabs.picard.v2.resources.policy.admission.mutating.MutatingAdmissionPolicyV2
 import io.violabs.picard.v2.resources.policy.admission.mutating.MutatingAdmissionPolicyBindingV2
+import io.violabs.picard.v2.resources.extend.resource.custom.CustomResourceDefinitionV2
+import io.violabs.picard.v2.resources.extend.deviceclass.DeviceClassV2
+import io.violabs.picard.v2.resources.extend.webhook.mutating.MutatingWebhookConfigurationV2
+import io.violabs.picard.v2.resources.extend.webhook.validating.ValidatingWebhookConfigurationV2
 
 interface APIVersion {
     fun refString(): String
@@ -218,6 +222,7 @@ open class KAPIVersion(
 
     object AdmissionRegistrationV1 : KAPIVersion("admissionregistration.k8s.io/v1"),
         MutatingWebhookConfiguration.Version,
+        MutatingWebhookConfigurationV2.Version,
         MutatingWebhookConfigurationList.Version,
         ValidatingAdmissionPolicy.Version,
         ValidatingAdmissionPolicyV2.Version,
@@ -226,6 +231,7 @@ open class KAPIVersion(
         ValidatingAdmissionPolicyBindingV2.Version,
         ValidatingAdmissionPolicyBindingList.Version,
         ValidatingWebhookConfiguration.Version,
+        ValidatingWebhookConfigurationV2.Version,
         ValidatingWebhookConfigurationList.Version
 
     object AdmissionRegistrationV1Alpha1 : KAPIVersion("admissionregistration.k8s.io/v1alpha1"),
@@ -234,6 +240,7 @@ open class KAPIVersion(
 
     object APIExtensionsV1 : KAPIVersion("apiextensions.k8s.io/v1"),
         CustomResourceDefinition.Version,
+        CustomResourceDefinitionV2.Version,
         CustomResourceDefinitionList.Version
 
     object APIRegistrationV1 : KAPIVersion("apiregistration.k8s.io/v1"),
@@ -381,6 +388,9 @@ open class KAPIVersion(
         ResourceClaimTemplateList.Version,
         ResourceSlice.Version,
         ResourceSliceList.Version
+
+    object ResourceV1Beta2 : KAPIVersion("resource.k8s.io/v1beta2"),
+        DeviceClassV2.Version
 
     object SchedulingV1 : KAPIVersion("scheduling.k8s.io/v1"),
         PriorityClass.Version,

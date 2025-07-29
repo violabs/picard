@@ -16,6 +16,7 @@ import io.violabs.picard.domain.k8sResources.extend.customResource.CustomResourc
 import io.violabs.picard.domain.k8sResources.extend.customResource.CustomResourceDefinitionVersion
 import io.violabs.picard.domain.manifest.ExtendResource
 
+@Deprecated("Use v2", ReplaceWith("CustomResourceDefinitionV2", "io.violabs.picard.v2.resources.extend.resource.custom.CustomResourceDefinitionV2"))
 data class CustomResourceDefinition(
     override val apiVersion: Version = KAPIVersion.APIExtensionsV1,
     val spec: Spec,

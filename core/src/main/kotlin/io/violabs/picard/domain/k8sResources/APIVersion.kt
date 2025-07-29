@@ -165,6 +165,7 @@ import io.violabs.picard.v2.resources.policy.admission.validating.ValidatingAdmi
 import io.violabs.picard.v2.resources.policy.admission.mutating.MutatingAdmissionPolicyV2
 import io.violabs.picard.v2.resources.policy.admission.mutating.MutatingAdmissionPolicyBindingV2
 import io.violabs.picard.v2.resources.extend.resource.custom.CustomResourceDefinitionV2
+import io.violabs.picard.v2.resources.extend.deviceclass.DeviceClassV2
 
 interface APIVersion {
     fun refString(): String
@@ -383,6 +384,9 @@ open class KAPIVersion(
         ResourceClaimTemplateList.Version,
         ResourceSlice.Version,
         ResourceSliceList.Version
+
+    object ResourceV1Beta2 : KAPIVersion("resource.k8s.io/v1beta2"),
+        DeviceClassV2.Version
 
     object SchedulingV1 : KAPIVersion("scheduling.k8s.io/v1"),
         PriorityClass.Version,

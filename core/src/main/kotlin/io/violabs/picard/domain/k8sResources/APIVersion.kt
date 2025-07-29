@@ -164,6 +164,7 @@ import io.violabs.picard.v2.resources.policy.admission.validating.ValidatingAdmi
 import io.violabs.picard.v2.resources.policy.admission.validating.ValidatingAdmissionPolicyBindingV2
 import io.violabs.picard.v2.resources.policy.admission.mutating.MutatingAdmissionPolicyV2
 import io.violabs.picard.v2.resources.policy.admission.mutating.MutatingAdmissionPolicyBindingV2
+import io.violabs.picard.v2.resources.extend.resource.custom.CustomResourceDefinitionV2
 
 interface APIVersion {
     fun refString(): String
@@ -234,6 +235,7 @@ open class KAPIVersion(
 
     object APIExtensionsV1 : KAPIVersion("apiextensions.k8s.io/v1"),
         CustomResourceDefinition.Version,
+        CustomResourceDefinitionV2.Version,
         CustomResourceDefinitionList.Version
 
     object APIRegistrationV1 : KAPIVersion("apiregistration.k8s.io/v1"),

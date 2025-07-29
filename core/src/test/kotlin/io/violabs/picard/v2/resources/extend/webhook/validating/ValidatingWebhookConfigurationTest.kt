@@ -1,4 +1,4 @@
-package io.violabs.picard.v2.resources.extend.webhook.mutating
+package io.violabs.picard.v2.resources.extend.webhook.validating
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
@@ -11,32 +11,32 @@ import io.violabs.picard.v2.resources.extend.webhook.ServiceReference
 import io.violabs.picard.v2.resources.extend.webhook.WebhookClientConfig
 import org.junit.jupiter.api.BeforeAll
 
-class MutatingWebhookConfigurationTest :
-    SuccessBuildSim<MutatingWebhookConfigurationV2, MutatingWebhookConfigurationV2DslBuilder>() {
+class ValidatingWebhookConfigurationTest :
+    SuccessBuildSim<ValidatingWebhookConfigurationV2, ValidatingWebhookConfigurationV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
         fun setup() = buildSetup(
-            MutatingWebhookConfigurationTest::class,
+            ValidatingWebhookConfigurationTest::class,
             SUCCESS_POSSIBILITIES
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<MutatingWebhookConfigurationV2, MutatingWebhookConfigurationV2DslBuilder> {
+            possibilities<ValidatingWebhookConfigurationV2, ValidatingWebhookConfigurationV2DslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(MutatingWebhookConfigurationV2DslBuilder())
-                    expected = MutatingWebhookConfigurationV2()
+                    given(ValidatingWebhookConfigurationV2DslBuilder())
+                    expected = ValidatingWebhookConfigurationV2()
                 }
 
                 scenario {
                     id = "full"
-                    given(MutatingWebhookConfigurationV2DslBuilder()) {
+                    given(ValidatingWebhookConfigurationV2DslBuilder()) {
                         metadata {
                             sharedObjectMeta()
                         }
                         webhooks {
-                            mutatingWebhook {
+                            validatingWebhook {
                                 admissionReviewVersions(PLACEHOLDER)
                                 clientConfig {
                                     caBundle(1.toByte())
@@ -60,7 +60,6 @@ class MutatingWebhookConfigurationTest :
                                 matchPolicy = PLACEHOLDER
                                 namespaceSelector { sharedSelector() }
                                 objectSelector { sharedSelector() }
-                                reinvocationPolicy = PLACEHOLDER
                                 rules {
                                     ruleWithOperations {
                                         apiGroups(PLACEHOLDER)
@@ -74,10 +73,10 @@ class MutatingWebhookConfigurationTest :
                             }
                         }
                     }
-                    expected = MutatingWebhookConfigurationV2(
+                    expected = ValidatingWebhookConfigurationV2(
                         metadata = Common.OBJECT_META,
                         webhooks = listOf(
-                            MutatingWebhook(
+                            ValidatingWebhook(
                                 admissionReviewVersions = listOf(PLACEHOLDER),
                                 clientConfig = WebhookClientConfig(
                                     caBundle = listOf(1.toByte()),
@@ -101,7 +100,6 @@ class MutatingWebhookConfigurationTest :
                                 matchPolicy = PLACEHOLDER,
                                 namespaceSelector = Common.LABEL_SELECTOR,
                                 objectSelector = Common.LABEL_SELECTOR,
-                                reinvocationPolicy = PLACEHOLDER,
                                 rules = listOf(
                                     RuleWithOperations(
                                         apiGroups = listOf(PLACEHOLDER),

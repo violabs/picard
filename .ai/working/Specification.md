@@ -18,24 +18,24 @@ Finally, update the v1 to have `@Deprecated("Use v2", ReplaceWith(<package for v
 
 ## Documentation
 
-MutatingWebhookConfiguration
-MutatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and may change the object.
+ValidatingWebhookConfiguration
+ValidatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and object without changing it.
 apiVersion: admissionregistration.k8s.io/v1
 
 import "k8s.io/api/admissionregistration/v1"
 
-MutatingWebhookConfiguration
-MutatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and may change the object.
+ValidatingWebhookConfiguration
+ValidatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and object without changing it.
 
 apiVersion: admissionregistration.k8s.io/v1
 
-kind: MutatingWebhookConfiguration
+kind: ValidatingWebhookConfiguration
 
 metadata (ObjectMeta)
 
 Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
 
-webhooks ([]MutatingWebhook)
+webhooks ([]ValidatingWebhook)
 
 Patch strategy: merge on key name
 
@@ -43,7 +43,7 @@ Map: unique values on key name will be kept during a merge
 
 Webhooks is a list of webhooks and the affected resources and operations.
 
-MutatingWebhook describes an admission webhook and the resources and operations it applies to.
+ValidatingWebhook describes an admission webhook and the resources and operations it applies to.
 
 webhooks.admissionReviewVersions ([]string), required
 
@@ -160,23 +160,13 @@ For example, to run the webhook on any objects whose namespace is not associated
 
 If instead you want to only run the webhook on any objects whose namespace is associated with the "environment" of "prod" or "staging"; you will set the selector as follows: "namespaceSelector": { "matchExpressions": [ { "key": "environment", "operator": "In", "values": [ "prod", "staging" ] } ] }
 
-See https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more examples of label selectors.
+See https://kubernetes.io/docs/concepts/overview/working-with-objects/labels for more examples of label selectors.
 
 Default to the empty LabelSelector, which matches everything.
 
 webhooks.objectSelector (LabelSelector)
 
 ObjectSelector decides whether to run the webhook based on if the object has matching labels. objectSelector is evaluated against both the oldObject and newObject that would be sent to the webhook, and is considered to match if either object matches the selector. A null object (oldObject in the case of create, or newObject in the case of delete) or an object that cannot have labels (like a DeploymentRollback or a PodProxyOptions object) is not considered to match. Use the object selector only if the webhook is opt-in, because end users may skip the admission webhook by setting the labels. Default to the empty LabelSelector, which matches everything.
-
-webhooks.reinvocationPolicy (string)
-
-reinvocationPolicy indicates whether this webhook should be called multiple times as part of a single admission evaluation. Allowed values are "Never" and "IfNeeded".
-
-Never: the webhook will not be called more than once in a single admission evaluation.
-
-IfNeeded: the webhook will be called at least one additional time as part of the admission evaluation if the object being admitted is modified by other admission plugins after the initial webhook call. Webhooks that specify this option must be idempotent, able to process objects they previously admitted. Note: * the number of additional invocations is not guaranteed to be exactly one. * if additional invocations result in further modifications to the object, webhooks are not guaranteed to be invoked again. * webhooks that use this option may be reordered to minimize the number of additional invocations. * to validate an object after all mutations are guaranteed complete, use a validating admission webhook instead.
-
-Defaults to "Never".
 
 webhooks.rules ([]RuleWithOperations)
 
@@ -223,6 +213,7 @@ scope specifies the scope of this rule. Valid values are "Cluster", "Namespaced"
 webhooks.timeoutSeconds (int32)
 
 TimeoutSeconds specifies the timeout for this webhook. After the timeout passes, the webhook call will be ignored or the API call will fail based on the failure policy. The timeout value must be between 1 and 30 seconds. Default to 10 seconds.
+
 
 
 

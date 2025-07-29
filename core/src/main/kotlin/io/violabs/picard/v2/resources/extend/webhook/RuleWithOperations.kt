@@ -1,4 +1,4 @@
-package io.violabs.picard.v2.resources.extend.webhook.mutating
+package io.violabs.picard.v2.resources.extend.webhook
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 

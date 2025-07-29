@@ -1,16 +1,16 @@
-package io.violabs.picard.v2.resources.extend.webhook.mutating
+package io.violabs.picard.v2.resources.extend.webhook.validating
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.v2.common.LabelSelector
-import io.violabs.picard.v2.resources.extend.webhook.MatchCondition
-import io.violabs.picard.v2.resources.extend.webhook.RuleWithOperations
 import io.violabs.picard.v2.resources.extend.webhook.WebhookClientConfig
+import io.violabs.picard.v2.resources.extend.webhook.RuleWithOperations
+import io.violabs.picard.v2.resources.extend.webhook.MatchCondition
 
 /**
- * MutatingWebhook describes an admission webhook and the resources and operations it applies to.
+ * ValidatingWebhook describes an admission webhook and the resources and operations it applies to.
  */
 @GeneratedDsl(withListGroup = true)
-data class MutatingWebhook(
+data class ValidatingWebhook(
     /**
      * AdmissionReviewVersions is an ordered list of preferred AdmissionReview versions
      * the Webhook expects. API server will try to use first version in the list which it supports.
@@ -67,11 +67,6 @@ data class MutatingWebhook(
      * the webhook, and is considered to match if either object matches the selector.
      */
     val objectSelector: LabelSelector? = null,
-    /**
-     * reinvocationPolicy indicates whether this webhook should be called multiple times as part
-     * of a single admission evaluation. Allowed values are "Never" and "IfNeeded".
-     */
-    val reinvocationPolicy: String? = null,
     /**
      * Rules describes what operations on what resources/subresources the webhook cares about.
      * The webhook cares about an operation if it matches any Rule.

@@ -166,6 +166,7 @@ import io.violabs.picard.v2.resources.policy.admission.mutating.MutatingAdmissio
 import io.violabs.picard.v2.resources.policy.admission.mutating.MutatingAdmissionPolicyBindingV2
 import io.violabs.picard.v2.resources.extend.resource.custom.CustomResourceDefinitionV2
 import io.violabs.picard.v2.resources.extend.deviceclass.DeviceClassV2
+import io.violabs.picard.v2.resources.extend.webhook.mutating.MutatingWebhookConfigurationV2
 
 interface APIVersion {
     fun refString(): String
@@ -220,6 +221,7 @@ open class KAPIVersion(
 
     object AdmissionRegistrationV1 : KAPIVersion("admissionregistration.k8s.io/v1"),
         MutatingWebhookConfiguration.Version,
+        MutatingWebhookConfigurationV2.Version,
         MutatingWebhookConfigurationList.Version,
         ValidatingAdmissionPolicy.Version,
         ValidatingAdmissionPolicyV2.Version,

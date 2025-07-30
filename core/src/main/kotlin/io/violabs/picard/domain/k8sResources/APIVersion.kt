@@ -170,6 +170,7 @@ import io.violabs.picard.v2.resources.extend.webhook.mutating.MutatingWebhookCon
 import io.violabs.picard.v2.resources.extend.webhook.validating.ValidatingWebhookConfigurationV2
 import io.violabs.picard.v2.resources.cluster.apiservice.ApiServiceV2
 import io.violabs.picard.v2.resources.cluster.component.status.ComponentStatusV2
+import io.violabs.picard.v2.resources.cluster.event.EventV2
 
 interface APIVersion {
     fun refString(): String
@@ -325,6 +326,7 @@ open class KAPIVersion(
 
     object EventsV1 : KAPIVersion("events.k8s.io/v1"),
         Event.Version,
+        EventV2.Version,
         EventList.Version
 
     object FlowControlApiServerV1 : KAPIVersion("flowcontrol.apiserver.k8s.io/v1"),

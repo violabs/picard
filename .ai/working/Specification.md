@@ -101,106 +101,52 @@ If you do not fix the build after 3 times, you can ask for help.
 
 ## Documentation
 
-Event
-Event is a report of an event somewhere in the cluster.
-apiVersion: events.k8s.io/v1
+IPAddress
+IPAddress represents a single IP of a single IP Family.
+apiVersion: networking.k8s.io/v1
 
-import "k8s.io/api/events/v1"
+import "k8s.io/api/networking/v1"
 
-Event
-Event is a report of an event somewhere in the cluster. It generally denotes some state change in the system. Events have a limited retention time and triggers and messages may evolve with time. Event consumers should not rely on the timing of an event with a given Reason reflecting a consistent underlying trigger, or the continued existence of events with that Reason. Events should be treated as informative, best-effort, supplemental data.
+IPAddress
+IPAddress represents a single IP of a single IP Family. The object is designed to be used by APIs that operate on IP addresses. The object is used by the Service core API for allocation of IP addresses. An IP address can be represented in different formats, to guarantee the uniqueness of the IP, the name of the object is the IP address in canonical format, four decimal digits separated by dots suppressing leading zeros for IPv4 and the representation defined by RFC 5952 for IPv6. Valid: 192.168.1.5 or 2001:db8::1 or 2001:db8:aaaa:bbbb:cccc:dddd:eeee:1 Invalid: 10.01.2.3 or 2001:db8:0:0:0::1
 
-apiVersion: events.k8s.io/v1
+apiVersion: networking.k8s.io/v1
 
-kind: Event
+kind: IPAddress
 
 metadata (ObjectMeta)
 
 Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 
-eventTime (MicroTime), required
+spec (IPAddressSpec)
 
-eventTime is the time when this Event was first observed. It is required.
+spec is the desired state of the IPAddress. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 
-MicroTime is version of Time with microsecond level precision.
+IPAddressSpec
+IPAddressSpec describe the attributes in an IP Address.
 
-action (string)
+parentRef (ParentReference), required
 
-action is what action was taken/failed regarding to the regarding object. It is machine-readable. This field cannot be empty for new Events and it can have at most 128 characters.
+ParentRef references the resource that an IPAddress is attached to. An IPAddress must reference a parent object.
 
-deprecatedCount (int32)
+ParentReference describes a reference to a parent object.
 
-deprecatedCount is the deprecated field assuring backward compatibility with core.v1 Event type.
+parentRef.name (string), required
 
-deprecatedFirstTimestamp (Time)
+Name is the name of the object being referenced.
 
-deprecatedFirstTimestamp is the deprecated field assuring backward compatibility with core.v1 Event type.
+parentRef.resource (string), required
 
-Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON. Wrappers are provided for many of the factory methods that the time package offers.
+Resource is the resource of the object being referenced.
 
-deprecatedLastTimestamp (Time)
+parentRef.group (string)
 
-deprecatedLastTimestamp is the deprecated field assuring backward compatibility with core.v1 Event type.
+Group is the group of the object being referenced.
 
-Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON. Wrappers are provided for many of the factory methods that the time package offers.
+parentRef.namespace (string)
 
-deprecatedSource (EventSource)
+Namespace is the namespace of the object being referenced.
 
-deprecatedSource is the deprecated field assuring backward compatibility with core.v1 Event type.
-
-EventSource contains information for an event.
-
-deprecatedSource.component (string)
-
-Component from which the event is generated.
-
-deprecatedSource.host (string)
-
-Node name on which the event is generated.
-
-note (string)
-
-note is a human-readable description of the status of this operation. Maximal length of the note is 1kB, but libraries should be prepared to handle values up to 64kB.
-
-reason (string)
-
-reason is why the action was taken. It is human-readable. This field cannot be empty for new Events and it can have at most 128 characters.
-
-regarding (ObjectReference)
-
-regarding contains the object this Event is about. In most cases it's an Object reporting controller implements, e.g. ReplicaSetController implements ReplicaSets and this event is emitted because it acts on some changes in a ReplicaSet object.
-
-related (ObjectReference)
-
-related is the optional secondary object for more complex actions. E.g. when regarding object triggers a creation or deletion of related object.
-
-reportingController (string)
-
-reportingController is the name of the controller that emitted this Event, e.g. kubernetes.io/kubelet. This field cannot be empty for new Events.
-
-reportingInstance (string)
-
-reportingInstance is the ID of the controller instance, e.g. kubelet-xyzf. This field cannot be empty for new Events and it can have at most 128 characters.
-
-series (EventSeries)
-
-series is data about the Event series this event represents or nil if it's a singleton Event.
-
-EventSeries contain information on series of events, i.e. thing that was/is happening continuously for some time. How often to update the EventSeries is up to the event reporters. The default event reporter in "k8s.io/client-go/tools/events/event_broadcaster.go" shows how this struct is updated on heartbeats and can guide customized reporter implementations.
-
-series.count (int32), required
-
-count is the number of occurrences in this series up to the last heartbeat time.
-
-series.lastObservedTime (MicroTime), required
-
-lastObservedTime is the time when last Event from the series was seen before last heartbeat.
-
-MicroTime is version of Time with microsecond level precision.
-
-type (string)
-
-type is the type of this event (Normal, Warning), new types could be added in the future. It is machine-readable. This field cannot be empty for new Events.
 
 
 

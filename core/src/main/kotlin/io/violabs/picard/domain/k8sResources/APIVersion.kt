@@ -171,6 +171,7 @@ import io.violabs.picard.v2.resources.extend.webhook.validating.ValidatingWebhoo
 import io.violabs.picard.v2.resources.cluster.apiservice.ApiServiceV2
 import io.violabs.picard.v2.resources.cluster.component.status.ComponentStatusV2
 import io.violabs.picard.v2.resources.cluster.event.EventV2
+import io.violabs.picard.v2.resources.cluster.ipaddress.IPAddressV2
 
 interface APIVersion {
     fun refString(): String
@@ -348,6 +349,7 @@ open class KAPIVersion(
 
     object NetworkingV1Beta1 : KAPIVersion("networking.k8s.io/v1"),
         IPAddress.Version,
+        IPAddressV2.Version,
         IPAddressList.Version,
         ServiceCIDR.Version,
         ServiceCIDRList.Version

@@ -1,10 +1,5 @@
 package io.violabs.mcp
 
-import io.ktor.client.*
-import io.ktor.client.plugins.*
-import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
 import io.ktor.utils.io.streams.*
 import io.modelcontextprotocol.kotlin.sdk.*
 import io.modelcontextprotocol.kotlin.sdk.server.Server
@@ -18,32 +13,10 @@ import kotlinx.serialization.json.*
 
 // Main function to run the MCP server
 fun `run mcp server`() {
-    // Base URL for the Weather API
-    val baseUrl = "https://api.weather.gov"
-
-    // Create an HTTP client with a default request configuration and JSON content negotiation
-    val httpClient = HttpClient {
-        defaultRequest {
-            url(baseUrl)
-            headers {
-                append("Accept", "application/geo+json")
-                append("User-Agent", "WeatherApiClient/1.0")
-            }
-            contentType(ContentType.Application.Json)
-        }
-        // Install content negotiation plugin for JSON serialization/deserialization
-        install(ContentNegotiation) {
-            json(Json {
-                ignoreUnknownKeys = true
-                prettyPrint = true
-            })
-        }
-    }
-
     // Create the MCP Server instance with a basic implementation
     val server = Server(
         Implementation(
-            name = "weather", // Tool name is "weather"
+            name = "gradle", // Tool name is "weather"
             version = "1.0.0" // Version of the implementation
         ),
         ServerOptions(
@@ -53,58 +26,62 @@ fun `run mcp server`() {
 
     // Register a tool to fetch weather alerts by state
     server.addTool(
-        name = "get_alerts",
+        name = "gradlew_clean",
         description = """
-            Get weather alerts for a US state. Input is Two-letter US state code (e.g. CA, NY)
+            Clean the gradle project
         """.trimIndent(),
         inputSchema = Tool.Input(
             properties = buildJsonObject {
-                putJsonObject("state") {
+                putJsonObject("location") {
                     put("type", "string")
-                    put("description", "Two-letter US state code (e.g. CA, NY)")
+                    put("description", "the location of the gradle project, if not specified, current directory is used")
                 }
-            },
-            required = listOf("state")
+                putJsonObject("module") {
+                    put("type", "string")
+                    put("description", "if there is a specific module to clean, specify it here, otherwise omit it")
+                }
+            }
         )
     ) { request ->
-        val state = request.arguments["state"]?.jsonPrimitive?.content ?: return@addTool CallToolResult(
-            content = listOf(TextContent("The 'state' parameter is required."))
-        )
+        val location = request.arguments["location"]?.jsonPrimitive?.content ?: System.getProperty("user.dir")
+        val module = request.arguments["module"]?.jsonPrimitive?.content
 
-        val alerts = httpClient.getAlerts(state)
+        try {
+            val projectDir = java.io.File(location)
+            val gradlewFile = java.io.File(projectDir, "gradlew")
+            val gradlewBatFile = java.io.File(projectDir, "gradlew.bat")
 
-        CallToolResult(content = alerts.map { TextContent(it) })
-    }
+            val command = when {
+                gradlewFile.exists() -> "./gradlew"
+                gradlewBatFile.exists() -> "gradlew.bat"
+                else -> "gradle" // fallback to system gradle
+            }
 
-    // Register a tool to fetch weather forecast by latitude and longitude
-    server.addTool(
-        name = "get_forecast",
-        description = """
-            Get weather forecast for a specific latitude/longitude
-        """.trimIndent(),
-        inputSchema = Tool.Input(
-            properties = buildJsonObject {
-                putJsonObject("latitude") {
-                    put("type", "number")
-                }
-                putJsonObject("longitude") {
-                    put("type", "number")
-                }
-            },
-            required = listOf("latitude", "longitude")
-        )
-    ) { request ->
-        val latitude = request.arguments["latitude"]?.jsonPrimitive?.doubleOrNull
-        val longitude = request.arguments["longitude"]?.jsonPrimitive?.doubleOrNull
-        if (latitude == null || longitude == null) {
-            return@addTool CallToolResult(
-                content = listOf(TextContent("The 'latitude' and 'longitude' parameters are required."))
+            val cleanTask = if (module != null) {
+                val modulePrefix = if (module.startsWith(":")) module else ":$module"
+                "${modulePrefix}:clean"
+            } else {
+                "clean"
+            }
+
+            val process = ProcessBuilder(command, cleanTask)
+                .directory(projectDir)
+                .redirectErrorStream(true)
+                .start()
+
+            val response = process.inputReader().use { reader ->
+                reader.lines().map { it.trim() }.map { TextContent(it) }.toList()
+            }
+
+            CallToolResult(content = response)
+        } catch (e: Exception) {
+            CallToolResult(
+                content = listOf(
+                    TextContent("Error executing gradle clean: ${e.message}"),
+                    TextContent("Make sure gradlew exists in the project directory and is executable")
+                )
             )
         }
-
-        val forecast = httpClient.getForecast(latitude, longitude)
-
-        CallToolResult(content = forecast.map { TextContent(it) })
     }
 
     // Create a transport using standard IO for server communication

@@ -1,23 +1,6 @@
 
 # Working Specifications
 
-## Prerequisites
-
-- Access to the Picard codebase
-- Gradle build environment set up
-- Understanding of Kotlin and Kubernetes resource structure
-
-## Implementation Workflow
-
-Follow these steps in order:
-
-1. **Create data classes** with proper annotations
-2. **Update APIVersion declarations** to include V2 versions
-3. **Add deprecation** to v1 classes
-4. **Run clean build** to generate DSL builders
-5. **Implement tests** using generated builders
-6. **Run tests** to verify implementation
-
 ## Instruct
 
 Build out objects with a specific format.
@@ -25,78 +8,22 @@ They should utilize `GeneratedDsl` and `DefaultValue` annotations. These items r
 level Kubernetes resources, and should be structured to include the `apiVersion`, `metadata`, and
 any specific fields relevant to the resource. Refer to the example below for guidance.
 
-### List Group Annotations
+If there is an object that is a list in a property of another, add `withListGroup = true` to the `GeneratedDsl` annotation.
 
-If there is a list property that needs DSL builder support, add `withListGroup = true` to the `GeneratedDsl` annotation **on the class level**:
-
-```kotlin
-// For the parent class that contains the list
-@GeneratedDsl(withListGroup = true)
-data class ParentResourceV2(...)
-
-// For the child class that will be in the list
-@GeneratedDsl(withListGroup = true) 
-data class ChildCondition(...)
-```
-
-This generates both `conditions(vararg items: ChildCondition)` and `conditions { childCondition { ... } }` DSL methods.
-
-### JsonProperty Usage
-
-When field names need to preserve original JSON casing that differs from Kotlin conventions:
-
-```kotlin
-data class ComponentCondition(
-    val status: String,
-    val type: String,
-    @JsonProperty("error")  // JSON field is "error", Kotlin property is "errorValue"
-    val errorValue: String? = null,
-    val message: String? = null
-)
-```
-
-### APIVersion Integration
-
-You will need to look at the package `io.violabs.picard.domain.k8sResources.APIVersion` to
+Additionally, you will have to look at the package io.violabs.picard.domain.k8sResources.APIVersion to
 add the V2 version as an extension of the existing version.
-
-### Deprecation
 
 Finally, update the v1 to have `@Deprecated("Use v2", ReplaceWith(<package for v2>))`
 
-## Rules
-
+Rules:
 - Time = LocalDateTime
 - Quantity = io.violabs.picard.domain.k8sResources.Quantity
 - Capitalized acronyms and initialisms should use camelCase (e.g., `APIService` -> `ApiService`, `CA` -> `Ca`)
   - Use `@JsonProperty` for properties to preserve the original casing if necessary.
   - Override `getKind(): String` to return the original casing for the kind if it extends a Resource
 
-## Build Process
-
-When you are finished creating the files:
-
-1. **First**: Run `./gradlew clean build -x test` to generate DSL builders
-2. **Then**: Implement tests using the generated builders
-3. **Finally**: Run `./gradlew test` to verify everything works
-
-If you do not fix the build after 3 times, you can ask for help.
-
-## Troubleshooting
-
-### Common Issues
-
-1. **DSL builders not found during test compilation**
-   - **Solution**: Run `./gradlew clean build -x test` first to generate the DSL classes
-
-2. **Missing list group methods (e.g., `conditions { ... }`)**
-   - **Solution**: Ensure both parent and child classes have `@GeneratedDsl(withListGroup = true)`
-
-3. **JsonProperty compilation errors**
-   - **Solution**: Import `com.fasterxml.jackson.annotation.JsonProperty`
-
-4. **APIVersion compilation errors**
-   - **Solution**: Verify the import was added and the Version interface extends APIVersion
+When you are finished creating the files, run the `gradlew_clean_build` tool and fix any issues until you can confirm the
+build works correctly. If you do not fix the build after 3 times, you can ask for help.
 
 
 ## Documentation

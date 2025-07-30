@@ -20,6 +20,9 @@ import io.violabs.picard.Common.sharedObjectMeta
 Also available `sharedSelector()` from `Common` object
 Default for LocalDateTime is `NOW`
 
+When you are finished creating the files, run the `gradlew_test` tool and fix any issues until you can confirm the
+test passes successfully. If you do not fix the test after 3 times, you can ask for help.
+
 # Example Spec
 
 codeLocation: core/src/main/kotlin/io/violabs/picard/v2/resources/policy/resource/quota/ResourceQuotaV2.kt

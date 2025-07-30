@@ -169,6 +169,7 @@ import io.violabs.picard.v2.resources.extend.deviceclass.DeviceClassV2
 import io.violabs.picard.v2.resources.extend.webhook.mutating.MutatingWebhookConfigurationV2
 import io.violabs.picard.v2.resources.extend.webhook.validating.ValidatingWebhookConfigurationV2
 import io.violabs.picard.v2.resources.cluster.apiservice.ApiServiceV2
+import io.violabs.picard.v2.resources.cluster.component.status.ComponentStatusV2
 
 interface APIVersion {
     fun refString(): String
@@ -184,6 +185,7 @@ open class KAPIVersion(
     //apiVersion: storage.k8s.io/v1
     object V1 : KAPIVersion(),
         ComponentStatus.Version,
+        ComponentStatusV2.Version,
         ComponentStatusList.Version,
         ConfigMap.Version,
         ConfigMapV2.Version,

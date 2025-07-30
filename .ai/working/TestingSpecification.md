@@ -18,6 +18,7 @@ import io.violabs.picard.Common.sharedObjectMeta
 ```
 
 Also available `sharedSelector()` from `Common` object
+Default for LocalDateTime is `NOW`
 
 # Example Spec
 

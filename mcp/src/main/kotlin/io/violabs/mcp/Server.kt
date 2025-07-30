@@ -42,6 +42,15 @@ fun `run mcp server`() {
         GradleApi::callGradleCleanBuild
     )
 
+    server.addTool(
+        name = "gradlew_test",
+        description = """
+            Run the gradle tests. You can specify whether to skip the integration tests or not.
+        """.trimIndent(),
+        inputSchema = GradleToolInputs.SKIPPABLE_REQUEST,
+        GradleApi::callGradleTest
+    )
+
     // Create a transport using standard IO for server communication
     val transport = StdioServerTransport(
         System.`in`.asInput(),

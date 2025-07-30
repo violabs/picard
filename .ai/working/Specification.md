@@ -101,51 +101,61 @@ If you do not fix the build after 3 times, you can ask for help.
 
 ## Documentation
 
-IPAddress
-IPAddress represents a single IP of a single IP Family.
-apiVersion: networking.k8s.io/v1
+Lease
+Lease defines a lease concept.
+apiVersion: coordination.k8s.io/v1
 
-import "k8s.io/api/networking/v1"
+import "k8s.io/api/coordination/v1"
 
-IPAddress
-IPAddress represents a single IP of a single IP Family. The object is designed to be used by APIs that operate on IP addresses. The object is used by the Service core API for allocation of IP addresses. An IP address can be represented in different formats, to guarantee the uniqueness of the IP, the name of the object is the IP address in canonical format, four decimal digits separated by dots suppressing leading zeros for IPv4 and the representation defined by RFC 5952 for IPv6. Valid: 192.168.1.5 or 2001:db8::1 or 2001:db8:aaaa:bbbb:cccc:dddd:eeee:1 Invalid: 10.01.2.3 or 2001:db8:0:0:0::1
+Lease
+Lease defines a lease concept.
 
-apiVersion: networking.k8s.io/v1
+apiVersion: coordination.k8s.io/v1
 
-kind: IPAddress
+kind: Lease
 
 metadata (ObjectMeta)
 
-Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 
-spec (IPAddressSpec)
+spec (LeaseSpec)
 
-spec is the desired state of the IPAddress. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+spec contains the specification of the Lease. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 
-IPAddressSpec
-IPAddressSpec describe the attributes in an IP Address.
+LeaseSpec
+LeaseSpec is a specification of a Lease.
 
-parentRef (ParentReference), required
+acquireTime (MicroTime)
 
-ParentRef references the resource that an IPAddress is attached to. An IPAddress must reference a parent object.
+acquireTime is a time when the current lease was acquired.
 
-ParentReference describes a reference to a parent object.
+MicroTime is version of Time with microsecond level precision.
 
-parentRef.name (string), required
+holderIdentity (string)
 
-Name is the name of the object being referenced.
+holderIdentity contains the identity of the holder of a current lease. If Coordinated Leader Election is used, the holder identity must be equal to the elected LeaseCandidate.metadata.name field.
 
-parentRef.resource (string), required
+leaseDurationSeconds (int32)
 
-Resource is the resource of the object being referenced.
+leaseDurationSeconds is a duration that candidates for a lease need to wait to force acquire it. This is measured against the time of last observed renewTime.
 
-parentRef.group (string)
+leaseTransitions (int32)
 
-Group is the group of the object being referenced.
+leaseTransitions is the number of transitions of a lease between holders.
 
-parentRef.namespace (string)
+preferredHolder (string)
 
-Namespace is the namespace of the object being referenced.
+PreferredHolder signals to a lease holder that the lease has a more optimal holder and should be given up. This field can only be set if Strategy is also set.
+
+renewTime (MicroTime)
+
+renewTime is a time when the current holder of a lease has last updated the lease.
+
+MicroTime is version of Time with microsecond level precision.
+
+strategy (string)
+
+Strategy indicates the strategy for picking the leader for coordinated leader election. If the field is not specified, there is no active coordination for this lease. (Alpha) Using this field requires the CoordinatedLeaderElection feature gate to be enabled.
 
 
 

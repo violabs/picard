@@ -172,6 +172,7 @@ import io.violabs.picard.v2.resources.cluster.apiservice.ApiServiceV2
 import io.violabs.picard.v2.resources.cluster.component.status.ComponentStatusV2
 import io.violabs.picard.v2.resources.cluster.event.EventV2
 import io.violabs.picard.v2.resources.cluster.ipaddress.IPAddressV2
+import io.violabs.picard.v2.resources.cluster.lease.LeaseV2
 
 interface APIVersion {
     fun refString(): String
@@ -315,6 +316,7 @@ open class KAPIVersion(
 
     object CoordinationV1 : KAPIVersion("coordination.k8s.io/v1"),
         Lease.Version,
+        LeaseV2.Version,
         LeaseList.Version
 
     object CoordinationV1Alpha1 : KAPIVersion("coordination.k8s.io/v1alpha1"),

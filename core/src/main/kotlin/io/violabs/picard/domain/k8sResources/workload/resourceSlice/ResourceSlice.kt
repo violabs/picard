@@ -12,6 +12,7 @@ import io.violabs.picard.domain.k8sResources.workload.Device
 import io.violabs.picard.domain.k8sResources.workload.nodeSelector.NodeSelector
 import io.violabs.picard.domain.manifest.WorkloadResource
 
+@Deprecated("Use v2", ReplaceWith("io.violabs.picard.v2.resources.resource.slice.ResourceSliceV2"))
 data class ResourceSlice(
     override val apiVersion: Version = KAPIVersion.ResourceV1Beta1,
     val spec: Spec,

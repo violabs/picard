@@ -422,7 +422,8 @@ open class KAPIVersion(
         ResourceSliceList.Version
 
     object ResourceV1Beta2 : KAPIVersion("resource.k8s.io/v1beta2"),
-        DeviceClassV2.Version
+        DeviceClassV2.Version,
+        io.violabs.picard.v2.resources.resource.slice.ResourceSliceV2.Version
 
     object SchedulingV1 : KAPIVersion("scheduling.k8s.io/v1"),
         PriorityClass.Version,

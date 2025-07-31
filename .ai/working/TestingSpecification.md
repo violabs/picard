@@ -4,7 +4,8 @@
 ## Overview
 
 You should copy over the existing test that matches the specification. It should match the same
-structure as the code. Make sure the test does not contain V2 references in the original.
+structure as the code. Make sure the test does not contain V2 references in the original. When you are finished,
+add items to .git.
 
 ## Prerequisites
 

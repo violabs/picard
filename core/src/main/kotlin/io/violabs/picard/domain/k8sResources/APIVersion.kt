@@ -176,6 +176,7 @@ import io.violabs.picard.v2.resources.cluster.lease.LeaseV2
 import io.violabs.picard.v2.resources.cluster.lease.candidate.LeaseCandidateV2
 import io.violabs.picard.v2.resources.cluster.namespace.NamespaceV2
 import io.violabs.picard.v2.resources.cluster.node.NodeV2
+import io.violabs.picard.v2.resources.cluster.runtimeclass.RuntimeClassV2
 
 interface APIVersion {
     fun refString(): String
@@ -366,6 +367,7 @@ open class KAPIVersion(
 
     object NodeV1 : KAPIVersion("node.k8s.io/v1"),
         RuntimeClass.Version,
+        RuntimeClassV2.Version,
         RuntimeClassList.Version
 
     object PolicyV1 : KAPIVersion("policy/v1"),

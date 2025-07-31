@@ -180,6 +180,7 @@ import io.violabs.picard.v2.resources.cluster.runtimeclass.RuntimeClassV2
 import io.violabs.picard.v2.resources.cluster.service.cidr.ServiceCidrV2
 import io.violabs.picard.v2.resources.service.ServiceV2
 import io.violabs.picard.v2.resources.service.endpoints.EndpointsV2
+import io.violabs.picard.v2.resources.service.endpointslice.EndpointSliceV2
 
 interface APIVersion {
     fun refString(): String
@@ -339,6 +340,7 @@ open class KAPIVersion(
 
     object DiscoveryV1 : KAPIVersion("discovery.k8s.io/v1"),
         EndpointSlice.Version,
+        EndpointSliceV2.Version,
         EndpointSliceList.Version
 
     object EventsV1 : KAPIVersion("events.k8s.io/v1"),

@@ -10,6 +10,7 @@ import io.violabs.picard.domain.k8sResources.service.endpoint.EndpointPort
 import io.violabs.picard.domain.manifest.ServiceResource
 
 
+@Deprecated("Use v2", ReplaceWith("EndpointSliceV2", "io.violabs.picard.v2.resources.service.endpointslice.EndpointSliceV2"))
 data class EndpointSlice(
     override val apiVersion: Version = KAPIVersion.DiscoveryV1,
     override val metadata: ObjectMetadata? = null,

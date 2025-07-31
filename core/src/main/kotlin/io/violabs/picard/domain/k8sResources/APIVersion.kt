@@ -173,6 +173,7 @@ import io.violabs.picard.v2.resources.cluster.component.status.ComponentStatusV2
 import io.violabs.picard.v2.resources.cluster.event.EventV2
 import io.violabs.picard.v2.resources.cluster.ipaddress.IPAddressV2
 import io.violabs.picard.v2.resources.cluster.lease.LeaseV2
+import io.violabs.picard.v2.resources.cluster.lease.candidate.LeaseCandidateV2
 
 interface APIVersion {
     fun refString(): String
@@ -322,6 +323,9 @@ open class KAPIVersion(
     object CoordinationV1Alpha1 : KAPIVersion("coordination.k8s.io/v1alpha1"),
         LeaseCandidate.Version,
         LeaseCandidateList.Version
+
+    object CoordinationV1Beta1 : KAPIVersion("coordination.k8s.io/v1beta1"),
+        LeaseCandidateV2.Version
 
     object DiscoveryV1 : KAPIVersion("discovery.k8s.io/v1"),
         EndpointSlice.Version,

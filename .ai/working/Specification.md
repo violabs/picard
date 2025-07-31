@@ -101,62 +101,57 @@ If you do not fix the build after 3 times, you can ask for help.
 
 ## Documentation
 
-Lease
-Lease defines a lease concept.
-apiVersion: coordination.k8s.io/v1
+LeaseCandidate v1beta1
+LeaseCandidate defines a candidate for a Lease object.
+apiVersion: coordination.k8s.io/v1beta1
 
-import "k8s.io/api/coordination/v1"
+import "k8s.io/api/coordination/v1beta1"
 
-Lease
-Lease defines a lease concept.
+LeaseCandidate
+LeaseCandidate defines a candidate for a Lease object. Candidates are created such that coordinated leader election will pick the best leader from the list of candidates.
 
-apiVersion: coordination.k8s.io/v1
+apiVersion: coordination.k8s.io/v1beta1
 
-kind: Lease
+kind: LeaseCandidate
 
 metadata (ObjectMeta)
 
 More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 
-spec (LeaseSpec)
+spec (LeaseCandidateSpec)
 
 spec contains the specification of the Lease. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 
-LeaseSpec
-LeaseSpec is a specification of a Lease.
+LeaseCandidateSpec
+LeaseCandidateSpec is a specification of a Lease.
 
-acquireTime (MicroTime)
+binaryVersion (string), required
 
-acquireTime is a time when the current lease was acquired.
+BinaryVersion is the binary version. It must be in a semver format without leading v. This field is required.
+
+leaseName (string), required
+
+LeaseName is the name of the lease for which this candidate is contending. The limits on this field are the same as on Lease.name. Multiple lease candidates may reference the same Lease.name. This field is immutable.
+
+strategy (string), required
+
+Strategy is the strategy that coordinated leader election will use for picking the leader. If multiple candidates for the same Lease return different strategies, the strategy provided by the candidate with the latest BinaryVersion will be used. If there is still conflict, this is a user error and coordinated leader election will not operate the Lease until resolved.
+
+emulationVersion (string)
+
+EmulationVersion is the emulation version. It must be in a semver format without leading v. EmulationVersion must be less than or equal to BinaryVersion. This field is required when strategy is "OldestEmulationVersion"
+
+pingTime (MicroTime)
+
+PingTime is the last time that the server has requested the LeaseCandidate to renew. It is only done during leader election to check if any LeaseCandidates have become ineligible. When PingTime is updated, the LeaseCandidate will respond by updating RenewTime.
 
 MicroTime is version of Time with microsecond level precision.
-
-holderIdentity (string)
-
-holderIdentity contains the identity of the holder of a current lease. If Coordinated Leader Election is used, the holder identity must be equal to the elected LeaseCandidate.metadata.name field.
-
-leaseDurationSeconds (int32)
-
-leaseDurationSeconds is a duration that candidates for a lease need to wait to force acquire it. This is measured against the time of last observed renewTime.
-
-leaseTransitions (int32)
-
-leaseTransitions is the number of transitions of a lease between holders.
-
-preferredHolder (string)
-
-PreferredHolder signals to a lease holder that the lease has a more optimal holder and should be given up. This field can only be set if Strategy is also set.
 
 renewTime (MicroTime)
 
-renewTime is a time when the current holder of a lease has last updated the lease.
+RenewTime is the time that the LeaseCandidate was last updated. Any time a Lease needs to do leader election, the PingTime field is updated to signal to the LeaseCandidate that they should update the RenewTime. Old LeaseCandidate objects are also garbage collected if it has been hours since the last renew. The PingTime field is updated regularly to prevent garbage collection for still active LeaseCandidates.
 
 MicroTime is version of Time with microsecond level precision.
-
-strategy (string)
-
-Strategy indicates the strategy for picking the leader for coordinated leader election. If the field is not specified, there is no active coordination for this lease. (Alpha) Using this field requires the CoordinatedLeaderElection feature gate to be enabled.
-
 
 
 

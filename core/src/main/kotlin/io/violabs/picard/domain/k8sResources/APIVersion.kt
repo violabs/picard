@@ -182,6 +182,7 @@ import io.violabs.picard.v2.resources.service.ServiceV2
 import io.violabs.picard.v2.resources.service.endpoints.EndpointsV2
 import io.violabs.picard.v2.resources.service.endpointslice.EndpointSliceV2
 import io.violabs.picard.v2.resources.service.ingress.IngressV2
+import io.violabs.picard.v2.resources.service.ingressclass.IngressClassV2
 
 interface APIVersion {
     fun refString(): String
@@ -362,6 +363,7 @@ open class KAPIVersion(
         IngressV2.Version,
         IngressList.Version,
         IngressClass.Version,
+        IngressClassV2.Version,
         IngressClassList.Version,
         NetworkPolicy.Version,
         NetworkPolicyV2.Version,

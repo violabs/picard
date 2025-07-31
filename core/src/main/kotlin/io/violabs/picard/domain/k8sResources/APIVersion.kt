@@ -178,6 +178,11 @@ import io.violabs.picard.v2.resources.cluster.namespace.NamespaceV2
 import io.violabs.picard.v2.resources.cluster.node.NodeV2
 import io.violabs.picard.v2.resources.cluster.runtimeclass.RuntimeClassV2
 import io.violabs.picard.v2.resources.cluster.service.cidr.ServiceCidrV2
+import io.violabs.picard.v2.resources.service.ServiceV2
+import io.violabs.picard.v2.resources.service.endpoints.EndpointsV2
+import io.violabs.picard.v2.resources.service.endpointslice.EndpointSliceV2
+import io.violabs.picard.v2.resources.service.ingress.IngressV2
+import io.violabs.picard.v2.resources.service.ingressclass.IngressClassV2
 
 interface APIVersion {
     fun refString(): String
@@ -199,6 +204,7 @@ open class KAPIVersion(
         ConfigMapV2.Version,
         ConfigMapList.Version,
         Endpoints.Version,
+        EndpointsV2.Version,
         EndpointsList.Version,
         LimitRange.Version,
         LimitRangeV2.Version,
@@ -228,6 +234,7 @@ open class KAPIVersion(
         SecretV2.Version,
         SecretList.Version,
         Service.Version,
+        ServiceV2.Version,
         ServiceList.Version,
         ServiceAccount.Version,
         ServiceAccountV2.Version,
@@ -335,6 +342,7 @@ open class KAPIVersion(
 
     object DiscoveryV1 : KAPIVersion("discovery.k8s.io/v1"),
         EndpointSlice.Version,
+        EndpointSliceV2.Version,
         EndpointSliceList.Version
 
     object EventsV1 : KAPIVersion("events.k8s.io/v1"),
@@ -352,8 +360,10 @@ open class KAPIVersion(
 
     object NetworkingV1 : KAPIVersion("networking.k8s.io/v1"),
         Ingress.Version,
+        IngressV2.Version,
         IngressList.Version,
         IngressClass.Version,
+        IngressClassV2.Version,
         IngressClassList.Version,
         NetworkPolicy.Version,
         NetworkPolicyV2.Version,

@@ -11,6 +11,7 @@ import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.ServiceResource
 
 
+@Deprecated("Use v2", ReplaceWith("IngressV2", "io.violabs.picard.v2.resources.service.ingress.IngressV2"))
 data class Ingress(
     override val apiVersion: Version = KAPIVersion.NetworkingV1,
     override val metadata: ObjectMetadata? = null,

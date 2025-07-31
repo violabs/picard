@@ -103,78 +103,62 @@ If you do not fix the build after 3 times, you can ask for help.
 
 ## Documentation
 
-ServiceCIDR
-ServiceCIDR defines a range of IP addresses using CIDR format (e.
+IngressClass
+IngressClass represents the class of the Ingress, referenced by the Ingress Spec.
 apiVersion: networking.k8s.io/v1
 
 import "k8s.io/api/networking/v1"
 
-ServiceCIDR
-ServiceCIDR defines a range of IP addresses using CIDR format (e.g. 192.168.0.0/24 or 2001:db2::/64). This range is used to allocate ClusterIPs to Service objects.
+IngressClass
+IngressClass represents the class of the Ingress, referenced by the Ingress Spec. The ingressclass.kubernetes.io/is-default-class annotation can be used to indicate that an IngressClass should be considered default. When a single IngressClass resource has this annotation set to true, new Ingress resources without a class specified will be assigned this default class.
 
 apiVersion: networking.k8s.io/v1
 
-kind: ServiceCIDR
+kind: IngressClass
 
 metadata (ObjectMeta)
 
 Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 
-spec (ServiceCIDRSpec)
+spec (IngressClassSpec)
 
-spec is the desired state of the ServiceCIDR. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+spec is the desired state of the IngressClass. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 
-status (ServiceCIDRStatus)
+IngressClassSpec
+IngressClassSpec provides information about the class of an Ingress.
 
-status represents the current state of the ServiceCIDR. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+controller (string)
 
-ServiceCIDRSpec
-ServiceCIDRSpec define the CIDRs the user wants to use for allocating ClusterIPs for Services.
+controller refers to the name of the controller that should handle this class. This allows for different "flavors" that are controlled by the same controller. For example, you may have different parameters for the same implementing controller. This should be specified as a domain-prefixed path no more than 250 characters in length, e.g. "acme.io/ingress-controller". This field is immutable.
 
-cidrs ([]string)
+parameters (IngressClassParametersReference)
 
-Atomic: will be replaced during a merge
+parameters is a link to a custom resource containing additional configuration for the controller. This is optional if the controller does not require extra parameters.
 
-CIDRs defines the IP blocks in CIDR notation (e.g. "192.168.0.0/24" or "2001:db8::/64") from which to assign service cluster IPs. Max of two CIDRs is allowed, one of each IP family. This field is immutable.
+IngressClassParametersReference identifies an API object. This can be used to specify a cluster or namespace-scoped resource.
 
-ServiceCIDRStatus
-ServiceCIDRStatus describes the current state of the ServiceCIDR.
+parameters.kind (string), required
 
-conditions ([]Condition)
+kind is the type of resource being referenced.
 
-Patch strategy: merge on key type
+parameters.name (string), required
 
-Map: unique values on key type will be kept during a merge
+name is the name of resource being referenced.
 
-conditions holds an array of metav1.Condition that describe the state of the ServiceCIDR. Current service state
+parameters.apiGroup (string)
 
-Condition contains details for one aspect of the current state of this API Resource.
+apiGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.
 
-conditions.lastTransitionTime (Time), required
+parameters.namespace (string)
 
-lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed. If that is not known, then using the time when the API field changed is acceptable.
+namespace is the namespace of the resource being referenced. This field is required when scope is set to "Namespace" and must be unset when scope is set to "Cluster".
 
-Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON. Wrappers are provided for many of the factory methods that the time package offers.
+parameters.scope (string)
 
-conditions.message (string), required
+scope represents if this refers to a cluster or namespace scoped resource. This may be set to "Cluster" (default) or "Namespace".
 
-message is a human readable message indicating details about the transition. This may be an empty string.
 
-conditions.reason (string), required
 
-reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
-
-conditions.status (string), required
-
-status of the condition, one of True, False, Unknown.
-
-conditions.type (string), required
-
-type of condition in CamelCase or in foo.example.com/CamelCase.
-
-conditions.observedGeneration (int64)
-
-observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
 
 
 

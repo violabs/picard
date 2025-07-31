@@ -6,6 +6,7 @@ import io.violabs.picard.domain.*
 import io.violabs.picard.domain.k8sResources.*
 import io.violabs.picard.domain.manifest.ServiceResource
 
+@Deprecated("Use ServiceV2", ReplaceWith("ServiceV2", "io.violabs.picard.v2.resources.service.ServiceV2"))
 data class Service(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,

@@ -10,6 +10,7 @@ import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.ClusterResource
 
+@Deprecated("Use v2", ReplaceWith("IPAddressV2", "io.violabs.picard.v2.resources.cluster.ipaddress.IPAddressV2"))
 data class IPAddress(
     override val apiVersion: Version = KAPIVersion.NetworkingV1Beta1,
     override val metadata: ObjectMetadata? = null,

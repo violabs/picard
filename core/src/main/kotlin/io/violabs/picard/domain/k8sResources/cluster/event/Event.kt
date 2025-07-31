@@ -11,6 +11,7 @@ import io.violabs.picard.domain.manifest.ClusterResource
 import java.time.Instant
 import java.time.LocalDateTime
 
+@Deprecated("Use EventV2", ReplaceWith("EventV2", "io.violabs.picard.v2.resources.cluster.event.EventV2"))
 data class Event(
     override val apiVersion: Version = KAPIVersion.EventsV1,
     override val metadata: ObjectMetadata? = null,

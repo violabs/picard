@@ -12,6 +12,7 @@ import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.ClusterResource
 
+@Deprecated("Use NamespaceV2", ReplaceWith("NamespaceV2", "io.violabs.picard.v2.resources.cluster.namespace.NamespaceV2"))
 data class Namespace(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,

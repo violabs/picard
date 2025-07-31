@@ -1,223 +1,180 @@
 
 # Working Specifications
 
+## Prerequisites
+
+- Access to the Picard codebase
+- Gradle build environment set up
+- Understanding of Kotlin and Kubernetes resource structure
+
+## Implementation Workflow
+
+Follow these steps in order:
+
+1. **Create data classes** with proper annotations
+2. **Update APIVersion declarations** to include V2 versions
+3. **Add deprecation** to v1 classes
+4. **Run clean build** to generate DSL builders
+5. **Implement tests** using generated builders
+6. **Run tests** to verify implementation
+
 ## Instruct
 
-I want to build out objects with a specific format.
+Build out objects with a specific format.
 They should utilize `GeneratedDsl` and `DefaultValue` annotations. These items represent top
 level Kubernetes resources, and should be structured to include the `apiVersion`, `metadata`, and
-any specific fields relevant to the resource. Refer to the example below for guidance.
+any specific fields relevant to the resource. Refer to the example below for guidance. When you are finished,
+add items to .git.
 
-If there is an object that is a list in a property of another, add `withListGroup = true` to the `GeneratedDsl` annotation.
 
-Additionally, you will have to look at the package io.violabs.picard.domain.k8sResources.APIVersion to
+### List Group Annotations
+
+If there is a list property that needs DSL builder support, add `withListGroup = true` to the `GeneratedDsl` annotation **on the class level**:
+
+```kotlin
+// For the parent class that contains the list
+@GeneratedDsl(withListGroup = true)
+data class ParentResourceV2(...)
+
+// For the child class that will be in the list
+@GeneratedDsl(withListGroup = true) 
+data class ChildCondition(...)
+```
+
+This generates both `conditions(vararg items: ChildCondition)` and `conditions { childCondition { ... } }` DSL methods.
+
+### JsonProperty Usage
+
+When field names need to preserve original JSON casing that differs from Kotlin conventions:
+
+```kotlin
+data class ComponentCondition(
+    val status: String,
+    val type: String,
+    @JsonProperty("error")  // JSON field is "error", Kotlin property is "errorValue"
+    val errorValue: String? = null,
+    val message: String? = null
+)
+```
+
+### APIVersion Integration
+
+You will need to look at the package `io.violabs.picard.domain.k8sResources.APIVersion` to
 add the V2 version as an extension of the existing version.
 
+### Deprecation
+
 Finally, update the v1 to have `@Deprecated("Use v2", ReplaceWith(<package for v2>))`
+
+## Rules
+
+- Time = LocalDateTime
+- Quantity = io.violabs.picard.domain.k8sResources.Quantity
+- Capitalized acronyms and initialisms should use camelCase (e.g., `APIService` -> `ApiService`, `CA` -> `Ca`)
+  - Use `@JsonProperty` for properties to preserve the original casing if necessary.
+  - Override `getKind(): String` to return the original casing for the kind if it extends a Resource
+
+## Build Process
+
+When you are finished creating the files:
+
+1. **First**: Run `./gradlew clean build -x test` to generate DSL builders
+2. **Then**: Implement tests using the generated builders
+3. **Finally**: Run `./gradlew test` to verify everything works
+
+If you do not fix the build after 3 times, you can ask for help.
+
+## Troubleshooting
+
+### Common Issues
+
+1. **DSL builders not found during test compilation**
+   - **Solution**: Run `./gradlew clean build -x test` first to generate the DSL classes
+
+2. **Missing list group methods (e.g., `conditions { ... }`)**
+   - **Solution**: Ensure both parent and child classes have `@GeneratedDsl(withListGroup = true)`
+
+3. **JsonProperty compilation errors**
+   - **Solution**: Import `com.fasterxml.jackson.annotation.JsonProperty`
+
+4. **APIVersion compilation errors**
+   - **Solution**: Verify the import was added and the Version interface extends APIVersion
 
 
 ## Documentation
 
-ValidatingWebhookConfiguration
-ValidatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and object without changing it.
-apiVersion: admissionregistration.k8s.io/v1
+ServiceCIDR
+ServiceCIDR defines a range of IP addresses using CIDR format (e.
+apiVersion: networking.k8s.io/v1
 
-import "k8s.io/api/admissionregistration/v1"
+import "k8s.io/api/networking/v1"
 
-ValidatingWebhookConfiguration
-ValidatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and object without changing it.
+ServiceCIDR
+ServiceCIDR defines a range of IP addresses using CIDR format (e.g. 192.168.0.0/24 or 2001:db2::/64). This range is used to allocate ClusterIPs to Service objects.
 
-apiVersion: admissionregistration.k8s.io/v1
+apiVersion: networking.k8s.io/v1
 
-kind: ValidatingWebhookConfiguration
+kind: ServiceCIDR
 
 metadata (ObjectMeta)
 
-Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
+Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 
-webhooks ([]ValidatingWebhook)
+spec (ServiceCIDRSpec)
 
-Patch strategy: merge on key name
+spec is the desired state of the ServiceCIDR. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 
-Map: unique values on key name will be kept during a merge
+status (ServiceCIDRStatus)
 
-Webhooks is a list of webhooks and the affected resources and operations.
+status represents the current state of the ServiceCIDR. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 
-ValidatingWebhook describes an admission webhook and the resources and operations it applies to.
+ServiceCIDRSpec
+ServiceCIDRSpec define the CIDRs the user wants to use for allocating ClusterIPs for Services.
 
-webhooks.admissionReviewVersions ([]string), required
+cidrs ([]string)
 
 Atomic: will be replaced during a merge
 
-AdmissionReviewVersions is an ordered list of preferred AdmissionReview versions the Webhook expects. API server will try to use first version in the list which it supports. If none of the versions specified in this list supported by API server, validation will fail for this object. If a persisted webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail and be subject to the failure policy.
+CIDRs defines the IP blocks in CIDR notation (e.g. "192.168.0.0/24" or "2001:db8::/64") from which to assign service cluster IPs. Max of two CIDRs is allowed, one of each IP family. This field is immutable.
 
-webhooks.clientConfig (WebhookClientConfig), required
+ServiceCIDRStatus
+ServiceCIDRStatus describes the current state of the ServiceCIDR.
 
-ClientConfig defines how to communicate with the hook. Required
+conditions ([]Condition)
 
-WebhookClientConfig contains the information to make a TLS connection with the webhook
+Patch strategy: merge on key type
 
-webhooks.clientConfig.caBundle ([]byte)
+Map: unique values on key type will be kept during a merge
 
-caBundle is a PEM encoded CA bundle which will be used to validate the webhook's server certificate. If unspecified, system trust roots on the apiserver are used.
+conditions holds an array of metav1.Condition that describe the state of the ServiceCIDR. Current service state
 
-webhooks.clientConfig.service (ServiceReference)
+Condition contains details for one aspect of the current state of this API Resource.
 
-service is a reference to the service for this webhook. Either service or url must be specified.
+conditions.lastTransitionTime (Time), required
 
-If the webhook is running within the cluster, then you should use service.
+lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed. If that is not known, then using the time when the API field changed is acceptable.
 
-ServiceReference holds a reference to Service.legacy.k8s.io
+Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON. Wrappers are provided for many of the factory methods that the time package offers.
 
-webhooks.clientConfig.service.name (string), required
+conditions.message (string), required
 
-name is the name of the service. Required
+message is a human readable message indicating details about the transition. This may be an empty string.
 
-webhooks.clientConfig.service.namespace (string), required
+conditions.reason (string), required
 
-namespace is the namespace of the service. Required
+reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
 
-webhooks.clientConfig.service.path (string)
+conditions.status (string), required
 
-path is an optional URL path which will be sent in any request to this service.
+status of the condition, one of True, False, Unknown.
 
-webhooks.clientConfig.service.port (int32)
+conditions.type (string), required
 
-If specified, the port on the service that hosting webhook. Default to 443 for backward compatibility. port should be a valid port number (1-65535, inclusive).
+type of condition in CamelCase or in foo.example.com/CamelCase.
 
-webhooks.clientConfig.url (string)
+conditions.observedGeneration (int64)
 
-url gives the location of the webhook, in standard URL form (scheme://host:port/path). Exactly one of url or service must be specified.
-
-The host should not refer to a service running in the cluster; use the service field instead. The host might be resolved via external DNS in some apiservers (e.g., kube-apiserver cannot resolve in-cluster DNS as that would be a layering violation). host may also be an IP address.
-
-Please note that using localhost or 127.0.0.1 as a host is risky unless you take great care to run this webhook on all hosts which run an apiserver which might need to make calls to this webhook. Such installs are likely to be non-portable, i.e., not easy to turn up in a new cluster.
-
-The scheme must be "https"; the URL must begin with "https://".
-
-A path is optional, and if present may be any string permissible in a URL. You may use the path to pass an arbitrary string to the webhook, for example, a cluster identifier.
-
-Attempting to use a user or basic auth e.g. "user:password@" is not allowed. Fragments ("#...") and query parameters ("?...") are not allowed, either.
-
-webhooks.name (string), required
-
-The name of the admission webhook. Name should be fully qualified, e.g., imagepolicy.kubernetes.io, where "imagepolicy" is the name of the webhook, and kubernetes.io is the name of the organization. Required.
-
-webhooks.sideEffects (string), required
-
-SideEffects states whether this webhook has side effects. Acceptable values are: None, NoneOnDryRun (webhooks created via v1beta1 may also specify Some or Unknown). Webhooks with side effects MUST implement a reconciliation system, since a request may be rejected by a future step in the admission chain and the side effects therefore need to be undone. Requests with the dryRun attribute will be auto-rejected if they match a webhook with sideEffects == Unknown or Some.
-
-webhooks.failurePolicy (string)
-
-FailurePolicy defines how unrecognized errors from the admission endpoint are handled - allowed values are Ignore or Fail. Defaults to Fail.
-
-webhooks.matchConditions ([]MatchCondition)
-
-Patch strategy: merge on key name
-
-Map: unique values on key name will be kept during a merge
-
-MatchConditions is a list of conditions that must be met for a request to be sent to this webhook. Match conditions filter requests that have already been matched by the rules, namespaceSelector, and objectSelector. An empty list of matchConditions matches all requests. There are a maximum of 64 match conditions allowed.
-
-The exact matching logic is (in order):
-
-If ANY matchCondition evaluates to FALSE, the webhook is skipped.
-If ALL matchConditions evaluate to TRUE, the webhook is called.
-If any matchCondition evaluates to an error (but none are FALSE):
-If failurePolicy=Fail, reject the request
-If failurePolicy=Ignore, the error is ignored and the webhook is skipped
-MatchCondition represents a condition which must by fulfilled for a request to be sent to a webhook.
-
-webhooks.matchConditions.expression (string), required
-
-Expression represents the expression which will be evaluated by CEL. Must evaluate to bool. CEL expressions have access to the contents of the AdmissionRequest and Authorizer, organized into CEL variables:
-
-'object' - The object from the incoming request. The value is null for DELETE requests. 'oldObject' - The existing object. The value is null for CREATE requests. 'request' - Attributes of the admission request(/pkg/apis/admission/types.go#AdmissionRequest). 'authorizer' - A CEL Authorizer. May be used to perform authorization checks for the principal (user or service account) of the request. See https://pkg.go.dev/k8s.io/apiserver/pkg/cel/library#Authz 'authorizer.requestResource' - A CEL ResourceCheck constructed from the 'authorizer' and configured with the request resource. Documentation on CEL: https://kubernetes.io/docs/reference/using-api/cel/
-
-Required.
-
-webhooks.matchConditions.name (string), required
-
-Name is an identifier for this match condition, used for strategic merging of MatchConditions, as well as providing an identifier for logging purposes. A good name should be descriptive of the associated expression. Name must be a qualified name consisting of alphanumeric characters, '-', '' or '.', and must start and end with an alphanumeric character (e.g. 'MyName', or 'my.name', or '123-abc', regex used for validation is '([A-Za-z0-9][-A-Za-z0-9.]*)?[A-Za-z0-9]') with an optional DNS subdomain prefix and '/' (e.g. 'example.com/MyName')
-
-Required.
-
-webhooks.matchPolicy (string)
-
-matchPolicy defines how the "rules" list is used to match incoming requests. Allowed values are "Exact" or "Equivalent".
-
-Exact: match a request only if it exactly matches a specified rule. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules" only included apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"], a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.
-
-Equivalent: match a request if modifies a resource listed in rules, even via another API group or version. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, and "rules" only included apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"], a request to apps/v1beta1 or extensions/v1beta1 would be converted to apps/v1 and sent to the webhook.
-
-Defaults to "Equivalent"
-
-webhooks.namespaceSelector (LabelSelector)
-
-NamespaceSelector decides whether to run the webhook on an object based on whether the namespace for that object matches the selector. If the object itself is a namespace, the matching is performed on object.metadata.labels. If the object is another cluster scoped resource, it never skips the webhook.
-
-For example, to run the webhook on any objects whose namespace is not associated with "runlevel" of "0" or "1"; you will set the selector as follows: "namespaceSelector": { "matchExpressions": [ { "key": "runlevel", "operator": "NotIn", "values": [ "0", "1" ] } ] }
-
-If instead you want to only run the webhook on any objects whose namespace is associated with the "environment" of "prod" or "staging"; you will set the selector as follows: "namespaceSelector": { "matchExpressions": [ { "key": "environment", "operator": "In", "values": [ "prod", "staging" ] } ] }
-
-See https://kubernetes.io/docs/concepts/overview/working-with-objects/labels for more examples of label selectors.
-
-Default to the empty LabelSelector, which matches everything.
-
-webhooks.objectSelector (LabelSelector)
-
-ObjectSelector decides whether to run the webhook based on if the object has matching labels. objectSelector is evaluated against both the oldObject and newObject that would be sent to the webhook, and is considered to match if either object matches the selector. A null object (oldObject in the case of create, or newObject in the case of delete) or an object that cannot have labels (like a DeploymentRollback or a PodProxyOptions object) is not considered to match. Use the object selector only if the webhook is opt-in, because end users may skip the admission webhook by setting the labels. Default to the empty LabelSelector, which matches everything.
-
-webhooks.rules ([]RuleWithOperations)
-
-Atomic: will be replaced during a merge
-
-Rules describes what operations on what resources/subresources the webhook cares about. The webhook cares about an operation if it matches any Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.
-
-RuleWithOperations is a tuple of Operations and Resources. It is recommended to make sure that all the tuple expansions are valid.
-
-webhooks.rules.apiGroups ([]string)
-
-Atomic: will be replaced during a merge
-
-APIGroups is the API groups the resources belong to. '' is all groups. If '' is present, the length of the slice must be one. Required.
-
-webhooks.rules.apiVersions ([]string)
-
-Atomic: will be replaced during a merge
-
-APIVersions is the API versions the resources belong to. '' is all versions. If '' is present, the length of the slice must be one. Required.
-
-webhooks.rules.operations ([]string)
-
-Atomic: will be replaced during a merge
-
-Operations is the operations the admission hook cares about - CREATE, UPDATE, DELETE, CONNECT or * for all of those operations and any future admission operations that are added. If '*' is present, the length of the slice must be one. Required.
-
-webhooks.rules.resources ([]string)
-
-Atomic: will be replaced during a merge
-
-Resources is a list of resources this rule applies to.
-
-For example: 'pods' means pods. 'pods/log' means the log subresource of pods. '' means all resources, but not subresources. 'pods/' means all subresources of pods. '/scale' means all scale subresources. '/*' means all resources and their subresources.
-
-If wildcard is present, the validation rule will ensure resources do not overlap with each other.
-
-Depending on the enclosing object, subresources might not be allowed. Required.
-
-webhooks.rules.scope (string)
-
-scope specifies the scope of this rule. Valid values are "Cluster", "Namespaced", and "" "Cluster" means that only cluster-scoped resources will match this rule. Namespace API objects are cluster-scoped. "Namespaced" means that only namespaced resources will match this rule. "" means that there are no scope restrictions. Subresources match the scope of their parent resource. Default is "*".
-
-webhooks.timeoutSeconds (int32)
-
-TimeoutSeconds specifies the timeout for this webhook. After the timeout passes, the webhook call will be ignored or the API call will fail based on the failure policy. The timeout value must be between 1 and 30 seconds. Default to 10 seconds.
-
-
-
-
-
+observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
 
 
 

@@ -12,6 +12,7 @@ import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.ClusterResource
 import java.time.Instant
 
+@Deprecated("Use LeaseCandidateV2", ReplaceWith("LeaseCandidateV2", "io.violabs.picard.v2.resources.cluster.lease.candidate.LeaseCandidateV2"))
 data class LeaseCandidate(
     override val apiVersion: Version = KAPIVersion.CoordinationV1Alpha1,
     val spec: Spec,

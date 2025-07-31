@@ -8,6 +8,7 @@ import io.violabs.picard.domain.condition.NodeConditionGroup
 import io.violabs.picard.domain.k8sResources.*
 import io.violabs.picard.domain.manifest.ClusterResource
 
+@Deprecated("Use NodeV2", ReplaceWith("NodeV2", "io.violabs.picard.v2.resources.cluster.node.NodeV2"))
 data class Node(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,

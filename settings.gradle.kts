@@ -42,7 +42,8 @@ includeModules(
     "core",
     "core-test",
     "sandbox",
-    "tutorial"
+    "tutorial",
+    "mcp"
 )
 
 class Module(private val moduleName: String) {

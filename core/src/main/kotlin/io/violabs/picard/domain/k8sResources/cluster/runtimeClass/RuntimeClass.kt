@@ -6,6 +6,7 @@ import io.violabs.picard.common.ResourceDslBuilder
 import io.violabs.picard.domain.k8sResources.*
 import io.violabs.picard.domain.manifest.ClusterResource
 
+@Deprecated("Use RuntimeClassV2", ReplaceWith("RuntimeClassV2", "io.violabs.picard.v2.resources.cluster.runtimeclass.RuntimeClassV2"))
 data class RuntimeClass(
     override val apiVersion: Version = KAPIVersion.NodeV1,
     val handler: String,

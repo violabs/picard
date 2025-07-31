@@ -9,6 +9,7 @@ import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.ClusterResource
 
+@Deprecated("Use v2", ReplaceWith("io.violabs.picard.v2.resources.cluster.component.status.ComponentStatusV2"))
 data class ComponentStatus(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,

@@ -1,4 +1,6 @@
 
+val kotlinVersion = "2.1.20"
+
 plugins {
     kotlin("jvm") version "2.1.20"
     id("org.jetbrains.dokka") version "1.9.20" apply false
@@ -14,6 +16,7 @@ plugins {
 group = "io.violabs"
 version = "0.0.1"
 
+extra["kotlinVersion"] = kotlinVersion
 extra["coreVersion"] = "0.1.3"
 extra["cmdVersion"] = "0.0.1"
 extra["dslVersion"] = "0.0.7"

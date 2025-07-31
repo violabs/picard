@@ -101,57 +101,78 @@ If you do not fix the build after 3 times, you can ask for help.
 
 ## Documentation
 
-LeaseCandidate v1beta1
-LeaseCandidate defines a candidate for a Lease object.
-apiVersion: coordination.k8s.io/v1beta1
+Namespace
+Namespace provides a scope for Names.
+apiVersion: v1
 
-import "k8s.io/api/coordination/v1beta1"
+import "k8s.io/api/core/v1"
 
-LeaseCandidate
-LeaseCandidate defines a candidate for a Lease object. Candidates are created such that coordinated leader election will pick the best leader from the list of candidates.
+Namespace
+Namespace provides a scope for Names. Use of multiple namespaces is optional.
 
-apiVersion: coordination.k8s.io/v1beta1
+apiVersion: v1
 
-kind: LeaseCandidate
+kind: Namespace
 
 metadata (ObjectMeta)
 
-More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 
-spec (LeaseCandidateSpec)
+spec (NamespaceSpec)
 
-spec contains the specification of the Lease. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+Spec defines the behavior of the Namespace. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 
-LeaseCandidateSpec
-LeaseCandidateSpec is a specification of a Lease.
+status (NamespaceStatus)
 
-binaryVersion (string), required
+Status describes the current status of a Namespace. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 
-BinaryVersion is the binary version. It must be in a semver format without leading v. This field is required.
+NamespaceSpec
+NamespaceSpec describes the attributes on a Namespace.
 
-leaseName (string), required
+finalizers ([]string)
 
-LeaseName is the name of the lease for which this candidate is contending. The limits on this field are the same as on Lease.name. Multiple lease candidates may reference the same Lease.name. This field is immutable.
+Atomic: will be replaced during a merge
 
-strategy (string), required
+Finalizers is an opaque list of values that must be empty to permanently remove object from storage. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/
 
-Strategy is the strategy that coordinated leader election will use for picking the leader. If multiple candidates for the same Lease return different strategies, the strategy provided by the candidate with the latest BinaryVersion will be used. If there is still conflict, this is a user error and coordinated leader election will not operate the Lease until resolved.
+NamespaceStatus
+NamespaceStatus is information about the current status of a Namespace.
 
-emulationVersion (string)
+conditions ([]NamespaceCondition)
 
-EmulationVersion is the emulation version. It must be in a semver format without leading v. EmulationVersion must be less than or equal to BinaryVersion. This field is required when strategy is "OldestEmulationVersion"
+Patch strategy: merge on key type
 
-pingTime (MicroTime)
+Map: unique values on key type will be kept during a merge
 
-PingTime is the last time that the server has requested the LeaseCandidate to renew. It is only done during leader election to check if any LeaseCandidates have become ineligible. When PingTime is updated, the LeaseCandidate will respond by updating RenewTime.
+Represents the latest available observations of a namespace's current state.
 
-MicroTime is version of Time with microsecond level precision.
+NamespaceCondition contains details about state of namespace.
 
-renewTime (MicroTime)
+conditions.status (string), required
 
-RenewTime is the time that the LeaseCandidate was last updated. Any time a Lease needs to do leader election, the PingTime field is updated to signal to the LeaseCandidate that they should update the RenewTime. Old LeaseCandidate objects are also garbage collected if it has been hours since the last renew. The PingTime field is updated regularly to prevent garbage collection for still active LeaseCandidates.
+Status of the condition, one of True, False, Unknown.
 
-MicroTime is version of Time with microsecond level precision.
+conditions.type (string), required
+
+Type of namespace controller condition.
+
+conditions.lastTransitionTime (Time)
+
+Last time the condition transitioned from one status to another.
+
+Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON. Wrappers are provided for many of the factory methods that the time package offers.
+
+conditions.message (string)
+
+Human-readable message indicating details about last transition.
+
+conditions.reason (string)
+
+Unique, one-word, CamelCase reason for the condition's last transition.
+
+phase (string)
+
+Phase is the current lifecycle phase of the namespace. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/
 
 
 

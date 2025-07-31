@@ -179,6 +179,7 @@ import io.violabs.picard.v2.resources.cluster.node.NodeV2
 import io.violabs.picard.v2.resources.cluster.runtimeclass.RuntimeClassV2
 import io.violabs.picard.v2.resources.cluster.service.cidr.ServiceCidrV2
 import io.violabs.picard.v2.resources.service.ServiceV2
+import io.violabs.picard.v2.resources.service.endpoints.EndpointsV2
 
 interface APIVersion {
     fun refString(): String
@@ -200,6 +201,7 @@ open class KAPIVersion(
         ConfigMapV2.Version,
         ConfigMapList.Version,
         Endpoints.Version,
+        EndpointsV2.Version,
         EndpointsList.Version,
         LimitRange.Version,
         LimitRangeV2.Version,

@@ -168,7 +168,7 @@ import io.violabs.picard.v2.resources.extend.resource.custom.CustomResourceDefin
 import io.violabs.picard.v2.resources.extend.deviceclass.DeviceClassV2
 import io.violabs.picard.v2.resources.extend.webhook.mutating.MutatingWebhookConfigurationV2
 import io.violabs.picard.v2.resources.extend.webhook.validating.ValidatingWebhookConfigurationV2
-import io.violabs.picard.v2.resources.cluster.apiservice.ApiServiceV2
+import io.violabs.picard.v2.resources.cluster.service.api.ApiServiceV2
 import io.violabs.picard.v2.resources.cluster.component.status.ComponentStatusV2
 import io.violabs.picard.v2.resources.cluster.event.EventV2
 import io.violabs.picard.v2.resources.cluster.ipaddress.IPAddressV2
@@ -177,6 +177,7 @@ import io.violabs.picard.v2.resources.cluster.lease.candidate.LeaseCandidateV2
 import io.violabs.picard.v2.resources.cluster.namespace.NamespaceV2
 import io.violabs.picard.v2.resources.cluster.node.NodeV2
 import io.violabs.picard.v2.resources.cluster.runtimeclass.RuntimeClassV2
+import io.violabs.picard.v2.resources.cluster.service.cidr.ServiceCidrV2
 
 interface APIVersion {
     fun refString(): String
@@ -356,7 +357,8 @@ open class KAPIVersion(
         IngressClassList.Version,
         NetworkPolicy.Version,
         NetworkPolicyV2.Version,
-        NetworkPolicyList.Version
+        NetworkPolicyList.Version,
+        ServiceCidrV2.Version
 
     object NetworkingV1Beta1 : KAPIVersion("networking.k8s.io/v1"),
         IPAddress.Version,

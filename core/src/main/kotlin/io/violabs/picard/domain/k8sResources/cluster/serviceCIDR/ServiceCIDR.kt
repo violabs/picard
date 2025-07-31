@@ -10,6 +10,7 @@ import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.ClusterResource
 
+@Deprecated("Use ServiceCIDRV2", ReplaceWith("ServiceCIDRV2", "io.violabs.picard.v2.resources.cluster.servicecidr.ServiceCIDRV2"))
 data class ServiceCIDR(
     override val apiVersion: Version = KAPIVersion.NetworkingV1Beta1,
     override val metadata: ObjectMetadata? = null,

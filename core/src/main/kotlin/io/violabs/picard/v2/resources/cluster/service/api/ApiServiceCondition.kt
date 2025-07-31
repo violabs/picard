@@ -1,4 +1,4 @@
-package io.violabs.picard.v2.resources.cluster.apiservice
+package io.violabs.picard.v2.resources.cluster.service.api
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import java.time.LocalDateTime

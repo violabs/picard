@@ -1,4 +1,4 @@
-package io.violabs.picard.v2.resources.cluster.apiservice
+package io.violabs.picard.v2.resources.cluster.service.api
 
 import com.fasterxml.jackson.annotation.JsonTypeName
 import io.violabs.konstellation.metaDsl.annotation.DefaultValue

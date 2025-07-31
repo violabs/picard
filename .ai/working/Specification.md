@@ -103,79 +103,78 @@ If you do not fix the build after 3 times, you can ask for help.
 
 ## Documentation
 
-RuntimeClass
-RuntimeClass defines a class of container runtime supported in the cluster.
-apiVersion: node.k8s.io/v1
+ServiceCIDR
+ServiceCIDR defines a range of IP addresses using CIDR format (e.
+apiVersion: networking.k8s.io/v1
 
-import "k8s.io/api/node/v1"
+import "k8s.io/api/networking/v1"
 
-RuntimeClass
-RuntimeClass defines a class of container runtime supported in the cluster. The RuntimeClass is used to determine which container runtime is used to run all containers in a pod. RuntimeClasses are manually defined by a user or cluster provisioner, and referenced in the PodSpec. The Kubelet is responsible for resolving the RuntimeClassName reference before running the pod. For more details, see https://kubernetes.io/docs/concepts/containers/runtime-class/
+ServiceCIDR
+ServiceCIDR defines a range of IP addresses using CIDR format (e.g. 192.168.0.0/24 or 2001:db2::/64). This range is used to allocate ClusterIPs to Service objects.
 
-apiVersion: node.k8s.io/v1
+apiVersion: networking.k8s.io/v1
 
-kind: RuntimeClass
+kind: ServiceCIDR
 
 metadata (ObjectMeta)
 
-More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 
-handler (string), required
+spec (ServiceCIDRSpec)
 
-handler specifies the underlying runtime and configuration that the CRI implementation will use to handle pods of this class. The possible values are specific to the node & CRI configuration. It is assumed that all handlers are available on every node, and handlers of the same name are equivalent on every node. For example, a handler called "runc" might specify that the runc OCI runtime (using native Linux containers) will be used to run the containers in a pod. The Handler must be lowercase, conform to the DNS Label (RFC 1123) requirements, and is immutable.
+spec is the desired state of the ServiceCIDR. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 
-overhead (Overhead)
+status (ServiceCIDRStatus)
 
-overhead represents the resource overhead associated with running a pod for a given RuntimeClass. For more details, see https://kubernetes.io/docs/concepts/scheduling-eviction/pod-overhead/
+status represents the current state of the ServiceCIDR. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 
-Overhead structure represents the resource overhead associated with running a pod.
+ServiceCIDRSpec
+ServiceCIDRSpec define the CIDRs the user wants to use for allocating ClusterIPs for Services.
 
-overhead.podFixed (map[string]Quantity)
-
-podFixed represents the fixed resource overhead associated with running a pod.
-
-scheduling (Scheduling)
-
-scheduling holds the scheduling constraints to ensure that pods running with this RuntimeClass are scheduled to nodes that support it. If scheduling is nil, this RuntimeClass is assumed to be supported by all nodes.
-
-Scheduling specifies the scheduling constraints for nodes supporting a RuntimeClass.
-
-scheduling.nodeSelector (map[string]string)
-
-nodeSelector lists labels that must be present on nodes that support this RuntimeClass. Pods using this RuntimeClass can only be scheduled to a node matched by this selector. The RuntimeClass nodeSelector is merged with a pod's existing nodeSelector. Any conflicts will cause the pod to be rejected in admission.
-
-scheduling.tolerations ([]Toleration)
+cidrs ([]string)
 
 Atomic: will be replaced during a merge
 
-tolerations are appended (excluding duplicates) to pods running with this RuntimeClass during admission, effectively unioning the set of nodes tolerated by the pod and the RuntimeClass.
+CIDRs defines the IP blocks in CIDR notation (e.g. "192.168.0.0/24" or "2001:db8::/64") from which to assign service cluster IPs. Max of two CIDRs is allowed, one of each IP family. This field is immutable.
 
-The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator .
+ServiceCIDRStatus
+ServiceCIDRStatus describes the current state of the ServiceCIDR.
 
-scheduling.tolerations.key (string)
+conditions ([]Condition)
 
-Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+Patch strategy: merge on key type
 
-scheduling.tolerations.operator (string)
+Map: unique values on key type will be kept during a merge
 
-Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+conditions holds an array of metav1.Condition that describe the state of the ServiceCIDR. Current service state
 
-scheduling.tolerations.value (string)
+Condition contains details for one aspect of the current state of this API Resource.
 
-Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+conditions.lastTransitionTime (Time), required
 
-scheduling.tolerations.effect (string)
+lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed. If that is not known, then using the time when the API field changed is acceptable.
 
-Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON. Wrappers are provided for many of the factory methods that the time package offers.
 
-scheduling.tolerations.tolerationSeconds (int64)
+conditions.message (string), required
 
-TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+message is a human readable message indicating details about the transition. This may be an empty string.
 
+conditions.reason (string), required
 
+reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
 
+conditions.status (string), required
 
+status of the condition, one of True, False, Unknown.
 
+conditions.type (string), required
+
+type of condition in CamelCase or in foo.example.com/CamelCase.
+
+conditions.observedGeneration (int64)
+
+observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
 
 
 

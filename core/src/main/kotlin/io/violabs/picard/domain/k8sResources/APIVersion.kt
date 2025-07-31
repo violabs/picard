@@ -175,6 +175,7 @@ import io.violabs.picard.v2.resources.cluster.ipaddress.IPAddressV2
 import io.violabs.picard.v2.resources.cluster.lease.LeaseV2
 import io.violabs.picard.v2.resources.cluster.lease.candidate.LeaseCandidateV2
 import io.violabs.picard.v2.resources.cluster.namespace.NamespaceV2
+import io.violabs.picard.v2.resources.cluster.node.NodeV2
 
 interface APIVersion {
     fun refString(): String
@@ -204,6 +205,7 @@ open class KAPIVersion(
         NamespaceV2.Version,
         NamespaceList.Version,
         Node.Version,
+        NodeV2.Version,
         NodeList.Version,
         PersistentVolume.Version,
         PersistentVolumeV2.Version,

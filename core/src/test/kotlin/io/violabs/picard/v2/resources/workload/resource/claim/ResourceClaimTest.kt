@@ -24,9 +24,9 @@ import io.violabs.picard.v2.resources.workload.resource.claim.device.request.Dev
 import io.violabs.picard.v2.resources.workload.resource.claim.device.request.ExactDeviceRequest
 import io.violabs.picard.v2.resources.workload.resource.claim.device.result.DeviceAllocationResult
 import io.violabs.picard.v2.resources.workload.resource.claim.device.result.DeviceRequestAllocationResult
-import io.violabs.picard.v2.resources.workload.resource.claim.device.selector.CelDeviceSelector
-import io.violabs.picard.v2.resources.workload.resource.claim.device.selector.DeviceSelector
-import io.violabs.picard.v2.resources.workload.resource.claim.device.selector.DeviceSelectorDslBuilder
+import io.violabs.picard.v2.resources.workload.resource.device.selector.CelDeviceSelector
+import io.violabs.picard.v2.resources.workload.resource.device.selector.DeviceSelector
+import io.violabs.picard.v2.resources.workload.resource.device.selector.DeviceSelectorDslBuilder
 import org.junit.jupiter.api.BeforeAll
 
 class ResourceClaimTest : SuccessBuildSim<ResourceClaimV2, ResourceClaimV2DslBuilder>() {

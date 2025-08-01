@@ -2,6 +2,8 @@ package io.violabs.picard.v2.resources.workload.resource.slice
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.v2.resources.workload.resource.NodeSelector
+import io.violabs.picard.v2.resources.workload.resource.slice.device.CounterSet
+import io.violabs.picard.v2.resources.workload.resource.slice.device.Device
 
 /**
  * ResourceSliceSpec contains the information published by the driver in one ResourceSlice.

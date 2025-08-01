@@ -7,6 +7,14 @@ import io.violabs.picard.Workload
 import io.violabs.picard.Workload.Resource.sharedTerms
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.workload.resource.NodeSelector
+import io.violabs.picard.v2.resources.workload.resource.device.taint.DeviceTaint
+import io.violabs.picard.v2.resources.workload.resource.slice.device.Counter
+import io.violabs.picard.v2.resources.workload.resource.slice.device.CounterDslBuilder
+import io.violabs.picard.v2.resources.workload.resource.slice.device.CounterSet
+import io.violabs.picard.v2.resources.workload.resource.slice.device.Device
+import io.violabs.picard.v2.resources.workload.resource.slice.device.DeviceAttribute
+import io.violabs.picard.v2.resources.workload.resource.slice.device.DeviceCapacity
+import io.violabs.picard.v2.resources.workload.resource.slice.device.DeviceCounterConsumption
 import org.junit.jupiter.api.BeforeAll
 
 class ResourceSliceTest : SuccessBuildSim<ResourceSliceV2, ResourceSliceV2DslBuilder>() {

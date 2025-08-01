@@ -1,4 +1,4 @@
-package io.violabs.picard.v2.resources.workload.resource.claim.device.selector
+package io.violabs.picard.v2.resources.workload.resource.device.selector
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 

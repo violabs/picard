@@ -185,6 +185,7 @@ import io.violabs.picard.v2.resources.service.ingress.IngressV2
 import io.violabs.picard.v2.resources.service.ingressclass.IngressClassV2
 import io.violabs.picard.v2.resources.workload.resource.slice.ResourceSliceV2
 import io.violabs.picard.v2.resources.workload.resource.claim.ResourceClaimV2
+import io.violabs.picard.v2.resources.workload.resource.claim.template.ResourceClaimTemplateV2
 
 interface APIVersion {
     fun refString(): String
@@ -426,7 +427,8 @@ open class KAPIVersion(
     object ResourceV1Beta2 : KAPIVersion("resource.k8s.io/v1beta2"),
         DeviceClassV2.Version,
         ResourceSliceV2.Version,
-        ResourceClaimV2.Version
+        ResourceClaimV2.Version,
+        ResourceClaimTemplateV2.Version
 
     object SchedulingV1 : KAPIVersion("scheduling.k8s.io/v1"),
         PriorityClass.Version,

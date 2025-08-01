@@ -3,8 +3,10 @@ package io.violabs.picard.v2.resources.workload.resource.slice
 import io.violabs.picard.Common.OBJECT_META
 import io.violabs.picard.Common.sharedObjectMeta
 import io.violabs.picard.SuccessBuildSim
+import io.violabs.picard.Workload
+import io.violabs.picard.Workload.Resource.sharedTerms
 import io.violabs.picard.possibilities
-import io.violabs.picard.v2.common.NodeSelectorRequirement
+import io.violabs.picard.v2.resources.workload.resource.NodeSelector
 import org.junit.jupiter.api.BeforeAll
 
 class ResourceSliceTest : SuccessBuildSim<ResourceSliceV2, ResourceSliceV2DslBuilder>() {
@@ -14,47 +16,6 @@ class ResourceSliceTest : SuccessBuildSim<ResourceSliceV2, ResourceSliceV2DslBui
         fun setup() = buildSetup(
             ResourceSliceTest::class,
             SUCCESS_POSSIBILITIES
-        )
-
-        private fun NodeSelectorDslBuilder.sharedTerms() {
-            nodeSelectorTerms {
-                nodeSelectorTerm {
-                    matchExpressions {
-                        nodeSelectorRequirement {
-                            key = PLACEHOLDER
-                            operator = NodeSelectorRequirement.Operator.Exists
-                            values(PLACEHOLDER)
-                        }
-                    }
-
-                    matchFields {
-                        nodeSelectorRequirement {
-                            key = PLACEHOLDER
-                            operator = NodeSelectorRequirement.Operator.Exists
-                            values(PLACEHOLDER)
-                        }
-                    }
-                }
-            }
-        }
-
-        private val NODE_SELECTOR_TERMS = listOf(
-            NodeSelectorTerm(
-                matchExpressions = listOf(
-                    NodeSelectorRequirement(
-                        key = PLACEHOLDER,
-                        operator = NodeSelectorRequirement.Operator.Exists,
-                        values = listOf(PLACEHOLDER)
-                    )
-                ),
-                matchFields = listOf(
-                    NodeSelectorRequirement(
-                        key = PLACEHOLDER,
-                        operator = NodeSelectorRequirement.Operator.Exists,
-                        values = listOf(PLACEHOLDER)
-                    )
-                )
-            )
         )
 
         private fun CounterDslBuilder.MapGroup<String>.sharedCounters() {
@@ -206,7 +167,7 @@ class ResourceSliceTest : SuccessBuildSim<ResourceSliceV2, ResourceSliceV2DslBui
                                 ),
                                 nodeName = PLACEHOLDER,
                                 nodeSelector = NodeSelector(
-                                    nodeSelectorTerms = NODE_SELECTOR_TERMS
+                                    nodeSelectorTerms = Workload.Resource.NODE_SELECTOR_TERMS
                                 ),
                                 taints = listOf(
                                     DeviceTaint(
@@ -220,7 +181,7 @@ class ResourceSliceTest : SuccessBuildSim<ResourceSliceV2, ResourceSliceV2DslBui
                         ),
                         nodeName = PLACEHOLDER,
                         nodeSelector = NodeSelector(
-                            nodeSelectorTerms = NODE_SELECTOR_TERMS
+                            nodeSelectorTerms = Workload.Resource.NODE_SELECTOR_TERMS
                         ),
                         perDeviceNodeSelection = true,
                         sharedCounters = listOf(

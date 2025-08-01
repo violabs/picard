@@ -1,4 +1,4 @@
-package io.violabs.picard.v2.resources.workload.resource.slice
+package io.violabs.picard.v2.resources.workload.resource
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 

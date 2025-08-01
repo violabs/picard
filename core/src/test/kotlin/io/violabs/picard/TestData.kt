@@ -31,6 +31,8 @@ import io.violabs.picard.v2.resources.storage.volume.source.NfsVolumeSource
 import io.violabs.picard.v2.resources.storage.volume.source.PersistentVolumeClaimVolumeSource
 import io.violabs.picard.v2.resources.storage.volume.source.ProjectedVolumeSource
 import io.violabs.picard.v2.resources.storage.volume.source.SecretVolumeSource
+import io.violabs.picard.v2.resources.workload.resource.NodeSelectorDslBuilder
+import io.violabs.picard.v2.resources.workload.resource.NodeSelectorTerm
 
 
 object Common {
@@ -287,4 +289,49 @@ object Volumes {
         image = IMAGE_VOLUME_SOURCE,
         nfs = NFS_VOLUME_SOURCE
     )
+}
+
+object Workload {
+    object Resource {
+        fun NodeSelectorDslBuilder.sharedTerms() {
+            nodeSelectorTerms {
+                nodeSelectorTerm {
+                    matchExpressions {
+                        nodeSelectorRequirement {
+                            key = PLACEHOLDER
+                            operator = NodeSelectorRequirement.Operator.Exists
+                            values(PLACEHOLDER)
+                        }
+                    }
+
+                    matchFields {
+                        nodeSelectorRequirement {
+                            key = PLACEHOLDER
+                            operator = NodeSelectorRequirement.Operator.Exists
+                            values(PLACEHOLDER)
+                        }
+                    }
+                }
+            }
+        }
+
+        val NODE_SELECTOR_TERMS = listOf(
+            NodeSelectorTerm(
+                matchExpressions = listOf(
+                    NodeSelectorRequirement(
+                        key = PLACEHOLDER,
+                        operator = NodeSelectorRequirement.Operator.Exists,
+                        values = listOf(PLACEHOLDER)
+                    )
+                ),
+                matchFields = listOf(
+                    NodeSelectorRequirement(
+                        key = PLACEHOLDER,
+                        operator = NodeSelectorRequirement.Operator.Exists,
+                        values = listOf(PLACEHOLDER)
+                    )
+                )
+            )
+        )
+    }
 }

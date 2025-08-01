@@ -36,8 +36,10 @@ If there is a list property that needs DSL builder support, add `withListGroup =
 
 ```kotlin
 // For the parent class that contains the list
-@GeneratedDsl(withListGroup = true)
-data class ParentResourceV2(...)
+@GeneratedDsl
+data class ParentResource(
+    val childConditions: List<ChildCondition>
+)
 
 // For the child class that will be in the list
 @GeneratedDsl(withListGroup = true) 
@@ -45,6 +47,21 @@ data class ChildCondition(...)
 ```
 
 This generates both `conditions(vararg items: ChildCondition)` and `conditions { childCondition { ... } }` DSL methods.
+
+### Map Group Annotations
+
+If there are any properties that contain a entity that has `@GeneratedDsl` that is a value in a map, you should use
+`MapGroupTypes.SINGLE`:
+
+```kotlin
+@GeneratedDsl
+data class ParentResource(
+    val mappableChild: Map<String, MappableChild>
+)
+
+@GeneratedDsl(withMapGroup = GeneratedDsl.MapGroupTypes.SINGLE)
+data class MappableChild(...)
+```
 
 ### JsonProperty Usage
 
@@ -106,247 +123,544 @@ If you do not fix the build after 3 times, you can ask for help.
 
 ## Documentation
 
-ResourceSlice v1beta2
-ResourceSlice represents one or more resources in a pool of similar resources, managed by a common driver.
+ResourceClaim v1beta2
+ResourceClaim describes a request for access to resources in the cluster, for use by workloads.
 apiVersion: resource.k8s.io/v1beta2
 
 import "k8s.io/api/resource/v1beta2"
 
-ResourceSlice
-ResourceSlice represents one or more resources in a pool of similar resources, managed by a common driver. A pool may span more than one ResourceSlice, and exactly how many ResourceSlices comprise a pool is determined by the driver.
-
-At the moment, the only supported resources are devices with attributes and capacities. Each device in a given pool, regardless of how many ResourceSlices, must have a unique name. The ResourceSlice in which a device gets published may change over time. The unique identifier for a device is the tuple <driver name>, <pool name>, <device name>.
-
-Whenever a driver needs to update a pool, it increments the pool.Spec.Pool.Generation number and updates all ResourceSlices with that new number and new resource definitions. A consumer must only use ResourceSlices with the highest generation number and ignore all others.
-
-When allocating all resources in a pool matching certain criteria or when looking for the best solution among several different alternatives, a consumer should check the number of ResourceSlices in a pool (included in each ResourceSlice) to determine whether its view of a pool is complete and if not, should wait until the driver has completed updating the pool.
-
-For resources that are not local to a node, the node name is not set. Instead, the driver may use a node selector to specify where the devices are available.
+ResourceClaim
+ResourceClaim describes a request for access to resources in the cluster, for use by workloads. For example, if a workload needs an accelerator device with specific properties, this is how that request is expressed. The status stanza tracks whether this claim has been satisfied and what specific resources have been allocated.
 
 This is an alpha type and requires enabling the DynamicResourceAllocation feature gate.
 
 apiVersion: resource.k8s.io/v1beta2
 
-kind: ResourceSlice
+kind: ResourceClaim
 
 metadata (ObjectMeta)
 
 Standard object metadata
 
-spec (ResourceSliceSpec), required
+spec (ResourceClaimSpec), required
 
-Contains the information published by the driver.
+Spec describes what is being requested and how to configure it. The spec is immutable.
 
-Changing the spec automatically increments the metadata.generation number.
+status (ResourceClaimStatus)
 
-ResourceSliceSpec
-ResourceSliceSpec contains the information published by the driver in one ResourceSlice.
+Status describes whether the claim is ready to use and what has been allocated.
 
-driver (string), required
+ResourceClaimSpec
+ResourceClaimSpec defines what is being requested in a ResourceClaim and how to configure it.
 
-Driver identifies the DRA driver providing the capacity information. A field selector can be used to list only ResourceSlice objects with a certain driver name.
+devices (DeviceClaim)
 
-Must be a DNS subdomain and should end with a DNS domain owned by the vendor of the driver. This field is immutable.
+Devices defines how to request devices.
 
-pool (ResourcePool), required
+DeviceClaim defines how to request devices with a ResourceClaim.
 
-Pool describes the pool that this ResourceSlice belongs to.
-
-ResourcePool describes the pool that ResourceSlices belong to.
-
-pool.generation (int64), required
-
-Generation tracks the change in a pool over time. Whenever a driver changes something about one or more of the resources in a pool, it must change the generation in all ResourceSlices which are part of that pool. Consumers of ResourceSlices should only consider resources from the pool with the highest generation number. The generation may be reset by drivers, which should be fine for consumers, assuming that all ResourceSlices in a pool are updated to match or deleted.
-
-Combined with ResourceSliceCount, this mechanism enables consumers to detect pools which are comprised of multiple ResourceSlices and are in an incomplete state.
-
-pool.name (string), required
-
-Name is used to identify the pool. For node-local devices, this is often the node name, but this is not required.
-
-It must not be longer than 253 characters and must consist of one or more DNS sub-domains separated by slashes. This field is immutable.
-
-pool.resourceSliceCount (int64), required
-
-ResourceSliceCount is the total number of ResourceSlices in the pool at this generation number. Must be greater than zero.
-
-Consumers can use this to check whether they have seen all ResourceSlices belonging to the same pool.
-
-allNodes (boolean)
-
-AllNodes indicates that all nodes have access to the resources in the pool.
-
-Exactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set.
-
-devices ([]Device)
+devices.config ([]DeviceClaimConfiguration)
 
 Atomic: will be replaced during a merge
 
-Devices lists some or all of the devices in this pool.
+This field holds configuration for multiple potential drivers which could satisfy requests in this claim. It is ignored while allocating the claim.
 
-Must not have more than 128 entries.
+DeviceClaimConfiguration is used for configuration parameters in DeviceClaim.
 
-Device represents one individual hardware instance that can be selected based on its attributes. Besides the name, exactly one field must be set.
+devices.config.opaque (OpaqueDeviceConfiguration)
 
-devices.name (string), required
+Opaque provides driver-specific configuration parameters.
 
-Name is unique identifier among all devices managed by the driver in the pool. It must be a DNS label.
+OpaqueDeviceConfiguration contains configuration parameters for a driver in a format defined by the driver vendor.
 
-devices.allNodes (boolean)
+devices.config.opaque.driver (string), required
 
-AllNodes indicates that all nodes have access to the device.
+Driver is used to determine which kubelet plugin needs to be passed these configuration parameters.
 
-Must only be set if Spec.PerDeviceNodeSelection is set to true. At most one of NodeName, NodeSelector and AllNodes can be set.
+An admission policy provided by the driver developer could use this to decide whether it needs to validate them.
 
-devices.attributes (map[string]DeviceAttribute)
+Must be a DNS subdomain and should end with a DNS domain owned by the vendor of the driver.
 
-Attributes defines the set of attributes for this device. The name of each attribute must be unique in that set.
+devices.config.opaque.parameters (RawExtension), required
 
-The maximum number of attributes and capacities combined is 32.
+Parameters can contain arbitrary data. It is the responsibility of the driver developer to handle validation and versioning. Typically this includes self-identification and a version ("kind" + "apiVersion" for Kubernetes types), with conversion between different versions.
 
-DeviceAttribute must have exactly one field set.
+The length of the raw data must be smaller or equal to 10 Ki.
 
-devices.attributes.bool (boolean)
+*RawExtension is used to hold extensions in external versions.
 
-BoolValue is a true/false value.
+To use this, make a field which has RawExtension as its type in your external, versioned struct, and Object in your internal struct. You also need to register your various plugin types.
 
-devices.attributes.int (int64)
+// Internal package:
 
-IntValue is a number.
+type MyAPIObject struct {
+runtime.TypeMeta `json:",inline"`
+MyPlugin runtime.Object `json:"myPlugin"`
+}
 
-devices.attributes.string (string)
+type PluginA struct {
+AOption string `json:"aOption"`
+}
+// External package:
 
-StringValue is a string. Must not be longer than 64 characters.
+type MyAPIObject struct {
+runtime.TypeMeta `json:",inline"`
+MyPlugin runtime.RawExtension `json:"myPlugin"`
+}
 
-devices.attributes.version (string)
+type PluginA struct {
+AOption string `json:"aOption"`
+}
+// On the wire, the JSON will look something like this:
 
-VersionValue is a semantic version according to semver.org spec 2.0.0. Must not be longer than 64 characters.
+{
+"kind":"MyAPIObject",
+"apiVersion":"v1",
+"myPlugin": {
+"kind":"PluginA",
+"aOption":"foo",
+},
+}
+So what happens? Decode first uses json or yaml to unmarshal the serialized data into your external MyAPIObject. That causes the raw JSON to be stored, but not unpacked. The next step is to copy (using pkg/conversion) into the internal struct. The runtime package's DefaultScheme has conversion functions installed which will unpack the JSON stored in RawExtension, turning it into the correct object type, and storing it in the Object. (TODO: In the case where the object is of an unknown type, a runtime.Unknown object will be created and stored.)*
 
-devices.capacity (map[string]DeviceCapacity)
-
-Capacity defines the set of capacities for this device. The name of each capacity must be unique in that set.
-
-The maximum number of attributes and capacities combined is 32.
-
-DeviceCapacity describes a quantity associated with a device.
-
-devices.capacity.value (Quantity), required
-
-Value defines how much of a certain device capacity is available.
-
-devices.consumesCounters ([]DeviceCounterConsumption)
-
-Atomic: will be replaced during a merge
-
-ConsumesCounters defines a list of references to sharedCounters and the set of counters that the device will consume from those counter sets.
-
-There can only be a single entry per counterSet.
-
-The total number of device counter consumption entries must be <= 32. In addition, the total number in the entire ResourceSlice must be <= 1024 (for example, 64 devices with 16 counters each).
-
-DeviceCounterConsumption defines a set of counters that a device will consume from a CounterSet.
-
-devices.consumesCounters.counterSet (string), required
-
-CounterSet is the name of the set from which the counters defined will be consumed.
-
-devices.consumesCounters.counters (map[string]Counter), required
-
-Counters defines the counters that will be consumed by the device.
-
-The maximum number counters in a device is 32. In addition, the maximum number of all counters in all devices is 1024 (for example, 64 devices with 16 counters each).
-
-Counter describes a quantity associated with a device.
-
-devices.consumesCounters.counters.value (Quantity), required
-
-Value defines how much of a certain device counter is available.
-
-devices.nodeName (string)
-
-NodeName identifies the node where the device is available.
-
-Must only be set if Spec.PerDeviceNodeSelection is set to true. At most one of NodeName, NodeSelector and AllNodes can be set.
-
-devices.nodeSelector (NodeSelector)
-
-NodeSelector defines the nodes where the device is available.
-
-Must use exactly one term.
-
-Must only be set if Spec.PerDeviceNodeSelection is set to true. At most one of NodeName, NodeSelector and AllNodes can be set.
-
-A node selector represents the union of the results of one or more label queries over a set of nodes; that is, it represents the OR of the selectors represented by the node selector terms.
-
-devices.nodeSelector.nodeSelectorTerms ([]NodeSelectorTerm), required
+devices.config.requests ([]string)
 
 Atomic: will be replaced during a merge
 
-Required. A list of node selector terms. The terms are ORed.
+Requests lists the names of requests where the configuration applies. If empty, it applies to all requests.
 
-A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+References to subrequests must include the name of the main request and may include the subrequest using the format <main request>[/<subrequest>]. If just the main request is given, the configuration applies to all subrequests.
 
-devices.nodeSelector.nodeSelectorTerms.matchExpressions ([]NodeSelectorRequirement)
-
-Atomic: will be replaced during a merge
-
-A list of node selector requirements by node's labels.
-
-devices.nodeSelector.nodeSelectorTerms.matchFields ([]NodeSelectorRequirement)
+devices.constraints ([]DeviceConstraint)
 
 Atomic: will be replaced during a merge
 
-A list of node selector requirements by node's fields.
+These constraints must be satisfied by the set of devices that get allocated for the claim.
 
-devices.taints ([]DeviceTaint)
+DeviceConstraint must have exactly one field set besides Requests.
+
+devices.constraints.matchAttribute (string)
+
+MatchAttribute requires that all devices in question have this attribute and that its type and value are the same across those devices.
+
+For example, if you specified "dra.example.com/numa" (a hypothetical example!), then only devices in the same NUMA node will be chosen. A device which does not have that attribute will not be chosen. All devices should use a value of the same type for this attribute because that is part of its specification, but if one device doesn't, then it also will not be chosen.
+
+Must include the domain qualifier.
+
+devices.constraints.requests ([]string)
 
 Atomic: will be replaced during a merge
 
-If specified, these are the driver-defined taints.
+Requests is a list of the one or more requests in this claim which must co-satisfy this constraint. If a request is fulfilled by multiple devices, then all of the devices must satisfy the constraint. If this is not specified, this constraint applies to all requests in this claim.
 
-The maximum number of taints is 4.
+References to subrequests must include the name of the main request and may include the subrequest using the format <main request>[/<subrequest>]. If just the main request is given, the constraint applies to all subrequests.
+
+devices.requests ([]DeviceRequest)
+
+Atomic: will be replaced during a merge
+
+Requests represent individual requests for distinct devices which must all be satisfied. If empty, nothing needs to be allocated.
+
+DeviceRequest is a request for devices required for a claim. This is typically a request for a single resource like a device, but can also ask for several identical devices. With FirstAvailable it is also possible to provide a prioritized list of requests.
+
+devices.requests.name (string), required
+
+Name can be used to reference this request in a pod.spec.containers[].resources.claims entry and in a constraint of the claim.
+
+References using the name in the DeviceRequest will uniquely identify a request when the Exactly field is set. When the FirstAvailable field is set, a reference to the name of the DeviceRequest will match whatever subrequest is chosen by the scheduler.
+
+Must be a DNS label.
+
+devices.requests.exactly (ExactDeviceRequest)
+
+Exactly specifies the details for a single request that must be met exactly for the request to be satisfied.
+
+One of Exactly or FirstAvailable must be set.
+
+ExactDeviceRequest is a request for one or more identical devices.
+
+devices.requests.exactly.deviceClassName (string), required
+
+DeviceClassName references a specific DeviceClass, which can define additional configuration and selectors to be inherited by this request.
+
+A DeviceClassName is required.
+
+Administrators may use this to restrict which devices may get requested by only installing classes with selectors for permitted devices. If users are free to request anything without restrictions, then administrators can create an empty DeviceClass for users to reference.
+
+devices.requests.exactly.adminAccess (boolean)
+
+AdminAccess indicates that this is a claim for administrative access to the device(s). Claims with AdminAccess are expected to be used for monitoring or other management services for a device. They ignore all ordinary claims to the device with respect to access modes and any resource allocations.
+
+This is an alpha field and requires enabling the DRAAdminAccess feature gate. Admin access is disabled if this field is unset or set to false, otherwise it is enabled.
+
+devices.requests.exactly.allocationMode (string)
+
+AllocationMode and its related fields define how devices are allocated to satisfy this request. Supported values are:
+
+ExactCount: This request is for a specific number of devices. This is the default. The exact number is provided in the count field.
+
+All: This request is for all of the matching devices in a pool. At least one device must exist on the node for the allocation to succeed. Allocation will fail if some devices are already allocated, unless adminAccess is requested.
+
+If AllocationMode is not specified, the default mode is ExactCount. If the mode is ExactCount and count is not specified, the default count is one. Any other requests must specify this field.
+
+More modes may get added in the future. Clients must refuse to handle requests with unknown modes.
+
+devices.requests.exactly.count (int64)
+
+Count is used only when the count mode is "ExactCount". Must be greater than zero. If AllocationMode is ExactCount and this field is not specified, the default is one.
+
+devices.requests.exactly.selectors ([]DeviceSelector)
+
+Atomic: will be replaced during a merge
+
+Selectors define criteria which must be satisfied by a specific device in order for that device to be considered for this request. All selectors must be satisfied for a device to be considered.
+
+DeviceSelector must have exactly one field set.
+
+devices.requests.exactly.selectors.cel (CELDeviceSelector)
+
+CEL contains a CEL expression for selecting a device.
+
+CELDeviceSelector contains a CEL expression for selecting a device.
+
+devices.requests.exactly.selectors.cel.expression (string), required
+
+Expression is a CEL expression which evaluates a single device. It must evaluate to true when the device under consideration satisfies the desired criteria, and false when it does not. Any other result is an error and causes allocation of devices to abort.
+
+The expression's input is an object named "device", which carries the following properties:
+
+driver (string): the name of the driver which defines this device.
+attributes (map[string]object): the device's attributes, grouped by prefix (e.g. device.attributes["dra.example.com"] evaluates to an object with all of the attributes which were prefixed by "dra.example.com".
+capacity (map[string]object): the device's capacities, grouped by prefix.
+Example: Consider a device with driver="dra.example.com", which exposes two attributes named "model" and "ext.example.com/family" and which exposes one capacity named "modules". This input to this expression would have the following fields:
+
+device.driver
+device.attributes["dra.example.com"].model
+device.attributes["ext.example.com"].family
+device.capacity["dra.example.com"].modules
+The device.driver field can be used to check for a specific driver, either as a high-level precondition (i.e. you only want to consider devices from this driver) or as part of a multi-clause expression that is meant to consider devices from different drivers.
+
+The value type of each attribute is defined by the device definition, and users who write these expressions must consult the documentation for their specific drivers. The value type of each capacity is Quantity.
+
+If an unknown prefix is used as a lookup in either device.attributes or device.capacity, an empty map will be returned. Any reference to an unknown field will cause an evaluation error and allocation to abort.
+
+A robust expression should check for the existence of attributes before referencing them.
+
+For ease of use, the cel.bind() function is enabled, and can be used to simplify expressions that access multiple attributes with the same domain. For example:
+
+cel.bind(dra, device.attributes["dra.example.com"], dra.someBool && dra.anotherBool)
+The length of the expression must be smaller or equal to 10 Ki. The cost of evaluating it is also limited based on the estimated number of logical steps.
+
+devices.requests.exactly.tolerations ([]DeviceToleration)
+
+Atomic: will be replaced during a merge
+
+If specified, the request's tolerations.
+
+Tolerations for NoSchedule are required to allocate a device which has a taint with that effect. The same applies to NoExecute.
+
+In addition, should any of the allocated devices get tainted with NoExecute after allocation and that effect is not tolerated, then all pods consuming the ResourceClaim get deleted to evict them. The scheduler will not let new pods reserve the claim while it has these tainted devices. Once all pods are evicted, the claim will get deallocated.
+
+The maximum number of tolerations is 16.
 
 This is an alpha field and requires enabling the DRADeviceTaints feature gate.
 
-The device this taint is attached to has the "effect" on any claim which does not tolerate the taint and, through the claim, to pods using the claim.
+The ResourceClaim this DeviceToleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator .
 
-devices.taints.effect (string), required
+devices.requests.exactly.tolerations.effect (string)
 
-The effect of the taint on claims that do not tolerate the taint and through such claims on the pods using them. Valid effects are NoSchedule and NoExecute. PreferNoSchedule as used for nodes is not valid here.
+Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule and NoExecute.
 
-devices.taints.key (string), required
+devices.requests.exactly.tolerations.key (string)
 
-The taint key to be applied to a device. Must be a label name.
+Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys. Must be a label name.
 
-devices.taints.timeAdded (Time)
+devices.requests.exactly.tolerations.operator (string)
 
-TimeAdded represents the time at which the taint was added. Added automatically during create or update if not set.
+Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a ResourceClaim can tolerate all taints of a particular category.
 
-Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON. Wrappers are provided for many of the factory methods that the time package offers.
+devices.requests.exactly.tolerations.tolerationSeconds (int64)
 
-devices.taints.value (string)
+TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system. If larger than zero, the time when the pod needs to be evicted is calculated as <time when taint was adedd> + <toleration seconds>.
 
-The taint value corresponding to the taint key. Must be a label value.
+devices.requests.exactly.tolerations.value (string)
 
-nodeName (string)
+Value is the taint value the toleration matches to. If the operator is Exists, the value must be empty, otherwise just a regular string. Must be a label value.
 
-NodeName identifies the node which provides the resources in this pool. A field selector can be used to list only ResourceSlice objects belonging to a certain node.
+devices.requests.firstAvailable ([]DeviceSubRequest)
 
-This field can be used to limit access from nodes to ResourceSlices with the same node name. It also indicates to autoscalers that adding new nodes of the same type as some old node might also make new resources available.
+Atomic: will be replaced during a merge
 
-Exactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set. This field is immutable.
+FirstAvailable contains subrequests, of which exactly one will be selected by the scheduler. It tries to satisfy them in the order in which they are listed here. So if there are two entries in the list, the scheduler will only check the second one if it determines that the first one can not be used.
 
-nodeSelector (NodeSelector)
+DRA does not yet implement scoring, so the scheduler will select the first set of devices that satisfies all the requests in the claim. And if the requirements can be satisfied on more than one node, other scheduling features will determine which node is chosen. This means that the set of devices allocated to a claim might not be the optimal set available to the cluster. Scoring will be implemented later.
 
-NodeSelector defines which nodes have access to the resources in the pool, when that pool is not limited to a single node.
+*DeviceSubRequest describes a request for device provided in the claim.spec.devices.requests[].firstAvailable array. Each is typically a request for a single resource like a device, but can also ask for several identical devices.
 
-Must use exactly one term.
+DeviceSubRequest is similar to ExactDeviceRequest, but doesn't expose the AdminAccess field as that one is only supported when requesting a specific device.*
 
-Exactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set.
+devices.requests.firstAvailable.deviceClassName (string), required
+
+DeviceClassName references a specific DeviceClass, which can define additional configuration and selectors to be inherited by this subrequest.
+
+A class is required. Which classes are available depends on the cluster.
+
+Administrators may use this to restrict which devices may get requested by only installing classes with selectors for permitted devices. If users are free to request anything without restrictions, then administrators can create an empty DeviceClass for users to reference.
+
+devices.requests.firstAvailable.name (string), required
+
+Name can be used to reference this subrequest in the list of constraints or the list of configurations for the claim. References must use the format <main request>/<subrequest>.
+
+Must be a DNS label.
+
+devices.requests.firstAvailable.allocationMode (string)
+
+AllocationMode and its related fields define how devices are allocated to satisfy this subrequest. Supported values are:
+
+ExactCount: This request is for a specific number of devices. This is the default. The exact number is provided in the count field.
+
+All: This subrequest is for all of the matching devices in a pool. Allocation will fail if some devices are already allocated, unless adminAccess is requested.
+
+If AllocationMode is not specified, the default mode is ExactCount. If the mode is ExactCount and count is not specified, the default count is one. Any other subrequests must specify this field.
+
+More modes may get added in the future. Clients must refuse to handle requests with unknown modes.
+
+devices.requests.firstAvailable.count (int64)
+
+Count is used only when the count mode is "ExactCount". Must be greater than zero. If AllocationMode is ExactCount and this field is not specified, the default is one.
+
+devices.requests.firstAvailable.selectors ([]DeviceSelector)
+
+Atomic: will be replaced during a merge
+
+Selectors define criteria which must be satisfied by a specific device in order for that device to be considered for this subrequest. All selectors must be satisfied for a device to be considered.
+
+DeviceSelector must have exactly one field set.
+
+devices.requests.firstAvailable.selectors.cel (CELDeviceSelector)
+
+CEL contains a CEL expression for selecting a device.
+
+CELDeviceSelector contains a CEL expression for selecting a device.
+
+devices.requests.firstAvailable.selectors.cel.expression (string), required
+
+Expression is a CEL expression which evaluates a single device. It must evaluate to true when the device under consideration satisfies the desired criteria, and false when it does not. Any other result is an error and causes allocation of devices to abort.
+
+The expression's input is an object named "device", which carries the following properties:
+
+driver (string): the name of the driver which defines this device.
+attributes (map[string]object): the device's attributes, grouped by prefix (e.g. device.attributes["dra.example.com"] evaluates to an object with all of the attributes which were prefixed by "dra.example.com".
+capacity (map[string]object): the device's capacities, grouped by prefix.
+Example: Consider a device with driver="dra.example.com", which exposes two attributes named "model" and "ext.example.com/family" and which exposes one capacity named "modules". This input to this expression would have the following fields:
+
+device.driver
+device.attributes["dra.example.com"].model
+device.attributes["ext.example.com"].family
+device.capacity["dra.example.com"].modules
+The device.driver field can be used to check for a specific driver, either as a high-level precondition (i.e. you only want to consider devices from this driver) or as part of a multi-clause expression that is meant to consider devices from different drivers.
+
+The value type of each attribute is defined by the device definition, and users who write these expressions must consult the documentation for their specific drivers. The value type of each capacity is Quantity.
+
+If an unknown prefix is used as a lookup in either device.attributes or device.capacity, an empty map will be returned. Any reference to an unknown field will cause an evaluation error and allocation to abort.
+
+A robust expression should check for the existence of attributes before referencing them.
+
+For ease of use, the cel.bind() function is enabled, and can be used to simplify expressions that access multiple attributes with the same domain. For example:
+
+cel.bind(dra, device.attributes["dra.example.com"], dra.someBool && dra.anotherBool)
+The length of the expression must be smaller or equal to 10 Ki. The cost of evaluating it is also limited based on the estimated number of logical steps.
+
+devices.requests.firstAvailable.tolerations ([]DeviceToleration)
+
+Atomic: will be replaced during a merge
+
+If specified, the request's tolerations.
+
+Tolerations for NoSchedule are required to allocate a device which has a taint with that effect. The same applies to NoExecute.
+
+In addition, should any of the allocated devices get tainted with NoExecute after allocation and that effect is not tolerated, then all pods consuming the ResourceClaim get deleted to evict them. The scheduler will not let new pods reserve the claim while it has these tainted devices. Once all pods are evicted, the claim will get deallocated.
+
+The maximum number of tolerations is 16.
+
+This is an alpha field and requires enabling the DRADeviceTaints feature gate.
+
+The ResourceClaim this DeviceToleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator .
+
+devices.requests.firstAvailable.tolerations.effect (string)
+
+Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule and NoExecute.
+
+devices.requests.firstAvailable.tolerations.key (string)
+
+Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys. Must be a label name.
+
+devices.requests.firstAvailable.tolerations.operator (string)
+
+Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a ResourceClaim can tolerate all taints of a particular category.
+
+devices.requests.firstAvailable.tolerations.tolerationSeconds (int64)
+
+TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system. If larger than zero, the time when the pod needs to be evicted is calculated as <time when taint was adedd> + <toleration seconds>.
+
+devices.requests.firstAvailable.tolerations.value (string)
+
+Value is the taint value the toleration matches to. If the operator is Exists, the value must be empty, otherwise just a regular string. Must be a label value.
+
+ResourceClaimStatus
+ResourceClaimStatus tracks whether the resource has been allocated and what the result of that was.
+
+allocation (AllocationResult)
+
+Allocation is set once the claim has been allocated successfully.
+
+AllocationResult contains attributes of an allocated resource.
+
+allocation.devices (DeviceAllocationResult)
+
+Devices is the result of allocating devices.
+
+DeviceAllocationResult is the result of allocating devices.
+
+allocation.devices.config ([]DeviceAllocationConfiguration)
+
+Atomic: will be replaced during a merge
+
+This field is a combination of all the claim and class configuration parameters. Drivers can distinguish between those based on a flag.
+
+This includes configuration parameters for drivers which have no allocated devices in the result because it is up to the drivers which configuration parameters they support. They can silently ignore unknown configuration parameters.
+
+DeviceAllocationConfiguration gets embedded in an AllocationResult.
+
+allocation.devices.config.source (string), required
+
+Source records whether the configuration comes from a class and thus is not something that a normal user would have been able to set or from a claim.
+
+allocation.devices.config.opaque (OpaqueDeviceConfiguration)
+
+Opaque provides driver-specific configuration parameters.
+
+OpaqueDeviceConfiguration contains configuration parameters for a driver in a format defined by the driver vendor.
+
+allocation.devices.config.opaque.driver (string), required
+
+Driver is used to determine which kubelet plugin needs to be passed these configuration parameters.
+
+An admission policy provided by the driver developer could use this to decide whether it needs to validate them.
+
+Must be a DNS subdomain and should end with a DNS domain owned by the vendor of the driver.
+
+allocation.devices.config.opaque.parameters (RawExtension), required
+
+Parameters can contain arbitrary data. It is the responsibility of the driver developer to handle validation and versioning. Typically this includes self-identification and a version ("kind" + "apiVersion" for Kubernetes types), with conversion between different versions.
+
+The length of the raw data must be smaller or equal to 10 Ki.
+
+*RawExtension is used to hold extensions in external versions.
+
+To use this, make a field which has RawExtension as its type in your external, versioned struct, and Object in your internal struct. You also need to register your various plugin types.
+
+// Internal package:
+
+type MyAPIObject struct { runtime.TypeMeta json:",inline" MyPlugin runtime.Object json:"myPlugin" }
+
+type PluginA struct { AOption string json:"aOption" }
+
+// External package:
+
+type MyAPIObject struct { runtime.TypeMeta json:",inline" MyPlugin runtime.RawExtension json:"myPlugin" }
+
+type PluginA struct { AOption string json:"aOption" }
+
+// On the wire, the JSON will look something like this:
+
+{ "kind":"MyAPIObject", "apiVersion":"v1", "myPlugin": { "kind":"PluginA", "aOption":"foo", }, }
+
+So what happens? Decode first uses json or yaml to unmarshal the serialized data into your external MyAPIObject. That causes the raw JSON to be stored, but not unpacked. The next step is to copy (using pkg/conversion) into the internal struct. The runtime package's DefaultScheme has conversion functions installed which will unpack the JSON stored in RawExtension, turning it into the correct object type, and storing it in the Object. (TODO: In the case where the object is of an unknown type, a runtime.Unknown object will be created and stored.)*
+
+allocation.devices.config.requests ([]string)
+
+Atomic: will be replaced during a merge
+
+Requests lists the names of requests where the configuration applies. If empty, its applies to all requests.
+
+References to subrequests must include the name of the main request and may include the subrequest using the format <main request>[/<subrequest>]. If just the main request is given, the configuration applies to all subrequests.
+
+allocation.devices.results ([]DeviceRequestAllocationResult)
+
+Atomic: will be replaced during a merge
+
+Results lists all allocated devices.
+
+DeviceRequestAllocationResult contains the allocation result for one request.
+
+allocation.devices.results.device (string), required
+
+Device references one device instance via its name in the driver's resource pool. It must be a DNS label.
+
+allocation.devices.results.driver (string), required
+
+Driver specifies the name of the DRA driver whose kubelet plugin should be invoked to process the allocation once the claim is needed on a node.
+
+Must be a DNS subdomain and should end with a DNS domain owned by the vendor of the driver.
+
+allocation.devices.results.pool (string), required
+
+This name together with the driver name and the device name field identify which device was allocated (\<driver name>/\<pool name>/\<device name>).
+
+Must not be longer than 253 characters and may contain one or more DNS sub-domains separated by slashes.
+
+allocation.devices.results.request (string), required
+
+Request is the name of the request in the claim which caused this device to be allocated. If it references a subrequest in the firstAvailable list on a DeviceRequest, this field must include both the name of the main request and the subrequest using the format <main request>/<subrequest>.
+
+Multiple devices may have been allocated per request.
+
+allocation.devices.results.adminAccess (boolean)
+
+AdminAccess indicates that this device was allocated for administrative access. See the corresponding request field for a definition of mode.
+
+This is an alpha field and requires enabling the DRAAdminAccess feature gate. Admin access is disabled if this field is unset or set to false, otherwise it is enabled.
+
+allocation.devices.results.tolerations ([]DeviceToleration)
+
+Atomic: will be replaced during a merge
+
+A copy of all tolerations specified in the request at the time when the device got allocated.
+
+The maximum number of tolerations is 16.
+
+This is an alpha field and requires enabling the DRADeviceTaints feature gate.
+
+The ResourceClaim this DeviceToleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator .
+
+allocation.devices.results.tolerations.effect (string)
+
+Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule and NoExecute.
+
+allocation.devices.results.tolerations.key (string)
+
+Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys. Must be a label name.
+
+allocation.devices.results.tolerations.operator (string)
+
+Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a ResourceClaim can tolerate all taints of a particular category.
+
+allocation.devices.results.tolerations.tolerationSeconds (int64)
+
+TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system. If larger than zero, the time when the pod needs to be evicted is calculated as <time when taint was adedd> + <toleration seconds>.
+
+allocation.devices.results.tolerations.value (string)
+
+Value is the taint value the toleration matches to. If the operator is Exists, the value must be empty, otherwise just a regular string. Must be a label value.
+
+allocation.nodeSelector (NodeSelector)
+
+NodeSelector defines where the allocated resources are available. If unset, they are available everywhere.
 
 A node selector represents the union of the results of one or more label queries over a set of nodes; that is, it represents the OR of the selectors represented by the node selector terms.
 
-nodeSelector.nodeSelectorTerms ([]NodeSelectorTerm), required
+allocation.nodeSelector.nodeSelectorTerms ([]NodeSelectorTerm), required
 
 Atomic: will be replaced during a merge
 
@@ -354,53 +668,177 @@ Required. A list of node selector terms. The terms are ORed.
 
 A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
 
-nodeSelector.nodeSelectorTerms.matchExpressions ([]NodeSelectorRequirement)
+allocation.nodeSelector.nodeSelectorTerms.matchExpressions ([]NodeSelectorRequirement)
 
 Atomic: will be replaced during a merge
 
 A list of node selector requirements by node's labels.
 
-nodeSelector.nodeSelectorTerms.matchFields ([]NodeSelectorRequirement)
+allocation.nodeSelector.nodeSelectorTerms.matchFields ([]NodeSelectorRequirement)
 
 Atomic: will be replaced during a merge
 
 A list of node selector requirements by node's fields.
 
-perDeviceNodeSelection (boolean)
+devices ([]AllocatedDeviceStatus)
 
-PerDeviceNodeSelection defines whether the access from nodes to resources in the pool is set on the ResourceSlice level or on each device. If it is set to true, every device defined the ResourceSlice must specify this individually.
+Map: unique values on keys driver, device, pool will be kept during a merge
 
-Exactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set.
+Devices contains the status of each device allocated for this claim, as reported by the driver. This can include driver-specific information. Entries are owned by their respective drivers.
 
-sharedCounters ([]CounterSet)
+AllocatedDeviceStatus contains the status of an allocated device, if the driver chooses to report it. This may include driver-specific information.
+
+devices.device (string), required
+
+Device references one device instance via its name in the driver's resource pool. It must be a DNS label.
+
+devices.driver (string), required
+
+Driver specifies the name of the DRA driver whose kubelet plugin should be invoked to process the allocation once the claim is needed on a node.
+
+Must be a DNS subdomain and should end with a DNS domain owned by the vendor of the driver.
+
+devices.pool (string), required
+
+This name together with the driver name and the device name field identify which device was allocated (\<driver name>/\<pool name>/\<device name>).
+
+Must not be longer than 253 characters and may contain one or more DNS sub-domains separated by slashes.
+
+devices.conditions ([]Condition)
+
+Map: unique values on key type will be kept during a merge
+
+Conditions contains the latest observation of the device's state. If the device has been configured according to the class and claim config references, the Ready condition should be True.
+
+Must not contain more than 8 entries.
+
+Condition contains details for one aspect of the current state of this API Resource.
+
+devices.conditions.lastTransitionTime (Time), required
+
+lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed. If that is not known, then using the time when the API field changed is acceptable.
+
+Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON. Wrappers are provided for many of the factory methods that the time package offers.
+
+devices.conditions.message (string), required
+
+message is a human readable message indicating details about the transition. This may be an empty string.
+
+devices.conditions.reason (string), required
+
+reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
+
+devices.conditions.status (string), required
+
+status of the condition, one of True, False, Unknown.
+
+devices.conditions.type (string), required
+
+type of condition in CamelCase or in foo.example.com/CamelCase.
+
+devices.conditions.observedGeneration (int64)
+
+observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
+
+devices.data (RawExtension)
+
+Data contains arbitrary driver-specific data.
+
+The length of the raw data must be smaller or equal to 10 Ki.
+
+*RawExtension is used to hold extensions in external versions.
+
+To use this, make a field which has RawExtension as its type in your external, versioned struct, and Object in your internal struct. You also need to register your various plugin types.
+
+// Internal package:
+
+type MyAPIObject struct {
+runtime.TypeMeta `json:",inline"`
+MyPlugin runtime.Object `json:"myPlugin"`
+}
+
+type PluginA struct {
+AOption string `json:"aOption"`
+}
+// External package:
+
+type MyAPIObject struct {
+runtime.TypeMeta `json:",inline"`
+MyPlugin runtime.RawExtension `json:"myPlugin"`
+}
+
+type PluginA struct {
+AOption string `json:"aOption"`
+}
+// On the wire, the JSON will look something like this:
+
+{
+"kind":"MyAPIObject",
+"apiVersion":"v1",
+"myPlugin": {
+"kind":"PluginA",
+"aOption":"foo",
+},
+}
+So what happens? Decode first uses json or yaml to unmarshal the serialized data into your external MyAPIObject. That causes the raw JSON to be stored, but not unpacked. The next step is to copy (using pkg/conversion) into the internal struct. The runtime package's DefaultScheme has conversion functions installed which will unpack the JSON stored in RawExtension, turning it into the correct object type, and storing it in the Object. (TODO: In the case where the object is of an unknown type, a runtime.Unknown object will be created and stored.)*
+
+devices.networkData (NetworkDeviceData)
+
+NetworkData contains network-related information specific to the device.
+
+NetworkDeviceData provides network-related details for the allocated device. This information may be filled by drivers or other components to configure or identify the device within a network context.
+
+devices.networkData.hardwareAddress (string)
+
+HardwareAddress represents the hardware address (e.g. MAC Address) of the device's network interface.
+
+Must not be longer than 128 characters.
+
+devices.networkData.interfaceName (string)
+
+InterfaceName specifies the name of the network interface associated with the allocated device. This might be the name of a physical or virtual network interface being configured in the pod.
+
+Must not be longer than 256 characters.
+
+devices.networkData.ips ([]string)
 
 Atomic: will be replaced during a merge
 
-SharedCounters defines a list of counter sets, each of which has a name and a list of counters available.
+IPs lists the network addresses assigned to the device's network interface. This can include both IPv4 and IPv6 addresses. The IPs are in the CIDR notation, which includes both the address and the associated subnet mask. e.g.: "192.0.2.5/24" for IPv4 and "2001:db8::5/64" for IPv6.
 
-The names of the SharedCounters must be unique in the ResourceSlice.
+reservedFor ([]ResourceClaimConsumerReference)
 
-The maximum number of counters in all sets is 32.
+Patch strategy: merge on key uid
 
-*CounterSet defines a named set of counters that are available to be used by devices defined in the ResourceSlice.
+Map: unique values on key uid will be kept during a merge
 
-The counters are not allocatable by themselves, but can be referenced by devices. When a device is allocated, the portion of counters it uses will no longer be available for use by other devices.*
+ReservedFor indicates which entities are currently allowed to use the claim. A Pod which references a ResourceClaim which is not reserved for that Pod will not be started. A claim that is in use or might be in use because it has been reserved must not get deallocated.
 
-sharedCounters.counters (map[string]Counter), required
+In a cluster with multiple scheduler instances, two pods might get scheduled concurrently by different schedulers. When they reference the same ResourceClaim which already has reached its maximum number of consumers, only one pod can be scheduled.
 
-Counters defines the set of counters for this CounterSet The name of each counter must be unique in that set and must be a DNS label.
+Both schedulers try to add their pod to the claim.status.reservedFor field, but only the update that reaches the API server first gets stored. The other one fails with an error and the scheduler which issued it knows that it must put the pod back into the queue, waiting for the ResourceClaim to become usable again.
 
-The maximum number of counters in all sets is 32.
+There can be at most 256 such reservations. This may get increased in the future, but not reduced.
 
-Counter describes a quantity associated with a device.
+ResourceClaimConsumerReference contains enough information to let you locate the consumer of a ResourceClaim. The user must be a resource in the same namespace as the ResourceClaim.
 
-sharedCounters.counters.value (Quantity), required
+reservedFor.name (string), required
 
-Value defines how much of a certain device counter is available.
+Name is the name of resource being referenced.
 
-sharedCounters.name (string), required
+reservedFor.resource (string), required
 
-Name defines the name of the counter set. It must be a DNS label.
+Resource is the type of resource being referenced, for example "pods".
+
+reservedFor.uid (string), required
+
+UID identifies exactly one incarnation of the resource.
+
+reservedFor.apiGroup (string)
+
+APIGroup is the group for the resource being referenced. It is empty for the core API. This matches the group in the APIVersion that is used when creating the resources.
+
+
 
 
 

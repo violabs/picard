@@ -1,6 +1,7 @@
 package io.violabs.picard.v2.resources.workload.resource.slice
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
+import io.violabs.picard.v2.resources.workload.resource.NodeSelector
 
 /**
  * Device represents one individual hardware instance that can be selected based on its attributes. 

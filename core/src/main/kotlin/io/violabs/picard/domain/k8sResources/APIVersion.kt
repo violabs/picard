@@ -188,6 +188,7 @@ import io.violabs.picard.v2.resources.workload.resource.claim.ResourceClaimV2
 import io.violabs.picard.v2.resources.workload.resource.claim.template.ResourceClaimTemplateV2
 import io.violabs.picard.v2.resources.workload.resource.device.taint.DeviceTaintRuleV2
 import io.violabs.picard.v2.resources.workload.scheduling.PriorityClassV2
+import io.violabs.picard.v2.resources.workload.autoscaling.pod.HorizontalPodAutoscalerV2
 
 interface APIVersion {
     fun refString(): String
@@ -311,7 +312,8 @@ open class KAPIVersion(
 
     object AutoscalingV2 : KAPIVersion("autoscaling/v2"),
         HorizontalPodAutoscaler.Version,
-        HorizontalPodAutoscalerList.Version
+        HorizontalPodAutoscalerList.Version,
+        HorizontalPodAutoscalerV2.Version
 
     object BatchV1 : KAPIVersion("batch/v1"),
         CronJob.Version,

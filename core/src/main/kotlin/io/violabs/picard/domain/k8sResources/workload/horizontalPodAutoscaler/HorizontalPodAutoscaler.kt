@@ -17,6 +17,7 @@ import io.violabs.picard.domain.k8sResources.workload.metric.MetricStatus
 import io.violabs.picard.domain.manifest.WorkloadResource
 import java.time.LocalDateTime
 
+@Deprecated("Use v2", ReplaceWith("io.violabs.picard.v2.resources.workload.autoscaling.pod.HorizontalPodAutoscalerV2"))
 data class HorizontalPodAutoscaler(
     override val apiVersion: Version = KAPIVersion.AutoscalingV2,
     override val metadata: ObjectMetadata? = null,

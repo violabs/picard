@@ -5,13 +5,14 @@
 
 You should copy over the existing test that matches the specification. It should match the same
 structure as the code. Make sure the test does not contain V2 references in the original. When you are finished,
-add items to .git.
+add items to .git. ENSURE YOU USE THE SAME TEST AND DO NOT SKIP ANYTHING.
 
 ## Prerequisites
 
 - Ensure the main classes are implemented and compile successfully
 - Run `./gradlew clean build -x test` to generate DSL builders before writing tests
 - Generated DSL builders follow the pattern `{ClassName}DslBuilder`
+- use defaults of: 1 for numbers 1.0 for floating point numbers, QUANTITY for quantities, PLACEHOLDER for strings, and PLACEHOLDER_LIST for lists in normal classes (not in dsl)
 
 ## Required Imports
 

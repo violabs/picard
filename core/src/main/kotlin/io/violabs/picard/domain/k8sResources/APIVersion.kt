@@ -192,6 +192,7 @@ import io.violabs.picard.v2.resources.workload.autoscaling.pod.HorizontalPodAuto
 import io.violabs.picard.v2.resources.workload.batch.cron.CronJobV2
 import io.violabs.picard.v2.resources.workload.batch.job.JobV2
 import io.violabs.picard.v2.resources.workload.daemon.DaemonSetV2
+import io.violabs.picard.v2.resources.workload.controller.revision.ControllerRevisionV2
 
 interface APIVersion {
     fun refString(): String
@@ -279,6 +280,7 @@ open class KAPIVersion(
 
     object AppsV1 : KAPIVersion("apps/v1"),
         ControllerRevision.Version,
+        ControllerRevisionV2.Version,
         ControllerRevisionList.Version,
         DaemonSet.Version,
         DaemonSetV2.Version,

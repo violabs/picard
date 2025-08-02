@@ -193,6 +193,7 @@ import io.violabs.picard.v2.resources.workload.batch.cron.CronJobV2
 import io.violabs.picard.v2.resources.workload.batch.job.JobV2
 import io.violabs.picard.v2.resources.workload.daemon.DaemonSetV2
 import io.violabs.picard.v2.resources.workload.controller.revision.ControllerRevisionV2
+import io.violabs.picard.v2.resources.workload.stateful.set.StatefulSetV2
 
 interface APIVersion {
     fun refString(): String
@@ -290,6 +291,7 @@ open class KAPIVersion(
         ReplicaSet.Version,
         ReplicaSetList.Version,
         StatefulSet.Version,
+        StatefulSetV2.Version,
         StatefulSetList.Version
 
     object AuthenticationV1 : KAPIVersion("authentication.k8s.io/v1"),

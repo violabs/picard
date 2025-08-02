@@ -1,12 +1,12 @@
-package io.violabs.picard.v2.resources.workload.batch
+package io.violabs.picard.v2.resources.workload.batch.cron
 
 import io.violabs.picard.Common
-import io.violabs.picard.Common.OBJECT_META
 import io.violabs.picard.Common.sharedObjectMeta
 import io.violabs.picard.Common.sharedObjectReference
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.k8sResources.workload.job.Job
 import io.violabs.picard.possibilities
+import io.violabs.picard.v2.resources.workload.batch.job.JobTemplateSpec
 import org.junit.jupiter.api.BeforeAll
 
 class CronJobTest : SuccessBuildSim<CronJobV2, CronJobV2DslBuilder>() {
@@ -69,7 +69,7 @@ class CronJobTest : SuccessBuildSim<CronJobV2, CronJobV2DslBuilder>() {
                     }
                 }
                 expected = CronJobV2(
-                    metadata = OBJECT_META,
+                    metadata = Common.OBJECT_META,
                     spec = CronJobSpec(
                         jobTemplate = JobTemplateSpec(
                             metadata = METADATA,

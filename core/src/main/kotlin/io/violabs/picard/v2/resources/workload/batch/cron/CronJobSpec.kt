@@ -1,6 +1,7 @@
-package io.violabs.picard.v2.resources.workload.batch
+package io.violabs.picard.v2.resources.workload.batch.cron
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
+import io.violabs.picard.v2.resources.workload.batch.job.JobTemplateSpec
 
 /**
  * CronJobSpec describes how the job execution will look like and when it will actually run.

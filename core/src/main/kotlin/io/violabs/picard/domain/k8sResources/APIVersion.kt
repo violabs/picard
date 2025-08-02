@@ -189,7 +189,8 @@ import io.violabs.picard.v2.resources.workload.resource.claim.template.ResourceC
 import io.violabs.picard.v2.resources.workload.resource.device.taint.DeviceTaintRuleV2
 import io.violabs.picard.v2.resources.workload.scheduling.PriorityClassV2
 import io.violabs.picard.v2.resources.workload.autoscaling.pod.HorizontalPodAutoscalerV2
-import io.violabs.picard.v2.resources.workload.batch.CronJobV2
+import io.violabs.picard.v2.resources.workload.batch.cron.CronJobV2
+import io.violabs.picard.v2.resources.workload.batch.job.JobV2
 
 interface APIVersion {
     fun refString(): String
@@ -321,6 +322,7 @@ open class KAPIVersion(
         CronJobV2.Version,
         CronJobList.Version,
         Job.Version,
+        JobV2.Version,
         JobList.Version
 
     object CertificatesV1 : KAPIVersion("certificates.k8s.io/v1"),

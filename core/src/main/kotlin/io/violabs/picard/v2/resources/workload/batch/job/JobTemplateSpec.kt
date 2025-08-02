@@ -1,4 +1,4 @@
-package io.violabs.picard.v2.resources.workload.batch
+package io.violabs.picard.v2.resources.workload.batch.job
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.domain.ObjectMetadata

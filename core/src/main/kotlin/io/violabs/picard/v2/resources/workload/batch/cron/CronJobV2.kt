@@ -1,4 +1,4 @@
-package io.violabs.picard.v2.resources.workload.batch
+package io.violabs.picard.v2.resources.workload.batch.cron
 
 import io.violabs.konstellation.metaDsl.annotation.DefaultValue
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl

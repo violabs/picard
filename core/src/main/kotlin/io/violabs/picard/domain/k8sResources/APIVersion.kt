@@ -187,6 +187,7 @@ import io.violabs.picard.v2.resources.workload.resource.slice.ResourceSliceV2
 import io.violabs.picard.v2.resources.workload.resource.claim.ResourceClaimV2
 import io.violabs.picard.v2.resources.workload.resource.claim.template.ResourceClaimTemplateV2
 import io.violabs.picard.v2.resources.workload.resource.device.taint.DeviceTaintRuleV2
+import io.violabs.picard.v2.resources.workload.scheduling.PriorityClassV2
 
 interface APIVersion {
     fun refString(): String
@@ -434,7 +435,8 @@ open class KAPIVersion(
 
     object SchedulingV1 : KAPIVersion("scheduling.k8s.io/v1"),
         PriorityClass.Version,
-        PriorityClassList.Version
+        PriorityClassList.Version,
+        PriorityClassV2.Version
 
     object StorageV1 : KAPIVersion("storage.k8s.io/v1"),
         CSIDriver.Version,

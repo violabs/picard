@@ -124,134 +124,84 @@ If you do not fix the build after 3 times, you can ask for help.
 
 ## Documentation
 
-Deployment
-Deployment enables declarative updates for Pods and ReplicaSets.
+ReplicaSet
+ReplicaSet ensures that a specified number of pod replicas are running at any given time.
 apiVersion: apps/v1
 
 import "k8s.io/api/apps/v1"
 
-Deployment
-Deployment enables declarative updates for Pods and ReplicaSets.
+ReplicaSet
+ReplicaSet ensures that a specified number of pod replicas are running at any given time.
 
 apiVersion: apps/v1
 
-kind: Deployment
+kind: ReplicaSet
 
 metadata (ObjectMeta)
 
-Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+If the Labels of a ReplicaSet are empty, they are defaulted to be the same as the Pod(s) that the ReplicaSet manages. Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 
-spec (DeploymentSpec)
+spec (ReplicaSetSpec)
 
-Specification of the desired behavior of the Deployment.
+Spec defines the specification of the desired behavior of the ReplicaSet. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 
-status (DeploymentStatus)
+status (ReplicaSetStatus)
 
-Most recently observed status of the Deployment.
+Status is the most recently observed status of the ReplicaSet. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 
-DeploymentSpec
-DeploymentSpec is the specification of the desired behavior of the Deployment.
+ReplicaSetSpec
+ReplicaSetSpec is the specification of a ReplicaSet.
 
 selector (LabelSelector), required
 
-Label selector for pods. Existing ReplicaSets whose pods are selected by this will be the ones affected by this deployment. It must match the pod template's labels.
+Selector is a label query over pods that should match the replica count. Label keys and values that must match in order to be controlled by this replica set. It must match the pod template's labels. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
 
-template (PodTemplateSpec), required
+template (PodTemplateSpec)
 
-Template describes the pods that will be created. The only allowed template.spec.restartPolicy value is "Always".
+Template is the object that describes the pod that will be created if insufficient replicas are detected. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/#pod-template
 
 replicas (int32)
 
-Number of desired pods. This is a pointer to distinguish between explicit zero and not specified. Defaults to 1.
+Replicas is the number of desired pods. This is a pointer to distinguish between explicit zero and unspecified. Defaults to 1. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset
 
 minReadySeconds (int32)
 
 Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready)
 
-strategy (DeploymentStrategy)
+ReplicaSetStatus
+ReplicaSetStatus represents the current status of a ReplicaSet.
 
-Patch strategy: retainKeys
+replicas (int32), required
 
-The deployment strategy to use to replace existing pods with new ones.
-
-DeploymentStrategy describes how to replace existing pods with new ones.
-
-strategy.type (string)
-
-Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
-
-strategy.rollingUpdate (RollingUpdateDeployment)
-
-Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.
-
-Spec to control the desired behavior of rolling update.
-
-strategy.rollingUpdate.maxSurge (IntOrString)
-
-The maximum number of pods that can be scheduled above the desired number of pods. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). This can not be 0 if MaxUnavailable is 0. Absolute number is calculated from percentage by rounding up. Defaults to 25%. Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update starts, such that the total number of old and new pods do not exceed 130% of desired pods. Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that total number of pods running at any time during the update is at most 130% of desired pods.
-
-IntOrString is a type that can hold an int32 or a string. When used in JSON or YAML marshalling and unmarshalling, it produces or consumes the inner type. This allows you to have, for example, a JSON field that can accept a name or number.
-
-strategy.rollingUpdate.maxUnavailable (IntOrString)
-
-The maximum number of pods that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). Absolute number is calculated from percentage by rounding down. This can not be 0 if MaxSurge is 0. Defaults to 25%. Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total number of pods available at all times during the update is at least 70% of desired pods.
-
-IntOrString is a type that can hold an int32 or a string. When used in JSON or YAML marshalling and unmarshalling, it produces or consumes the inner type. This allows you to have, for example, a JSON field that can accept a name or number.
-
-revisionHistoryLimit (int32)
-
-The number of old ReplicaSets to retain to allow rollback. This is a pointer to distinguish between explicit zero and not specified. Defaults to 10.
-
-progressDeadlineSeconds (int32)
-
-The maximum time in seconds for a deployment to make progress before it is considered to be failed. The deployment controller will continue to process failed deployments and a condition with a ProgressDeadlineExceeded reason will be surfaced in the deployment status. Note that progress will not be estimated during the time a deployment is paused. Defaults to 600s.
-
-paused (boolean)
-
-Indicates that the deployment is paused.
-
-DeploymentStatus
-DeploymentStatus is the most recently observed status of the Deployment.
-
-replicas (int32)
-
-Total number of non-terminating pods targeted by this deployment (their labels match the selector).
+Replicas is the most recently observed number of non-terminating pods. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset
 
 availableReplicas (int32)
 
-Total number of available non-terminating pods (ready for at least minReadySeconds) targeted by this deployment.
+The number of available non-terminating pods (ready for at least minReadySeconds) for this replica set.
 
 readyReplicas (int32)
 
-Total number of non-terminating pods targeted by this Deployment with a Ready Condition.
-
-unavailableReplicas (int32)
-
-Total number of unavailable pods targeted by this deployment. This is the total number of pods that are still required for the deployment to have 100% available capacity. They may either be pods that are running but not yet available or pods that still have not been created.
-
-updatedReplicas (int32)
-
-Total number of non-terminating pods targeted by this deployment that have the desired template spec.
+The number of non-terminating pods targeted by this ReplicaSet with a Ready Condition.
 
 terminatingReplicas (int32)
 
-Total number of terminating pods targeted by this deployment. Terminating pods have a non-null .metadata.deletionTimestamp and have not yet reached the Failed or Succeeded .status.phase.
+The number of terminating pods for this replica set. Terminating pods have a non-null .metadata.deletionTimestamp and have not yet reached the Failed or Succeeded .status.phase.
 
 This is an alpha field. Enable DeploymentReplicaSetTerminatingReplicas to be able to use this field.
 
-collisionCount (int32)
+fullyLabeledReplicas (int32)
 
-Count of hash collisions for the Deployment. The Deployment controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ReplicaSet.
+The number of non-terminating pods that have labels matching the labels of the pod template of the replicaset.
 
-conditions ([]DeploymentCondition)
+conditions ([]ReplicaSetCondition)
 
 Patch strategy: merge on key type
 
 Map: unique values on key type will be kept during a merge
 
-Represents the latest available observations of a deployment's current state.
+Represents the latest available observations of a replica set's current state.
 
-DeploymentCondition describes the state of a deployment at a certain point.
+ReplicaSetCondition describes the state of a replica set at a certain point.
 
 conditions.status (string), required
 
@@ -259,17 +209,11 @@ Status of the condition, one of True, False, Unknown.
 
 conditions.type (string), required
 
-Type of deployment condition.
+Type of replica set condition.
 
 conditions.lastTransitionTime (Time)
 
-Last time the condition transitioned from one status to another.
-
-Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON. Wrappers are provided for many of the factory methods that the time package offers.
-
-conditions.lastUpdateTime (Time)
-
-The last time this condition was updated.
+The last time the condition transitioned from one status to another.
 
 Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON. Wrappers are provided for many of the factory methods that the time package offers.
 
@@ -283,7 +227,7 @@ The reason for the condition's last transition.
 
 observedGeneration (int64)
 
-The generation observed by the deployment controller.
+ObservedGeneration reflects the generation of the most recently observed ReplicaSet.
 
 
 

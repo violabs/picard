@@ -1,7 +1,6 @@
-package io.violabs.picard.v2.resources.workload.stateful.set
+package io.violabs.picard.v2.resources.workload.set.stateful
 
 import io.violabs.picard.Common
-import io.violabs.picard.Common.OBJECT_META
 import io.violabs.picard.Common.sharedObjectMeta
 import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
@@ -90,7 +89,7 @@ class StatefulSetTest : SuccessBuildSim<StatefulSetV2, StatefulSetV2DslBuilder>(
                     }
                 }
                 expected = StatefulSetV2(
-                    metadata = OBJECT_META,
+                    metadata = Common.OBJECT_META,
                     spec = StatefulSetSpec(
                         serviceName = PLACEHOLDER,
                         selector = Common.LABEL_SELECTOR,

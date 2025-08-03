@@ -1,4 +1,4 @@
-package io.violabs.picard.v2.resources.workload.stateful.set
+package io.violabs.picard.v2.resources.workload.set.replica
 
 import io.violabs.konstellation.metaDsl.annotation.DefaultValue
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
@@ -9,10 +9,12 @@ import io.violabs.picard.domain.manifest.WorkloadResource
 import io.violabs.picard.v2.common.ObjectMeta
 
 /**
- * StatefulSet represents a set of pods with consistent identities.
+ * ReplicaSet ensures that a specified number of pod replicas are running at any given time.
+ *
+ * apiVersion: apps/v1
  */
 @GeneratedDsl
-data class StatefulSetV2(
+data class ReplicaSetV2(
     @DefaultValue(
         "KAPIVersion.AppsV1",
         AppConstants.DefaultValue.KAPI_VERSION_PACKAGE,
@@ -21,13 +23,14 @@ data class StatefulSetV2(
     override val apiVersion: Version = KAPIVersion.AppsV1,
     override val metadata: ObjectMeta? = null,
     /**
-     * Spec defines the desired identities of pods in this set.
+     * Spec defines the specification of the desired behavior of the ReplicaSet.
      */
-    val spec: StatefulSetSpec? = null,
+    val spec: ReplicaSetSpec? = null,
     /**
-     * Status is the current status of Pods in this StatefulSet. This data may be out of date by some window of time.
+     * Status is the most recently observed status of the ReplicaSet. This data may be
+     * out of date by some window of time. Populated by the system. Read-only.
      */
-    val status: StatefulSetStatus? = null
-) : WorkloadResource<StatefulSetV2.Version, ObjectMeta> {
+    val status: ReplicaSetStatus? = null
+) : WorkloadResource<ReplicaSetV2.Version, ObjectMeta> {
     interface Version : APIVersion
 }

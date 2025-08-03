@@ -194,7 +194,8 @@ import io.violabs.picard.v2.resources.workload.batch.job.JobV2
 import io.violabs.picard.v2.resources.workload.daemon.DaemonSetV2
 import io.violabs.picard.v2.resources.workload.controller.revision.ControllerRevisionV2
 import io.violabs.picard.v2.resources.workload.deployment.DeploymentV2
-import io.violabs.picard.v2.resources.workload.stateful.set.StatefulSetV2
+import io.violabs.picard.v2.resources.workload.set.replica.ReplicaSetV2
+import io.violabs.picard.v2.resources.workload.set.stateful.StatefulSetV2
 
 interface APIVersion {
     fun refString(): String
@@ -291,6 +292,7 @@ open class KAPIVersion(
         DeploymentV2.Version,
         DeploymentList.Version,
         ReplicaSet.Version,
+        ReplicaSetV2.Version,
         ReplicaSetList.Version,
         StatefulSet.Version,
         StatefulSetV2.Version,

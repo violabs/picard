@@ -1,4 +1,4 @@
-package io.violabs.picard.v2.resources.workload.stateful.set
+package io.violabs.picard.v2.resources.workload.set.stateful
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.domain.k8sResources.IntOrString

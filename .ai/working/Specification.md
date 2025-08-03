@@ -124,104 +124,26 @@ If you do not fix the build after 3 times, you can ask for help.
 
 ## Documentation
 
-ReplicationController
-ReplicationController represents the configuration of a replication controller.
+Binding
+Binding ties one object to another; for example, a pod is bound to a node by a scheduler.
 apiVersion: v1
 
 import "k8s.io/api/core/v1"
 
-ReplicationController
-ReplicationController represents the configuration of a replication controller.
+Binding
+Binding ties one object to another; for example, a pod is bound to a node by a scheduler.
 
 apiVersion: v1
 
-kind: ReplicationController
+kind: Binding
 
 metadata (ObjectMeta)
 
-If the Labels of a ReplicationController are empty, they are defaulted to be the same as the Pod(s) that the replication controller manages. Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 
-spec (ReplicationControllerSpec)
+target (ObjectReference), required
 
-Spec defines the specification of the desired behavior of the replication controller. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
-
-status (ReplicationControllerStatus)
-
-Status is the most recently observed status of the replication controller. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
-
-ReplicationControllerSpec
-ReplicationControllerSpec is the specification of a replication controller.
-
-selector (map[string]string)
-
-Selector is a label query over pods that should match the Replicas count. If Selector is empty, it is defaulted to the labels present on the Pod template. Label keys and values that must match in order to be controlled by this replication controller, if empty defaulted to labels on Pod template. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
-
-template (PodTemplateSpec)
-
-Template is the object that describes the pod that will be created if insufficient replicas are detected. This takes precedence over a TemplateRef. The only allowed template.spec.restartPolicy value is "Always". More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template
-
-replicas (int32)
-
-Replicas is the number of desired replicas. This is a pointer to distinguish between explicit zero and unspecified. Defaults to 1. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#what-is-a-replicationcontroller
-
-minReadySeconds (int32)
-
-Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready)
-
-ReplicationControllerStatus
-ReplicationControllerStatus represents the current status of a replication controller.
-
-replicas (int32), required
-
-Replicas is the most recently observed number of replicas. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#what-is-a-replicationcontroller
-
-availableReplicas (int32)
-
-The number of available replicas (ready for at least minReadySeconds) for this replication controller.
-
-readyReplicas (int32)
-
-The number of ready replicas for this replication controller.
-
-fullyLabeledReplicas (int32)
-
-The number of pods that have labels matching the labels of the pod template of the replication controller.
-
-conditions ([]ReplicationControllerCondition)
-
-Patch strategy: merge on key type
-
-Map: unique values on key type will be kept during a merge
-
-Represents the latest available observations of a replication controller's current state.
-
-ReplicationControllerCondition describes the state of a replication controller at a certain point.
-
-conditions.status (string), required
-
-Status of the condition, one of True, False, Unknown.
-
-conditions.type (string), required
-
-Type of replication controller condition.
-
-conditions.lastTransitionTime (Time)
-
-The last time the condition transitioned from one status to another.
-
-Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON. Wrappers are provided for many of the factory methods that the time package offers.
-
-conditions.message (string)
-
-A human readable message indicating details about the transition.
-
-conditions.reason (string)
-
-The reason for the condition's last transition.
-
-observedGeneration (int64)
-
-ObservedGeneration reflects the generation of the most recently observed replication controller.
+The target object that you want to bind to the standard object.
 
 
 

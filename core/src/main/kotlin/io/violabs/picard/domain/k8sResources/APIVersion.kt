@@ -198,6 +198,7 @@ import io.violabs.picard.v2.resources.workload.binding.BindingV2
 import io.violabs.picard.v2.resources.workload.controller.replication.ReplicationControllerV2
 import io.violabs.picard.v2.resources.workload.set.replica.ReplicaSetV2
 import io.violabs.picard.v2.resources.workload.set.stateful.StatefulSetV2
+import io.violabs.picard.v2.resources.workload.pod.PodV2
 
 interface APIVersion {
     fun refString(): String
@@ -238,6 +239,7 @@ open class KAPIVersion(
         PersistentVolumeClaimV2.Version,
         PersistentVolumeClaimList.Version,
         Pod.Version,
+        PodV2.Version,
         PodList.Version,
         PodTemplate.Version,
         PodTemplateList.Version,

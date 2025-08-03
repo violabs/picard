@@ -21,6 +21,7 @@ import io.violabs.picard.v2.resources.storage.volume.Volume
 import io.violabs.picard.v2.resources.storage.volume.VolumeDslBuilder
 import java.time.LocalDateTime
 
+@Deprecated("Use v2", ReplaceWith("io.violabs.picard.v2.resources.workload.pod.PodV2"))
 data class Pod(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,

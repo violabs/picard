@@ -17,6 +17,7 @@ import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.domain.label.LabelSelector
 import io.violabs.picard.domain.manifest.WorkloadResource
 
+@Deprecated("Use v2", ReplaceWith("DeploymentV2", "io.violabs.picard.v2.resources.workload.deployment.DeploymentV2"))
 data class Deployment(
     override val apiVersion: Version = KAPIVersion.AppsV1,
     override val metadata: ObjectMetadata? = null,

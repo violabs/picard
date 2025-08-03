@@ -193,6 +193,7 @@ import io.violabs.picard.v2.resources.workload.batch.cron.CronJobV2
 import io.violabs.picard.v2.resources.workload.batch.job.JobV2
 import io.violabs.picard.v2.resources.workload.daemon.DaemonSetV2
 import io.violabs.picard.v2.resources.workload.controller.revision.ControllerRevisionV2
+import io.violabs.picard.v2.resources.workload.deployment.DeploymentV2
 import io.violabs.picard.v2.resources.workload.stateful.set.StatefulSetV2
 
 interface APIVersion {
@@ -287,6 +288,7 @@ open class KAPIVersion(
         DaemonSetV2.Version,
         DaemonSetList.Version,
         Deployment.Version,
+        DeploymentV2.Version,
         DeploymentList.Version,
         ReplicaSet.Version,
         ReplicaSetList.Version,

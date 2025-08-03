@@ -14,6 +14,7 @@ import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.domain.manifest.WorkloadResource
 
+@Deprecated("Use v2", ReplaceWith("ReplicationControllerV2", "io.violabs.picard.v2.resources.workload.controller.replication.ReplicationControllerV2"))
 data class ReplicationController(
     override val apiVersion: Version = KAPIVersion.V1,
     override val metadata: ObjectMetadata? = null,

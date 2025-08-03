@@ -194,6 +194,7 @@ import io.violabs.picard.v2.resources.workload.batch.job.JobV2
 import io.violabs.picard.v2.resources.workload.daemon.DaemonSetV2
 import io.violabs.picard.v2.resources.workload.controller.revision.ControllerRevisionV2
 import io.violabs.picard.v2.resources.workload.deployment.DeploymentV2
+import io.violabs.picard.v2.resources.workload.controller.replication.ReplicationControllerV2
 import io.violabs.picard.v2.resources.workload.set.replica.ReplicaSetV2
 import io.violabs.picard.v2.resources.workload.set.stateful.StatefulSetV2
 
@@ -239,6 +240,7 @@ open class KAPIVersion(
         PodTemplate.Version,
         PodTemplateList.Version,
         ReplicationController.Version,
+        ReplicationControllerV2.Version,
         ReplicationControllerList.Version,
         ResourceQuota.Version,
         ResourceQuotaV2.Version,

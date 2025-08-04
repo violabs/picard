@@ -1,6 +1,8 @@
-package io.violabs.picard.v2.resources.workload.pod.container
+package io.violabs.picard.v2.resources.workload.pod.container.env
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
+import io.violabs.picard.v2.resources.workload.pod.container.secret.SecretEnvSource
+import io.violabs.picard.v2.resources.workload.pod.container.config.ConfigMapEnvSource
 
 /**
  * EnvFromSource represents the source of a set of ConfigMaps
@@ -12,7 +14,8 @@ data class EnvFromSource(
      */
     val configMapRef: ConfigMapEnvSource? = null,
     /**
-     * An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.
+     * An optional identifier to prepend to each key in the ConfigMap.
+     * Must be a C_IDENTIFIER.
      */
     val prefix: String? = null,
     /**

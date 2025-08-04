@@ -3,12 +3,14 @@ package io.violabs.picard.v2.resources.workload.pod.resource
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 
 /**
- * PodResourceClaim references exactly one ResourceClaim, either directly or by ResourceClaim template name.
+ * PodResourceClaim references exactly one ResourceClaim,
+ * either directly or by ResourceClaim template name.
  */
 @GeneratedDsl(withListGroup = true)
 data class PodResourceClaim(
     /**
-     * Name uniquely identifies this resource claim inside the pod. This must be a DNS_LABEL.
+     * Name uniquely identifies this resource claim inside the pod.
+     * This must be a DNS_LABEL.
      */
     val name: String,
     /**
@@ -18,11 +20,18 @@ data class PodResourceClaim(
      */
     val resourceClaimName: String? = null,
     /**
-     * ResourceClaimTemplateName is the name of a ResourceClaimTemplate object in the same namespace as this pod.
+     * ResourceClaimTemplateName is the name of a ResourceClaimTemplate
+     * object in the same namespace as this pod.
      *
-     * The template will be used to create a new ResourceClaim, which will be bound to this pod. When this pod is deleted, the ResourceClaim will also be deleted. The pod name and resource name, along with a generated component, will be used to form a unique name for the ResourceClaim, which will be recorded in pod.status.resourceClaimStatuses.
+     * The template will be used to create a new ResourceClaim,
+     * which will be bound to this pod.
+     * When this pod is deleted, the ResourceClaim will also be deleted.
+     * The pod name and resource name, along with a generated component,
+     * will be used to form a unique name for the ResourceClaim,
+     * which will be recorded in pod.status.resourceClaimStatuses.
      *
-     * This field is immutable and no changes will be made to the corresponding ResourceClaim by the control plane after creating the ResourceClaim.
+     * This field is immutable and no changes will be made to the corresponding
+     * ResourceClaim by the control plane after creating the ResourceClaim.
      *
      * Exactly one of ResourceClaimName and ResourceClaimTemplateName must be set.
      */

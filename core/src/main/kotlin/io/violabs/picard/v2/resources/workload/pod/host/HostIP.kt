@@ -1,4 +1,4 @@
-package io.violabs.picard.v2.resources.workload.pod
+package io.violabs.picard.v2.resources.workload.pod.host
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 

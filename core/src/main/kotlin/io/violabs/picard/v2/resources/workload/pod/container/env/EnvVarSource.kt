@@ -1,7 +1,6 @@
 package io.violabs.picard.v2.resources.workload.pod.container.env
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
-import io.violabs.picard.v2.resources.workload.pod.container.env.ObjectFieldSelector
 import io.violabs.picard.v2.resources.workload.pod.container.resource.ResourceFieldSelector
 import io.violabs.picard.v2.resources.workload.pod.container.secret.SecretKeySelector
 import io.violabs.picard.v2.resources.workload.pod.container.config.ConfigMapKeySelector

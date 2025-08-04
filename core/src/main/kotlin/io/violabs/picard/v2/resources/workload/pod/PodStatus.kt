@@ -1,9 +1,10 @@
 package io.violabs.picard.v2.resources.workload.pod
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.v2.common.condition.Condition
-import io.violabs.picard.v2.resources.workload.pod.container.ContainerStatus
-import io.violabs.picard.v2.resources.workload.pod.host.HostIP
+import io.violabs.picard.v2.resources.workload.pod.container.status.ContainerStatus
+import io.violabs.picard.v2.resources.workload.pod.host.HostIp
 import io.violabs.picard.v2.resources.workload.pod.resource.PodResourceClaimStatus
 import java.time.LocalDateTime
 
@@ -31,7 +32,8 @@ data class PodStatus(
      * problem in kubelet which in turns mean that HostIP will not be updated even
      * if there is a node is assigned to pod
      */
-    val hostIP: String? = null,
+    @JsonProperty("hostIP")
+    val hostIp: String? = null,
     /**
      * hostIPs holds the IP addresses allocated to the host. If this field is
      * specified, the first entry must match the hostIP field. This list is empty
@@ -39,7 +41,8 @@ data class PodStatus(
      * problem in kubelet which in turns means that HostIPs will not be updated
      * even if there is a node is assigned to this pod.
      */
-    val hostIPs: List<HostIP>? = null,
+    @JsonProperty("hostIPs")
+    val hostIps: List<HostIp>? = null,
     /**
      * RFC 3339 date and time at which the object was acknowledged by the Kubelet.
      * This is before the Kubelet pulled the container image(s) for the pod.
@@ -54,18 +57,18 @@ data class PodStatus(
      * Pending: The pod has been accepted by the Kubernetes system, but one or more
      * of the container images has not been created. This includes time before being
      * scheduled as well as time spent downloading images over the network, which
-     * could take a while. Running: The pod has been bound to a node, and all of the
-     * containers have been created. At least one container is still running, or is
-     * in the process of starting or restarting. Succeeded: All containers in the pod
-     * have terminated in success, and will not be restarted. Failed: All containers
-     * in the pod have terminated, and at least one container has terminated in failure.
+     * could take a while.
+     * Running: The pod has been bound to a node, and all of the containers have been created.
+     * At least one container is still running, or is in the process of starting or restarting.
+     * Succeeded: All containers in the pod have terminated in success, and will not be restarted.
+     * Failed: All containers in the pod have terminated, and at least one container has terminated in failure.
      * The container either exited with non-zero status or was terminated by the system.
      * Unknown: For some reason the state of the pod could not be obtained, typically
      * due to an error in communicating with the host of the pod.
      *
      * More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-phase
      */
-    val phase: String? = null,
+    val phase: Phase? = null,
     /**
      * A human readable message indicating details about why the pod is in this condition.
      */
@@ -77,12 +80,14 @@ data class PodStatus(
     /**
      * podIP address allocated to the pod. Routable at least within the cluster. Empty if not yet allocated.
      */
-    val podIP: String? = null,
+    @JsonProperty("podIP")
+    val podIp: String? = null,
     /**
      * podIPs holds the IP addresses allocated to the pod. If this field is specified,
      * the 0th entry must match the podIP field. This list is empty if no IPs have been allocated yet.
      */
-    val podIPs: List<PodIP>? = null,
+    @JsonProperty("podIPs")
+    val podIps: List<PodIp>? = null,
     /**
      * Current service state of pod.
      * More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions
@@ -115,5 +120,18 @@ data class PodStatus(
      * if no resources resize is pending. Any changes to container resources
      * will automatically set this to "Proposed"
      */
-    val resize: String? = null
-)
+    val resize: String? = null,
+    /**
+     * If set, this represents the .metadata.generation that the pod status was set based upon.
+     * This is an alpha field. Enable PodObservedGenerationTracking to be able to use this field.
+     */
+    val observedGeneration: Long? = null
+) {
+    enum class Phase {
+        Pending,
+        Running,
+        Succeeded,
+        Failed,
+        Unknown
+    }
+}

@@ -1,5 +1,6 @@
 package io.violabs.picard.v2.resources.workload.pod.container.state
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import java.time.LocalDateTime
 
@@ -11,7 +12,8 @@ data class ContainerStateTerminated(
     /**
      * Container's ID in the format '<type>://<container_id>'
      */
-    val containerID: String? = null,
+    @JsonProperty("containerID")
+    val containerId: String? = null,
     /**
      * Exit status from the last termination of the container
      */

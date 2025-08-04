@@ -1,5 +1,6 @@
 package io.violabs.picard.v2.resources.workload.pod.container
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 
 /**
@@ -15,7 +16,8 @@ data class ContainerPort(
     /**
      * What host IP to bind the external port to.
      */
-    val hostIP: String? = null,
+    @JsonProperty("hostIP")
+    val hostIp: String? = null,
     /**
      * Number of port to expose on the host.
      * If specified, this must be a valid port number, 0 < x < 65536.

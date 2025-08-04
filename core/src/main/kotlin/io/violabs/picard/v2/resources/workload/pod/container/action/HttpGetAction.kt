@@ -1,6 +1,7 @@
 package io.violabs.picard.v2.resources.workload.pod.container.action
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
+import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.v2.resources.workload.pod.container.action.HttpHeader
 
 /**
@@ -9,15 +10,15 @@ import io.violabs.picard.v2.resources.workload.pod.container.action.HttpHeader
 @GeneratedDsl
 data class HttpGetAction(
     /**
-     * Path to access on the HTTP server.
-     */
-    val path: String? = null,
-    /**
      * Name or number of the port to access on the container.
      * Number must be in the range 1 to 65535.
      * Name must be an IANA_SVC_NAME.
      */
-    val port: String? = null,
+    val port: IntOrString,
+    /**
+     * Path to access on the HTTP server.
+     */
+    val path: String? = null,
     /**
      * Host name to connect to, defaults to the pod IP. You probably want to set
      * "Host" in httpHeaders instead.

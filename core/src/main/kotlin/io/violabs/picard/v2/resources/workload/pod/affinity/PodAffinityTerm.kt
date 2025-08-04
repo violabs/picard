@@ -13,6 +13,14 @@ import io.violabs.picard.v2.common.LabelSelector
 @GeneratedDsl(withListGroup = true)
 data class PodAffinityTerm(
     /**
+     * This pod should be co-located (affinity) or not co-located (anti-affinity) with
+     * the pods matching the labelSelector in the specified namespaces, where co-located
+     * is defined as running on a node whose value of the label with key topologyKey
+     * matches that of any node on which any of the selected pods is running.
+     * Empty topologyKey is not allowed.
+     */
+    val topologyKey: String,
+    /**
      * A label query over a set of resources, in this case pods.
      * If it's null, this PodAffinityTerm matches with no Pods.
      */
@@ -32,14 +40,6 @@ data class PodAffinityTerm(
      * null or empty namespaces list and null namespaceSelector means "this pod's namespace".
      */
     val namespaces: List<String>? = null,
-    /**
-     * This pod should be co-located (affinity) or not co-located (anti-affinity) with
-     * the pods matching the labelSelector in the specified namespaces, where co-located
-     * is defined as running on a node whose value of the label with key topologyKey
-     * matches that of any node on which any of the selected pods is running.
-     * Empty topologyKey is not allowed.
-     */
-    val topologyKey: String,
     /**
      * MatchLabelKeys is a set of pod label keys to select which pods will
      * be taken into consideration. The keys are used to lookup values from the

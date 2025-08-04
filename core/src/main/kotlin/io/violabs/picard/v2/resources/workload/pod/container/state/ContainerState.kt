@@ -20,5 +20,5 @@ data class ContainerState(
     /**
      * Details about a waiting container
      */
-    val waiting: ContainerStateWaiting? = null
+    val waiting: ContainerStateWaiting? = null,
 )

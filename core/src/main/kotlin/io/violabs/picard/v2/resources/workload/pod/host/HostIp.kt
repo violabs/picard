@@ -6,7 +6,7 @@ import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
  * HostIP represents a single IP address allocated to the host.
  */
 @GeneratedDsl(withListGroup = true)
-data class HostIP(
+data class HostIp(
     /**
      * IP is the IP address assigned to the host
      */

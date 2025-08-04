@@ -1,4 +1,4 @@
-package io.violabs.picard.v2.resources.workload.pod.container
+package io.violabs.picard.v2.resources.workload.pod.container.ephemeral
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.v2.resources.workload.pod.container.env.EnvFromSource
@@ -89,11 +89,11 @@ data class EphemeralContainer(
      */
     val volumeDevices: List<VolumeDevice>? = null,
     /**
-     * Compute Resources required by this container.
-     * Cannot be updated.
-     * More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+     * Restart policy for the container to manage the restart behavior
+     * of each container within a pod. This may only be set for init containers.
+     * You cannot set this field on ephemeral containers.
      */
-    val resources: ResourceRequirements? = null,
+    val restartPolicy: String? = null,
     /**
      * Optional: Path at which the file to which the container's termination
      * message will be written is mounted into the container's filesystem.
@@ -102,6 +102,14 @@ data class EphemeralContainer(
      * The total message length across all containers will be limited to 12kb.
      * Defaults to /dev/termination-log.
      * Cannot be updated.
+     */
+    val resizePolicy: List<ContainerResizePolicy>? = null,
+    /**
+     * Optional: Path at which the file to which the container's termination message will be written
+     * is mounted into the container's filesystem. Message written is intended to be brief final status,
+     * such as an assertion failure message. Will be truncated by the node if greater than 4096 bytes.
+     * The total message length across all containers will be limited to 12kb.
+     * Defaults to /dev/termination-log. Cannot be updated.
      */
     val terminationMessagePath: String? = null,
     /**

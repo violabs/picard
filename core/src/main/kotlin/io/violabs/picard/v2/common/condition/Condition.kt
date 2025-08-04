@@ -1,6 +1,7 @@
 package io.violabs.picard.v2.common.condition
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
+import io.violabs.picard.domain.BooleanType
 import java.time.LocalDateTime
 
 /**
@@ -13,23 +14,23 @@ data class Condition(
      * This should be when the underlying condition changed. If that is not known, then using the time
      * when the API field changed is acceptable.
      */
-    val lastTransitionTime: LocalDateTime,
+    val lastTransitionTime: LocalDateTime? = null,
     /**
      * message is a human readable message indicating details about the transition.
      * This may be an empty string.
      */
-    val message: String,
+    val message: String? = null,
     /**
      * reason contains a programmatic identifier indicating the reason for the condition's last transition.
      * Producers of specific condition types may define expected values and meanings for this field,
      * and whether the values are considered a guaranteed API. The value should be a CamelCase string.
      * This field may not be empty.
      */
-    val reason: String,
+    val reason: String? = null,
     /**
      * status of the condition, one of True, False, Unknown.
      */
-    val status: String,
+    val status: BooleanType,
     /**
      * type of condition in CamelCase or in foo.example.com/CamelCase.
      */

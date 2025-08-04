@@ -26,5 +26,11 @@ data class Lifecycle(
      * Other management of the container blocks until the hook completes or until the termination grace period is reached.
      * More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
      */
-    val preStop: LifecycleHandler? = null
+    val preStop: LifecycleHandler? = null,
+    /**
+     * StopSignal defines which signal will be sent to a container when it is being stopped.
+     * If not specified, the default is defined by the container runtime in use.
+     * StopSignal can only be set for Pods with a non-empty .spec.os.name
+     */
+    val stopSignal: String? = null
 )

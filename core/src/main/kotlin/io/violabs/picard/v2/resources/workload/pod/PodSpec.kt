@@ -7,8 +7,9 @@ import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.v2.common.LocalObjectReference
 import io.violabs.picard.v2.resources.storage.volume.Volume
 import io.violabs.picard.v2.resources.workload.pod.container.Container
-import io.violabs.picard.v2.resources.workload.pod.container.EphemeralContainer
+import io.violabs.picard.v2.resources.workload.pod.container.ephemeral.EphemeralContainer
 import io.violabs.picard.v2.resources.workload.pod.affinity.Affinity
+import io.violabs.picard.v2.resources.workload.pod.container.resource.ResourceRequirements
 import io.violabs.picard.v2.resources.workload.pod.dns.PodDnsConfig
 import io.violabs.picard.v2.resources.workload.pod.gate.PodReadinessGate
 import io.violabs.picard.v2.resources.workload.pod.gate.SchedulingGate
@@ -352,6 +353,17 @@ data class PodSpec(
      * servers that enable the UserNamespacesSupport feature.
      */
     val hostUsers: Boolean? = null,
+    /**
+     * Resources is the total amount of CPU and Memory resources required by all containers in the pod.
+     * It supports specifying Requests and Limits for "cpu" and "memory" resource names only.
+     * ResourceClaims are not supported.
+     *
+     * This field enables fine-grained control over resource allocation for the entire pod,
+     * allowing resource sharing among containers in a pod.
+     *
+     * This is an alpha field and requires enabling the PodLevelResources feature gate.
+     */
+    val resources: ResourceRequirements? = null,
     /**
      * ResourceClaims defines which ResourceClaims must be allocated
      * and reserved before the Pod is allowed to start.

@@ -1,6 +1,7 @@
 package io.violabs.picard.v2.resources.workload.pod.affinity
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
+import io.violabs.picard.v2.common.NodeSelectorRequirement
 
 /**
  * A null or empty node selector term matches no objects. The requirements of

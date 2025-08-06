@@ -3,7 +3,6 @@ package io.violabs.picard.v2.resources.workload.pod.container.ephemeral
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.v2.resources.workload.pod.container.env.EnvFromSource
 import io.violabs.picard.v2.resources.workload.pod.container.env.EnvVar
-import io.violabs.picard.v2.resources.workload.pod.container.resource.ResourceRequirements
 import io.violabs.picard.v2.resources.workload.pod.container.security.ContainerSecurityContext
 import io.violabs.picard.v2.resources.workload.pod.container.volume.VolumeDevice
 import io.violabs.picard.v2.resources.workload.pod.container.volume.VolumeMount
@@ -88,12 +87,6 @@ data class EphemeralContainer(
      * volumeDevices is the list of block devices to be used by the container.
      */
     val volumeDevices: List<VolumeDevice>? = null,
-    /**
-     * Restart policy for the container to manage the restart behavior
-     * of each container within a pod. This may only be set for init containers.
-     * You cannot set this field on ephemeral containers.
-     */
-    val restartPolicy: String? = null,
     /**
      * Optional: Path at which the file to which the container's termination
      * message will be written is mounted into the container's filesystem.

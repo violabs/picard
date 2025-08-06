@@ -23,17 +23,6 @@ data class ConfigMapVolumeSource(
      */
     val name: String? = null,
     /**
-     * Atomic: will be replaced during a merge
-     *
-     * If unspecified, each key-value pair in the Data field of the referenced ConfigMap
-     * will be projected into the volume as a file whose name is the key and content is
-     * the value. If specified, the listed keys will be projected into the specified paths,
-     * and unlisted keys will not be present. If a key is specified which is not present in the ConfigMap,
-     * the volume setup will error unless it is marked optional. Paths must be relative and may not
-     * contain the '..' path or start with '..'.
-     */
-    val items: List<KeyToPath>? = null,
-    /**
      * Mode bits used to set permissions on created files by default. Must be an
      * octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML
      * accepts both octal and decimal values, JSON requires decimal values for mode bits.
@@ -45,5 +34,16 @@ data class ConfigMapVolumeSource(
     /**
      * specify whether the ConfigMap or its keys must be defined
      */
-    val optional: Boolean? = null
+    val optional: Boolean? = null,
+    /**
+     * Atomic: will be replaced during a merge
+     *
+     * If unspecified, each key-value pair in the Data field of the referenced ConfigMap
+     * will be projected into the volume as a file whose name is the key and content is
+     * the value. If specified, the listed keys will be projected into the specified paths,
+     * and unlisted keys will not be present. If a key is specified which is not present in the ConfigMap,
+     * the volume setup will error unless it is marked optional. Paths must be relative and may not
+     * contain the '..' path or start with '..'.
+     */
+    val items: List<KeyToPath>? = null
 )

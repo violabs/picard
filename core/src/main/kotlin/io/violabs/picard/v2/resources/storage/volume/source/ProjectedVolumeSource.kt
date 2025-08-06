@@ -1,7 +1,7 @@
 package io.violabs.picard.v2.resources.storage.volume.source
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
-import io.violabs.picard.v2.resources.configstorage.volume.projection.VolumeProjection
+import io.violabs.picard.v2.resources.storage.volume.projection.VolumeProjection
 
 /**
  * Represents a projected volume source

@@ -1,5 +1,6 @@
 package io.violabs.picard.v2.resources.workload.pod.dns
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 
 /**
@@ -14,7 +15,8 @@ data class PodDnsConfig(
      *
      * Atomic: will be replaced during a merge
      */
-    val nameservers: List<String>? = null,
+    @JsonProperty("nameservers")
+    val nameServers: List<String>? = null,
     /**
      * A list of DNS resolver options. This will be merged with the base options generated from DNSPolicy.
      * Duplicated entries will be removed.

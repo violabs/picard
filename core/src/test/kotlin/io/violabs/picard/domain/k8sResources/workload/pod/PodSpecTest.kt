@@ -21,6 +21,7 @@ import io.violabs.picard.domain.k8sResources.workload.pod.resource.PodResourceCl
 import io.violabs.picard.domain.k8sResources.workload.pod.security.*
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.common.LabelSelectorRequirement
+import io.violabs.picard.v2.resources.storage.volume.source.ImageVolumeSource
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Disabled
 
@@ -410,7 +411,7 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
                             }
 
                             image {
-                                imagePullPolicy = PLACEHOLDER
+                                imagePullPolicy = ImageVolumeSource.ImagePullPolicy.Always
                                 reference = PLACEHOLDER
                             }
 

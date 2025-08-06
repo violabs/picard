@@ -5,7 +5,7 @@ import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 /**
  * VolumeMountStatus shows status of volume mounts.
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class VolumeMountStatus(
     /**
      * MountPath corresponds to the original VolumeMount.

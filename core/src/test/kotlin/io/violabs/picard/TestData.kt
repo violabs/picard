@@ -9,7 +9,6 @@ import io.violabs.picard.v2.resources.storage.persistent.volume.claim.Persistent
 import io.violabs.picard.v2.resources.storage.volume.KeyToPath
 import io.violabs.picard.v2.resources.storage.volume.Volume
 import io.violabs.picard.v2.resources.storage.volume.DownwardApiVolumeFile
-import io.violabs.picard.v2.resources.configstorage.volume.projection.*
 import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimTemplate
 import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimConditionDslBuilder
 import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimSpec
@@ -18,6 +17,7 @@ import io.violabs.picard.v2.resources.storage.volume.projection.ConfigMapProject
 import io.violabs.picard.v2.resources.storage.volume.projection.DownwardApiProjection
 import io.violabs.picard.v2.resources.storage.volume.projection.SecretProjection
 import io.violabs.picard.v2.resources.storage.volume.projection.ServiceAccountTokenProjection
+import io.violabs.picard.v2.resources.storage.volume.projection.VolumeProjection
 import io.violabs.picard.v2.resources.storage.volume.source.ConfigMapVolumeSource
 import io.violabs.picard.v2.resources.storage.volume.source.CsiVolumeSource
 import io.violabs.picard.v2.resources.storage.volume.source.DownwardApiVolumeSource
@@ -212,7 +212,7 @@ object Volumes {
     )
 
     val IMAGE_VOLUME_SOURCE = ImageVolumeSource(
-        imagePullPolicy = PLACEHOLDER,
+        imagePullPolicy = ImageVolumeSource.ImagePullPolicy.Always,
         reference = PLACEHOLDER
     )
 

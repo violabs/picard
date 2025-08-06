@@ -11,7 +11,7 @@ data class ContainerResizePolicy(
     /**
      * Name of the resource to which this resource resize policy applies. Supported values: cpu, memory.
      */
-    val resourceName: String,
+    val resourceName: ResourceName,
     /**
      * Restart policy to apply when specified resource is resized. If not specified, it defaults to NotRequired.
      */

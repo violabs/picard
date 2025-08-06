@@ -43,7 +43,7 @@ data class ContainerStatus(
      * The image ID may not match the image ID of the image used in the PodSpec,
      * as it may have been resolved by the runtime.
      */
-    @JsonProperty("imageId")
+    @JsonProperty("imageID")
     val imageId: String,
     /**
      * ContainerID is the ID of the container in the format '<type>://<container_id>'.

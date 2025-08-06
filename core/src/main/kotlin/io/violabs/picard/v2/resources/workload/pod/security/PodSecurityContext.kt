@@ -3,6 +3,7 @@ package io.violabs.picard.v2.resources.workload.pod.security
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.v2.resources.workload.pod.container.security.AppArmorProfile
 import io.violabs.picard.v2.resources.workload.pod.container.options.SeLinuxOptions
+import io.violabs.picard.v2.resources.workload.pod.container.options.WindowsSecurityContextOptions
 import io.violabs.picard.v2.resources.workload.pod.container.security.SeccompProfile
 
 /**

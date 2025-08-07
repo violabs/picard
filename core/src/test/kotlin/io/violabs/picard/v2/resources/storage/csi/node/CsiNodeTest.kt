@@ -7,7 +7,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class CsiNodeTest : FullBuildSim<CsiNodeV2, CsiNodeV2DslBuilder>() {
+class CsiNodeTest : FullBuildSim<CsiNode, CsiNodeV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,7 +17,7 @@ class CsiNodeTest : FullBuildSim<CsiNodeV2, CsiNodeV2DslBuilder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<CsiNodeV2, CsiNodeV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<CsiNode, CsiNodeV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(CsiNodeV2DslBuilder()) {
@@ -25,7 +25,7 @@ class CsiNodeTest : FullBuildSim<CsiNodeV2, CsiNodeV2DslBuilder>() {
                         drivers { }
                     }
                 }
-                expected = CsiNodeV2(
+                expected = CsiNode(
                     spec = CsiNodeSpec(
                         drivers = emptyList()
                     )
@@ -50,7 +50,7 @@ class CsiNodeTest : FullBuildSim<CsiNodeV2, CsiNodeV2DslBuilder>() {
                         }
                     }
                 }
-                expected = CsiNodeV2(
+                expected = CsiNode(
                     metadata = Common.OBJECT_META,
                     spec = CsiNodeSpec(
                         drivers = listOf(
@@ -66,7 +66,7 @@ class CsiNodeTest : FullBuildSim<CsiNodeV2, CsiNodeV2DslBuilder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<CsiNodeV2, CsiNodeV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<CsiNode, CsiNodeV2DslBuilder> {
             requireScenario("spec") {
                 given(CsiNodeV2DslBuilder())
             }

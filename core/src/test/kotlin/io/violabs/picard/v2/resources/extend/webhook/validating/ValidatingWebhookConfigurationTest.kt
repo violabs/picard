@@ -2,7 +2,6 @@ package io.violabs.picard.v2.resources.extend.webhook.validating
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
-import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.extend.webhook.MatchCondition
@@ -12,7 +11,7 @@ import io.violabs.picard.v2.resources.extend.webhook.WebhookClientConfig
 import org.junit.jupiter.api.BeforeAll
 
 class ValidatingWebhookConfigurationTest :
-    SuccessBuildSim<ValidatingWebhookConfigurationV2, ValidatingWebhookConfigurationV2DslBuilder>() {
+    SuccessBuildSim<ValidatingWebhookConfiguration, ValidatingWebhookConfigurationV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -22,11 +21,11 @@ class ValidatingWebhookConfigurationTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<ValidatingWebhookConfigurationV2, ValidatingWebhookConfigurationV2DslBuilder> {
+            possibilities<ValidatingWebhookConfiguration, ValidatingWebhookConfigurationV2DslBuilder> {
                 scenario {
                     id = "minimum"
                     given(ValidatingWebhookConfigurationV2DslBuilder())
-                    expected = ValidatingWebhookConfigurationV2()
+                    expected = ValidatingWebhookConfiguration()
                 }
 
                 scenario {
@@ -73,7 +72,7 @@ class ValidatingWebhookConfigurationTest :
                             }
                         }
                     }
-                    expected = ValidatingWebhookConfigurationV2(
+                    expected = ValidatingWebhookConfiguration(
                         metadata = Common.OBJECT_META,
                         webhooks = listOf(
                             ValidatingWebhook(

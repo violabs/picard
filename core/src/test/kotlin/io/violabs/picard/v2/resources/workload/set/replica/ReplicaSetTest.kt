@@ -1,14 +1,13 @@
 package io.violabs.picard.v2.resources.workload.set.replica
 
 import io.violabs.picard.Common
-import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.common.ObjectMeta
 import org.junit.jupiter.api.BeforeAll
 
-class ReplicaSetTest : SuccessBuildSim<ReplicaSetV2, ReplicaSetV2DslBuilder>() {
+class ReplicaSetTest : SuccessBuildSim<ReplicaSet, ReplicaSetV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,7 +16,7 @@ class ReplicaSetTest : SuccessBuildSim<ReplicaSetV2, ReplicaSetV2DslBuilder>() {
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ReplicaSetV2, ReplicaSetV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ReplicaSet, ReplicaSetV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(ReplicaSetV2DslBuilder()) {
@@ -27,7 +26,7 @@ class ReplicaSetTest : SuccessBuildSim<ReplicaSetV2, ReplicaSetV2DslBuilder>() {
                         }
                     }
                 }
-                expected = ReplicaSetV2(
+                expected = ReplicaSet(
                     spec = ReplicaSetSpec(
                         selector = Common.LABEL_SELECTOR
                     )
@@ -67,7 +66,7 @@ class ReplicaSetTest : SuccessBuildSim<ReplicaSetV2, ReplicaSetV2DslBuilder>() {
                         observedGeneration = 1
                     }
                 }
-                expected = ReplicaSetV2(
+                expected = ReplicaSet(
                     metadata = ObjectMeta(
                         name = PLACEHOLDER,
                         namespace = PLACEHOLDER

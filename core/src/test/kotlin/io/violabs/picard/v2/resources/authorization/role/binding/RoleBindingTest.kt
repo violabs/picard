@@ -4,12 +4,11 @@ package io.violabs.picard.v2.resources.authorization.role.binding
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
 import io.violabs.picard.FullBuildSim
-import io.violabs.picard.domain.k8sResources.authorization.role.binding.RoleBinding
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.authorization.role.RoleTestConfig
 import org.junit.jupiter.api.BeforeAll
 
-class RoleBindingTest : FullBuildSim<RoleBindingV2, RoleBindingV2DslBuilder>() {
+class RoleBindingTest : FullBuildSim<RoleBinding, RoleBindingV2DslBuilder>() {
     companion object : RoleTestConfig {
         @JvmStatic
         @BeforeAll
@@ -19,7 +18,7 @@ class RoleBindingTest : FullBuildSim<RoleBindingV2, RoleBindingV2DslBuilder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<RoleBindingV2, RoleBindingV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<RoleBinding, RoleBindingV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(RoleBindingV2DslBuilder()) {
@@ -27,7 +26,7 @@ class RoleBindingTest : FullBuildSim<RoleBindingV2, RoleBindingV2DslBuilder>() {
                         sharedRoleRef()
                     }
                 }
-                expected = RoleBindingV2(
+                expected = RoleBinding(
                     roleRef = roleRef
                 )
             }
@@ -46,7 +45,7 @@ class RoleBindingTest : FullBuildSim<RoleBindingV2, RoleBindingV2DslBuilder>() {
                         sharedSubject()
                     }
                 }
-                expected = RoleBindingV2(
+                expected = RoleBinding(
                     roleRef = roleRef,
                     subjects = listOf(subject),
                     metadata = Common.OBJECT_META
@@ -54,7 +53,7 @@ class RoleBindingTest : FullBuildSim<RoleBindingV2, RoleBindingV2DslBuilder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<RoleBindingV2, RoleBindingV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<RoleBinding, RoleBindingV2DslBuilder> {
             requireScenario("roleRef") {
                 given(RoleBindingV2DslBuilder())
             }

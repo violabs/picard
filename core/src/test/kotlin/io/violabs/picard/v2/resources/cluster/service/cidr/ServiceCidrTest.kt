@@ -6,7 +6,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ServiceCidrTest : SuccessBuildSim<ServiceCidrV2, ServiceCidrV2DslBuilder>() {
+class ServiceCidrTest : SuccessBuildSim<ServiceCidr, ServiceCidrV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,11 +15,11 @@ class ServiceCidrTest : SuccessBuildSim<ServiceCidrV2, ServiceCidrV2DslBuilder>(
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ServiceCidrV2, ServiceCidrV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ServiceCidr, ServiceCidrV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(ServiceCidrV2DslBuilder())
-                expected = ServiceCidrV2()
+                expected = ServiceCidr()
             }
 
             scenario {
@@ -44,7 +44,7 @@ class ServiceCidrTest : SuccessBuildSim<ServiceCidrV2, ServiceCidrV2DslBuilder>(
                         }
                     }
                 }
-                expected = ServiceCidrV2(
+                expected = ServiceCidr(
                     metadata = Common.OBJECT_META,
                     spec = ServiceCidrSpec(
                         cidrs = listOf(PLACEHOLDER)

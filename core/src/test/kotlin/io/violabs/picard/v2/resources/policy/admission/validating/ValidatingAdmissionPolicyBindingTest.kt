@@ -2,15 +2,15 @@ package io.violabs.picard.v2.resources.policy.admission.validating
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
-import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.policy.admission.MatchResources
 import io.violabs.picard.v2.resources.policy.admission.ParamRef
+import io.violabs.picard.v2.resources.policy.admission.validating.binding.ValidatingAdmissionPolicyBinding
 import org.junit.jupiter.api.BeforeAll
 
 class ValidatingAdmissionPolicyBindingTest :
-    SuccessBuildSim<ValidatingAdmissionPolicyBindingV2, ValidatingAdmissionPolicyBindingV2DslBuilder>() {
+    SuccessBuildSim<ValidatingAdmissionPolicyBinding, ValidatingAdmissionPolicyBindingV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -53,11 +53,11 @@ class ValidatingAdmissionPolicyBindingTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<ValidatingAdmissionPolicyBindingV2, ValidatingAdmissionPolicyBindingV2DslBuilder> {
+            possibilities<ValidatingAdmissionPolicyBinding, ValidatingAdmissionPolicyBindingV2DslBuilder> {
                 scenario {
                     id = "minimum"
                     given(ValidatingAdmissionPolicyBindingV2DslBuilder())
-                    expected = ValidatingAdmissionPolicyBindingV2()
+                    expected = ValidatingAdmissionPolicyBinding()
                 }
 
                 scenario {
@@ -108,7 +108,7 @@ class ValidatingAdmissionPolicyBindingTest :
                             validationActions(PLACEHOLDER)
                         }
                     }
-                    expected = ValidatingAdmissionPolicyBindingV2(
+                    expected = ValidatingAdmissionPolicyBinding(
                         metadata = Common.OBJECT_META,
                         spec = ValidatingAdmissionPolicyBindingSpec(
                             matchResources = MATCH_RESOURCES,

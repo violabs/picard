@@ -3,7 +3,6 @@ package io.violabs.picard.v2.resources.storage.persistent.volume.claim
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
-import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.Conditions
 import io.violabs.picard.Conditions.sharedPersistentVolumeClaimCondition
 import io.violabs.picard.SuccessBuildSim
@@ -11,7 +10,7 @@ import io.violabs.picard.domain.AccessMode
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PersistentVolumeClaimTest : SuccessBuildSim<PersistentVolumeClaimV2, PersistentVolumeClaimV2DslBuilder>() {
+class PersistentVolumeClaimTest : SuccessBuildSim<PersistentVolumeClaim, PersistentVolumeClaimV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -25,11 +24,11 @@ class PersistentVolumeClaimTest : SuccessBuildSim<PersistentVolumeClaimV2, Persi
             limits = QUANTITY_MAP
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<PersistentVolumeClaimV2, PersistentVolumeClaimV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<PersistentVolumeClaim, PersistentVolumeClaimV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(PersistentVolumeClaimV2DslBuilder())
-                expected = PersistentVolumeClaimV2()
+                expected = PersistentVolumeClaim()
             }
 
             scenario {
@@ -71,7 +70,7 @@ class PersistentVolumeClaimTest : SuccessBuildSim<PersistentVolumeClaimV2, Persi
                         phase = PLACEHOLDER
                     }
                 }
-                expected = PersistentVolumeClaimV2(
+                expected = PersistentVolumeClaim(
                     metadata = Common.OBJECT_META,
                     spec = PersistentVolumeClaimSpec(
                         accessModes = listOf(AccessMode.ReadWriteOnce),

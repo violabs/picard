@@ -7,7 +7,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class VolumeAttributeClassTest : SuccessBuildSim<VolumeAttributesClassV2, VolumeAttributesClassV2DslBuilder>() {
+class VolumeAttributeClassTest : SuccessBuildSim<VolumeAttributesClass, VolumeAttributesClassV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,13 +17,13 @@ class VolumeAttributeClassTest : SuccessBuildSim<VolumeAttributesClassV2, Volume
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<VolumeAttributesClassV2, VolumeAttributesClassV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<VolumeAttributesClass, VolumeAttributesClassV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(VolumeAttributesClassV2DslBuilder()) {
                     driverName = PLACEHOLDER
                 }
-                expected = VolumeAttributesClassV2(driverName = PLACEHOLDER)
+                expected = VolumeAttributesClass(driverName = PLACEHOLDER)
             }
 
             scenario {
@@ -35,7 +35,7 @@ class VolumeAttributeClassTest : SuccessBuildSim<VolumeAttributesClassV2, Volume
                     driverName = PLACEHOLDER
                     parameters(PLACEHOLDER to PLACEHOLDER)
                 }
-                expected = VolumeAttributesClassV2(
+                expected = VolumeAttributesClass(
                     metadata = Common.OBJECT_META,
                     driverName = PLACEHOLDER,
                     parameters = mapOf(PLACEHOLDER to PLACEHOLDER)

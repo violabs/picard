@@ -2,7 +2,6 @@ package io.violabs.picard.v2.resources.policy.admission.mutating
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
-import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.policy.admission.MatchCondition
@@ -13,7 +12,7 @@ import io.violabs.picard.v2.resources.policy.admission.Variable
 import org.junit.jupiter.api.BeforeAll
 
 class MutatingAdmissionPolicyTest :
-    SuccessBuildSim<MutatingAdmissionPolicyV2, MutatingAdmissionPolicyV2DslBuilder>() {
+    SuccessBuildSim<MutatingAdmissionPolicy, MutatingAdmissionPolicyV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -48,11 +47,11 @@ class MutatingAdmissionPolicyTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<MutatingAdmissionPolicyV2, MutatingAdmissionPolicyV2DslBuilder> {
+            possibilities<MutatingAdmissionPolicy, MutatingAdmissionPolicyV2DslBuilder> {
                 scenario {
                     id = "minimum"
                     given(MutatingAdmissionPolicyV2DslBuilder())
-                    expected = MutatingAdmissionPolicyV2()
+                    expected = MutatingAdmissionPolicy()
                 }
 
                 scenario {
@@ -122,7 +121,7 @@ class MutatingAdmissionPolicyTest :
                             }
                         }
                     }
-                    expected = MutatingAdmissionPolicyV2(
+                    expected = MutatingAdmissionPolicy(
                         metadata = Common.OBJECT_META,
                         spec = MutatingAdmissionPolicySpec(
                             failurePolicy = PLACEHOLDER,

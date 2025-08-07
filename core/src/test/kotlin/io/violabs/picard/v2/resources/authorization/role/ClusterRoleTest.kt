@@ -3,12 +3,11 @@ package io.violabs.picard.v2.resources.authorization.role
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
-import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ClusterRoleTest : SuccessBuildSim<ClusterRoleV2, ClusterRoleV2DslBuilder>() {
+class ClusterRoleTest : SuccessBuildSim<ClusterRole, ClusterRoleV2DslBuilder>() {
     companion object : RoleTestConfig {
         @JvmStatic
         @BeforeAll
@@ -18,11 +17,11 @@ class ClusterRoleTest : SuccessBuildSim<ClusterRoleV2, ClusterRoleV2DslBuilder>(
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ClusterRoleV2, ClusterRoleV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ClusterRole, ClusterRoleV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(ClusterRoleV2DslBuilder())
-                expected = ClusterRoleV2()
+                expected = ClusterRole()
             }
 
             scenario {
@@ -44,7 +43,7 @@ class ClusterRoleTest : SuccessBuildSim<ClusterRoleV2, ClusterRoleV2DslBuilder>(
                         sharedPolicyRule()
                     }
                 }
-                expected = ClusterRoleV2(
+                expected = ClusterRole(
                     metadata = Common.OBJECT_META,
                     aggregationRule = AggregationRule(
                         clusterRoleSelectors = listOf(Common.LABEL_SELECTOR)

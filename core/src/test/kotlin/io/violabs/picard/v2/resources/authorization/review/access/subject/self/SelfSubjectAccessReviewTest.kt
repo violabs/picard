@@ -8,7 +8,7 @@ import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.authorization.review.access.subject.AccessReviewTestConfig
 import org.junit.jupiter.api.BeforeAll
 
-class SelfSubjectAccessReviewTest : FullBuildSim<SelfSubjectAccessReviewV2, SelfSubjectAccessReviewV2DslBuilder>() {
+class SelfSubjectAccessReviewTest : FullBuildSim<SelfSubjectAccessReview, SelfSubjectAccessReviewV2DslBuilder>() {
     companion object : AccessReviewTestConfig {
         @JvmStatic
         @BeforeAll
@@ -18,13 +18,13 @@ class SelfSubjectAccessReviewTest : FullBuildSim<SelfSubjectAccessReviewV2, Self
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<SelfSubjectAccessReviewV2, SelfSubjectAccessReviewV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<SelfSubjectAccessReview, SelfSubjectAccessReviewV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(SelfSubjectAccessReviewV2DslBuilder()) {
                     spec { }
                 }
-                expected = SelfSubjectAccessReviewV2(
+                expected = SelfSubjectAccessReview(
                     spec = SelfSubjectAccessReviewSpec()
                 )
             }
@@ -44,7 +44,7 @@ class SelfSubjectAccessReviewTest : FullBuildSim<SelfSubjectAccessReviewV2, Self
                     // this is same as already tests [SubjectAccessReviewTest]
                     status { sharedSubjectAccessReviewStatus() }
                 }
-                expected = SelfSubjectAccessReviewV2(
+                expected = SelfSubjectAccessReview(
                     spec = SelfSubjectAccessReviewSpec(
                         nonResourceAttributes = sharedNonResourceAttributes(),
                         resourceAttributes = sharedResourceAttributes()
@@ -55,7 +55,7 @@ class SelfSubjectAccessReviewTest : FullBuildSim<SelfSubjectAccessReviewV2, Self
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<SelfSubjectAccessReviewV2, SelfSubjectAccessReviewV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<SelfSubjectAccessReview, SelfSubjectAccessReviewV2DslBuilder> {
             requireScenario("spec") {
                 given(SelfSubjectAccessReviewV2DslBuilder())
             }

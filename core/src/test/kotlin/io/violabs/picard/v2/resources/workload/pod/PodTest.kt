@@ -3,7 +3,6 @@ package io.violabs.picard.v2.resources.workload.pod
 import io.violabs.picard.Common
 import io.violabs.picard.Common.OBJECT_META
 import io.violabs.picard.Common.sharedObjectMeta
-import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.AccessMode
 import io.violabs.picard.domain.BooleanType
@@ -14,7 +13,6 @@ import io.violabs.picard.v2.common.LocalObjectReference
 import io.violabs.picard.v2.common.NodeSelectorRequirement
 import io.violabs.picard.v2.common.ObjectFieldSelector
 import io.violabs.picard.v2.common.ResourceFieldSelector
-import io.violabs.picard.v2.resources.workload.pod.Condition
 import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimSpec
 import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimTemplate
 import io.violabs.picard.v2.resources.storage.persistent.volume.claim.VolumeResourceRequirements
@@ -69,7 +67,7 @@ import io.violabs.picard.v2.resources.workload.pod.security.PodSecurityContext
 import io.violabs.picard.v2.resources.workload.pod.security.Sysctl
 import org.junit.jupiter.api.BeforeAll
 
-class PodTest : SuccessBuildSim<PodV2, PodV2DslBuilder>() {
+class PodTest : SuccessBuildSim<Pod, PodV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -748,11 +746,11 @@ class PodTest : SuccessBuildSim<PodV2, PodV2DslBuilder>() {
             )
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<PodV2, PodV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Pod, PodV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(PodV2DslBuilder())
-                expected = PodV2()
+                expected = Pod()
             }
 
             scenario {
@@ -1128,7 +1126,7 @@ class PodTest : SuccessBuildSim<PodV2, PodV2DslBuilder>() {
                         observedGeneration = 1
                     }
                 }
-                expected = PodV2(
+                expected = Pod(
                     metadata = OBJECT_META,
                     spec = PodSpec(
                         containers = listOf(CONTAINER),

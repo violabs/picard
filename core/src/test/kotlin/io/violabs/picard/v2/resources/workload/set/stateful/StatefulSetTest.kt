@@ -2,15 +2,14 @@ package io.violabs.picard.v2.resources.workload.set.stateful
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
-import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.possibilities
-import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimV2
+import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaim
 import org.junit.jupiter.api.BeforeAll
 
-class StatefulSetTest : SuccessBuildSim<StatefulSetV2, StatefulSetV2DslBuilder>() {
+class StatefulSetTest : SuccessBuildSim<StatefulSet, StatefulSetV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -19,7 +18,7 @@ class StatefulSetTest : SuccessBuildSim<StatefulSetV2, StatefulSetV2DslBuilder>(
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<StatefulSetV2, StatefulSetV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<StatefulSet, StatefulSetV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(StatefulSetV2DslBuilder()) {
@@ -31,7 +30,7 @@ class StatefulSetTest : SuccessBuildSim<StatefulSetV2, StatefulSetV2DslBuilder>(
                         template = PodTemplate.Spec()
                     }
                 }
-                expected = StatefulSetV2(
+                expected = StatefulSet(
                     spec = StatefulSetSpec(
                         serviceName = PLACEHOLDER,
                         selector = Common.LABEL_SELECTOR,
@@ -88,7 +87,7 @@ class StatefulSetTest : SuccessBuildSim<StatefulSetV2, StatefulSetV2DslBuilder>(
                         observedGeneration = 1
                     }
                 }
-                expected = StatefulSetV2(
+                expected = StatefulSet(
                     metadata = Common.OBJECT_META,
                     spec = StatefulSetSpec(
                         serviceName = PLACEHOLDER,
@@ -106,7 +105,7 @@ class StatefulSetTest : SuccessBuildSim<StatefulSetV2, StatefulSetV2DslBuilder>(
                         revisionHistoryLimit = 1,
                         minReadySeconds = 1,
                         volumeClaimTemplates = listOf(
-                            PersistentVolumeClaimV2()
+                            PersistentVolumeClaim()
                         ),
                         persistentVolumeClaimRetentionPolicy = StatefulSetPersistentVolumeClaimRetentionPolicy(
                             whenDeleted = PLACEHOLDER,

@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import io.violabs.picard.v2.common.ObjectMeta
 import org.junit.jupiter.api.BeforeAll
 
-class ReplicationControllerTest : SuccessBuildSim<ReplicationControllerV2, ReplicationControllerV2DslBuilder>() {
+class ReplicationControllerTest : SuccessBuildSim<ReplicationController, ReplicationControllerV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,11 +15,11 @@ class ReplicationControllerTest : SuccessBuildSim<ReplicationControllerV2, Repli
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ReplicationControllerV2, ReplicationControllerV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ReplicationController, ReplicationControllerV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(ReplicationControllerV2DslBuilder())
-                expected = ReplicationControllerV2()
+                expected = ReplicationController()
             }
 
             scenario {
@@ -52,7 +52,7 @@ class ReplicationControllerTest : SuccessBuildSim<ReplicationControllerV2, Repli
                         observedGeneration = 1
                     }
                 }
-                expected = ReplicationControllerV2(
+                expected = ReplicationController(
                     metadata = ObjectMeta(
                         name = PLACEHOLDER,
                         namespace = PLACEHOLDER

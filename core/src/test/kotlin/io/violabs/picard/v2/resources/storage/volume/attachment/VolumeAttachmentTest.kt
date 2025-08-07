@@ -10,7 +10,7 @@ import io.violabs.picard.v2.resources.storage.volume.source.VolumeAttachmentSour
 import io.violabs.picard.v2.resources.storage.volume.source.VolumeAttachmentSourceDslBuilder
 import org.junit.jupiter.api.BeforeAll
 
-class VolumeAttachmentTest : SuccessBuildSim<VolumeAttachmentV2, VolumeAttachmentV2DslBuilder>() {
+class VolumeAttachmentTest : SuccessBuildSim<VolumeAttachment, VolumeAttachmentV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -37,11 +37,11 @@ class VolumeAttachmentTest : SuccessBuildSim<VolumeAttachmentV2, VolumeAttachmen
             }
         }
 
-        private val SUCCESS_POSSIBILITIES = possibilities<VolumeAttachmentV2, VolumeAttachmentV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<VolumeAttachment, VolumeAttachmentV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(VolumeAttachmentV2DslBuilder())
-                expected = VolumeAttachmentV2()
+                expected = VolumeAttachment()
             }
 
             scenario {
@@ -59,7 +59,7 @@ class VolumeAttachmentTest : SuccessBuildSim<VolumeAttachmentV2, VolumeAttachmen
                         }
                     }
                 }
-                expected = VolumeAttachmentV2(
+                expected = VolumeAttachment(
                     metadata = Common.OBJECT_META,
                     spec = VolumeAttachmentSpec(
                         attacher = PLACEHOLDER,

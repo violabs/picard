@@ -2,16 +2,17 @@ package io.violabs.picard.v2.resources.policy.admission.mutating
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
-import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.policy.admission.MatchResources
 import io.violabs.picard.v2.resources.policy.admission.ParamRef
+import io.violabs.picard.v2.resources.policy.admission.mutating.binding.MutatingAdmissionPolicyBinding
+import io.violabs.picard.v2.resources.policy.admission.mutating.binding.MutatingAdmissionPolicyBindingSpec
 import io.violabs.picard.v2.resources.policy.admission.validating.NamedRuleWithOperations
 import org.junit.jupiter.api.BeforeAll
 
 class MutatingAdmissionPolicyBindingTest :
-    SuccessBuildSim<MutatingAdmissionPolicyBindingV2, MutatingAdmissionPolicyBindingV2DslBuilder>() {
+    SuccessBuildSim<MutatingAdmissionPolicyBinding, MutatingAdmissionPolicyBindingV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -54,11 +55,11 @@ class MutatingAdmissionPolicyBindingTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<MutatingAdmissionPolicyBindingV2, MutatingAdmissionPolicyBindingV2DslBuilder> {
+            possibilities<MutatingAdmissionPolicyBinding, MutatingAdmissionPolicyBindingV2DslBuilder> {
                 scenario {
                     id = "minimum"
                     given(MutatingAdmissionPolicyBindingV2DslBuilder())
-                    expected = MutatingAdmissionPolicyBindingV2()
+                    expected = MutatingAdmissionPolicyBinding()
                 }
 
                 scenario {
@@ -108,7 +109,7 @@ class MutatingAdmissionPolicyBindingTest :
                             policyName = PLACEHOLDER
                         }
                     }
-                    expected = MutatingAdmissionPolicyBindingV2(
+                    expected = MutatingAdmissionPolicyBinding(
                         metadata = Common.OBJECT_META,
                         spec = MutatingAdmissionPolicyBindingSpec(
                             matchResources = MATCH_RESOURCES,

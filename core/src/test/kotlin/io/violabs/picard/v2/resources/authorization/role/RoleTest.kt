@@ -7,7 +7,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class RoleTest : SuccessBuildSim<RoleV2, RoleV2DslBuilder>() {
+class RoleTest : SuccessBuildSim<Role, RoleV2DslBuilder>() {
     companion object : RoleTestConfig {
         @JvmStatic
         @BeforeAll
@@ -17,11 +17,11 @@ class RoleTest : SuccessBuildSim<RoleV2, RoleV2DslBuilder>() {
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<RoleV2, RoleV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Role, RoleV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(RoleV2DslBuilder())
-                expected = RoleV2()
+                expected = Role()
             }
 
             scenario {
@@ -35,7 +35,7 @@ class RoleTest : SuccessBuildSim<RoleV2, RoleV2DslBuilder>() {
                         sharedPolicyRule()
                     }
                 }
-                expected = RoleV2(
+                expected = Role(
                     metadata = Common.OBJECT_META,
                     rules = listOf(policyRule)
                 )

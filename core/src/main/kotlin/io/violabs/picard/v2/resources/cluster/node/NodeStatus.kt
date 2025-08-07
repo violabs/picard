@@ -2,6 +2,7 @@ package io.violabs.picard.v2.resources.cluster.node
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.domain.k8sResources.Quantity
+import io.violabs.picard.v2.resources.cluster.node.config.NodeConfigStatus
 import io.violabs.picard.v2.resources.cluster.node.daemon.NodeDaemonEndpoints
 import io.violabs.picard.v2.resources.cluster.node.runtime.NodeRuntimeHandler
 

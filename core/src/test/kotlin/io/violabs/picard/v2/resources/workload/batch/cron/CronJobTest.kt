@@ -2,14 +2,13 @@ package io.violabs.picard.v2.resources.workload.batch.cron
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
-import io.violabs.picard.Common.sharedObjectReference
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.k8sResources.workload.job.Job
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.workload.batch.job.JobTemplateSpec
 import org.junit.jupiter.api.BeforeAll
 
-class CronJobTest : SuccessBuildSim<CronJobV2, CronJobV2DslBuilder>() {
+class CronJobTest : SuccessBuildSim<CronJob, CronJobV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -18,7 +17,7 @@ class CronJobTest : SuccessBuildSim<CronJobV2, CronJobV2DslBuilder>() {
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<CronJobV2, CronJobV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<CronJob, CronJobV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(CronJobV2DslBuilder()) {
@@ -29,7 +28,7 @@ class CronJobTest : SuccessBuildSim<CronJobV2, CronJobV2DslBuilder>() {
                         schedule = PLACEHOLDER
                     }
                 }
-                expected = CronJobV2(
+                expected = CronJob(
                     spec = CronJobSpec(
                         jobTemplate = JobTemplateSpec(
                             spec = Job.Spec()
@@ -68,7 +67,7 @@ class CronJobTest : SuccessBuildSim<CronJobV2, CronJobV2DslBuilder>() {
                         lastSuccessfulTime = NOW
                     }
                 }
-                expected = CronJobV2(
+                expected = CronJob(
                     metadata = Common.OBJECT_META,
                     spec = CronJobSpec(
                         jobTemplate = JobTemplateSpec(

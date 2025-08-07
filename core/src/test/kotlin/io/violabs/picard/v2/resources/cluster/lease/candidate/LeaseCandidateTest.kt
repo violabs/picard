@@ -1,14 +1,12 @@
 package io.violabs.picard.v2.resources.cluster.lease.candidate
 
-import io.violabs.picard.BuildSim.Companion.PLACEHOLDER
-import io.violabs.picard.BuildSim.Companion.TIMESTAMP
 import io.violabs.picard.Common.OBJECT_META
 import io.violabs.picard.Common.sharedObjectMeta
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class LeaseCandidateTest : SuccessBuildSim<LeaseCandidateV2, LeaseCandidateV2DslBuilder>() {
+class LeaseCandidateTest : SuccessBuildSim<LeaseCandidate, LeaseCandidateV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,7 +15,7 @@ class LeaseCandidateTest : SuccessBuildSim<LeaseCandidateV2, LeaseCandidateV2Dsl
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<LeaseCandidateV2, LeaseCandidateV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<LeaseCandidate, LeaseCandidateV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(LeaseCandidateV2DslBuilder()) {
@@ -27,7 +25,7 @@ class LeaseCandidateTest : SuccessBuildSim<LeaseCandidateV2, LeaseCandidateV2Dsl
                         strategy = PLACEHOLDER
                     }
                 }
-                expected = LeaseCandidateV2(
+                expected = LeaseCandidate(
                     spec = LeaseCandidateSpec(
                         binaryVersion = PLACEHOLDER,
                         leaseName = PLACEHOLDER,
@@ -51,7 +49,7 @@ class LeaseCandidateTest : SuccessBuildSim<LeaseCandidateV2, LeaseCandidateV2Dsl
                         renewTime = TIMESTAMP
                     }
                 }
-                expected = LeaseCandidateV2(
+                expected = LeaseCandidate(
                     metadata = OBJECT_META,
                     spec = LeaseCandidateSpec(
                         binaryVersion = PLACEHOLDER,

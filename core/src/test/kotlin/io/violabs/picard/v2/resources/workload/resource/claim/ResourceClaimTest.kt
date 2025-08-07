@@ -29,7 +29,7 @@ import io.violabs.picard.v2.resources.workload.resource.device.selector.DeviceSe
 import io.violabs.picard.v2.resources.workload.resource.device.selector.DeviceSelectorDslBuilder
 import org.junit.jupiter.api.BeforeAll
 
-class ResourceClaimTest : SuccessBuildSim<ResourceClaimV2, ResourceClaimV2DslBuilder>() {
+class ResourceClaimTest : SuccessBuildSim<ResourceClaim, ResourceClaimV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -84,7 +84,7 @@ class ResourceClaimTest : SuccessBuildSim<ResourceClaimV2, ResourceClaimV2DslBui
             parameters = mapOf(PLACEHOLDER to PLACEHOLDER)
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ResourceClaimV2, ResourceClaimV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ResourceClaim, ResourceClaimV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(ResourceClaimV2DslBuilder()) {
@@ -92,7 +92,7 @@ class ResourceClaimTest : SuccessBuildSim<ResourceClaimV2, ResourceClaimV2DslBui
                         // Empty spec - DeviceClaim is optional
                     }
                 }
-                expected = ResourceClaimV2(
+                expected = ResourceClaim(
                     spec = ResourceClaimSpec()
                 )
             }
@@ -224,7 +224,7 @@ class ResourceClaimTest : SuccessBuildSim<ResourceClaimV2, ResourceClaimV2DslBui
                         }
                     }
                 }
-                expected = ResourceClaimV2(
+                expected = ResourceClaim(
                     metadata = OBJECT_META,
                     spec = ResourceClaimSpec(
                         devices = DeviceClaim(

@@ -11,7 +11,7 @@ data class NetworkPolicyPeer(
     /**
      * ipBlock defines policy on a particular IPBlock. If this field is set then neither of the other fields can be.
      */
-    val ipBlock: IPBlock? = null,
+    val ipBlock: IpBlock? = null,
     /**
      * namespaceSelector selects namespaces using cluster-scoped labels. This field follows standard label selector semantics;
      * if present but empty, it selects all namespaces.

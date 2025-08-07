@@ -9,7 +9,7 @@ import io.violabs.picard.v2.resources.authorization.review.access.subject.Access
 import io.violabs.picard.v2.resources.authorization.review.access.subject.SubjectAccessReviewSpec
 import org.junit.jupiter.api.BeforeAll
 
-class LocalSubjectAccessReviewTest : FullBuildSim<LocalSubjectAccessReviewV2, LocalSubjectAccessReviewV2DslBuilder>() {
+class LocalSubjectAccessReviewTest : FullBuildSim<LocalSubjectAccessReview, LocalSubjectAccessReviewV2DslBuilder>() {
     companion object : AccessReviewTestConfig {
         @JvmStatic
         @BeforeAll
@@ -19,13 +19,13 @@ class LocalSubjectAccessReviewTest : FullBuildSim<LocalSubjectAccessReviewV2, Lo
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<LocalSubjectAccessReviewV2, LocalSubjectAccessReviewV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<LocalSubjectAccessReview, LocalSubjectAccessReviewV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(LocalSubjectAccessReviewV2DslBuilder()) {
                     spec {  }
                 }
-                expected = LocalSubjectAccessReviewV2(
+                expected = LocalSubjectAccessReview(
                     spec = SubjectAccessReviewSpec()
                 )
             }
@@ -41,7 +41,7 @@ class LocalSubjectAccessReviewTest : FullBuildSim<LocalSubjectAccessReviewV2, Lo
 
                     status { sharedSubjectAccessReviewStatus() }
                 }
-                expected = LocalSubjectAccessReviewV2(
+                expected = LocalSubjectAccessReview(
                     spec = sharedSubjectAccessReviewSpec(),
                     status = sharedSubjectAccessReviewStatus(),
                     metadata = Common.OBJECT_META
@@ -49,7 +49,7 @@ class LocalSubjectAccessReviewTest : FullBuildSim<LocalSubjectAccessReviewV2, Lo
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<LocalSubjectAccessReviewV2, LocalSubjectAccessReviewV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<LocalSubjectAccessReview, LocalSubjectAccessReviewV2DslBuilder> {
             requireScenario("spec") {
                 given(LocalSubjectAccessReviewV2DslBuilder())
             }

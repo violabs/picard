@@ -3,12 +3,11 @@ package io.violabs.picard.v2.resources.storage.csi.storage.capacity
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
-import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class CSIStorageCapacityTest : FullBuildSim<CsiStorageCapacityV2, CsiStorageCapacityV2DslBuilder>() {
+class CSIStorageCapacityTest : FullBuildSim<CsiStorageCapacity, CsiStorageCapacityV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -18,13 +17,13 @@ class CSIStorageCapacityTest : FullBuildSim<CsiStorageCapacityV2, CsiStorageCapa
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<CsiStorageCapacityV2, CsiStorageCapacityV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<CsiStorageCapacity, CsiStorageCapacityV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(CsiStorageCapacityV2DslBuilder()) {
                     storageClassName = PLACEHOLDER
                 }
-                expected = CsiStorageCapacityV2(storageClassName = PLACEHOLDER)
+                expected = CsiStorageCapacity(storageClassName = PLACEHOLDER)
             }
 
             scenario {
@@ -41,7 +40,7 @@ class CSIStorageCapacityTest : FullBuildSim<CsiStorageCapacityV2, CsiStorageCapa
                         sharedSelector()
                     }
                 }
-                expected = CsiStorageCapacityV2(
+                expected = CsiStorageCapacity(
                     metadata = Common.OBJECT_META,
                     storageClassName = PLACEHOLDER,
                     capacity = QUANTITY,
@@ -51,7 +50,7 @@ class CSIStorageCapacityTest : FullBuildSim<CsiStorageCapacityV2, CsiStorageCapa
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<CsiStorageCapacityV2, CsiStorageCapacityV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<CsiStorageCapacity, CsiStorageCapacityV2DslBuilder> {
             requireScenario("storageClassName") {
                 given(CsiStorageCapacityV2DslBuilder())
             }

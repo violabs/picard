@@ -6,7 +6,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ApiServiceTest : SuccessBuildSim<ApiServiceV2, ApiServiceV2DslBuilder>() {
+class ApiServiceTest : SuccessBuildSim<ApiService, ApiServiceV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,11 +15,11 @@ class ApiServiceTest : SuccessBuildSim<ApiServiceV2, ApiServiceV2DslBuilder>() {
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ApiServiceV2, ApiServiceV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ApiService, ApiServiceV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(ApiServiceV2DslBuilder())
-                expected = ApiServiceV2()
+                expected = ApiService()
             }
 
             scenario {
@@ -53,7 +53,7 @@ class ApiServiceTest : SuccessBuildSim<ApiServiceV2, ApiServiceV2DslBuilder>() {
                         }
                     }
                 }
-                expected = ApiServiceV2(
+                expected = ApiService(
                     metadata = Common.OBJECT_META,
                     spec = ApiServiceSpec(
                         groupPriorityMinimum = 1,

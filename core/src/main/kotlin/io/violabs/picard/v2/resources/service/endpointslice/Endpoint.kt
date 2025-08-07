@@ -1,7 +1,7 @@
 package io.violabs.picard.v2.resources.service.endpointslice
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
-import io.violabs.picard.domain.ObjectReference
+import io.violabs.picard.v2.common.ObjectReference
 
 /**
  * Endpoint represents a single logical "backend" implementing a service.

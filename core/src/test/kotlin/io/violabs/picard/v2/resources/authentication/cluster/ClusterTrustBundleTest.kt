@@ -6,7 +6,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ClusterTrustBundleTest : FullBuildSim<ClusterTrustBundleV2, ClusterTrustBundleV2DslBuilder>() {
+class ClusterTrustBundleTest : FullBuildSim<ClusterTrustBundle, ClusterTrustBundleV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,7 +16,7 @@ class ClusterTrustBundleTest : FullBuildSim<ClusterTrustBundleV2, ClusterTrustBu
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ClusterTrustBundleV2, ClusterTrustBundleV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ClusterTrustBundle, ClusterTrustBundleV2DslBuilder> {
             scenario {
                 id = "minimum"
                 description = "included metadata"
@@ -25,7 +25,7 @@ class ClusterTrustBundleTest : FullBuildSim<ClusterTrustBundleV2, ClusterTrustBu
                         trustBundle = PLACEHOLDER
                     }
                 }
-                expected = ClusterTrustBundleV2(
+                expected = ClusterTrustBundle(
                     spec = ClusterTrustBundleSpec(
                         trustBundle = PLACEHOLDER
                     )
@@ -45,7 +45,7 @@ class ClusterTrustBundleTest : FullBuildSim<ClusterTrustBundleV2, ClusterTrustBu
                         signerName = PLACEHOLDER
                     }
                 }
-                expected = ClusterTrustBundleV2(
+                expected = ClusterTrustBundle(
                     spec = ClusterTrustBundleSpec(
                         trustBundle = PLACEHOLDER,
                         signerName = PLACEHOLDER
@@ -55,7 +55,7 @@ class ClusterTrustBundleTest : FullBuildSim<ClusterTrustBundleV2, ClusterTrustBu
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<ClusterTrustBundleV2, ClusterTrustBundleV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ClusterTrustBundle, ClusterTrustBundleV2DslBuilder> {
             requireScenario("spec") {
                 given(ClusterTrustBundleV2DslBuilder())
             }

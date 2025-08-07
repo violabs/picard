@@ -7,7 +7,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class TokenReviewTest : FullBuildSim<TokenReviewV2, TokenReviewV2DslBuilder>() {
+class TokenReviewTest : FullBuildSim<TokenReview, TokenReviewV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,13 +17,13 @@ class TokenReviewTest : FullBuildSim<TokenReviewV2, TokenReviewV2DslBuilder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<TokenReviewV2, TokenReviewV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<TokenReview, TokenReviewV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(TokenReviewV2DslBuilder()) {
                     spec {  }
                 }
-                expected = TokenReviewV2(
+                expected = TokenReview(
                     spec = TokenReviewSpec()
                 )
             }
@@ -52,7 +52,7 @@ class TokenReviewTest : FullBuildSim<TokenReviewV2, TokenReviewV2DslBuilder>() {
                         }
                     }
                 }
-                expected = TokenReviewV2(
+                expected = TokenReview(
                     metadata = Common.OBJECT_META,
                     spec = TokenReviewSpec(
                         audiences = listOf(PLACEHOLDER),
@@ -73,7 +73,7 @@ class TokenReviewTest : FullBuildSim<TokenReviewV2, TokenReviewV2DslBuilder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<TokenReviewV2, TokenReviewV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<TokenReview, TokenReviewV2DslBuilder> {
             requireScenario("spec") {
                 given(TokenReviewV2DslBuilder())
             }

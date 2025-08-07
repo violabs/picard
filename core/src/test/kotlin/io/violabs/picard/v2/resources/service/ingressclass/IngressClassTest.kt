@@ -6,7 +6,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class IngressClassTest : SuccessBuildSim<IngressClassV2, IngressClassV2DslBuilder>() {
+class IngressClassTest : SuccessBuildSim<IngressClass, IngressClassV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,11 +15,11 @@ class IngressClassTest : SuccessBuildSim<IngressClassV2, IngressClassV2DslBuilde
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<IngressClassV2, IngressClassV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<IngressClass, IngressClassV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(IngressClassV2DslBuilder())
-                expected = IngressClassV2()
+                expected = IngressClass()
             }
 
             scenario {
@@ -39,7 +39,7 @@ class IngressClassTest : SuccessBuildSim<IngressClassV2, IngressClassV2DslBuilde
                         }
                     }
                 }
-                expected = IngressClassV2(
+                expected = IngressClass(
                     metadata = OBJECT_META,
                     spec = IngressClassSpec(
                         controller = PLACEHOLDER,

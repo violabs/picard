@@ -6,7 +6,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class NamespaceTest : SuccessBuildSim<NamespaceV2, NamespaceV2DslBuilder>() {
+class NamespaceTest : SuccessBuildSim<Namespace, NamespaceV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,11 +15,11 @@ class NamespaceTest : SuccessBuildSim<NamespaceV2, NamespaceV2DslBuilder>() {
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<NamespaceV2, NamespaceV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Namespace, NamespaceV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(NamespaceV2DslBuilder())
-                expected = NamespaceV2()
+                expected = Namespace()
             }
 
             scenario {
@@ -44,7 +44,7 @@ class NamespaceTest : SuccessBuildSim<NamespaceV2, NamespaceV2DslBuilder>() {
                         phase = PLACEHOLDER
                     }
                 }
-                expected = NamespaceV2(
+                expected = Namespace(
                     metadata = OBJECT_META,
                     spec = NamespaceSpec(
                         finalizers = listOf(PLACEHOLDER)

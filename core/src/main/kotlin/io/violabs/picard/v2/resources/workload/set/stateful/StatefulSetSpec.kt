@@ -1,14 +1,14 @@
 package io.violabs.picard.v2.resources.workload.set.stateful
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
-import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.v2.common.LabelSelector
-import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimV2
+import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaim
+import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateSpec
 
 /**
  * A StatefulSetSpec is the specification of a StatefulSet.
  */
-@GeneratedDsl(withListGroup = true)
+@GeneratedDsl
 data class StatefulSetSpec(
     /**
      * serviceName is the name of the service that governs this StatefulSet.
@@ -32,7 +32,7 @@ data class StatefulSetSpec(
      * StatefulSet named "web" with index number "3" would be named "web-3". The only allowed
      * template.spec.restartPolicy value is "Always".
      */
-    val template: PodTemplate.Spec,
+    val template: PodTemplateSpec,
     /**
      * replicas is the desired number of replicas of the given Template. These are replicas in
      * the sense that they are instantiations of the same Template, but individual replicas
@@ -66,7 +66,7 @@ data class StatefulSetSpec(
      * least one matching (by name) volumeMount in one container in the template. A claim in
      * this list takes precedence over any volumes in the template, with the same name.
      */
-    val volumeClaimTemplates: List<PersistentVolumeClaimV2>? = null,
+    val volumeClaimTemplates: List<PersistentVolumeClaim>? = null,
     /**
      * Minimum number of seconds for which a newly created pod should be ready without
      * any of its container crashing for it to be considered available. Defaults to 0

@@ -6,15 +6,25 @@ import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sAPIResource
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.K8sResource
-import io.violabs.picard.domain.k8sResources.authentication.certificateSigningRequest.CertificateSigningRequest
-import io.violabs.picard.domain.k8sResources.authentication.certificateSigningRequest.CertificateSigningRequestList
-import io.violabs.picard.domain.k8sResources.authentication.clusterTrustBundle.ClusterTrustBundle
-import io.violabs.picard.domain.k8sResources.authentication.clusterTrustBundle.ClusterTrustBundleList
-import io.violabs.picard.domain.k8sResources.authentication.selfSubjectReview.SelfSubjectReview
-import io.violabs.picard.domain.k8sResources.authentication.tokenRequest.TokenRequest
-import io.violabs.picard.domain.k8sResources.authentication.tokenRequest.TokenRequestList
-import io.violabs.picard.domain.k8sResources.authentication.tokenReview.TokenReview
-import io.violabs.picard.domain.k8sResources.authentication.tokenReview.TokenReviewList
+import io.violabs.picard.v2.resources.authentication.certificate.CertificateSigningRequestDslBuilder
+import io.violabs.picard.v2.resources.authentication.certificate.CertificateSigningRequestDslBuilderScope
+import io.violabs.picard.v2.resources.authentication.certificate.CertificateSigningRequestListDslBuilder
+import io.violabs.picard.v2.resources.authentication.certificate.CertificateSigningRequestListDslBuilderScope
+import io.violabs.picard.v2.resources.authentication.cluster.ClusterTrustBundleDslBuilder
+import io.violabs.picard.v2.resources.authentication.cluster.ClusterTrustBundleDslBuilderScope
+import io.violabs.picard.v2.resources.authentication.cluster.ClusterTrustBundleListDslBuilder
+import io.violabs.picard.v2.resources.authentication.cluster.ClusterTrustBundleListDslBuilderScope
+import io.violabs.picard.v2.resources.authentication.self.SelfSubjectReviewDslBuilder
+import io.violabs.picard.v2.resources.authentication.self.SelfSubjectReviewDslBuilderScope
+import io.violabs.picard.v2.resources.authentication.token.request.TokenRequestDslBuilder
+import io.violabs.picard.v2.resources.authentication.token.request.TokenRequestDslBuilderScope
+import io.violabs.picard.v2.resources.authentication.token.request.TokenRequestListDslBuilder
+import io.violabs.picard.v2.resources.authentication.token.request.TokenRequestListDslBuilderScope
+import io.violabs.picard.v2.resources.authentication.token.review.TokenReviewDslBuilder
+import io.violabs.picard.v2.resources.authentication.token.review.TokenReviewDslBuilderScope
+import io.violabs.picard.v2.resources.authentication.token.review.TokenReviewList
+import io.violabs.picard.v2.resources.authentication.token.review.TokenReviewListDslBuilder
+import io.violabs.picard.v2.resources.authentication.token.review.TokenReviewListDslBuilderScope
 
 interface AuthenticationResource<T : APIVersion, META> : K8sResource<T, META>
 interface AuthenticationListResource<T : APIVersion, E> : K8sListResource<T, E>
@@ -28,48 +38,48 @@ data class AuthenticationResourceSection(
         private val lists: MutableList<AuthenticationListResource<*, *>> = mutableListOf()
     ) : DslBuilder<AuthenticationResourceSection> {
 
-        fun certificateSigningRequest(block: CertificateSigningRequest.Builder.() -> Unit) {
-            val request = CertificateSigningRequest.Builder().apply(block).build()
+        fun certificateSigningRequest(block: CertificateSigningRequestDslBuilderScope) {
+            val request = CertificateSigningRequestDslBuilder().apply(block).build()
             resources.add(request)
         }
 
-        fun certificateSigningRequestList(block: CertificateSigningRequestList.Builder.() -> Unit) {
-            val list = CertificateSigningRequestList.Builder().apply(block).build()
+        fun certificateSigningRequestList(block: CertificateSigningRequestListDslBuilderScope) {
+            val list = CertificateSigningRequestListDslBuilder().apply(block).build()
             lists.add(list)
         }
 
-        fun clusterTrustBundle(block: ClusterTrustBundle.Builder.() -> Unit) {
-            val trustBundle = ClusterTrustBundle.Builder().apply(block).build()
+        fun clusterTrustBundle(block: ClusterTrustBundleDslBuilderScope) {
+            val trustBundle = ClusterTrustBundleDslBuilder().apply(block).build()
             resources.add(trustBundle)
         }
 
-        fun clusterTrustBundleList(block: ClusterTrustBundleList.Builder.() -> Unit) {
-            val list = ClusterTrustBundleList.Builder().apply(block).build()
+        fun clusterTrustBundleList(block: ClusterTrustBundleListDslBuilderScope) {
+            val list = ClusterTrustBundleListDslBuilder().apply(block).build()
             lists.add(list)
         }
 
-        fun selfSubjectReview(block: SelfSubjectReview.Builder.() -> Unit) {
-            val selfSubjectReview = SelfSubjectReview.Builder().apply(block).build()
+        fun selfSubjectReview(block: SelfSubjectReviewDslBuilderScope) {
+            val selfSubjectReview = SelfSubjectReviewDslBuilder().apply(block).build()
             resources.add(selfSubjectReview)
         }
 
-        fun tokenRequest(block: TokenRequest.Builder.() -> Unit) {
-            val tokenRequest = TokenRequest.Builder().apply(block).build()
+        fun tokenRequest(block: TokenRequestDslBuilderScope) {
+            val tokenRequest = TokenRequestDslBuilder().apply(block).build()
             resources.add(tokenRequest)
         }
 
-        fun tokenRequestList(block: TokenRequestList.Builder.() -> Unit) {
-            val list = TokenRequestList.Builder().apply(block).build()
+        fun tokenRequestList(block: TokenRequestListDslBuilderScope) {
+            val list = TokenRequestListDslBuilder().apply(block).build()
             lists.add(list)
         }
 
-        fun tokenReview(block: TokenReview.Builder.() -> Unit) {
-            val tokenReview = TokenReview.Builder().apply(block).build()
+        fun tokenReview(block: TokenReviewDslBuilderScope) {
+            val tokenReview = TokenReviewDslBuilder().apply(block).build()
             resources.add(tokenReview)
         }
 
-        fun tokenReviewList(block: TokenReviewList.Builder.() -> Unit) {
-            val list = TokenReviewList.Builder().apply(block).build()
+        fun tokenReviewList(block: TokenReviewListDslBuilderScope) {
+            val list = TokenReviewListDslBuilder().apply(block).build()
             lists.add(list)
         }
 

@@ -1,6 +1,5 @@
 package io.violabs.picard.v2.resources.service
 
-import io.violabs.picard.BuildSim.Companion.PLACEHOLDER
 import io.violabs.picard.Common.OBJECT_META
 import io.violabs.picard.Common.sharedObjectMeta
 import io.violabs.picard.SuccessBuildSim
@@ -14,7 +13,7 @@ import io.violabs.picard.v2.resources.service.status.PortStatus
 import io.violabs.picard.v2.resources.service.status.ServiceStatus
 import org.junit.jupiter.api.BeforeAll
 
-class ServiceTest : SuccessBuildSim<ServiceV2, ServiceV2DslBuilder>() {
+class ServiceTest : SuccessBuildSim<Service, ServiceV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -23,11 +22,11 @@ class ServiceTest : SuccessBuildSim<ServiceV2, ServiceV2DslBuilder>() {
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ServiceV2, ServiceV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Service, ServiceV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(ServiceV2DslBuilder())
-                expected = ServiceV2()
+                expected = Service()
             }
 
             scenario {
@@ -100,7 +99,7 @@ class ServiceTest : SuccessBuildSim<ServiceV2, ServiceV2DslBuilder>() {
                         }
                     }
                 }
-                expected = ServiceV2(
+                expected = Service(
                     metadata = OBJECT_META,
                     spec = ServiceSpec(
                         selector = mapOf(PLACEHOLDER to PLACEHOLDER),

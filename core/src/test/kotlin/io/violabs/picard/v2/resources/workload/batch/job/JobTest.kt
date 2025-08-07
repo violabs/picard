@@ -2,7 +2,6 @@ package io.violabs.picard.v2.resources.workload.batch.job
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
-import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.BooleanType
 import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
@@ -15,7 +14,7 @@ import io.violabs.picard.v2.resources.workload.batch.job.policy.success.SuccessP
 import io.violabs.picard.v2.resources.workload.batch.job.policy.success.SuccessPolicyRule
 import org.junit.jupiter.api.BeforeAll
 
-class JobTest : SuccessBuildSim<JobV2, JobV2DslBuilder>() {
+class JobTest : SuccessBuildSim<Job, JobV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -53,7 +52,7 @@ class JobTest : SuccessBuildSim<JobV2, JobV2DslBuilder>() {
             reason = PLACEHOLDER
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<JobV2, JobV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Job, JobV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(JobV2DslBuilder()) {
@@ -61,7 +60,7 @@ class JobTest : SuccessBuildSim<JobV2, JobV2DslBuilder>() {
                         template = PodTemplate.Spec()
                     }
                 }
-                expected = JobV2(
+                expected = Job(
                     spec = JobSpec(
                         template = PodTemplate.Spec()
                     )
@@ -144,7 +143,7 @@ class JobTest : SuccessBuildSim<JobV2, JobV2DslBuilder>() {
                         terminating = 1
                     }
                 }
-                expected = JobV2(
+                expected = Job(
                     metadata = Common.OBJECT_META,
                     spec = JobSpec(
                         template = PodTemplate.Spec(),

@@ -2,7 +2,6 @@ package io.violabs.picard.v2.resources.workload.autoscaling.pod
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
-import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.BooleanType
 import io.violabs.picard.possibilities
@@ -29,7 +28,7 @@ import io.violabs.picard.v2.resources.workload.autoscaling.metric.status.PodsMet
 import io.violabs.picard.v2.resources.workload.autoscaling.metric.status.ResourceMetricStatus
 import org.junit.jupiter.api.BeforeAll
 
-class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscalerV2, HorizontalPodAutoscalerV2DslBuilder>() {
+class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, HorizontalPodAutoscalerV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -115,7 +114,7 @@ class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscalerV2, H
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<HorizontalPodAutoscalerV2, HorizontalPodAutoscalerV2DslBuilder> {
+            possibilities<HorizontalPodAutoscaler, HorizontalPodAutoscalerV2DslBuilder> {
                 scenario {
                     id = "minimum"
                     given(HorizontalPodAutoscalerV2DslBuilder()) {
@@ -127,7 +126,7 @@ class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscalerV2, H
                             }
                         }
                     }
-                    expected = HorizontalPodAutoscalerV2(
+                    expected = HorizontalPodAutoscaler(
                         spec = HorizontalPodAutoscalerSpec(
                             maxReplicas = 1,
                             scaleTargetRef = CrossVersionObjectReference(
@@ -236,7 +235,7 @@ class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscalerV2, H
                             }
                         }
                     }
-                    expected = HorizontalPodAutoscalerV2(
+                    expected = HorizontalPodAutoscaler(
                         metadata = Common.OBJECT_META,
                         spec = HorizontalPodAutoscalerSpec(
                             minReplicas = 1,

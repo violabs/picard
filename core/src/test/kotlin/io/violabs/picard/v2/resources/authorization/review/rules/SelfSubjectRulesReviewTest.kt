@@ -7,7 +7,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class SelfSubjectRulesReviewTest : FullBuildSim<SelfSubjectRulesReviewV2, SelfSubjectRulesReviewV2DslBuilder>() {
+class SelfSubjectRulesReviewTest : FullBuildSim<SelfSubjectRulesReview, SelfSubjectRulesReviewV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,7 +17,7 @@ class SelfSubjectRulesReviewTest : FullBuildSim<SelfSubjectRulesReviewV2, SelfSu
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<SelfSubjectRulesReviewV2, SelfSubjectRulesReviewV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<SelfSubjectRulesReview, SelfSubjectRulesReviewV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(SelfSubjectRulesReviewV2DslBuilder()) {
@@ -25,7 +25,7 @@ class SelfSubjectRulesReviewTest : FullBuildSim<SelfSubjectRulesReviewV2, SelfSu
                         namespace = PLACEHOLDER
                     }
                 }
-                expected = SelfSubjectRulesReviewV2(
+                expected = SelfSubjectRulesReview(
                     spec = SelfSubjectRulesReviewSpec(PLACEHOLDER)
                 )
             }
@@ -62,7 +62,7 @@ class SelfSubjectRulesReviewTest : FullBuildSim<SelfSubjectRulesReviewV2, SelfSu
                         evaluationError = PLACEHOLDER
                     }
                 }
-                expected = SelfSubjectRulesReviewV2(
+                expected = SelfSubjectRulesReview(
                     spec = SelfSubjectRulesReviewSpec(PLACEHOLDER),
                     status = SelfSubjectRulesReviewStatus(
                         incomplete = true,
@@ -87,7 +87,7 @@ class SelfSubjectRulesReviewTest : FullBuildSim<SelfSubjectRulesReviewV2, SelfSu
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<SelfSubjectRulesReviewV2, SelfSubjectRulesReviewV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<SelfSubjectRulesReview, SelfSubjectRulesReviewV2DslBuilder> {
             requireScenario("spec") {
                 given(SelfSubjectRulesReviewV2DslBuilder())
             }

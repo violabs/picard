@@ -7,7 +7,7 @@ import io.violabs.picard.possibilities
 import io.violabs.picard.domain.ObjectReference
 import org.junit.jupiter.api.BeforeAll
 
-class EndpointsTest : SuccessBuildSim<EndpointsV2, EndpointsV2DslBuilder>() {
+class EndpointsTest : SuccessBuildSim<Endpoints, EndpointsV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,11 +16,11 @@ class EndpointsTest : SuccessBuildSim<EndpointsV2, EndpointsV2DslBuilder>() {
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<EndpointsV2, EndpointsV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Endpoints, EndpointsV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(EndpointsV2DslBuilder())
-                expected = EndpointsV2()
+                expected = Endpoints()
             }
 
             scenario {
@@ -74,7 +74,7 @@ class EndpointsTest : SuccessBuildSim<EndpointsV2, EndpointsV2DslBuilder>() {
                         }
                     }
                 }
-                expected = EndpointsV2(
+                expected = Endpoints(
                     metadata = OBJECT_META,
                     subsets = listOf(
                         EndpointSubset(

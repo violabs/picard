@@ -3,14 +3,13 @@ package io.violabs.picard.v2.resources.policy.network
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
-import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.common.LabelSelectorRequirement
 import org.junit.jupiter.api.BeforeAll
 
-class NetworkPolicyTest : SuccessBuildSim<NetworkPolicyV2, NetworkPolicyV2DslBuilder>() {
+class NetworkPolicyTest : SuccessBuildSim<NetworkPolicy, NetworkPolicyV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -20,7 +19,7 @@ class NetworkPolicyTest : SuccessBuildSim<NetworkPolicyV2, NetworkPolicyV2DslBui
         )
 
         private val NETWORK_POLICY_PEER = NetworkPolicyPeer(
-            ipBlock = IPBlock(
+            ipBlock = IpBlock(
                 cidr = PLACEHOLDER,
                 except = PLACEHOLDER_LIST
             ),
@@ -44,11 +43,11 @@ class NetworkPolicyTest : SuccessBuildSim<NetworkPolicyV2, NetworkPolicyV2DslBui
             ports = listOf(NETWORK_POLICY_PORT)
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<NetworkPolicyV2, NetworkPolicyV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<NetworkPolicy, NetworkPolicyV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(NetworkPolicyV2DslBuilder())
-                expected = NetworkPolicyV2()
+                expected = NetworkPolicy()
             }
 
             scenario {
@@ -122,7 +121,7 @@ class NetworkPolicyTest : SuccessBuildSim<NetworkPolicyV2, NetworkPolicyV2DslBui
                         }
                     }
                 }
-                expected = NetworkPolicyV2(
+                expected = NetworkPolicy(
                     metadata = Common.OBJECT_META,
                     spec = NetworkPolicySpec(
                         podSelector = Common.LABEL_SELECTOR,

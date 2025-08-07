@@ -1,8 +1,8 @@
 package io.violabs.picard.v2.resources.workload.daemon
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
-import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.v2.common.LabelSelector
+import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateSpec
 
 /**
  * DaemonSetSpec is the specification of a daemon set.
@@ -22,7 +22,7 @@ data class DaemonSetSpec(
      * allowed template.spec.restartPolicy value is "Always".
      * More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template
      */
-    val template: PodTemplate.Spec,
+    val template: PodTemplateSpec,
     /**
      * The minimum number of seconds for which a newly created DaemonSet pod should be
      * ready without any of its container crashing, for it to be considered available.

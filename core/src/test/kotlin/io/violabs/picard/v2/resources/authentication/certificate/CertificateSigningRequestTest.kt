@@ -7,7 +7,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class CertificateSigningRequestTest :
-    FullBuildSim<CertificateSigningRequestV2, CertificateSigningRequestV2DslBuilder>() {
+    FullBuildSim<CertificateSigningRequest, CertificateSigningRequestV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -18,7 +18,7 @@ class CertificateSigningRequestTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<CertificateSigningRequestV2, CertificateSigningRequestV2DslBuilder> {
+            possibilities<CertificateSigningRequest, CertificateSigningRequestV2DslBuilder> {
                 scenario {
                     id = "minimum"
                     given(CertificateSigningRequestV2DslBuilder()) {
@@ -27,7 +27,7 @@ class CertificateSigningRequestTest :
                             signerName = PLACEHOLDER
                         }
                     }
-                    expected = CertificateSigningRequestV2(
+                    expected = CertificateSigningRequest(
                         spec = CertificateSigningRequestSpec(
                             request = BYTES,
                             signerName = PLACEHOLDER
@@ -67,7 +67,7 @@ class CertificateSigningRequestTest :
                             }
                         }
                     }
-                    expected = CertificateSigningRequestV2(
+                    expected = CertificateSigningRequest(
                         metadata = Common.OBJECT_META,
 
                         spec = CertificateSigningRequestSpec(
@@ -99,7 +99,7 @@ class CertificateSigningRequestTest :
             }
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<CertificateSigningRequestV2, CertificateSigningRequestV2DslBuilder> {
+            possibilities<CertificateSigningRequest, CertificateSigningRequestV2DslBuilder> {
                 requireScenario("spec") {
                     given(CertificateSigningRequestV2DslBuilder())
                 }

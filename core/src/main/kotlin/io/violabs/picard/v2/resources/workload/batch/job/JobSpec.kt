@@ -1,10 +1,10 @@
 package io.violabs.picard.v2.resources.workload.batch.job
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
-import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.v2.common.LabelSelector
 import io.violabs.picard.v2.resources.workload.batch.job.policy.failure.PodFailurePolicy
 import io.violabs.picard.v2.resources.workload.batch.job.policy.success.SuccessPolicy
+import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateSpec
 
 /**
  * JobSpec describes how the job execution will look like.
@@ -16,7 +16,7 @@ data class JobSpec(
      * template.spec.restartPolicy values are "Never" or "OnFailure".
      * More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
      */
-    val template: PodTemplate.Spec,
+    val template: PodTemplateSpec,
     /**
      * Specifies the maximum desired number of pods the job should run at any
      * given time. The actual number of pods running in steady state will be less

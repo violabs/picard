@@ -2,7 +2,6 @@ package io.violabs.picard.v2.resources.extend.webhook.mutating
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
-import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.extend.webhook.MatchCondition
@@ -12,7 +11,7 @@ import io.violabs.picard.v2.resources.extend.webhook.WebhookClientConfig
 import org.junit.jupiter.api.BeforeAll
 
 class MutatingWebhookConfigurationTest :
-    SuccessBuildSim<MutatingWebhookConfigurationV2, MutatingWebhookConfigurationV2DslBuilder>() {
+    SuccessBuildSim<MutatingWebhookConfiguration, MutatingWebhookConfigurationV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -22,11 +21,11 @@ class MutatingWebhookConfigurationTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<MutatingWebhookConfigurationV2, MutatingWebhookConfigurationV2DslBuilder> {
+            possibilities<MutatingWebhookConfiguration, MutatingWebhookConfigurationV2DslBuilder> {
                 scenario {
                     id = "minimum"
                     given(MutatingWebhookConfigurationV2DslBuilder())
-                    expected = MutatingWebhookConfigurationV2()
+                    expected = MutatingWebhookConfiguration()
                 }
 
                 scenario {
@@ -74,7 +73,7 @@ class MutatingWebhookConfigurationTest :
                             }
                         }
                     }
-                    expected = MutatingWebhookConfigurationV2(
+                    expected = MutatingWebhookConfiguration(
                         metadata = Common.OBJECT_META,
                         webhooks = listOf(
                             MutatingWebhook(

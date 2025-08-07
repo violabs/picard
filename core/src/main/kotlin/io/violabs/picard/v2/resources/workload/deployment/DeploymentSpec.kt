@@ -1,8 +1,8 @@
 package io.violabs.picard.v2.resources.workload.deployment
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
-import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.v2.common.LabelSelector
+import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateSpec
 
 /**
  * DeploymentSpec is the specification of the desired behavior of the Deployment.
@@ -18,7 +18,7 @@ data class DeploymentSpec(
      * Template describes the pods that will be created. The only allowed template.spec.restartPolicy
      * value is "Always".
      */
-    val template: PodTemplate.Spec,
+    val template: PodTemplateSpec,
     /**
      * Number of desired pods. This is a pointer to distinguish between explicit zero and not
      * specified. Defaults to 1.

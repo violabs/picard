@@ -1,7 +1,7 @@
 package io.violabs.picard.v2.resources.workload.controller.replication
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
-import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
+import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateSpec
 
 /**
  * ReplicationControllerSpec is the specification of a replication controller.
@@ -20,7 +20,7 @@ data class ReplicationControllerSpec(
      * replicas are detected. This takes precedence over a TemplateRef. The only allowed
      * template.spec.restartPolicy value is "Always".
      */
-    val template: PodTemplate.Spec? = null,
+    val template: PodTemplateSpec? = null,
     /**
      * Replicas is the number of desired replicas. This is a pointer to distinguish between
      * explicit zero and unspecified. Defaults to 1.

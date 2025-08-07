@@ -2,7 +2,6 @@ package io.violabs.picard.v2.resources.extend.resource.json.schema
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
-import io.violabs.picard.domain.k8sResources.extend.json.JSONSchemaPropsOrStringArray
 
 /**
  * JsonSchemaProps is a JSON-Schema following Specification Draft 4 (http://json-schema.org/).
@@ -47,7 +46,7 @@ data class JsonSchemaProps(
     /**
      * Dependencies validation
      */
-    val dependencies: Map<String, JSONSchemaPropsOrStringArray>? = null,
+    val dependencies: Map<String, JsonSchemaPropsOrStringArray>? = null,
     /**
      * Description of the field
      */

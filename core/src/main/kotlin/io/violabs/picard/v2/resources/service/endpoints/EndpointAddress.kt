@@ -1,7 +1,7 @@
 package io.violabs.picard.v2.resources.service.endpoints
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
-import io.violabs.picard.domain.ObjectReference
+import io.violabs.picard.v2.common.ObjectReference
 
 @GeneratedDsl(withListGroup = true)
 data class EndpointAddress(

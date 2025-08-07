@@ -11,7 +11,7 @@ import io.violabs.picard.v2.resources.extend.resource.webhook.WebhookConversion
 import org.junit.jupiter.api.BeforeAll
 import java.time.ZoneOffset
 
-class CustomResourceDefinitionTest : SuccessBuildSim<CustomResourceDefinitionV2, CustomResourceDefinitionV2DslBuilder>() {
+class CustomResourceDefinitionTest : SuccessBuildSim<CustomResourceDefinition, CustomResourceDefinitionV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -96,7 +96,7 @@ class CustomResourceDefinitionTest : SuccessBuildSim<CustomResourceDefinitionV2,
             storedVersions = listOf(PLACEHOLDER)
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<CustomResourceDefinitionV2, CustomResourceDefinitionV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<CustomResourceDefinition, CustomResourceDefinitionV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(CustomResourceDefinitionV2DslBuilder()) {
@@ -116,7 +116,7 @@ class CustomResourceDefinitionTest : SuccessBuildSim<CustomResourceDefinitionV2,
                         }
                     }
                 }
-                expected = CustomResourceDefinitionV2(
+                expected = CustomResourceDefinition(
                     spec = CustomResourceDefinitionSpec(
                         group = PLACEHOLDER,
                         names = CustomResourceDefinitionNames(
@@ -227,7 +227,7 @@ class CustomResourceDefinitionTest : SuccessBuildSim<CustomResourceDefinitionV2,
                         storedVersions(PLACEHOLDER)
                     }
                 }
-                expected = CustomResourceDefinitionV2(
+                expected = CustomResourceDefinition(
                     metadata = Common.OBJECT_META,
                     spec = SPEC,
                     status = STATUS

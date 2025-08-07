@@ -9,7 +9,7 @@ import io.violabs.picard.v2.resources.policy.schema.flow.FlowDistinguisherMethod
 import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchemaCondition
 import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchemaSpec
 import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchemaStatus
-import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchemaV2
+import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchema
 import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchemaV2DslBuilder
 import io.violabs.picard.v2.resources.policy.schema.flow.PriorityLevelConfigurationReference
 import io.violabs.picard.v2.resources.policy.schema.rule.NonResourcePolicyRule
@@ -21,7 +21,7 @@ import io.violabs.picard.v2.resources.policy.schema.subject.Subject
 import io.violabs.picard.v2.resources.policy.schema.subject.UserSubject
 import org.junit.jupiter.api.BeforeAll
 
-class FlowSchemaTest : SuccessBuildSim<FlowSchemaV2, FlowSchemaV2DslBuilder>() {
+class FlowSchemaTest : SuccessBuildSim<FlowSchema, FlowSchemaV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -59,11 +59,11 @@ class FlowSchemaTest : SuccessBuildSim<FlowSchemaV2, FlowSchemaV2DslBuilder>() {
             resourceRules = listOf(RESOURCE_RULE)
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<FlowSchemaV2, FlowSchemaV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<FlowSchema, FlowSchemaV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(FlowSchemaV2DslBuilder())
-                expected = FlowSchemaV2()
+                expected = FlowSchema()
             }
 
             scenario {
@@ -124,7 +124,7 @@ class FlowSchemaTest : SuccessBuildSim<FlowSchemaV2, FlowSchemaV2DslBuilder>() {
                     }
                 }
 
-                expected = FlowSchemaV2(
+                expected = FlowSchema(
                     metadata = Common.OBJECT_META,
                     spec = FlowSchemaSpec(
                         priorityLevelConfiguration = PriorityLevelConfigurationReference(PLACEHOLDER),

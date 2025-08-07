@@ -2,7 +2,6 @@ package io.violabs.picard.v2.resources.policy.admission.validating
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
-import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.policy.admission.MatchCondition
@@ -11,7 +10,7 @@ import io.violabs.picard.v2.resources.policy.admission.Variable
 import org.junit.jupiter.api.BeforeAll
 
 class ValidatingAdmissionPolicyTest :
-    SuccessBuildSim<ValidatingAdmissionPolicyV2, ValidatingAdmissionPolicyV2DslBuilder>() {
+    SuccessBuildSim<ValidatingAdmissionPolicy, ValidatingAdmissionPolicyV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -66,11 +65,11 @@ class ValidatingAdmissionPolicyTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<ValidatingAdmissionPolicyV2, ValidatingAdmissionPolicyV2DslBuilder> {
+            possibilities<ValidatingAdmissionPolicy, ValidatingAdmissionPolicyV2DslBuilder> {
                 scenario {
                     id = "minimum"
                     given(ValidatingAdmissionPolicyV2DslBuilder())
-                    expected = ValidatingAdmissionPolicyV2()
+                    expected = ValidatingAdmissionPolicy()
                 }
 
                 scenario {
@@ -163,7 +162,7 @@ class ValidatingAdmissionPolicyTest :
                             }
                         }
                     }
-                    expected = ValidatingAdmissionPolicyV2(
+                    expected = ValidatingAdmissionPolicy(
                         metadata = Common.OBJECT_META,
                         spec = ValidatingAdmissionPolicySpec(
                             auditAnnotations = listOf(AUDIT_ANNOTATION),

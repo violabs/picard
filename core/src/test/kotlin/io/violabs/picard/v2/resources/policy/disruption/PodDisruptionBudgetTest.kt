@@ -3,13 +3,12 @@ package io.violabs.picard.v2.resources.policy.disruption
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
-import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PodDisruptionBudgetTest : SuccessBuildSim<PodDisruptionBudgetV2, PodDisruptionBudgetV2DslBuilder>() {
+class PodDisruptionBudgetTest : SuccessBuildSim<PodDisruptionBudget, PodDisruptionBudgetV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -27,11 +26,11 @@ class PodDisruptionBudgetTest : SuccessBuildSim<PodDisruptionBudgetV2, PodDisrup
             observedGeneration = 1L
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<PodDisruptionBudgetV2, PodDisruptionBudgetV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<PodDisruptionBudget, PodDisruptionBudgetV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(PodDisruptionBudgetV2DslBuilder())
-                expected = PodDisruptionBudgetV2()
+                expected = PodDisruptionBudget()
             }
 
             scenario {
@@ -67,7 +66,7 @@ class PodDisruptionBudgetTest : SuccessBuildSim<PodDisruptionBudgetV2, PodDisrup
                         observedGeneration = 1L
                     }
                 }
-                expected = PodDisruptionBudgetV2(
+                expected = PodDisruptionBudget(
                     metadata = Common.OBJECT_META,
                     spec = PodDisruptionBudgetSpec(
                         maxUnavailable = IntOrString(1),

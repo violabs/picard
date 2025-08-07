@@ -1,8 +1,8 @@
 package io.violabs.picard.v2.resources.workload.set.replica
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
-import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.v2.common.LabelSelector
+import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateSpec
 
 /**
  * ReplicaSetSpec is the specification of a ReplicaSet.
@@ -19,7 +19,7 @@ data class ReplicaSetSpec(
      * Template is the object that describes the pod that will be created if insufficient
      * replicas are detected.
      */
-    val template: PodTemplate.Spec? = null,
+    val template: PodTemplateSpec? = null,
     /**
      * Replicas is the number of desired pods. This is a pointer to distinguish between
      * explicit zero and unspecified. Defaults to 1.

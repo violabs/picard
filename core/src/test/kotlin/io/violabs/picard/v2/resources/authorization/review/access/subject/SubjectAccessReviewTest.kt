@@ -7,7 +7,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class SubjectAccessReviewTest : FullBuildSim<SubjectAccessReviewV2, SubjectAccessReviewV2DslBuilder>() {
+class SubjectAccessReviewTest : FullBuildSim<SubjectAccessReview, SubjectAccessReviewV2DslBuilder>() {
     companion object : AccessReviewTestConfig {
         @JvmStatic
         @BeforeAll
@@ -17,13 +17,13 @@ class SubjectAccessReviewTest : FullBuildSim<SubjectAccessReviewV2, SubjectAcces
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<SubjectAccessReviewV2, SubjectAccessReviewV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<SubjectAccessReview, SubjectAccessReviewV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(SubjectAccessReviewV2DslBuilder()) {
                     spec { }
                 }
-                expected = SubjectAccessReviewV2(
+                expected = SubjectAccessReview(
                     spec = SubjectAccessReviewSpec()
                 )
             }
@@ -39,7 +39,7 @@ class SubjectAccessReviewTest : FullBuildSim<SubjectAccessReviewV2, SubjectAcces
 
                     this.status { sharedSubjectAccessReviewStatus() }
                 }
-                expected = SubjectAccessReviewV2(
+                expected = SubjectAccessReview(
                     metadata = Common.OBJECT_META,
                     spec = sharedSubjectAccessReviewSpec(),
                     status = sharedSubjectAccessReviewStatus()
@@ -47,7 +47,7 @@ class SubjectAccessReviewTest : FullBuildSim<SubjectAccessReviewV2, SubjectAcces
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<SubjectAccessReviewV2, SubjectAccessReviewV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<SubjectAccessReview, SubjectAccessReviewV2DslBuilder> {
             requireScenario("spec") {
                 given(SubjectAccessReviewV2DslBuilder())
             }

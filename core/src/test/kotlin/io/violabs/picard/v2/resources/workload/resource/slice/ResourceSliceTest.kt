@@ -17,7 +17,7 @@ import io.violabs.picard.v2.resources.workload.resource.slice.device.DeviceCapac
 import io.violabs.picard.v2.resources.workload.resource.slice.device.DeviceCounterConsumption
 import org.junit.jupiter.api.BeforeAll
 
-class ResourceSliceTest : SuccessBuildSim<ResourceSliceV2, ResourceSliceV2DslBuilder>() {
+class ResourceSliceTest : SuccessBuildSim<ResourceSlice, ResourceSliceV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -38,7 +38,7 @@ class ResourceSliceTest : SuccessBuildSim<ResourceSliceV2, ResourceSliceV2DslBui
             )
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ResourceSliceV2, ResourceSliceV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ResourceSlice, ResourceSliceV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(ResourceSliceV2DslBuilder()) {
@@ -51,7 +51,7 @@ class ResourceSliceTest : SuccessBuildSim<ResourceSliceV2, ResourceSliceV2DslBui
                         }
                     }
                 }
-                expected = ResourceSliceV2(
+                expected = ResourceSlice(
                     spec = ResourceSliceSpec(
                         driver = PLACEHOLDER,
                         pool = ResourcePool(
@@ -140,7 +140,7 @@ class ResourceSliceTest : SuccessBuildSim<ResourceSliceV2, ResourceSliceV2DslBui
                         }
                     }
                 }
-                expected = ResourceSliceV2(
+                expected = ResourceSlice(
                     metadata = OBJECT_META,
                     spec = ResourceSliceSpec(
                         driver = PLACEHOLDER,

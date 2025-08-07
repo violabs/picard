@@ -6,7 +6,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PriorityClassTest : SuccessBuildSim<PriorityClassV2, PriorityClassV2DslBuilder>() {
+class PriorityClassTest : SuccessBuildSim<PriorityClass, PriorityClassV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,13 +15,13 @@ class PriorityClassTest : SuccessBuildSim<PriorityClassV2, PriorityClassV2DslBui
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<PriorityClassV2, PriorityClassV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<PriorityClass, PriorityClassV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(PriorityClassV2DslBuilder()) {
                     value = 1
                 }
-                expected = PriorityClassV2(
+                expected = PriorityClass(
                     value = 1
                 )
             }
@@ -35,14 +35,14 @@ class PriorityClassTest : SuccessBuildSim<PriorityClassV2, PriorityClassV2DslBui
                     value = 1000
                     description = PLACEHOLDER
                     globalDefault(true)
-                    preemptionPolicy = PriorityClassV2.PreemptionPolicy.PreemptLowerPriority
+                    preemptionPolicy = PriorityClass.PreemptionPolicy.PreemptLowerPriority
                 }
-                expected = PriorityClassV2(
+                expected = PriorityClass(
                     metadata = OBJECT_META,
                     value = 1000,
                     description = PLACEHOLDER,
                     globalDefault = true,
-                    preemptionPolicy = PriorityClassV2.PreemptionPolicy.PreemptLowerPriority
+                    preemptionPolicy = PriorityClass.PreemptionPolicy.PreemptLowerPriority
                 )
             }
         }

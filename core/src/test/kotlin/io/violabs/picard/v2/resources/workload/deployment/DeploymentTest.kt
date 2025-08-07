@@ -1,7 +1,6 @@
 package io.violabs.picard.v2.resources.workload.deployment
 
 import io.violabs.picard.Common
-import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
@@ -9,7 +8,7 @@ import io.violabs.picard.possibilities
 import io.violabs.picard.v2.common.ObjectMeta
 import org.junit.jupiter.api.BeforeAll
 
-class DeploymentTest : SuccessBuildSim<DeploymentV2, DeploymentV2DslBuilder>() {
+class DeploymentTest : SuccessBuildSim<Deployment, DeploymentV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -18,7 +17,7 @@ class DeploymentTest : SuccessBuildSim<DeploymentV2, DeploymentV2DslBuilder>() {
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<DeploymentV2, DeploymentV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Deployment, DeploymentV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(DeploymentV2DslBuilder()) {
@@ -29,7 +28,7 @@ class DeploymentTest : SuccessBuildSim<DeploymentV2, DeploymentV2DslBuilder>() {
                         template = PodTemplate.Spec()
                     }
                 }
-                expected = DeploymentV2(
+                expected = Deployment(
                     spec = DeploymentSpec(
                         selector = Common.LABEL_SELECTOR,
                         template = PodTemplate.Spec()
@@ -82,7 +81,7 @@ class DeploymentTest : SuccessBuildSim<DeploymentV2, DeploymentV2DslBuilder>() {
                         observedGeneration = 1
                     }
                 }
-                expected = DeploymentV2(
+                expected = Deployment(
                     metadata = ObjectMeta(
                         name = PLACEHOLDER,
                         namespace = PLACEHOLDER

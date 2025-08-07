@@ -7,7 +7,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class LimitRangeTest : SuccessBuildSim<LimitRangeV2, LimitRangeV2DslBuilder>() {
+class LimitRangeTest : SuccessBuildSim<LimitRange, LimitRangeV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,11 +16,11 @@ class LimitRangeTest : SuccessBuildSim<LimitRangeV2, LimitRangeV2DslBuilder>() {
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<LimitRangeV2, LimitRangeV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<LimitRange, LimitRangeV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(LimitRangeV2DslBuilder())
-                expected = LimitRangeV2()
+                expected = LimitRange()
             }
 
             scenario {
@@ -42,7 +42,7 @@ class LimitRangeTest : SuccessBuildSim<LimitRangeV2, LimitRangeV2DslBuilder>() {
                         }
                     }
                 }
-                expected = LimitRangeV2(
+                expected = LimitRange(
                     metadata = Common.OBJECT_META,
                     spec = LimitRangeSpec(
                         limits = listOf(

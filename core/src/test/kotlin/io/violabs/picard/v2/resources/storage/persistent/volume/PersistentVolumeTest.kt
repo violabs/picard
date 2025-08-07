@@ -3,13 +3,12 @@ package io.violabs.picard.v2.resources.storage.persistent.volume
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
-import io.violabs.picard.Common.sharedObjectReference
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.common.NodeSelectorRequirement
 import org.junit.jupiter.api.BeforeAll
 
-class PersistentVolumeTest : SuccessBuildSim<PersistentVolumeV2, PersistentVolumeV2DslBuilder>() {
+class PersistentVolumeTest : SuccessBuildSim<PersistentVolume, PersistentVolumeV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -18,11 +17,11 @@ class PersistentVolumeTest : SuccessBuildSim<PersistentVolumeV2, PersistentVolum
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<PersistentVolumeV2, PersistentVolumeV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<PersistentVolume, PersistentVolumeV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(PersistentVolumeV2DslBuilder())
-                expected = PersistentVolumeV2()
+                expected = PersistentVolume()
             }
 
             scenario {
@@ -73,7 +72,7 @@ class PersistentVolumeTest : SuccessBuildSim<PersistentVolumeV2, PersistentVolum
                         lastPhaseTransitionTime = NOW
                     }
                 }
-                expected = PersistentVolumeV2(
+                expected = PersistentVolume(
                     metadata = Common.OBJECT_META,
                     spec = PersistentVolumeSpec(
                         accessModes = listOf(PLACEHOLDER),

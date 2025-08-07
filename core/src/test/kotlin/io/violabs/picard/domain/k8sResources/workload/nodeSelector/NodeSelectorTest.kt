@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class NodeSelectorTest : FailureBuildSim<NodeSelector, NodeSelector.Builder>() {
+class NodeSelectorTest : FailureBuildSim<NodeSelector, NodeSelectorDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class NodeSelectorTest : FailureBuildSim<NodeSelector, NodeSelector.Builder>() {
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<NodeSelector, NodeSelector.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<NodeSelector, NodeSelectorDslBuilder> {
             requireNotEmptyScenario("nodeSelectorTerms") {
-                given(NodeSelector.Builder())
+                given(NodeSelectorDslBuilder())
             }
         }
     }

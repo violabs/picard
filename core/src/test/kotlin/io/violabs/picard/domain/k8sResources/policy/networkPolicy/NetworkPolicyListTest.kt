@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class NetworkPolicyListTest : FullBuildSim<NetworkPolicyList, NetworkPolicyList.Builder>() {
+class NetworkPolicyListTest : FullBuildSim<NetworkPolicyList, NetworkPolicyListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class NetworkPolicyListTest : FullBuildSim<NetworkPolicyList, NetworkPolicyList.
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<NetworkPolicyList, NetworkPolicyList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<NetworkPolicyList, NetworkPolicyListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(NetworkPolicyList.Builder()) {
+                given(NetworkPolicyListDslBuilder()) {
                     items {
                         networkPolicyItem {  }
                     }
@@ -29,9 +29,9 @@ class NetworkPolicyListTest : FullBuildSim<NetworkPolicyList, NetworkPolicyList.
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<NetworkPolicyList, NetworkPolicyList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<NetworkPolicyList, NetworkPolicyListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(NetworkPolicyList.Builder())
+                given(NetworkPolicyListDslBuilder())
             }
         }
     }

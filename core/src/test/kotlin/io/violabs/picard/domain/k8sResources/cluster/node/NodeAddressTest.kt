@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class NodeAddressTest : FailureBuildSim<NodeAddress, NodeAddress.Builder>() {
+class NodeAddressTest : FailureBuildSim<NodeAddress, NodeAddressDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class NodeAddressTest : FailureBuildSim<NodeAddress, NodeAddress.Builder>() {
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<NodeAddress, NodeAddress.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<NodeAddress, NodeAddressDslBuilder> {
             requireScenario("address") {
-                given(NodeAddress.Builder())
+                given(NodeAddressDslBuilder())
             }
 
             requireScenario("type") {
-                given(NodeAddress.Builder()) {
+                given(NodeAddressDslBuilder()) {
                     address = PLACEHOLDER
                 }
             }

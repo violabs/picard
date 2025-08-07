@@ -21,7 +21,7 @@ import io.violabs.picard.domain.k8sResources.policy.validatingAdmissionPolicy.bi
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PolicyResourceSectionTest : FullBuildSim<PolicyResourceSection, PolicyResourceSection.Builder>() {
+class PolicyResourceSectionTest : FullBuildSim<PolicyResourceSection, PolicyResourceSectionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -31,10 +31,10 @@ class PolicyResourceSectionTest : FullBuildSim<PolicyResourceSection, PolicyReso
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<PolicyResourceSection, PolicyResourceSection.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<PolicyResourceSection, PolicyResourceSectionDslBuilder> {
             scenario {
                 id = "minimum"
-                given(PolicyResourceSection.Builder()) {
+                given(PolicyResourceSectionDslBuilder()) {
                     flowSchema { }
                     flowSchemaList {
                         items {
@@ -107,9 +107,9 @@ class PolicyResourceSectionTest : FullBuildSim<PolicyResourceSection, PolicyReso
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<PolicyResourceSection, PolicyResourceSection.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<PolicyResourceSection, PolicyResourceSectionDslBuilder> {
             requireNotEmptyScenario("resources") {
-                given(PolicyResourceSection.Builder())
+                given(PolicyResourceSectionDslBuilder())
             }
         }
     }

@@ -5,7 +5,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PersistentVolumeTest : SuccessBuildSim<PersistentVolume, PersistentVolume.Builder>() {
+class PersistentVolumeTest : SuccessBuildSim<PersistentVolume, PersistentVolumeDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -18,16 +18,16 @@ class PersistentVolumeTest : SuccessBuildSim<PersistentVolume, PersistentVolume.
             required = NODE_SELECTOR
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<PersistentVolume, PersistentVolume.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<PersistentVolume, PersistentVolumeDslBuilder> {
             scenario {
                 id = "minimum"
-                given(PersistentVolume.Builder())
+                given(PersistentVolumeDslBuilder())
                 expected = PersistentVolume()
             }
 
             scenario {
                 id = "minimum"
-                given(PersistentVolume.Builder()) {
+                given(PersistentVolumeDslBuilder()) {
                     sharedMetadata()
                     spec {
                         accessModes = PLACEHOLDER
@@ -57,7 +57,7 @@ class PersistentVolumeTest : SuccessBuildSim<PersistentVolume, PersistentVolume.
                 }
                 expected = PersistentVolume(
                     metadata = METADATA,
-                    spec = PersistentVolume.Spec(
+                    spec = PersistentVolumeSpec(
                         accessModes = PLACEHOLDER,
                         capacity = QUANTITY_MAP,
                         claimRef = OBJECT_REFERENCE,
@@ -68,7 +68,7 @@ class PersistentVolumeTest : SuccessBuildSim<PersistentVolume, PersistentVolume.
                         volumeAttributesClassName = PLACEHOLDER,
                         volumeMode = PLACEHOLDER
                     ),
-                    status = PersistentVolume.Status(
+                    status = PersistentVolumeStatus(
                         phase = PLACEHOLDER,
                         message = PLACEHOLDER,
                         reason = PLACEHOLDER,

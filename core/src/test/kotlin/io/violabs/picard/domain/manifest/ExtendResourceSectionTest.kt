@@ -15,7 +15,7 @@ import io.violabs.picard.domain.k8sResources.extend.webhook.validatingWebhookCon
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ExtendResourceSectionTest : FullBuildSim<ExtendResourceSection, ExtendResourceSection.Builder>() {
+class ExtendResourceSectionTest : FullBuildSim<ExtendResourceSection, ExtendResourceSectionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -25,7 +25,7 @@ class ExtendResourceSectionTest : FullBuildSim<ExtendResourceSection, ExtendReso
             FAILURE_POSSIBILITIES
         )
 
-        private val CUSTOM_RESOURCE_DEFINITION = CustomResourceDefinition(spec = CustomResourceDefinition.Spec(
+        private val CUSTOM_RESOURCE_DEFINITION = CustomResourceDefinition(spec = CustomResourceDefinitionSpec(
             group = PLACEHOLDER,
             names = CustomResourceDefinitionNames(
                 kind = PLACEHOLDER,
@@ -41,7 +41,7 @@ class ExtendResourceSectionTest : FullBuildSim<ExtendResourceSection, ExtendReso
             )
         ))
 
-        private fun CustomResourceDefinition.Builder.sharedCustomResourceDefinition() {
+        private fun CustomResourceDefinitionDslBuilder.sharedCustomResourceDefinition() {
             spec {
                 group = PLACEHOLDER
                 names {
@@ -59,12 +59,12 @@ class ExtendResourceSectionTest : FullBuildSim<ExtendResourceSection, ExtendReso
             }
         }
 
-        private val DEVICE_CLASS = DeviceClass(spec = DeviceClass.Spec())
+        private val DEVICE_CLASS = DeviceClass(spec = DeviceClassSpec())
         
-        private val SUCCESS_POSSIBILITIES = possibilities<ExtendResourceSection, ExtendResourceSection.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ExtendResourceSection, ExtendResourceSectionDslBuilder> {
             scenario {
                 id = "full"
-                given(ExtendResourceSection.Builder()) {
+                given(ExtendResourceSectionDslBuilder()) {
                     customResourceDefinition {
                         sharedCustomResourceDefinition()
                     }
@@ -113,9 +113,9 @@ class ExtendResourceSectionTest : FullBuildSim<ExtendResourceSection, ExtendReso
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<ExtendResourceSection, ExtendResourceSection.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ExtendResourceSection, ExtendResourceSectionDslBuilder> {
             requireNotEmptyScenario("resources") {
-                given(ExtendResourceSection.Builder())
+                given(ExtendResourceSectionDslBuilder())
             }
         }
     }

@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class NamespaceListTest : FullBuildSim<NamespaceList, NamespaceList.Builder>() {
+class NamespaceListTest : FullBuildSim<NamespaceList, NamespaceListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class NamespaceListTest : FullBuildSim<NamespaceList, NamespaceList.Builder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<NamespaceList, NamespaceList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<NamespaceList, NamespaceListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(NamespaceList.Builder()) {
+                given(NamespaceListDslBuilder()) {
                     items {
                         name {  }
                     }
@@ -31,9 +31,9 @@ class NamespaceListTest : FullBuildSim<NamespaceList, NamespaceList.Builder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<NamespaceList, NamespaceList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<NamespaceList, NamespaceListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(NamespaceList.Builder())
+                given(NamespaceListDslBuilder())
             }
         }
     }

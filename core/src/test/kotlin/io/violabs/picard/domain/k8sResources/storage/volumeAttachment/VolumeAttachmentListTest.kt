@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class VolumeAttachmentListTest : FullBuildSim<VolumeAttachmentList, VolumeAttachmentList.Builder>() {
+class VolumeAttachmentListTest : FullBuildSim<VolumeAttachmentList, VolumeAttachmentListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class VolumeAttachmentListTest : FullBuildSim<VolumeAttachmentList, VolumeAttach
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<VolumeAttachmentList, VolumeAttachmentList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<VolumeAttachmentList, VolumeAttachmentListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(VolumeAttachmentList.Builder()) {
+                given(VolumeAttachmentListDslBuilder()) {
                     items {
                         volumeAttachmentItem {  }
                     }
@@ -29,9 +29,9 @@ class VolumeAttachmentListTest : FullBuildSim<VolumeAttachmentList, VolumeAttach
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<VolumeAttachmentList, VolumeAttachmentList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<VolumeAttachmentList, VolumeAttachmentListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(VolumeAttachmentList.Builder())
+                given(VolumeAttachmentListDslBuilder())
             }
         }
     }

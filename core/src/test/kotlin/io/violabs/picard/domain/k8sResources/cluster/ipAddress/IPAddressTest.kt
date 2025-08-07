@@ -5,7 +5,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class IPAddressTest : SuccessBuildSim<IPAddress, IPAddress.Builder>() {
+class IPAddressTest : SuccessBuildSim<IPAddress, IPAddressDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class IPAddressTest : SuccessBuildSim<IPAddress, IPAddress.Builder>() {
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<IPAddress, IPAddress.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<IPAddress, IPAddressDslBuilder> {
             scenario {
                 id = "minimum"
-                given(IPAddress.Builder()) {
+                given(IPAddressDslBuilder()) {
 
                 }
                 expected = IPAddress()

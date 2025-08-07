@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class CronJobListTest : FullBuildSim<CronJobList, CronJobList.Builder>() {
+class CronJobListTest : FullBuildSim<CronJobList, CronJobListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class CronJobListTest : FullBuildSim<CronJobList, CronJobList.Builder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<CronJobList, CronJobList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<CronJobList, CronJobListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(CronJobList.Builder()) {
+                given(CronJobListDslBuilder()) {
                     items {
                         cronJobItem { }
                     }
@@ -29,9 +29,9 @@ class CronJobListTest : FullBuildSim<CronJobList, CronJobList.Builder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<CronJobList, CronJobList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<CronJobList, CronJobListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(CronJobList.Builder())
+                given(CronJobListDslBuilder())
             }
         }
     }

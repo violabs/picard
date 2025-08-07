@@ -6,7 +6,7 @@ import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class DaemonSetTest : SuccessBuildSim<DaemonSet, DaemonSet.Builder>() {
+class DaemonSetTest : SuccessBuildSim<DaemonSet, DaemonSetDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,16 +16,16 @@ class DaemonSetTest : SuccessBuildSim<DaemonSet, DaemonSet.Builder>() {
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<DaemonSet, DaemonSet.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<DaemonSet, DaemonSetDslBuilder> {
             scenario {
                 id = "minimum"
-                given(DaemonSet.Builder())
+                given(DaemonSetDslBuilder())
                 expected = DaemonSet()
             }
 
             scenario {
                 id = "full - without template spec"
-                given(DaemonSet.Builder()) {
+                given(DaemonSetDslBuilder()) {
                     sharedMetadata()
                     spec {
                         selector {
@@ -62,14 +62,14 @@ class DaemonSetTest : SuccessBuildSim<DaemonSet, DaemonSet.Builder>() {
                 }
                 expected = DaemonSet(
                     metadata = METADATA,
-                    spec = DaemonSet.Spec(
+                    spec = DaemonSetSpec(
                         selector = LABEL_SELECTOR,
-                        template = PodTemplate.Spec(),
+                        template = PodTemplateSpec(),
                         minReadySeconds = 1,
                         updateStrategy = UPDATE_STRATEGY,
                         revisionHistoryLimit = 1
                     ),
-                    status = DaemonSet.Status(
+                    status = DaemonSetStatus(
                         numberReady = 1,
                         numberAvailable = 1,
                         numberUnavailable = 1,

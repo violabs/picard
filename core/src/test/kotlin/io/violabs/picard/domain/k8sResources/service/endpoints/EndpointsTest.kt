@@ -9,7 +9,7 @@ import io.violabs.picard.domain.k8sResources.service.endpoint.EndpointSubset
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class EndpointsTest : SuccessBuildSim<Endpoints, Endpoints.Builder>() {
+class EndpointsTest : SuccessBuildSim<Endpoints, EndpointsDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -38,7 +38,7 @@ class EndpointsTest : SuccessBuildSim<Endpoints, Endpoints.Builder>() {
             ports = listOf(PORT)
         )
 
-        private fun EndpointAddress.Builder.sharedAddress() {
+        private fun EndpointAddressDslBuilder.sharedAddress() {
             ip = PLACEHOLDER
             hostname = PLACEHOLDER
             nodeName = PLACEHOLDER
@@ -47,16 +47,16 @@ class EndpointsTest : SuccessBuildSim<Endpoints, Endpoints.Builder>() {
             }
         }
 
-        private val SUCCESS_POSSIBILITIES = possibilities<Endpoints, Endpoints.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Endpoints, EndpointsDslBuilder> {
             scenario {
                 id = "minimum"
-                given(Endpoints.Builder())
+                given(EndpointsDslBuilder())
                 expected = Endpoints()
             }
 
             scenario {
                 id = "full"
-                given(Endpoints.Builder()) {
+                given(EndpointsDslBuilder()) {
                     sharedMetadata()
                     subsets {
                         addEndpointSubset {

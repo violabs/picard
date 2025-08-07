@@ -4,7 +4,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ModifyVolumeStatusTest : FailureBuildSim<ModifyVolumeStatus, ModifyVolumeStatus.Builder>() {
+class ModifyVolumeStatusTest : FailureBuildSim<ModifyVolumeStatus, ModifyVolumeStatusDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -13,9 +13,9 @@ class ModifyVolumeStatusTest : FailureBuildSim<ModifyVolumeStatus, ModifyVolumeS
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<ModifyVolumeStatus, ModifyVolumeStatus.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ModifyVolumeStatus, ModifyVolumeStatusDslBuilder> {
             requireScenario("status") {
-                given(ModifyVolumeStatus.Builder())
+                given(ModifyVolumeStatusDslBuilder())
             }
         }
     }

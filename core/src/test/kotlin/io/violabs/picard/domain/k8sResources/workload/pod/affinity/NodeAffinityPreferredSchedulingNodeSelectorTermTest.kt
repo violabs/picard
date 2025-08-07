@@ -5,7 +5,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class NodeAffinityPreferredSchedulingNodeSelectorTermTest :
-    FailureBuildSim<NodeAffinityPreferredSchedulingTerm, NodeAffinityPreferredSchedulingTerm.Builder>() {
+    FailureBuildSim<NodeAffinityPreferredSchedulingTerm, NodeAffinityPreferredSchedulingTermDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,13 +15,13 @@ class NodeAffinityPreferredSchedulingNodeSelectorTermTest :
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<NodeAffinityPreferredSchedulingTerm, NodeAffinityPreferredSchedulingTerm.Builder> {
+            possibilities<NodeAffinityPreferredSchedulingTerm, NodeAffinityPreferredSchedulingTermDslBuilder> {
                 requireScenario("preference") {
-                    given(NodeAffinityPreferredSchedulingTerm.Builder())
+                    given(NodeAffinityPreferredSchedulingTermDslBuilder())
                 }
 
                 requireScenario("weight") {
-                    given(NodeAffinityPreferredSchedulingTerm.Builder()) {
+                    given(NodeAffinityPreferredSchedulingTermDslBuilder()) {
                         preference {}
                     }
                 }

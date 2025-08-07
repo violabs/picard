@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ResourceClaimTemplateSpecTest : FailureBuildSim<ResourceClaimTemplate.Spec, ResourceClaimTemplate.Spec.Builder>() {
+class ResourceClaimTemplateSpecTest : FailureBuildSim<ResourceClaimTemplateSpec, ResourceClaimTemplateSpecDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,9 +15,9 @@ class ResourceClaimTemplateSpecTest : FailureBuildSim<ResourceClaimTemplate.Spec
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<ResourceClaimTemplate.Spec, ResourceClaimTemplate.Spec.Builder> {
+            possibilities<ResourceClaimTemplateSpec, ResourceClaimTemplateSpecDslBuilder> {
                 requireScenario("spec") {
-                    given(ResourceClaimTemplate.Spec.Builder())
+                    given(ResourceClaimTemplateSpecDslBuilder())
                 }
             }
     }

@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class CustomResourceDefinitionVersionTest :
-    FailureBuildSim<CustomResourceDefinitionVersion, CustomResourceDefinitionVersion.Builder>() {
+    FailureBuildSim<CustomResourceDefinitionVersion, CustomResourceDefinitionVersionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,19 +16,19 @@ class CustomResourceDefinitionVersionTest :
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<CustomResourceDefinitionVersion, CustomResourceDefinitionVersion.Builder> {
+            possibilities<CustomResourceDefinitionVersion, CustomResourceDefinitionVersionDslBuilder> {
                 requireScenario("name") {
-                    given(CustomResourceDefinitionVersion.Builder())
+                    given(CustomResourceDefinitionVersionDslBuilder())
                 }
 
                 requireScenario("served") {
-                    given(CustomResourceDefinitionVersion.Builder()) {
+                    given(CustomResourceDefinitionVersionDslBuilder()) {
                         name = PLACEHOLDER
                     }
                 }
 
                 requireScenario("storage") {
-                    given(CustomResourceDefinitionVersion.Builder()) {
+                    given(CustomResourceDefinitionVersionDslBuilder()) {
                         name = PLACEHOLDER
                         served()
                     }

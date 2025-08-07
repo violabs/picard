@@ -6,7 +6,7 @@ import io.violabs.picard.domain.Taint
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class NodeTest : SuccessBuildSim<Node, Node.Builder>() {
+class NodeTest : SuccessBuildSim<Node, NodeDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -25,7 +25,7 @@ class NodeTest : SuccessBuildSim<Node, Node.Builder>() {
             )
         )
 
-        private val SPEC = Node.Spec(
+        private val SPEC = NodeSpec(
             configSource = NODE_CONFIG_SOURCE,
             externalID = PLACEHOLDER,
             podCIDR = PLACEHOLDER,
@@ -34,7 +34,7 @@ class NodeTest : SuccessBuildSim<Node, Node.Builder>() {
             value = true
         )
 
-        private val STATUS = Node.Status(
+        private val STATUS = NodeStatus(
             addresses = listOf(NodeAddress(PLACEHOLDER, PLACEHOLDER)),
             allocatable = mapOf(PLACEHOLDER to QUANTITY),
             capacity = mapOf(PLACEHOLDER to QUANTITY),
@@ -88,7 +88,7 @@ class NodeTest : SuccessBuildSim<Node, Node.Builder>() {
             volumesInUse = listOf(PLACEHOLDER)
         )
 
-        private fun NodeConfigSource.Builder.defaultNodeConfigSource() {
+        private fun NodeConfigSourceDslBuilder.defaultNodeConfigSource() {
             configMap {
                 kubeletConfigKey = PLACEHOLDER
                 name = PLACEHOLDER
@@ -98,16 +98,16 @@ class NodeTest : SuccessBuildSim<Node, Node.Builder>() {
             }
         }
 
-        private val SUCCESS_POSSIBILITIES = possibilities<Node, Node.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Node, NodeDslBuilder> {
             scenario {
                 id = "minimum"
-                given(Node.Builder())
+                given(NodeDslBuilder())
                 expected = Node()
             }
 
             scenario {
                 id = "full"
-                given(Node.Builder()) {
+                given(NodeDslBuilder()) {
                     sharedMetadata()
                     spec {
                         configSource {

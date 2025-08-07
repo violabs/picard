@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class IngressServiceBackendTest : FailureBuildSim<IngressServiceBackend, IngressServiceBackend.Builder>() {
+class IngressServiceBackendTest : FailureBuildSim<IngressServiceBackend, IngressServiceBackendDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class IngressServiceBackendTest : FailureBuildSim<IngressServiceBackend, Ingress
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<IngressServiceBackend, IngressServiceBackend.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<IngressServiceBackend, IngressServiceBackendDslBuilder> {
             requireScenario("name") {
-                given(IngressServiceBackend.Builder())
+                given(IngressServiceBackendDslBuilder())
             }
         }
     }

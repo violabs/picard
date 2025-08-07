@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class SystemInfoTest : FailureBuildSim<SystemInfo, SystemInfo.Builder>() {
+class SystemInfoTest : FailureBuildSim<SystemInfo, SystemInfoDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,26 +14,26 @@ class SystemInfoTest : FailureBuildSim<SystemInfo, SystemInfo.Builder>() {
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<SystemInfo, SystemInfo.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<SystemInfo, SystemInfoDslBuilder> {
             requireScenario("architecture") {
-                given(SystemInfo.Builder())
+                given(SystemInfoDslBuilder())
             }
 
             requireScenario("bootID") {
-                given(SystemInfo.Builder()) {
+                given(SystemInfoDslBuilder()) {
                     architecture = PLACEHOLDER
                 }
             }
 
             requireScenario("containerRuntimeVersion") {
-                given(SystemInfo.Builder()) {
+                given(SystemInfoDslBuilder()) {
                     architecture = PLACEHOLDER
                     bootID = PLACEHOLDER
                 }
             }
 
             requireScenario("kernelVersion") {
-                given(SystemInfo.Builder()) {
+                given(SystemInfoDslBuilder()) {
                     architecture = PLACEHOLDER
                     bootID = PLACEHOLDER
                     containerRuntimeVersion = PLACEHOLDER
@@ -41,7 +41,7 @@ class SystemInfoTest : FailureBuildSim<SystemInfo, SystemInfo.Builder>() {
             }
 
             requireScenario("kubeProxyVersion") {
-                given(SystemInfo.Builder()) {
+                given(SystemInfoDslBuilder()) {
                     architecture = PLACEHOLDER
                     bootID = PLACEHOLDER
                     containerRuntimeVersion = PLACEHOLDER
@@ -50,7 +50,7 @@ class SystemInfoTest : FailureBuildSim<SystemInfo, SystemInfo.Builder>() {
             }
 
             requireScenario("kubeletVersion") {
-                given(SystemInfo.Builder()) {
+                given(SystemInfoDslBuilder()) {
                     architecture = PLACEHOLDER
                     bootID = PLACEHOLDER
                     containerRuntimeVersion = PLACEHOLDER
@@ -60,7 +60,7 @@ class SystemInfoTest : FailureBuildSim<SystemInfo, SystemInfo.Builder>() {
             }
 
             requireScenario("machineID") {
-                given(SystemInfo.Builder()) {
+                given(SystemInfoDslBuilder()) {
                     architecture = PLACEHOLDER
                     bootID = PLACEHOLDER
                     containerRuntimeVersion = PLACEHOLDER
@@ -71,7 +71,7 @@ class SystemInfoTest : FailureBuildSim<SystemInfo, SystemInfo.Builder>() {
             }
 
             requireScenario("operatingSystem") {
-                given(SystemInfo.Builder()) {
+                given(SystemInfoDslBuilder()) {
                     architecture = PLACEHOLDER
                     bootID = PLACEHOLDER
                     containerRuntimeVersion = PLACEHOLDER
@@ -83,7 +83,7 @@ class SystemInfoTest : FailureBuildSim<SystemInfo, SystemInfo.Builder>() {
             }
 
             requireScenario("osImage") {
-                given(SystemInfo.Builder()) {
+                given(SystemInfoDslBuilder()) {
                     architecture = PLACEHOLDER
                     bootID = PLACEHOLDER
                     containerRuntimeVersion = PLACEHOLDER
@@ -96,7 +96,7 @@ class SystemInfoTest : FailureBuildSim<SystemInfo, SystemInfo.Builder>() {
             }
 
             requireScenario("systemUUID") {
-                given(SystemInfo.Builder()) {
+                given(SystemInfoDslBuilder()) {
                     architecture = PLACEHOLDER
                     bootID = PLACEHOLDER
                     containerRuntimeVersion = PLACEHOLDER

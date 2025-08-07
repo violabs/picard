@@ -11,7 +11,7 @@ import io.violabs.picard.v2.resources.extend.webhook.WebhookClientConfig
 import org.junit.jupiter.api.BeforeAll
 
 class MutatingWebhookConfigurationTest :
-    SuccessBuildSim<MutatingWebhookConfiguration, MutatingWebhookConfigurationV2DslBuilder>() {
+    SuccessBuildSim<MutatingWebhookConfiguration, MutatingWebhookConfigurationDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -21,16 +21,16 @@ class MutatingWebhookConfigurationTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<MutatingWebhookConfiguration, MutatingWebhookConfigurationV2DslBuilder> {
+            possibilities<MutatingWebhookConfiguration, MutatingWebhookConfigurationDslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(MutatingWebhookConfigurationV2DslBuilder())
+                    given(MutatingWebhookConfigurationDslBuilder())
                     expected = MutatingWebhookConfiguration()
                 }
 
                 scenario {
                     id = "full"
-                    given(MutatingWebhookConfigurationV2DslBuilder()) {
+                    given(MutatingWebhookConfigurationDslBuilder()) {
                         metadata {
                             sharedObjectMeta()
                         }

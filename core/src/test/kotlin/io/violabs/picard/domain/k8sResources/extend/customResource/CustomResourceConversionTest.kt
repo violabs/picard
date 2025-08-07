@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class CustomResourceConversionTest : FailureBuildSim<CustomResourceConversion, CustomResourceConversion.Builder>() {
+class CustomResourceConversionTest : FailureBuildSim<CustomResourceConversion, CustomResourceConversionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class CustomResourceConversionTest : FailureBuildSim<CustomResourceConversion, C
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<CustomResourceConversion, CustomResourceConversion.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<CustomResourceConversion, CustomResourceConversionDslBuilder> {
             requireScenario("strategy") {
-                given(CustomResourceConversion.Builder())
+                given(CustomResourceConversionDslBuilder())
             }
         }
     }

@@ -7,7 +7,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class SubjectAccessReviewTest : FullBuildSim<SubjectAccessReview, SubjectAccessReviewV2DslBuilder>() {
+class SubjectAccessReviewTest : FullBuildSim<SubjectAccessReview, SubjectAccessReviewDslBuilder>() {
     companion object : AccessReviewTestConfig {
         @JvmStatic
         @BeforeAll
@@ -17,10 +17,10 @@ class SubjectAccessReviewTest : FullBuildSim<SubjectAccessReview, SubjectAccessR
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<SubjectAccessReview, SubjectAccessReviewV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<SubjectAccessReview, SubjectAccessReviewDslBuilder> {
             scenario {
                 id = "minimum"
-                given(SubjectAccessReviewV2DslBuilder()) {
+                given(SubjectAccessReviewDslBuilder()) {
                     spec { }
                 }
                 expected = SubjectAccessReview(
@@ -30,7 +30,7 @@ class SubjectAccessReviewTest : FullBuildSim<SubjectAccessReview, SubjectAccessR
 
             scenario {
                 id = "full"
-                given(SubjectAccessReviewV2DslBuilder()) {
+                given(SubjectAccessReviewDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -47,9 +47,9 @@ class SubjectAccessReviewTest : FullBuildSim<SubjectAccessReview, SubjectAccessR
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<SubjectAccessReview, SubjectAccessReviewV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<SubjectAccessReview, SubjectAccessReviewDslBuilder> {
             requireScenario("spec") {
-                given(SubjectAccessReviewV2DslBuilder())
+                given(SubjectAccessReviewDslBuilder())
             }
         }
     }

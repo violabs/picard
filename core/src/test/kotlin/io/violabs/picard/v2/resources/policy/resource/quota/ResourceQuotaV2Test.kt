@@ -7,25 +7,25 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ResourceQuotaV2Test : SuccessBuildSim<ResourceQuota, ResourceQuotaV2DslBuilder>() {
+class ResourceQuotaTest : SuccessBuildSim<ResourceQuota, ResourceQuotaDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
         fun setup() = buildSetup(
-            ResourceQuotaV2Test::class,
+            ResourceQuotaTest::class,
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ResourceQuota, ResourceQuotaV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ResourceQuota, ResourceQuotaDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ResourceQuotaV2DslBuilder())
+                given(ResourceQuotaDslBuilder())
                 expected = ResourceQuota()
             }
 
             scenario {
                 id = "full"
-                given(ResourceQuotaV2DslBuilder()) {
+                given(ResourceQuotaDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }

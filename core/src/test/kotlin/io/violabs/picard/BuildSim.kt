@@ -26,6 +26,8 @@ import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourcePool
 import io.violabs.picard.domain.label.Label
 import io.violabs.picard.domain.label.LabelSelector
 import io.violabs.picard.domain.label.LabelSelectorRequirement
+import io.violabs.picard.v2.resources.authorization.role.binding.RoleRef
+import io.violabs.picard.v2.resources.authorization.role.binding.RoleRefDslBuilder
 import org.junit.jupiter.api.TestTemplate
 import java.time.Instant
 import java.time.LocalDateTime
@@ -162,7 +164,7 @@ abstract class BuildSim<T, B : DslBuilder<T>> : UnitSim() {
         )
 
         @JvmStatic
-        protected fun LabelSelector.Builder.sharedSelector() {
+        protected fun LabelSelectorDslBuilder.sharedSelector() {
             matchExpressions {
                 addLabelSelectorRequirement {
                     key = PLACEHOLDER
@@ -184,7 +186,7 @@ abstract class BuildSim<T, B : DslBuilder<T>> : UnitSim() {
         )
 
         @JvmStatic
-        protected fun RoleRef.Builder.sharedRoleRef() {
+        protected fun RoleRefDslBuilder.sharedRoleRef() {
             apiGroup = PLACEHOLDER
             kind = PLACEHOLDER
             name = PLACEHOLDER
@@ -238,7 +240,7 @@ abstract class BuildSim<T, B : DslBuilder<T>> : UnitSim() {
         )
 
         @JvmStatic
-        protected fun ConditionGroup<Condition, Condition.Builder>.sharedCondition() {
+        protected fun ConditionGroup<Condition, ConditionDslBuilder>.sharedCondition() {
             condition {
                 status = BooleanType.True
                 type = PLACEHOLDER
@@ -282,7 +284,7 @@ abstract class BuildSim<T, B : DslBuilder<T>> : UnitSim() {
         )
 
         @JvmStatic
-        protected fun ObjectReference.Builder.sharedObjectReference() {
+        protected fun ObjectReferenceDslBuilder.sharedObjectReference() {
             apiVersion = KAPIVersion.APIRegistrationV1
             fieldPath = PLACEHOLDER
             kind = PLACEHOLDER
@@ -311,7 +313,7 @@ abstract class BuildSim<T, B : DslBuilder<T>> : UnitSim() {
         )
 
         @JvmStatic
-        protected fun NodeSelectorTerm.Builder.sharedNodeSelectorTerm() {
+        protected fun NodeSelectorTermDslBuilder.sharedNodeSelectorTerm() {
             matchExpressions {
                 requirement {
                     key = PLACEHOLDER
@@ -351,7 +353,7 @@ abstract class BuildSim<T, B : DslBuilder<T>> : UnitSim() {
         )
 
         @JvmStatic
-        protected fun MatchResources.Builder.sharedMatchResources() {
+        protected fun MatchResourcesDslBuilder.sharedMatchResources() {
             excludeResourceRules {
                 addNamedRuleWithOperations {
                     apiGroups(PLACEHOLDER)
@@ -399,7 +401,7 @@ abstract class BuildSim<T, B : DslBuilder<T>> : UnitSim() {
         )
 
         @JvmStatic
-        protected fun ResourcePool.Builder.sharedResourcePool() {
+        protected fun ResourcePoolDslBuilder.sharedResourcePool() {
             generation = 1
             name = PLACEHOLDER
             resourceSliceCount = 1

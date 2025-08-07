@@ -6,6 +6,7 @@ import io.violabs.picard.common.AppConstants
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.ConfigResource
+import io.violabs.picard.domain.manifest.StorageResource
 import io.violabs.picard.v2.common.ObjectMeta
 
 /**
@@ -35,6 +36,6 @@ data class VolumeAttachment(
      * entity completing the attach or detach operation, i.e. the external-attacher.
      */
     val status: VolumeAttachmentStatus? = null
-) : ConfigResource<VolumeAttachment.Version, ObjectMeta> {
+) : StorageResource<VolumeAttachment.Version, ObjectMeta> {
     interface Version : APIVersion
 }

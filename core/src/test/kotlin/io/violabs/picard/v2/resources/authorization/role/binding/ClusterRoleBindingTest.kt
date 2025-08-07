@@ -8,7 +8,7 @@ import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.authorization.role.RoleTestConfig
 import org.junit.jupiter.api.BeforeAll
 
-class ClusterRoleBindingTest : FullBuildSim<ClusterRoleBinding, ClusterRoleBindingV2DslBuilder>() {
+class ClusterRoleBindingTest : FullBuildSim<ClusterRoleBinding, ClusterRoleBindingDslBuilder>() {
     companion object : RoleTestConfig {
         @JvmStatic
         @BeforeAll
@@ -18,10 +18,10 @@ class ClusterRoleBindingTest : FullBuildSim<ClusterRoleBinding, ClusterRoleBindi
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ClusterRoleBinding, ClusterRoleBindingV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ClusterRoleBinding, ClusterRoleBindingDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ClusterRoleBindingV2DslBuilder()) {
+                given(ClusterRoleBindingDslBuilder()) {
                     roleRef {
                         sharedRoleRef()
                     }
@@ -33,7 +33,7 @@ class ClusterRoleBindingTest : FullBuildSim<ClusterRoleBinding, ClusterRoleBindi
 
             scenario {
                 id = "full"
-                given(ClusterRoleBindingV2DslBuilder()) {
+                given(ClusterRoleBindingDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -54,9 +54,9 @@ class ClusterRoleBindingTest : FullBuildSim<ClusterRoleBinding, ClusterRoleBindi
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<ClusterRoleBinding, ClusterRoleBindingV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ClusterRoleBinding, ClusterRoleBindingDslBuilder> {
             requireScenario("roleRef") {
-                given(ClusterRoleBindingV2DslBuilder())
+                given(ClusterRoleBindingDslBuilder())
             }
         }
     }

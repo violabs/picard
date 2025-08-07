@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class VariableTest : FailureBuildSim<Variable, Variable.Builder>() {
+class VariableTest : FailureBuildSim<Variable, VariableDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class VariableTest : FailureBuildSim<Variable, Variable.Builder>() {
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<Variable, Variable.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<Variable, VariableDslBuilder> {
             requireScenario("expression") {
-                given(Variable.Builder())
+                given(VariableDslBuilder())
             }
 
             requireScenario("name") {
-                given(Variable.Builder()) {
+                given(VariableDslBuilder()) {
                     expression = PLACEHOLDER
                 }
             }

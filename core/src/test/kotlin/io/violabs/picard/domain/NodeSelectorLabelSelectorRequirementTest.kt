@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class NodeSelectorLabelSelectorRequirementTest : FailureBuildSim<NodeSelectorRequirement, NodeSelectorRequirement.Builder>() {
+class NodeSelectorLabelSelectorRequirementTest : FailureBuildSim<NodeSelectorRequirement, NodeSelectorRequirementDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,14 +16,14 @@ class NodeSelectorLabelSelectorRequirementTest : FailureBuildSim<NodeSelectorReq
     }
 }
 
-private val FAILURE_POSSIBILITIES = possibilities<NodeSelectorRequirement, NodeSelectorRequirement.Builder> {
+private val FAILURE_POSSIBILITIES = possibilities<NodeSelectorRequirement, NodeSelectorRequirementDslBuilder> {
     requireScenario("key") {
         id = "missing key"
-        given(NodeSelectorRequirement.Builder())
+        given(NodeSelectorRequirementDslBuilder())
     }
 
     requireScenario("operator") {
-        given(NodeSelectorRequirement.Builder()) {
+        given(NodeSelectorRequirementDslBuilder()) {
             key = "test-key"
         }
     }

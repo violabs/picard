@@ -1,11 +1,11 @@
-package io.violabs.picard.domain.k8sResources.authorization.role
+package io.violabs.picard.v2.resources.authorization.role
 
-
+import io.violabs.picard.Common.sharedListMeta
 import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class RoleListTest : FullBuildSim<RoleList, RoleList.Builder>() {
+class RoleListTest : FullBuildSim<RoleList, RoleListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,15 +15,15 @@ class RoleListTest : FullBuildSim<RoleList, RoleList.Builder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<RoleList, RoleList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<RoleList, RoleListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(RoleList.Builder()) {
+                given(RoleListDslBuilder()) {
                     items {
-                        roleItem {  }
+                        role {}
                     }
 
-                    sharedMetadata()
+                    metadata { sharedListMeta() }
                 }
                 expected = RoleList(
                     items = listOf(Role()),
@@ -32,9 +32,9 @@ class RoleListTest : FullBuildSim<RoleList, RoleList.Builder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<RoleList, RoleList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<RoleList, RoleListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(RoleList.Builder())
+                given(RoleListDslBuilder())
             }
         }
     }

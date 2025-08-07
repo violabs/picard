@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class TokenRequestSpecTest : FailureBuildSim<TokenRequest.Spec, TokenRequest.Spec.Builder>() {
+class TokenRequestSpecTest : FailureBuildSim<TokenRequestSpec, TokenRequestSpecDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class TokenRequestSpecTest : FailureBuildSim<TokenRequest.Spec, TokenRequest.Spe
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<TokenRequest.Spec, TokenRequest.Spec.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<TokenRequestSpec, TokenRequestSpecDslBuilder> {
             requireNotEmptyScenario("audiences") {
-                given(TokenRequest.Spec.Builder())
+                given(TokenRequestSpecDslBuilder())
             }
         }
     }

@@ -6,7 +6,7 @@ import io.violabs.picard.verifyRequiredField
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 
-class EnvVarTest : FailureBuildSim<EnvVar, EnvVar.Builder>() {
+class EnvVarTest : FailureBuildSim<EnvVar, EnvVarDslBuilder>() {
 
     companion object {
         @JvmStatic
@@ -20,10 +20,10 @@ class EnvVarTest : FailureBuildSim<EnvVar, EnvVar.Builder>() {
     }
 }
 
-private val FAILURE_POSSIBILITIES = possibilities<EnvVar, EnvVar.Builder> {
+private val FAILURE_POSSIBILITIES = possibilities<EnvVar, EnvVarDslBuilder> {
     scenario {
         id = "missing name"
-        given(EnvVar.Builder())
+        given(EnvVarDslBuilder())
         exceptionMessage = withTemplate("name")
     }
 }

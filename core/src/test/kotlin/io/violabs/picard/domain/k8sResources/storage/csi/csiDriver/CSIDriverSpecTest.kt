@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class CSIDriverSpecTest : FailureBuildSim<CSIDriver.Spec, CSIDriver.Spec.Builder>() {
+class CSIDriverSpecTest : FailureBuildSim<CSIDriverSpec, CSIDriverSpecDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,26 +14,26 @@ class CSIDriverSpecTest : FailureBuildSim<CSIDriver.Spec, CSIDriver.Spec.Builder
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<CSIDriver.Spec, CSIDriver.Spec.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<CSIDriverSpec, CSIDriverSpecDslBuilder> {
             requireScenario("attachRequired") {
-                given(CSIDriver.Spec.Builder())
+                given(CSIDriverSpecDslBuilder())
             }
 
             requireScenario("podInfoOnMount") {
-                given(CSIDriver.Spec.Builder()) {
+                given(CSIDriverSpecDslBuilder()) {
                     attachRequired()
                 }
             }
 
             requireScenario("requiresRepublish") {
-                given(CSIDriver.Spec.Builder()) {
+                given(CSIDriverSpecDslBuilder()) {
                     attachRequired()
                     podInfoOnMount()
                 }
             }
 
             requireScenario("seLinuxMount") {
-                given(CSIDriver.Spec.Builder()) {
+                given(CSIDriverSpecDslBuilder()) {
                     attachRequired()
                     podInfoOnMount()
                     requiresRepublish()
@@ -41,7 +41,7 @@ class CSIDriverSpecTest : FailureBuildSim<CSIDriver.Spec, CSIDriver.Spec.Builder
             }
 
             requireScenario("storageCapacity") {
-                given(CSIDriver.Spec.Builder()) {
+                given(CSIDriverSpecDslBuilder()) {
                     attachRequired()
                     podInfoOnMount()
                     requiresRepublish()
@@ -50,7 +50,7 @@ class CSIDriverSpecTest : FailureBuildSim<CSIDriver.Spec, CSIDriver.Spec.Builder
             }
 
             requireScenario("fsGroupPolicy") {
-                given(CSIDriver.Spec.Builder()) {
+                given(CSIDriverSpecDslBuilder()) {
                     attachRequired()
                     podInfoOnMount()
                     requiresRepublish()
@@ -60,7 +60,7 @@ class CSIDriverSpecTest : FailureBuildSim<CSIDriver.Spec, CSIDriver.Spec.Builder
             }
 
             requireScenario("tokenRequests") {
-                given(CSIDriver.Spec.Builder()) {
+                given(CSIDriverSpecDslBuilder()) {
                     attachRequired()
                     podInfoOnMount()
                     requiresRepublish()
@@ -71,7 +71,7 @@ class CSIDriverSpecTest : FailureBuildSim<CSIDriver.Spec, CSIDriver.Spec.Builder
             }
 
             requireNotEmptyScenario("volumeLifecycleModes") {
-                given(CSIDriver.Spec.Builder()) {
+                given(CSIDriverSpecDslBuilder()) {
                     attachRequired()
                     podInfoOnMount()
                     requiresRepublish()

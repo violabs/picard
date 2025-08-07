@@ -8,7 +8,7 @@ import io.violabs.picard.possibilities
 import io.violabs.picard.v2.common.NodeSelectorRequirement
 import org.junit.jupiter.api.BeforeAll
 
-class PersistentVolumeTest : SuccessBuildSim<PersistentVolume, PersistentVolumeV2DslBuilder>() {
+class PersistentVolumeTest : SuccessBuildSim<PersistentVolume, PersistentVolumeDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,16 +17,16 @@ class PersistentVolumeTest : SuccessBuildSim<PersistentVolume, PersistentVolumeV
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<PersistentVolume, PersistentVolumeV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<PersistentVolume, PersistentVolumeDslBuilder> {
             scenario {
                 id = "minimum"
-                given(PersistentVolumeV2DslBuilder())
+                given(PersistentVolumeDslBuilder())
                 expected = PersistentVolume()
             }
 
             scenario {
                 id = "minimum"
-                given(PersistentVolumeV2DslBuilder()) {
+                given(PersistentVolumeDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }

@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class StorageVersionMigrationStatusTest :
-    FailureBuildSim<StorageVersionMigration.Status, StorageVersionMigration.Status.Builder>() {
+    FailureBuildSim<StorageVersionMigrationStatus, StorageVersionMigrationStatusDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,9 +16,9 @@ class StorageVersionMigrationStatusTest :
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<StorageVersionMigration.Status, StorageVersionMigration.Status.Builder> {
+            possibilities<StorageVersionMigrationStatus, StorageVersionMigrationStatusDslBuilder> {
                 requireNotEmptyScenario("conditions") {
-                    given(StorageVersionMigration.Status.Builder())
+                    given(StorageVersionMigrationStatusDslBuilder())
                 }
             }
     }

@@ -6,7 +6,7 @@ import io.violabs.picard.domain.Operator
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class OnExitCodesRequirementTest : FailureBuildSim<OnExitCodesRequirement, OnExitCodesRequirement.Builder>() {
+class OnExitCodesRequirementTest : FailureBuildSim<OnExitCodesRequirement, OnExitCodesRequirementDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,13 +15,13 @@ class OnExitCodesRequirementTest : FailureBuildSim<OnExitCodesRequirement, OnExi
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<OnExitCodesRequirement, OnExitCodesRequirement.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<OnExitCodesRequirement, OnExitCodesRequirementDslBuilder> {
             requireScenario("operator") {
-                given(OnExitCodesRequirement.Builder())
+                given(OnExitCodesRequirementDslBuilder())
             }
 
             requireNotEmptyScenario("values") {
-                given(OnExitCodesRequirement.Builder()) {
+                given(OnExitCodesRequirementDslBuilder()) {
                     operator = Operator.In
                 }
             }

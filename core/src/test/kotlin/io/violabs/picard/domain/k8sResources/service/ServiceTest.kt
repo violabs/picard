@@ -7,7 +7,7 @@ import io.violabs.picard.domain.k8sResources.Protocol
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ServiceTest : SuccessBuildSim<Service, Service.Builder>() {
+class ServiceTest : SuccessBuildSim<Service, ServiceDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -44,16 +44,16 @@ class ServiceTest : SuccessBuildSim<Service, Service.Builder>() {
             ))
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<Service, Service.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Service, ServiceDslBuilder> {
             scenario {
                 id = "minimum"
-                given(Service.Builder())
+                given(ServiceDslBuilder())
                 expected = Service()
             }
 
             scenario {
                 id = "minimum"
-                given(Service.Builder()) {
+                given(ServiceDslBuilder()) {
                     sharedMetadata()
                     spec {
                         selector(PLACEHOLDER to PLACEHOLDER)
@@ -67,7 +67,7 @@ class ServiceTest : SuccessBuildSim<Service, Service.Builder>() {
                                 appProtocol = PLACEHOLDER
                             }
                         }
-                        type = Service.Spec.Type.ClusterIP
+                        type = ServiceSpec.Type.ClusterIP
                         ipFamilies(PLACEHOLDER)
                         ipFamilyPolicy = PLACEHOLDER
                         clusterIP = PLACEHOLDER
@@ -111,10 +111,10 @@ class ServiceTest : SuccessBuildSim<Service, Service.Builder>() {
                 }
                 expected = Service(
                     metadata = METADATA,
-                    spec = Service.Spec(
+                    spec = ServiceSpec(
                         selector = mapOf(PLACEHOLDER to PLACEHOLDER),
                         ports = listOf(SERVICE_PORT),
-                        type = Service.Spec.Type.ClusterIP,
+                        type = ServiceSpec.Type.ClusterIP,
                         ipFamilies = listOf(PLACEHOLDER),
                         ipFamilyPolicy = PLACEHOLDER,
                         clusterIP = PLACEHOLDER,
@@ -133,7 +133,7 @@ class ServiceTest : SuccessBuildSim<Service, Service.Builder>() {
                         allocateLoadBalancerNodePorts = true,
                         trafficDistribution = PLACEHOLDER
                     ),
-                    status = Service.Status(
+                    status = ServiceStatus(
                         loadBalancer = LOAD_BALANCER_STATUS
                     )
                 )

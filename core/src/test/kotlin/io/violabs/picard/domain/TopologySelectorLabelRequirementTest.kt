@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class TopologySelectorLabelRequirementTest :
-    FailureBuildSim<TopologySelectorLabelRequirement, TopologySelectorLabelRequirement.Builder>() {
+    FailureBuildSim<TopologySelectorLabelRequirement, TopologySelectorLabelRequirementDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,13 +16,13 @@ class TopologySelectorLabelRequirementTest :
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<TopologySelectorLabelRequirement, TopologySelectorLabelRequirement.Builder> {
+            possibilities<TopologySelectorLabelRequirement, TopologySelectorLabelRequirementDslBuilder> {
                 requireScenario("key") {
-                    given(TopologySelectorLabelRequirement.Builder())
+                    given(TopologySelectorLabelRequirementDslBuilder())
                 }
 
                 requireNotEmptyScenario("values") {
-                    given(TopologySelectorLabelRequirement.Builder()) {
+                    given(TopologySelectorLabelRequirementDslBuilder()) {
                         key = PLACEHOLDER
                     }
                 }

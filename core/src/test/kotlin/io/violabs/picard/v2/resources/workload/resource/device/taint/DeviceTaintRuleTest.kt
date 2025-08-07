@@ -9,7 +9,7 @@ import io.violabs.picard.v2.resources.workload.resource.device.selector.DeviceSe
 import io.violabs.picard.v2.resources.workload.resource.device.selector.DeviceTaintSelector
 import org.junit.jupiter.api.BeforeAll
 
-class DeviceTaintRuleTest : SuccessBuildSim<DeviceTaintRule, DeviceTaintRuleV2DslBuilder>() {
+class DeviceTaintRuleTest : SuccessBuildSim<DeviceTaintRule, DeviceTaintRuleDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -18,10 +18,10 @@ class DeviceTaintRuleTest : SuccessBuildSim<DeviceTaintRule, DeviceTaintRuleV2Ds
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<DeviceTaintRule, DeviceTaintRuleV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<DeviceTaintRule, DeviceTaintRuleDslBuilder> {
             scenario {
                 id = "minimum"
-                given(DeviceTaintRuleV2DslBuilder()) {
+                given(DeviceTaintRuleDslBuilder()) {
                     spec {
                         taint {
                             effect = DeviceTaint.Effect.NoSchedule
@@ -41,7 +41,7 @@ class DeviceTaintRuleTest : SuccessBuildSim<DeviceTaintRule, DeviceTaintRuleV2Ds
 
             scenario {
                 id = "full"
-                given(DeviceTaintRuleV2DslBuilder()) {
+                given(DeviceTaintRuleDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }

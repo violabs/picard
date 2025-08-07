@@ -29,7 +29,7 @@ import io.violabs.picard.v2.resources.workload.resource.device.selector.DeviceSe
 import io.violabs.picard.v2.resources.workload.resource.device.selector.DeviceSelectorDslBuilder
 import org.junit.jupiter.api.BeforeAll
 
-class ResourceClaimTest : SuccessBuildSim<ResourceClaim, ResourceClaimV2DslBuilder>() {
+class ResourceClaimTest : SuccessBuildSim<ResourceClaim, ResourceClaimDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -84,10 +84,10 @@ class ResourceClaimTest : SuccessBuildSim<ResourceClaim, ResourceClaimV2DslBuild
             parameters = mapOf(PLACEHOLDER to PLACEHOLDER)
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ResourceClaim, ResourceClaimV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ResourceClaim, ResourceClaimDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ResourceClaimV2DslBuilder()) {
+                given(ResourceClaimDslBuilder()) {
                     spec {
                         // Empty spec - DeviceClaim is optional
                     }
@@ -99,7 +99,7 @@ class ResourceClaimTest : SuccessBuildSim<ResourceClaim, ResourceClaimV2DslBuild
 
             scenario {
                 id = "full"
-                given(ResourceClaimV2DslBuilder()) {
+                given(ResourceClaimDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -199,7 +199,7 @@ class ResourceClaimTest : SuccessBuildSim<ResourceClaim, ResourceClaimV2DslBuild
                                 conditions {
                                     condition {
                                         type = PLACEHOLDER
-                                        status = Condition.Status.True
+                                        status = ConditionStatus.True
                                         message = PLACEHOLDER
                                         reason = PLACEHOLDER
                                         lastTransitionTime = NOW
@@ -298,7 +298,7 @@ class ResourceClaimTest : SuccessBuildSim<ResourceClaim, ResourceClaimV2DslBuild
                                 conditions = listOf(
                                     Condition(
                                         type = PLACEHOLDER,
-                                        status = Condition.Status.True,
+                                        status = ConditionStatus.True,
                                         message = PLACEHOLDER,
                                         reason = PLACEHOLDER,
                                         lastTransitionTime = NOW

@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ControllerRevisionListTest : FullBuildSim<ControllerRevisionList, ControllerRevisionList.Builder>() {
+class ControllerRevisionListTest : FullBuildSim<ControllerRevisionList, ControllerRevisionListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class ControllerRevisionListTest : FullBuildSim<ControllerRevisionList, Controll
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ControllerRevisionList, ControllerRevisionList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ControllerRevisionList, ControllerRevisionListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ControllerRevisionList.Builder()) {
+                given(ControllerRevisionListDslBuilder()) {
                     items {
                         controllerRevisionItem {
                             revision = 1
@@ -31,9 +31,9 @@ class ControllerRevisionListTest : FullBuildSim<ControllerRevisionList, Controll
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<ControllerRevisionList, ControllerRevisionList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ControllerRevisionList, ControllerRevisionListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(ControllerRevisionList.Builder())
+                given(ControllerRevisionListDslBuilder())
             }
         }
     }

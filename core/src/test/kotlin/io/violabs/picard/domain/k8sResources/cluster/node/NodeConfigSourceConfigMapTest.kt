@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class NodeConfigSourceConfigMapTest : FailureBuildSim<NodeConfigSourceConfigMap, NodeConfigSourceConfigMap.Builder>() {
+class NodeConfigSourceConfigMapTest : FailureBuildSim<NodeConfigSourceConfigMap, NodeConfigSourceConfigMapDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,19 +15,19 @@ class NodeConfigSourceConfigMapTest : FailureBuildSim<NodeConfigSourceConfigMap,
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<NodeConfigSourceConfigMap, NodeConfigSourceConfigMap.Builder> {
+            possibilities<NodeConfigSourceConfigMap, NodeConfigSourceConfigMapDslBuilder> {
                 requireScenario("kubeletConfigKey") {
-                    given(NodeConfigSourceConfigMap.Builder())
+                    given(NodeConfigSourceConfigMapDslBuilder())
                 }
 
                 requireScenario("name") {
-                    given(NodeConfigSourceConfigMap.Builder()) {
+                    given(NodeConfigSourceConfigMapDslBuilder()) {
                         kubeletConfigKey = PLACEHOLDER
                     }
                 }
 
                 requireScenario("namespace") {
-                    given(NodeConfigSourceConfigMap.Builder()) {
+                    given(NodeConfigSourceConfigMapDslBuilder()) {
                         kubeletConfigKey = PLACEHOLDER
                         name = PLACEHOLDER
                     }

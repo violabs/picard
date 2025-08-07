@@ -6,7 +6,7 @@ import io.violabs.picard.domain.k8sResources.workload.job.Job
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class CronJobTest : SuccessBuildSim<CronJob, CronJob.Builder>() {
+class CronJobTest : SuccessBuildSim<CronJob, CronJobDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,22 +16,22 @@ class CronJobTest : SuccessBuildSim<CronJob, CronJob.Builder>() {
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<CronJob, CronJob.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<CronJob, CronJobDslBuilder> {
             scenario {
                 id = "minimum"
-                given(CronJob.Builder())
+                given(CronJobDslBuilder())
                 expected = CronJob()
             }
 
             scenario {
                 id = "full - with minimum job template"
-                given(CronJob.Builder()) {
+                given(CronJobDslBuilder()) {
                     sharedMetadata()
                     spec {
                         jobTemplate {  }
                         schedule = PLACEHOLDER
                         timeZone = PLACEHOLDER
-                        concurrencyPolicy = CronJob.Spec.ConcurrencyPolicy.Allow
+                        concurrencyPolicy = CronJobSpec.ConcurrencyPolicy.Allow
                         startingDeadlineSeconds = 1
                         suspend()
                         successfulJobsHistoryLimit = 1
@@ -49,17 +49,17 @@ class CronJobTest : SuccessBuildSim<CronJob, CronJob.Builder>() {
                 }
                 expected = CronJob(
                     metadata = METADATA,
-                    spec = CronJob.Spec(
-                        jobTemplate = Job.Spec(),
+                    spec = CronJobSpec(
+                        jobTemplate = JobSpec(),
                         schedule = PLACEHOLDER,
                         timeZone = PLACEHOLDER,
-                        concurrencyPolicy = CronJob.Spec.ConcurrencyPolicy.Allow,
+                        concurrencyPolicy = CronJobSpec.ConcurrencyPolicy.Allow,
                         startingDeadlineSeconds = 1,
                         suspend = true,
                         successfulJobsHistoryLimit = 1,
                         failedJobsHistoryLimit = 1
                     ),
-                    status = CronJob.Status(
+                    status = CronJobStatus(
                         active = listOf(OBJECT_REFERENCE),
                         lastScheduleTime = NOW,
                         lastSuccessfulTime = NOW

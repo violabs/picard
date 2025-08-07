@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class HorizontalPodAutoscalerStatusTest :
-    FullBuildSim<HorizontalPodAutoscaler.Status, HorizontalPodAutoscaler.Status.Builder>() {
+    FullBuildSim<HorizontalPodAutoscalerStatus, HorizontalPodAutoscalerStatusDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,14 +17,14 @@ class HorizontalPodAutoscalerStatusTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<HorizontalPodAutoscaler.Status, HorizontalPodAutoscaler.Status.Builder> {
+            possibilities<HorizontalPodAutoscalerStatus, HorizontalPodAutoscalerStatusDslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(HorizontalPodAutoscaler.Status.Builder()) {
+                    given(HorizontalPodAutoscalerStatusDslBuilder()) {
                         currentReplicas = 1
                         desiredReplicas = 1
                     }
-                    expected = HorizontalPodAutoscaler.Status(
+                    expected = HorizontalPodAutoscalerStatus(
                         currentReplicas = 1,
                         desiredReplicas = 1
                     )
@@ -32,13 +32,13 @@ class HorizontalPodAutoscalerStatusTest :
             }
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<HorizontalPodAutoscaler.Status, HorizontalPodAutoscaler.Status.Builder> {
+            possibilities<HorizontalPodAutoscalerStatus, HorizontalPodAutoscalerStatusDslBuilder> {
                 requireScenario("currentReplicas") {
-                    given(HorizontalPodAutoscaler.Status.Builder())
+                    given(HorizontalPodAutoscalerStatusDslBuilder())
                 }
 
                 requireScenario("desiredReplicas") {
-                    given(HorizontalPodAutoscaler.Status.Builder()) {
+                    given(HorizontalPodAutoscalerStatusDslBuilder()) {
                         currentReplicas = 1
                     }
                 }

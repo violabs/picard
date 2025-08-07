@@ -13,7 +13,7 @@ import io.violabs.picard.v2.resources.cluster.node.runtime.NodeRuntimeHandler
 import io.violabs.picard.v2.resources.cluster.node.runtime.NodeRuntimeHandlerFeatures
 import org.junit.jupiter.api.BeforeAll
 
-class NodeTest : SuccessBuildSim<Node, NodeV2DslBuilder>() {
+class NodeTest : SuccessBuildSim<Node, NodeDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -104,16 +104,16 @@ class NodeTest : SuccessBuildSim<Node, NodeV2DslBuilder>() {
             volumesInUse = listOf(PLACEHOLDER)
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<Node, NodeV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Node, NodeDslBuilder> {
             scenario {
                 id = "minimum"
-                given(NodeV2DslBuilder())
+                given(NodeDslBuilder())
                 expected = Node()
             }
 
             scenario {
                 id = "full"
-                given(NodeV2DslBuilder()) {
+                given(NodeDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }

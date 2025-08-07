@@ -6,7 +6,7 @@ import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ReplicationControllerTest : SuccessBuildSim<ReplicationController, ReplicationController.Builder>() {
+class ReplicationControllerTest : SuccessBuildSim<ReplicationController, ReplicationControllerDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,16 +16,16 @@ class ReplicationControllerTest : SuccessBuildSim<ReplicationController, Replica
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ReplicationController, ReplicationController.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ReplicationController, ReplicationControllerDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ReplicationController.Builder())
+                given(ReplicationControllerDslBuilder())
                 expected = ReplicationController()
             }
 
             scenario {
                 id = "full"
-                given(ReplicationController.Builder()) {
+                given(ReplicationControllerDslBuilder()) {
                     sharedMetadata()
                     spec {
                         selector(PLACEHOLDER to PLACEHOLDER)
@@ -46,13 +46,13 @@ class ReplicationControllerTest : SuccessBuildSim<ReplicationController, Replica
                 }
                 expected = ReplicationController(
                     metadata = METADATA,
-                    spec = ReplicationController.Spec(
+                    spec = ReplicationControllerSpec(
                         selector = mapOf(PLACEHOLDER to PLACEHOLDER),
-                        template = PodTemplate.Spec(),
+                        template = PodTemplateSpec(),
                         replicas = 1,
                         minReadySeconds = 1
                     ),
-                    status = ReplicationController.Status(
+                    status = ReplicationControllerStatus(
                         replicas = 1,
                         readyReplicas = 1,
                         availableReplicas = 1,

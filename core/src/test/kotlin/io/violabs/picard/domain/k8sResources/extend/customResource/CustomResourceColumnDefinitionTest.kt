@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class CustomResourceColumnDefinitionTest :
-    FailureBuildSim<CustomResourceColumnDefinition, CustomResourceColumnDefinition.Builder>() {
+    FailureBuildSim<CustomResourceColumnDefinition, CustomResourceColumnDefinitionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,19 +16,19 @@ class CustomResourceColumnDefinitionTest :
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<CustomResourceColumnDefinition, CustomResourceColumnDefinition.Builder> {
+            possibilities<CustomResourceColumnDefinition, CustomResourceColumnDefinitionDslBuilder> {
                 requireScenario("jsonPath") {
-                    given(CustomResourceColumnDefinition.Builder())
+                    given(CustomResourceColumnDefinitionDslBuilder())
                 }
 
                 requireScenario("name") {
-                    given(CustomResourceColumnDefinition.Builder()) {
+                    given(CustomResourceColumnDefinitionDslBuilder()) {
                         jsonPath = PLACEHOLDER
                     }
                 }
 
                 requireScenario("type") {
-                    given(CustomResourceColumnDefinition.Builder()) {
+                    given(CustomResourceColumnDefinitionDslBuilder()) {
                         jsonPath = PLACEHOLDER
                         name = PLACEHOLDER
                     }

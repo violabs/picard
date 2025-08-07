@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class GRPCActionTest : FailureBuildSim<GRPCAction, GRPCAction.Builder>() {
+class GRPCActionTest : FailureBuildSim<GRPCAction, GRPCActionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,10 +16,10 @@ class GRPCActionTest : FailureBuildSim<GRPCAction, GRPCAction.Builder>() {
     }
 }
 
-private val FAILURE_POSSIBILITIES = possibilities<GRPCAction, GRPCAction.Builder> {
+private val FAILURE_POSSIBILITIES = possibilities<GRPCAction, GRPCActionDslBuilder> {
     scenario {
         id = "missing port"
-        given(GRPCAction.Builder())
+        given(GRPCActionDslBuilder())
         exceptionMessage = withTemplate("port")
     }
 }

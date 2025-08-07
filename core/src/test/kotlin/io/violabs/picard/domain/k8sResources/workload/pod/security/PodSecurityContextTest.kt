@@ -5,7 +5,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PodSecurityContextTest : SuccessBuildSim<PodSecurityContext, PodSecurityContext.Builder>() {
+class PodSecurityContextTest : SuccessBuildSim<PodSecurityContext, PodSecurityContextDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,16 +15,16 @@ class PodSecurityContextTest : SuccessBuildSim<PodSecurityContext, PodSecurityCo
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<PodSecurityContext, PodSecurityContext.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<PodSecurityContext, PodSecurityContextDslBuilder> {
             scenario {
                 id = "minimum"
-                given(PodSecurityContext.Builder())
+                given(PodSecurityContextDslBuilder())
                 expected = PodSecurityContext()
             }
 
             scenario {
                 idForFalseBooleanValues()
-                given(PodSecurityContext.Builder()) {
+                given(PodSecurityContextDslBuilder()) {
                     runAsNonRoot(false)
                 }
                 expected = PodSecurityContext(

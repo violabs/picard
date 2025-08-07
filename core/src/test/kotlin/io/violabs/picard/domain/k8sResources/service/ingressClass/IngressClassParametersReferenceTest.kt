@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class IngressClassParametersReferenceTest :
-    FailureBuildSim<IngressClassParametersReference, IngressClassParametersReference.Builder>() {
+    FailureBuildSim<IngressClassParametersReference, IngressClassParametersReferenceDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,13 +16,13 @@ class IngressClassParametersReferenceTest :
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<IngressClassParametersReference, IngressClassParametersReference.Builder> {
+            possibilities<IngressClassParametersReference, IngressClassParametersReferenceDslBuilder> {
                 requireScenario("kind") {
-                    given(IngressClassParametersReference.Builder())
+                    given(IngressClassParametersReferenceDslBuilder())
                 }
 
                 requireScenario("name") {
-                    given(IngressClassParametersReference.Builder()) {
+                    given(IngressClassParametersReferenceDslBuilder()) {
                         kind = PLACEHOLDER
                     }
                 }

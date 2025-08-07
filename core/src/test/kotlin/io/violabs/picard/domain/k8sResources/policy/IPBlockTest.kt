@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class IPBlockTest : FailureBuildSim<IPBlock, IPBlock.Builder>() {
+class IPBlockTest : FailureBuildSim<IPBlock, IPBlockDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class IPBlockTest : FailureBuildSim<IPBlock, IPBlock.Builder>() {
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<IPBlock, IPBlock.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<IPBlock, IPBlockDslBuilder> {
             requireScenario("cidr") {
-                given(IPBlock.Builder())
+                given(IPBlockDslBuilder())
             }
         }
     }

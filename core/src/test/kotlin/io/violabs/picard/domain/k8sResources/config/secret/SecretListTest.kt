@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class SecretListTest : FullBuildSim<SecretList, SecretList.Builder>() {
+class SecretListTest : FullBuildSim<SecretList, SecretListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class SecretListTest : FullBuildSim<SecretList, SecretList.Builder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<SecretList, SecretList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<SecretList, SecretListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(SecretList.Builder()) {
+                given(SecretListDslBuilder()) {
                     items {
                         secretItem {}
                     }
@@ -29,9 +29,9 @@ class SecretListTest : FullBuildSim<SecretList, SecretList.Builder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<SecretList, SecretList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<SecretList, SecretListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(SecretList.Builder())
+                given(SecretListDslBuilder())
             }
         }
     }

@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class HorizontalPodAutoscalerListTest :
-    FullBuildSim<HorizontalPodAutoscalerList, HorizontalPodAutoscalerList.Builder>() {
+    FullBuildSim<HorizontalPodAutoscalerList, HorizontalPodAutoscalerListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,10 +17,10 @@ class HorizontalPodAutoscalerListTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<HorizontalPodAutoscalerList, HorizontalPodAutoscalerList.Builder> {
+            possibilities<HorizontalPodAutoscalerList, HorizontalPodAutoscalerListDslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(HorizontalPodAutoscalerList.Builder()) {
+                    given(HorizontalPodAutoscalerListDslBuilder()) {
                         items {
                             horizontalPodAutoscalerItem { }
                         }
@@ -32,9 +32,9 @@ class HorizontalPodAutoscalerListTest :
             }
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<HorizontalPodAutoscalerList, HorizontalPodAutoscalerList.Builder> {
+            possibilities<HorizontalPodAutoscalerList, HorizontalPodAutoscalerListDslBuilder> {
                 requireNotEmptyScenario("items") {
-                    given(HorizontalPodAutoscalerList.Builder())
+                    given(HorizontalPodAutoscalerListDslBuilder())
                 }
             }
     }

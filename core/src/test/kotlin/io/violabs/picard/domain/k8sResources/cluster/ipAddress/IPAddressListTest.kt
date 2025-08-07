@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class IPAddressListTest : FullBuildSim<IPAddressList, IPAddressList.Builder>() {
+class IPAddressListTest : FullBuildSim<IPAddressList, IPAddressListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class IPAddressListTest : FullBuildSim<IPAddressList, IPAddressList.Builder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<IPAddressList, IPAddressList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<IPAddressList, IPAddressListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(IPAddressList.Builder()) {
+                given(IPAddressListDslBuilder()) {
                     items {
                         address {  }
                     }
@@ -29,9 +29,9 @@ class IPAddressListTest : FullBuildSim<IPAddressList, IPAddressList.Builder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<IPAddressList, IPAddressList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<IPAddressList, IPAddressListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(IPAddressList.Builder())
+                given(IPAddressListDslBuilder())
             }
         }
     }

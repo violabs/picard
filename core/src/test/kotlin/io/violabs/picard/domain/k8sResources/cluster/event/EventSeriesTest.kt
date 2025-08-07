@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class EventSeriesTest : FailureBuildSim<EventSeries, EventSeries.Builder>() {
+class EventSeriesTest : FailureBuildSim<EventSeries, EventSeriesDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class EventSeriesTest : FailureBuildSim<EventSeries, EventSeries.Builder>() {
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<EventSeries, EventSeries.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<EventSeries, EventSeriesDslBuilder> {
             requireScenario("count") {
-                given(EventSeries.Builder())
+                given(EventSeriesDslBuilder())
             }
 
             requireScenario("lastObservedTime") {
-                given(EventSeries.Builder()) {
+                given(EventSeriesDslBuilder()) {
                     count = 1
                 }
             }

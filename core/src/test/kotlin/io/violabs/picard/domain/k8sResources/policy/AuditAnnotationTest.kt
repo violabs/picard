@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class AuditAnnotationTest : FailureBuildSim<AuditAnnotation, AuditAnnotation.Builder>() {
+class AuditAnnotationTest : FailureBuildSim<AuditAnnotation, AuditAnnotationDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class AuditAnnotationTest : FailureBuildSim<AuditAnnotation, AuditAnnotation.Bui
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<AuditAnnotation, AuditAnnotation.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<AuditAnnotation, AuditAnnotationDslBuilder> {
             requireScenario("key") {
-                given(AuditAnnotation.Builder())
+                given(AuditAnnotationDslBuilder())
             }
 
             requireScenario("valueExpression") {
-                given(AuditAnnotation.Builder()) {
+                given(AuditAnnotationDslBuilder()) {
                     key = PLACEHOLDER
                 }
             }

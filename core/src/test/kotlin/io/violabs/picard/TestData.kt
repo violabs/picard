@@ -2,6 +2,8 @@ package io.violabs.picard
 
 import io.violabs.picard.BuildSim.Companion.PLACEHOLDER
 import io.violabs.picard.domain.BooleanType
+import io.violabs.picard.domain.ListMeta
+import io.violabs.picard.domain.ListMetaDslBuilder
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.v2.common.*
@@ -54,6 +56,16 @@ object Common {
         labels(PLACEHOLDER to PLACEHOLDER)
 
         annotations(PLACEHOLDER to PLACEHOLDER)
+    }
+
+    val LIST_META = ListMeta(
+        resourceVersion = PLACEHOLDER,
+        remainingItemCount = 1L,
+    )
+
+    fun ListMetaDslBuilder.sharedListMeta() {
+        resourceVersion = PLACEHOLDER
+        remainingItemCount = 1L
     }
 
     val OBJECT_REFERENCE = ObjectReference(

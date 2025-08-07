@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class CSIDriverListTest : FullBuildSim<CSIDriverList, CSIDriverList.Builder>() {
+class CSIDriverListTest : FullBuildSim<CSIDriverList, CSIDriverListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class CSIDriverListTest : FullBuildSim<CSIDriverList, CSIDriverList.Builder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<CSIDriverList, CSIDriverList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<CSIDriverList, CSIDriverListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(CSIDriverList.Builder()) {
+                given(CSIDriverListDslBuilder()) {
                     items {
                         csiDriverItem {  }
                     }
@@ -29,9 +29,9 @@ class CSIDriverListTest : FullBuildSim<CSIDriverList, CSIDriverList.Builder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<CSIDriverList, CSIDriverList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<CSIDriverList, CSIDriverListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(CSIDriverList.Builder())
+                given(CSIDriverListDslBuilder())
             }
         }
     }

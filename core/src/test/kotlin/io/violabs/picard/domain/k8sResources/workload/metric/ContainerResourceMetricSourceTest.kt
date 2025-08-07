@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class ContainerResourceMetricSourceTest :
-    FailureBuildSim<ContainerResourceMetricSource, ContainerResourceMetricSource.Builder>() {
+    FailureBuildSim<ContainerResourceMetricSource, ContainerResourceMetricSourceDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,13 +16,13 @@ class ContainerResourceMetricSourceTest :
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<ContainerResourceMetricSource, ContainerResourceMetricSource.Builder> {
+            possibilities<ContainerResourceMetricSource, ContainerResourceMetricSourceDslBuilder> {
                 requireScenario("container") {
-                    given(ContainerResourceMetricSource.Builder())
+                    given(ContainerResourceMetricSourceDslBuilder())
                 }
 
                 requireScenario("name") {
-                    given(ContainerResourceMetricSource.Builder()) {
+                    given(ContainerResourceMetricSourceDslBuilder()) {
                         container = PLACEHOLDER
                     }
                 }

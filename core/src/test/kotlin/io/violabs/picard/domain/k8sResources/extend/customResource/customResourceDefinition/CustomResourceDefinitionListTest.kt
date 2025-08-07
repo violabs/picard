@@ -8,7 +8,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class CustomResourceDefinitionListTest :
-    FullBuildSim<CustomResourceDefinitionList, CustomResourceDefinitionList.Builder>() {
+    FullBuildSim<CustomResourceDefinitionList, CustomResourceDefinitionListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -19,10 +19,10 @@ class CustomResourceDefinitionListTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<CustomResourceDefinitionList, CustomResourceDefinitionList.Builder> {
+            possibilities<CustomResourceDefinitionList, CustomResourceDefinitionListDslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(CustomResourceDefinitionList.Builder()) {
+                    given(CustomResourceDefinitionListDslBuilder()) {
                         items {
                             definition {
                                 spec {
@@ -46,7 +46,7 @@ class CustomResourceDefinitionListTest :
                     expected = CustomResourceDefinitionList(
                         items = listOf(
                             CustomResourceDefinition(
-                                spec = CustomResourceDefinition.Spec(
+                                spec = CustomResourceDefinitionSpec(
                                     group = PLACEHOLDER,
                                     names = CustomResourceDefinitionNames(
                                         kind = PLACEHOLDER,
@@ -68,9 +68,9 @@ class CustomResourceDefinitionListTest :
             }
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<CustomResourceDefinitionList, CustomResourceDefinitionList.Builder> {
+            possibilities<CustomResourceDefinitionList, CustomResourceDefinitionListDslBuilder> {
                 requireNotEmptyScenario("items") {
-                    given(CustomResourceDefinitionList.Builder())
+                    given(CustomResourceDefinitionListDslBuilder())
                 }
             }
     }

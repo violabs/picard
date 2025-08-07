@@ -8,7 +8,7 @@ import io.violabs.picard.domain.k8sResources.policy.IPBlock
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class NetworkPolicyTest : SuccessBuildSim<NetworkPolicy, NetworkPolicy.Builder>() {
+class NetworkPolicyTest : SuccessBuildSim<NetworkPolicy, NetworkPolicyDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -26,7 +26,7 @@ class NetworkPolicyTest : SuccessBuildSim<NetworkPolicy, NetworkPolicy.Builder>(
             podSelector = LABEL_SELECTOR
         )
 
-        private fun NetworkPolicyPeer.Builder.sharedNetworkPolicyPeer() {
+        private fun NetworkPolicyPeerDslBuilder.sharedNetworkPolicyPeer() {
             ipBlock {
                 cidr = PLACEHOLDER
                 except(PLACEHOLDER)
@@ -45,7 +45,7 @@ class NetworkPolicyTest : SuccessBuildSim<NetworkPolicy, NetworkPolicy.Builder>(
             protocol = Protocol.TCP
         )
 
-        private fun NetworkPolicyPort.Builder.sharedNetworkPolicyPort() {
+        private fun NetworkPolicyPortDslBuilder.sharedNetworkPolicyPort() {
             port(PORT_NUMBER)
             endPort = PORT_NUMBER
             protocol = Protocol.TCP
@@ -60,16 +60,16 @@ class NetworkPolicyTest : SuccessBuildSim<NetworkPolicy, NetworkPolicy.Builder>(
             ))
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<NetworkPolicy, NetworkPolicy.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<NetworkPolicy, NetworkPolicyDslBuilder> {
             scenario {
                 id = "minimum"
-                given(NetworkPolicy.Builder())
+                given(NetworkPolicyDslBuilder())
                 expected = NetworkPolicy()
             }
 
             scenario {
                 id = "full"
-                given(NetworkPolicy.Builder()) {
+                given(NetworkPolicyDslBuilder()) {
                     sharedMetadata()
                     spec {
                         podSelector {
@@ -108,7 +108,7 @@ class NetworkPolicyTest : SuccessBuildSim<NetworkPolicy, NetworkPolicy.Builder>(
                 }
                 expected = NetworkPolicy(
                     metadata = METADATA,
-                    spec = NetworkPolicy.Spec(
+                    spec = NetworkPolicySpec(
                         podSelector = LABEL_SELECTOR,
                         policyTypes = PLACEHOLDER_LIST,
                         ingress = listOf(NETWORK_POLICY_INGRESS_RULE)

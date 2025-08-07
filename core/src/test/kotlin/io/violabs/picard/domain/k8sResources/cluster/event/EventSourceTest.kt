@@ -5,7 +5,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class EventSourceTest : SuccessBuildSim<EventSource, EventSource.Builder>() {
+class EventSourceTest : SuccessBuildSim<EventSource, EventSourceDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,16 +14,16 @@ class EventSourceTest : SuccessBuildSim<EventSource, EventSource.Builder>() {
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<EventSource, EventSource.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<EventSource, EventSourceDslBuilder> {
             scenario {
                 id = "minimum"
-                given(EventSource.Builder())
+                given(EventSourceDslBuilder())
                 expected = EventSource()
             }
 
             scenario {
                 id = "full"
-                given(EventSource.Builder()) {
+                given(EventSourceDslBuilder()) {
                     component = PLACEHOLDER
                     host = PLACEHOLDER
                 }

@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class LimitResponseTest : FailureBuildSim<LimitResponse, LimitResponse.Builder>() {
+class LimitResponseTest : FailureBuildSim<LimitResponse, LimitResponseDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class LimitResponseTest : FailureBuildSim<LimitResponse, LimitResponse.Builder>(
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<LimitResponse, LimitResponse.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<LimitResponse, LimitResponseDslBuilder> {
             requireScenario("type") {
-                given(LimitResponse.Builder())
+                given(LimitResponseDslBuilder())
             }
         }
     }

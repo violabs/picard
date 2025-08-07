@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class EndpointSliceListTest : FullBuildSim<EndpointSliceList, EndpointSliceList.Builder>() {
+class EndpointSliceListTest : FullBuildSim<EndpointSliceList, EndpointSliceListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class EndpointSliceListTest : FullBuildSim<EndpointSliceList, EndpointSliceList.
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<EndpointSliceList, EndpointSliceList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<EndpointSliceList, EndpointSliceListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(EndpointSliceList.Builder()) {
+                given(EndpointSliceListDslBuilder()) {
                     items {
                         endpointSliceItem {  }
                     }
@@ -27,9 +27,9 @@ class EndpointSliceListTest : FullBuildSim<EndpointSliceList, EndpointSliceList.
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<EndpointSliceList, EndpointSliceList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<EndpointSliceList, EndpointSliceListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(EndpointSliceList.Builder())
+                given(EndpointSliceListDslBuilder())
             }
         }
     }

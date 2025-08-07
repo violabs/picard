@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PodDisruptionBudgetListTest : FullBuildSim<PodDisruptionBudgetList, PodDisruptionBudgetList.Builder>() {
+class PodDisruptionBudgetListTest : FullBuildSim<PodDisruptionBudgetList, PodDisruptionBudgetListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class PodDisruptionBudgetListTest : FullBuildSim<PodDisruptionBudgetList, PodDis
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<PodDisruptionBudgetList, PodDisruptionBudgetList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<PodDisruptionBudgetList, PodDisruptionBudgetListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(PodDisruptionBudgetList.Builder()) {
+                given(PodDisruptionBudgetListDslBuilder()) {
                     items {
                         podDisruptionBudgetItem {  }
                     }
@@ -31,9 +31,9 @@ class PodDisruptionBudgetListTest : FullBuildSim<PodDisruptionBudgetList, PodDis
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<PodDisruptionBudgetList, PodDisruptionBudgetList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<PodDisruptionBudgetList, PodDisruptionBudgetListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(PodDisruptionBudgetList.Builder())
+                given(PodDisruptionBudgetListDslBuilder())
             }
         }
     }

@@ -9,7 +9,7 @@ import io.violabs.picard.domain.k8sResources.workload.pod.security.SecurityProfi
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ContainerTest : ContainerSim<Container, Container.Builder>(Container.Builder()) {
+class ContainerTest : ContainerSim<Container, ContainerDslBuilder>(ContainerDslBuilder()) {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -43,12 +43,12 @@ class ContainerTest : ContainerSim<Container, Container.Builder>(Container.Build
             tty = true,
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<Container, Container.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Container, ContainerDslBuilder> {
 
             scenario {
                 id = "minimum"
                 description = "least required fields"
-                given(Container.Builder()) {
+                given(ContainerDslBuilder()) {
                     name = CONTAINER_NAME
                 }
                 expected = Container(CONTAINER_NAME)
@@ -56,7 +56,7 @@ class ContainerTest : ContainerSim<Container, Container.Builder>(Container.Build
 
             fullScenario(
                 this,
-                Container.Builder(),
+                ContainerDslBuilder(),
                 FULL_CONTAINER
             ) {
                 ports {
@@ -291,7 +291,7 @@ class ContainerTest : ContainerSim<Container, Container.Builder>(Container.Build
             scenario {
                 id = "false booleans"
                 description = "we can manually set the booleans to false"
-                given(Container.Builder()) {
+                given(ContainerDslBuilder()) {
                     name = CONTAINER_NAME
                     stdin = false
                     stdinOnce = false

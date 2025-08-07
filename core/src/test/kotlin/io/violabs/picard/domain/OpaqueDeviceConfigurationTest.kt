@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class OpaqueDeviceConfigurationTest : FailureBuildSim<OpaqueDeviceConfiguration, OpaqueDeviceConfiguration.Builder>() {
+class OpaqueDeviceConfigurationTest : FailureBuildSim<OpaqueDeviceConfiguration, OpaqueDeviceConfigurationDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,13 +15,13 @@ class OpaqueDeviceConfigurationTest : FailureBuildSim<OpaqueDeviceConfiguration,
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<OpaqueDeviceConfiguration, OpaqueDeviceConfiguration.Builder> {
+            possibilities<OpaqueDeviceConfiguration, OpaqueDeviceConfigurationDslBuilder> {
                 requireScenario("driver") {
-                    given(OpaqueDeviceConfiguration.Builder())
+                    given(OpaqueDeviceConfigurationDslBuilder())
                 }
 
                 requireScenario("parameters") {
-                    given(OpaqueDeviceConfiguration.Builder()) {
+                    given(OpaqueDeviceConfigurationDslBuilder()) {
                         driver = PLACEHOLDER
                     }
                 }

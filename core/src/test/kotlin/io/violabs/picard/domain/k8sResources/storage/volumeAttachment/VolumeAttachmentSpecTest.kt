@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class VolumeAttachmentSpecTest : FailureBuildSim<VolumeAttachment.Spec, VolumeAttachment.Spec.Builder>() {
+class VolumeAttachmentSpecTest : FailureBuildSim<VolumeAttachmentSpec, VolumeAttachmentSpecDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class VolumeAttachmentSpecTest : FailureBuildSim<VolumeAttachment.Spec, VolumeAt
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<VolumeAttachment.Spec, VolumeAttachment.Spec.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<VolumeAttachmentSpec, VolumeAttachmentSpecDslBuilder> {
             requireScenario("attacher") {
-                given(VolumeAttachment.Spec.Builder())
+                given(VolumeAttachmentSpecDslBuilder())
             }
         }
     }

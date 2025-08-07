@@ -8,7 +8,7 @@ import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.authorization.role.RoleTestConfig
 import org.junit.jupiter.api.BeforeAll
 
-class RoleBindingTest : FullBuildSim<RoleBinding, RoleBindingV2DslBuilder>() {
+class RoleBindingTest : FullBuildSim<RoleBinding, RoleBindingDslBuilder>() {
     companion object : RoleTestConfig {
         @JvmStatic
         @BeforeAll
@@ -18,10 +18,10 @@ class RoleBindingTest : FullBuildSim<RoleBinding, RoleBindingV2DslBuilder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<RoleBinding, RoleBindingV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<RoleBinding, RoleBindingDslBuilder> {
             scenario {
                 id = "minimum"
-                given(RoleBindingV2DslBuilder()) {
+                given(RoleBindingDslBuilder()) {
                     roleRef {
                         sharedRoleRef()
                     }
@@ -33,7 +33,7 @@ class RoleBindingTest : FullBuildSim<RoleBinding, RoleBindingV2DslBuilder>() {
 
             scenario {
                 id = "full"
-                given(RoleBindingV2DslBuilder()) {
+                given(RoleBindingDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -53,9 +53,9 @@ class RoleBindingTest : FullBuildSim<RoleBinding, RoleBindingV2DslBuilder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<RoleBinding, RoleBindingV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<RoleBinding, RoleBindingDslBuilder> {
             requireScenario("roleRef") {
-                given(RoleBindingV2DslBuilder())
+                given(RoleBindingDslBuilder())
             }
         }
     }

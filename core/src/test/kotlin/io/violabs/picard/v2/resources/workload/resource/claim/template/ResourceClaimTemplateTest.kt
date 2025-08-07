@@ -7,7 +7,7 @@ import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.workload.resource.claim.ResourceClaimSpec
 import org.junit.jupiter.api.BeforeAll
 
-class ResourceClaimTemplateTest : SuccessBuildSim<ResourceClaimTemplate, ResourceClaimTemplateV2DslBuilder>() {
+class ResourceClaimTemplateTest : SuccessBuildSim<ResourceClaimTemplate, ResourceClaimTemplateDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,10 +16,10 @@ class ResourceClaimTemplateTest : SuccessBuildSim<ResourceClaimTemplate, Resourc
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ResourceClaimTemplate, ResourceClaimTemplateV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ResourceClaimTemplate, ResourceClaimTemplateDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ResourceClaimTemplateV2DslBuilder()) {
+                given(ResourceClaimTemplateDslBuilder()) {
                     spec {
                         spec {
                             // Empty ResourceClaimSpec - DeviceClaim is optional
@@ -35,7 +35,7 @@ class ResourceClaimTemplateTest : SuccessBuildSim<ResourceClaimTemplate, Resourc
 
             scenario {
                 id = "full"
-                given(ResourceClaimTemplateV2DslBuilder()) {
+                given(ResourceClaimTemplateDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }

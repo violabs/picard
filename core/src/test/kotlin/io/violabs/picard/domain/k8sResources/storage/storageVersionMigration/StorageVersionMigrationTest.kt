@@ -5,7 +5,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class StorageVersionMigrationTest : SuccessBuildSim<StorageVersionMigration, StorageVersionMigration.Builder>() {
+class StorageVersionMigrationTest : SuccessBuildSim<StorageVersionMigration, StorageVersionMigrationDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,16 +15,16 @@ class StorageVersionMigrationTest : SuccessBuildSim<StorageVersionMigration, Sto
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<StorageVersionMigration, StorageVersionMigration.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<StorageVersionMigration, StorageVersionMigrationDslBuilder> {
             scenario {
                 id = "minimum"
-                given(StorageVersionMigration.Builder())
+                given(StorageVersionMigrationDslBuilder())
                 expected = StorageVersionMigration()
             }
 
             scenario {
                 id = "full"
-                given(StorageVersionMigration.Builder()) {
+                given(StorageVersionMigrationDslBuilder()) {
                     sharedMetadata()
                     spec {
                         resource {
@@ -43,7 +43,7 @@ class StorageVersionMigrationTest : SuccessBuildSim<StorageVersionMigration, Sto
                 }
                 expected = StorageVersionMigration(
                     metadata = METADATA,
-                    spec = StorageVersionMigration.Spec(
+                    spec = StorageVersionMigrationSpec(
                         resource = GroupVersionResource(
                             group = PLACEHOLDER,
                             version = PLACEHOLDER,
@@ -51,7 +51,7 @@ class StorageVersionMigrationTest : SuccessBuildSim<StorageVersionMigration, Sto
                         ),
                         continueToken = PLACEHOLDER
                     ),
-                    status = StorageVersionMigration.Status(
+                    status = StorageVersionMigrationStatus(
                         conditions = listOf(CONDITION),
                         resourceVersion = PLACEHOLDER
                     )

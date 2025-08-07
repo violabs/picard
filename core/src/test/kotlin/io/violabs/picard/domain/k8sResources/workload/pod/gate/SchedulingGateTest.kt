@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class SchedulingGateTest : FailureBuildSim<SchedulingGate, SchedulingGate.Builder>() {
+class SchedulingGateTest : FailureBuildSim<SchedulingGate, SchedulingGateDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,8 +16,8 @@ class SchedulingGateTest : FailureBuildSim<SchedulingGate, SchedulingGate.Builde
     }
 }
 
-private val FAILURE_POSSIBILITIES = possibilities<SchedulingGate, SchedulingGate.Builder> {
+private val FAILURE_POSSIBILITIES = possibilities<SchedulingGate, SchedulingGateDslBuilder> {
     requireScenario("name") {
-        given(SchedulingGate.Builder())
+        given(SchedulingGateDslBuilder())
     }
 }

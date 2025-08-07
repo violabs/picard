@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class CSIStorageCapacityListTest : FullBuildSim<CSIStorageCapacityList, CSIStorageCapacityList.Builder>() {
+class CSIStorageCapacityListTest : FullBuildSim<CSIStorageCapacityList, CSIStorageCapacityListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class CSIStorageCapacityListTest : FullBuildSim<CSIStorageCapacityList, CSIStora
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<CSIStorageCapacityList, CSIStorageCapacityList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<CSIStorageCapacityList, CSIStorageCapacityListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(CSIStorageCapacityList.Builder()) {
+                given(CSIStorageCapacityListDslBuilder()) {
                     items {
                         csiStorageCapacityItem {
                             storageClassName = PLACEHOLDER
@@ -31,9 +31,9 @@ class CSIStorageCapacityListTest : FullBuildSim<CSIStorageCapacityList, CSIStora
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<CSIStorageCapacityList, CSIStorageCapacityList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<CSIStorageCapacityList, CSIStorageCapacityListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(CSIStorageCapacityList.Builder())
+                given(CSIStorageCapacityListDslBuilder())
             }
         }
     }

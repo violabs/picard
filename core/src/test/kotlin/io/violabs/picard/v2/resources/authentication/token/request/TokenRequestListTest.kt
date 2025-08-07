@@ -1,11 +1,12 @@
 package io.violabs.picard.v2.resources.authentication.token.request
 
 
+import io.violabs.picard.Common.sharedListMeta
 import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class TokenRequestListTest : FullBuildSim<TokenRequestList, TokenRequestList.Builder>() {
+class TokenRequestListTest : FullBuildSim<TokenRequestList, TokenRequestListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,29 +16,29 @@ class TokenRequestListTest : FullBuildSim<TokenRequestList, TokenRequestList.Bui
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<TokenRequestList, TokenRequestList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<TokenRequestList, TokenRequestListDslBuilder> {
             scenario {
                 id = "minimum"
                 description = "with shared metadata"
-                given(TokenRequestList.Builder()) {
+                given(TokenRequestListDslBuilder()) {
                     items {
-                        request {
-
+                        tokenRequest {
+                            spec { audiences(PLACEHOLDER) }
                         }
                     }
 
-                    sharedMetadata()
+                    metadata { sharedListMeta() }
                 }
                 expected = TokenRequestList(
-                    items = listOf(TokenRequest()),
+                    items = listOf(TokenRequest(spec = TokenRequestSpec(audiences = PLACEHOLDER_LIST))),
                     metadata = LIST_METADATA
                 )
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<TokenRequestList, TokenRequestList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<TokenRequestList, TokenRequestListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(TokenRequestList.Builder())
+                given(TokenRequestListDslBuilder())
             }
         }
     }

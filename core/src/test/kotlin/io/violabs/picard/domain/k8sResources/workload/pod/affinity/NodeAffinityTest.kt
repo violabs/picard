@@ -5,7 +5,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class NodeAffinityTest : SuccessBuildSim<NodeAffinity, NodeAffinity.Builder>() {
+class NodeAffinityTest : SuccessBuildSim<NodeAffinity, NodeAffinityDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,10 +16,10 @@ class NodeAffinityTest : SuccessBuildSim<NodeAffinity, NodeAffinity.Builder>() {
     }
 }
 
-private val SUCCESS_POSSIBILITIES = possibilities<NodeAffinity, NodeAffinity.Builder> {
+private val SUCCESS_POSSIBILITIES = possibilities<NodeAffinity, NodeAffinityDslBuilder> {
     scenario {
         id = "empty group"
-        given(NodeAffinity.Builder()) {
+        given(NodeAffinityDslBuilder()) {
             preferredDuringSchedulingIgnoredDuringExecution {  }
         }
         expected = NodeAffinity()

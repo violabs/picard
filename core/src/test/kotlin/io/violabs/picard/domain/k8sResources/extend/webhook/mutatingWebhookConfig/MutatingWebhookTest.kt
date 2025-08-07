@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class MutatingWebhookTest : FailureBuildSim<MutatingWebhook, MutatingWebhook.Builder>() {
+class MutatingWebhookTest : FailureBuildSim<MutatingWebhook, MutatingWebhookDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,19 +14,19 @@ class MutatingWebhookTest : FailureBuildSim<MutatingWebhook, MutatingWebhook.Bui
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<MutatingWebhook, MutatingWebhook.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<MutatingWebhook, MutatingWebhookDslBuilder> {
             requireScenario("admissionReviewVersions") {
-                given(MutatingWebhook.Builder())
+                given(MutatingWebhookDslBuilder())
             }
 
             requireScenario("clientConfig") {
-                given(MutatingWebhook.Builder()) {
+                given(MutatingWebhookDslBuilder()) {
                     admissionReviewVersions(PLACEHOLDER)
                 }
             }
 
             requireScenario("name") {
-                given(MutatingWebhook.Builder()) {
+                given(MutatingWebhookDslBuilder()) {
                     admissionReviewVersions(PLACEHOLDER)
                     clientConfig {}
                 }
@@ -34,7 +34,7 @@ class MutatingWebhookTest : FailureBuildSim<MutatingWebhook, MutatingWebhook.Bui
 
 
             requireScenario("sideEffects") {
-                given(MutatingWebhook.Builder()) {
+                given(MutatingWebhookDslBuilder()) {
                     admissionReviewVersions(PLACEHOLDER)
                     clientConfig {}
                     name = PLACEHOLDER

@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ResourceMetricSourceTest : FailureBuildSim<ResourceMetricSource, ResourceMetricSource.Builder>() {
+class ResourceMetricSourceTest : FailureBuildSim<ResourceMetricSource, ResourceMetricSourceDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class ResourceMetricSourceTest : FailureBuildSim<ResourceMetricSource, ResourceM
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<ResourceMetricSource, ResourceMetricSource.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ResourceMetricSource, ResourceMetricSourceDslBuilder> {
             requireScenario("name") {
-                given(ResourceMetricSource.Builder())
+                given(ResourceMetricSourceDslBuilder())
             }
         }
     }

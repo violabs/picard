@@ -6,6 +6,7 @@ import io.violabs.picard.common.AppConstants
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.ClusterResource
+import io.violabs.picard.domain.manifest.WorkloadResource
 import io.violabs.picard.v2.common.ObjectMeta
 import io.violabs.picard.v2.common.ObjectReference
 
@@ -27,6 +28,6 @@ data class Binding(
      * The target object that you want to bind to the standard object.
      */
     val target: ObjectReference
-) : ClusterResource<Binding.Version, ObjectMeta> {
+) : WorkloadResource<Binding.Version, ObjectMeta> {
     interface Version : APIVersion
 }

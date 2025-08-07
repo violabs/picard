@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class ReplicationControllerStatusTest :
-    FailureBuildSim<ReplicationController.Status, ReplicationController.Status.Builder>() {
+    FailureBuildSim<ReplicationControllerStatus, ReplicationControllerStatusDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,9 +16,9 @@ class ReplicationControllerStatusTest :
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<ReplicationController.Status, ReplicationController.Status.Builder> {
+            possibilities<ReplicationControllerStatus, ReplicationControllerStatusDslBuilder> {
                 requireScenario("replicas") {
-                    given(ReplicationController.Status.Builder())
+                    given(ReplicationControllerStatusDslBuilder())
                 }
             }
     }

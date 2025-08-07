@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ResourceQuotaListTest : FullBuildSim<ResourceQuotaList, ResourceQuotaList.Builder>() {
+class ResourceQuotaListTest : FullBuildSim<ResourceQuotaList, ResourceQuotaListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class ResourceQuotaListTest : FullBuildSim<ResourceQuotaList, ResourceQuotaList.
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ResourceQuotaList, ResourceQuotaList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ResourceQuotaList, ResourceQuotaListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ResourceQuotaList.Builder()) {
+                given(ResourceQuotaListDslBuilder()) {
                     items {
                         resourceQuotaItem {  }
                     }
@@ -29,9 +29,9 @@ class ResourceQuotaListTest : FullBuildSim<ResourceQuotaList, ResourceQuotaList.
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<ResourceQuotaList, ResourceQuotaList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ResourceQuotaList, ResourceQuotaListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(ResourceQuotaList.Builder())
+                given(ResourceQuotaListDslBuilder())
             }
         }
     }

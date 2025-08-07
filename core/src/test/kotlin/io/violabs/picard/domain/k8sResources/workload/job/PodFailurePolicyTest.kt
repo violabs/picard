@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PodFailurePolicyTest : FailureBuildSim<PodFailurePolicy, PodFailurePolicy.Builder>() {
+class PodFailurePolicyTest : FailureBuildSim<PodFailurePolicy, PodFailurePolicyDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class PodFailurePolicyTest : FailureBuildSim<PodFailurePolicy, PodFailurePolicy.
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<PodFailurePolicy, PodFailurePolicy.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<PodFailurePolicy, PodFailurePolicyDslBuilder> {
             requireNotEmptyScenario("rules") {
-                given(PodFailurePolicy.Builder())
+                given(PodFailurePolicyDslBuilder())
             }
         }
     }

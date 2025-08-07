@@ -7,7 +7,7 @@ import io.violabs.picard.domain.condition.ComponentCondition
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ComponentStatusTest : SuccessBuildSim<ComponentStatus, ComponentStatus.Builder>() {
+class ComponentStatusTest : SuccessBuildSim<ComponentStatus, ComponentStatusDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,16 +17,16 @@ class ComponentStatusTest : SuccessBuildSim<ComponentStatus, ComponentStatus.Bui
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ComponentStatus, ComponentStatus.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ComponentStatus, ComponentStatusDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ComponentStatus.Builder())
+                given(ComponentStatusDslBuilder())
                 expected = ComponentStatus()
             }
 
             scenario {
                 id = "full"
-                given(ComponentStatus.Builder()) {
+                given(ComponentStatusDslBuilder()) {
                     sharedMetadata()
                     conditions {
                         condition {

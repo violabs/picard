@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ResourceSliceSpecTest : FailureBuildSim<ResourceSlice.Spec, ResourceSlice.Spec.Builder>() {
+class ResourceSliceSpecTest : FailureBuildSim<ResourceSliceSpec, ResourceSliceSpecDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class ResourceSliceSpecTest : FailureBuildSim<ResourceSlice.Spec, ResourceSlice.
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<ResourceSlice.Spec, ResourceSlice.Spec.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ResourceSliceSpec, ResourceSliceSpecDslBuilder> {
             requireScenario("driver") {
-                given(ResourceSlice.Spec.Builder())
+                given(ResourceSliceSpecDslBuilder())
             }
 
             requireScenario("pool") {
-                given(ResourceSlice.Spec.Builder()) {
+                given(ResourceSliceSpecDslBuilder()) {
                     driver = PLACEHOLDER
                 }
             }

@@ -6,7 +6,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PriorityClassTest : SuccessBuildSim<PriorityClass, PriorityClassV2DslBuilder>() {
+class PriorityClassTest : SuccessBuildSim<PriorityClass, PriorityClassDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class PriorityClassTest : SuccessBuildSim<PriorityClass, PriorityClassV2DslBuild
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<PriorityClass, PriorityClassV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<PriorityClass, PriorityClassDslBuilder> {
             scenario {
                 id = "minimum"
-                given(PriorityClassV2DslBuilder()) {
+                given(PriorityClassDslBuilder()) {
                     value = 1
                 }
                 expected = PriorityClass(
@@ -28,7 +28,7 @@ class PriorityClassTest : SuccessBuildSim<PriorityClass, PriorityClassV2DslBuild
 
             scenario {
                 id = "full"
-                given(PriorityClassV2DslBuilder()) {
+                given(PriorityClassDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }

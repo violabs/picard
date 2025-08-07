@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class HPAScalingPolicyTest : FailureBuildSim<HPAScalingPolicy, HPAScalingPolicy.Builder>() {
+class HPAScalingPolicyTest : FailureBuildSim<HPAScalingPolicy, HPAScalingPolicyDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,19 +14,19 @@ class HPAScalingPolicyTest : FailureBuildSim<HPAScalingPolicy, HPAScalingPolicy.
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<HPAScalingPolicy, HPAScalingPolicy.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<HPAScalingPolicy, HPAScalingPolicyDslBuilder> {
             requireScenario("type") {
-                given(HPAScalingPolicy.Builder())
+                given(HPAScalingPolicyDslBuilder())
             }
 
             requireScenario("value") {
-                given(HPAScalingPolicy.Builder()) {
+                given(HPAScalingPolicyDslBuilder()) {
                     type = PLACEHOLDER
                 }
             }
 
             requireScenario("periodSeconds") {
-                given(HPAScalingPolicy.Builder()) {
+                given(HPAScalingPolicyDslBuilder()) {
                     type = PLACEHOLDER
                     value = 1
                 }

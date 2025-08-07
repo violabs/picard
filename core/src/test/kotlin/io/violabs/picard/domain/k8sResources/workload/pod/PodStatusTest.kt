@@ -13,7 +13,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 import java.time.LocalDateTime
 
-class PodStatusTest : SuccessBuildSim<Pod.Status, Pod.Status.Builder>() {
+class PodStatusTest : SuccessBuildSim<PodStatus, PodStatusDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -105,16 +105,16 @@ class PodStatusTest : SuccessBuildSim<Pod.Status, Pod.Status.Builder>() {
             resourceClaimName = "test_resource_claim_name",
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<Pod.Status, Pod.Status.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<PodStatus, PodStatusDslBuilder> {
             scenario {
                 id = "minimum"
-                given(Pod.Status.Builder())
-                expected = Pod.Status()
+                given(PodStatusDslBuilder())
+                expected = PodStatus()
             }
 
             scenario {
                 id = "full"
-                given(Pod.Status.Builder()) {
+                given(PodStatusDslBuilder()) {
                     nominatedNodeName = "test_nominated_node_name"
                     hostIP = "127.0.0.1"
                     hostIPs { addIp("0.0.0.0") }
@@ -139,7 +139,7 @@ class PodStatusTest : SuccessBuildSim<Pod.Status, Pod.Status.Builder>() {
                     }
                     resize = "large"
                 }
-                expected = Pod.Status(
+                expected = PodStatus(
                     nominatedNodeName = "test_nominated_node_name",
                     hostIP = "127.0.0.1",
                     hostIPs = listOf(
@@ -231,7 +231,7 @@ class PodStatusTest : SuccessBuildSim<Pod.Status, Pod.Status.Builder>() {
             }
         }
 
-        private fun ContainerState.Builder.sharedContainerState() {
+        private fun ContainerStateDslBuilder.sharedContainerState() {
             running {
                 startedAt = NOW
             }

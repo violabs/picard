@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class SelectableFieldTest : FailureBuildSim<SelectableField, SelectableField.Builder>() {
+class SelectableFieldTest : FailureBuildSim<SelectableField, SelectableFieldDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class SelectableFieldTest : FailureBuildSim<SelectableField, SelectableField.Bui
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<SelectableField, SelectableField.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<SelectableField, SelectableFieldDslBuilder> {
             requireScenario("jsonPath") {
-                given(SelectableField.Builder())
+                given(SelectableFieldDslBuilder())
             }
         }
     }

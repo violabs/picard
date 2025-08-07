@@ -6,7 +6,7 @@ import io.violabs.picard.domain.k8sResources.Toleration
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class RuntimeClassTest : FullBuildSim<RuntimeClass, RuntimeClass.Builder>() {
+class RuntimeClassTest : FullBuildSim<RuntimeClass, RuntimeClassDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,10 +16,10 @@ class RuntimeClassTest : FullBuildSim<RuntimeClass, RuntimeClass.Builder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<RuntimeClass, RuntimeClass.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<RuntimeClass, RuntimeClassDslBuilder> {
             scenario {
                 id = "minimum"
-                given(RuntimeClass.Builder()) {
+                given(RuntimeClassDslBuilder()) {
                     handler = PLACEHOLDER
                 }
                 expected = RuntimeClass(handler = PLACEHOLDER)
@@ -27,7 +27,7 @@ class RuntimeClassTest : FullBuildSim<RuntimeClass, RuntimeClass.Builder>() {
 
             scenario {
                 id = "full"
-                given(RuntimeClass.Builder()) {
+                given(RuntimeClassDslBuilder()) {
                     sharedMetadata()
                     handler = PLACEHOLDER
                     overhead {
@@ -68,9 +68,9 @@ class RuntimeClassTest : FullBuildSim<RuntimeClass, RuntimeClass.Builder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<RuntimeClass, RuntimeClass.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<RuntimeClass, RuntimeClassDslBuilder> {
             requireScenario("handler") {
-                given(RuntimeClass.Builder())
+                given(RuntimeClassDslBuilder())
             }
         }
     }

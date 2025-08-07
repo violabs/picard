@@ -1,10 +1,11 @@
 package io.violabs.picard.v2.resources.authentication.token.review
 
+import io.violabs.picard.Common.sharedListMeta
 import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class TokenReviewListTest : FullBuildSim<TokenReviewList, TokenReviewList.Builder>() {
+class TokenReviewListTest : FullBuildSim<TokenReviewList, TokenReviewListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,28 +15,28 @@ class TokenReviewListTest : FullBuildSim<TokenReviewList, TokenReviewList.Builde
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<TokenReviewList, TokenReviewList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<TokenReviewList, TokenReviewListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(TokenReviewList.Builder()) {
+                given(TokenReviewListDslBuilder()) {
                     items {
-                        review {
-                            spec { }
+                        tokenReview {
+                            spec {  }
                         }
                     }
 
-                    sharedMetadata()
+                    metadata { sharedListMeta() }
                 }
                 expected = TokenReviewList(
-                    items = listOf(TokenReview(spec = TokenReview.Spec())),
+                    items = listOf(TokenReview(spec = TokenReviewSpec())),
                     metadata = LIST_METADATA
                 )
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<TokenReviewList, TokenReviewList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<TokenReviewList, TokenReviewListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(TokenReviewList.Builder())
+                given(TokenReviewListDslBuilder())
             }
         }
     }

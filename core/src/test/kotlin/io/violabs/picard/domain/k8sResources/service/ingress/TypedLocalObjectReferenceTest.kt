@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class TypedLocalObjectReferenceTest : FailureBuildSim<TypedLocalObjectReference, TypedLocalObjectReference.Builder>() {
+class TypedLocalObjectReferenceTest : FailureBuildSim<TypedLocalObjectReference, TypedLocalObjectReferenceDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,13 +15,13 @@ class TypedLocalObjectReferenceTest : FailureBuildSim<TypedLocalObjectReference,
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<TypedLocalObjectReference, TypedLocalObjectReference.Builder> {
+            possibilities<TypedLocalObjectReference, TypedLocalObjectReferenceDslBuilder> {
                 requireScenario("kind") {
-                    given(TypedLocalObjectReference.Builder())
+                    given(TypedLocalObjectReferenceDslBuilder())
                 }
 
                 requireScenario("name") {
-                    given(TypedLocalObjectReference.Builder()) {
+                    given(TypedLocalObjectReferenceDslBuilder()) {
                         kind = PLACEHOLDER
                     }
                 }

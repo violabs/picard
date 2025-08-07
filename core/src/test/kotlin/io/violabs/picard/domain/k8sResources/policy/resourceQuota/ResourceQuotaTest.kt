@@ -8,7 +8,7 @@ import io.violabs.picard.domain.k8sResources.policy.ScopedResourceSelectorRequir
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ResourceQuotaTest : SuccessBuildSim<ResourceQuota, ResourceQuota.Builder>() {
+class ResourceQuotaTest : SuccessBuildSim<ResourceQuota, ResourceQuotaDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -18,10 +18,10 @@ class ResourceQuotaTest : SuccessBuildSim<ResourceQuota, ResourceQuota.Builder>(
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ResourceQuota, ResourceQuota.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ResourceQuota, ResourceQuotaDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ResourceQuota.Builder()) {
+                given(ResourceQuotaDslBuilder()) {
 
                 }
                 expected = ResourceQuota()
@@ -29,7 +29,7 @@ class ResourceQuotaTest : SuccessBuildSim<ResourceQuota, ResourceQuota.Builder>(
 
             scenario {
                 id = "full"
-                given(ResourceQuota.Builder()) {
+                given(ResourceQuotaDslBuilder()) {
                     sharedMetadata()
                     spec {
                         hard(QUANTITY_PAIR)
@@ -51,7 +51,7 @@ class ResourceQuotaTest : SuccessBuildSim<ResourceQuota, ResourceQuota.Builder>(
                 }
                 expected = ResourceQuota(
                     metadata = METADATA,
-                    spec = ResourceQuota.Spec(
+                    spec = ResourceQuotaSpec(
                         hard = QUANTITY_MAP,
                         scopeSelector = ScopeSelector(
                             matchExpressions = listOf(
@@ -64,7 +64,7 @@ class ResourceQuotaTest : SuccessBuildSim<ResourceQuota, ResourceQuota.Builder>(
                         ),
                         scopes = PLACEHOLDER_LIST
                     ),
-                    status = ResourceQuota.Status(
+                    status = ResourceQuotaStatus(
                         hard = QUANTITY_MAP,
                         used = QUANTITY_MAP
                     )

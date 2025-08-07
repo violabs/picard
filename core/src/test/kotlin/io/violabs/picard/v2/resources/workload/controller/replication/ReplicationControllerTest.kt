@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import io.violabs.picard.v2.common.ObjectMeta
 import org.junit.jupiter.api.BeforeAll
 
-class ReplicationControllerTest : SuccessBuildSim<ReplicationController, ReplicationControllerV2DslBuilder>() {
+class ReplicationControllerTest : SuccessBuildSim<ReplicationController, ReplicationControllerDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,23 +15,23 @@ class ReplicationControllerTest : SuccessBuildSim<ReplicationController, Replica
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ReplicationController, ReplicationControllerV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ReplicationController, ReplicationControllerDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ReplicationControllerV2DslBuilder())
+                given(ReplicationControllerDslBuilder())
                 expected = ReplicationController()
             }
 
             scenario {
                 id = "full"
-                given(ReplicationControllerV2DslBuilder()) {
+                given(ReplicationControllerDslBuilder()) {
                     metadata {
                         name = PLACEHOLDER
                         namespace = PLACEHOLDER
                     }
                     spec {
                         selector(PLACEHOLDER to PLACEHOLDER)
-                        template = PodTemplate.Spec()
+                        template = PodTemplateSpec()
                         replicas = 1
                         minReadySeconds = 1
                     }
@@ -59,7 +59,7 @@ class ReplicationControllerTest : SuccessBuildSim<ReplicationController, Replica
                     ),
                     spec = ReplicationControllerSpec(
                         selector = mapOf(PLACEHOLDER to PLACEHOLDER),
-                        template = PodTemplate.Spec(),
+                        template = PodTemplateSpec(),
                         replicas = 1,
                         minReadySeconds = 1
                     ),

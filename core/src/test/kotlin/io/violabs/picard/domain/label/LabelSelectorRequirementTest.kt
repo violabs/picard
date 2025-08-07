@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class LabelSelectorRequirementTest : FailureBuildSim<LabelSelectorRequirement, LabelSelectorRequirement.Builder>() {
+class LabelSelectorRequirementTest : FailureBuildSim<LabelSelectorRequirement, LabelSelectorRequirementDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class LabelSelectorRequirementTest : FailureBuildSim<LabelSelectorRequirement, L
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<LabelSelectorRequirement, LabelSelectorRequirement.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<LabelSelectorRequirement, LabelSelectorRequirementDslBuilder> {
             requireScenario("key") {
-                given(LabelSelectorRequirement.Builder())
+                given(LabelSelectorRequirementDslBuilder())
             }
 
             requireScenario("operator") {
-                given(LabelSelectorRequirement.Builder()) {
+                given(LabelSelectorRequirementDslBuilder()) {
                     key = PLACEHOLDER
                 }
             }

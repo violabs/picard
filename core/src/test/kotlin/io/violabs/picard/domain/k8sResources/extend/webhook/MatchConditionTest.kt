@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class MatchConditionTest : FailureBuildSim<MatchCondition, MatchCondition.Builder>() {
+class MatchConditionTest : FailureBuildSim<MatchCondition, MatchConditionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class MatchConditionTest : FailureBuildSim<MatchCondition, MatchCondition.Builde
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<MatchCondition, MatchCondition.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<MatchCondition, MatchConditionDslBuilder> {
             requireScenario("expression") {
-                given(MatchCondition.Builder())
+                given(MatchConditionDslBuilder())
             }
 
             requireScenario("name") {
-                given(MatchCondition.Builder()) {
+                given(MatchConditionDslBuilder()) {
                     expression = PLACEHOLDER
                 }
             }

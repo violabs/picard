@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class LeaseCandidateSpecTest : FailureBuildSim<LeaseCandidate.Spec, LeaseCandidate.Spec.Builder>() {
+class LeaseCandidateSpecTest : FailureBuildSim<LeaseCandidateSpec, LeaseCandidateSpecDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class LeaseCandidateSpecTest : FailureBuildSim<LeaseCandidate.Spec, LeaseCandida
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<LeaseCandidate.Spec, LeaseCandidate.Spec.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<LeaseCandidateSpec, LeaseCandidateSpecDslBuilder> {
             requireScenario("leaseName") {
-                given(LeaseCandidate.Spec.Builder())
+                given(LeaseCandidateSpecDslBuilder())
             }
 
             requireNotEmptyScenario("preferredStrategies") {
-                given(LeaseCandidate.Spec.Builder()) {
+                given(LeaseCandidateSpecDslBuilder()) {
                     leaseName = PLACEHOLDER
                 }
             }

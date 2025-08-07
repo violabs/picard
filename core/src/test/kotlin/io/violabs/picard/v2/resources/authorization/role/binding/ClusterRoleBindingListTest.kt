@@ -1,11 +1,12 @@
-package io.violabs.picard.domain.k8sResources.authorization.clusterRole.binding
+package io.violabs.picard.v2.resources.authorization.role.binding
 
-
+import io.violabs.picard.Common.sharedListMeta
 import io.violabs.picard.FullBuildSim
+import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ClusterRoleBindingListTest : FullBuildSim<ClusterRoleBindingList, ClusterRoleBindingList.Builder>() {
+class ClusterRoleBindingListTest : FullBuildSim<ClusterRoleBindingList, ClusterRoleBindingListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,16 +16,19 @@ class ClusterRoleBindingListTest : FullBuildSim<ClusterRoleBindingList, ClusterR
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ClusterRoleBindingList, ClusterRoleBindingList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ClusterRoleBindingList, ClusterRoleBindingListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ClusterRoleBindingList.Builder()) {
+                given(ClusterRoleBindingListDslBuilder()) {
                     items {
-                        binding {
-                            roleRef { sharedRoleRef() }
+                        clusterRoleBinding {
+                            roleRef {
+                                sharedRoleRef()
+                            }
                         }
                     }
-                    sharedMetadata()
+
+                    metadata { sharedListMeta() }
                 }
                 expected = ClusterRoleBindingList(
                     items = listOf(
@@ -37,9 +41,9 @@ class ClusterRoleBindingListTest : FullBuildSim<ClusterRoleBindingList, ClusterR
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<ClusterRoleBindingList, ClusterRoleBindingList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ClusterRoleBindingList, ClusterRoleBindingListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(ClusterRoleBindingList.Builder())
+                given(ClusterRoleBindingListDslBuilder())
             }
         }
     }

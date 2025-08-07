@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class LeaseCandidateTest : FullBuildSim<LeaseCandidate, LeaseCandidate.Builder>() {
+class LeaseCandidateTest : FullBuildSim<LeaseCandidate, LeaseCandidateDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,17 +15,17 @@ class LeaseCandidateTest : FullBuildSim<LeaseCandidate, LeaseCandidate.Builder>(
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<LeaseCandidate, LeaseCandidate.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<LeaseCandidate, LeaseCandidateDslBuilder> {
             scenario {
                 id = "minimum"
-                given(LeaseCandidate.Builder()) {
+                given(LeaseCandidateDslBuilder()) {
                     spec {
                         leaseName = PLACEHOLDER
                         preferredStrategies(PLACEHOLDER)
                     }
                 }
                 expected = LeaseCandidate(
-                    spec = LeaseCandidate.Spec(
+                    spec = LeaseCandidateSpec(
                         leaseName = PLACEHOLDER,
                         preferredStrategies = listOf(PLACEHOLDER)
                     )
@@ -34,7 +34,7 @@ class LeaseCandidateTest : FullBuildSim<LeaseCandidate, LeaseCandidate.Builder>(
 
             scenario {
                 id = "full"
-                given(LeaseCandidate.Builder()) {
+                given(LeaseCandidateDslBuilder()) {
                     spec {
                         leaseName = PLACEHOLDER
                         preferredStrategies(PLACEHOLDER)
@@ -45,7 +45,7 @@ class LeaseCandidateTest : FullBuildSim<LeaseCandidate, LeaseCandidate.Builder>(
                     }
                 }
                 expected = LeaseCandidate(
-                    spec = LeaseCandidate.Spec(
+                    spec = LeaseCandidateSpec(
                         leaseName = PLACEHOLDER,
                         preferredStrategies = listOf(PLACEHOLDER),
                         binaryVersion = PLACEHOLDER,
@@ -57,9 +57,9 @@ class LeaseCandidateTest : FullBuildSim<LeaseCandidate, LeaseCandidate.Builder>(
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<LeaseCandidate, LeaseCandidate.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<LeaseCandidate, LeaseCandidateDslBuilder> {
             requireScenario("spec") {
-                given(LeaseCandidate.Builder())
+                given(LeaseCandidateDslBuilder())
             }
         }
     }

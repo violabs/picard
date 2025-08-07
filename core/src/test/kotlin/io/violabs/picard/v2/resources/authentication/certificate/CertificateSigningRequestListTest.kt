@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class CertificateSigningRequestListTest :
-    FullBuildSim<CertificateSigningRequestList, CertificateSigningRequestListV2DslBuilder>() {
+    FullBuildSim<CertificateSigningRequestList, CertificateSigningRequestListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,11 +17,11 @@ class CertificateSigningRequestListTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<CertificateSigningRequestList, CertificateSigningRequestListV2DslBuilder> {
+            possibilities<CertificateSigningRequestList, CertificateSigningRequestListDslBuilder> {
                 scenario {
                     id = "minimum"
                     description = "adding metadata for coverage"
-                    given(CertificateSigningRequestListV2DslBuilder()) {
+                    given(CertificateSigningRequestListDslBuilder()) {
                         items {
 
                         }
@@ -43,9 +43,9 @@ class CertificateSigningRequestListTest :
             }
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<CertificateSigningRequestList, CertificateSigningRequestListV2DslBuilder> {
+            possibilities<CertificateSigningRequestList, CertificateSigningRequestListDslBuilder> {
                 requireNotEmptyScenario("items") {
-                    given(CertificateSigningRequestListV2DslBuilder())
+                    given(CertificateSigningRequestListDslBuilder())
                 }
             }
     }

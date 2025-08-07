@@ -14,7 +14,7 @@ import io.violabs.picard.domain.k8sResources.policy.subject.UserSubject
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class FlowSchemaTest : SuccessBuildSim<FlowSchema, FlowSchema.Builder>() {
+class FlowSchemaTest : SuccessBuildSim<FlowSchema, FlowSchemaDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -52,16 +52,16 @@ class FlowSchemaTest : SuccessBuildSim<FlowSchema, FlowSchema.Builder>() {
             resourceRules = listOf(RESOURCE_RULE)
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<FlowSchema, FlowSchema.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<FlowSchema, FlowSchemaDslBuilder> {
             scenario {
                 id = "minimum"
-                given(FlowSchema.Builder())
+                given(FlowSchemaDslBuilder())
                 expected = FlowSchema()
             }
 
             scenario {
                 id = "full"
-                given(FlowSchema.Builder()) {
+                given(FlowSchemaDslBuilder()) {
                     sharedMetadata()
                     spec {
                         priorityLevelConfiguration(PLACEHOLDER)
@@ -104,7 +104,7 @@ class FlowSchemaTest : SuccessBuildSim<FlowSchema, FlowSchema.Builder>() {
                 }
                 expected = FlowSchema(
                     metadata = METADATA,
-                    spec = FlowSchema.Spec(
+                    spec = FlowSchemaSpec(
                         priorityLevelConfiguration = PriorityLevelConfigurationReference(PLACEHOLDER),
                         distinguisherMethod = FlowDistinguisherMethod(FlowDistinguisherMethod.Type.ByUser.name),
                         matchingPrecedence = 1,
@@ -112,7 +112,7 @@ class FlowSchemaTest : SuccessBuildSim<FlowSchema, FlowSchema.Builder>() {
                             POLICY_RULES_WITH_SUBJECTS
                         )
                     ),
-                    status = FlowSchema.Status(
+                    status = FlowSchemaStatus(
                         conditions = listOf(CONDITION)
                     )
                 )

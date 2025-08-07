@@ -7,7 +7,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class RoleTest : SuccessBuildSim<Role, RoleV2DslBuilder>() {
+class RoleTest : SuccessBuildSim<Role, RoleDslBuilder>() {
     companion object : RoleTestConfig {
         @JvmStatic
         @BeforeAll
@@ -17,16 +17,16 @@ class RoleTest : SuccessBuildSim<Role, RoleV2DslBuilder>() {
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<Role, RoleV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Role, RoleDslBuilder> {
             scenario {
                 id = "minimum"
-                given(RoleV2DslBuilder())
+                given(RoleDslBuilder())
                 expected = Role()
             }
 
             scenario {
                 id = "full"
-                given(RoleV2DslBuilder()) {
+                given(RoleDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }

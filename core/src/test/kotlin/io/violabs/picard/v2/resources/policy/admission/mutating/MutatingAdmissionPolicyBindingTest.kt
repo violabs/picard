@@ -12,7 +12,7 @@ import io.violabs.picard.v2.resources.policy.admission.validating.NamedRuleWithO
 import org.junit.jupiter.api.BeforeAll
 
 class MutatingAdmissionPolicyBindingTest :
-    SuccessBuildSim<MutatingAdmissionPolicyBinding, MutatingAdmissionPolicyBindingV2DslBuilder>() {
+    SuccessBuildSim<MutatingAdmissionPolicyBinding, MutatingAdmissionPolicyBindingDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -55,16 +55,16 @@ class MutatingAdmissionPolicyBindingTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<MutatingAdmissionPolicyBinding, MutatingAdmissionPolicyBindingV2DslBuilder> {
+            possibilities<MutatingAdmissionPolicyBinding, MutatingAdmissionPolicyBindingDslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(MutatingAdmissionPolicyBindingV2DslBuilder())
+                    given(MutatingAdmissionPolicyBindingDslBuilder())
                     expected = MutatingAdmissionPolicyBinding()
                 }
 
                 scenario {
                     id = "full"
-                    given(MutatingAdmissionPolicyBindingV2DslBuilder()) {
+                    given(MutatingAdmissionPolicyBindingDslBuilder()) {
                         metadata {
                             sharedObjectMeta()
                         }

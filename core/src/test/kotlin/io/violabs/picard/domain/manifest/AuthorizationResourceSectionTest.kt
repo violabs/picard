@@ -18,7 +18,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class AuthorizationResourceSectionTest :
-    FullBuildSim<AuthorizationResourceSection, AuthorizationResourceSection.Builder>() {
+    FullBuildSim<AuthorizationResourceSection, AuthorizationResourceSectionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -28,17 +28,17 @@ class AuthorizationResourceSectionTest :
             FAILURE_POSSIBILITIES
         )
 
-        private val SUBJECT_ACCESS_REVIEW_SPEC = SubjectAccessReview.Spec()
+        private val SUBJECT_ACCESS_REVIEW_SPEC = SubjectAccessReviewSpec()
 
         private val CLUSTER_ROLE_BINDING = ClusterRoleBinding(roleRef = ROLE_REF)
 
         private val ROLE_BINDING = RoleBinding(roleRef = ROLE_REF)
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<AuthorizationResourceSection, AuthorizationResourceSection.Builder> {
+            possibilities<AuthorizationResourceSection, AuthorizationResourceSectionDslBuilder> {
                 scenario {
                     id = "full"
-                    given(AuthorizationResourceSection.Builder()) {
+                    given(AuthorizationResourceSectionDslBuilder()) {
                         clusterRole { }
 
                         clusterRoleList {
@@ -114,8 +114,8 @@ class AuthorizationResourceSectionTest :
                             ROLE_BINDING,
                             RoleBindingList(items = listOf(ROLE_BINDING)),
                             RoleList(items = listOf(Role())),
-                            SelfSubjectAccessReview(spec = SelfSubjectAccessReview.Spec()),
-                            SelfSubjectRulesReview(spec = SelfSubjectRulesReview.Spec(namespace = PLACEHOLDER)),
+                            SelfSubjectAccessReview(spec = SelfSubjectAccessReviewSpec()),
+                            SelfSubjectRulesReview(spec = SelfSubjectRulesReviewSpec(namespace = PLACEHOLDER)),
                             SubjectAccessReview(spec = SUBJECT_ACCESS_REVIEW_SPEC)
                         )
                     )
@@ -123,9 +123,9 @@ class AuthorizationResourceSectionTest :
             }
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<AuthorizationResourceSection, AuthorizationResourceSection.Builder> {
+            possibilities<AuthorizationResourceSection, AuthorizationResourceSectionDslBuilder> {
                 requireNotEmptyScenario("resources") {
-                    given(AuthorizationResourceSection.Builder())
+                    given(AuthorizationResourceSectionDslBuilder())
                 }
             }
     }

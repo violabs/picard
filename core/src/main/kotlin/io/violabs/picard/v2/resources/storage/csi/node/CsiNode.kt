@@ -6,6 +6,7 @@ import io.violabs.picard.common.AppConstants
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.ConfigResource
+import io.violabs.picard.domain.manifest.StorageResource
 import io.violabs.picard.v2.common.ObjectMeta
 import io.violabs.picard.v2.resources.storage.csi.driver.CsiDriver
 
@@ -37,7 +38,7 @@ data class CsiNode(
      * spec is the specification of CSINode
      */
     val spec: CsiNodeSpec
-) : ConfigResource<CsiDriver.Version, ObjectMeta> {
+) : StorageResource<CsiDriver.Version, ObjectMeta> {
     interface Version : APIVersion
 
     override fun getKind(): String {

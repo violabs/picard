@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.k8sResources.authorization.accessReview
+package io.violabs.picard.v2.resources.authorization.review.rules
 
 
 import io.violabs.picard.FailureBuildSim
@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class SelfSubjectRulesReviewSpecTest :
-    FailureBuildSim<SelfSubjectRulesReview.Spec, SelfSubjectRulesReview.Spec.Builder>() {
+    FailureBuildSim<SelfSubjectRulesReviewSpec, SelfSubjectRulesReviewSpecDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,9 +16,9 @@ class SelfSubjectRulesReviewSpecTest :
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<SelfSubjectRulesReview.Spec, SelfSubjectRulesReview.Spec.Builder> {
+            possibilities<SelfSubjectRulesReviewSpec, SelfSubjectRulesReviewSpecDslBuilder> {
                 requireScenario("namespace") {
-                    given(SelfSubjectRulesReview.Spec.Builder())
+                    given(SelfSubjectRulesReviewSpecDslBuilder())
                 }
             }
     }

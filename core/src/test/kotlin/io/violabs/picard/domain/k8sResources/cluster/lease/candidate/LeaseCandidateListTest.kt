@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class LeaseCandidateListTest : FullBuildSim<LeaseCandidateList, LeaseCandidateList.Builder>() {
+class LeaseCandidateListTest : FullBuildSim<LeaseCandidateList, LeaseCandidateListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class LeaseCandidateListTest : FullBuildSim<LeaseCandidateList, LeaseCandidateLi
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<LeaseCandidateList, LeaseCandidateList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<LeaseCandidateList, LeaseCandidateListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(LeaseCandidateList.Builder()) {
+                given(LeaseCandidateListDslBuilder()) {
                     items {
                         candidate {
                             spec {
@@ -31,7 +31,7 @@ class LeaseCandidateListTest : FullBuildSim<LeaseCandidateList, LeaseCandidateLi
                 expected = LeaseCandidateList(
                     items = listOf(
                         LeaseCandidate(
-                            spec = LeaseCandidate.Spec(
+                            spec = LeaseCandidateSpec(
                                 leaseName = PLACEHOLDER,
                                 preferredStrategies = listOf(PLACEHOLDER)
                             )
@@ -41,9 +41,9 @@ class LeaseCandidateListTest : FullBuildSim<LeaseCandidateList, LeaseCandidateLi
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<LeaseCandidateList, LeaseCandidateList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<LeaseCandidateList, LeaseCandidateListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(LeaseCandidateList.Builder())
+                given(LeaseCandidateListDslBuilder())
             }
         }
     }

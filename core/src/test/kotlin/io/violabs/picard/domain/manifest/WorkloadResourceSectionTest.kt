@@ -35,7 +35,7 @@ import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSetLis
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class WorkloadResourceSectionTest : FullBuildSim<WorkloadResourceSection, WorkloadResourceSection.Builder>() {
+class WorkloadResourceSectionTest : FullBuildSim<WorkloadResourceSection, WorkloadResourceSectionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -53,29 +53,29 @@ class WorkloadResourceSectionTest : FullBuildSim<WorkloadResourceSection, Worklo
             value = 1
         )
 
-        private val RESOURCE_CLAIM_SPEC = ResourceClaim.Spec()
+        private val RESOURCE_CLAIM_SPEC = ResourceClaimSpec()
 
         private val RESOURCE_CLAIM = ResourceClaim(
             spec = RESOURCE_CLAIM_SPEC
         )
 
         private val RESOURCE_CLAIM_TEMPLATE = ResourceClaimTemplate(
-            spec = ResourceClaimTemplate.Spec(
+            spec = ResourceClaimTemplateSpec(
                 spec = RESOURCE_CLAIM_SPEC
             )
         )
 
         private val RESOURCE_SLICE = ResourceSlice(
-            spec = ResourceSlice.Spec(
+            spec = ResourceSliceSpec(
                 driver = PLACEHOLDER,
                 pool = RESOURCE_POOL
             )
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<WorkloadResourceSection, WorkloadResourceSection.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<WorkloadResourceSection, WorkloadResourceSectionDslBuilder> {
             scenario {
                 id = "full"
-                given(WorkloadResourceSection.Builder()) {
+                given(WorkloadResourceSectionDslBuilder()) {
                     controllerRevision {
                         revision = 1
                     }
@@ -267,9 +267,9 @@ class WorkloadResourceSectionTest : FullBuildSim<WorkloadResourceSection, Worklo
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<WorkloadResourceSection, WorkloadResourceSection.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<WorkloadResourceSection, WorkloadResourceSectionDslBuilder> {
             requireNotEmptyScenario("resources") {
-                given(WorkloadResourceSection.Builder())
+                given(WorkloadResourceSectionDslBuilder())
             }
         }
     }

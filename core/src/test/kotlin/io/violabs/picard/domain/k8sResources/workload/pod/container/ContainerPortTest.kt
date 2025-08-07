@@ -4,7 +4,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ContainerPortTest : FullBuildSim<ContainerPort, ContainerPort.Builder>() {
+class ContainerPortTest : FullBuildSim<ContainerPort, ContainerPortDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -18,20 +18,20 @@ class ContainerPortTest : FullBuildSim<ContainerPort, ContainerPort.Builder>() {
     }
 }
 
-private val SUCCESS_POSSIBILITIES = possibilities<ContainerPort, ContainerPort.Builder> {
+private val SUCCESS_POSSIBILITIES = possibilities<ContainerPort, ContainerPortDslBuilder> {
     scenario {
         id = "minimum"
-        given(ContainerPort.Builder()) {
+        given(ContainerPortDslBuilder()) {
             containerPort = 8080
         }
         expected = ContainerPort(containerPort = 8080)
     }
 }
 
-private val FAILURE_POSSIBILITIES = possibilities<ContainerPort, ContainerPort.Builder> {
+private val FAILURE_POSSIBILITIES = possibilities<ContainerPort, ContainerPortDslBuilder> {
     scenario {
         id = "missing containerPort"
-        given(ContainerPort.Builder())
+        given(ContainerPortDslBuilder())
         exceptionMessage = withTemplate("containerPort")
     }
 }

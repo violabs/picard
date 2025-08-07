@@ -10,7 +10,7 @@ import io.violabs.picard.domain.AccessMode
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PersistentVolumeClaimTest : SuccessBuildSim<PersistentVolumeClaim, PersistentVolumeClaimV2DslBuilder>() {
+class PersistentVolumeClaimTest : SuccessBuildSim<PersistentVolumeClaim, PersistentVolumeClaimDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -24,16 +24,16 @@ class PersistentVolumeClaimTest : SuccessBuildSim<PersistentVolumeClaim, Persist
             limits = QUANTITY_MAP
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<PersistentVolumeClaim, PersistentVolumeClaimV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<PersistentVolumeClaim, PersistentVolumeClaimDslBuilder> {
             scenario {
                 id = "minimum"
-                given(PersistentVolumeClaimV2DslBuilder())
+                given(PersistentVolumeClaimDslBuilder())
                 expected = PersistentVolumeClaim()
             }
 
             scenario {
                 id = "full"
-                given(PersistentVolumeClaimV2DslBuilder()) {
+                given(PersistentVolumeClaimDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }

@@ -7,7 +7,7 @@ import io.violabs.picard.domain.condition.ServiceCondition
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ServiceCIDRTest : SuccessBuildSim<ServiceCIDR, ServiceCIDR.Builder>() {
+class ServiceCIDRTest : SuccessBuildSim<ServiceCIDR, ServiceCIDRDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,16 +17,16 @@ class ServiceCIDRTest : SuccessBuildSim<ServiceCIDR, ServiceCIDR.Builder>() {
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ServiceCIDR, ServiceCIDR.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ServiceCIDR, ServiceCIDRDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ServiceCIDR.Builder())
+                given(ServiceCIDRDslBuilder())
                 expected = ServiceCIDR()
             }
 
             scenario {
                 id = "full"
-                given(ServiceCIDR.Builder()) {
+                given(ServiceCIDRDslBuilder()) {
                     sharedMetadata()
                     spec {
                         cidrs(PLACEHOLDER)
@@ -46,10 +46,10 @@ class ServiceCIDRTest : SuccessBuildSim<ServiceCIDR, ServiceCIDR.Builder>() {
                 }
                 expected = ServiceCIDR(
                     metadata = METADATA,
-                    spec = ServiceCIDR.Spec(
+                    spec = ServiceCIDRSpec(
                         cidrs = listOf(PLACEHOLDER)
                     ),
-                    status = ServiceCIDR.Status(
+                    status = ServiceCIDRStatus(
                         conditions = listOf(
                             ServiceCondition(
                                 status = BooleanType.True,

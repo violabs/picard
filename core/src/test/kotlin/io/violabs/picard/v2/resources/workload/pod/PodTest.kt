@@ -67,7 +67,7 @@ import io.violabs.picard.v2.resources.workload.pod.security.PodSecurityContext
 import io.violabs.picard.v2.resources.workload.pod.security.Sysctl
 import org.junit.jupiter.api.BeforeAll
 
-class PodTest : SuccessBuildSim<Pod, PodV2DslBuilder>() {
+class PodTest : SuccessBuildSim<Pod, PodDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -746,16 +746,16 @@ class PodTest : SuccessBuildSim<Pod, PodV2DslBuilder>() {
             )
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<Pod, PodV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Pod, PodDslBuilder> {
             scenario {
                 id = "minimum"
-                given(PodV2DslBuilder())
+                given(PodDslBuilder())
                 expected = Pod()
             }
 
             scenario {
                 id = "full"
-                given(PodV2DslBuilder()) {
+                given(PodDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }

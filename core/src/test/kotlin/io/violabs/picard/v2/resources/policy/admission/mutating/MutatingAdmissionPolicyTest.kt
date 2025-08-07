@@ -12,7 +12,7 @@ import io.violabs.picard.v2.resources.policy.admission.Variable
 import org.junit.jupiter.api.BeforeAll
 
 class MutatingAdmissionPolicyTest :
-    SuccessBuildSim<MutatingAdmissionPolicy, MutatingAdmissionPolicyV2DslBuilder>() {
+    SuccessBuildSim<MutatingAdmissionPolicy, MutatingAdmissionPolicyDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -47,16 +47,16 @@ class MutatingAdmissionPolicyTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<MutatingAdmissionPolicy, MutatingAdmissionPolicyV2DslBuilder> {
+            possibilities<MutatingAdmissionPolicy, MutatingAdmissionPolicyDslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(MutatingAdmissionPolicyV2DslBuilder())
+                    given(MutatingAdmissionPolicyDslBuilder())
                     expected = MutatingAdmissionPolicy()
                 }
 
                 scenario {
                     id = "full"
-                    given(MutatingAdmissionPolicyV2DslBuilder()) {
+                    given(MutatingAdmissionPolicyDslBuilder()) {
                         metadata {
                             sharedObjectMeta()
                         }

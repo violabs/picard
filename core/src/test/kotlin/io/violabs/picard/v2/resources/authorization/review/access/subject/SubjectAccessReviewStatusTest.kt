@@ -1,11 +1,10 @@
-package io.violabs.picard.domain.k8sResources.authorization.accessReview
-
+package io.violabs.picard.v2.resources.authorization.review.access.subject
 
 import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class SubjectAccessReviewStatusTest : FailureBuildSim<SubjectAccessReview.Status, SubjectAccessReview.Status.Builder>() {
+class SubjectAccessReviewStatusTest : FailureBuildSim<SubjectAccessReviewStatus, SubjectAccessReviewStatusDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,9 +14,9 @@ class SubjectAccessReviewStatusTest : FailureBuildSim<SubjectAccessReview.Status
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<SubjectAccessReview.Status, SubjectAccessReview.Status.Builder> {
+            possibilities<SubjectAccessReviewStatus, SubjectAccessReviewStatusDslBuilder> {
                 requireScenario("allowed") {
-                    given(SubjectAccessReview.Status.Builder())
+                    given(SubjectAccessReviewStatusDslBuilder())
                 }
             }
     }

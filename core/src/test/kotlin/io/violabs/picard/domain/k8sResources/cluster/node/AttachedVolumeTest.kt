@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class AttachedVolumeTest : FailureBuildSim<AttachedVolume, AttachedVolume.Builder>() {
+class AttachedVolumeTest : FailureBuildSim<AttachedVolume, AttachedVolumeDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class AttachedVolumeTest : FailureBuildSim<AttachedVolume, AttachedVolume.Builde
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<AttachedVolume, AttachedVolume.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<AttachedVolume, AttachedVolumeDslBuilder> {
             requireScenario("devicePath") {
-                given(AttachedVolume.Builder())
+                given(AttachedVolumeDslBuilder())
             }
 
             requireScenario("name") {
-                given(AttachedVolume.Builder()) {
+                given(AttachedVolumeDslBuilder()) {
                     devicePath = PLACEHOLDER
                 }
             }

@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class NetworkPolicySpecTest : FailureBuildSim<NetworkPolicy.Spec, NetworkPolicy.Spec.Builder>() {
+class NetworkPolicySpecTest : FailureBuildSim<NetworkPolicySpec, NetworkPolicySpecDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class NetworkPolicySpecTest : FailureBuildSim<NetworkPolicy.Spec, NetworkPolicy.
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<NetworkPolicy.Spec, NetworkPolicy.Spec.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<NetworkPolicySpec, NetworkPolicySpecDslBuilder> {
             requireScenario("podSelector") {
-                given(NetworkPolicy.Spec.Builder())
+                given(NetworkPolicySpecDslBuilder())
             }
         }
     }

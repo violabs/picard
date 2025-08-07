@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ExternalMetricSourceTest : FailureBuildSim<ExternalMetricSource, ExternalMetricSource.Builder>() {
+class ExternalMetricSourceTest : FailureBuildSim<ExternalMetricSource, ExternalMetricSourceDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class ExternalMetricSourceTest : FailureBuildSim<ExternalMetricSource, ExternalM
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<ExternalMetricSource, ExternalMetricSource.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ExternalMetricSource, ExternalMetricSourceDslBuilder> {
             requireScenario("metric") {
-                given(ExternalMetricSource.Builder())
+                given(ExternalMetricSourceDslBuilder())
             }
 
             requireScenario("target") {
-                given(ExternalMetricSource.Builder()) {
+                given(ExternalMetricSourceDslBuilder()) {
                     metric {
                         name = PLACEHOLDER
                     }

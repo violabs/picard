@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class VolumeDeviceTest : FailureBuildSim<VolumeDevice, VolumeDevice.Builder>() {
+class VolumeDeviceTest : FailureBuildSim<VolumeDevice, VolumeDeviceDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,16 +16,16 @@ class VolumeDeviceTest : FailureBuildSim<VolumeDevice, VolumeDevice.Builder>() {
     }
 }
 
-private val FAILURE_POSSIBILITIES = possibilities<VolumeDevice, VolumeDevice.Builder> {
+private val FAILURE_POSSIBILITIES = possibilities<VolumeDevice, VolumeDeviceDslBuilder> {
     scenario {
         id = "missing devicePath"
-        given(VolumeDevice.Builder())
+        given(VolumeDeviceDslBuilder())
         exceptionMessage = withTemplate("devicePath")
     }
 
 //    scenario {
 //        id = "missing name"
-//        given(VolumeDevice.Builder()) {
+//        given(VolumeDeviceDslBuilder()) {
 //            devicePath = "/test"
 //        }
 //        exceptionMessage = withTemplate("name")

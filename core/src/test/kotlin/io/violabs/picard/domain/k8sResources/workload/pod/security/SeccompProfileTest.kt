@@ -4,7 +4,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class SeccompProfileTest : FailureBuildSim<SeccompProfile, SeccompProfile.Builder>() {
+class SeccompProfileTest : FailureBuildSim<SeccompProfile, SeccompProfileDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,10 +17,10 @@ class SeccompProfileTest : FailureBuildSim<SeccompProfile, SeccompProfile.Builde
     }
 }
 
-private val FAILURE_POSSIBILITIES = possibilities<SeccompProfile, SeccompProfile.Builder> {
+private val FAILURE_POSSIBILITIES = possibilities<SeccompProfile, SeccompProfileDslBuilder> {
     scenario {
         id = "missing type"
-        given(SeccompProfile.Builder())
+        given(SeccompProfileDslBuilder())
         exceptionMessage = withTemplate("type")
     }
 }

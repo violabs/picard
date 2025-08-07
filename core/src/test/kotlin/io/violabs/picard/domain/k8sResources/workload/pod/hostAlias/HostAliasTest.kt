@@ -4,7 +4,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class HostAliasTest : FailureBuildSim<HostAlias, HostAlias.Builder>() {
+class HostAliasTest : FailureBuildSim<HostAlias, HostAliasDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -13,9 +13,9 @@ class HostAliasTest : FailureBuildSim<HostAlias, HostAlias.Builder>() {
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<HostAlias, HostAlias.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<HostAlias, HostAliasDslBuilder> {
             requireScenario("ip") {
-                given(HostAlias.Builder())
+                given(HostAliasDslBuilder())
             }
         }
     }

@@ -7,7 +7,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class ScopedResourceSelectorRequirementTest :
-    FailureBuildSim<ScopedResourceSelectorRequirement, ScopedResourceSelectorRequirement.Builder>() {
+    FailureBuildSim<ScopedResourceSelectorRequirement, ScopedResourceSelectorRequirementDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,13 +17,13 @@ class ScopedResourceSelectorRequirementTest :
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<ScopedResourceSelectorRequirement, ScopedResourceSelectorRequirement.Builder> {
+            possibilities<ScopedResourceSelectorRequirement, ScopedResourceSelectorRequirementDslBuilder> {
                 requireScenario("operator") {
-                    given(ScopedResourceSelectorRequirement.Builder())
+                    given(ScopedResourceSelectorRequirementDslBuilder())
                 }
 
                 requireScenario("scopeName") {
-                    given(ScopedResourceSelectorRequirement.Builder()) {
+                    given(ScopedResourceSelectorRequirementDslBuilder()) {
                         operator = Operator.In
                     }
                 }

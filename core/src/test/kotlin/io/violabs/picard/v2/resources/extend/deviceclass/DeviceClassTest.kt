@@ -10,7 +10,7 @@ import io.violabs.picard.v2.resources.extend.deviceclass.selector.CelDeviceSelec
 import io.violabs.picard.v2.resources.extend.deviceclass.selector.DeviceSelector
 import org.junit.jupiter.api.BeforeAll
 
-class DeviceClassTest : FullBuildSim<DeviceClass, DeviceClassV2DslBuilder>() {
+class DeviceClassTest : FullBuildSim<DeviceClass, DeviceClassDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -20,10 +20,10 @@ class DeviceClassTest : FullBuildSim<DeviceClass, DeviceClassV2DslBuilder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<DeviceClass, DeviceClassV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<DeviceClass, DeviceClassDslBuilder> {
             scenario {
                 id = "minimum"
-                given(DeviceClassV2DslBuilder()) {
+                given(DeviceClassDslBuilder()) {
                     spec {}
                 }
                 expected = DeviceClass(
@@ -33,7 +33,7 @@ class DeviceClassTest : FullBuildSim<DeviceClass, DeviceClassV2DslBuilder>() {
 
             scenario {
                 id = "full"
-                given(DeviceClassV2DslBuilder()) {
+                given(DeviceClassDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -78,9 +78,9 @@ class DeviceClassTest : FullBuildSim<DeviceClass, DeviceClassV2DslBuilder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<DeviceClass, DeviceClassV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<DeviceClass, DeviceClassDslBuilder> {
             requireScenario("spec") {
-                given(DeviceClassV2DslBuilder())
+                given(DeviceClassDslBuilder())
             }
         }
     }

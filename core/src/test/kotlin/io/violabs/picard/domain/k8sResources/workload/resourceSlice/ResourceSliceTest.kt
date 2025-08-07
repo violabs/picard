@@ -8,7 +8,7 @@ import io.violabs.picard.domain.k8sResources.workload.DeviceBasic
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ResourceSliceTest : FullBuildSim<ResourceSlice, ResourceSlice.Builder>() {
+class ResourceSliceTest : FullBuildSim<ResourceSlice, ResourceSliceDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -33,10 +33,10 @@ class ResourceSliceTest : FullBuildSim<ResourceSlice, ResourceSlice.Builder>() {
             )
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ResourceSlice, ResourceSlice.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ResourceSlice, ResourceSliceDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ResourceSlice.Builder()) {
+                given(ResourceSliceDslBuilder()) {
                     spec {
                         driver = PLACEHOLDER
                         pool {
@@ -47,7 +47,7 @@ class ResourceSliceTest : FullBuildSim<ResourceSlice, ResourceSlice.Builder>() {
                     }
                 }
                 expected = ResourceSlice(
-                    spec = ResourceSlice.Spec(
+                    spec = ResourceSliceSpec(
                         driver = PLACEHOLDER,
                         pool = RESOURCE_POOL
                     )
@@ -56,7 +56,7 @@ class ResourceSliceTest : FullBuildSim<ResourceSlice, ResourceSlice.Builder>() {
 
             scenario {
                 id = "full"
-                given(ResourceSlice.Builder()) {
+                given(ResourceSliceDslBuilder()) {
                     sharedMetadata()
                     spec {
                         driver = PLACEHOLDER
@@ -94,7 +94,7 @@ class ResourceSliceTest : FullBuildSim<ResourceSlice, ResourceSlice.Builder>() {
                 }
                 expected = ResourceSlice(
                     metadata = METADATA,
-                    spec = ResourceSlice.Spec(
+                    spec = ResourceSliceSpec(
                         driver = PLACEHOLDER,
                         pool = RESOURCE_POOL,
                         allNodes = true,
@@ -106,9 +106,9 @@ class ResourceSliceTest : FullBuildSim<ResourceSlice, ResourceSlice.Builder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<ResourceSlice, ResourceSlice.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ResourceSlice, ResourceSliceDslBuilder> {
             requireScenario("spec") {
-                given(ResourceSlice.Builder())
+                given(ResourceSliceDslBuilder())
             }
 
         }

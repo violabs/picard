@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class PriorityLevelConfigurationSpecTest :
-    FailureBuildSim<PriorityLevelConfiguration.Spec, PriorityLevelConfiguration.Spec.Builder>() {
+    FailureBuildSim<PriorityLevelConfigurationSpec, PriorityLevelConfigurationSpecDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,9 +16,9 @@ class PriorityLevelConfigurationSpecTest :
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<PriorityLevelConfiguration.Spec, PriorityLevelConfiguration.Spec.Builder> {
+            possibilities<PriorityLevelConfigurationSpec, PriorityLevelConfigurationSpecDslBuilder> {
                 requireScenario("type") {
-                    given(PriorityLevelConfiguration.Spec.Builder())
+                    given(PriorityLevelConfigurationSpecDslBuilder())
                 }
             }
     }

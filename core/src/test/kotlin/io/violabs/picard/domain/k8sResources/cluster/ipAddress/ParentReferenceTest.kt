@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ParentReferenceTest : FailureBuildSim<ParentReference, ParentReference.Builder>() {
+class ParentReferenceTest : FailureBuildSim<ParentReference, ParentReferenceDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class ParentReferenceTest : FailureBuildSim<ParentReference, ParentReference.Bui
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<ParentReference, ParentReference.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ParentReference, ParentReferenceDslBuilder> {
             requireScenario("name") {
-                given(ParentReference.Builder())
+                given(ParentReferenceDslBuilder())
             }
 
             requireScenario("resource") {
-                given(ParentReference.Builder()) {
+                given(ParentReferenceDslBuilder()) {
                     name = PLACEHOLDER
                 }
             }

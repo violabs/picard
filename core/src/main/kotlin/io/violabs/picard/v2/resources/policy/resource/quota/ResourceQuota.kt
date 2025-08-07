@@ -6,6 +6,7 @@ import io.violabs.picard.common.AppConstants
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.ConfigResource
+import io.violabs.picard.domain.manifest.PolicyResource
 import io.violabs.picard.v2.common.ObjectMeta
 
 /**
@@ -39,6 +40,6 @@ data class ResourceQuota(
      * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
      */
     val status: ResourceQuotaStatus? = null
-) : ConfigResource<ResourceQuota.Version, ObjectMeta> {
+) : PolicyResource<ResourceQuota.Version, ObjectMeta> {
     interface Version : APIVersion
 }

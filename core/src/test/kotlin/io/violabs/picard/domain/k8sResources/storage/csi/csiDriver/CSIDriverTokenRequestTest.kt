@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class CSIDriverTokenRequestTest : FailureBuildSim<CSIDriverTokenRequest, CSIDriverTokenRequest.Builder>() {
+class CSIDriverTokenRequestTest : FailureBuildSim<CSIDriverTokenRequest, CSIDriverTokenRequestDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class CSIDriverTokenRequestTest : FailureBuildSim<CSIDriverTokenRequest, CSIDriv
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<CSIDriverTokenRequest, CSIDriverTokenRequest.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<CSIDriverTokenRequest, CSIDriverTokenRequestDslBuilder> {
             requireScenario("audience") {
-                given(CSIDriverTokenRequest.Builder())
+                given(CSIDriverTokenRequestDslBuilder())
             }
         }
     }

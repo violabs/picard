@@ -8,7 +8,7 @@ import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.workload.batch.job.JobTemplateSpec
 import org.junit.jupiter.api.BeforeAll
 
-class CronJobTest : SuccessBuildSim<CronJob, CronJobV2DslBuilder>() {
+class CronJobTest : SuccessBuildSim<CronJob, CronJobDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,13 +17,13 @@ class CronJobTest : SuccessBuildSim<CronJob, CronJobV2DslBuilder>() {
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<CronJob, CronJobV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<CronJob, CronJobDslBuilder> {
             scenario {
                 id = "minimum"
-                given(CronJobV2DslBuilder()) {
+                given(CronJobDslBuilder()) {
                     spec {
                         jobTemplate {
-                            spec = Job.Spec()
+                            spec = JobSpec()
                         }
                         schedule = PLACEHOLDER
                     }
@@ -31,7 +31,7 @@ class CronJobTest : SuccessBuildSim<CronJob, CronJobV2DslBuilder>() {
                 expected = CronJob(
                     spec = CronJobSpec(
                         jobTemplate = JobTemplateSpec(
-                            spec = Job.Spec()
+                            spec = JobSpec()
                         ),
                         schedule = PLACEHOLDER
                     )
@@ -40,14 +40,14 @@ class CronJobTest : SuccessBuildSim<CronJob, CronJobV2DslBuilder>() {
 
             scenario {
                 id = "full"
-                given(CronJobV2DslBuilder()) {
+                given(CronJobDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
                     spec {
                         jobTemplate {
                             metadata = METADATA
-                            spec = Job.Spec()
+                            spec = JobSpec()
                         }
                         schedule = PLACEHOLDER
                         timeZone = PLACEHOLDER
@@ -72,7 +72,7 @@ class CronJobTest : SuccessBuildSim<CronJob, CronJobV2DslBuilder>() {
                     spec = CronJobSpec(
                         jobTemplate = JobTemplateSpec(
                             metadata = METADATA,
-                            spec = Job.Spec()
+                            spec = JobSpec()
                         ),
                         schedule = PLACEHOLDER,
                         timeZone = PLACEHOLDER,

@@ -8,7 +8,7 @@ import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class TokenRequestTest : SuccessBuildSim<TokenRequest, TokenRequestV2DslBuilder>() {
+class TokenRequestTest : SuccessBuildSim<TokenRequest, TokenRequestDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -18,10 +18,10 @@ class TokenRequestTest : SuccessBuildSim<TokenRequest, TokenRequestV2DslBuilder>
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<TokenRequest, TokenRequestV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<TokenRequest, TokenRequestDslBuilder> {
             scenario {
                 id = "minimum"
-                given(TokenRequestV2DslBuilder()) {
+                given(TokenRequestDslBuilder()) {
                     spec {
                         audiences(PLACEHOLDER)
                     }
@@ -33,7 +33,7 @@ class TokenRequestTest : SuccessBuildSim<TokenRequest, TokenRequestV2DslBuilder>
 
             scenario {
                 id = "full"
-                given(TokenRequestV2DslBuilder()) {
+                given(TokenRequestDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }

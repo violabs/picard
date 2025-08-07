@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class CustomResourceSubresourceScaleTest :
-    FailureBuildSim<CustomResourceSubresourceScale, CustomResourceSubresourceScale.Builder>() {
+    FailureBuildSim<CustomResourceSubresourceScale, CustomResourceSubresourceScaleDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,13 +16,13 @@ class CustomResourceSubresourceScaleTest :
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<CustomResourceSubresourceScale, CustomResourceSubresourceScale.Builder> {
+            possibilities<CustomResourceSubresourceScale, CustomResourceSubresourceScaleDslBuilder> {
                 requireScenario("specReplicasPath") {
-                    given(CustomResourceSubresourceScale.Builder())
+                    given(CustomResourceSubresourceScaleDslBuilder())
                 }
 
                 requireScenario("statusReplicasPath") {
-                    given(CustomResourceSubresourceScale.Builder()) {
+                    given(CustomResourceSubresourceScaleDslBuilder()) {
                         specReplicasPath = PLACEHOLDER
                     }
                 }

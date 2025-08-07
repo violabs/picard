@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ReadinessGateTest : FailureBuildSim<ReadinessGate, ReadinessGate.Builder>() {
+class ReadinessGateTest : FailureBuildSim<ReadinessGate, ReadinessGateDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,8 +16,8 @@ class ReadinessGateTest : FailureBuildSim<ReadinessGate, ReadinessGate.Builder>(
     }
 }
 
-private val FAILURE_POSSIBILITIES = possibilities<ReadinessGate, ReadinessGate.Builder> {
+private val FAILURE_POSSIBILITIES = possibilities<ReadinessGate, ReadinessGateDslBuilder> {
     requireScenario("conditionType") {
-        given(ReadinessGate.Builder())
+        given(ReadinessGateDslBuilder())
     }
 }

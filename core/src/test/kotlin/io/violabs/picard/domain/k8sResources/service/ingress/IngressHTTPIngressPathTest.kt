@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class IngressHTTPIngressPathTest : FailureBuildSim<IngressHTTPIngressPath, IngressHTTPIngressPath.Builder>() {
+class IngressHTTPIngressPathTest : FailureBuildSim<IngressHTTPIngressPath, IngressHTTPIngressPathDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class IngressHTTPIngressPathTest : FailureBuildSim<IngressHTTPIngressPath, Ingre
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<IngressHTTPIngressPath, IngressHTTPIngressPath.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<IngressHTTPIngressPath, IngressHTTPIngressPathDslBuilder> {
             requireScenario("backend") {
-                given(IngressHTTPIngressPath.Builder())
+                given(IngressHTTPIngressPathDslBuilder())
             }
 
             requireScenario("pathType") {
-                given(IngressHTTPIngressPath.Builder()) {
+                given(IngressHTTPIngressPathDslBuilder()) {
                     backend {
 
                     }

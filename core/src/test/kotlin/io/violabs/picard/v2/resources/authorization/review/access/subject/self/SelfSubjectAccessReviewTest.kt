@@ -8,7 +8,7 @@ import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.authorization.review.access.subject.AccessReviewTestConfig
 import org.junit.jupiter.api.BeforeAll
 
-class SelfSubjectAccessReviewTest : FullBuildSim<SelfSubjectAccessReview, SelfSubjectAccessReviewV2DslBuilder>() {
+class SelfSubjectAccessReviewTest : FullBuildSim<SelfSubjectAccessReview, SelfSubjectAccessReviewDslBuilder>() {
     companion object : AccessReviewTestConfig {
         @JvmStatic
         @BeforeAll
@@ -18,10 +18,10 @@ class SelfSubjectAccessReviewTest : FullBuildSim<SelfSubjectAccessReview, SelfSu
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<SelfSubjectAccessReview, SelfSubjectAccessReviewV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<SelfSubjectAccessReview, SelfSubjectAccessReviewDslBuilder> {
             scenario {
                 id = "minimum"
-                given(SelfSubjectAccessReviewV2DslBuilder()) {
+                given(SelfSubjectAccessReviewDslBuilder()) {
                     spec { }
                 }
                 expected = SelfSubjectAccessReview(
@@ -31,7 +31,7 @@ class SelfSubjectAccessReviewTest : FullBuildSim<SelfSubjectAccessReview, SelfSu
 
             scenario {
                 id = "full"
-                given(SelfSubjectAccessReviewV2DslBuilder()) {
+                given(SelfSubjectAccessReviewDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -55,9 +55,9 @@ class SelfSubjectAccessReviewTest : FullBuildSim<SelfSubjectAccessReview, SelfSu
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<SelfSubjectAccessReview, SelfSubjectAccessReviewV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<SelfSubjectAccessReview, SelfSubjectAccessReviewDslBuilder> {
             requireScenario("spec") {
-                given(SelfSubjectAccessReviewV2DslBuilder())
+                given(SelfSubjectAccessReviewDslBuilder())
             }
         }
     }

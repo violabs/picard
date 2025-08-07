@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class WebhookConversionTest : FailureBuildSim<WebhookConversion, WebhookConversion.Builder>() {
+class WebhookConversionTest : FailureBuildSim<WebhookConversion, WebhookConversionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class WebhookConversionTest : FailureBuildSim<WebhookConversion, WebhookConversi
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<WebhookConversion, WebhookConversion.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<WebhookConversion, WebhookConversionDslBuilder> {
             requireNotEmptyScenario("conversionReviewVersions") {
-                given(WebhookConversion.Builder())
+                given(WebhookConversionDslBuilder())
             }
         }
     }

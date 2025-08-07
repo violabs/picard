@@ -6,7 +6,7 @@ import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PodListTest : FullBuildSim<PodList, PodList.Builder>() {
+class PodListTest : FullBuildSim<PodList, PodListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,10 +17,10 @@ class PodListTest : FullBuildSim<PodList, PodList.Builder>() {
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<PodList, PodList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<PodList, PodListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(PodList.Builder()) {
+                given(PodListDslBuilder()) {
                     items {
                         podItem { }
                     }
@@ -32,7 +32,7 @@ class PodListTest : FullBuildSim<PodList, PodList.Builder>() {
 
             scenario {
                 id = "metadata"
-                given(PodList.Builder()) {
+                given(PodListDslBuilder()) {
                     items {
                         podItem { }
                     }
@@ -54,13 +54,13 @@ class PodListTest : FullBuildSim<PodList, PodList.Builder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<PodList, PodList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<PodList, PodListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(PodList.Builder())
+                given(PodListDslBuilder())
             }
 
             requireNotEmptyScenario("items") {
-                given(PodList.Builder()) {
+                given(PodListDslBuilder()) {
                     items {}
                 }
             }

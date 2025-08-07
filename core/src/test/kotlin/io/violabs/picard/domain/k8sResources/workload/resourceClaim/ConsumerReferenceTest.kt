@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ConsumerReferenceTest : FailureBuildSim<ConsumerReference, ConsumerReference.Builder>() {
+class ConsumerReferenceTest : FailureBuildSim<ConsumerReference, ConsumerReferenceDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,19 +14,19 @@ class ConsumerReferenceTest : FailureBuildSim<ConsumerReference, ConsumerReferen
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<ConsumerReference, ConsumerReference.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ConsumerReference, ConsumerReferenceDslBuilder> {
             requireScenario("name") {
-                given(ConsumerReference.Builder())
+                given(ConsumerReferenceDslBuilder())
             }
 
             requireScenario("resource") {
-                given(ConsumerReference.Builder()) {
+                given(ConsumerReferenceDslBuilder()) {
                     name = PLACEHOLDER
                 }
             }
 
             requireScenario("uid") {
-                given(ConsumerReference.Builder()) {
+                given(ConsumerReferenceDslBuilder()) {
                     name = PLACEHOLDER
                     resource = PLACEHOLDER
                 }

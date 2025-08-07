@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class StorageVersionMigrationListTest :
-    FullBuildSim<StorageVersionMigrationList, StorageVersionMigrationList.Builder>() {
+    FullBuildSim<StorageVersionMigrationList, StorageVersionMigrationListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,10 +17,10 @@ class StorageVersionMigrationListTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<StorageVersionMigrationList, StorageVersionMigrationList.Builder> {
+            possibilities<StorageVersionMigrationList, StorageVersionMigrationListDslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(StorageVersionMigrationList.Builder()) {
+                    given(StorageVersionMigrationListDslBuilder()) {
                         items {
                             storageVersionMigrationItem {  }
                         }
@@ -32,9 +32,9 @@ class StorageVersionMigrationListTest :
             }
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<StorageVersionMigrationList, StorageVersionMigrationList.Builder> {
+            possibilities<StorageVersionMigrationList, StorageVersionMigrationListDslBuilder> {
                 requireNotEmptyScenario("items") {
-                    given(StorageVersionMigrationList.Builder())
+                    given(StorageVersionMigrationListDslBuilder())
                 }
             }
     }

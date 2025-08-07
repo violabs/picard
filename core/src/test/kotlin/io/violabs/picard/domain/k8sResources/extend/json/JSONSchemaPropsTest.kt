@@ -5,7 +5,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class JSONSchemaPropsTest : SuccessBuildSim<JSONSchemaProps, JSONSchemaProps.Builder>() {
+class JSONSchemaPropsTest : SuccessBuildSim<JSONSchemaProps, JSONSchemaPropsDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -24,15 +24,15 @@ class JSONSchemaPropsTest : SuccessBuildSim<JSONSchemaProps, JSONSchemaProps.Bui
         )
         private val DEFAULT_JSON = JSON(PLACEHOLDER)
 
-        private fun JSONSchemaProps.Builder.nestedProp() {
+        private fun JSONSchemaPropsDslBuilder.nestedProp() {
             ref = PLACEHOLDER
             schema = PLACEHOLDER
         }
 
-        private val SUCCESS_POSSIBILITIES = possibilities<JSONSchemaProps, JSONSchemaProps.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<JSONSchemaProps, JSONSchemaPropsDslBuilder> {
             scenario {
                 id = "full"
-                given(JSONSchemaProps.Builder()) {
+                given(JSONSchemaPropsDslBuilder()) {
                     ref = PLACEHOLDER
                     schema = PLACEHOLDER
                     additionalItems {

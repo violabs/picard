@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class ValidatingAdmissionPolicyListTest :
-    FullBuildSim<ValidatingAdmissionPolicyList, ValidatingAdmissionPolicyList.Builder>() {
+    FullBuildSim<ValidatingAdmissionPolicyList, ValidatingAdmissionPolicyListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,10 +17,10 @@ class ValidatingAdmissionPolicyListTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<ValidatingAdmissionPolicyList, ValidatingAdmissionPolicyList.Builder> {
+            possibilities<ValidatingAdmissionPolicyList, ValidatingAdmissionPolicyListDslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(ValidatingAdmissionPolicyList.Builder()) {
+                    given(ValidatingAdmissionPolicyListDslBuilder()) {
                         items { validatingAdmissionPolicyItem {  }}
                     }
                     expected = ValidatingAdmissionPolicyList(
@@ -30,9 +30,9 @@ class ValidatingAdmissionPolicyListTest :
             }
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<ValidatingAdmissionPolicyList, ValidatingAdmissionPolicyList.Builder> {
+            possibilities<ValidatingAdmissionPolicyList, ValidatingAdmissionPolicyListDslBuilder> {
                 requireNotEmptyScenario("items") {
-                    given(ValidatingAdmissionPolicyList.Builder())
+                    given(ValidatingAdmissionPolicyListDslBuilder())
                 }
             }
     }

@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ReplicationControllerListTest : FullBuildSim<ReplicationControllerList, ReplicationControllerList.Builder>() {
+class ReplicationControllerListTest : FullBuildSim<ReplicationControllerList, ReplicationControllerListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,10 +16,10 @@ class ReplicationControllerListTest : FullBuildSim<ReplicationControllerList, Re
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<ReplicationControllerList, ReplicationControllerList.Builder> {
+            possibilities<ReplicationControllerList, ReplicationControllerListDslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(ReplicationControllerList.Builder()) {
+                    given(ReplicationControllerListDslBuilder()) {
                         items {
                             replicationControllerItem { }
                         }
@@ -31,9 +31,9 @@ class ReplicationControllerListTest : FullBuildSim<ReplicationControllerList, Re
             }
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<ReplicationControllerList, ReplicationControllerList.Builder> {
+            possibilities<ReplicationControllerList, ReplicationControllerListDslBuilder> {
                 requireNotEmptyScenario("items") {
-                    given(ReplicationControllerList.Builder())
+                    given(ReplicationControllerListDslBuilder())
                 }
             }
     }

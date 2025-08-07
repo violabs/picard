@@ -6,7 +6,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class IngressClassTest : SuccessBuildSim<IngressClass, IngressClassV2DslBuilder>() {
+class IngressClassTest : SuccessBuildSim<IngressClass, IngressClassDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,16 +15,16 @@ class IngressClassTest : SuccessBuildSim<IngressClass, IngressClassV2DslBuilder>
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<IngressClass, IngressClassV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<IngressClass, IngressClassDslBuilder> {
             scenario {
                 id = "minimum"
-                given(IngressClassV2DslBuilder())
+                given(IngressClassDslBuilder())
                 expected = IngressClass()
             }
 
             scenario {
                 id = "full"
-                given(IngressClassV2DslBuilder()) {
+                given(IngressClassDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }

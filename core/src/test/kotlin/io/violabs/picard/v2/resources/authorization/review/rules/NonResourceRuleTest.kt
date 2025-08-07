@@ -1,11 +1,10 @@
-package io.violabs.picard.domain.k8sResources.authorization
-
+package io.violabs.picard.v2.resources.authorization.review.rules
 
 import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class NonResourceRuleTest : FailureBuildSim<NonResourceRule, NonResourceRule.Builder>() {
+class NonResourceRuleTest : FailureBuildSim<NonResourceRule, NonResourceRuleDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +13,9 @@ class NonResourceRuleTest : FailureBuildSim<NonResourceRule, NonResourceRule.Bui
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<NonResourceRule, NonResourceRule.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<NonResourceRule, NonResourceRuleDslBuilder> {
             requireNotEmptyScenario("verbs") {
-                given(NonResourceRule.Builder())
+                given(NonResourceRuleDslBuilder())
             }
         }
     }

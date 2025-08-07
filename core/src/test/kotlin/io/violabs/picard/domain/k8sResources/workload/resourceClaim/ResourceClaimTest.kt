@@ -6,7 +6,7 @@ import io.violabs.picard.domain.DeviceSelector
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ResourceClaimTest : FullBuildSim<ResourceClaim, ResourceClaim.Builder>() {
+class ResourceClaimTest : FullBuildSim<ResourceClaim, ResourceClaimDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -60,20 +60,20 @@ class ResourceClaimTest : FullBuildSim<ResourceClaim, ResourceClaim.Builder>() {
             nodeSelector = NODE_SELECTOR
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ResourceClaim, ResourceClaim.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ResourceClaim, ResourceClaimDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ResourceClaim.Builder()) {
+                given(ResourceClaimDslBuilder()) {
                     spec {}
                 }
                 expected = ResourceClaim(
-                    spec = ResourceClaim.Spec()
+                    spec = ResourceClaimSpec()
                 )
             }
 
             scenario {
                 id = "full"
-                given(ResourceClaim.Builder()) {
+                given(ResourceClaimDslBuilder()) {
                     sharedMetadata()
                     spec {
                         controller = PLACEHOLDER
@@ -153,7 +153,7 @@ class ResourceClaimTest : FullBuildSim<ResourceClaim, ResourceClaim.Builder>() {
                 }
                 expected = ResourceClaim(
                     metadata = METADATA,
-                    spec = ResourceClaim.Spec(
+                    spec = ResourceClaimSpec(
                         controller = PLACEHOLDER,
                         devices = DeviceClaim(
                             config = DEVICE_CLAIM_CONFIGURATION,
@@ -161,7 +161,7 @@ class ResourceClaimTest : FullBuildSim<ResourceClaim, ResourceClaim.Builder>() {
                             requests = listOf(DEVICE_REQUEST)
                         )
                     ),
-                    status = ResourceClaim.Status(
+                    status = ResourceClaimStatus(
                         allocation = RESOURCE_CLAIM_ALLOCATION_RESULT,
                         deallocationRequested = true,
                         reservedFor = listOf(
@@ -177,9 +177,9 @@ class ResourceClaimTest : FullBuildSim<ResourceClaim, ResourceClaim.Builder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<ResourceClaim, ResourceClaim.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ResourceClaim, ResourceClaimDslBuilder> {
             requireScenario("spec") {
-                given(ResourceClaim.Builder())
+                given(ResourceClaimDslBuilder())
             }
         }
     }

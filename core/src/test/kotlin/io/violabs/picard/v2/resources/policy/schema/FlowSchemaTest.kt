@@ -10,7 +10,7 @@ import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchemaCondition
 import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchemaSpec
 import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchemaStatus
 import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchema
-import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchemaV2DslBuilder
+import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchemaDslBuilder
 import io.violabs.picard.v2.resources.policy.schema.flow.PriorityLevelConfigurationReference
 import io.violabs.picard.v2.resources.policy.schema.rule.NonResourcePolicyRule
 import io.violabs.picard.v2.resources.policy.schema.rule.ResourcePolicyRule
@@ -21,7 +21,7 @@ import io.violabs.picard.v2.resources.policy.schema.subject.Subject
 import io.violabs.picard.v2.resources.policy.schema.subject.UserSubject
 import org.junit.jupiter.api.BeforeAll
 
-class FlowSchemaTest : SuccessBuildSim<FlowSchema, FlowSchemaV2DslBuilder>() {
+class FlowSchemaTest : SuccessBuildSim<FlowSchema, FlowSchemaDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -59,16 +59,16 @@ class FlowSchemaTest : SuccessBuildSim<FlowSchema, FlowSchemaV2DslBuilder>() {
             resourceRules = listOf(RESOURCE_RULE)
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<FlowSchema, FlowSchemaV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<FlowSchema, FlowSchemaDslBuilder> {
             scenario {
                 id = "minimum"
-                given(FlowSchemaV2DslBuilder())
+                given(FlowSchemaDslBuilder())
                 expected = FlowSchema()
             }
 
             scenario {
                 id = "full"
-                given(FlowSchemaV2DslBuilder()) {
+                given(FlowSchemaDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -115,7 +115,7 @@ class FlowSchemaTest : SuccessBuildSim<FlowSchema, FlowSchemaV2DslBuilder>() {
                         conditions {
                             flowSchemaCondition {
                                 type = PLACEHOLDER
-                                status = FlowSchemaCondition.Status.True
+                                status = FlowSchemaConditionStatus.True
                                 lastTransitionTime = NOW
                                 reason = PLACEHOLDER
                                 message = PLACEHOLDER
@@ -138,7 +138,7 @@ class FlowSchemaTest : SuccessBuildSim<FlowSchema, FlowSchemaV2DslBuilder>() {
                         conditions = listOf(
                             FlowSchemaCondition(
                                 type = PLACEHOLDER,
-                                status = FlowSchemaCondition.Status.True,
+                                status = FlowSchemaConditionStatus.True,
                                 lastTransitionTime = NOW,
                                 reason = PLACEHOLDER,
                                 message = PLACEHOLDER

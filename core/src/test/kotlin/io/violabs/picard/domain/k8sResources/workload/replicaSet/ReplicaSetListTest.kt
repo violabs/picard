@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ReplicaSetListTest : FullBuildSim<ReplicaSetList, ReplicaSetList.Builder>() {
+class ReplicaSetListTest : FullBuildSim<ReplicaSetList, ReplicaSetListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class ReplicaSetListTest : FullBuildSim<ReplicaSetList, ReplicaSetList.Builder>(
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ReplicaSetList, ReplicaSetList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ReplicaSetList, ReplicaSetListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ReplicaSetList.Builder()) {
+                given(ReplicaSetListDslBuilder()) {
                     items {
                         replicaSetItem { }
                     }
@@ -29,9 +29,9 @@ class ReplicaSetListTest : FullBuildSim<ReplicaSetList, ReplicaSetList.Builder>(
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<ReplicaSetList, ReplicaSetList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ReplicaSetList, ReplicaSetListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(ReplicaSetList.Builder())
+                given(ReplicaSetListDslBuilder())
             }
         }
     }

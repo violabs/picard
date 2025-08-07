@@ -7,7 +7,7 @@ import io.violabs.picard.domain.k8sResources.workload.resourceClaim.ResourceClai
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ResourceClaimTemplateTest : FullBuildSim<ResourceClaimTemplate, ResourceClaimTemplate.Builder>() {
+class ResourceClaimTemplateTest : FullBuildSim<ResourceClaimTemplate, ResourceClaimTemplateDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,24 +17,24 @@ class ResourceClaimTemplateTest : FullBuildSim<ResourceClaimTemplate, ResourceCl
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ResourceClaimTemplate, ResourceClaimTemplate.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ResourceClaimTemplate, ResourceClaimTemplateDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ResourceClaimTemplate.Builder()) {
+                given(ResourceClaimTemplateDslBuilder()) {
                     spec {
                         resourceClaimSpec {}
                     }
                 }
                 expected = ResourceClaimTemplate(
-                    spec = ResourceClaimTemplate.Spec(
-                        spec = ResourceClaim.Spec()
+                    spec = ResourceClaimTemplateSpec(
+                        spec = ResourceClaimSpec()
                     )
                 )
             }
 
             scenario {
                 id = "full level 1"
-                given(ResourceClaimTemplate.Builder()) {
+                given(ResourceClaimTemplateDslBuilder()) {
                     sharedMetadata()
                     spec {
                         resourceClaimSpec {}
@@ -45,17 +45,17 @@ class ResourceClaimTemplateTest : FullBuildSim<ResourceClaimTemplate, ResourceCl
                 }
                 expected = ResourceClaimTemplate(
                     metadata = METADATA,
-                    spec = ResourceClaimTemplate.Spec(
-                        spec = ResourceClaim.Spec(),
+                    spec = ResourceClaimTemplateSpec(
+                        spec = ResourceClaimSpec(),
                         metadata = ObjectMetadata()
                     )
                 )
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<ResourceClaimTemplate, ResourceClaimTemplate.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ResourceClaimTemplate, ResourceClaimTemplateDslBuilder> {
             requireScenario("spec") {
-                given(ResourceClaimTemplate.Builder())
+                given(ResourceClaimTemplateDslBuilder())
             }
         }
     }

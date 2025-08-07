@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class CSINodeSpecTest : FailureBuildSim<CSINode.Spec, CSINode.Spec.Builder>() {
+class CSINodeSpecTest : FailureBuildSim<CSINodeSpec, CSINodeSpecDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class CSINodeSpecTest : FailureBuildSim<CSINode.Spec, CSINode.Spec.Builder>() {
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<CSINode.Spec, CSINode.Spec.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<CSINodeSpec, CSINodeSpecDslBuilder> {
             requireNotEmptyScenario("drivers") {
-                given(CSINode.Spec.Builder())
+                given(CSINodeSpecDslBuilder())
             }
         }
     }

@@ -8,7 +8,7 @@ import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class DeploymentTest : SuccessBuildSim<Deployment, Deployment.Builder>() {
+class DeploymentTest : SuccessBuildSim<Deployment, DeploymentDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -18,16 +18,16 @@ class DeploymentTest : SuccessBuildSim<Deployment, Deployment.Builder>() {
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<Deployment, Deployment.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Deployment, DeploymentDslBuilder> {
             scenario {
                 id = "minimum"
-                given(Deployment.Builder())
+                given(DeploymentDslBuilder())
                 expected = Deployment()
             }
 
             scenario {
                 id = "full"
-                given(Deployment.Builder()) {
+                given(DeploymentDslBuilder()) {
                     sharedMetadata()
                     spec {
                         selector {
@@ -67,9 +67,9 @@ class DeploymentTest : SuccessBuildSim<Deployment, Deployment.Builder>() {
                 }
                 expected = Deployment(
                     metadata = METADATA,
-                    spec = Deployment.Spec(
+                    spec = DeploymentSpec(
                         selector = LABEL_SELECTOR,
-                        template = PodTemplate.Spec(),
+                        template = PodTemplateSpec(),
                         replicas = 1,
                         minReadySeconds = 1,
                         strategy = Strategy(
@@ -83,7 +83,7 @@ class DeploymentTest : SuccessBuildSim<Deployment, Deployment.Builder>() {
                         progressDeadlineSeconds = 1,
                         paused = true
                     ),
-                    status = Deployment.Status(
+                    status = DeploymentStatus(
                         replicas = 1,
                         availableReplicas = 1,
                         unavailableReplicas = 1,

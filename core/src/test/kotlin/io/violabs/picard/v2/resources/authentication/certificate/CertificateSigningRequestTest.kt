@@ -7,7 +7,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class CertificateSigningRequestTest :
-    FullBuildSim<CertificateSigningRequest, CertificateSigningRequestV2DslBuilder>() {
+    FullBuildSim<CertificateSigningRequest, CertificateSigningRequestDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -18,10 +18,10 @@ class CertificateSigningRequestTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<CertificateSigningRequest, CertificateSigningRequestV2DslBuilder> {
+            possibilities<CertificateSigningRequest, CertificateSigningRequestDslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(CertificateSigningRequestV2DslBuilder()) {
+                    given(CertificateSigningRequestDslBuilder()) {
                         spec {
                             request(0b1, 0b01)
                             signerName = PLACEHOLDER
@@ -37,7 +37,7 @@ class CertificateSigningRequestTest :
 
                 scenario {
                     id = "full"
-                    given(CertificateSigningRequestV2DslBuilder()) {
+                    given(CertificateSigningRequestDslBuilder()) {
                         metadata {
                             sharedObjectMeta()
                         }
@@ -57,7 +57,7 @@ class CertificateSigningRequestTest :
                             certificate(0b1, 0b01)
                             conditions {
                                 certificateSigningRequestCondition {
-                                    status = CertificateSigningRequestCondition.Status.True
+                                    status = CertificateSigningRequestConditionStatus.True
                                     type = CertificateSigningRequestCondition.Type.Approved
                                     lastTransitionTime = NOW
                                     lastUpdateTime = NOW
@@ -85,7 +85,7 @@ class CertificateSigningRequestTest :
                             certificate = BYTES,
                             conditions = listOf(
                                 CertificateSigningRequestCondition(
-                                    status = CertificateSigningRequestCondition.Status.True,
+                                    status = CertificateSigningRequestConditionStatus.True,
                                     type = CertificateSigningRequestCondition.Type.Approved,
                                     lastTransitionTime = NOW,
                                     lastUpdateTime = NOW,
@@ -99,9 +99,9 @@ class CertificateSigningRequestTest :
             }
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<CertificateSigningRequest, CertificateSigningRequestV2DslBuilder> {
+            possibilities<CertificateSigningRequest, CertificateSigningRequestDslBuilder> {
                 requireScenario("spec") {
-                    given(CertificateSigningRequestV2DslBuilder())
+                    given(CertificateSigningRequestDslBuilder())
                 }
             }
     }

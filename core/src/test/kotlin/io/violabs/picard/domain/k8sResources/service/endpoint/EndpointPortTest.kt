@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class EndpointPortTest : FailureBuildSim<EndpointPort, EndpointPort.Builder>() {
+class EndpointPortTest : FailureBuildSim<EndpointPort, EndpointPortDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class EndpointPortTest : FailureBuildSim<EndpointPort, EndpointPort.Builder>() {
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<EndpointPort, EndpointPort.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<EndpointPort, EndpointPortDslBuilder> {
             requireScenario("port") {
-                given(EndpointPort.Builder())
+                given(EndpointPortDslBuilder())
             }
         }
     }

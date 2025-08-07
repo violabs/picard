@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ResourceClaimListTest : FullBuildSim<ResourceClaimList, ResourceClaimList.Builder>() {
+class ResourceClaimListTest : FullBuildSim<ResourceClaimList, ResourceClaimListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class ResourceClaimListTest : FullBuildSim<ResourceClaimList, ResourceClaimList.
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ResourceClaimList, ResourceClaimList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ResourceClaimList, ResourceClaimListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ResourceClaimList.Builder()) {
+                given(ResourceClaimListDslBuilder()) {
                     items {
                         resourceClaimItem {
                             spec {}
@@ -26,14 +26,14 @@ class ResourceClaimListTest : FullBuildSim<ResourceClaimList, ResourceClaimList.
                     }
                 }
                 expected = ResourceClaimList(
-                    items = listOf(ResourceClaim(spec = ResourceClaim.Spec()))
+                    items = listOf(ResourceClaim(spec = ResourceClaimSpec()))
                 )
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<ResourceClaimList, ResourceClaimList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ResourceClaimList, ResourceClaimListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(ResourceClaimList.Builder())
+                given(ResourceClaimListDslBuilder())
             }
         }
     }

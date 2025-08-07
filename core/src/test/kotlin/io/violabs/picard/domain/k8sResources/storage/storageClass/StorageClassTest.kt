@@ -7,7 +7,7 @@ import io.violabs.picard.domain.TopologySelectorLabelRequirement
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class StorageClassTest : FullBuildSim<StorageClass, StorageClass.Builder>() {
+class StorageClassTest : FullBuildSim<StorageClass, StorageClassDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,10 +17,10 @@ class StorageClassTest : FullBuildSim<StorageClass, StorageClass.Builder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<StorageClass, StorageClass.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<StorageClass, StorageClassDslBuilder> {
             scenario {
                 id = "minimum"
-                given(StorageClass.Builder()) {
+                given(StorageClassDslBuilder()) {
                     provisioner = PLACEHOLDER
                 }
                 expected = StorageClass(
@@ -30,7 +30,7 @@ class StorageClassTest : FullBuildSim<StorageClass, StorageClass.Builder>() {
 
             scenario {
                 id = "full"
-                given(StorageClass.Builder()) {
+                given(StorageClassDslBuilder()) {
                     provisioner = PLACEHOLDER
                     allowVolumeExpansion()
                     allowedTopologies {
@@ -69,9 +69,9 @@ class StorageClassTest : FullBuildSim<StorageClass, StorageClass.Builder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<StorageClass, StorageClass.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<StorageClass, StorageClassDslBuilder> {
             requireScenario("provisioner") {
-                given(StorageClass.Builder())
+                given(StorageClassDslBuilder())
             }
         }
     }

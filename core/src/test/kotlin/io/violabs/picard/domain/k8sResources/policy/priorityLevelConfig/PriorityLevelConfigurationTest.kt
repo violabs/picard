@@ -8,7 +8,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class PriorityLevelConfigurationTest :
-    SuccessBuildSim<PriorityLevelConfiguration, PriorityLevelConfiguration.Builder>() {
+    SuccessBuildSim<PriorityLevelConfiguration, PriorityLevelConfigurationDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -19,16 +19,16 @@ class PriorityLevelConfigurationTest :
 
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<PriorityLevelConfiguration, PriorityLevelConfiguration.Builder> {
+            possibilities<PriorityLevelConfiguration, PriorityLevelConfigurationDslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(PriorityLevelConfiguration.Builder())
+                    given(PriorityLevelConfigurationDslBuilder())
                     expected = PriorityLevelConfiguration()
                 }
 
                 scenario {
                     id = "full"
-                    given(PriorityLevelConfiguration.Builder()) {
+                    given(PriorityLevelConfigurationDslBuilder()) {
                         sharedMetadata()
                         spec {
                             type = PriorityLevelConfiguration.Type.Exempt
@@ -58,7 +58,7 @@ class PriorityLevelConfigurationTest :
                     }
                     expected = PriorityLevelConfiguration(
                         metadata = METADATA,
-                        spec = PriorityLevelConfiguration.Spec(
+                        spec = PriorityLevelConfigurationSpec(
                             type = PriorityLevelConfiguration.Type.Exempt,
                             exempt = ExemptPriorityLevelConfiguration(
                                 lendablePercent = 1,
@@ -78,7 +78,7 @@ class PriorityLevelConfigurationTest :
                                 nominalConcurrencyShares = 1
                             )
                         ),
-                        status = PriorityLevelConfiguration.Status(
+                        status = PriorityLevelConfigurationStatus(
                             conditions = listOf(CONDITION)
                         )
                     )

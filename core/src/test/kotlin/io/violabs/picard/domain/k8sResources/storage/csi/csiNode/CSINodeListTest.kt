@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class CSINodeListTest : FullBuildSim<CSINodeList, CSINodeList.Builder>() {
+class CSINodeListTest : FullBuildSim<CSINodeList, CSINodeListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class CSINodeListTest : FullBuildSim<CSINodeList, CSINodeList.Builder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<CSINodeList, CSINodeList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<CSINodeList, CSINodeListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(CSINodeList.Builder()) {
+                given(CSINodeListDslBuilder()) {
                     items {
                         csiNodeItem {}
                     }
@@ -29,9 +29,9 @@ class CSINodeListTest : FullBuildSim<CSINodeList, CSINodeList.Builder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<CSINodeList, CSINodeList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<CSINodeList, CSINodeListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(CSINodeList.Builder())
+                given(CSINodeListDslBuilder())
             }
         }
     }

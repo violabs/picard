@@ -15,7 +15,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class AuthenticationResourceSectionTest :
-    FullBuildSim<AuthenticationResourceSection, AuthenticationResourceSection.Builder>() {
+    FullBuildSim<AuthenticationResourceSection, AuthenticationResourceSectionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -26,14 +26,14 @@ class AuthenticationResourceSectionTest :
         )
 
         private val CERTIFICATE_SIGNING_REQUEST = CertificateSigningRequest(
-            spec = CertificateSigningRequest.Spec(
+            spec = CertificateSigningRequestSpec(
                 request = BYTES,
                 signerName = PLACEHOLDER
             )
         )
 
         private val CLUSTER_TRUST_BUNDLE = ClusterTrustBundle(
-            spec = ClusterTrustBundle.Spec(
+            spec = ClusterTrustBundleSpec(
                 trustBundle = PLACEHOLDER
             )
         )
@@ -41,14 +41,14 @@ class AuthenticationResourceSectionTest :
         private val TOKEN_REQUEST = TokenRequest()
 
         private val TOKEN_REVIEW = TokenReview(
-            spec = TokenReview.Spec()
+            spec = TokenReviewSpec()
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<AuthenticationResourceSection, AuthenticationResourceSection.Builder> {
+            possibilities<AuthenticationResourceSection, AuthenticationResourceSectionDslBuilder> {
                 scenario {
                     id = "full"
-                    given(AuthenticationResourceSection.Builder()) {
+                    given(AuthenticationResourceSectionDslBuilder()) {
                         certificateSigningRequest {
                             spec {
                                 request(BYTE_1, BYTE_2)
@@ -114,9 +114,9 @@ class AuthenticationResourceSectionTest :
             }
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<AuthenticationResourceSection, AuthenticationResourceSection.Builder> {
+            possibilities<AuthenticationResourceSection, AuthenticationResourceSectionDslBuilder> {
                 requireNotEmptyScenario("resources") {
-                    given(AuthenticationResourceSection.Builder())
+                    given(AuthenticationResourceSectionDslBuilder())
                 }
             }
     }

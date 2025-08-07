@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PriorityClassListTest : FullBuildSim<PriorityClassList, PriorityClassList.Builder>() {
+class PriorityClassListTest : FullBuildSim<PriorityClassList, PriorityClassListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class PriorityClassListTest : FullBuildSim<PriorityClassList, PriorityClassList.
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<PriorityClassList, PriorityClassList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<PriorityClassList, PriorityClassListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(PriorityClassList.Builder()) {
+                given(PriorityClassListDslBuilder()) {
                     items {
                         priorityClassItem { value = 1 }
                     }
@@ -29,9 +29,9 @@ class PriorityClassListTest : FullBuildSim<PriorityClassList, PriorityClassList.
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<PriorityClassList, PriorityClassList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<PriorityClassList, PriorityClassListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(PriorityClassList.Builder())
+                given(PriorityClassListDslBuilder())
             }
         }
     }

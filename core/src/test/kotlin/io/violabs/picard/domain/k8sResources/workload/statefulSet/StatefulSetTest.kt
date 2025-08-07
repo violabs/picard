@@ -8,7 +8,7 @@ import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class StatefulSetTest : SuccessBuildSim<StatefulSet, StatefulSet.Builder>() {
+class StatefulSetTest : SuccessBuildSim<StatefulSet, StatefulSetDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -22,16 +22,16 @@ class StatefulSetTest : SuccessBuildSim<StatefulSet, StatefulSet.Builder>() {
             whenScaled = PLACEHOLDER
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<StatefulSet, StatefulSet.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<StatefulSet, StatefulSetDslBuilder> {
             scenario {
                 id = "minimum"
-                given(StatefulSet.Builder())
+                given(StatefulSetDslBuilder())
                 expected = StatefulSet()
             }
 
             scenario {
                 id = "full"
-                given(StatefulSet.Builder()) {
+                given(StatefulSetDslBuilder()) {
                     sharedMetadata()
                     spec {
                         serviceName = PLACEHOLDER
@@ -76,10 +76,10 @@ class StatefulSetTest : SuccessBuildSim<StatefulSet, StatefulSet.Builder>() {
                 }
                 expected = StatefulSet(
                     metadata = METADATA,
-                    spec = StatefulSet.Spec(
+                    spec = StatefulSetSpec(
                         serviceName = PLACEHOLDER,
                         selector = LABEL_SELECTOR,
-                        template = PodTemplate.Spec(),
+                        template = PodTemplateSpec(),
                         replicas = 1,
                         updateStrategy = UPDATE_STRATEGY,
                         podManagementPolicy = PLACEHOLDER,
@@ -89,7 +89,7 @@ class StatefulSetTest : SuccessBuildSim<StatefulSet, StatefulSet.Builder>() {
                         persistentVolumeClaimRetentionPolicy = PERSISTENT_VOLUME_CLAIM_RETENTION_POLICY,
                         ordinals = Ordinals(1)
                     ),
-                    status = StatefulSet.Status(
+                    status = StatefulSetStatus(
                         replicas = 1,
                         readyReplicas = 1,
                         currentReplicas = 1,

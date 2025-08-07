@@ -6,7 +6,7 @@ import io.violabs.picard.domain.BooleanType
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class SigningRequestConditionTest : FailureBuildSim<SigningRequestCondition, SigningRequestCondition.Builder>() {
+class SigningRequestConditionTest : FailureBuildSim<SigningRequestCondition, SigningRequestConditionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,13 +15,13 @@ class SigningRequestConditionTest : FailureBuildSim<SigningRequestCondition, Sig
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<SigningRequestCondition, SigningRequestCondition.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<SigningRequestCondition, SigningRequestConditionDslBuilder> {
             requireScenario("status") {
-                given(SigningRequestCondition.Builder())
+                given(SigningRequestConditionDslBuilder())
             }
 
             requireScenario("type") {
-                given(SigningRequestCondition.Builder()) {
+                given(SigningRequestConditionDslBuilder()) {
                     status = BooleanType.True
                 }
             }

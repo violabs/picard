@@ -1,10 +1,10 @@
-package io.violabs.picard.domain.k8sResources.authorization.clusterRole
+package io.violabs.picard.v2.resources.authorization.role
 
 import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ClusterRoleListTest : FullBuildSim<ClusterRoleList, ClusterRoleList.Builder>() {
+class ClusterRoleListTest : FullBuildSim<ClusterRoleList, ClusterRoleListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,12 +14,12 @@ class ClusterRoleListTest : FullBuildSim<ClusterRoleList, ClusterRoleList.Builde
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ClusterRoleList, ClusterRoleList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ClusterRoleList, ClusterRoleListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ClusterRoleList.Builder()) {
+                given(ClusterRoleListDslBuilder()) {
                     items {
-                        role { }
+                        clusterRole {  }
                     }
                 }
                 expected = ClusterRoleList(
@@ -28,9 +28,9 @@ class ClusterRoleListTest : FullBuildSim<ClusterRoleList, ClusterRoleList.Builde
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<ClusterRoleList, ClusterRoleList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ClusterRoleList, ClusterRoleListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(ClusterRoleList.Builder())
+                given(ClusterRoleListDslBuilder())
             }
         }
     }

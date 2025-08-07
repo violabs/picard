@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class RuntimeClassListTest : FullBuildSim<RuntimeClassList, RuntimeClassList.Builder>() {
+class RuntimeClassListTest : FullBuildSim<RuntimeClassList, RuntimeClassListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class RuntimeClassListTest : FullBuildSim<RuntimeClassList, RuntimeClassList.Bui
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<RuntimeClassList, RuntimeClassList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<RuntimeClassList, RuntimeClassListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(RuntimeClassList.Builder()) {
+                given(RuntimeClassListDslBuilder()) {
                     items {
                         runtime {
                             handler = PLACEHOLDER
@@ -31,9 +31,9 @@ class RuntimeClassListTest : FullBuildSim<RuntimeClassList, RuntimeClassList.Bui
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<RuntimeClassList, RuntimeClassList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<RuntimeClassList, RuntimeClassListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(RuntimeClassList.Builder())
+                given(RuntimeClassListDslBuilder())
             }
         }
     }

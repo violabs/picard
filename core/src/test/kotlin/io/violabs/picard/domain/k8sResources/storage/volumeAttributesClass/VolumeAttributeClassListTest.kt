@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class VolumeAttributeClassListTest : FullBuildSim<VolumeAttributesClassList, VolumeAttributesClassList.Builder>() {
+class VolumeAttributeClassListTest : FullBuildSim<VolumeAttributesClassList, VolumeAttributesClassListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class VolumeAttributeClassListTest : FullBuildSim<VolumeAttributesClassList, Vol
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<VolumeAttributesClassList, VolumeAttributesClassList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<VolumeAttributesClassList, VolumeAttributesClassListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(VolumeAttributesClassList.Builder()) {
+                given(VolumeAttributesClassListDslBuilder()) {
                     items {
                         volumeAttributesClassItem {  }
                     }
@@ -29,9 +29,9 @@ class VolumeAttributeClassListTest : FullBuildSim<VolumeAttributesClassList, Vol
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<VolumeAttributesClassList, VolumeAttributesClassList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<VolumeAttributesClassList, VolumeAttributesClassListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(VolumeAttributesClassList.Builder())
+                given(VolumeAttributesClassListDslBuilder())
             }
         }
     }

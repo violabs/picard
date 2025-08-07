@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PodResourceClaimTest : FailureBuildSim<PodResourceClaim, PodResourceClaim.Builder>() {
+class PodResourceClaimTest : FailureBuildSim<PodResourceClaim, PodResourceClaimDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,8 +16,8 @@ class PodResourceClaimTest : FailureBuildSim<PodResourceClaim, PodResourceClaim.
     }
 }
 
-private val FAILURE_POSSIBILITIES = possibilities<PodResourceClaim, PodResourceClaim.Builder> {
+private val FAILURE_POSSIBILITIES = possibilities<PodResourceClaim, PodResourceClaimDslBuilder> {
     requireScenario("name") {
-        given(PodResourceClaim.Builder())
+        given(PodResourceClaimDslBuilder())
     }
 }

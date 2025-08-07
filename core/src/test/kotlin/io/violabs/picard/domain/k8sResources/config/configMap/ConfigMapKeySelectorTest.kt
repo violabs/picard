@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ConfigMapKeySelectorTest : FailureBuildSim<ConfigMapKeySelector, ConfigMapKeySelector.Builder>() {
+class ConfigMapKeySelectorTest : FailureBuildSim<ConfigMapKeySelector, ConfigMapKeySelectorDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class ConfigMapKeySelectorTest : FailureBuildSim<ConfigMapKeySelector, ConfigMap
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<ConfigMapKeySelector, ConfigMapKeySelector.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ConfigMapKeySelector, ConfigMapKeySelectorDslBuilder> {
             requireScenario("key") {
-                given(ConfigMapKeySelector.Builder())
+                given(ConfigMapKeySelectorDslBuilder())
             }
         }
     }

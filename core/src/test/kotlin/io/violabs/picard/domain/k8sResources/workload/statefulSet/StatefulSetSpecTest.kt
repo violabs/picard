@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class StatefulSetSpecTest : FailureBuildSim<StatefulSet.Spec, StatefulSet.Spec.Builder>() {
+class StatefulSetSpecTest : FailureBuildSim<StatefulSetSpec, StatefulSetSpecDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class StatefulSetSpecTest : FailureBuildSim<StatefulSet.Spec, StatefulSet.Spec.B
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<StatefulSet.Spec, StatefulSet.Spec.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<StatefulSetSpec, StatefulSetSpecDslBuilder> {
             requireScenario("serviceName") {
-                given(StatefulSet.Spec.Builder())
+                given(StatefulSetSpecDslBuilder())
             }
 
             requireScenario("selector") {
-                given(StatefulSet.Spec.Builder()) {
+                given(StatefulSetSpecDslBuilder()) {
                     serviceName = PLACEHOLDER
                 }
             }

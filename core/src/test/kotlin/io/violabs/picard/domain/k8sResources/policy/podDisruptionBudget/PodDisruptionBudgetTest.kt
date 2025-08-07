@@ -7,7 +7,7 @@ import io.violabs.picard.domain.condition.ServiceCondition
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PodDisruptionBudgetTest : SuccessBuildSim<PodDisruptionBudget, PodDisruptionBudget.Builder>() {
+class PodDisruptionBudgetTest : SuccessBuildSim<PodDisruptionBudget, PodDisruptionBudgetDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,16 +17,16 @@ class PodDisruptionBudgetTest : SuccessBuildSim<PodDisruptionBudget, PodDisrupti
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<PodDisruptionBudget, PodDisruptionBudget.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<PodDisruptionBudget, PodDisruptionBudgetDslBuilder> {
             scenario {
                 id = "minimum"
-                given(PodDisruptionBudget.Builder())
+                given(PodDisruptionBudgetDslBuilder())
                 expected = PodDisruptionBudget()
             }
 
             scenario {
                 id = "minimum"
-                given(PodDisruptionBudget.Builder()) {
+                given(PodDisruptionBudgetDslBuilder()) {
                     sharedMetadata()
                     spec {
                         maxUnavailable(1)
@@ -57,13 +57,13 @@ class PodDisruptionBudgetTest : SuccessBuildSim<PodDisruptionBudget, PodDisrupti
                 }
                 expected = PodDisruptionBudget(
                     metadata = METADATA,
-                    spec = PodDisruptionBudget.Spec(
+                    spec = PodDisruptionBudgetSpec(
                         maxUnavailable = INT_OR_STRING_1,
                         minAvailable = INT_OR_STRING_1,
                         selector = LABEL_SELECTOR,
                         unhealthyPodEvictionPolicy = PLACEHOLDER
                     ),
-                    status = PodDisruptionBudget.Status(
+                    status = PodDisruptionBudgetStatus(
                         currentHealthy = 1,
                         desiredHealthy = 1,
                         disruptionsAllowed = 1,

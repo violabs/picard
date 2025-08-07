@@ -5,7 +5,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class RollingUpdateTest : SuccessBuildSim<BaseStrategy.RollingUpdate, BaseStrategy.RollingUpdate.Builder>() {
+class RollingUpdateTest : SuccessBuildSim<BaseStrategy.RollingUpdate, BaseStrategy.RollingUpdateDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class RollingUpdateTest : SuccessBuildSim<BaseStrategy.RollingUpdate, BaseStrate
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<BaseStrategy.RollingUpdate, BaseStrategy.RollingUpdate.Builder> {
+            possibilities<BaseStrategy.RollingUpdate, BaseStrategy.RollingUpdateDslBuilder> {
                 scenario {
                     id = "string based"
-                    given(BaseStrategy.RollingUpdate.Builder()) {
+                    given(BaseStrategy.RollingUpdateDslBuilder()) {
                         maxSurge("1")
                         maxUnavailable("1")
                     }

@@ -7,7 +7,7 @@ import io.violabs.picard.v2.common.ObjectMeta
 import io.violabs.picard.v2.common.ObjectReference
 import org.junit.jupiter.api.BeforeAll
 
-class BindingTest : SuccessBuildSim<Binding, BindingV2DslBuilder>() {
+class BindingTest : SuccessBuildSim<Binding, BindingDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,10 +16,10 @@ class BindingTest : SuccessBuildSim<Binding, BindingV2DslBuilder>() {
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<Binding, BindingV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Binding, BindingDslBuilder> {
             scenario {
                 id = "minimum"
-                given(BindingV2DslBuilder()) {
+                given(BindingDslBuilder()) {
                     target {
                         kind = PLACEHOLDER
                         name = PLACEHOLDER
@@ -35,7 +35,7 @@ class BindingTest : SuccessBuildSim<Binding, BindingV2DslBuilder>() {
 
             scenario {
                 id = "full"
-                given(BindingV2DslBuilder()) {
+                given(BindingDslBuilder()) {
                     metadata {
                         name = PLACEHOLDER  
                         namespace = PLACEHOLDER

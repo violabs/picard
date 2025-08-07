@@ -6,7 +6,7 @@ import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class NetworkPolicyPortTest : SuccessBuildSim<NetworkPolicyPort, NetworkPolicyPort.Builder>() {
+class NetworkPolicyPortTest : SuccessBuildSim<NetworkPolicyPort, NetworkPolicyPortDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,10 +16,10 @@ class NetworkPolicyPortTest : SuccessBuildSim<NetworkPolicyPort, NetworkPolicyPo
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<NetworkPolicyPort, NetworkPolicyPort.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<NetworkPolicyPort, NetworkPolicyPortDslBuilder> {
             scenario {
                 id = "minimum"
-                given(NetworkPolicyPort.Builder()) {
+                given(NetworkPolicyPortDslBuilder()) {
                     port("8080")
                 }
                 expected = NetworkPolicyPort(

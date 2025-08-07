@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class StorageClassListTest : FullBuildSim<StorageClassList, StorageClassList.Builder>() {
+class StorageClassListTest : FullBuildSim<StorageClassList, StorageClassListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class StorageClassListTest : FullBuildSim<StorageClassList, StorageClassList.Bui
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<StorageClassList, StorageClassList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<StorageClassList, StorageClassListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(StorageClassList.Builder()) {
+                given(StorageClassListDslBuilder()) {
                     items {
                         storageClassItem {
                             provisioner = PLACEHOLDER
@@ -35,9 +35,9 @@ class StorageClassListTest : FullBuildSim<StorageClassList, StorageClassList.Bui
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<StorageClassList, StorageClassList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<StorageClassList, StorageClassListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(StorageClassList.Builder())
+                given(StorageClassListDslBuilder())
             }
         }
     }

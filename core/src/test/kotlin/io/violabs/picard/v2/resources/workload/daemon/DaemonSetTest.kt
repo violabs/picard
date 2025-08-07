@@ -10,7 +10,7 @@
 //import io.violabs.picard.v2.common.ObjectMeta
 //import org.junit.jupiter.api.BeforeAll
 //
-//class DaemonSetTest : SuccessBuildSim<DaemonSetV2, DaemonSetV2DslBuilder>() {
+//class DaemonSetTest : SuccessBuildSim<DaemonSet, DaemonSetDslBuilder>() {
 //    companion object {
 //        @JvmStatic
 //        @BeforeAll
@@ -19,28 +19,28 @@
 //            SUCCESS_POSSIBILITIES
 //        )
 //
-//        private val SUCCESS_POSSIBILITIES = possibilities<DaemonSetV2, DaemonSetV2DslBuilder> {
+//        private val SUCCESS_POSSIBILITIES = possibilities<DaemonSet, DaemonSetDslBuilder> {
 //            scenario {
 //                id = "minimum"
-//                given(DaemonSetV2DslBuilder()) {
+//                given(DaemonSetDslBuilder()) {
 //                    spec {
 //                        selector {
 //                            sharedSelector()
 //                        }
-//                        template = PodTemplate.Spec()
+//                        template = PodTemplateSpec()
 //                    }
 //                }
-//                expected = DaemonSetV2(
+//                expected = DaemonSet(
 //                    spec = DaemonSetSpec(
 //                        selector = Common.LABEL_SELECTOR,
-//                        template = PodTemplate.Spec()
+//                        template = PodTemplateSpec()
 //                    )
 //                )
 //            }
 //
 //            scenario {
 //                id = "full"
-//                given(DaemonSetV2DslBuilder()) {
+//                given(DaemonSetDslBuilder()) {
 //                    metadata {
 //                        name = PLACEHOLDER
 //                        namespace = PLACEHOLDER
@@ -49,7 +49,7 @@
 //                        selector {
 //                            sharedSelector()
 //                        }
-//                        template = PodTemplate.Spec()
+//                        template = PodTemplateSpec()
 //                        minReadySeconds = 1
 //                        updateStrategy {
 //                            type = DaemonSetUpdateStrategy.Type.RollingUpdate
@@ -81,14 +81,14 @@
 //                        observedGeneration = 1
 //                    }
 //                }
-//                expected = DaemonSetV2(
+//                expected = DaemonSet(
 //                    metadata = ObjectMeta(
 //                        name = PLACEHOLDER,
 //                        namespace = PLACEHOLDER
 //                    ),
 //                    spec = DaemonSetSpec(
 //                        selector = Common.LABEL_SELECTOR,
-//                        template = PodTemplate.Spec(),
+//                        template = PodTemplateSpec(),
 //                        minReadySeconds = 1,
 //                        updateStrategy = DaemonSetUpdateStrategy(
 //                            type = DaemonSetUpdateStrategy.Type.RollingUpdate,

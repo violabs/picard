@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class DeviceRequestAllocationResultTest :
-    FailureBuildSim<DeviceRequestAllocationResult, DeviceRequestAllocationResult.Builder>() {
+    FailureBuildSim<DeviceRequestAllocationResult, DeviceRequestAllocationResultDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,26 +16,26 @@ class DeviceRequestAllocationResultTest :
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<DeviceRequestAllocationResult, DeviceRequestAllocationResult.Builder> {
+            possibilities<DeviceRequestAllocationResult, DeviceRequestAllocationResultDslBuilder> {
                 requireScenario("device") {
-                    given(DeviceRequestAllocationResult.Builder())
+                    given(DeviceRequestAllocationResultDslBuilder())
                 }
 
                 requireScenario("driver") {
-                    given(DeviceRequestAllocationResult.Builder()) {
+                    given(DeviceRequestAllocationResultDslBuilder()) {
                         device = PLACEHOLDER
                     }
                 }
 
                 requireScenario("pool") {
-                    given(DeviceRequestAllocationResult.Builder()) {
+                    given(DeviceRequestAllocationResultDslBuilder()) {
                         device = PLACEHOLDER
                         driver = PLACEHOLDER
                     }
                 }
 
                 requireScenario("request") {
-                    given(DeviceRequestAllocationResult.Builder()) {
+                    given(DeviceRequestAllocationResultDslBuilder()) {
                         device = PLACEHOLDER
                         driver = PLACEHOLDER
                         pool = PLACEHOLDER

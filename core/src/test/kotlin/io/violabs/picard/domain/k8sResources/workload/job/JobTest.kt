@@ -8,7 +8,7 @@ import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class JobTest : SuccessBuildSim<Job, Job.Builder>() {
+class JobTest : SuccessBuildSim<Job, JobDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -37,22 +37,22 @@ class JobTest : SuccessBuildSim<Job, Job.Builder>() {
             succeededIndexes = PLACEHOLDER
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<Job, Job.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Job, JobDslBuilder> {
             scenario {
                 id = "minimum"
-                given(Job.Builder())
+                given(JobDslBuilder())
                 expected = Job()
             }
 
             scenario {
                 id = "full without template spec"
-                given(Job.Builder()) {
+                given(JobDslBuilder()) {
                     sharedMetadata()
                     spec {
                         template {}
                         parallelism = 1
                         completions = 1
-                        completionMode = Job.Spec.CompletionMode.NonIndexed
+                        completionMode = JobSpec.CompletionMode.NonIndexed
                         backoffLimit = 1
                         activeDeadlineSeconds = 1
                         ttlSecondsAfterFinished = 1
@@ -113,11 +113,11 @@ class JobTest : SuccessBuildSim<Job, Job.Builder>() {
                 }
                 expected = Job(
                     metadata = METADATA,
-                    spec = Job.Spec(
-                        template = PodTemplate.Spec(),
+                    spec = JobSpec(
+                        template = PodTemplateSpec(),
                         parallelism = 1,
                         completions = 1,
-                        completionMode = Job.Spec.CompletionMode.NonIndexed,
+                        completionMode = JobSpec.CompletionMode.NonIndexed,
                         backoffLimit = 1,
                         activeDeadlineSeconds = 1,
                         ttlSecondsAfterFinished = 1,
@@ -135,7 +135,7 @@ class JobTest : SuccessBuildSim<Job, Job.Builder>() {
                         maxFailedIndexes = 1,
                         podReplacementPolicy = PLACEHOLDER
                     ),
-                    status = Job.Status(
+                    status = JobStatus(
                         startTime = NOW,
                         completionTime = NOW,
                         active = 1,

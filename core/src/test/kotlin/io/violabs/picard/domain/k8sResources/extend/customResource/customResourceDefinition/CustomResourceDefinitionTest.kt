@@ -11,7 +11,7 @@ import io.violabs.picard.domain.k8sResources.extend.webhook.WebhookConversion
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class CustomResourceDefinitionTest : FullBuildSim<CustomResourceDefinition, CustomResourceDefinition.Builder>() {
+class CustomResourceDefinitionTest : FullBuildSim<CustomResourceDefinition, CustomResourceDefinitionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -74,7 +74,7 @@ class CustomResourceDefinitionTest : FullBuildSim<CustomResourceDefinition, Cust
             singular = PLACEHOLDER
         )
 
-        private val SPEC = CustomResourceDefinition.Spec(
+        private val SPEC = CustomResourceDefinitionSpec(
             group = PLACEHOLDER,
             names = NAMES,
             scope = PLACEHOLDER,
@@ -83,16 +83,16 @@ class CustomResourceDefinitionTest : FullBuildSim<CustomResourceDefinition, Cust
             preserveUnknownFields = true
         )
 
-        private val STATUS = CustomResourceDefinition.Status(
+        private val STATUS = CustomResourceDefinitionStatus(
             acceptedNames = NAMES,
             conditions = listOf(CONDITION),
             storedVersions = PLACEHOLDER_LIST
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<CustomResourceDefinition, CustomResourceDefinition.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<CustomResourceDefinition, CustomResourceDefinitionDslBuilder> {
             scenario {
                 id = "minimum"
-                given(CustomResourceDefinition.Builder()) {
+                given(CustomResourceDefinitionDslBuilder()) {
                     spec {
                         group = PLACEHOLDER
                         names {
@@ -110,7 +110,7 @@ class CustomResourceDefinitionTest : FullBuildSim<CustomResourceDefinition, Cust
                     }
                 }
                 expected = CustomResourceDefinition(
-                    spec = CustomResourceDefinition.Spec(
+                    spec = CustomResourceDefinitionSpec(
                         group = PLACEHOLDER,
                         names = CustomResourceDefinitionNames(
                             kind = PLACEHOLDER,
@@ -130,7 +130,7 @@ class CustomResourceDefinitionTest : FullBuildSim<CustomResourceDefinition, Cust
 
             scenario {
                 id = "full"
-                given(CustomResourceDefinition.Builder()) {
+                given(CustomResourceDefinitionDslBuilder()) {
                     spec {
                         group = PLACEHOLDER
                         names {
@@ -224,9 +224,9 @@ class CustomResourceDefinitionTest : FullBuildSim<CustomResourceDefinition, Cust
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<CustomResourceDefinition, CustomResourceDefinition.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<CustomResourceDefinition, CustomResourceDefinitionDslBuilder> {
             requireScenario("spec") {
-                given(CustomResourceDefinition.Builder())
+                given(CustomResourceDefinitionDslBuilder())
             }
         }
     }

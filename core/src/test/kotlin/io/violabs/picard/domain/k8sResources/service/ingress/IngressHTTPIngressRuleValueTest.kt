@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class IngressHTTPIngressRuleValueTest :
-    FailureBuildSim<IngressHTTPIngressRuleValue, IngressHTTPIngressRuleValue.Builder>() {
+    FailureBuildSim<IngressHTTPIngressRuleValue, IngressHTTPIngressRuleValueDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,9 +16,9 @@ class IngressHTTPIngressRuleValueTest :
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<IngressHTTPIngressRuleValue, IngressHTTPIngressRuleValue.Builder> {
+            possibilities<IngressHTTPIngressRuleValue, IngressHTTPIngressRuleValueDslBuilder> {
                 requireNotEmptyScenario("paths") {
-                    given(IngressHTTPIngressRuleValue.Builder())
+                    given(IngressHTTPIngressRuleValueDslBuilder())
                 }
             }
     }

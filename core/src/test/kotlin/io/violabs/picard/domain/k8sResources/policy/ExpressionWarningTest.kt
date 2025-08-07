@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ExpressionWarningTest : FailureBuildSim<ExpressionWarning, ExpressionWarning.Builder>() {
+class ExpressionWarningTest : FailureBuildSim<ExpressionWarning, ExpressionWarningDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class ExpressionWarningTest : FailureBuildSim<ExpressionWarning, ExpressionWarni
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<ExpressionWarning, ExpressionWarning.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ExpressionWarning, ExpressionWarningDslBuilder> {
             requireScenario("fieldRef") {
-                given(ExpressionWarning.Builder())
+                given(ExpressionWarningDslBuilder())
             }
 
             requireScenario("warning") {
-                given(ExpressionWarning.Builder()) {
+                given(ExpressionWarningDslBuilder()) {
                     fieldRef = PLACEHOLDER
                 }
             }

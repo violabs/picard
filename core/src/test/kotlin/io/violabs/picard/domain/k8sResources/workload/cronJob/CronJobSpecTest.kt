@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class CronJobSpecTest : FailureBuildSim<CronJob.Spec, CronJob.Spec.Builder>() {
+class CronJobSpecTest : FailureBuildSim<CronJobSpec, CronJobSpecDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class CronJobSpecTest : FailureBuildSim<CronJob.Spec, CronJob.Spec.Builder>() {
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<CronJob.Spec, CronJob.Spec.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<CronJobSpec, CronJobSpecDslBuilder> {
             requireScenario("jobTemplate") {
-                given(CronJob.Spec.Builder())
+                given(CronJobSpecDslBuilder())
             }
 
             requireScenario("schedule") {
-                given(CronJob.Spec.Builder()) {
+                given(CronJobSpecDslBuilder()) {
                     jobTemplate {  }
                 }
             }

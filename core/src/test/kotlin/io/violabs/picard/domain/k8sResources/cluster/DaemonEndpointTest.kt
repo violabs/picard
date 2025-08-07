@@ -6,7 +6,7 @@ import io.violabs.picard.domain.k8sResources.cluster.node.DaemonEndpoint
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class DaemonEndpointTest : FailureBuildSim<DaemonEndpoint, DaemonEndpoint.Builder>() {
+class DaemonEndpointTest : FailureBuildSim<DaemonEndpoint, DaemonEndpointDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,9 +15,9 @@ class DaemonEndpointTest : FailureBuildSim<DaemonEndpoint, DaemonEndpoint.Builde
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<DaemonEndpoint, DaemonEndpoint.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<DaemonEndpoint, DaemonEndpointDslBuilder> {
             requireScenario("port") {
-                given(DaemonEndpoint.Builder())
+                given(DaemonEndpointDslBuilder())
             }
         }
     }

@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ContainerStatusTest : FailureBuildSim<ContainerStatus, ContainerStatus.Builder>() {
+class ContainerStatusTest : FailureBuildSim<ContainerStatus, ContainerStatusDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,28 +14,28 @@ class ContainerStatusTest : FailureBuildSim<ContainerStatus, ContainerStatus.Bui
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<ContainerStatus, ContainerStatus.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ContainerStatus, ContainerStatusDslBuilder> {
             val placeholder = "placeholder"
 
             requireScenario("imageID") {
-                given(ContainerStatus.Builder())
+                given(ContainerStatusDslBuilder())
             }
 
             requireScenario("image") {
-                given(ContainerStatus.Builder()) {
+                given(ContainerStatusDslBuilder()) {
                     imageID = placeholder
                 }
             }
 
             requireScenario("name") {
-                given(ContainerStatus.Builder()) {
+                given(ContainerStatusDslBuilder()) {
                     imageID = placeholder
                     image = placeholder
                 }
             }
 
             requireScenario("ready") {
-                given(ContainerStatus.Builder()) {
+                given(ContainerStatusDslBuilder()) {
                     imageID = placeholder
                     image = placeholder
                     name = placeholder

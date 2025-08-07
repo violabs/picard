@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class IngressClassListTest : FullBuildSim<IngressClassList, IngressClassList.Builder>() {
+class IngressClassListTest : FullBuildSim<IngressClassList, IngressClassListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class IngressClassListTest : FullBuildSim<IngressClassList, IngressClassList.Bui
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<IngressClassList, IngressClassList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<IngressClassList, IngressClassListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(IngressClassList.Builder()) {
+                given(IngressClassListDslBuilder()) {
                     items {
                         ingressClassItem {  }
                     }
@@ -29,9 +29,9 @@ class IngressClassListTest : FullBuildSim<IngressClassList, IngressClassList.Bui
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<IngressClassList, IngressClassList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<IngressClassList, IngressClassListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(IngressClassList.Builder())
+                given(IngressClassListDslBuilder())
             }
         }
     }

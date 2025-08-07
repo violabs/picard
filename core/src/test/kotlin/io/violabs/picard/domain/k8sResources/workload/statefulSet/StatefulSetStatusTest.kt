@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class StatefulSetStatusTest : FailureBuildSim<StatefulSet.Status, StatefulSet.Status.Builder>() {
+class StatefulSetStatusTest : FailureBuildSim<StatefulSetStatus, StatefulSetStatusDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class StatefulSetStatusTest : FailureBuildSim<StatefulSet.Status, StatefulSet.St
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<StatefulSet.Status, StatefulSet.Status.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<StatefulSetStatus, StatefulSetStatusDslBuilder> {
             requireScenario("replicas") {
-                given(StatefulSet.Status.Builder())
+                given(StatefulSetStatusDslBuilder())
             }
         }
     }

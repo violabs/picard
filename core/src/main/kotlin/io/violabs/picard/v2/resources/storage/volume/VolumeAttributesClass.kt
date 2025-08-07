@@ -6,6 +6,7 @@ import io.violabs.picard.common.AppConstants
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.ConfigResource
+import io.violabs.picard.domain.manifest.StorageResource
 import io.violabs.picard.v2.common.ObjectMeta
 
 /**
@@ -47,6 +48,6 @@ data class VolumeAttributesClass(
      * field.
      */
     val parameters: Map<String, String>? = null
-) : ConfigResource<VolumeAttributesClass.Version, ObjectMeta> {
+) : StorageResource<VolumeAttributesClass.Version, ObjectMeta> {
     interface Version : APIVersion
 }

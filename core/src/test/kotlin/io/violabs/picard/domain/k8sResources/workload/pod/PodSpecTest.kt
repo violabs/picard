@@ -26,7 +26,7 @@ import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Disabled
 
 @Disabled
-class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
+class PodSpecTest : FullBuildSim<PodSpec, PodSpecDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -154,7 +154,7 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
         /**
          * Containers are tested separately.
          */
-        private val SPEC = Pod.Spec(
+        private val SPEC = PodSpec(
             containers = listOf(STANDARD_CONTAINER),
             initContainers = listOf(Container("init")),
             ephemeralContainers = listOf(EphemeralContainer("ephemeral")),
@@ -194,24 +194,24 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
             schedulingGates = listOf(SCHEDULING_GATE)
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<Pod.Spec, Pod.Spec.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<PodSpec, PodSpecDslBuilder> {
             scenario {
                 id = "minimum"
-                given(Pod.Spec.Builder()) {
+                given(PodSpecDslBuilder()) {
                     containers {
                         container {
                             name = PLACEHOLDER
                         }
                     }
                 }
-                expected = Pod.Spec(
+                expected = PodSpec(
                     containers = listOf(STANDARD_CONTAINER)
                 )
             }
 
             scenario {
                 id = "full"
-                given(Pod.Spec.Builder()) {
+                given(PodSpecDslBuilder()) {
                     containers {
                         container {
                             name = PLACEHOLDER
@@ -602,7 +602,7 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
 
             scenario {
                 idForFalseBooleanValues()
-                given(Pod.Spec.Builder()) {
+                given(PodSpecDslBuilder()) {
                     containers {
                         container {
                             name = PLACEHOLDER
@@ -610,14 +610,14 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
                     }
                     enableServiceLinks(false)
                 }
-                expected = Pod.Spec(
+                expected = PodSpec(
                     containers = listOf(STANDARD_CONTAINER),
                     enableServiceLinks = false
                 )
             }
         }
 
-        fun PodAffinityTerm.Builder.sharedTerm() {
+        fun PodAffinityTermDslBuilder.sharedTerm() {
             topologyKey = "top"
             labelSelector {
                 sharedSelector()
@@ -631,9 +631,9 @@ class PodSpecTest : FullBuildSim<Pod.Spec, Pod.Spec.Builder>() {
         }
 
 
-        private val FAILURE_POSSIBILITIES = possibilities<Pod.Spec, Pod.Spec.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<PodSpec, PodSpecDslBuilder> {
             requireNotEmptyScenario("containers") {
-                given(Pod.Spec.Builder())
+                given(PodSpecDslBuilder())
             }
         }
     }

@@ -5,7 +5,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class VolumeAttachmentTest : SuccessBuildSim<VolumeAttachment, VolumeAttachment.Builder>() {
+class VolumeAttachmentTest : SuccessBuildSim<VolumeAttachment, VolumeAttachmentDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -30,7 +30,7 @@ class VolumeAttachmentTest : SuccessBuildSim<VolumeAttachment, VolumeAttachment.
             )
         )
 
-        private fun VolumeAttachmentSource.Builder.sharedVolumeAttachmentSource() {
+        private fun VolumeAttachmentSourceDslBuilder.sharedVolumeAttachmentSource() {
             persistentVolumeName = PLACEHOLDER
             inlineVolumeSpec {
                 attached()
@@ -48,16 +48,16 @@ class VolumeAttachmentTest : SuccessBuildSim<VolumeAttachment, VolumeAttachment.
             }
         }
 
-        private val SUCCESS_POSSIBILITIES = possibilities<VolumeAttachment, VolumeAttachment.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<VolumeAttachment, VolumeAttachmentDslBuilder> {
             scenario {
                 id = "minimum"
-                given(VolumeAttachment.Builder())
+                given(VolumeAttachmentDslBuilder())
                 expected = VolumeAttachment()
             }
 
             scenario {
                 id = "full"
-                given(VolumeAttachment.Builder()) {
+                given(VolumeAttachmentDslBuilder()) {
                     sharedMetadata()
                     spec {
                         attacher = PLACEHOLDER
@@ -72,7 +72,7 @@ class VolumeAttachmentTest : SuccessBuildSim<VolumeAttachment, VolumeAttachment.
                 }
                 expected = VolumeAttachment(
                     metadata = METADATA,
-                    spec = VolumeAttachment.Spec(
+                    spec = VolumeAttachmentSpec(
                         attacher = PLACEHOLDER,
                         nodeName = PLACEHOLDER,
                         source = VOLUME_ATTACHMENT_SOURCE,

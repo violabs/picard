@@ -28,7 +28,7 @@ import io.violabs.picard.v2.resources.workload.autoscaling.metric.status.PodsMet
 import io.violabs.picard.v2.resources.workload.autoscaling.metric.status.ResourceMetricStatus
 import org.junit.jupiter.api.BeforeAll
 
-class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, HorizontalPodAutoscalerV2DslBuilder>() {
+class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, HorizontalPodAutoscalerDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -114,10 +114,10 @@ class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, Hor
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<HorizontalPodAutoscaler, HorizontalPodAutoscalerV2DslBuilder> {
+            possibilities<HorizontalPodAutoscaler, HorizontalPodAutoscalerDslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(HorizontalPodAutoscalerV2DslBuilder()) {
+                    given(HorizontalPodAutoscalerDslBuilder()) {
                         spec {
                             maxReplicas = 1
                             scaleTargetRef {
@@ -139,7 +139,7 @@ class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, Hor
 
                 scenario {
                     id = "full"
-                    given(HorizontalPodAutoscalerV2DslBuilder()) {
+                    given(HorizontalPodAutoscalerDslBuilder()) {
                         metadata {
                             sharedObjectMeta()
                         }

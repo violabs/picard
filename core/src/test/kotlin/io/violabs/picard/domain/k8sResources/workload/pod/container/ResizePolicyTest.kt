@@ -4,7 +4,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ResizePolicyTest : FailureBuildSim<ResizePolicy, ResizePolicy.Builder>() {
+class ResizePolicyTest : FailureBuildSim<ResizePolicy, ResizePolicyDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,16 +17,16 @@ class ResizePolicyTest : FailureBuildSim<ResizePolicy, ResizePolicy.Builder>() {
     }
 }
 
-private val FAILURE_POSSIBILITIES = possibilities<ResizePolicy, ResizePolicy.Builder> {
+private val FAILURE_POSSIBILITIES = possibilities<ResizePolicy, ResizePolicyDslBuilder> {
     scenario {
         id = "missing resourceName"
-        given(ResizePolicy.Builder())
+        given(ResizePolicyDslBuilder())
         exceptionMessage = withTemplate("resourceName")
     }
 
     scenario {
         id = "missing restartPolicy"
-        given(ResizePolicy.Builder()) {
+        given(ResizePolicyDslBuilder()) {
             resourceName = "cool-resource"
         }
         exceptionMessage = withTemplate("restartPolicy")

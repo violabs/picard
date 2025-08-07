@@ -6,7 +6,7 @@ import io.violabs.picard.domain.k8sResources.Protocol
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class IngressTest : SuccessBuildSim<Ingress, Ingress.Builder>() {
+class IngressTest : SuccessBuildSim<Ingress, IngressDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -34,7 +34,7 @@ class IngressTest : SuccessBuildSim<Ingress, Ingress.Builder>() {
             service = SERVICE_BACKEND
         )
 
-        private fun IngressBackend.Builder.sharedBackend() {
+        private fun IngressBackendDslBuilder.sharedBackend() {
             resource {
                 apiGroup = PLACEHOLDER
                 kind = PLACEHOLDER
@@ -67,16 +67,16 @@ class IngressTest : SuccessBuildSim<Ingress, Ingress.Builder>() {
             secretName = PLACEHOLDER
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<Ingress, Ingress.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Ingress, IngressDslBuilder> {
             scenario {
                 id = "minimum"
-                given(Ingress.Builder())
+                given(IngressDslBuilder())
                 expected = Ingress()
             }
 
             scenario {
                 id = "full"
-                given(Ingress.Builder()) {
+                given(IngressDslBuilder()) {
                     sharedMetadata()
                     spec {
                         defaultBackend {
@@ -122,13 +122,13 @@ class IngressTest : SuccessBuildSim<Ingress, Ingress.Builder>() {
                 }
                 expected = Ingress(
                     metadata = METADATA,
-                    spec = Ingress.Spec(
+                    spec = IngressSpec(
                         defaultBackend = INGRESS_BACKEND,
                         ingressClassName = PLACEHOLDER,
                         rules = listOf(INGRESS_RULE),
                         tls = listOf(TLS)
                     ),
-                    status = Ingress.Status(
+                    status = IngressStatus(
                         loadBalancer = IngressLoadBalancerIngress(
                             hostname = PLACEHOLDER,
                             ip = PLACEHOLDER,

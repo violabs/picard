@@ -7,7 +7,7 @@ import io.violabs.picard.domain.k8sResources.workload.metric.*
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, HorizontalPodAutoscaler.Builder>() {
+class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, HorizontalPodAutoscalerDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -22,7 +22,7 @@ class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, Hor
             name = PLACEHOLDER
         )
 
-        private fun CrossVersionObjectReference.Builder.sharedCrossVersionObjectRef() {
+        private fun CrossVersionObjectReferenceDslBuilder.sharedCrossVersionObjectRef() {
             apiVersion = PLACEHOLDER
             kind = PLACEHOLDER
             name = PLACEHOLDER
@@ -40,7 +40,7 @@ class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, Hor
             stabilizationWindowSeconds = 1
         )
 
-        private fun HPAScalingRules.Builder.sharedHPAScalingRules() {
+        private fun HPAScalingRulesDslBuilder.sharedHPAScalingRules() {
             policies {
                 addHPAScalingPolicy {
                     type = PLACEHOLDER
@@ -64,7 +64,7 @@ class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, Hor
             value = QUANTITY
         )
 
-        private fun MetricTarget.Builder.sharedMetricTarget() {
+        private fun MetricTargetDslBuilder.sharedMetricTarget() {
             type = MetricTarget.Type.AverageValue
             averageUtilization = 1
             averageValue(PLACEHOLDER)
@@ -76,7 +76,7 @@ class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, Hor
             selector = LABEL_SELECTOR
         )
 
-        private fun MetricIdentifier.Builder.sharedMetricIdentifier() {
+        private fun MetricIdentifierDslBuilder.sharedMetricIdentifier() {
             name = PLACEHOLDER
             selector {
                 sharedSelector()
@@ -125,7 +125,7 @@ class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, Hor
             value = QUANTITY
         )
 
-        private fun MetricValueStatus.Builder.sharedMetricValueStatus() {
+        private fun MetricValueStatusDslBuilder.sharedMetricValueStatus() {
             averageUtilization = 1
             averageValue(PLACEHOLDER)
             value(PLACEHOLDER)
@@ -137,7 +137,7 @@ class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, Hor
             name = PLACEHOLDER,
         )
 
-        private fun ContainerResourceMetricStatus.Builder.sharedContainerResourceMetricStatus() {
+        private fun ContainerResourceMetricStatusDslBuilder.sharedContainerResourceMetricStatus() {
             container = PLACEHOLDER
             current {
                 sharedMetricValueStatus()
@@ -177,16 +177,16 @@ class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, Hor
             resource = RESOURCE_METRIC_STATUS
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<HorizontalPodAutoscaler, HorizontalPodAutoscaler.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<HorizontalPodAutoscaler, HorizontalPodAutoscalerDslBuilder> {
             scenario {
                 id = "minimum"
-                given(HorizontalPodAutoscaler.Builder())
+                given(HorizontalPodAutoscalerDslBuilder())
                 expected = HorizontalPodAutoscaler()
             }
 
             scenario {
                 id = "full"
-                given(HorizontalPodAutoscaler.Builder()) {
+                given(HorizontalPodAutoscalerDslBuilder()) {
                     sharedMetadata()
                     spec {
                         maxReplicas = 1
@@ -318,7 +318,7 @@ class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, Hor
                 }
                 expected = HorizontalPodAutoscaler(
                     metadata = METADATA,
-                    spec = HorizontalPodAutoscaler.Spec(
+                    spec = HorizontalPodAutoscalerSpec(
                         maxReplicas = 1,
                         minReplicas = 1,
                         targetCPUUtilizationPercentage = 1,
@@ -326,7 +326,7 @@ class HorizontalPodAutoscalerTest : SuccessBuildSim<HorizontalPodAutoscaler, Hor
                         behavior = HPA_BEHAVIOR,
                         metrics = listOf(METRIC_SPEC)
                     ),
-                    status = HorizontalPodAutoscaler.Status(
+                    status = HorizontalPodAutoscalerStatus(
                         currentReplicas = 1,
                         desiredReplicas = 1,
                         lastScaleTime = NOW,

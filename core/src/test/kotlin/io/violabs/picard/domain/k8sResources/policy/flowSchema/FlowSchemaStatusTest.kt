@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class FlowSchemaStatusTest : FailureBuildSim<FlowSchema.Status, FlowSchema.Status.Builder>() {
+class FlowSchemaStatusTest : FailureBuildSim<FlowSchemaStatus, FlowSchemaStatusDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class FlowSchemaStatusTest : FailureBuildSim<FlowSchema.Status, FlowSchema.Statu
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<FlowSchema.Status, FlowSchema.Status.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<FlowSchemaStatus, FlowSchemaStatusDslBuilder> {
             requireNotEmptyScenario("conditions") {
-                given(FlowSchema.Status.Builder())
+                given(FlowSchemaStatusDslBuilder())
             }
         }
     }

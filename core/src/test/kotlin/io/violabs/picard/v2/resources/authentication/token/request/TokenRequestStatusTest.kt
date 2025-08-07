@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class TokenRequestStatusTest : FailureBuildSim<TokenRequest.Status, TokenRequest.Status.Builder>() {
+class TokenRequestStatusTest : FailureBuildSim<TokenRequestStatus, TokenRequestStatusDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class TokenRequestStatusTest : FailureBuildSim<TokenRequest.Status, TokenRequest
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<TokenRequest.Status, TokenRequest.Status.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<TokenRequestStatus, TokenRequestStatusDslBuilder> {
             requireScenario("expirationTimestamp") {
-                given(TokenRequest.Status.Builder())
+                given(TokenRequestStatusDslBuilder())
             }
 
             requireScenario("token") {
-                given(TokenRequest.Status.Builder()) {
+                given(TokenRequestStatusDslBuilder()) {
                     expirationTimestamp = NOW
                 }
             }

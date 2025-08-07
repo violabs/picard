@@ -6,6 +6,12 @@ import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sAPIResource
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.K8sResource
+import io.violabs.picard.v2.resources.config.map.ConfigMapDslBuilder
+import io.violabs.picard.v2.resources.config.map.ConfigMapDslBuilderScope
+import io.violabs.picard.v2.resources.config.secret.SecretDslBuilder
+import io.violabs.picard.v2.resources.config.secret.SecretDslBuilderScope
+import io.violabs.picard.v2.resources.config.secret.SecretListDslBuilder
+import io.violabs.picard.v2.resources.config.secret.SecretListDslBuilderScope
 
 interface ConfigResource<T : APIVersion, META> : K8sResource<T, META>
 interface ConfigListResource<T : APIVersion, E> : K8sListResource<T, E>
@@ -19,25 +25,20 @@ data class ConfigResourceSection(
         private val lists: MutableList<ConfigListResource<*, *>> = mutableListOf()
     ) : DslBuilder<ConfigResourceSection> {
 
-//        fun configMap(block: ConfigMap.Builder.() -> Unit) {
-//            val configMap = ConfigMap.Builder().apply(block).build()
-//            resources.add(configMap)
-//        }
-//
-//        fun configMapList(block: ConfigMapList.Builder.() -> Unit) {
-//            val list = ConfigMapList.Builder().apply(block).build()
-//            lists.add(list)
-//        }
-//
-//        fun secret(block: Secret.Builder.() -> Unit) {
-//            val secret = Secret.Builder().apply(block).build()
-//            resources.add(secret)
-//        }
-//
-//        fun secretList(block: SecretList.Builder.() -> Unit) {
-//            val list = SecretList.Builder().apply(block).build()
-//            lists.add(list)
-//        }
+        fun configMap(block: ConfigMapDslBuilderScope) {
+            val configMap = ConfigMapDslBuilder().apply(block).build()
+            resources.add(configMap)
+        }
+
+        fun secret(block: SecretDslBuilderScope) {
+            val secret = SecretDslBuilder().apply(block).build()
+            resources.add(secret)
+        }
+
+        fun secretList(block: SecretListDslBuilderScope) {
+            val list = SecretListDslBuilder().apply(block).build()
+            lists.add(list)
+        }
 
         override fun build(): ConfigResourceSection {
             return ConfigResourceSection(

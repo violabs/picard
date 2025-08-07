@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class FlowSchemaSpecTest : FailureBuildSim<FlowSchema.Spec, FlowSchema.Spec.Builder>() {
+class FlowSchemaSpecTest : FailureBuildSim<FlowSchemaSpec, FlowSchemaSpecDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class FlowSchemaSpecTest : FailureBuildSim<FlowSchema.Spec, FlowSchema.Spec.Buil
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<FlowSchema.Spec, FlowSchema.Spec.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<FlowSchemaSpec, FlowSchemaSpecDslBuilder> {
             requireScenario("priorityLevelConfiguration") {
-                given(FlowSchema.Spec.Builder())
+                given(FlowSchemaSpecDslBuilder())
             }
         }
     }

@@ -14,7 +14,7 @@ import io.violabs.picard.domain.k8sResources.workload.pod.Pod
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ManifestTest : FullBuildSim<Manifest, Manifest.Builder>() {
+class ManifestTest : FullBuildSim<Manifest, ManifestDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -24,10 +24,10 @@ class ManifestTest : FullBuildSim<Manifest, Manifest.Builder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<Manifest, Manifest.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Manifest, ManifestDslBuilder> {
             scenario {
                 id = "full"
-                given(Manifest.Builder()) {
+                given(ManifestDslBuilder()) {
                     authenticationSection {
                         tokenRequest { }
                     }
@@ -98,9 +98,9 @@ class ManifestTest : FullBuildSim<Manifest, Manifest.Builder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<Manifest, Manifest.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<Manifest, ManifestDslBuilder> {
             requireNotEmptyScenario("resources") {
-                given(Manifest.Builder())
+                given(ManifestDslBuilder())
             }
         }
     }

@@ -5,7 +5,7 @@ import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class HTTPGetActionTest : FullBuildSim<HTTPGetAction, HTTPGetAction.Builder>() {
+class HTTPGetActionTest : FullBuildSim<HTTPGetAction, HTTPGetActionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,10 +17,10 @@ class HTTPGetActionTest : FullBuildSim<HTTPGetAction, HTTPGetAction.Builder>() {
     }
 }
 
-private val SUCCESS_POSSIBILITIES = possibilities<HTTPGetAction, HTTPGetAction.Builder> {
+private val SUCCESS_POSSIBILITIES = possibilities<HTTPGetAction, HTTPGetActionDslBuilder> {
     scenario {
         id = "minimum"
-        given(HTTPGetAction.Builder()) {
+        given(HTTPGetActionDslBuilder()) {
             port("1234")
 
             httpHeaders {
@@ -36,10 +36,10 @@ private val SUCCESS_POSSIBILITIES = possibilities<HTTPGetAction, HTTPGetAction.B
     }
 }
 
-private val FAILURE_POSSIBILITIES = possibilities<HTTPGetAction, HTTPGetAction.Builder> {
+private val FAILURE_POSSIBILITIES = possibilities<HTTPGetAction, HTTPGetActionDslBuilder> {
     scenario {
         id = "missing port"
-        given(HTTPGetAction.Builder())
+        given(HTTPGetActionDslBuilder())
         exceptionMessage = withTemplate("port")
     }
 }

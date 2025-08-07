@@ -5,7 +5,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class CSINodeTest : SuccessBuildSim<CSINode, CSINode.Builder>() {
+class CSINodeTest : SuccessBuildSim<CSINode, CSINodeDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,16 +15,16 @@ class CSINodeTest : SuccessBuildSim<CSINode, CSINode.Builder>() {
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<CSINode, CSINode.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<CSINode, CSINodeDslBuilder> {
             scenario {
                 id = "minimum"
-                given(CSINode.Builder())
+                given(CSINodeDslBuilder())
                 expected = CSINode()
             }
 
             scenario {
                 id = "full"
-                given(CSINode.Builder()) {
+                given(CSINodeDslBuilder()) {
                     sharedMetadata()
                     spec {
                         drivers {
@@ -39,7 +39,7 @@ class CSINodeTest : SuccessBuildSim<CSINode, CSINode.Builder>() {
                 }
                 expected = CSINode(
                     metadata = METADATA,
-                    spec = CSINode.Spec(
+                    spec = CSINodeSpec(
                         drivers = listOf(
                             CSINodeDriver(
                                 name = PLACEHOLDER,

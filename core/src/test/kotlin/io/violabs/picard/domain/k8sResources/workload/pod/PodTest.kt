@@ -9,7 +9,7 @@ import io.violabs.picard.domain.k8sResources.workload.pod.container.Container
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PodTest : SuccessBuildSim<Pod, Pod.Builder>() {
+class PodTest : SuccessBuildSim<Pod, PodDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -28,17 +28,17 @@ private val METADATA = ObjectMetadata(
     annotations = listOf(K8sAnnotation("test-run", "example")),
 )
 
-private val SUCCESS_POSSIBILITIES = possibilities<Pod, Pod.Builder> {
+private val SUCCESS_POSSIBILITIES = possibilities<Pod, PodDslBuilder> {
     scenario {
         id = "minimum"
-        given(Pod.Builder())
+        given(PodDslBuilder())
         expected = Pod()
     }
 
     scenario {
         id = "full metadata"
         description = "full metadata with placeholders for minimum Spec and Status"
-        given(Pod.Builder()) {
+        given(PodDslBuilder()) {
             metadata {
                 name = "test"
                 namespace = "test"
@@ -61,10 +61,10 @@ private val SUCCESS_POSSIBILITIES = possibilities<Pod, Pod.Builder> {
         }
         expected = Pod(
             metadata = METADATA,
-            spec = Pod.Spec(
+            spec = PodSpec(
                 containers = listOf(Container("test"))
             ),
-            status = Pod.Status()
+            status = PodStatus()
         )
     }
 }

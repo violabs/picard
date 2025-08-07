@@ -9,7 +9,7 @@ import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaim
 import org.junit.jupiter.api.BeforeAll
 
-class StatefulSetTest : SuccessBuildSim<StatefulSet, StatefulSetV2DslBuilder>() {
+class StatefulSetTest : SuccessBuildSim<StatefulSet, StatefulSetDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -18,30 +18,30 @@ class StatefulSetTest : SuccessBuildSim<StatefulSet, StatefulSetV2DslBuilder>() 
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<StatefulSet, StatefulSetV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<StatefulSet, StatefulSetDslBuilder> {
             scenario {
                 id = "minimum"
-                given(StatefulSetV2DslBuilder()) {
+                given(StatefulSetDslBuilder()) {
                     spec {
                         serviceName = PLACEHOLDER
                         selector {
                             sharedSelector()
                         }
-                        template = PodTemplate.Spec()
+                        template = PodTemplateSpec()
                     }
                 }
                 expected = StatefulSet(
                     spec = StatefulSetSpec(
                         serviceName = PLACEHOLDER,
                         selector = Common.LABEL_SELECTOR,
-                        template = PodTemplate.Spec()
+                        template = PodTemplateSpec()
                     )
                 )
             }
 
             scenario {
                 id = "full"
-                given(StatefulSetV2DslBuilder()) {
+                given(StatefulSetDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -50,7 +50,7 @@ class StatefulSetTest : SuccessBuildSim<StatefulSet, StatefulSetV2DslBuilder>() 
                         selector {
                             sharedSelector()
                         }
-                        template = PodTemplate.Spec()
+                        template = PodTemplateSpec()
                         replicas = 1
                         updateStrategy {
                             type = PLACEHOLDER
@@ -63,7 +63,7 @@ class StatefulSetTest : SuccessBuildSim<StatefulSet, StatefulSetV2DslBuilder>() 
                         revisionHistoryLimit = 1
                         minReadySeconds = 1
                         volumeClaimTemplates {
-                            persistentVolumeClaimV2 {
+                            persistentVolumeClaim {
 
                             }
                         }
@@ -92,7 +92,7 @@ class StatefulSetTest : SuccessBuildSim<StatefulSet, StatefulSetV2DslBuilder>() 
                     spec = StatefulSetSpec(
                         serviceName = PLACEHOLDER,
                         selector = Common.LABEL_SELECTOR,
-                        template = PodTemplate.Spec(),
+                        template = PodTemplateSpec(),
                         replicas = 1,
                         updateStrategy = StatefulSetUpdateStrategy(
                             type = PLACEHOLDER,

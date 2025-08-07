@@ -5,7 +5,7 @@ import io.violabs.picard.domain.BooleanType
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ConditionTest : FailureBuildSim<Condition, Condition.Builder>() {
+class ConditionTest : FailureBuildSim<Condition, ConditionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class ConditionTest : FailureBuildSim<Condition, Condition.Builder>() {
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<Condition, Condition.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<Condition, ConditionDslBuilder> {
             requireScenario("status") {
-                given(Condition.Builder())
+                given(ConditionDslBuilder())
             }
 
             requireScenario("type") {
-                given(Condition.Builder()) {
+                given(ConditionDslBuilder()) {
                     status = BooleanType.True
                 }
             }

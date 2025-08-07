@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ObjectMetricStatusTest : FailureBuildSim<ObjectMetricStatus, ObjectMetricStatus.Builder>() {
+class ObjectMetricStatusTest : FailureBuildSim<ObjectMetricStatus, ObjectMetricStatusDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class ObjectMetricStatusTest : FailureBuildSim<ObjectMetricStatus, ObjectMetricS
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<ObjectMetricStatus, ObjectMetricStatus.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ObjectMetricStatus, ObjectMetricStatusDslBuilder> {
             requireScenario("current") {
-                given(ObjectMetricStatus.Builder())
+                given(ObjectMetricStatusDslBuilder())
             }
 
             requireScenario("describedObject") {
-                given(ObjectMetricStatus.Builder()) {
+                given(ObjectMetricStatusDslBuilder()) {
                     current {
 
                     }
@@ -28,7 +28,7 @@ class ObjectMetricStatusTest : FailureBuildSim<ObjectMetricStatus, ObjectMetricS
             }
 
             requireScenario("metric") {
-                given(ObjectMetricStatus.Builder()) {
+                given(ObjectMetricStatusDslBuilder()) {
                     current {
 
                     }
@@ -40,7 +40,7 @@ class ObjectMetricStatusTest : FailureBuildSim<ObjectMetricStatus, ObjectMetricS
             }
 
             requireScenario("pods") {
-                given(ObjectMetricStatus.Builder()) {
+                given(ObjectMetricStatusDslBuilder()) {
                     current {
 
                     }

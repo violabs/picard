@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ResourceFieldSelectorTest : FailureBuildSim<ResourceFieldSelector, ResourceFieldSelector.Builder>() {
+class ResourceFieldSelectorTest : FailureBuildSim<ResourceFieldSelector, ResourceFieldSelectorDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class ResourceFieldSelectorTest : FailureBuildSim<ResourceFieldSelector, Resourc
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<ResourceFieldSelector, ResourceFieldSelector.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ResourceFieldSelector, ResourceFieldSelectorDslBuilder> {
             requireScenario("resource") {
-                given(ResourceFieldSelector.Builder())
+                given(ResourceFieldSelectorDslBuilder())
             }
 
             requireScenario("containerName") {
-                given(ResourceFieldSelector.Builder()) {
+                given(ResourceFieldSelectorDslBuilder()) {
                     resource = PLACEHOLDER
                 }
             }

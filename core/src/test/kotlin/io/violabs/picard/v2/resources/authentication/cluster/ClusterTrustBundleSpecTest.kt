@@ -1,12 +1,10 @@
 package io.violabs.picard.v2.resources.authentication.cluster
 
-
 import io.violabs.picard.FailureBuildSim
-import io.violabs.picard.domain.k8sResources.authentication.clusterTrustBundle.ClusterTrustBundle
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ClusterTrustBundleSpecTest : FailureBuildSim<ClusterTrustBundle.Spec, ClusterTrustBundle.Spec.Builder>() {
+class ClusterTrustBundleSpecTest : FailureBuildSim<ClusterTrustBundleSpec, ClusterTrustBundleSpecDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,9 +13,9 @@ class ClusterTrustBundleSpecTest : FailureBuildSim<ClusterTrustBundle.Spec, Clus
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<ClusterTrustBundle.Spec, ClusterTrustBundle.Spec.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ClusterTrustBundleSpec, ClusterTrustBundleSpecDslBuilder> {
             requireScenario("trustBundle") {
-                given(ClusterTrustBundle.Spec.Builder())
+                given(ClusterTrustBundleSpecDslBuilder())
             }
         }
     }

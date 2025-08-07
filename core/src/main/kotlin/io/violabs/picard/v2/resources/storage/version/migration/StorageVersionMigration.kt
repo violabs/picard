@@ -6,6 +6,7 @@ import io.violabs.picard.common.AppConstants
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.ConfigResource
+import io.violabs.picard.domain.manifest.StorageResource
 import io.violabs.picard.v2.common.ObjectMeta
 
 /**
@@ -34,6 +35,6 @@ data class StorageVersionMigration(
      * Status of the migration.
      */
     val status: StorageVersionMigrationStatus? = null
-) : ConfigResource<StorageVersionMigration.Version, ObjectMeta> {
+) : StorageResource<StorageVersionMigration.Version, ObjectMeta> {
     interface Version : APIVersion
 }

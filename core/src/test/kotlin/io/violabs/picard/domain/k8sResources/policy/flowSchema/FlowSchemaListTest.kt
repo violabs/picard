@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class FlowSchemaListTest : FullBuildSim<FlowSchemaList, FlowSchemaList.Builder>() {
+class FlowSchemaListTest : FullBuildSim<FlowSchemaList, FlowSchemaListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class FlowSchemaListTest : FullBuildSim<FlowSchemaList, FlowSchemaList.Builder>(
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<FlowSchemaList, FlowSchemaList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<FlowSchemaList, FlowSchemaListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(FlowSchemaList.Builder()) {
+                given(FlowSchemaListDslBuilder()) {
                     items {
                         flowSchemaItem {  }
                     }
@@ -31,9 +31,9 @@ class FlowSchemaListTest : FullBuildSim<FlowSchemaList, FlowSchemaList.Builder>(
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<FlowSchemaList, FlowSchemaList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<FlowSchemaList, FlowSchemaListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(FlowSchemaList.Builder())
+                given(FlowSchemaListDslBuilder())
             }
         }
     }

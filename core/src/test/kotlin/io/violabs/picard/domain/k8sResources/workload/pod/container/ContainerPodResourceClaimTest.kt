@@ -4,7 +4,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ContainerPodResourceClaimTest : FailureBuildSim<ContainerResourceClaim, ContainerResourceClaim.Builder>() {
+class ContainerPodResourceClaimTest : FailureBuildSim<ContainerResourceClaim, ContainerResourceClaimDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -18,10 +18,10 @@ class ContainerPodResourceClaimTest : FailureBuildSim<ContainerResourceClaim, Co
 }
 
 
-private val FAILURE_POSSIBILITIES = possibilities<ContainerPort, ContainerPort.Builder> {
+private val FAILURE_POSSIBILITIES = possibilities<ContainerPort, ContainerPortDslBuilder> {
     scenario {
         id = "missing containerPort"
-        given(ContainerPort.Builder())
+        given(ContainerPortDslBuilder())
         exceptionMessage = withTemplate("containerPort")
     }
 }

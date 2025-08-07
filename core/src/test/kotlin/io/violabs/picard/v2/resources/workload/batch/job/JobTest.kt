@@ -14,7 +14,7 @@ import io.violabs.picard.v2.resources.workload.batch.job.policy.success.SuccessP
 import io.violabs.picard.v2.resources.workload.batch.job.policy.success.SuccessPolicyRule
 import org.junit.jupiter.api.BeforeAll
 
-class JobTest : SuccessBuildSim<Job, JobV2DslBuilder>() {
+class JobTest : SuccessBuildSim<Job, JobDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -52,29 +52,29 @@ class JobTest : SuccessBuildSim<Job, JobV2DslBuilder>() {
             reason = PLACEHOLDER
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<Job, JobV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Job, JobDslBuilder> {
             scenario {
                 id = "minimum"
-                given(JobV2DslBuilder()) {
+                given(JobDslBuilder()) {
                     spec {
-                        template = PodTemplate.Spec()
+                        template = PodTemplateSpec()
                     }
                 }
                 expected = Job(
                     spec = JobSpec(
-                        template = PodTemplate.Spec()
+                        template = PodTemplateSpec()
                     )
                 )
             }
 
             scenario {
                 id = "full"
-                given(JobV2DslBuilder()) {
+                given(JobDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
                     spec {
-                        template = PodTemplate.Spec()
+                        template = PodTemplateSpec()
                         parallelism = 1
                         completions = 1
                         completionMode = JobSpec.CompletionMode.NonIndexed
@@ -146,7 +146,7 @@ class JobTest : SuccessBuildSim<Job, JobV2DslBuilder>() {
                 expected = Job(
                     metadata = Common.OBJECT_META,
                     spec = JobSpec(
-                        template = PodTemplate.Spec(),
+                        template = PodTemplateSpec(),
                         parallelism = 1,
                         completions = 1,
                         completionMode = JobSpec.CompletionMode.NonIndexed,

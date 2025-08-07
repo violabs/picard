@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class InlineVolumeSpecTest : FailureBuildSim<InlineVolumeSpec, InlineVolumeSpec.Builder>() {
+class InlineVolumeSpecTest : FailureBuildSim<InlineVolumeSpec, InlineVolumeSpecDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class InlineVolumeSpecTest : FailureBuildSim<InlineVolumeSpec, InlineVolumeSpec.
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<InlineVolumeSpec, InlineVolumeSpec.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<InlineVolumeSpec, InlineVolumeSpecDslBuilder> {
             requireScenario("attached") {
-                given(InlineVolumeSpec.Builder())
+                given(InlineVolumeSpecDslBuilder())
             }
         }
     }

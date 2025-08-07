@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PodDisruptionBudgetStatusTest : FailureBuildSim<PodDisruptionBudget.Status, PodDisruptionBudget.Status.Builder>() {
+class PodDisruptionBudgetStatusTest : FailureBuildSim<PodDisruptionBudgetStatus, PodDisruptionBudgetStatusDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,26 +15,26 @@ class PodDisruptionBudgetStatusTest : FailureBuildSim<PodDisruptionBudget.Status
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<PodDisruptionBudget.Status, PodDisruptionBudget.Status.Builder> {
+            possibilities<PodDisruptionBudgetStatus, PodDisruptionBudgetStatusDslBuilder> {
                 requireScenario("currentHealthy") {
-                    given(PodDisruptionBudget.Status.Builder())
+                    given(PodDisruptionBudgetStatusDslBuilder())
                 }
 
                 requireScenario("desiredHealthy") {
-                    given(PodDisruptionBudget.Status.Builder()) {
+                    given(PodDisruptionBudgetStatusDslBuilder()) {
                         currentHealthy = 1
                     }
                 }
 
                 requireScenario("disruptionsAllowed") {
-                    given(PodDisruptionBudget.Status.Builder()) {
+                    given(PodDisruptionBudgetStatusDslBuilder()) {
                         currentHealthy = 1
                         desiredHealthy = 1
                     }
                 }
 
                 requireScenario("expectedPods") {
-                    given(PodDisruptionBudget.Status.Builder()) {
+                    given(PodDisruptionBudgetStatusDslBuilder()) {
                         currentHealthy = 1
                         desiredHealthy = 1
                         disruptionsAllowed = 1

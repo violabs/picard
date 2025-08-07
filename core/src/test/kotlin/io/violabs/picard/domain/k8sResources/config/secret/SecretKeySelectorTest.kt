@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class SecretKeySelectorTest : FailureBuildSim<SecretKeySelector, SecretKeySelector.Builder>() {
+class SecretKeySelectorTest : FailureBuildSim<SecretKeySelector, SecretKeySelectorDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class SecretKeySelectorTest : FailureBuildSim<SecretKeySelector, SecretKeySelect
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<SecretKeySelector, SecretKeySelector.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<SecretKeySelector, SecretKeySelectorDslBuilder> {
             requireScenario("key") {
-                given(SecretKeySelector.Builder())
+                given(SecretKeySelectorDslBuilder())
             }
         }
     }

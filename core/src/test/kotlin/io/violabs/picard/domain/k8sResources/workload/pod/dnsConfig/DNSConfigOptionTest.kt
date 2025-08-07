@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class DNSConfigOptionTest : FailureBuildSim<DNSConfigOption, DNSConfigOption.Builder>() {
+class DNSConfigOptionTest : FailureBuildSim<DNSConfigOption, DNSConfigOptionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,8 +16,8 @@ class DNSConfigOptionTest : FailureBuildSim<DNSConfigOption, DNSConfigOption.Bui
     }
 }
 
-private val FAILURE_POSSIBILITIES = possibilities<DNSConfigOption, DNSConfigOption.Builder> {
+private val FAILURE_POSSIBILITIES = possibilities<DNSConfigOption, DNSConfigOptionDslBuilder> {
     requireScenario("name") {
-        given(DNSConfigOption.Builder())
+        given(DNSConfigOptionDslBuilder())
     }
 }

@@ -23,7 +23,7 @@ import io.violabs.picard.domain.k8sResources.storage.volumeAttributesClass.Volum
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class StorageResourceSectionTest : FullBuildSim<StorageResourceSection, StorageResourceSection.Builder>() {
+class StorageResourceSectionTest : FullBuildSim<StorageResourceSection, StorageResourceSectionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -41,10 +41,10 @@ class StorageResourceSectionTest : FullBuildSim<StorageResourceSection, StorageR
             provisioner = PLACEHOLDER
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<StorageResourceSection, StorageResourceSection.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<StorageResourceSection, StorageResourceSectionDslBuilder> {
             scenario {
                 id = "full"
-                given(StorageResourceSection.Builder()) {
+                given(StorageResourceSectionDslBuilder()) {
                     csiDriver {  }
 
                     csiDriverList {
@@ -150,9 +150,9 @@ class StorageResourceSectionTest : FullBuildSim<StorageResourceSection, StorageR
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<StorageResourceSection, StorageResourceSection.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<StorageResourceSection, StorageResourceSectionDslBuilder> {
             requireNotEmptyScenario("resources") {
-                given(StorageResourceSection.Builder())
+                given(StorageResourceSectionDslBuilder())
             }
         }
     }

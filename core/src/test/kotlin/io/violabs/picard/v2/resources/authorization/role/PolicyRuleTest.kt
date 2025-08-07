@@ -1,11 +1,10 @@
-package io.violabs.picard.domain.k8sResources.authorization
-
+package io.violabs.picard.v2.resources.authorization.role
 
 import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PolicyRuleTest : FailureBuildSim<PolicyRule, PolicyRule.Builder>() {
+class PolicyRuleTest : FailureBuildSim<PolicyRule, PolicyRuleDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +13,9 @@ class PolicyRuleTest : FailureBuildSim<PolicyRule, PolicyRule.Builder>() {
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<PolicyRule, PolicyRule.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<PolicyRule, PolicyRuleDslBuilder> {
             requireNotEmptyScenario("verbs") {
-                given(PolicyRule.Builder())
+                given(PolicyRuleDslBuilder())
             }
         }
     }

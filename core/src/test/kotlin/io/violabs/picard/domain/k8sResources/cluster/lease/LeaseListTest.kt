@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class LeaseListTest : FullBuildSim<LeaseList, LeaseList.Builder>() {
+class LeaseListTest : FullBuildSim<LeaseList, LeaseListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class LeaseListTest : FullBuildSim<LeaseList, LeaseList.Builder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<LeaseList, LeaseList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<LeaseList, LeaseListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(LeaseList.Builder()) {
+                given(LeaseListDslBuilder()) {
                     items {
                         leaseItem {}
                     }
@@ -29,9 +29,9 @@ class LeaseListTest : FullBuildSim<LeaseList, LeaseList.Builder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<LeaseList, LeaseList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<LeaseList, LeaseListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(LeaseList.Builder())
+                given(LeaseListDslBuilder())
             }
         }
     }

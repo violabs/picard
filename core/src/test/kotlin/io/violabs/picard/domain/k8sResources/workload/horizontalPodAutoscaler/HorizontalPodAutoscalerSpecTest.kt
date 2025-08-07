@@ -7,7 +7,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class HorizontalPodAutoscalerSpecTest :
-    FullBuildSim<HorizontalPodAutoscaler.Spec, HorizontalPodAutoscaler.Spec.Builder>() {
+    FullBuildSim<HorizontalPodAutoscalerSpec, HorizontalPodAutoscalerSpecDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -18,10 +18,10 @@ class HorizontalPodAutoscalerSpecTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<HorizontalPodAutoscaler.Spec, HorizontalPodAutoscaler.Spec.Builder> {
+            possibilities<HorizontalPodAutoscalerSpec, HorizontalPodAutoscalerSpecDslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(HorizontalPodAutoscaler.Spec.Builder()) {
+                    given(HorizontalPodAutoscalerSpecDslBuilder()) {
                         maxReplicas = 1
                         scaleTargetRef {
                             apiVersion = PLACEHOLDER
@@ -29,7 +29,7 @@ class HorizontalPodAutoscalerSpecTest :
                             name = PLACEHOLDER
                         }
                     }
-                    expected = HorizontalPodAutoscaler.Spec(
+                    expected = HorizontalPodAutoscalerSpec(
                         maxReplicas = 1,
                         scaleTargetRef = CrossVersionObjectReference(
                             apiVersion = PLACEHOLDER,
@@ -41,13 +41,13 @@ class HorizontalPodAutoscalerSpecTest :
             }
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<HorizontalPodAutoscaler.Spec, HorizontalPodAutoscaler.Spec.Builder> {
+            possibilities<HorizontalPodAutoscalerSpec, HorizontalPodAutoscalerSpecDslBuilder> {
                 requireScenario("maxReplicas") {
-                    given(HorizontalPodAutoscaler.Spec.Builder())
+                    given(HorizontalPodAutoscalerSpecDslBuilder())
                 }
 
                 requireScenario("scaleTargetRef") {
-                    given(HorizontalPodAutoscaler.Spec.Builder()) {
+                    given(HorizontalPodAutoscalerSpecDslBuilder()) {
                         maxReplicas = 1
                     }
                 }

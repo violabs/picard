@@ -9,7 +9,7 @@ import io.violabs.picard.possibilities
 import io.violabs.picard.v2.common.LabelSelectorRequirement
 import org.junit.jupiter.api.BeforeAll
 
-class NetworkPolicyTest : SuccessBuildSim<NetworkPolicy, NetworkPolicyV2DslBuilder>() {
+class NetworkPolicyTest : SuccessBuildSim<NetworkPolicy, NetworkPolicyDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -43,16 +43,16 @@ class NetworkPolicyTest : SuccessBuildSim<NetworkPolicy, NetworkPolicyV2DslBuild
             ports = listOf(NETWORK_POLICY_PORT)
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<NetworkPolicy, NetworkPolicyV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<NetworkPolicy, NetworkPolicyDslBuilder> {
             scenario {
                 id = "minimum"
-                given(NetworkPolicyV2DslBuilder())
+                given(NetworkPolicyDslBuilder())
                 expected = NetworkPolicy()
             }
 
             scenario {
                 id = "full"
-                given(NetworkPolicyV2DslBuilder()) {
+                given(NetworkPolicyDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }

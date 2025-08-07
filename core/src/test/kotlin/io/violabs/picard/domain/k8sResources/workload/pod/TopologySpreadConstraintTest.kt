@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class TopologySpreadConstraintTest : FailureBuildSim<TopologySpreadConstraint, TopologySpreadConstraint.Builder>() {
+class TopologySpreadConstraintTest : FailureBuildSim<TopologySpreadConstraint, TopologySpreadConstraintDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,19 +14,19 @@ class TopologySpreadConstraintTest : FailureBuildSim<TopologySpreadConstraint, T
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<TopologySpreadConstraint, TopologySpreadConstraint.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<TopologySpreadConstraint, TopologySpreadConstraintDslBuilder> {
             requireScenario("maxSkew") {
-                given(TopologySpreadConstraint.Builder())
+                given(TopologySpreadConstraintDslBuilder())
             }
 
             requireScenario("topologyKey") {
-                given(TopologySpreadConstraint.Builder()) {
+                given(TopologySpreadConstraintDslBuilder()) {
                     maxSkew = 1
                 }
             }
 
             requireScenario("whenUnsatisfiable") {
-                given(TopologySpreadConstraint.Builder()) {
+                given(TopologySpreadConstraintDslBuilder()) {
                     maxSkew = 1
                     topologyKey = "fill"
                 }

@@ -15,7 +15,7 @@ import io.violabs.picard.domain.k8sResources.service.ingressClass.IngressClassLi
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ServiceResourceSectionTest : FullBuildSim<ServiceResourceSection, ServiceResourceSection.Builder>() {
+class ServiceResourceSectionTest : FullBuildSim<ServiceResourceSection, ServiceResourceSectionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -25,10 +25,10 @@ class ServiceResourceSectionTest : FullBuildSim<ServiceResourceSection, ServiceR
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ServiceResourceSection, ServiceResourceSection.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ServiceResourceSection, ServiceResourceSectionDslBuilder> {
             scenario {
                 id = "full"
-                given(ServiceResourceSection.Builder()) {
+                given(ServiceResourceSectionDslBuilder()) {
                     endpoints { }
                     endpointsList {
                         items {
@@ -77,9 +77,9 @@ class ServiceResourceSectionTest : FullBuildSim<ServiceResourceSection, ServiceR
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<ServiceResourceSection, ServiceResourceSection.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ServiceResourceSection, ServiceResourceSectionDslBuilder> {
             requireNotEmptyScenario("resources") {
-                given(ServiceResourceSection.Builder())
+                given(ServiceResourceSectionDslBuilder())
             }
         }
     }

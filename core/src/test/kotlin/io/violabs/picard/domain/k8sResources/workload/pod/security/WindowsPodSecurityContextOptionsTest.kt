@@ -5,7 +5,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class WindowsPodSecurityContextOptionsTest :
-    SuccessBuildSim<WindowsSecurityContextOptions, WindowsSecurityContextOptions.Builder>() {
+    SuccessBuildSim<WindowsSecurityContextOptions, WindowsSecurityContextOptionsDslBuilder>() {
 
     companion object {
         @JvmStatic
@@ -20,10 +20,10 @@ class WindowsPodSecurityContextOptionsTest :
 }
 
 private val SUCCESS_POSSIBILITIES =
-    possibilities<WindowsSecurityContextOptions, WindowsSecurityContextOptions.Builder> {
+    possibilities<WindowsSecurityContextOptions, WindowsSecurityContextOptionsDslBuilder> {
         scenario {
             id = "false boolean values"
-            given(WindowsSecurityContextOptions.Builder()) {
+            given(WindowsSecurityContextOptionsDslBuilder()) {
                 hostProcess = false
             }
             expected = WindowsSecurityContextOptions(

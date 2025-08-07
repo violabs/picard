@@ -13,7 +13,7 @@ import io.violabs.picard.v2.resources.service.status.PortStatus
 import io.violabs.picard.v2.resources.service.status.ServiceStatus
 import org.junit.jupiter.api.BeforeAll
 
-class ServiceTest : SuccessBuildSim<Service, ServiceV2DslBuilder>() {
+class ServiceTest : SuccessBuildSim<Service, ServiceDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -22,16 +22,16 @@ class ServiceTest : SuccessBuildSim<Service, ServiceV2DslBuilder>() {
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<Service, ServiceV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Service, ServiceDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ServiceV2DslBuilder())
+                given(ServiceDslBuilder())
                 expected = Service()
             }
 
             scenario {
                 id = "full"
-                given(ServiceV2DslBuilder()) {
+                given(ServiceDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }

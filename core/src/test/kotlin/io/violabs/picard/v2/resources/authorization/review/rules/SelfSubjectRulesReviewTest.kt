@@ -7,7 +7,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class SelfSubjectRulesReviewTest : FullBuildSim<SelfSubjectRulesReview, SelfSubjectRulesReviewV2DslBuilder>() {
+class SelfSubjectRulesReviewTest : FullBuildSim<SelfSubjectRulesReview, SelfSubjectRulesReviewDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,10 +17,10 @@ class SelfSubjectRulesReviewTest : FullBuildSim<SelfSubjectRulesReview, SelfSubj
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<SelfSubjectRulesReview, SelfSubjectRulesReviewV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<SelfSubjectRulesReview, SelfSubjectRulesReviewDslBuilder> {
             scenario {
                 id = "minimum"
-                given(SelfSubjectRulesReviewV2DslBuilder()) {
+                given(SelfSubjectRulesReviewDslBuilder()) {
                     spec {
                         namespace = PLACEHOLDER
                     }
@@ -32,7 +32,7 @@ class SelfSubjectRulesReviewTest : FullBuildSim<SelfSubjectRulesReview, SelfSubj
 
             scenario {
                 id = "full"
-                given(SelfSubjectRulesReviewV2DslBuilder()) {
+                given(SelfSubjectRulesReviewDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -87,9 +87,9 @@ class SelfSubjectRulesReviewTest : FullBuildSim<SelfSubjectRulesReview, SelfSubj
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<SelfSubjectRulesReview, SelfSubjectRulesReviewV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<SelfSubjectRulesReview, SelfSubjectRulesReviewDslBuilder> {
             requireScenario("spec") {
-                given(SelfSubjectRulesReviewV2DslBuilder())
+                given(SelfSubjectRulesReviewDslBuilder())
             }
         }
     }

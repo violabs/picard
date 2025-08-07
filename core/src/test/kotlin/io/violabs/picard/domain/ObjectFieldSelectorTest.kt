@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ObjectFieldSelectorTest : FailureBuildSim<ObjectFieldSelector, ObjectFieldSelector.Builder>() {
+class ObjectFieldSelectorTest : FailureBuildSim<ObjectFieldSelector, ObjectFieldSelectorDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class ObjectFieldSelectorTest : FailureBuildSim<ObjectFieldSelector, ObjectField
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<ObjectFieldSelector, ObjectFieldSelector.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ObjectFieldSelector, ObjectFieldSelectorDslBuilder> {
             requireScenario("fieldPath") {
-                given(ObjectFieldSelector.Builder())
+                given(ObjectFieldSelectorDslBuilder())
             }
         }
     }

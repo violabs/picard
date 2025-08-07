@@ -7,6 +7,7 @@ import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.k8sResources.Quantity
 import io.violabs.picard.domain.manifest.ConfigResource
+import io.violabs.picard.domain.manifest.StorageResource
 import io.violabs.picard.v2.common.LabelSelector
 import io.violabs.picard.v2.common.ObjectMeta
 
@@ -89,7 +90,7 @@ data class CsiStorageCapacity(
      * accessible from all nodes. This field is immutable.
      */
     val nodeTopology: LabelSelector? = null
-) : ConfigResource<CsiStorageCapacity.Version, ObjectMeta> {
+) : StorageResource<CsiStorageCapacity.Version, ObjectMeta> {
     interface Version : APIVersion
 
     override fun getKind(): String {

@@ -39,7 +39,7 @@ abstract class ContainerSim<T : BaseContainer, B : DslBuilder<T>>(
             buildSetup(klass, scenariosSet)
         }
 
-        fun <T : BaseContainer, BUILDER : BaseContainer.Builder<T>> fullScenario(
+        fun <T : BaseContainer, BUILDER : BaseContainerDslBuilder<T>> fullScenario(
             set: TestScenarioSet<T, BUILDER>,
             builder: BUILDER,
             expectedContainer: T,

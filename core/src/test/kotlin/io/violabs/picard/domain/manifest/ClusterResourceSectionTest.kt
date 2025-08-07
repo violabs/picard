@@ -25,7 +25,7 @@ import io.violabs.picard.domain.k8sResources.cluster.serviceCIDR.ServiceCIDRList
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ClusterResourceSectionTest : FullBuildSim<ClusterResourceSection, ClusterResourceSection.Builder>() {
+class ClusterResourceSectionTest : FullBuildSim<ClusterResourceSection, ClusterResourceSectionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -40,7 +40,7 @@ class ClusterResourceSectionTest : FullBuildSim<ClusterResourceSection, ClusterR
         )
 
         private val LEASE_CANDIDATE = LeaseCandidate(
-            spec = LeaseCandidate.Spec(
+            spec = LeaseCandidateSpec(
                 leaseName = PLACEHOLDER,
                 preferredStrategies = PLACEHOLDER_LIST,
             )
@@ -50,10 +50,10 @@ class ClusterResourceSectionTest : FullBuildSim<ClusterResourceSection, ClusterR
             handler = PLACEHOLDER
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ClusterResourceSection, ClusterResourceSection.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ClusterResourceSection, ClusterResourceSectionDslBuilder> {
             scenario {
                 id = "full"
-                given(ClusterResourceSection.Builder()) {
+                given(ClusterResourceSectionDslBuilder()) {
                     apiService { }
                     apiServiceList {
                         items {
@@ -122,7 +122,7 @@ class ClusterResourceSectionTest : FullBuildSim<ClusterResourceSection, ClusterR
                             runtime { handler = PLACEHOLDER }
                         }
                     }
-                    serviceCIDR {
+                    serviceCidr {
                     }
                     serviceCIDRList {
                         items {
@@ -157,9 +157,9 @@ class ClusterResourceSectionTest : FullBuildSim<ClusterResourceSection, ClusterR
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<ClusterResourceSection, ClusterResourceSection.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ClusterResourceSection, ClusterResourceSectionDslBuilder> {
             requireNotEmptyScenario("resources") {
-                given(ClusterResourceSection.Builder())
+                given(ClusterResourceSectionDslBuilder())
             }
         }
     }

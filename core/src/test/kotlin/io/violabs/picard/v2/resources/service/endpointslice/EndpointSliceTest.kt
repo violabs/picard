@@ -7,7 +7,7 @@ import io.violabs.picard.possibilities
 import io.violabs.picard.domain.ObjectReference
 import org.junit.jupiter.api.BeforeAll
 
-class EndpointSliceTest : SuccessBuildSim<EndpointSlice, EndpointSliceV2DslBuilder>() {
+class EndpointSliceTest : SuccessBuildSim<EndpointSlice, EndpointSliceDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,10 +16,10 @@ class EndpointSliceTest : SuccessBuildSim<EndpointSlice, EndpointSliceV2DslBuild
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<EndpointSlice, EndpointSliceV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<EndpointSlice, EndpointSliceDslBuilder> {
             scenario {
                 id = "minimum"
-                given(EndpointSliceV2DslBuilder()) {
+                given(EndpointSliceDslBuilder()) {
                     addressType = "IPv4"
                     endpoints {
                         endpoint {
@@ -39,7 +39,7 @@ class EndpointSliceTest : SuccessBuildSim<EndpointSlice, EndpointSliceV2DslBuild
 
             scenario {
                 id = "full"
-                given(EndpointSliceV2DslBuilder()) {
+                given(EndpointSliceDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }

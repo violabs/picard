@@ -3,12 +3,10 @@ package io.violabs.picard.v2.resources.authentication.cluster
 
 import io.violabs.picard.FullBuildSim
 import io.violabs.picard.domain.ListMeta
-import io.violabs.picard.domain.k8sResources.authentication.clusterTrustBundle.ClusterTrustBundle
-import io.violabs.picard.domain.k8sResources.authentication.clusterTrustBundle.ClusterTrustBundleList
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ClusterTrustBundleListTest : FullBuildSim<ClusterTrustBundleList, ClusterTrustBundleList.Builder>() {
+class ClusterTrustBundleListTest : FullBuildSim<ClusterTrustBundleList, ClusterTrustBundleListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -18,13 +16,13 @@ class ClusterTrustBundleListTest : FullBuildSim<ClusterTrustBundleList, ClusterT
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ClusterTrustBundleList, ClusterTrustBundleList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ClusterTrustBundleList, ClusterTrustBundleListDslBuilder> {
             scenario {
                 id = "minimum"
                 description = "with blank metadata"
-                given(ClusterTrustBundleList.Builder()) {
+                given(ClusterTrustBundleListDslBuilder()) {
                     items {
-                        bundle {
+                        clusterTrustBundle {
                             spec {
                                 trustBundle = PLACEHOLDER
                             }
@@ -36,7 +34,7 @@ class ClusterTrustBundleListTest : FullBuildSim<ClusterTrustBundleList, ClusterT
                 expected = ClusterTrustBundleList(
                     items = listOf(
                         ClusterTrustBundle(
-                            spec = ClusterTrustBundle.Spec(
+                            spec = ClusterTrustBundleSpec(
                                 trustBundle = PLACEHOLDER
                             )
                         )
@@ -46,9 +44,9 @@ class ClusterTrustBundleListTest : FullBuildSim<ClusterTrustBundleList, ClusterT
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<ClusterTrustBundleList, ClusterTrustBundleList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ClusterTrustBundleList, ClusterTrustBundleListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(ClusterTrustBundleList.Builder())
+                given(ClusterTrustBundleListDslBuilder())
             }
         }
     }

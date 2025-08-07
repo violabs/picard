@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class MetricIdentifierTest : FailureBuildSim<MetricIdentifier, MetricIdentifier.Builder>() {
+class MetricIdentifierTest : FailureBuildSim<MetricIdentifier, MetricIdentifierDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class MetricIdentifierTest : FailureBuildSim<MetricIdentifier, MetricIdentifier.
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<MetricIdentifier, MetricIdentifier.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<MetricIdentifier, MetricIdentifierDslBuilder> {
             requireScenario("name") {
-                given(MetricIdentifier.Builder())
+                given(MetricIdentifierDslBuilder())
             }
         }
     }

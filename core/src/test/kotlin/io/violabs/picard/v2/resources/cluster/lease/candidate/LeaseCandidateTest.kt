@@ -6,7 +6,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class LeaseCandidateTest : SuccessBuildSim<LeaseCandidate, LeaseCandidateV2DslBuilder>() {
+class LeaseCandidateTest : SuccessBuildSim<LeaseCandidate, LeaseCandidateDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class LeaseCandidateTest : SuccessBuildSim<LeaseCandidate, LeaseCandidateV2DslBu
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<LeaseCandidate, LeaseCandidateV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<LeaseCandidate, LeaseCandidateDslBuilder> {
             scenario {
                 id = "minimum"
-                given(LeaseCandidateV2DslBuilder()) {
+                given(LeaseCandidateDslBuilder()) {
                     spec {
                         binaryVersion = PLACEHOLDER
                         leaseName = PLACEHOLDER
@@ -36,7 +36,7 @@ class LeaseCandidateTest : SuccessBuildSim<LeaseCandidate, LeaseCandidateV2DslBu
 
             scenario {
                 id = "full"
-                given(LeaseCandidateV2DslBuilder()) {
+                given(LeaseCandidateDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }

@@ -9,7 +9,7 @@ import io.violabs.picard.domain.k8sResources.policy.*
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ValidatingAdmissionPolicyTest : SuccessBuildSim<ValidatingAdmissionPolicy, ValidatingAdmissionPolicy.Builder>() {
+class ValidatingAdmissionPolicyTest : SuccessBuildSim<ValidatingAdmissionPolicy, ValidatingAdmissionPolicyDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -64,16 +64,16 @@ class ValidatingAdmissionPolicyTest : SuccessBuildSim<ValidatingAdmissionPolicy,
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<ValidatingAdmissionPolicy, ValidatingAdmissionPolicy.Builder> {
+            possibilities<ValidatingAdmissionPolicy, ValidatingAdmissionPolicyDslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(ValidatingAdmissionPolicy.Builder())
+                    given(ValidatingAdmissionPolicyDslBuilder())
                     expected = ValidatingAdmissionPolicy()
                 }
 
                 scenario {
                     id = "full"
-                    given(ValidatingAdmissionPolicy.Builder()) {
+                    given(ValidatingAdmissionPolicyDslBuilder()) {
                         sharedMetadata()
                         spec {
                             auditAnnotations {
@@ -135,7 +135,7 @@ class ValidatingAdmissionPolicyTest : SuccessBuildSim<ValidatingAdmissionPolicy,
                     }
                     expected = ValidatingAdmissionPolicy(
                         metadata = METADATA,
-                        spec = ValidatingAdmissionPolicy.Spec(
+                        spec = ValidatingAdmissionPolicySpec(
                             auditAnnotations = listOf(AUDIT_ANNOTATION),
                             failurePolicy = PLACEHOLDER,
                             matchConditions = listOf(MATCH_CONDITION),
@@ -144,7 +144,7 @@ class ValidatingAdmissionPolicyTest : SuccessBuildSim<ValidatingAdmissionPolicy,
                             validations = listOf(VALIDATION),
                             variables = listOf(VARIABLE)
                         ),
-                        status = ValidatingAdmissionPolicy.Status(
+                        status = ValidatingAdmissionPolicyStatus(
                             conditions = listOf(SERVICE_CONDITION),
                             observedGeneration = 1,
                             typeChecking = TYPE_CHECKING

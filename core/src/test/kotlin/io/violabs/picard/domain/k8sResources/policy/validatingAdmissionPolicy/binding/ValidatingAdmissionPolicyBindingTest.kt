@@ -7,7 +7,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class ValidatingAdmissionPolicyBindingTest :
-    SuccessBuildSim<ValidatingAdmissionPolicyBinding, ValidatingAdmissionPolicyBinding.Builder>() {
+    SuccessBuildSim<ValidatingAdmissionPolicyBinding, ValidatingAdmissionPolicyBindingDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -27,16 +27,16 @@ class ValidatingAdmissionPolicyBindingTest :
 
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<ValidatingAdmissionPolicyBinding, ValidatingAdmissionPolicyBinding.Builder> {
+            possibilities<ValidatingAdmissionPolicyBinding, ValidatingAdmissionPolicyBindingDslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(ValidatingAdmissionPolicyBinding.Builder())
+                    given(ValidatingAdmissionPolicyBindingDslBuilder())
                     expected = ValidatingAdmissionPolicyBinding()
                 }
 
                 scenario {
                     id = "full"
-                    given(ValidatingAdmissionPolicyBinding.Builder()) {
+                    given(ValidatingAdmissionPolicyBindingDslBuilder()) {
                         sharedMetadata()
                         spec {
                             matchResources {
@@ -54,7 +54,7 @@ class ValidatingAdmissionPolicyBindingTest :
                     }
                     expected = ValidatingAdmissionPolicyBinding(
                         metadata = METADATA,
-                        spec = ValidatingAdmissionPolicyBinding.Spec(
+                        spec = ValidatingAdmissionPolicyBindingSpec(
                             matchResources = MATCH_RESOURCES,
                             paramRef = PARAM_REF
                         )

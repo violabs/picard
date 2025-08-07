@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class SysctlTest : FailureBuildSim<Sysctl, Sysctl.Builder>() {
+class SysctlTest : FailureBuildSim<Sysctl, SysctlDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class SysctlTest : FailureBuildSim<Sysctl, Sysctl.Builder>() {
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<Sysctl, Sysctl.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<Sysctl, SysctlDslBuilder> {
             requireScenario("name") {
-                given(Sysctl.Builder())
+                given(SysctlDslBuilder())
             }
 
             requireScenario("value") {
-                given(Sysctl.Builder()) {
+                given(SysctlDslBuilder()) {
                     name = "sysctl_test"
                 }
             }

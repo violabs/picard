@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class CrossVersionObjectReferenceTest :
-    FailureBuildSim<CrossVersionObjectReference, CrossVersionObjectReference.Builder>() {
+    FailureBuildSim<CrossVersionObjectReference, CrossVersionObjectReferenceDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,13 +16,13 @@ class CrossVersionObjectReferenceTest :
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<CrossVersionObjectReference, CrossVersionObjectReference.Builder> {
+            possibilities<CrossVersionObjectReference, CrossVersionObjectReferenceDslBuilder> {
                 requireScenario("kind") {
-                    given(CrossVersionObjectReference.Builder())
+                    given(CrossVersionObjectReferenceDslBuilder())
                 }
 
                 requireScenario("name") {
-                    given(CrossVersionObjectReference.Builder()) {
+                    given(CrossVersionObjectReferenceDslBuilder()) {
                         kind = PLACEHOLDER
                     }
                 }

@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class NonResourcePolicyRuleTest : FailureBuildSim<NonResourcePolicyRule, NonResourcePolicyRule.Builder>() {
+class NonResourcePolicyRuleTest : FailureBuildSim<NonResourcePolicyRule, NonResourcePolicyRuleDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class NonResourcePolicyRuleTest : FailureBuildSim<NonResourcePolicyRule, NonReso
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<NonResourcePolicyRule, NonResourcePolicyRule.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<NonResourcePolicyRule, NonResourcePolicyRuleDslBuilder> {
             requireNotEmptyScenario("nonResourceURLs") {
-                given(NonResourcePolicyRule.Builder())
+                given(NonResourcePolicyRuleDslBuilder())
             }
 
             requireNotEmptyScenario("verbs") {
-                given(NonResourcePolicyRule.Builder()) {
+                given(NonResourcePolicyRuleDslBuilder()) {
                     nonResourceURLs(PLACEHOLDER)
                 }
             }

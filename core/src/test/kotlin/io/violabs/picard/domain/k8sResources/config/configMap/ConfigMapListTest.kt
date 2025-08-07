@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ConfigMapListTest : FullBuildSim<ConfigMapList, ConfigMapList.Builder>() {
+class ConfigMapListTest : FullBuildSim<ConfigMapList, ConfigMapListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class ConfigMapListTest : FullBuildSim<ConfigMapList, ConfigMapList.Builder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ConfigMapList, ConfigMapList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ConfigMapList, ConfigMapListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ConfigMapList.Builder()) {
+                given(ConfigMapListDslBuilder()) {
                     items {
                         map {  }
                     }
@@ -31,9 +31,9 @@ class ConfigMapListTest : FullBuildSim<ConfigMapList, ConfigMapList.Builder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<ConfigMapList, ConfigMapList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ConfigMapList, ConfigMapListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(ConfigMapList.Builder())
+                given(ConfigMapListDslBuilder())
             }
         }
     }

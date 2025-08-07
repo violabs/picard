@@ -9,7 +9,7 @@ import io.violabs.picard.domain.k8sResources.config.secret.SecretList
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ConfigResourceSectionTest : FullBuildSim<ConfigResourceSection, ConfigResourceSection.Builder>() {
+class ConfigResourceSectionTest : FullBuildSim<ConfigResourceSection, ConfigResourceSectionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -19,10 +19,10 @@ class ConfigResourceSectionTest : FullBuildSim<ConfigResourceSection, ConfigReso
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ConfigResourceSection, ConfigResourceSection.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ConfigResourceSection, ConfigResourceSectionDslBuilder> {
             scenario {
                 id = "full"
-                given(ConfigResourceSection.Builder()) {
+                given(ConfigResourceSectionDslBuilder()) {
                     configMap {
 
                     }
@@ -54,9 +54,9 @@ class ConfigResourceSectionTest : FullBuildSim<ConfigResourceSection, ConfigReso
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<ConfigResourceSection, ConfigResourceSection.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ConfigResourceSection, ConfigResourceSectionDslBuilder> {
             requireNotEmptyScenario("resources") {
-                given(ConfigResourceSection.Builder())
+                given(ConfigResourceSectionDslBuilder())
             }
         }
     }

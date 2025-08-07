@@ -6,7 +6,7 @@ import io.violabs.picard.domain.DeviceSelector
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class DeviceClassTest : FullBuildSim<DeviceClass, DeviceClass.Builder>() {
+class DeviceClassTest : FullBuildSim<DeviceClass, DeviceClassDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,20 +16,20 @@ class DeviceClassTest : FullBuildSim<DeviceClass, DeviceClass.Builder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<DeviceClass, DeviceClass.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<DeviceClass, DeviceClassDslBuilder> {
             scenario {
                 id = "minimum"
-                given(DeviceClass.Builder()) {
+                given(DeviceClassDslBuilder()) {
                     spec {}
                 }
                 expected = DeviceClass(
-                    spec = DeviceClass.Spec()
+                    spec = DeviceClassSpec()
                 )
             }
 
             scenario {
                 id = "full"
-                given(DeviceClass.Builder()) {
+                given(DeviceClassDslBuilder()) {
                     sharedMetadata()
                     spec {
                         config {
@@ -56,7 +56,7 @@ class DeviceClassTest : FullBuildSim<DeviceClass, DeviceClass.Builder>() {
                 }
                 expected = DeviceClass(
                     metadata = METADATA,
-                    spec = DeviceClass.Spec(
+                    spec = DeviceClassSpec(
                         config = listOf(
                             DeviceClassConfiguration(
                                 opaque = OPAQUE_DEVICE_CONFIG
@@ -73,9 +73,9 @@ class DeviceClassTest : FullBuildSim<DeviceClass, DeviceClass.Builder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<DeviceClass, DeviceClass.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<DeviceClass, DeviceClassDslBuilder> {
             requireScenario("spec") {
-                given(DeviceClass.Builder())
+                given(DeviceClassDslBuilder())
             }
         }
     }

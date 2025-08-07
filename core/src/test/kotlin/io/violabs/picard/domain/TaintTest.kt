@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class TaintTest : FailureBuildSim<Taint, Taint.Builder>() {
+class TaintTest : FailureBuildSim<Taint, TaintDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class TaintTest : FailureBuildSim<Taint, Taint.Builder>() {
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<Taint, Taint.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<Taint, TaintDslBuilder> {
             requireScenario("effect") {
-                given(Taint.Builder())
+                given(TaintDslBuilder())
             }
         }
     }

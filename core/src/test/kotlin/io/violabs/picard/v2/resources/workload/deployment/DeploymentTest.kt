@@ -8,7 +8,7 @@ import io.violabs.picard.possibilities
 import io.violabs.picard.v2.common.ObjectMeta
 import org.junit.jupiter.api.BeforeAll
 
-class DeploymentTest : SuccessBuildSim<Deployment, DeploymentV2DslBuilder>() {
+class DeploymentTest : SuccessBuildSim<Deployment, DeploymentDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,28 +17,28 @@ class DeploymentTest : SuccessBuildSim<Deployment, DeploymentV2DslBuilder>() {
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<Deployment, DeploymentV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Deployment, DeploymentDslBuilder> {
             scenario {
                 id = "minimum"
-                given(DeploymentV2DslBuilder()) {
+                given(DeploymentDslBuilder()) {
                     spec {
                         selector {
                             sharedSelector()
                         }
-                        template = PodTemplate.Spec()
+                        template = PodTemplateSpec()
                     }
                 }
                 expected = Deployment(
                     spec = DeploymentSpec(
                         selector = Common.LABEL_SELECTOR,
-                        template = PodTemplate.Spec()
+                        template = PodTemplateSpec()
                     )
                 )
             }
 
             scenario {
                 id = "full"
-                given(DeploymentV2DslBuilder()) {
+                given(DeploymentDslBuilder()) {
                     metadata {
                         name = PLACEHOLDER
                         namespace = PLACEHOLDER
@@ -47,7 +47,7 @@ class DeploymentTest : SuccessBuildSim<Deployment, DeploymentV2DslBuilder>() {
                         selector {
                             sharedSelector()
                         }
-                        template = PodTemplate.Spec()
+                        template = PodTemplateSpec()
                         replicas = 1
                         minReadySeconds = 1
                         strategy {
@@ -88,7 +88,7 @@ class DeploymentTest : SuccessBuildSim<Deployment, DeploymentV2DslBuilder>() {
                     ),
                     spec = DeploymentSpec(
                         selector = Common.LABEL_SELECTOR,
-                        template = PodTemplate.Spec(),
+                        template = PodTemplateSpec(),
                         replicas = 1,
                         minReadySeconds = 1,
                         strategy = DeploymentStrategy(

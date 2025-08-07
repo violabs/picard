@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeAll
 import kotlin.test.Test
 
 class ContainerResourceRequirementsTest :
-    SuccessBuildSim<ContainerResourceRequirements, ContainerResourceRequirements.Builder>() {
+    SuccessBuildSim<ContainerResourceRequirements, ContainerResourceRequirementsDslBuilder>() {
 
     companion object {
         @JvmStatic
@@ -22,12 +22,12 @@ class ContainerResourceRequirementsTest :
     }
 }
 
-private val SUCCESS_POSSIBILITIES = possibilities<ContainerResourceRequirements, ContainerResourceRequirements.Builder> {
+private val SUCCESS_POSSIBILITIES = possibilities<ContainerResourceRequirements, ContainerResourceRequirementsDslBuilder> {
     val quantity = Quantity("100m")
 
     scenario {
         id = "default list provided"
-        given(ContainerResourceRequirements.Builder()) {
+        given(ContainerResourceRequirementsDslBuilder()) {
             limits {}
 
             requests {}

@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ResourcePoolTest : FailureBuildSim<ResourcePool, ResourcePool.Builder>() {
+class ResourcePoolTest : FailureBuildSim<ResourcePool, ResourcePoolDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,19 +14,19 @@ class ResourcePoolTest : FailureBuildSim<ResourcePool, ResourcePool.Builder>() {
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<ResourcePool, ResourcePool.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ResourcePool, ResourcePoolDslBuilder> {
             requireScenario("generation") {
-                given(ResourcePool.Builder())
+                given(ResourcePoolDslBuilder())
             }
 
             requireScenario("name") {
-                given(ResourcePool.Builder()) {
+                given(ResourcePoolDslBuilder()) {
                     generation = 1
                 }
             }
 
             requireScenario("resourceSliceCount") {
-                given(ResourcePool.Builder()) {
+                given(ResourcePoolDslBuilder()) {
                     generation = 1
                     name = PLACEHOLDER
                 }

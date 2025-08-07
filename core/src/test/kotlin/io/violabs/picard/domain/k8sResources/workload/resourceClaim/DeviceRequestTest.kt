@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class DeviceRequestTest : FailureBuildSim<DeviceRequest, DeviceRequest.Builder>() {
+class DeviceRequestTest : FailureBuildSim<DeviceRequest, DeviceRequestDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class DeviceRequestTest : FailureBuildSim<DeviceRequest, DeviceRequest.Builder>(
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<DeviceRequest, DeviceRequest.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<DeviceRequest, DeviceRequestDslBuilder> {
             requireScenario("deviceClassName") {
-                given(DeviceRequest.Builder())
+                given(DeviceRequestDslBuilder())
             }
 
             requireScenario("name") {
-                given(DeviceRequest.Builder()) {
+                given(DeviceRequestDslBuilder()) {
                     deviceClassName = PLACEHOLDER
                 }
             }

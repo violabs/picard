@@ -1,10 +1,11 @@
 package io.violabs.picard.v2.resources.authentication.service.account
 
+import io.violabs.picard.Common.sharedListMeta
 import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ServiceAccountListTest : FullBuildSim<ServiceAccountList, ServiceAccountList.Builder>() {
+class ServiceAccountListTest : FullBuildSim<ServiceAccountList, ServiceAccountListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,12 +15,12 @@ class ServiceAccountListTest : FullBuildSim<ServiceAccountList, ServiceAccountLi
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ServiceAccountList, ServiceAccountList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ServiceAccountList, ServiceAccountListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ServiceAccountList.Builder()) {
+                given(ServiceAccountListDslBuilder()) {
                     items {
-                        account { }
+                        serviceAccount {  }
                     }
                 }
                 expected = ServiceAccountList(
@@ -29,12 +30,12 @@ class ServiceAccountListTest : FullBuildSim<ServiceAccountList, ServiceAccountLi
 
             scenario {
                 id = "full base level"
-                given(ServiceAccountList.Builder()) {
+                given(ServiceAccountListDslBuilder()) {
                     items {
-                        account { }
+                        serviceAccount { }
                     }
 
-                    sharedMetadata()
+                    metadata { sharedListMeta() }
                 }
                 expected = ServiceAccountList(
                     items = listOf(ServiceAccount()),
@@ -43,9 +44,9 @@ class ServiceAccountListTest : FullBuildSim<ServiceAccountList, ServiceAccountLi
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<ServiceAccountList, ServiceAccountList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ServiceAccountList, ServiceAccountListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(ServiceAccountList.Builder())
+                given(ServiceAccountListDslBuilder())
             }
         }
     }

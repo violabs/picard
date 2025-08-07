@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ServiceAccountSubjectTest : FailureBuildSim<ServiceAccountSubject, ServiceAccountSubject.Builder>() {
+class ServiceAccountSubjectTest : FailureBuildSim<ServiceAccountSubject, ServiceAccountSubjectDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class ServiceAccountSubjectTest : FailureBuildSim<ServiceAccountSubject, Service
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<ServiceAccountSubject, ServiceAccountSubject.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ServiceAccountSubject, ServiceAccountSubjectDslBuilder> {
             requireScenario("name") {
-                given(ServiceAccountSubject.Builder())
+                given(ServiceAccountSubjectDslBuilder())
             }
 
             requireScenario("namespace") {
-                given(ServiceAccountSubject.Builder()) {
+                given(ServiceAccountSubjectDslBuilder()) {
                     name = PLACEHOLDER
                 }
             }

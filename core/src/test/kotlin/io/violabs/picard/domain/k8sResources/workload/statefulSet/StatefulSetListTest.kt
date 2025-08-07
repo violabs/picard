@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class StatefulSetListTest : FullBuildSim<StatefulSetList, StatefulSetList.Builder>() {
+class StatefulSetListTest : FullBuildSim<StatefulSetList, StatefulSetListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class StatefulSetListTest : FullBuildSim<StatefulSetList, StatefulSetList.Builde
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<StatefulSetList, StatefulSetList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<StatefulSetList, StatefulSetListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(StatefulSetList.Builder()) {
+                given(StatefulSetListDslBuilder()) {
                     items {
                         statefulSetItem { }
                     }
@@ -29,9 +29,9 @@ class StatefulSetListTest : FullBuildSim<StatefulSetList, StatefulSetList.Builde
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<StatefulSetList, StatefulSetList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<StatefulSetList, StatefulSetListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(StatefulSetList.Builder())
+                given(StatefulSetListDslBuilder())
             }
         }
     }

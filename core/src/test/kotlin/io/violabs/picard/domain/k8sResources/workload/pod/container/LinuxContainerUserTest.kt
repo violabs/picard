@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class LinuxContainerUserTest : FailureBuildSim<LinuxContainerUser, LinuxContainerUser.Builder>() {
+class LinuxContainerUserTest : FailureBuildSim<LinuxContainerUser, LinuxContainerUserDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class LinuxContainerUserTest : FailureBuildSim<LinuxContainerUser, LinuxContaine
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<LinuxContainerUser, LinuxContainerUser.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<LinuxContainerUser, LinuxContainerUserDslBuilder> {
             requireScenario("gid") {
-                given(LinuxContainerUser.Builder())
+                given(LinuxContainerUserDslBuilder())
             }
 
             requireScenario("uid") {
-                given(LinuxContainerUser.Builder()) {
+                given(LinuxContainerUserDslBuilder()) {
                     gid = 1
                 }
             }

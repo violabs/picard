@@ -1,26 +1,26 @@
-package io.violabs.picard.domain.k8sResources.cluster.apiService
+package io.violabs.picard.v2.resources.cluster.service.api
 
 
 import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class APIServiceSpecTest : FailureBuildSim<APIService.Spec, APIService.Spec.Builder>() {
+class ApiServiceSpecTest : FailureBuildSim<ApiServiceSpec, ApiServiceSpecDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
         fun setup() = buildSetup(
-            APIServiceSpecTest::class,
+            ApiServiceSpecTest::class,
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<APIService.Spec, APIService.Spec.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ApiServiceSpec, ApiServiceSpecDslBuilder> {
             requireScenario("groupPriorityMinimum") {
-                given(APIService.Spec.Builder())
+                given(ApiServiceSpecDslBuilder())
             }
 
             requireScenario("versionPriority") {
-                given(APIService.Spec.Builder()) {
+                given(ApiServiceSpecDslBuilder()) {
                     groupPriorityMinimum = 1
                 }
             }

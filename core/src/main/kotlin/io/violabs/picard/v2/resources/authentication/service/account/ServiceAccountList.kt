@@ -1,12 +1,14 @@
 package io.violabs.picard.v2.resources.authentication.service.account
 
 import io.violabs.konstellation.metaDsl.annotation.DefaultValue
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.common.AppConstants
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.manifest.AuthenticationListResource
 
+@GeneratedDsl
 data class ServiceAccountList(
     @DefaultValue(
         "KAPIVersion.V1",

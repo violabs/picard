@@ -7,7 +7,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ClusterRoleTest : SuccessBuildSim<ClusterRole, ClusterRoleV2DslBuilder>() {
+class ClusterRoleTest : SuccessBuildSim<ClusterRole, ClusterRoleDslBuilder>() {
     companion object : RoleTestConfig {
         @JvmStatic
         @BeforeAll
@@ -17,16 +17,16 @@ class ClusterRoleTest : SuccessBuildSim<ClusterRole, ClusterRoleV2DslBuilder>() 
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ClusterRole, ClusterRoleV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ClusterRole, ClusterRoleDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ClusterRoleV2DslBuilder())
+                given(ClusterRoleDslBuilder())
                 expected = ClusterRole()
             }
 
             scenario {
                 id = "full"
-                given(ClusterRoleV2DslBuilder()) {
+                given(ClusterRoleDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }

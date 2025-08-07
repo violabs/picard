@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class CustomResourceDefinitionNamesTest :
-    FailureBuildSim<CustomResourceDefinitionNames, CustomResourceDefinitionNames.Builder>() {
+    FailureBuildSim<CustomResourceDefinitionNames, CustomResourceDefinitionNamesDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,13 +16,13 @@ class CustomResourceDefinitionNamesTest :
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<CustomResourceDefinitionNames, CustomResourceDefinitionNames.Builder> {
+            possibilities<CustomResourceDefinitionNames, CustomResourceDefinitionNamesDslBuilder> {
                 requireScenario("kind") {
-                    given(CustomResourceDefinitionNames.Builder())
+                    given(CustomResourceDefinitionNamesDslBuilder())
                 }
 
                 requireScenario("plural") {
-                    given(CustomResourceDefinitionNames.Builder()) {
+                    given(CustomResourceDefinitionNamesDslBuilder()) {
                         kind = PLACEHOLDER
                     }
                 }

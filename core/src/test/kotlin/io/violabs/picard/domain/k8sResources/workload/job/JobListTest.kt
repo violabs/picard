@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class JobListTest : FullBuildSim<JobList, JobList.Builder>() {
+class JobListTest : FullBuildSim<JobList, JobListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class JobListTest : FullBuildSim<JobList, JobList.Builder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<JobList, JobList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<JobList, JobListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(JobList.Builder()) {
+                given(JobListDslBuilder()) {
                     items {
                         jobItem { }
                     }
@@ -29,9 +29,9 @@ class JobListTest : FullBuildSim<JobList, JobList.Builder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<JobList, JobList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<JobList, JobListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(JobList.Builder())
+                given(JobListDslBuilder())
             }
         }
     }

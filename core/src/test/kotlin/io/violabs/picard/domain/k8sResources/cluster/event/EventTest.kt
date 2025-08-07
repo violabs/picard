@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class EventTest : FullBuildSim<Event, Event.Builder>() {
+class EventTest : FullBuildSim<Event, EventDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class EventTest : FullBuildSim<Event, Event.Builder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<Event, Event.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Event, EventDslBuilder> {
             scenario {
                 id = "minimum"
-                given(Event.Builder()) {
+                given(EventDslBuilder()) {
                     eventTime = TIMESTAMP
                 }
                 expected = Event(eventTime = TIMESTAMP)
@@ -26,7 +26,7 @@ class EventTest : FullBuildSim<Event, Event.Builder>() {
 
             scenario {
                 id = "full"
-                given(Event.Builder()) {
+                given(EventDslBuilder()) {
                     eventTime = TIMESTAMP
                     action = PLACEHOLDER
                     deprecatedCount = 1
@@ -77,9 +77,9 @@ class EventTest : FullBuildSim<Event, Event.Builder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<Event, Event.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<Event, EventDslBuilder> {
             requireScenario("eventTime") {
-                given(Event.Builder())
+                given(EventDslBuilder())
             }
         }
     }

@@ -6,7 +6,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class ValidatingWebhookConfigurationListTest :
-    FullBuildSim<ValidatingWebhookConfigurationList, ValidatingWebhookConfigurationList.Builder>() {
+    FullBuildSim<ValidatingWebhookConfigurationList, ValidatingWebhookConfigurationListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,10 +17,10 @@ class ValidatingWebhookConfigurationListTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<ValidatingWebhookConfigurationList, ValidatingWebhookConfigurationList.Builder> {
+            possibilities<ValidatingWebhookConfigurationList, ValidatingWebhookConfigurationListDslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(ValidatingWebhookConfigurationList.Builder()) {
+                    given(ValidatingWebhookConfigurationListDslBuilder()) {
                         items {
                             config {}
                         }
@@ -34,9 +34,9 @@ class ValidatingWebhookConfigurationListTest :
             }
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<ValidatingWebhookConfigurationList, ValidatingWebhookConfigurationList.Builder> {
+            possibilities<ValidatingWebhookConfigurationList, ValidatingWebhookConfigurationListDslBuilder> {
                 requireNotEmptyScenario("items") {
-                    given(ValidatingWebhookConfigurationList.Builder())
+                    given(ValidatingWebhookConfigurationListDslBuilder())
                 }
             }
     }

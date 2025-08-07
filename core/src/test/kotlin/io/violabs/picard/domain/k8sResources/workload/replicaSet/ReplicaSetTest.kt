@@ -6,7 +6,7 @@ import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ReplicaSetTest : SuccessBuildSim<ReplicaSet, ReplicaSet.Builder>() {
+class ReplicaSetTest : SuccessBuildSim<ReplicaSet, ReplicaSetDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,16 +16,16 @@ class ReplicaSetTest : SuccessBuildSim<ReplicaSet, ReplicaSet.Builder>() {
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ReplicaSet, ReplicaSet.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ReplicaSet, ReplicaSetDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ReplicaSet.Builder())
+                given(ReplicaSetDslBuilder())
                 expected = ReplicaSet()
             }
 
             scenario {
                 id = "full"
-                given(ReplicaSet.Builder()) {
+                given(ReplicaSetDslBuilder()) {
                     sharedMetadata()
                     spec {
                         selector {
@@ -50,13 +50,13 @@ class ReplicaSetTest : SuccessBuildSim<ReplicaSet, ReplicaSet.Builder>() {
                 }
                 expected = ReplicaSet(
                     metadata = METADATA,
-                    spec = ReplicaSet.Spec(
+                    spec = ReplicaSetSpec(
                         selector = LABEL_SELECTOR,
-                        template = PodTemplate.Spec(),
+                        template = PodTemplateSpec(),
                         replicas = 1,
                         minReadySeconds = 1
                     ),
-                    status = ReplicaSet.Status(
+                    status = ReplicaSetStatus(
                         replicas = 1,
                         fullyLabeledReplicas = 1,
                         readyReplicas = 1,

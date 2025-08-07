@@ -1,12 +1,15 @@
 package io.violabs.picard.v2.resources.storage.volume.attachment
 
 import io.violabs.konstellation.metaDsl.annotation.DefaultValue
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.common.AppConstants
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.manifest.StorageListResource
 
+@GeneratedDsl
 data class VolumeAttachmentList(
     @DefaultValue(
         "KAPIVersion.StorageV1",
@@ -16,6 +19,6 @@ data class VolumeAttachmentList(
     override val apiVersion: Version = KAPIVersion.StorageV1,
     override val items: List<VolumeAttachment>,
     override val metadata: ListMeta? = null
-) : K8sListResource<VolumeAttachmentList.Version, VolumeAttachment> {
+) : StorageListResource<VolumeAttachmentList.Version, VolumeAttachment> {
     interface Version : APIVersion
 }

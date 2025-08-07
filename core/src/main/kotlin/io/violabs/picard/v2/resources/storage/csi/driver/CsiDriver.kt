@@ -6,6 +6,7 @@ import io.violabs.picard.common.AppConstants
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.ConfigResource
+import io.violabs.picard.domain.manifest.StorageResource
 import io.violabs.picard.v2.common.ObjectMeta
 
 /**
@@ -34,7 +35,7 @@ data class CsiDriver(
      */
     override val metadata: ObjectMeta? = null,
     val spec: CsiDriverSpec? = null
-) : ConfigResource<CsiDriver.Version, ObjectMeta> {
+) : StorageResource<CsiDriver.Version, ObjectMeta> {
     interface Version : APIVersion
 
     override fun getKind(): String {

@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class CSINodeDriverTest : FailureBuildSim<CSINodeDriver, CSINodeDriver.Builder>() {
+class CSINodeDriverTest : FailureBuildSim<CSINodeDriver, CSINodeDriverDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,13 +14,13 @@ class CSINodeDriverTest : FailureBuildSim<CSINodeDriver, CSINodeDriver.Builder>(
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<CSINodeDriver, CSINodeDriver.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<CSINodeDriver, CSINodeDriverDslBuilder> {
             requireScenario("name") {
-                given(CSINodeDriver.Builder())
+                given(CSINodeDriverDslBuilder())
             }
 
             requireScenario("nodeID") {
-                given(CSINodeDriver.Builder()) {
+                given(CSINodeDriverDslBuilder()) {
                     name = PLACEHOLDER
                 }
             }

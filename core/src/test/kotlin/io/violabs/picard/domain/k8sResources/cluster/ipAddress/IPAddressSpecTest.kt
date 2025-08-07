@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class IPAddressSpecTest : FullBuildSim<IPAddress.Spec, IPAddress.Spec.Builder>() {
+class IPAddressSpecTest : FullBuildSim<IPAddressSpec, IPAddressSpecDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class IPAddressSpecTest : FullBuildSim<IPAddress.Spec, IPAddress.Spec.Builder>()
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<IPAddress.Spec, IPAddress.Spec.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<IPAddressSpec, IPAddressSpecDslBuilder> {
             scenario {
                 id = "minimum"
-                given(IPAddress.Spec.Builder()) {
+                given(IPAddressSpecDslBuilder()) {
                     parentRef {
                         name = PLACEHOLDER
                         resource = PLACEHOLDER
@@ -26,7 +26,7 @@ class IPAddressSpecTest : FullBuildSim<IPAddress.Spec, IPAddress.Spec.Builder>()
                         namespace = PLACEHOLDER
                     }
                 }
-                expected = IPAddress.Spec(
+                expected = IPAddressSpec(
                     parentRef = ParentReference(
                         name = PLACEHOLDER,
                         resource = PLACEHOLDER,
@@ -37,9 +37,9 @@ class IPAddressSpecTest : FullBuildSim<IPAddress.Spec, IPAddress.Spec.Builder>()
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<IPAddress.Spec, IPAddress.Spec.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<IPAddressSpec, IPAddressSpecDslBuilder> {
             requireScenario("parentRef") {
-                given(IPAddress.Spec.Builder())
+                given(IPAddressSpecDslBuilder())
             }
         }
     }

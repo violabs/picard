@@ -6,7 +6,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ServiceCidrTest : SuccessBuildSim<ServiceCidr, ServiceCidrV2DslBuilder>() {
+class ServiceCidrTest : SuccessBuildSim<ServiceCidr, ServiceCidrDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,16 +15,16 @@ class ServiceCidrTest : SuccessBuildSim<ServiceCidr, ServiceCidrV2DslBuilder>() 
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ServiceCidr, ServiceCidrV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ServiceCidr, ServiceCidrDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ServiceCidrV2DslBuilder())
+                given(ServiceCidrDslBuilder())
                 expected = ServiceCidr()
             }
 
             scenario {
                 id = "full"
-                given(ServiceCidrV2DslBuilder()) {
+                given(ServiceCidrDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }

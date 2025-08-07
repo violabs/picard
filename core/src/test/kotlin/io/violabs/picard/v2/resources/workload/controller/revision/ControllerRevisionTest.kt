@@ -6,7 +6,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ControllerRevisionTest : SuccessBuildSim<ControllerRevision, ControllerRevisionV2DslBuilder>() {
+class ControllerRevisionTest : SuccessBuildSim<ControllerRevision, ControllerRevisionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class ControllerRevisionTest : SuccessBuildSim<ControllerRevision, ControllerRev
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ControllerRevision, ControllerRevisionV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ControllerRevision, ControllerRevisionDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ControllerRevisionV2DslBuilder()) {
+                given(ControllerRevisionDslBuilder()) {
                     revision = 1
                 }
                 expected = ControllerRevision(revision = 1)
@@ -26,7 +26,7 @@ class ControllerRevisionTest : SuccessBuildSim<ControllerRevision, ControllerRev
 
             scenario {
                 id = "full"
-                given(ControllerRevisionV2DslBuilder()) {
+                given(ControllerRevisionDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }

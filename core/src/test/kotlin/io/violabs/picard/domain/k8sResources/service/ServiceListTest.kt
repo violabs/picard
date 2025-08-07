@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ServiceListTest : FullBuildSim<ServiceList, ServiceList.Builder>() {
+class ServiceListTest : FullBuildSim<ServiceList, ServiceListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class ServiceListTest : FullBuildSim<ServiceList, ServiceList.Builder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ServiceList, ServiceList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ServiceList, ServiceListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ServiceList.Builder()) {
+                given(ServiceListDslBuilder()) {
                     items {
                         serviceItem {
                         }
@@ -30,9 +30,9 @@ class ServiceListTest : FullBuildSim<ServiceList, ServiceList.Builder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<ServiceList, ServiceList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ServiceList, ServiceListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(ServiceList.Builder())
+                given(ServiceListDslBuilder())
             }
         }
     }

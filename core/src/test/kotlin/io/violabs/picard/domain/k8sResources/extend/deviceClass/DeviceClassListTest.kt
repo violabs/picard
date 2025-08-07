@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class DeviceClassListTest : FullBuildSim<DeviceClassList, DeviceClassList.Builder>() {
+class DeviceClassListTest : FullBuildSim<DeviceClassList, DeviceClassListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class DeviceClassListTest : FullBuildSim<DeviceClassList, DeviceClassList.Builde
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<DeviceClassList, DeviceClassList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<DeviceClassList, DeviceClassListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(DeviceClassList.Builder()) {
+                given(DeviceClassListDslBuilder()) {
                     items {
                         deviceClassItem {
                             spec {}
@@ -28,16 +28,16 @@ class DeviceClassListTest : FullBuildSim<DeviceClassList, DeviceClassList.Builde
                 expected = DeviceClassList(
                     items = listOf(
                         DeviceClass(
-                            spec = DeviceClass.Spec()
+                            spec = DeviceClassSpec()
                         )
                     )
                 )
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<DeviceClassList, DeviceClassList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<DeviceClassList, DeviceClassListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(DeviceClassList.Builder())
+                given(DeviceClassListDslBuilder())
             }
         }
     }

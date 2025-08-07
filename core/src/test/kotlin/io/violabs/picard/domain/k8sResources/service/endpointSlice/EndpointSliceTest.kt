@@ -12,7 +12,7 @@ import io.violabs.picard.domain.k8sResources.service.endpoint.EndpointPort
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class EndpointSliceTest : SuccessBuildSim<EndpointSlice, EndpointSlice.Builder>() {
+class EndpointSliceTest : SuccessBuildSim<EndpointSlice, EndpointSliceDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -47,16 +47,16 @@ class EndpointSliceTest : SuccessBuildSim<EndpointSlice, EndpointSlice.Builder>(
             zone = PLACEHOLDER
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<EndpointSlice, EndpointSlice.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<EndpointSlice, EndpointSliceDslBuilder> {
             scenario {
                 id = "minimum"
-                given(EndpointSlice.Builder())
+                given(EndpointSliceDslBuilder())
                 expected = EndpointSlice()
             }
 
             scenario {
                 id = "full"
-                given(EndpointSlice.Builder()) {
+                given(EndpointSliceDslBuilder()) {
                     sharedMetadata()
                     endpoints {
                         endpoint {

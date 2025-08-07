@@ -6,6 +6,7 @@ import io.violabs.picard.common.AppConstants
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.ConfigResource
+import io.violabs.picard.domain.manifest.StorageResource
 import io.violabs.picard.v2.common.ObjectMeta
 import io.violabs.picard.v2.resources.storage.selector.label.TopologySelectorTerm
 
@@ -73,6 +74,6 @@ data class StorageClass(
      * by servers that enable the VolumeScheduling feature.
      */
     val volumeBindingMode: String? = null,
-) : ConfigResource<StorageClass.Version, ObjectMeta> {
+) : StorageResource<StorageClass.Version, ObjectMeta> {
     interface Version : APIVersion
 }

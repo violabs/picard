@@ -8,7 +8,7 @@ import io.violabs.picard.possibilities
 import io.violabs.picard.v2.common.ObjectReference
 import org.junit.jupiter.api.BeforeAll
 
-class EventTest : SuccessBuildSim<Event, EventV2DslBuilder>() {
+class EventTest : SuccessBuildSim<Event, EventDslBuilder>() {
     companion object {
         private val OBJECT_REFERENCE = ObjectReference(
             apiVersion = KAPIVersion.V1,
@@ -27,10 +27,10 @@ class EventTest : SuccessBuildSim<Event, EventV2DslBuilder>() {
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<Event, EventV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Event, EventDslBuilder> {
             scenario {
                 id = "minimum"
-                given(EventV2DslBuilder()) {
+                given(EventDslBuilder()) {
                     eventTime = TIMESTAMP
                 }
                 expected = Event(eventTime = TIMESTAMP)
@@ -38,7 +38,7 @@ class EventTest : SuccessBuildSim<Event, EventV2DslBuilder>() {
 
             scenario {
                 id = "full"
-                given(EventV2DslBuilder()) {
+                given(EventDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }

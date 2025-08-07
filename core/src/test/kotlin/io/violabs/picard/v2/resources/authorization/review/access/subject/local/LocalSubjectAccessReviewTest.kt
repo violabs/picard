@@ -9,7 +9,7 @@ import io.violabs.picard.v2.resources.authorization.review.access.subject.Access
 import io.violabs.picard.v2.resources.authorization.review.access.subject.SubjectAccessReviewSpec
 import org.junit.jupiter.api.BeforeAll
 
-class LocalSubjectAccessReviewTest : FullBuildSim<LocalSubjectAccessReview, LocalSubjectAccessReviewV2DslBuilder>() {
+class LocalSubjectAccessReviewTest : FullBuildSim<LocalSubjectAccessReview, LocalSubjectAccessReviewDslBuilder>() {
     companion object : AccessReviewTestConfig {
         @JvmStatic
         @BeforeAll
@@ -19,10 +19,10 @@ class LocalSubjectAccessReviewTest : FullBuildSim<LocalSubjectAccessReview, Loca
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<LocalSubjectAccessReview, LocalSubjectAccessReviewV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<LocalSubjectAccessReview, LocalSubjectAccessReviewDslBuilder> {
             scenario {
                 id = "minimum"
-                given(LocalSubjectAccessReviewV2DslBuilder()) {
+                given(LocalSubjectAccessReviewDslBuilder()) {
                     spec {  }
                 }
                 expected = LocalSubjectAccessReview(
@@ -32,7 +32,7 @@ class LocalSubjectAccessReviewTest : FullBuildSim<LocalSubjectAccessReview, Loca
 
             scenario {
                 id = "full"
-                given(LocalSubjectAccessReviewV2DslBuilder()) {
+                given(LocalSubjectAccessReviewDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -49,9 +49,9 @@ class LocalSubjectAccessReviewTest : FullBuildSim<LocalSubjectAccessReview, Loca
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<LocalSubjectAccessReview, LocalSubjectAccessReviewV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<LocalSubjectAccessReview, LocalSubjectAccessReviewDslBuilder> {
             requireScenario("spec") {
-                given(LocalSubjectAccessReviewV2DslBuilder())
+                given(LocalSubjectAccessReviewDslBuilder())
             }
         }
     }

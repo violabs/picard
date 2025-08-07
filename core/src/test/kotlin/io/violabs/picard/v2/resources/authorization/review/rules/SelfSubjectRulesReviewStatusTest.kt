@@ -1,13 +1,11 @@
-package io.violabs.picard.domain.k8sResources.authorization.accessReview
-
+package io.violabs.picard.v2.resources.authorization.review.rules
 
 import io.violabs.picard.FailureBuildSim
-import io.violabs.picard.domain.HTTPVerb
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class SelfSubjectRulesReviewStatusTest :
-    FailureBuildSim<SelfSubjectRulesReview.Status, SelfSubjectRulesReview.Status.Builder>() {
+    FailureBuildSim<SelfSubjectRulesReviewStatus, SelfSubjectRulesReviewStatusDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,24 +15,24 @@ class SelfSubjectRulesReviewStatusTest :
         )
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<SelfSubjectRulesReview.Status, SelfSubjectRulesReview.Status.Builder> {
+            possibilities<SelfSubjectRulesReviewStatus, SelfSubjectRulesReviewStatusDslBuilder> {
                 requireScenario("incomplete") {
-                    given(SelfSubjectRulesReview.Status.Builder())
+                    given(SelfSubjectRulesReviewStatusDslBuilder())
                 }
 
                 requireNotEmptyScenario("nonResourceRules") {
-                    given(SelfSubjectRulesReview.Status.Builder()) {
+                    given(SelfSubjectRulesReviewStatusDslBuilder()) {
                         incomplete()
                     }
                 }
 
                 requireNotEmptyScenario("resourceRules") {
-                    given(SelfSubjectRulesReview.Status.Builder()) {
+                    given(SelfSubjectRulesReviewStatusDslBuilder()) {
                         incomplete()
 
                         nonResourceRules {
-                            addNonResourceRule {
-                                verbs(HTTPVerb.GET)
+                            nonResourceRule {
+                                verbs(PLACEHOLDER)
                             }
                         }
                     }

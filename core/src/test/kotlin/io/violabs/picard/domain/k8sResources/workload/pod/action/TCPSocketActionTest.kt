@@ -6,7 +6,7 @@ import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class TCPSocketActionTest : FullBuildSim<TCPSocketAction, TCPSocketAction.Builder>() {
+class TCPSocketActionTest : FullBuildSim<TCPSocketAction, TCPSocketActionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -18,10 +18,10 @@ class TCPSocketActionTest : FullBuildSim<TCPSocketAction, TCPSocketAction.Builde
     }
 }
 
-private val SUCCESS_POSSIBILITIES = possibilities<TCPSocketAction, TCPSocketAction.Builder> {
+private val SUCCESS_POSSIBILITIES = possibilities<TCPSocketAction, TCPSocketActionDslBuilder> {
     scenario {
         id = "minimum"
-        given(TCPSocketAction.Builder()) {
+        given(TCPSocketActionDslBuilder()) {
             port("8080")
         }
         expected = TCPSocketAction(
@@ -30,10 +30,10 @@ private val SUCCESS_POSSIBILITIES = possibilities<TCPSocketAction, TCPSocketActi
     }
 }
 
-private val FAILURE_POSSIBILITIES = possibilities<TCPSocketAction, TCPSocketAction.Builder> {
+private val FAILURE_POSSIBILITIES = possibilities<TCPSocketAction, TCPSocketActionDslBuilder> {
     scenario {
         id = "missing port"
-        given(TCPSocketAction.Builder())
+        given(TCPSocketActionDslBuilder())
         exceptionMessage = withTemplate("port")
     }
 }

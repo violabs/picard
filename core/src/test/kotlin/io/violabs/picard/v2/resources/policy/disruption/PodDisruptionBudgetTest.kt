@@ -8,7 +8,7 @@ import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PodDisruptionBudgetTest : SuccessBuildSim<PodDisruptionBudget, PodDisruptionBudgetV2DslBuilder>() {
+class PodDisruptionBudgetTest : SuccessBuildSim<PodDisruptionBudget, PodDisruptionBudgetDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -26,16 +26,16 @@ class PodDisruptionBudgetTest : SuccessBuildSim<PodDisruptionBudget, PodDisrupti
             observedGeneration = 1L
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<PodDisruptionBudget, PodDisruptionBudgetV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<PodDisruptionBudget, PodDisruptionBudgetDslBuilder> {
             scenario {
                 id = "minimum"
-                given(PodDisruptionBudgetV2DslBuilder())
+                given(PodDisruptionBudgetDslBuilder())
                 expected = PodDisruptionBudget()
             }
 
             scenario {
                 id = "full"
-                given(PodDisruptionBudgetV2DslBuilder()) {
+                given(PodDisruptionBudgetDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }

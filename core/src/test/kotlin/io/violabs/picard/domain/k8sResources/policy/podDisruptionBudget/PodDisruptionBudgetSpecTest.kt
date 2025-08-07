@@ -5,7 +5,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PodDisruptionBudgetSpecTest : SuccessBuildSim<PodDisruptionBudget.Spec, PodDisruptionBudget.Spec.Builder>() {
+class PodDisruptionBudgetSpecTest : SuccessBuildSim<PodDisruptionBudgetSpec, PodDisruptionBudgetSpecDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,14 +15,14 @@ class PodDisruptionBudgetSpecTest : SuccessBuildSim<PodDisruptionBudget.Spec, Po
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<PodDisruptionBudget.Spec, PodDisruptionBudget.Spec.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<PodDisruptionBudgetSpec, PodDisruptionBudgetSpecDslBuilder> {
             scenario {
                 id = "int or string"
-                given(PodDisruptionBudget.Spec.Builder()) {
+                given(PodDisruptionBudgetSpecDslBuilder()) {
                     maxUnavailable("1")
                     minAvailable("1")
                 }
-                expected = PodDisruptionBudget.Spec(
+                expected = PodDisruptionBudgetSpec(
                     maxUnavailable = INT_OR_STRING_2,
                     minAvailable = INT_OR_STRING_2
                 )

@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class LimitRangeSpecTest : FailureBuildSim<LimitRange.Spec, LimitRange.Spec.Builder>() {
+class LimitRangeSpecTest : FailureBuildSim<LimitRangeSpec, LimitRangeSpecDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class LimitRangeSpecTest : FailureBuildSim<LimitRange.Spec, LimitRange.Spec.Buil
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<LimitRange.Spec, LimitRange.Spec.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<LimitRangeSpec, LimitRangeSpecDslBuilder> {
             requireNotEmptyScenario("limits") {
-                given(LimitRange.Spec.Builder())
+                given(LimitRangeSpecDslBuilder())
             }
         }
     }

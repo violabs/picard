@@ -6,7 +6,7 @@ import io.violabs.picard.domain.k8sResources.workload.resourceClaim.ResourceClai
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ResourceClaimTemplateListTest : FullBuildSim<ResourceClaimTemplateList, ResourceClaimTemplateList.Builder>() {
+class ResourceClaimTemplateListTest : FullBuildSim<ResourceClaimTemplateList, ResourceClaimTemplateListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,10 +17,10 @@ class ResourceClaimTemplateListTest : FullBuildSim<ResourceClaimTemplateList, Re
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<ResourceClaimTemplateList, ResourceClaimTemplateList.Builder> {
+            possibilities<ResourceClaimTemplateList, ResourceClaimTemplateListDslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(ResourceClaimTemplateList.Builder()) {
+                    given(ResourceClaimTemplateListDslBuilder()) {
                         items {
                             resourceClaimTemplateItem {
                                 spec {
@@ -31,8 +31,8 @@ class ResourceClaimTemplateListTest : FullBuildSim<ResourceClaimTemplateList, Re
                     }
                     expected = ResourceClaimTemplateList(
                         items = listOf(ResourceClaimTemplate(
-                            spec = ResourceClaimTemplate.Spec(
-                                spec = ResourceClaim.Spec()
+                            spec = ResourceClaimTemplateSpec(
+                                spec = ResourceClaimSpec()
                             )
                         ))
                     )
@@ -40,9 +40,9 @@ class ResourceClaimTemplateListTest : FullBuildSim<ResourceClaimTemplateList, Re
             }
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<ResourceClaimTemplateList, ResourceClaimTemplateList.Builder> {
+            possibilities<ResourceClaimTemplateList, ResourceClaimTemplateListDslBuilder> {
                 requireNotEmptyScenario("items") {
-                    given(ResourceClaimTemplateList.Builder())
+                    given(ResourceClaimTemplateListDslBuilder())
                 }
             }
     }

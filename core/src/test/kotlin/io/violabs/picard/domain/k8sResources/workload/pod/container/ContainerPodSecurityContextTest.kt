@@ -4,7 +4,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ContainerPodSecurityContextTest : SuccessBuildSim<ContainerSecurityContext, ContainerSecurityContext.Builder>() {
+class ContainerPodSecurityContextTest : SuccessBuildSim<ContainerSecurityContext, ContainerSecurityContextDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,10 +17,10 @@ class ContainerPodSecurityContextTest : SuccessBuildSim<ContainerSecurityContext
     }
 }
 
-private val SUCCESS_POSSIBILITIES = possibilities<ContainerSecurityContext, ContainerSecurityContext.Builder> {
+private val SUCCESS_POSSIBILITIES = possibilities<ContainerSecurityContext, ContainerSecurityContextDslBuilder> {
     scenario {
         id = "false boolean values"
-        given(ContainerSecurityContext.Builder()) {
+        given(ContainerSecurityContextDslBuilder()) {
             allowPrivilegeEscalation = false
             privileged = false
             readOnlyRootFilesystem = false

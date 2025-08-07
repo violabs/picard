@@ -7,7 +7,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class EphemeralContainerTest :
-    ContainerSim<EphemeralContainer, EphemeralContainer.Builder>(EphemeralContainer.Builder()) {
+    ContainerSim<EphemeralContainer, EphemeralContainerDslBuilder>(EphemeralContainerDslBuilder()) {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -36,11 +36,11 @@ class EphemeralContainerTest :
             tty = true,
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<EphemeralContainer, EphemeralContainer.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<EphemeralContainer, EphemeralContainerDslBuilder> {
             scenario {
                 id = "minimum"
                 description = "least required fields"
-                given(EphemeralContainer.Builder()) {
+                given(EphemeralContainerDslBuilder()) {
                     name = CONTAINER_NAME
                 }
                 expected = EphemeralContainer(CONTAINER_NAME)
@@ -48,7 +48,7 @@ class EphemeralContainerTest :
 
             fullScenario(
                 this,
-                EphemeralContainer.Builder(),
+                EphemeralContainerDslBuilder(),
                 FULL_CONTAINER
             ) {
                 targetContainerName = CONTAINER_NAME

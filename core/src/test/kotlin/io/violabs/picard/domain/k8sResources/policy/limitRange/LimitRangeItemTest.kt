@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class LimitRangeItemTest : FailureBuildSim<LimitRangeItem, LimitRangeItem.Builder>() {
+class LimitRangeItemTest : FailureBuildSim<LimitRangeItem, LimitRangeItemDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class LimitRangeItemTest : FailureBuildSim<LimitRangeItem, LimitRangeItem.Builde
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<LimitRangeItem, LimitRangeItem.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<LimitRangeItem, LimitRangeItemDslBuilder> {
             requireScenario("type") {
-                given(LimitRangeItem.Builder())
+                given(LimitRangeItemDslBuilder())
             }
         }
     }

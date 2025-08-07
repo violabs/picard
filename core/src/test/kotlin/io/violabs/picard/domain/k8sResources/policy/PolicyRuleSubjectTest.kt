@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PolicyRuleSubjectTest : FailureBuildSim<PolicyRuleSubject, PolicyRuleSubject.Builder>() {
+class PolicyRuleSubjectTest : FailureBuildSim<PolicyRuleSubject, PolicyRuleSubjectDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,9 +14,9 @@ class PolicyRuleSubjectTest : FailureBuildSim<PolicyRuleSubject, PolicyRuleSubje
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<PolicyRuleSubject, PolicyRuleSubject.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<PolicyRuleSubject, PolicyRuleSubjectDslBuilder> {
             requireScenario("kind") {
-                given(PolicyRuleSubject.Builder())
+                given(PolicyRuleSubjectDslBuilder())
             }
         }
     }

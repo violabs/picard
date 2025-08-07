@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class LimitRangeListTest : FullBuildSim<LimitRangeList, LimitRangeList.Builder>() {
+class LimitRangeListTest : FullBuildSim<LimitRangeList, LimitRangeListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class LimitRangeListTest : FullBuildSim<LimitRangeList, LimitRangeList.Builder>(
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<LimitRangeList, LimitRangeList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<LimitRangeList, LimitRangeListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(LimitRangeList.Builder()) {
+                given(LimitRangeListDslBuilder()) {
                     items {
                         limitRangeItem {  }
                     }
@@ -29,9 +29,9 @@ class LimitRangeListTest : FullBuildSim<LimitRangeList, LimitRangeList.Builder>(
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<LimitRangeList, LimitRangeList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<LimitRangeList, LimitRangeListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(LimitRangeList.Builder())
+                given(LimitRangeListDslBuilder())
             }
         }
     }

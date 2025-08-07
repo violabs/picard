@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ResourcePolicyRuleTest : FailureBuildSim<ResourcePolicyRule, ResourcePolicyRule.Builder>() {
+class ResourcePolicyRuleTest : FailureBuildSim<ResourcePolicyRule, ResourcePolicyRuleDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -14,19 +14,19 @@ class ResourcePolicyRuleTest : FailureBuildSim<ResourcePolicyRule, ResourcePolic
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<ResourcePolicyRule, ResourcePolicyRule.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ResourcePolicyRule, ResourcePolicyRuleDslBuilder> {
             requireNotEmptyScenario("apiGroups") {
-                given(ResourcePolicyRule.Builder())
+                given(ResourcePolicyRuleDslBuilder())
             }
 
             requireNotEmptyScenario("resources") {
-                given(ResourcePolicyRule.Builder()) {
+                given(ResourcePolicyRuleDslBuilder()) {
                     apiGroups(PLACEHOLDER)
                 }
             }
 
             requireNotEmptyScenario("verbs") {
-                given(ResourcePolicyRule.Builder()) {
+                given(ResourcePolicyRuleDslBuilder()) {
                     apiGroups(PLACEHOLDER)
                     resources(PLACEHOLDER)
                 }

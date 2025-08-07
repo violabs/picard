@@ -4,7 +4,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class VolumeMountTest : FullBuildSim<VolumeMount, VolumeMount.Builder>() {
+class VolumeMountTest : FullBuildSim<VolumeMount, VolumeMountDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,10 +16,10 @@ class VolumeMountTest : FullBuildSim<VolumeMount, VolumeMount.Builder>() {
     }
 }
 
-private val SUCCESS_POSSIBILITIES = possibilities<VolumeMount, VolumeMount.Builder> {
+private val SUCCESS_POSSIBILITIES = possibilities<VolumeMount, VolumeMountDslBuilder> {
     scenario {
         idForFalseBooleanValues()
-        given(VolumeMount.Builder()) {
+        given(VolumeMountDslBuilder()) {
             name = "cool-volume"
             mountPath = "/cool-path"
             readOnly = false
@@ -32,13 +32,13 @@ private val SUCCESS_POSSIBILITIES = possibilities<VolumeMount, VolumeMount.Build
     }
 }
 
-private val FAILURE_POSSIBILITIES = possibilities<VolumeMount, VolumeMount.Builder> {
+private val FAILURE_POSSIBILITIES = possibilities<VolumeMount, VolumeMountDslBuilder> {
     requireScenario("name") {
-        given(VolumeMount.Builder())
+        given(VolumeMountDslBuilder())
     }
 
     requireScenario("mountPath") {
-        given(VolumeMount.Builder()) {
+        given(VolumeMountDslBuilder()) {
             name = "cool-volume"
         }
     }

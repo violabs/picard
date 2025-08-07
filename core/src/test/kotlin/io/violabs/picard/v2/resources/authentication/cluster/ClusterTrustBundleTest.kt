@@ -6,7 +6,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ClusterTrustBundleTest : FullBuildSim<ClusterTrustBundle, ClusterTrustBundleV2DslBuilder>() {
+class ClusterTrustBundleTest : FullBuildSim<ClusterTrustBundle, ClusterTrustBundleDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,11 +16,11 @@ class ClusterTrustBundleTest : FullBuildSim<ClusterTrustBundle, ClusterTrustBund
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ClusterTrustBundle, ClusterTrustBundleV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ClusterTrustBundle, ClusterTrustBundleDslBuilder> {
             scenario {
                 id = "minimum"
                 description = "included metadata"
-                given(ClusterTrustBundleV2DslBuilder()) {
+                given(ClusterTrustBundleDslBuilder()) {
                     spec {
                         trustBundle = PLACEHOLDER
                     }
@@ -35,7 +35,7 @@ class ClusterTrustBundleTest : FullBuildSim<ClusterTrustBundle, ClusterTrustBund
             scenario {
                 id = "full"
                 description = "exclude full metadata"
-                given(ClusterTrustBundleV2DslBuilder()) {
+                given(ClusterTrustBundleDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -55,9 +55,9 @@ class ClusterTrustBundleTest : FullBuildSim<ClusterTrustBundle, ClusterTrustBund
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<ClusterTrustBundle, ClusterTrustBundleV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ClusterTrustBundle, ClusterTrustBundleDslBuilder> {
             requireScenario("spec") {
-                given(ClusterTrustBundleV2DslBuilder())
+                given(ClusterTrustBundleDslBuilder())
             }
         }
     }

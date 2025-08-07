@@ -1,7 +1,6 @@
 package io.violabs.picard.v2.resources.authentication.certificate
 
 import io.violabs.picard.FailureBuildSim
-import io.violabs.picard.domain.k8sResources.authentication.certificateSigningRequest.CertificateSigningRequest
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 

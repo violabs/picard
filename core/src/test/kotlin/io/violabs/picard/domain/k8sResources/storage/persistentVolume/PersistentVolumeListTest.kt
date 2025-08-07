@@ -5,7 +5,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PersistentVolumeListTest : FullBuildSim<PersistentVolumeList, PersistentVolumeList.Builder>() {
+class PersistentVolumeListTest : FullBuildSim<PersistentVolumeList, PersistentVolumeListDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,10 +15,10 @@ class PersistentVolumeListTest : FullBuildSim<PersistentVolumeList, PersistentVo
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<PersistentVolumeList, PersistentVolumeList.Builder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<PersistentVolumeList, PersistentVolumeListDslBuilder> {
             scenario {
                 id = "minimum"
-                given(PersistentVolumeList.Builder()) {
+                given(PersistentVolumeListDslBuilder()) {
                     items {
                         persistentVolumeItem {  }
                     }
@@ -29,9 +29,9 @@ class PersistentVolumeListTest : FullBuildSim<PersistentVolumeList, PersistentVo
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<PersistentVolumeList, PersistentVolumeList.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<PersistentVolumeList, PersistentVolumeListDslBuilder> {
             requireNotEmptyScenario("items") {
-                given(PersistentVolumeList.Builder())
+                given(PersistentVolumeListDslBuilder())
             }
         }
     }

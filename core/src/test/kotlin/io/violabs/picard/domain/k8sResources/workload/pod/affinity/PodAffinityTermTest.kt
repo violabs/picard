@@ -5,7 +5,7 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class PodAffinityTermTest : FailureBuildSim<PodAffinityTerm, PodAffinityTerm.Builder>() {
+class PodAffinityTermTest : FailureBuildSim<PodAffinityTerm, PodAffinityTermDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,8 +16,8 @@ class PodAffinityTermTest : FailureBuildSim<PodAffinityTerm, PodAffinityTerm.Bui
     }
 }
 
-private val FAILURE_POSSIBILITIES = possibilities<PodAffinityTerm, PodAffinityTerm.Builder> {
+private val FAILURE_POSSIBILITIES = possibilities<PodAffinityTerm, PodAffinityTermDslBuilder> {
     requireScenario("topologyKey") {
-        given(PodAffinityTerm.Builder())
+        given(PodAffinityTermDslBuilder())
     }
 }

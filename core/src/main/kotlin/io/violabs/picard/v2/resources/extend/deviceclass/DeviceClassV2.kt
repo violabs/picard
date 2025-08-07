@@ -20,7 +20,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  * 
  * https://kubernetes.io/docs/reference/kubernetes-api/extend-resources/device-class-v1beta2/
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class DeviceClassV2(
     @DefaultValue(
         "KAPIVersion.ResourceV1Beta2", 

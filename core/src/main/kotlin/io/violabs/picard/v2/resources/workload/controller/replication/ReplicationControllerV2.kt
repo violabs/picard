@@ -13,7 +13,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  *
  * apiVersion: v1
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class ReplicationControllerV2(
     @DefaultValue(
         "KAPIVersion.V1",

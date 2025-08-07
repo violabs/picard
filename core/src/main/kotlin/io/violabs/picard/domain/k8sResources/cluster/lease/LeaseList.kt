@@ -7,6 +7,7 @@ import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.ClusterListResource
 
+@Deprecated("Use v2", ReplaceWith("io.violabs.picard.v2.resources.cluster.lease.LeaseListV2"))
 data class LeaseList(
     override val apiVersion: Version = KAPIVersion.CoordinationV1,
     override val items: List<Lease>,

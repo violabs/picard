@@ -24,7 +24,7 @@ import io.violabs.picard.v2.resources.storage.csi.driver.CsiDriverV2
  * available on the node, or the Kubelet version is low enough that it doesn't create this object. CSINode has
  * an OwnerReference that points to the corresponding node object.
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class CsiNodeV2(
     @DefaultValue(
         "KAPIVersion.StorageV1",

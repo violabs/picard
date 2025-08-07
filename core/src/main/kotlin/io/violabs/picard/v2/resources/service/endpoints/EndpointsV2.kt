@@ -24,7 +24,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  * apiVersion: v1
  * kind: Endpoints
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class EndpointsV2(
     @DefaultValue(
         "KAPIVersion.V1",

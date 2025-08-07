@@ -17,7 +17,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  * apiVersion: flowcontrol.apiserver.k8s.io/v1
  * kind: PriorityLevelConfiguration
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class PriorityLevelConfigurationV2(
     @DefaultValue(
         "KAPIVersion.FlowControlApiServerV1",

@@ -14,7 +14,7 @@ import io.violabs.picard.v2.common.LocalObjectReference
 import io.violabs.picard.v2.common.NodeSelectorRequirement
 import io.violabs.picard.v2.common.ObjectFieldSelector
 import io.violabs.picard.v2.common.ResourceFieldSelector
-import io.violabs.picard.v2.common.condition.Condition
+import io.violabs.picard.v2.resources.workload.pod.Condition
 import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimSpec
 import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimTemplate
 import io.violabs.picard.v2.resources.storage.persistent.volume.claim.VolumeResourceRequirements

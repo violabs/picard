@@ -18,7 +18,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  * PersistentVolume (PV) is a storage resource provisioned by an administrator.
  * It is analogous to a node. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class PersistentVolumeV2(
     @DefaultValue(
         "KAPIVersion.V1",

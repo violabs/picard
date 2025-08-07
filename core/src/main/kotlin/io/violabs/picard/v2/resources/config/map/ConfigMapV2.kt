@@ -17,7 +17,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  *
  * https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/config-map-v1/
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class ConfigMapV2(
     @DefaultValue("KAPIVersion.V1", "io.violabs.picard.domain.k8sResources", "KAPIVersion")
     override val apiVersion: Version = KAPIVersion.V1,

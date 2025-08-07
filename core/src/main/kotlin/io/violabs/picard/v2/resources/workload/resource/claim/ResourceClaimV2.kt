@@ -19,7 +19,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  * 
  * import "k8s.io/api/resource/v1beta2"
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class ResourceClaimV2(
     @DefaultValue(
         "KAPIVersion.ResourceV1Beta2",

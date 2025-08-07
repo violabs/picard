@@ -19,7 +19,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  *
  * import "k8s.io/api/storage/v1beta1"
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class VolumeAttributesClassV2(
     @DefaultValue(
         "KAPIVersion.StorageV1Beta1",

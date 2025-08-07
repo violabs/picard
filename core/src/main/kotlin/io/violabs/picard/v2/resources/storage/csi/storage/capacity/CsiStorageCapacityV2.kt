@@ -38,7 +38,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  * it falls back to a comparison against the less precise Capacity. If that is also unset, the
  * scheduler assumes that capacity is insufficient and tries some other node.
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class CsiStorageCapacityV2(
     @DefaultValue(
         "KAPIVersion.StorageV1",

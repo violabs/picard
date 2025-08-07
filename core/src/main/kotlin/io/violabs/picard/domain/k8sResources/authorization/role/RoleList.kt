@@ -7,6 +7,7 @@ import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.AuthorizationListResource
 
+@Deprecated("Use v2", ReplaceWith("io.violabs.picard.v2.resources.authorization.role.RoleListV2"))
 data class RoleList(
     override val apiVersion: Version = KAPIVersion.RbacAuthorizationV1,
     override val items: List<Role>,

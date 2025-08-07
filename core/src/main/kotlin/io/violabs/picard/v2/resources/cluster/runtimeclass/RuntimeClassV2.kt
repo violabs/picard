@@ -19,7 +19,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  *
  * import "k8s.io/api/node/v1"
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class RuntimeClassV2(
     @DefaultValue(
         "KAPIVersion.NodeV1",

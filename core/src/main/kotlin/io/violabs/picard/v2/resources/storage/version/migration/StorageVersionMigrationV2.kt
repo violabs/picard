@@ -17,7 +17,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  *
  * import "k8s.io/api/storagemigration/v1alpha1"
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class StorageVersionMigrationV2(
     @DefaultValue(
         "KAPIVersion.StorageMigrationV1Alpha1",

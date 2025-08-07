@@ -2,7 +2,7 @@ package io.violabs.picard.v2.resources.workload.pod
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
-import io.violabs.picard.v2.common.condition.Condition
+import io.violabs.picard.v2.resources.workload.pod.Condition
 import io.violabs.picard.v2.resources.workload.pod.container.status.ContainerStatus
 import io.violabs.picard.v2.resources.workload.pod.host.HostIp
 import io.violabs.picard.v2.resources.workload.pod.resource.PodResourceClaimStatus

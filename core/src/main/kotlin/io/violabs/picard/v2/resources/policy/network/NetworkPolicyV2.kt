@@ -16,7 +16,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  *
  * https://kubernetes.io/docs/reference/kubernetes-api/policy-resources/network-policy-v1/
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class NetworkPolicyV2(
     @DefaultValue(
         "KAPIVersion.NetworkingV1",

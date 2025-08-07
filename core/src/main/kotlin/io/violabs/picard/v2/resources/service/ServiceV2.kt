@@ -17,7 +17,7 @@ import io.violabs.picard.v2.resources.service.status.ServiceStatus
  * apiVersion: v1
  * kind: Service
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class ServiceV2(
     @DefaultValue(
         "KAPIVersion.V1",

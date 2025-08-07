@@ -20,7 +20,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  *
  * import "k8s.io/api/authentication/v1"
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class SelfSubjectReviewV2(
     @DefaultValue(
         "KAPIVersion.AuthenticationV1",

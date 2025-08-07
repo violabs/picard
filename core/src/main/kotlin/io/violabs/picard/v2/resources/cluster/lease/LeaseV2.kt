@@ -15,7 +15,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  *
  * import "k8s.io/api/coordination/v1"
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class LeaseV2(
     @DefaultValue(
         "KAPIVersion.CoordinationV1",

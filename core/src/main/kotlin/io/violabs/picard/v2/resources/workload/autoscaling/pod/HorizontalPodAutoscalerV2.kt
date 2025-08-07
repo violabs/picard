@@ -19,7 +19,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  *
  * import "k8s.io/api/autoscaling/v2"
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class HorizontalPodAutoscalerV2(
     @DefaultValue(
         "KAPIVersion.AutoscalingV2",

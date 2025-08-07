@@ -11,7 +11,7 @@ import io.violabs.picard.v2.common.ObjectMeta
 /**
  * StatefulSet represents a set of pods with consistent identities.
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class StatefulSetV2(
     @DefaultValue(
         "KAPIVersion.AppsV1",

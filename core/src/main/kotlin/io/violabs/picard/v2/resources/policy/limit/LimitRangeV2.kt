@@ -16,7 +16,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  *
  * https://kubernetes.io/docs/reference/kubernetes-api/policy-resources/limit-range-v1/
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class LimitRangeV2(
     @DefaultValue(
         "KAPIVersion.V1",

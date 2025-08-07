@@ -11,7 +11,7 @@ import io.violabs.picard.v2.common.ObjectMeta
 /**
  * ControllerRevision implements an immutable snapshot of state data.
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class ControllerRevisionV2(
     @DefaultValue(
         "KAPIVersion.AppsV1",

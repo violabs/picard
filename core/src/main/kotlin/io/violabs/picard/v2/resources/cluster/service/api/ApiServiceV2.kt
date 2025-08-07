@@ -14,8 +14,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  * 
  * apiVersion: apiregistration.k8s.io/v1
  */
-@GeneratedDsl
-@JsonTypeName("APIService")
+@GeneratedDsl(withListGroup = true)
 data class ApiServiceV2(
     @DefaultValue(
         "KAPIVersion.APIRegistrationV1",

@@ -11,7 +11,7 @@ import io.violabs.picard.v2.common.ObjectMeta
 /**
  * DaemonSet represents the configuration of a daemon set.
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class DaemonSetV2(
     @DefaultValue(
         "KAPIVersion.AppsV1",

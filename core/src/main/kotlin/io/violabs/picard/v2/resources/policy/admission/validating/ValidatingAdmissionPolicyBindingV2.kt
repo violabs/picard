@@ -26,7 +26,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  *
  * import "k8s.io/api/admissionregistration/v1"
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class ValidatingAdmissionPolicyBindingV2(
     @DefaultValue(
         "KAPIVersion.AdmissionRegistrationV1",

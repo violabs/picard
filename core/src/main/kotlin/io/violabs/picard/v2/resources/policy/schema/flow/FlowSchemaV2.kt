@@ -20,7 +20,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  *
  * import "k8s.io/api/flowcontrol/v1"
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class FlowSchemaV2(
     @DefaultValue(
         "KAPIVersion.FlowControlApiServerV1",

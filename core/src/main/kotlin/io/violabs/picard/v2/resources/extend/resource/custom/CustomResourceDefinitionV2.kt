@@ -18,7 +18,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  * 
  * https://kubernetes.io/docs/reference/kubernetes-api/extend-resources/custom-resource-definition-v1/
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class CustomResourceDefinitionV2(
     @DefaultValue(
         "KAPIVersion.APIExtensionsV1", 

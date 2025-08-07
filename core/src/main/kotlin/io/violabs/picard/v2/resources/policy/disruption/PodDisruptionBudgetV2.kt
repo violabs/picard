@@ -16,7 +16,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  *
  * https://kubernetes.io/docs/reference/kubernetes-api/policy-resources/pod-disruption-budget-v1/
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class PodDisruptionBudgetV2(
     @DefaultValue(
         "KAPIVersion.PolicyV1",

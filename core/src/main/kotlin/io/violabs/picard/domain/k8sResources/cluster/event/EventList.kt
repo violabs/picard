@@ -7,6 +7,7 @@ import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.ClusterListResource
 
+@Deprecated("Use v2", ReplaceWith("io.violabs.picard.v2.resources.cluster.event.EventListV2"))
 data class EventList(
     override val apiVersion: Version = KAPIVersion.EventsV1,
     override val items: List<Event>,

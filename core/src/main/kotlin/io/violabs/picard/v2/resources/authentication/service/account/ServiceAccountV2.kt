@@ -21,7 +21,7 @@ import io.violabs.picard.v2.common.ObjectReference
  *
  * https://kubernetes.io/docs/reference/kubernetes-api/authentication-resources/service-account-v1/
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class ServiceAccountV2(
     @DefaultValue(
         "KAPIVersion.V1",

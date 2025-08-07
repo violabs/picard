@@ -16,7 +16,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  *
  * https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/csi-driver-v1/
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class CsiDriverV2(
     @DefaultValue(
         "KAPIVersion.StorageV1",

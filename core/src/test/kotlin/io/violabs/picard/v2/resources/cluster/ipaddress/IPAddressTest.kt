@@ -1,13 +1,12 @@
 package io.violabs.picard.v2.resources.cluster.ipaddress
 
-import io.violabs.picard.BuildSim.Companion.PLACEHOLDER
 import io.violabs.picard.Common.OBJECT_META
 import io.violabs.picard.Common.sharedObjectMeta
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class IPAddressTest : SuccessBuildSim<IPAddressV2, IPAddressV2DslBuilder>() {
+class IPAddressTest : SuccessBuildSim<IpAddressV2, IPAddressV2DslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,11 +15,11 @@ class IPAddressTest : SuccessBuildSim<IPAddressV2, IPAddressV2DslBuilder>() {
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<IPAddressV2, IPAddressV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<IpAddressV2, IPAddressV2DslBuilder> {
             scenario {
                 id = "minimum"
                 given(IPAddressV2DslBuilder())
-                expected = IPAddressV2()
+                expected = IpAddressV2()
             }
 
             scenario {
@@ -38,7 +37,7 @@ class IPAddressTest : SuccessBuildSim<IPAddressV2, IPAddressV2DslBuilder>() {
                         }
                     }
                 }
-                expected = IPAddressV2(
+                expected = IpAddressV2(
                     metadata = OBJECT_META,
                     spec = IPAddressSpec(
                         parentRef = ParentReference(

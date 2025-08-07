@@ -21,8 +21,8 @@ import io.violabs.picard.v2.common.ObjectMeta
  *
  * import "k8s.io/api/networking/v1"
  */
-@GeneratedDsl
-data class IPAddressV2(
+@GeneratedDsl(withListGroup = true)
+data class IpAddressV2(
     @DefaultValue(
         "KAPIVersion.NetworkingV1Beta1",
         AppConstants.DefaultValue.KAPI_VERSION_PACKAGE,
@@ -34,6 +34,10 @@ data class IPAddressV2(
      * spec is the desired state of the IPAddress. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
      */
     val spec: IPAddressSpec? = null
-) : ClusterResource<IPAddressV2.Version, ObjectMeta> {
+) : ClusterResource<IpAddressV2.Version, ObjectMeta> {
     interface Version : APIVersion
+
+    override fun getKind(): String {
+        return "IPAddress"
+    }
 }

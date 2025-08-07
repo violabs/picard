@@ -129,16 +129,22 @@ import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourceSlic
 import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourceSliceList
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSet
 import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSetList
+import io.violabs.picard.v2.resources.authentication.certificate.CertificateSigningRequestListV2
 import io.violabs.picard.v2.resources.authentication.certificate.CertificateSigningRequestV2
+import io.violabs.picard.v2.resources.authentication.cluster.ClusterTrustBundleListV2
 import io.violabs.picard.v2.resources.authentication.cluster.ClusterTrustBundleV2
 import io.violabs.picard.v2.resources.authentication.self.SelfSubjectReviewV2
+import io.violabs.picard.v2.resources.authentication.service.account.ServiceAccountListV2
 import io.violabs.picard.v2.resources.authentication.service.account.ServiceAccountV2
+import io.violabs.picard.v2.resources.authentication.token.request.TokenRequestListV2
 import io.violabs.picard.v2.resources.authentication.token.request.TokenRequestV2
+import io.violabs.picard.v2.resources.authentication.token.review.TokenReviewListV2
 import io.violabs.picard.v2.resources.authentication.token.review.TokenReviewV2
 import io.violabs.picard.v2.resources.authorization.review.access.subject.SubjectAccessReviewV2
 import io.violabs.picard.v2.resources.authorization.review.access.subject.local.LocalSubjectAccessReviewV2
 import io.violabs.picard.v2.resources.authorization.review.access.subject.self.SelfSubjectAccessReviewV2
 import io.violabs.picard.v2.resources.authorization.review.rules.SelfSubjectRulesReviewV2
+import io.violabs.picard.v2.resources.authorization.role.ClusterRoleListV2
 import io.violabs.picard.v2.resources.authorization.role.ClusterRoleV2
 import io.violabs.picard.v2.resources.authorization.role.RoleV2
 import io.violabs.picard.v2.resources.authorization.role.binding.ClusterRoleBindingV2
@@ -171,7 +177,7 @@ import io.violabs.picard.v2.resources.extend.webhook.validating.ValidatingWebhoo
 import io.violabs.picard.v2.resources.cluster.service.api.ApiServiceV2
 import io.violabs.picard.v2.resources.cluster.component.status.ComponentStatusV2
 import io.violabs.picard.v2.resources.cluster.event.EventV2
-import io.violabs.picard.v2.resources.cluster.ipaddress.IPAddressV2
+import io.violabs.picard.v2.resources.cluster.ipaddress.IpAddressV2
 import io.violabs.picard.v2.resources.cluster.lease.LeaseV2
 import io.violabs.picard.v2.resources.cluster.lease.candidate.LeaseCandidateV2
 import io.violabs.picard.v2.resources.cluster.namespace.NamespaceV2
@@ -179,6 +185,7 @@ import io.violabs.picard.v2.resources.cluster.node.NodeV2
 import io.violabs.picard.v2.resources.cluster.runtimeclass.RuntimeClassV2
 import io.violabs.picard.v2.resources.cluster.service.cidr.ServiceCidrV2
 import io.violabs.picard.v2.resources.service.ServiceV2
+import io.violabs.picard.v2.resources.service.ServiceListV2
 import io.violabs.picard.v2.resources.service.endpoints.EndpointsV2
 import io.violabs.picard.v2.resources.service.endpointslice.EndpointSliceV2
 import io.violabs.picard.v2.resources.service.ingress.IngressV2
@@ -199,6 +206,61 @@ import io.violabs.picard.v2.resources.workload.controller.replication.Replicatio
 import io.violabs.picard.v2.resources.workload.set.replica.ReplicaSetV2
 import io.violabs.picard.v2.resources.workload.set.stateful.StatefulSetV2
 import io.violabs.picard.v2.resources.workload.pod.PodV2
+import io.violabs.picard.v2.resources.cluster.ipaddress.IpAddressListV2
+import io.violabs.picard.v2.resources.cluster.runtimeclass.RuntimeClassListV2
+import io.violabs.picard.v2.resources.cluster.namespace.NamespaceListV2
+import io.violabs.picard.v2.resources.cluster.lease.candidate.LeaseCandidateListV2
+import io.violabs.picard.v2.resources.cluster.lease.LeaseListV2
+import io.violabs.picard.v2.resources.cluster.node.NodeListV2
+import io.violabs.picard.v2.resources.cluster.event.EventListV2
+import io.violabs.picard.v2.resources.extend.deviceclass.DeviceClassListV2
+import io.violabs.picard.v2.resources.config.secret.SecretListV2
+import io.violabs.picard.v2.resources.workload.deployment.DeploymentListV2
+import io.violabs.picard.v2.resources.service.endpoints.EndpointsListV2
+import io.violabs.picard.v2.resources.service.ingressclass.IngressClassListV2
+import io.violabs.picard.v2.resources.service.ingress.IngressListV2
+import io.violabs.picard.v2.resources.service.endpointslice.EndpointSliceListV2
+import io.violabs.picard.v2.resources.authorization.role.binding.RoleBindingListV2
+import io.violabs.picard.v2.resources.authorization.role.RoleListV2
+import io.violabs.picard.v2.resources.authorization.role.binding.ClusterRoleBindingListV2
+import io.violabs.picard.v2.resources.cluster.component.status.ComponentStatusListV2
+import io.violabs.picard.v2.resources.cluster.service.api.ApiServiceListV2
+import io.violabs.picard.v2.resources.cluster.service.cidr.ServiceCidrListV2
+import io.violabs.picard.v2.resources.config.map.ConfigMapListV2
+import io.violabs.picard.v2.resources.extend.resource.custom.CustomResourceDefinitionListV2
+import io.violabs.picard.v2.resources.extend.webhook.mutating.MutatingWebhookConfigurationListV2
+import io.violabs.picard.v2.resources.extend.webhook.validating.ValidatingWebhookConfigurationListV2
+import io.violabs.picard.v2.resources.policy.admission.validating.ValidatingAdmissionPolicyBindingListV2
+import io.violabs.picard.v2.resources.policy.admission.validating.ValidatingAdmissionPolicyListV2
+import io.violabs.picard.v2.resources.policy.disruption.PodDisruptionBudgetListV2
+import io.violabs.picard.v2.resources.policy.level.PriorityLevelConfigurationListV2
+import io.violabs.picard.v2.resources.policy.limit.LimitRangeListV2
+import io.violabs.picard.v2.resources.policy.network.NetworkPolicyListV2
+import io.violabs.picard.v2.resources.policy.resource.quota.ResourceQuotaListV2
+import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchemaListV2
+import io.violabs.picard.v2.resources.storage.StorageClassListV2
+import io.violabs.picard.v2.resources.storage.csi.driver.CsiDriverListV2
+import io.violabs.picard.v2.resources.storage.csi.node.CsiNodeListV2
+import io.violabs.picard.v2.resources.storage.csi.storage.capacity.CsiStorageCapacityListV2
+import io.violabs.picard.v2.resources.storage.persistent.volume.PersistentVolumeListV2
+import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimListV2
+import io.violabs.picard.v2.resources.storage.version.migration.StorageVersionMigrationListV2
+import io.violabs.picard.v2.resources.storage.volume.VolumeAttributesClassListV2
+import io.violabs.picard.v2.resources.storage.volume.attachment.VolumeAttachmentListV2
+import io.violabs.picard.v2.resources.workload.autoscaling.pod.HorizontalPodAutoscalerListV2
+import io.violabs.picard.v2.resources.workload.batch.cron.CronJobListV2
+import io.violabs.picard.v2.resources.workload.batch.job.JobListV2
+import io.violabs.picard.v2.resources.workload.controller.replication.ReplicationControllerListV2
+import io.violabs.picard.v2.resources.workload.controller.revision.ControllerRevisionListV2
+import io.violabs.picard.v2.resources.workload.daemon.DaemonSetListV2
+import io.violabs.picard.v2.resources.workload.pod.PodListV2
+import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateListV2
+import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateV2
+import io.violabs.picard.v2.resources.workload.resource.claim.ResourceClaimListV2
+import io.violabs.picard.v2.resources.workload.resource.claim.template.ResourceClaimTemplateListV2
+import io.violabs.picard.v2.resources.workload.resource.slice.ResourceSliceListV2
+import io.violabs.picard.v2.resources.workload.set.replica.ReplicaSetListV2
+import io.violabs.picard.v2.resources.workload.set.stateful.StatefulSetListV2
 
 interface APIVersion {
     fun refString(): String
@@ -216,62 +278,82 @@ open class KAPIVersion(
         ComponentStatus.Version,
         ComponentStatusV2.Version,
         ComponentStatusList.Version,
+        ComponentStatusListV2.Version,
         BindingV2.Version,
         ConfigMap.Version,
         ConfigMapV2.Version,
         ConfigMapList.Version,
+        ConfigMapListV2.Version,
         Endpoints.Version,
         EndpointsV2.Version,
         EndpointsList.Version,
+        EndpointsListV2.Version,
         LimitRange.Version,
         LimitRangeV2.Version,
         LimitRangeList.Version,
+        LimitRangeListV2.Version,
         Namespace.Version,
         NamespaceV2.Version,
         NamespaceList.Version,
+        NamespaceListV2.Version,
         Node.Version,
         NodeV2.Version,
         NodeList.Version,
+        NodeListV2.Version,
         PersistentVolume.Version,
         PersistentVolumeV2.Version,
         PersistentVolumeList.Version,
+        PersistentVolumeListV2.Version,
         PersistentVolumeClaim.Version,
         PersistentVolumeClaimV2.Version,
         PersistentVolumeClaimList.Version,
+        PersistentVolumeClaimListV2.Version,
         Pod.Version,
         PodV2.Version,
         PodList.Version,
+        PodListV2.Version,
         PodTemplate.Version,
+        PodTemplateV2.Version,
         PodTemplateList.Version,
+        PodTemplateListV2.Version,
         ReplicationController.Version,
         ReplicationControllerV2.Version,
         ReplicationControllerList.Version,
+        ReplicationControllerListV2.Version,
         ResourceQuota.Version,
         ResourceQuotaV2.Version,
         ResourceQuotaList.Version,
+        ResourceQuotaListV2.Version,
         Secret.Version,
         SecretV2.Version,
         SecretList.Version,
+        SecretListV2.Version,
         Service.Version,
         ServiceV2.Version,
         ServiceList.Version,
+        ServiceListV2.Version,
         ServiceAccount.Version,
         ServiceAccountV2.Version,
-        ServiceAccountList.Version
+        ServiceAccountList.Version,
+        ServiceAccountListV2.Version
 
     object AdmissionRegistrationV1 : KAPIVersion("admissionregistration.k8s.io/v1"),
         MutatingWebhookConfiguration.Version,
         MutatingWebhookConfigurationV2.Version,
         MutatingWebhookConfigurationList.Version,
+        MutatingWebhookConfigurationListV2.Version,
         ValidatingAdmissionPolicy.Version,
         ValidatingAdmissionPolicyV2.Version,
         ValidatingAdmissionPolicyList.Version,
+        ValidatingAdmissionPolicyListV2.Version,
         ValidatingAdmissionPolicyBinding.Version,
         ValidatingAdmissionPolicyBindingV2.Version,
         ValidatingAdmissionPolicyBindingList.Version,
+        ValidatingAdmissionPolicyBindingListV2.Version,
         ValidatingWebhookConfiguration.Version,
         ValidatingWebhookConfigurationV2.Version,
-        ValidatingWebhookConfigurationList.Version
+        ValidatingWebhookConfigurationList.Version,
+        ValidatingWebhookConfigurationListV2.Version
 
     object AdmissionRegistrationV1Alpha1 : KAPIVersion("admissionregistration.k8s.io/v1alpha1"),
         MutatingAdmissionPolicyV2.Version,
@@ -280,37 +362,46 @@ open class KAPIVersion(
     object APIExtensionsV1 : KAPIVersion("apiextensions.k8s.io/v1"),
         CustomResourceDefinition.Version,
         CustomResourceDefinitionV2.Version,
-        CustomResourceDefinitionList.Version
+        CustomResourceDefinitionList.Version,
+        CustomResourceDefinitionListV2.Version
 
     object APIRegistrationV1 : KAPIVersion("apiregistration.k8s.io/v1"),
         APIService.Version,
         ApiServiceV2.Version,
-        APIServiceList.Version
+        APIServiceList.Version,
+        ApiServiceListV2.Version
 
     object AppsV1 : KAPIVersion("apps/v1"),
         ControllerRevision.Version,
         ControllerRevisionV2.Version,
         ControllerRevisionList.Version,
+        ControllerRevisionListV2.Version,
         DaemonSet.Version,
         DaemonSetV2.Version,
         DaemonSetList.Version,
+        DaemonSetListV2.Version,
         Deployment.Version,
         DeploymentV2.Version,
         DeploymentList.Version,
+        DeploymentListV2.Version,
         ReplicaSet.Version,
         ReplicaSetV2.Version,
         ReplicaSetList.Version,
+        ReplicaSetListV2.Version,
         StatefulSet.Version,
         StatefulSetV2.Version,
-        StatefulSetList.Version
+        StatefulSetList.Version,
+        StatefulSetListV2.Version
 
     object AuthenticationV1 : KAPIVersion("authentication.k8s.io/v1"),
         TokenRequest.Version,
         TokenRequestV2.Version,
         TokenRequestList.Version,
+        TokenRequestListV2.Version,
         TokenReview.Version,
         TokenReviewV2.Version,
         TokenReviewList.Version,
+        TokenReviewListV2.Version,
         SelfSubjectReview.Version,
         SelfSubjectReviewV2.Version
 
@@ -326,110 +417,145 @@ open class KAPIVersion(
 
     object AutoscalingV1 : KAPIVersion("autoscaling/v1"),
         HorizontalPodAutoscaler.Version,
-        HorizontalPodAutoscalerList.Version
+        HorizontalPodAutoscalerList.Version,
+        HorizontalPodAutoscalerV2.Version,
+        HorizontalPodAutoscalerListV2.Version
 
     object AutoscalingV2 : KAPIVersion("autoscaling/v2"),
         HorizontalPodAutoscaler.Version,
         HorizontalPodAutoscalerList.Version,
-        HorizontalPodAutoscalerV2.Version
+        HorizontalPodAutoscalerV2.Version,
+        HorizontalPodAutoscalerListV2.Version
 
     object BatchV1 : KAPIVersion("batch/v1"),
         CronJob.Version,
         CronJobV2.Version,
         CronJobList.Version,
+        CronJobListV2.Version,
         Job.Version,
         JobV2.Version,
-        JobList.Version
+        JobList.Version,
+        JobListV2.Version
 
     object CertificatesV1 : KAPIVersion("certificates.k8s.io/v1"),
         CertificateSigningRequest.Version,
         CertificateSigningRequestV2.Version,
-        CertificateSigningRequestList.Version
+        CertificateSigningRequestList.Version,
+        CertificateSigningRequestListV2.Version
 
     object CertificatesV1Alpha1 : KAPIVersion("certificates.k8s.io/v1alpha1"),
         ClusterTrustBundle.Version,
-        ClusterTrustBundleList.Version
+        ClusterTrustBundleV2.Version,
+        ClusterTrustBundleList.Version,
+        ClusterTrustBundleListV2.Version
 
     object CertificatesV1Beta1 : KAPIVersion("certificates.k8s.io/v1beta1"),
         ClusterTrustBundle.Version,
         ClusterTrustBundleV2.Version,
-        ClusterTrustBundleList.Version
+        ClusterTrustBundleList.Version,
+        ClusterTrustBundleListV2.Version
 
     object CoordinationV1 : KAPIVersion("coordination.k8s.io/v1"),
         Lease.Version,
         LeaseV2.Version,
-        LeaseList.Version
+        LeaseList.Version,
+        LeaseListV2.Version
 
     object CoordinationV1Alpha1 : KAPIVersion("coordination.k8s.io/v1alpha1"),
         LeaseCandidate.Version,
-        LeaseCandidateList.Version
+        LeaseCandidateV2.Version,
+        LeaseCandidateList.Version,
+        LeaseCandidateListV2.Version
 
     object CoordinationV1Beta1 : KAPIVersion("coordination.k8s.io/v1beta1"),
-        LeaseCandidateV2.Version
+        LeaseCandidate.Version,
+        LeaseCandidateV2.Version,
+        LeaseCandidateList.Version,
+        LeaseCandidateListV2.Version
 
     object DiscoveryV1 : KAPIVersion("discovery.k8s.io/v1"),
         EndpointSlice.Version,
         EndpointSliceV2.Version,
-        EndpointSliceList.Version
+        EndpointSliceList.Version,
+        EndpointSliceListV2.Version
 
     object EventsV1 : KAPIVersion("events.k8s.io/v1"),
         Event.Version,
         EventV2.Version,
-        EventList.Version
+        EventList.Version,
+        EventListV2.Version
 
     object FlowControlApiServerV1 : KAPIVersion("flowcontrol.apiserver.k8s.io/v1"),
         FlowSchema.Version,
         FlowSchemaV2.Version,
         FlowSchemaList.Version,
+        FlowSchemaListV2.Version,
         PriorityLevelConfiguration.Version,
         PriorityLevelConfigurationV2.Version,
-        PriorityLevelConfigurationList.Version
+        PriorityLevelConfigurationList.Version,
+        PriorityLevelConfigurationListV2.Version
 
     object NetworkingV1 : KAPIVersion("networking.k8s.io/v1"),
         Ingress.Version,
         IngressV2.Version,
         IngressList.Version,
+        IngressListV2.Version,
         IngressClass.Version,
         IngressClassV2.Version,
         IngressClassList.Version,
+        IngressClassListV2.Version,
         NetworkPolicy.Version,
         NetworkPolicyV2.Version,
         NetworkPolicyList.Version,
-        ServiceCidrV2.Version
-
-    object NetworkingV1Beta1 : KAPIVersion("networking.k8s.io/v1"),
-        IPAddress.Version,
-        IPAddressV2.Version,
-        IPAddressList.Version,
+        NetworkPolicyListV2.Version,
         ServiceCIDR.Version,
-        ServiceCIDRList.Version
+        ServiceCidrV2.Version,
+        ServiceCIDRList.Version,
+        ServiceCidrListV2.Version
+
+    object NetworkingV1Beta1 : KAPIVersion("networking.k8s.io/v1beta1"),
+        IPAddress.Version,
+        IpAddressV2.Version,
+        IPAddressList.Version,
+        IpAddressListV2.Version,
+        ServiceCIDR.Version,
+        ServiceCidrV2.Version,
+        ServiceCIDRList.Version,
+        ServiceCidrListV2.Version
 
     object NodeV1 : KAPIVersion("node.k8s.io/v1"),
         RuntimeClass.Version,
         RuntimeClassV2.Version,
-        RuntimeClassList.Version
+        RuntimeClassList.Version,
+        RuntimeClassListV2.Version
 
     object PolicyV1 : KAPIVersion("policy/v1"),
         PodDisruptionBudget.Version,
         PodDisruptionBudgetV2.Version,
-        PodDisruptionBudgetList.Version
+        PodDisruptionBudgetList.Version,
+        PodDisruptionBudgetListV2.Version
 
     object RbacAuthorizationV1 : KAPIVersion("rbac.authorization.k8s.io/v1"),
         ClusterRole.Version,
         ClusterRoleV2.Version,
         ClusterRoleList.Version,
+        ClusterRoleListV2.Version,
         ClusterRoleBinding.Version,
         ClusterRoleBindingV2.Version,
         ClusterRoleBindingList.Version,
+        ClusterRoleBindingListV2.Version,
         Role.Version,
         RoleV2.Version,
         RoleList.Version,
-        RoleBindingV2.Version,
+        RoleListV2.Version,
         RoleBinding.Version,
-        RoleBindingList.Version
+        RoleBindingV2.Version,
+        RoleBindingList.Version,
+        RoleBindingListV2.Version
 
     object ResourceV1Alpha3 : KAPIVersion("resource.k8s.io/v1alpha3"),
         DeviceClass.Version,
+        DeviceClassV2.Version,
         DeviceClassList.Version,
         DeviceTaintRuleV2.Version,
         ResourceClaim.Version,
@@ -441,7 +567,9 @@ open class KAPIVersion(
 
     object ResourceV1Beta1 : KAPIVersion("resource.k8s.io/v1beta1"),
         DeviceClass.Version,
+        DeviceClassV2.Version,
         DeviceClassList.Version,
+        DeviceClassListV2.Version,
         ResourceClaim.Version,
         ResourceClaimList.Version,
         ResourceClaimTemplate.Version,
@@ -451,9 +579,13 @@ open class KAPIVersion(
 
     object ResourceV1Beta2 : KAPIVersion("resource.k8s.io/v1beta2"),
         DeviceClassV2.Version,
+        DeviceClassListV2.Version,
         ResourceSliceV2.Version,
+        ResourceSliceListV2.Version,
         ResourceClaimV2.Version,
-        ResourceClaimTemplateV2.Version
+        ResourceClaimListV2.Version,
+        ResourceClaimTemplateV2.Version,
+        ResourceClaimTemplateListV2.Version
 
     object SchedulingV1 : KAPIVersion("scheduling.k8s.io/v1"),
         PriorityClass.Version,
@@ -464,26 +596,33 @@ open class KAPIVersion(
         CSIDriver.Version,
         CsiDriverV2.Version,
         CSIDriverList.Version,
+        CsiDriverListV2.Version,
         CSINode.Version,
         CsiNodeV2.Version,
         CSINodeList.Version,
+        CsiNodeListV2.Version,
         CSIStorageCapacity.Version,
         CsiStorageCapacityV2.Version,
         CSIStorageCapacityList.Version,
+        CsiStorageCapacityListV2.Version,
         StorageClass.Version,
         StorageClassV2.Version,
         StorageClassList.Version,
+        StorageClassListV2.Version,
         VolumeAttachment.Version,
         VolumeAttachmentV2.Version,
-        VolumeAttachmentList.Version
+        VolumeAttachmentList.Version,
+        VolumeAttachmentListV2.Version
 
     object StorageV1Beta1 : KAPIVersion("storage.k8s.io/v1beta1"),
         VolumeAttributesClass.Version,
         VolumeAttributesClassV2.Version,
-        VolumeAttributesClassList.Version
+        VolumeAttributesClassList.Version,
+        VolumeAttributesClassListV2.Version
 
     object StorageMigrationV1Alpha1 : KAPIVersion("storagemigration.k8s.io/v1alpha1"),
         StorageVersionMigration.Version,
         StorageVersionMigrationV2.Version,
-        StorageVersionMigrationList.Version
+        StorageVersionMigrationList.Version,
+        StorageVersionMigrationListV2.Version
 }

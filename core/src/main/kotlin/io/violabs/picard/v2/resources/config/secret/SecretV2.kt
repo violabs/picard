@@ -10,7 +10,7 @@ import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.ConfigResource
 import io.violabs.picard.v2.common.ObjectMeta
 
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 @JsonPropertyOrder("apiVersion", "kind", "metadata", "type", "data", "immutable")
 data class SecretV2(
     @DefaultValue("KAPIVersion.V1", "io.violabs.picard.domain.k8sResources", "KAPIVersion")

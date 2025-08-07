@@ -18,7 +18,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  *
  * import "k8s.io/api/resource/v1alpha3"
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class DeviceTaintRuleV2(
     @DefaultValue(
         "KAPIVersion.ResourceV1Alpha3",

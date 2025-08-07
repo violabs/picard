@@ -22,7 +22,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  *
  * apiVersion: batch/v1
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class JobV2(
     @DefaultValue(
         "KAPIVersion.BatchV1",

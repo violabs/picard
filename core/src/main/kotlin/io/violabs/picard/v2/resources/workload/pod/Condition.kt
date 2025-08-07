@@ -1,4 +1,4 @@
-package io.violabs.picard.v2.common.condition
+package io.violabs.picard.v2.resources.workload.pod
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.domain.BooleanType

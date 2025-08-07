@@ -30,7 +30,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  *
  * import "k8s.io/api/certificates/v1"
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class CertificateSigningRequestV2(
     @DefaultValue(
         "KAPIVersion.CertificatesV1",

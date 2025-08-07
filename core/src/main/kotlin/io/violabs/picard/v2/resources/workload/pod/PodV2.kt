@@ -22,7 +22,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  *
  * kind: Pod
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class PodV2(
     @DefaultValue(
         "KAPIVersion.V1",

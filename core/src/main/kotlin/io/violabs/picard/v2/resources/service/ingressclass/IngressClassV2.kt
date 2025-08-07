@@ -21,7 +21,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  * Standard object's metadata. More info: 
  * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class IngressClassV2(
     @DefaultValue(
         "KAPIVersion.NetworkingV1",

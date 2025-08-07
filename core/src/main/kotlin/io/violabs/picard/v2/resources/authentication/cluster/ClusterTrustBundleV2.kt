@@ -25,7 +25,7 @@ import io.violabs.picard.v2.common.ObjectMeta
  * Admission control is used to enforce that only users with permissions on the signer
  * can create or modify the corresponding bundle.
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class ClusterTrustBundleV2(
     @DefaultValue(
         "KAPIVersion.CertificatesV1Beta1",

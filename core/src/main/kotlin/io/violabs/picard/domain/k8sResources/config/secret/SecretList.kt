@@ -7,6 +7,7 @@ import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.manifest.ConfigListResource
 
+@Deprecated("Use v2", ReplaceWith("io.violabs.picard.v2.resources.config.secret.SecretListV2"))
 data class SecretList(
     override val apiVersion: Version = KAPIVersion.V1,
     override val items: List<Secret>,

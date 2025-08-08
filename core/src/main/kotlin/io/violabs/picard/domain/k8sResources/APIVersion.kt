@@ -125,8 +125,8 @@ import io.violabs.picard.v2.resources.workload.controller.replication.Replicatio
 import io.violabs.picard.v2.resources.workload.controller.revision.ControllerRevisionList
 import io.violabs.picard.v2.resources.workload.daemon.DaemonSetList
 import io.violabs.picard.v2.resources.workload.pod.PodList
-import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateListV2
-import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateV2
+import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateList
+import io.violabs.picard.v2.resources.workload.pod.template.PodTemplate
 import io.violabs.picard.v2.resources.workload.resource.claim.ResourceClaimList
 import io.violabs.picard.v2.resources.workload.resource.claim.template.ResourceClaimTemplateList
 import io.violabs.picard.v2.resources.workload.resource.slice.ResourceSliceList
@@ -166,8 +166,8 @@ open class KAPIVersion(
         PersistentVolumeClaimList.Version,
         Pod.Version,
         PodList.Version,
-        PodTemplateV2.Version,
-        PodTemplateListV2.Version,
+        PodTemplate.Version,
+        PodTemplateList.Version,
         ReplicationController.Version,
         ReplicationControllerList.Version,
         ResourceQuota.Version,

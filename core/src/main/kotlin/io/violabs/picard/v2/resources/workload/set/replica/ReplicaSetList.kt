@@ -1,12 +1,15 @@
 package io.violabs.picard.v2.resources.workload.set.replica
 
 import io.violabs.konstellation.metaDsl.annotation.DefaultValue
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.common.AppConstants
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.manifest.WorkloadListResource
 
+@GeneratedDsl
 data class ReplicaSetList(
     @DefaultValue(
         "KAPIVersion.AppsV1",
@@ -16,6 +19,6 @@ data class ReplicaSetList(
     override val apiVersion: Version = KAPIVersion.AppsV1,
     override val items: List<ReplicaSet>,
     override val metadata: ListMeta? = null
-) : K8sListResource<ReplicaSetList.Version, ReplicaSet> {
+) : WorkloadListResource<ReplicaSetList.Version, ReplicaSet> {
     interface Version : APIVersion
 }

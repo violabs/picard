@@ -2,9 +2,9 @@ package io.violabs.picard.v2.resources.workload.set.replica
 
 import io.violabs.picard.Common
 import io.violabs.picard.SuccessBuildSim
-import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.common.ObjectMeta
+import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateSpec
 import org.junit.jupiter.api.BeforeAll
 
 class ReplicaSetTest : SuccessBuildSim<ReplicaSet, ReplicaSetDslBuilder>() {
@@ -44,7 +44,7 @@ class ReplicaSetTest : SuccessBuildSim<ReplicaSet, ReplicaSetDslBuilder>() {
                         selector {
                             sharedSelector()
                         }
-                        template = PodTemplateSpec()
+                        template {}
                         replicas = 1
                         minReadySeconds = 1
                     }

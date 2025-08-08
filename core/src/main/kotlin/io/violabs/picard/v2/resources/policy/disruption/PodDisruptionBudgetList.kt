@@ -1,12 +1,15 @@
 package io.violabs.picard.v2.resources.policy.disruption
 
 import io.violabs.konstellation.metaDsl.annotation.DefaultValue
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.common.AppConstants
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.manifest.PolicyListResource
 
+@GeneratedDsl
 data class PodDisruptionBudgetList(
     @DefaultValue(
         "KAPIVersion.PolicyV1",
@@ -16,6 +19,6 @@ data class PodDisruptionBudgetList(
     override val apiVersion: Version = KAPIVersion.PolicyV1,
     override val items: List<PodDisruptionBudget>,
     override val metadata: ListMeta? = null
-) : K8sListResource<PodDisruptionBudgetList.Version, PodDisruptionBudget> {
+) : PolicyListResource<PodDisruptionBudgetList.Version, PodDisruptionBudget> {
     interface Version : APIVersion
 }

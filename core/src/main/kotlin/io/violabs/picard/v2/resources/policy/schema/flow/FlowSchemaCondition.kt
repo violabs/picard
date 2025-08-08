@@ -1,6 +1,7 @@
 package io.violabs.picard.v2.resources.policy.schema.flow
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
+import io.violabs.picard.domain.BooleanType
 import java.time.LocalDateTime
 
 @GeneratedDsl(withListGroup = true)
@@ -23,16 +24,11 @@ data class FlowSchemaCondition(
     /**
      * status is the status of the condition. Can be True, False, Unknown. Required.
      */
-    val status: Status? = null,
+    val status: BooleanType? = null,
     /**
      * conditions.type (string)
      *
      * type is the type of the condition. Required.
      */
     val type: String? = null
-) {
-    enum class Status {
-        True, False, Unknown
-    }
-}
-
+)

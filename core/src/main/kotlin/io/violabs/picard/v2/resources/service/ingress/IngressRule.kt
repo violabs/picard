@@ -1,7 +1,7 @@
 package io.violabs.picard.v2.resources.service.ingress
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
-import io.violabs.picard.v2.resources.service.ingress.http.HTTPIngressRuleValue
+import io.violabs.picard.v2.resources.service.ingress.http.HttpIngressRuleValue
 
 /**
  * IngressRule represents the rules mapping the paths under a specified host to the related backend services. 
@@ -34,5 +34,5 @@ data class IngressRule(
      * http://<host>/<path>? -> backend where where parts of the url correspond to RFC 3986, this 
      * resource will be used to match against everything after the last '/' and before the first '?' or '#'.
      */
-    val http: HTTPIngressRuleValue? = null
+    val http: HttpIngressRuleValue? = null
 )

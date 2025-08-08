@@ -24,7 +24,7 @@ import io.violabs.picard.v2.resources.storage.selector.label.TopologySelectorTer
  * StorageClasses are non-namespaced; the name of the storage class according to
  * etcd is in ObjectMeta.Name.
  */
-@GeneratedDsl
+@GeneratedDsl(withListGroup = true)
 data class StorageClass(
     @DefaultValue(
         "KAPIVersion.StorageV1",

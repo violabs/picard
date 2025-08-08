@@ -14,10 +14,10 @@ import io.violabs.picard.v2.resources.service.endpoints.EndpointsDslBuilder
 import io.violabs.picard.v2.resources.service.endpoints.EndpointsDslBuilderScope
 import io.violabs.picard.v2.resources.service.endpoints.EndpointsListDslBuilder
 import io.violabs.picard.v2.resources.service.endpoints.EndpointsListDslBuilderScope
-import io.violabs.picard.v2.resources.service.endpointslice.EndpointSliceDslBuilder
-import io.violabs.picard.v2.resources.service.endpointslice.EndpointSliceDslBuilderScope
-import io.violabs.picard.v2.resources.service.endpointslice.EndpointSliceListDslBuilder
-import io.violabs.picard.v2.resources.service.endpointslice.EndpointSliceListDslBuilderScope
+import io.violabs.picard.v2.resources.service.slice.EndpointSliceDslBuilder
+import io.violabs.picard.v2.resources.service.slice.EndpointSliceDslBuilderScope
+import io.violabs.picard.v2.resources.service.slice.EndpointSliceListDslBuilder
+import io.violabs.picard.v2.resources.service.slice.EndpointSliceListDslBuilderScope
 import io.violabs.picard.v2.resources.service.ingress.IngressDslBuilder
 import io.violabs.picard.v2.resources.service.ingress.IngressDslBuilderScope
 import io.violabs.picard.v2.resources.service.ingress.IngressListDslBuilder

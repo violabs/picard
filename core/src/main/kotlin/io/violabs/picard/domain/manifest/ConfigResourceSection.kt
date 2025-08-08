@@ -8,6 +8,8 @@ import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.K8sResource
 import io.violabs.picard.v2.resources.config.map.ConfigMapDslBuilder
 import io.violabs.picard.v2.resources.config.map.ConfigMapDslBuilderScope
+import io.violabs.picard.v2.resources.config.map.ConfigMapListDslBuilder
+import io.violabs.picard.v2.resources.config.map.ConfigMapListDslBuilderScope
 import io.violabs.picard.v2.resources.config.secret.SecretDslBuilder
 import io.violabs.picard.v2.resources.config.secret.SecretDslBuilderScope
 import io.violabs.picard.v2.resources.config.secret.SecretListDslBuilder
@@ -28,6 +30,11 @@ data class ConfigResourceSection(
         fun configMap(block: ConfigMapDslBuilderScope) {
             val configMap = ConfigMapDslBuilder().apply(block).build()
             resources.add(configMap)
+        }
+
+        fun configMapList(block: ConfigMapListDslBuilderScope) {
+            val list = ConfigMapListDslBuilder().apply(block).build()
+            lists.add(list)
         }
 
         fun secret(block: SecretDslBuilderScope) {

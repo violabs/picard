@@ -1,12 +1,15 @@
 package io.violabs.picard.v2.resources.extend.webhook.mutating
 
 import io.violabs.konstellation.metaDsl.annotation.DefaultValue
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.common.AppConstants
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.manifest.ExtendListResource
 
+@GeneratedDsl
 data class MutatingWebhookConfigurationList(
     @DefaultValue(
         "KAPIVersion.AdmissionRegistrationV1",
@@ -16,6 +19,6 @@ data class MutatingWebhookConfigurationList(
     override val apiVersion: Version = KAPIVersion.AdmissionRegistrationV1,
     override val items: List<MutatingWebhookConfiguration>,
     override val metadata: ListMeta? = null
-) : K8sListResource<MutatingWebhookConfigurationList.Version, MutatingWebhookConfiguration> {
+) : ExtendListResource<MutatingWebhookConfigurationList.Version, MutatingWebhookConfiguration> {
     interface Version : APIVersion
 }

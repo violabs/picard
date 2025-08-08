@@ -58,7 +58,7 @@ import io.violabs.picard.v2.resources.cluster.service.cidr.ServiceCidr
 import io.violabs.picard.v2.resources.service.Service
 import io.violabs.picard.v2.resources.service.ServiceList
 import io.violabs.picard.v2.resources.service.endpoints.Endpoints
-import io.violabs.picard.v2.resources.service.endpointslice.EndpointSlice
+import io.violabs.picard.v2.resources.service.slice.EndpointSlice
 import io.violabs.picard.v2.resources.service.ingress.Ingress
 import io.violabs.picard.v2.resources.service.ingressclass.IngressClass
 import io.violabs.picard.v2.resources.workload.resource.slice.ResourceSlice
@@ -90,7 +90,7 @@ import io.violabs.picard.v2.resources.workload.deployment.DeploymentList
 import io.violabs.picard.v2.resources.service.endpoints.EndpointsList
 import io.violabs.picard.v2.resources.service.ingressclass.IngressClassList
 import io.violabs.picard.v2.resources.service.ingress.IngressList
-import io.violabs.picard.v2.resources.service.endpointslice.EndpointSliceList
+import io.violabs.picard.v2.resources.service.slice.EndpointSliceList
 import io.violabs.picard.v2.resources.authorization.role.binding.RoleBindingList
 import io.violabs.picard.v2.resources.authorization.role.RoleList
 import io.violabs.picard.v2.resources.authorization.role.binding.ClusterRoleBindingList

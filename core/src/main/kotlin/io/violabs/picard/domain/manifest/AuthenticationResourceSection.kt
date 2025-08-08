@@ -22,7 +22,6 @@ import io.violabs.picard.v2.resources.authentication.token.request.TokenRequestL
 import io.violabs.picard.v2.resources.authentication.token.request.TokenRequestListDslBuilderScope
 import io.violabs.picard.v2.resources.authentication.token.review.TokenReviewDslBuilder
 import io.violabs.picard.v2.resources.authentication.token.review.TokenReviewDslBuilderScope
-import io.violabs.picard.v2.resources.authentication.token.review.TokenReviewList
 import io.violabs.picard.v2.resources.authentication.token.review.TokenReviewListDslBuilder
 import io.violabs.picard.v2.resources.authentication.token.review.TokenReviewListDslBuilderScope
 

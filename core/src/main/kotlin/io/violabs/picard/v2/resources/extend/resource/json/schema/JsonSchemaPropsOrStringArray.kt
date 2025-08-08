@@ -4,6 +4,6 @@ import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 
 @GeneratedDsl
 data class JsonSchemaPropsOrStringArray(
-    val schema: JsonSchemaProps? = null,
-    val stringArray: List<String>? = null
+    val props: JsonSchemaProps? = null,
+    val array: List<String>? = null
 )

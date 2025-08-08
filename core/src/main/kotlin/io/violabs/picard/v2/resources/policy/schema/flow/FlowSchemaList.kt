@@ -1,12 +1,15 @@
 package io.violabs.picard.v2.resources.policy.schema.flow
 
 import io.violabs.konstellation.metaDsl.annotation.DefaultValue
+import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.common.AppConstants
 import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.domain.ListMeta
 import io.violabs.picard.domain.k8sResources.K8sListResource
+import io.violabs.picard.domain.manifest.PolicyListResource
 
+@GeneratedDsl
 data class FlowSchemaList(
     @DefaultValue(
         "KAPIVersion.FlowControlApiServerV1",
@@ -16,6 +19,6 @@ data class FlowSchemaList(
     override val apiVersion: Version = KAPIVersion.FlowControlApiServerV1,
     override val items: List<FlowSchema>,
     override val metadata: ListMeta? = null
-) : K8sListResource<FlowSchemaList.Version, FlowSchema> {
+) : PolicyListResource<FlowSchemaList.Version, FlowSchema> {
     interface Version : APIVersion
 }

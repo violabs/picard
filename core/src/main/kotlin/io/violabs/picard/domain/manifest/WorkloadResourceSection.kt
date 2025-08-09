@@ -6,36 +6,66 @@ import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sAPIResource
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.K8sResource
-import io.violabs.picard.domain.k8sResources.workload.controllerRevision.ControllerRevision
-import io.violabs.picard.domain.k8sResources.workload.controllerRevision.ControllerRevisionList
-import io.violabs.picard.domain.k8sResources.workload.cronJob.CronJob
-import io.violabs.picard.domain.k8sResources.workload.cronJob.CronJobList
-import io.violabs.picard.domain.k8sResources.workload.daemonSet.DaemonSet
-import io.violabs.picard.domain.k8sResources.workload.daemonSet.DaemonSetList
-import io.violabs.picard.domain.k8sResources.workload.deployment.Deployment
-import io.violabs.picard.domain.k8sResources.workload.deployment.DeploymentList
-import io.violabs.picard.domain.k8sResources.workload.horizontalPodAutoscaler.HorizontalPodAutoscaler
-import io.violabs.picard.domain.k8sResources.workload.horizontalPodAutoscaler.HorizontalPodAutoscalerList
-import io.violabs.picard.domain.k8sResources.workload.job.Job
-import io.violabs.picard.domain.k8sResources.workload.job.JobList
-import io.violabs.picard.domain.k8sResources.workload.pod.Pod
-import io.violabs.picard.domain.k8sResources.workload.pod.PodList
-import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
-import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplateList
-import io.violabs.picard.domain.k8sResources.workload.priorityClass.PriorityClass
-import io.violabs.picard.domain.k8sResources.workload.priorityClass.PriorityClassList
-import io.violabs.picard.domain.k8sResources.workload.replicaSet.ReplicaSet
-import io.violabs.picard.domain.k8sResources.workload.replicaSet.ReplicaSetList
-import io.violabs.picard.domain.k8sResources.workload.replicationController.ReplicationController
-import io.violabs.picard.domain.k8sResources.workload.replicationController.ReplicationControllerList
-import io.violabs.picard.domain.k8sResources.workload.resourceClaim.ResourceClaim
-import io.violabs.picard.domain.k8sResources.workload.resourceClaim.ResourceClaimList
-import io.violabs.picard.domain.k8sResources.workload.resourceClaimTemplate.ResourceClaimTemplate
-import io.violabs.picard.domain.k8sResources.workload.resourceClaimTemplate.ResourceClaimTemplateList
-import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourceSlice
-import io.violabs.picard.domain.k8sResources.workload.resourceSlice.ResourceSliceList
-import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSet
-import io.violabs.picard.domain.k8sResources.workload.statefulSet.StatefulSetList
+import io.violabs.picard.v2.resources.workload.autoscaling.pod.HorizontalPodAutoscalerDslBuilder
+import io.violabs.picard.v2.resources.workload.autoscaling.pod.HorizontalPodAutoscalerDslBuilderScope
+import io.violabs.picard.v2.resources.workload.autoscaling.pod.HorizontalPodAutoscalerListDslBuilder
+import io.violabs.picard.v2.resources.workload.autoscaling.pod.HorizontalPodAutoscalerListDslBuilderScope
+import io.violabs.picard.v2.resources.workload.batch.cron.CronJobDslBuilder
+import io.violabs.picard.v2.resources.workload.batch.cron.CronJobDslBuilderScope
+import io.violabs.picard.v2.resources.workload.batch.cron.CronJobListDslBuilder
+import io.violabs.picard.v2.resources.workload.batch.cron.CronJobListDslBuilderScope
+import io.violabs.picard.v2.resources.workload.batch.job.JobDslBuilder
+import io.violabs.picard.v2.resources.workload.batch.job.JobDslBuilderScope
+import io.violabs.picard.v2.resources.workload.batch.job.JobListDslBuilder
+import io.violabs.picard.v2.resources.workload.batch.job.JobListDslBuilderScope
+import io.violabs.picard.v2.resources.workload.binding.BindingDslBuilder
+import io.violabs.picard.v2.resources.workload.binding.BindingDslBuilderScope
+import io.violabs.picard.v2.resources.workload.controller.replication.ReplicationControllerDslBuilder
+import io.violabs.picard.v2.resources.workload.controller.replication.ReplicationControllerDslBuilderScope
+import io.violabs.picard.v2.resources.workload.controller.replication.ReplicationControllerListDslBuilder
+import io.violabs.picard.v2.resources.workload.controller.replication.ReplicationControllerListDslBuilderScope
+import io.violabs.picard.v2.resources.workload.controller.revision.ControllerRevisionDslBuilder
+import io.violabs.picard.v2.resources.workload.controller.revision.ControllerRevisionDslBuilderScope
+import io.violabs.picard.v2.resources.workload.controller.revision.ControllerRevisionListDslBuilder
+import io.violabs.picard.v2.resources.workload.controller.revision.ControllerRevisionListDslBuilderScope
+import io.violabs.picard.v2.resources.workload.daemon.DaemonSetDslBuilder
+import io.violabs.picard.v2.resources.workload.daemon.DaemonSetDslBuilderScope
+import io.violabs.picard.v2.resources.workload.daemon.DaemonSetListDslBuilder
+import io.violabs.picard.v2.resources.workload.daemon.DaemonSetListDslBuilderScope
+import io.violabs.picard.v2.resources.workload.deployment.DeploymentDslBuilder
+import io.violabs.picard.v2.resources.workload.deployment.DeploymentDslBuilderScope
+import io.violabs.picard.v2.resources.workload.deployment.DeploymentListDslBuilder
+import io.violabs.picard.v2.resources.workload.deployment.DeploymentListDslBuilderScope
+import io.violabs.picard.v2.resources.workload.pod.PodDslBuilder
+import io.violabs.picard.v2.resources.workload.pod.PodDslBuilderScope
+import io.violabs.picard.v2.resources.workload.pod.PodListDslBuilder
+import io.violabs.picard.v2.resources.workload.pod.PodListDslBuilderScope
+import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateDslBuilder
+import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateDslBuilderScope
+import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateListDslBuilder
+import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateListDslBuilderScope
+import io.violabs.picard.v2.resources.workload.resource.claim.ResourceClaimDslBuilder
+import io.violabs.picard.v2.resources.workload.resource.claim.ResourceClaimDslBuilderScope
+import io.violabs.picard.v2.resources.workload.resource.claim.ResourceClaimListDslBuilder
+import io.violabs.picard.v2.resources.workload.resource.claim.ResourceClaimListDslBuilderScope
+import io.violabs.picard.v2.resources.workload.resource.claim.template.ResourceClaimTemplateDslBuilder
+import io.violabs.picard.v2.resources.workload.resource.claim.template.ResourceClaimTemplateDslBuilderScope
+import io.violabs.picard.v2.resources.workload.resource.claim.template.ResourceClaimTemplateListDslBuilder
+import io.violabs.picard.v2.resources.workload.resource.claim.template.ResourceClaimTemplateListDslBuilderScope
+import io.violabs.picard.v2.resources.workload.resource.slice.ResourceSliceDslBuilder
+import io.violabs.picard.v2.resources.workload.resource.slice.ResourceSliceDslBuilderScope
+import io.violabs.picard.v2.resources.workload.resource.slice.ResourceSliceListDslBuilder
+import io.violabs.picard.v2.resources.workload.resource.slice.ResourceSliceListDslBuilderScope
+import io.violabs.picard.v2.resources.workload.scheduling.PriorityClassDslBuilder
+import io.violabs.picard.v2.resources.workload.scheduling.PriorityClassDslBuilderScope
+import io.violabs.picard.v2.resources.workload.scheduling.PriorityClassListDslBuilder
+import io.violabs.picard.v2.resources.workload.scheduling.PriorityClassListDslBuilderScope
+import io.violabs.picard.v2.resources.workload.set.replica.ReplicaSetDslBuilder
+import io.violabs.picard.v2.resources.workload.set.replica.ReplicaSetDslBuilderScope
+import io.violabs.picard.v2.resources.workload.set.stateful.StatefulSetDslBuilder
+import io.violabs.picard.v2.resources.workload.set.stateful.StatefulSetDslBuilderScope
+import io.violabs.picard.v2.resources.workload.set.stateful.StatefulSetListDslBuilder
+import io.violabs.picard.v2.resources.workload.set.stateful.StatefulSetListDslBuilderScope
 
 interface WorkloadResource<T : APIVersion, META> : K8sResource<T, META>
 interface WorkloadListResource<T : APIVersion, E> : K8sListResource<T, E>
@@ -49,126 +79,160 @@ data class WorkloadResourceSection(
         private val lists: MutableList<WorkloadListResource<*, *>> = mutableListOf()
     ) : DslBuilder<WorkloadResourceSection> {
 
-        fun controllerRevision(block: ControllerRevision.Builder.() -> Unit) {
-            resources += ControllerRevision.Builder().apply(block).build()
+        fun controllerReplication(block: ReplicationControllerDslBuilderScope) {
+            val controllerReplication = ReplicationControllerDslBuilder().apply(block).build()
+            resources.add(controllerReplication)
         }
 
-        fun controllerRevisionList(block: ControllerRevisionList.Builder.() -> Unit) {
-            lists += ControllerRevisionList.Builder().apply(block).build()
+        fun controllerReplicationList(block: ReplicationControllerListDslBuilderScope) {
+            val list = ReplicationControllerListDslBuilder().apply(block).build()
+            lists.add(list)
         }
 
-        fun cronJob(block: CronJob.Builder.() -> Unit) {
-            resources += CronJob.Builder().apply(block).build()
+        fun controllerRevision(block: ControllerRevisionDslBuilderScope) {
+            val controllerRevision = ControllerRevisionDslBuilder().apply(block).build()
+            resources.add(controllerRevision)
         }
 
-        fun cronJobList(block: CronJobList.Builder.() -> Unit) {
-            lists += CronJobList.Builder().apply(block).build()
+        fun controllerRevisionList(block: ControllerRevisionListDslBuilderScope) {
+            val list = ControllerRevisionListDslBuilder().apply(block).build()
+            lists.add(list)
         }
 
-        fun daemonSet(block: DaemonSet.Builder.() -> Unit) {
-            resources += DaemonSet.Builder().apply(block).build()
+        fun cronJob(block: CronJobDslBuilderScope) {
+            val cronJob = CronJobDslBuilder().apply(block).build()
+            resources.add(cronJob)
         }
 
-        fun daemonSetList(block: DaemonSetList.Builder.() -> Unit) {
-            lists += DaemonSetList.Builder().apply(block).build()
+        fun cronJobList(block: CronJobListDslBuilderScope) {
+            val list = CronJobListDslBuilder().apply(block).build()
+            lists.add(list)
         }
 
-        fun deployment(block: Deployment.Builder.() -> Unit) {
-            resources += Deployment.Builder().apply(block).build()
+        fun daemonSet(block: DaemonSetDslBuilderScope) {
+            val daemonSet = DaemonSetDslBuilder().apply(block).build()
+            resources.add(daemonSet)
         }
 
-        fun deploymentList(block: DeploymentList.Builder.() -> Unit) {
-            lists += DeploymentList.Builder().apply(block).build()
+        fun daemonSetList(block: DaemonSetListDslBuilderScope) {
+            val list = DaemonSetListDslBuilder().apply(block).build()
+            lists.add(list)
         }
 
-        fun horizontalPodAutoscaler(block: HorizontalPodAutoscaler.Builder.() -> Unit) {
-            resources += HorizontalPodAutoscaler.Builder().apply(block).build()
+        fun deployment(block: DeploymentDslBuilderScope) {
+            val deployment = DeploymentDslBuilder().apply(block).build()
+            resources.add(deployment)
         }
 
-        fun horizontalPodAutoscalerList(block: HorizontalPodAutoscalerList.Builder.() -> Unit) {
-            lists += HorizontalPodAutoscalerList.Builder().apply(block).build()
+        fun deploymentList(block: DeploymentListDslBuilderScope) {
+            val list = DeploymentListDslBuilder().apply(block).build()
+            lists.add(list)
         }
 
-        fun job(block: Job.Builder.() -> Unit) {
-            resources += Job.Builder().apply(block).build()
+        fun horizontalPodAutoscaler(block: HorizontalPodAutoscalerDslBuilderScope) {
+            val horizontalPodAutoscaler = HorizontalPodAutoscalerDslBuilder().apply(block).build()
+            resources.add(horizontalPodAutoscaler)
         }
 
-        fun jobList(block: JobList.Builder.() -> Unit) {
-            lists += JobList.Builder().apply(block).build()
+        fun horizontalPodAutoscalerList(block: HorizontalPodAutoscalerListDslBuilderScope) {
+            val list = HorizontalPodAutoscalerListDslBuilder().apply(block).build()
+            lists.add(list)
         }
 
-        fun pod(block: Pod.Builder.() -> Unit) {
-            resources += Pod.Builder().apply(block).build()
+        fun job(block: JobDslBuilderScope) {
+            val job = JobDslBuilder().apply(block).build()
+            resources.add(job)
         }
 
-        fun podList(block: PodList.Builder.() -> Unit) {
-            lists += PodList.Builder().apply(block).build()
+        fun jobList(block: JobListDslBuilderScope) {
+            val jobList = JobListDslBuilder().apply(block).build()
+            lists.add(jobList)
         }
 
-        fun podTemplate(block: PodTemplate.Builder.() -> Unit) {
-            resources += PodTemplate.Builder().apply(block).build()
+        fun pod(block: PodDslBuilderScope) {
+            val pod = PodDslBuilder().apply(block).build()
+            resources.add(pod)
         }
 
-        fun podTemplateList(block: PodTemplateList.Builder.() -> Unit) {
-            lists += PodTemplateList.Builder().apply(block).build()
+        fun podList(block: PodListDslBuilderScope) {
+            val podList = PodListDslBuilder().apply(block).build()
+            lists.add(podList)
         }
 
-        fun priorityClass(block: PriorityClass.Builder.() -> Unit) {
-            resources += PriorityClass.Builder().apply(block).build()
+        fun podTemplate(block: PodTemplateDslBuilderScope) {
+            val podTemplate = PodTemplateDslBuilder().apply(block).build()
+            resources.add(podTemplate)
         }
 
-        fun priorityClassList(block: PriorityClassList.Builder.() -> Unit) {
-            lists += PriorityClassList.Builder().apply(block).build()
+        fun podTemplateList(block: PodTemplateListDslBuilderScope) {
+            val podTemplateList = PodTemplateListDslBuilder().apply(block).build()
+            lists.add(podTemplateList)
         }
 
-        fun replicaSet(block: ReplicaSet.Builder.() -> Unit) {
-            resources += ReplicaSet.Builder().apply(block).build()
+        fun priorityClass(block: PriorityClassDslBuilderScope) {
+            val priorityClass = PriorityClassDslBuilder().apply(block).build()
+            resources.add(priorityClass)
         }
 
-        fun replicaSetList(block: ReplicaSetList.Builder.() -> Unit) {
-            lists += ReplicaSetList.Builder().apply(block).build()
+        fun priorityClassList(block: PriorityClassListDslBuilderScope) {
+            val priorityClassList = PriorityClassListDslBuilder().apply(block).build()
+            lists.add(priorityClassList)
         }
 
-        fun replicationController(block: ReplicationController.Builder.() -> Unit) {
-            resources += ReplicationController.Builder().apply(block).build()
+        fun replicaSet(block: ReplicaSetDslBuilderScope) {
+            val replicaSet = ReplicaSetDslBuilder().apply(block).build()
+            resources.add(replicaSet)
         }
 
-        fun replicationControllerList(block: ReplicationControllerList.Builder.() -> Unit) {
-            lists += ReplicationControllerList.Builder().apply(block).build()
+        fun replicationController(block: ReplicationControllerDslBuilderScope) {
+            val replicationController = ReplicationControllerDslBuilder().apply(block).build()
+            resources.add(replicationController)
         }
 
-        fun resourceClaim(block: ResourceClaim.Builder.() -> Unit) {
-            resources += ResourceClaim.Builder().apply(block).build()
+        fun resourceClaim(block: ResourceClaimDslBuilderScope) {
+            val resourceClaim = ResourceClaimDslBuilder().apply(block).build()
+            resources.add(resourceClaim)
         }
 
-        fun resourceClaimList(block: ResourceClaimList.Builder.() -> Unit) {
-            lists += ResourceClaimList.Builder().apply(block).build()
+        fun resourceClaimList(block: ResourceClaimListDslBuilderScope) {
+            val resourceClaimList = ResourceClaimListDslBuilder().apply(block).build()
+            lists.add(resourceClaimList)
         }
 
-        fun resourceClaimTemplate(block: ResourceClaimTemplate.Builder.() -> Unit) {
-            resources += ResourceClaimTemplate.Builder().apply(block).build()
+        fun resourceClaimTemplate(block: ResourceClaimTemplateDslBuilderScope) {
+            val resourceClaimTemplate = ResourceClaimTemplateDslBuilder().apply(block).build()
+            resources.add(resourceClaimTemplate)
         }
 
-        fun resourceClaimTemplateList(block: ResourceClaimTemplateList.Builder.() -> Unit) {
-            lists += ResourceClaimTemplateList.Builder().apply(block).build()
+        fun resourceClaimTemplateList(block: ResourceClaimTemplateListDslBuilderScope) {
+            val resourceClaimTemplateList = ResourceClaimTemplateListDslBuilder().apply(block).build()
+            lists.add(resourceClaimTemplateList)
         }
 
-        fun resourceSlice(block: ResourceSlice.Builder.() -> Unit) {
-            resources += ResourceSlice.Builder().apply(block).build()
+        fun resourceSlice(block: ResourceSliceDslBuilderScope) {
+            val resourceSlice = ResourceSliceDslBuilder().apply(block).build()
+            resources.add(resourceSlice)
         }
 
-        fun resourceSliceList(block: ResourceSliceList.Builder.() -> Unit) {
-            lists += ResourceSliceList.Builder().apply(block).build()
+        fun resourceSliceList(block: ResourceSliceListDslBuilderScope) {
+            val resourceSliceList = ResourceSliceListDslBuilder().apply(block).build()
+            lists.add(resourceSliceList)
         }
 
-        fun statefulSet(block: StatefulSet.Builder.() -> Unit) {
-            resources += StatefulSet.Builder().apply(block).build()
+        fun statefulSet(block: StatefulSetDslBuilderScope) {
+            val statefulSet = StatefulSetDslBuilder().apply(block).build()
+            resources.add(statefulSet)
         }
 
-        fun statefulSetList(block: StatefulSetList.Builder.() -> Unit) {
-            lists += StatefulSetList.Builder().apply(block).build()
+        fun statefulSetList(block: StatefulSetListDslBuilderScope) {
+            val list = StatefulSetListDslBuilder().apply(block).build()
+            lists.add(list)
         }
 
+        fun binding(block: BindingDslBuilderScope) {
+            val binding = BindingDslBuilder().apply(block).build()
+            resources.add(binding)
+        }
 
         override fun build(): WorkloadResourceSection {
             return WorkloadResourceSection(

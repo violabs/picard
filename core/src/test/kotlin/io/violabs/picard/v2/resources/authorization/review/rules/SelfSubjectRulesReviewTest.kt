@@ -7,7 +7,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class SelfSubjectRulesReviewTest : FullBuildSim<SelfSubjectRulesReviewV2, SelfSubjectRulesReviewV2DslBuilder>() {
+class SelfSubjectRulesReviewTest : FullBuildSim<SelfSubjectRulesReview, SelfSubjectRulesReviewDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,22 +17,22 @@ class SelfSubjectRulesReviewTest : FullBuildSim<SelfSubjectRulesReviewV2, SelfSu
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<SelfSubjectRulesReviewV2, SelfSubjectRulesReviewV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<SelfSubjectRulesReview, SelfSubjectRulesReviewDslBuilder> {
             scenario {
                 id = "minimum"
-                given(SelfSubjectRulesReviewV2DslBuilder()) {
+                given(SelfSubjectRulesReviewDslBuilder()) {
                     spec {
                         namespace = PLACEHOLDER
                     }
                 }
-                expected = SelfSubjectRulesReviewV2(
+                expected = SelfSubjectRulesReview(
                     spec = SelfSubjectRulesReviewSpec(PLACEHOLDER)
                 )
             }
 
             scenario {
                 id = "full"
-                given(SelfSubjectRulesReviewV2DslBuilder()) {
+                given(SelfSubjectRulesReviewDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -62,7 +62,7 @@ class SelfSubjectRulesReviewTest : FullBuildSim<SelfSubjectRulesReviewV2, SelfSu
                         evaluationError = PLACEHOLDER
                     }
                 }
-                expected = SelfSubjectRulesReviewV2(
+                expected = SelfSubjectRulesReview(
                     spec = SelfSubjectRulesReviewSpec(PLACEHOLDER),
                     status = SelfSubjectRulesReviewStatus(
                         incomplete = true,
@@ -87,9 +87,9 @@ class SelfSubjectRulesReviewTest : FullBuildSim<SelfSubjectRulesReviewV2, SelfSu
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<SelfSubjectRulesReviewV2, SelfSubjectRulesReviewV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<SelfSubjectRulesReview, SelfSubjectRulesReviewDslBuilder> {
             requireScenario("spec") {
-                given(SelfSubjectRulesReviewV2DslBuilder())
+                given(SelfSubjectRulesReviewDslBuilder())
             }
         }
     }

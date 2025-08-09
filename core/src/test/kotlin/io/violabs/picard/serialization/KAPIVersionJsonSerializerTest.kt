@@ -2,7 +2,7 @@ package io.violabs.picard.serialization
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.violabs.geordi.UnitSim
-import io.violabs.picard.domain.k8sResources.workload.pod.Pod
+import io.violabs.picard.v2.resources.workload.pod.Pod
 import org.junit.jupiter.api.Test
 
 class KAPIVersionJsonSerializerTest : UnitSim() {

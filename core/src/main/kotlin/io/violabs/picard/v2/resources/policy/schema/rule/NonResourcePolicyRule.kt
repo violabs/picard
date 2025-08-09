@@ -31,13 +31,13 @@ data class NonResourcePolicyRule(
      * If it is present, it must be the only entry. Required.
      */
     @JsonProperty("nonResourceURLs")
-    val nonResourceUrls: Set<String>,
+    val nonResourceUrls: List<String>,
     /**
      * Set: unique values will be kept during a merge
      *
      * verbs is a list of matching verbs and may not be empty. "*" matches all verbs.
      * If it is present, it must be the only entry. Required.
      */
-    val verbs: Set<String>
+    val verbs: List<String>
 )
 

@@ -1,6 +1,8 @@
 package io.violabs.picard.v2.resources.extend.deviceclass
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
+import io.violabs.picard.v2.resources.extend.deviceclass.config.DeviceClassConfiguration
+import io.violabs.picard.v2.resources.extend.deviceclass.selector.DeviceSelector
 
 /**
  * DeviceClassSpec is used in a [DeviceClass] to define what can be allocated and how to configure it.

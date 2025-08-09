@@ -6,24 +6,43 @@ import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sAPIResource
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.K8sResource
-import io.violabs.picard.domain.k8sResources.storage.csi.csiDriver.CSIDriver
-import io.violabs.picard.domain.k8sResources.storage.csi.csiDriver.CSIDriverList
-import io.violabs.picard.domain.k8sResources.storage.csi.csiNode.CSINode
-import io.violabs.picard.domain.k8sResources.storage.csi.csiNode.CSINodeList
-import io.violabs.picard.domain.k8sResources.storage.csi.csiStorageCapacity.CSIStorageCapacity
-import io.violabs.picard.domain.k8sResources.storage.csi.csiStorageCapacity.CSIStorageCapacityList
-import io.violabs.picard.domain.k8sResources.storage.persistentVolume.PersistentVolume
-import io.violabs.picard.domain.k8sResources.storage.persistentVolume.PersistentVolumeList
-import io.violabs.picard.domain.k8sResources.storage.persistentVolume.claim.PersistentVolumeClaim
-import io.violabs.picard.domain.k8sResources.storage.persistentVolume.claim.PersistentVolumeClaimList
-import io.violabs.picard.domain.k8sResources.storage.storageClass.StorageClass
-import io.violabs.picard.domain.k8sResources.storage.storageClass.StorageClassList
-import io.violabs.picard.domain.k8sResources.storage.storageVersionMigration.StorageVersionMigration
-import io.violabs.picard.domain.k8sResources.storage.storageVersionMigration.StorageVersionMigrationList
-import io.violabs.picard.domain.k8sResources.storage.volumeAttachment.VolumeAttachment
-import io.violabs.picard.domain.k8sResources.storage.volumeAttachment.VolumeAttachmentList
-import io.violabs.picard.domain.k8sResources.storage.volumeAttributesClass.VolumeAttributesClass
-import io.violabs.picard.domain.k8sResources.storage.volumeAttributesClass.VolumeAttributesClassList
+import io.violabs.picard.v2.resources.storage.csi.driver.CsiDriverDslBuilder
+import io.violabs.picard.v2.resources.storage.csi.driver.CsiDriverDslBuilderScope
+import io.violabs.picard.v2.resources.storage.csi.driver.CsiDriverListDslBuilder
+import io.violabs.picard.v2.resources.storage.csi.driver.CsiDriverListDslBuilderScope
+import io.violabs.picard.v2.resources.storage.csi.node.CsiNodeDslBuilder
+import io.violabs.picard.v2.resources.storage.csi.node.CsiNodeDslBuilderScope
+import io.violabs.picard.v2.resources.storage.csi.node.CsiNodeListDslBuilder
+import io.violabs.picard.v2.resources.storage.csi.node.CsiNodeListDslBuilderScope
+import io.violabs.picard.v2.resources.storage.csi.storage.capacity.CsiStorageCapacityDslBuilder
+import io.violabs.picard.v2.resources.storage.csi.storage.capacity.CsiStorageCapacityDslBuilderScope
+import io.violabs.picard.v2.resources.storage.csi.storage.capacity.CsiStorageCapacityListDslBuilder
+import io.violabs.picard.v2.resources.storage.csi.storage.capacity.CsiStorageCapacityListDslBuilderScope
+import io.violabs.picard.v2.resources.storage.persistent.volume.PersistentVolumeDslBuilder
+import io.violabs.picard.v2.resources.storage.persistent.volume.PersistentVolumeDslBuilderScope
+import io.violabs.picard.v2.resources.storage.persistent.volume.PersistentVolumeListDslBuilder
+import io.violabs.picard.v2.resources.storage.persistent.volume.PersistentVolumeListDslBuilderScope
+import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimDslBuilder
+import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimDslBuilderScope
+import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimListDslBuilder
+import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaimListDslBuilderScope
+import io.violabs.picard.v2.resources.storage.StorageClassDslBuilder
+import io.violabs.picard.v2.resources.storage.StorageClassDslBuilderScope
+import io.violabs.picard.v2.resources.storage.StorageClassListDslBuilder
+import io.violabs.picard.v2.resources.storage.StorageClassListDslBuilderScope
+import io.violabs.picard.v2.resources.storage.csi.driver.CsiDriver
+import io.violabs.picard.v2.resources.storage.version.migration.StorageVersionMigrationDslBuilder
+import io.violabs.picard.v2.resources.storage.version.migration.StorageVersionMigrationDslBuilderScope
+import io.violabs.picard.v2.resources.storage.version.migration.StorageVersionMigrationListDslBuilder
+import io.violabs.picard.v2.resources.storage.version.migration.StorageVersionMigrationListDslBuilderScope
+import io.violabs.picard.v2.resources.storage.volume.attachment.VolumeAttachmentDslBuilder
+import io.violabs.picard.v2.resources.storage.volume.attachment.VolumeAttachmentDslBuilderScope
+import io.violabs.picard.v2.resources.storage.volume.attachment.VolumeAttachmentListDslBuilder
+import io.violabs.picard.v2.resources.storage.volume.attachment.VolumeAttachmentListDslBuilderScope
+import io.violabs.picard.v2.resources.storage.volume.VolumeAttributesClassDslBuilder
+import io.violabs.picard.v2.resources.storage.volume.VolumeAttributesClassDslBuilderScope
+import io.violabs.picard.v2.resources.storage.volume.VolumeAttributesClassListDslBuilder
+import io.violabs.picard.v2.resources.storage.volume.VolumeAttributesClassListDslBuilderScope
 
 interface StorageResource<T : APIVersion, META> : K8sResource<T, META>
 interface StorageListResource<T : APIVersion, E> : K8sListResource<T, E>
@@ -36,76 +55,94 @@ data class StorageResourceSection(
         private val resources: MutableList<StorageResource<*, *>> = mutableListOf(),
         private val lists: MutableList<StorageListResource<*, *>> = mutableListOf()
     ) : DslBuilder<StorageResourceSection> {
-        fun csiDriver(block: CSIDriver.Builder.() -> Unit) {
-            resources += CSIDriver.Builder().apply(block).build()
+        fun csiDriver(block: CsiDriverDslBuilderScope) {
+            val csiDriver: CsiDriver = CsiDriverDslBuilder().apply(block).build()
+            resources.add(csiDriver)
         }
 
-        fun csiDriverList(block: CSIDriverList.Builder.() -> Unit) {
-            lists += CSIDriverList.Builder().apply(block).build()
+        fun csiDriverList(block: CsiDriverListDslBuilderScope) {
+            val list = CsiDriverListDslBuilder().apply(block).build()
+            lists.add(list)
         }
 
-        fun csiNode(block: CSINode.Builder.() -> Unit) {
-            resources += CSINode.Builder().apply(block).build()
+        fun csiNode(block: CsiNodeDslBuilderScope) {
+            val csiNode = CsiNodeDslBuilder().apply(block).build()
+            resources.add(csiNode)
         }
 
-        fun csiNodeList(block: CSINodeList.Builder.() -> Unit) {
-            lists += CSINodeList.Builder().apply(block).build()
+        fun csiNodeList(block: CsiNodeListDslBuilderScope) {
+            val list = CsiNodeListDslBuilder().apply(block).build()
+            lists.add(list)
         }
 
-        fun csiStorageCapacity(block: CSIStorageCapacity.Builder.() -> Unit) {
-            resources += CSIStorageCapacity.Builder().apply(block).build()
+        fun csiStorageCapacity(block: CsiStorageCapacityDslBuilderScope) {
+            val csiStorageCapacity = CsiStorageCapacityDslBuilder().apply(block).build()
+            resources.add(csiStorageCapacity)
         }
 
-        fun csiStorageCapacityList(block: CSIStorageCapacityList.Builder.() -> Unit) {
-            lists += CSIStorageCapacityList.Builder().apply(block).build()
+        fun csiStorageCapacityList(block: CsiStorageCapacityListDslBuilderScope) {
+            val list = CsiStorageCapacityListDslBuilder().apply(block).build()
+            lists.add(list)
         }
 
-        fun persistentVolumeClaim(block: PersistentVolumeClaim.Builder.() -> Unit) {
-            resources += PersistentVolumeClaim.Builder().apply(block).build()
+        fun persistentVolumeClaim(block: PersistentVolumeClaimDslBuilderScope) {
+            val pvc = PersistentVolumeClaimDslBuilder().apply(block).build()
+            resources.add(pvc)
         }
 
-        fun persistentVolumeClaimList(block: PersistentVolumeClaimList.Builder.() -> Unit) {
-            lists += PersistentVolumeClaimList.Builder().apply(block).build()
+        fun persistentVolumeClaimList(block: PersistentVolumeClaimListDslBuilderScope) {
+            val list = PersistentVolumeClaimListDslBuilder().apply(block).build()
+            lists.add(list)
         }
 
-        fun persistentVolume(block: PersistentVolume.Builder.() -> Unit) {
-            resources += PersistentVolume.Builder().apply(block).build()
+        fun persistentVolume(block: PersistentVolumeDslBuilderScope) {
+            val pv = PersistentVolumeDslBuilder().apply(block).build()
+            resources.add(pv)
         }
 
-        fun persistentVolumeList(block: PersistentVolumeList.Builder.() -> Unit) {
-            lists += PersistentVolumeList.Builder().apply(block).build()
+        fun persistentVolumeList(block: PersistentVolumeListDslBuilderScope) {
+            val list = PersistentVolumeListDslBuilder().apply(block).build()
+            lists.add(list)
         }
 
-        fun storageClass(block: StorageClass.Builder.() -> Unit) {
-            resources += StorageClass.Builder().apply(block).build()
+        fun storageClass(block: StorageClassDslBuilderScope) {
+            val storageClass = StorageClassDslBuilder().apply(block).build()
+            resources.add(storageClass)
         }
 
-        fun storageClassList(block: StorageClassList.Builder.() -> Unit) {
-            lists += StorageClassList.Builder().apply(block).build()
+        fun storageClassList(block: StorageClassListDslBuilderScope) {
+            val list = StorageClassListDslBuilder().apply(block).build()
+            lists.add(list)
         }
 
-        fun storageVersionMigration(block: StorageVersionMigration.Builder.() -> Unit) {
-            resources += StorageVersionMigration.Builder().apply(block).build()
+        fun storageVersionMigration(block: StorageVersionMigrationDslBuilderScope) {
+            val migration = StorageVersionMigrationDslBuilder().apply(block).build()
+            resources.add(migration)
         }
 
-        fun storageVersionMigrationList(block: StorageVersionMigrationList.Builder.() -> Unit) {
-            lists += StorageVersionMigrationList.Builder().apply(block).build()
+        fun storageVersionMigrationList(block: StorageVersionMigrationListDslBuilderScope) {
+            val list = StorageVersionMigrationListDslBuilder().apply(block).build()
+            lists.add(list)
         }
 
-        fun volumeAttachment(block: VolumeAttachment.Builder.() -> Unit) {
-            resources += VolumeAttachment.Builder().apply(block).build()
+        fun volumeAttachment(block: VolumeAttachmentDslBuilderScope) {
+            val attachment = VolumeAttachmentDslBuilder().apply(block).build()
+            resources.add(attachment)
         }
 
-        fun volumeAttachmentList(block: VolumeAttachmentList.Builder.() -> Unit) {
-            lists += VolumeAttachmentList.Builder().apply(block).build()
+        fun volumeAttachmentList(block: VolumeAttachmentListDslBuilderScope) {
+            val list = VolumeAttachmentListDslBuilder().apply(block).build()
+            lists.add(list)
         }
 
-        fun volumeAttributesClass(block: VolumeAttributesClass.Builder.() -> Unit) {
-            resources += VolumeAttributesClass.Builder().apply(block).build()
+        fun volumeAttributesClass(block: VolumeAttributesClassDslBuilderScope) {
+            val volumeClass = VolumeAttributesClassDslBuilder().apply(block).build()
+            resources.add(volumeClass)
         }
 
-        fun volumeAttributesClassList(block: VolumeAttributesClassList.Builder.() -> Unit) {
-            lists += VolumeAttributesClassList.Builder().apply(block).build()
+        fun volumeAttributesClassList(block: VolumeAttributesClassListDslBuilderScope) {
+            val list = VolumeAttributesClassListDslBuilder().apply(block).build()
+            lists.add(list)
         }
 
 

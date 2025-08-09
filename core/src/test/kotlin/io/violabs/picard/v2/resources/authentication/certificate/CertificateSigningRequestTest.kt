@@ -3,11 +3,12 @@ package io.violabs.picard.v2.resources.authentication.certificate
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
 import io.violabs.picard.FullBuildSim
+import io.violabs.picard.domain.BooleanType
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class CertificateSigningRequestTest :
-    FullBuildSim<CertificateSigningRequestV2, CertificateSigningRequestV2DslBuilder>() {
+    FullBuildSim<CertificateSigningRequest, CertificateSigningRequestDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -18,16 +19,16 @@ class CertificateSigningRequestTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<CertificateSigningRequestV2, CertificateSigningRequestV2DslBuilder> {
+            possibilities<CertificateSigningRequest, CertificateSigningRequestDslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(CertificateSigningRequestV2DslBuilder()) {
+                    given(CertificateSigningRequestDslBuilder()) {
                         spec {
                             request(0b1, 0b01)
                             signerName = PLACEHOLDER
                         }
                     }
-                    expected = CertificateSigningRequestV2(
+                    expected = CertificateSigningRequest(
                         spec = CertificateSigningRequestSpec(
                             request = BYTES,
                             signerName = PLACEHOLDER
@@ -37,7 +38,7 @@ class CertificateSigningRequestTest :
 
                 scenario {
                     id = "full"
-                    given(CertificateSigningRequestV2DslBuilder()) {
+                    given(CertificateSigningRequestDslBuilder()) {
                         metadata {
                             sharedObjectMeta()
                         }
@@ -57,7 +58,7 @@ class CertificateSigningRequestTest :
                             certificate(0b1, 0b01)
                             conditions {
                                 certificateSigningRequestCondition {
-                                    status = CertificateSigningRequestCondition.Status.True
+                                    status = BooleanType.True
                                     type = CertificateSigningRequestCondition.Type.Approved
                                     lastTransitionTime = NOW
                                     lastUpdateTime = NOW
@@ -67,7 +68,7 @@ class CertificateSigningRequestTest :
                             }
                         }
                     }
-                    expected = CertificateSigningRequestV2(
+                    expected = CertificateSigningRequest(
                         metadata = Common.OBJECT_META,
 
                         spec = CertificateSigningRequestSpec(
@@ -85,7 +86,7 @@ class CertificateSigningRequestTest :
                             certificate = BYTES,
                             conditions = listOf(
                                 CertificateSigningRequestCondition(
-                                    status = CertificateSigningRequestCondition.Status.True,
+                                    status = BooleanType.True,
                                     type = CertificateSigningRequestCondition.Type.Approved,
                                     lastTransitionTime = NOW,
                                     lastUpdateTime = NOW,
@@ -99,9 +100,9 @@ class CertificateSigningRequestTest :
             }
 
         private val FAILURE_POSSIBILITIES =
-            possibilities<CertificateSigningRequestV2, CertificateSigningRequestV2DslBuilder> {
+            possibilities<CertificateSigningRequest, CertificateSigningRequestDslBuilder> {
                 requireScenario("spec") {
-                    given(CertificateSigningRequestV2DslBuilder())
+                    given(CertificateSigningRequestDslBuilder())
                 }
             }
     }

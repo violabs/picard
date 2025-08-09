@@ -10,7 +10,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 
-class SecretTest : SuccessBuildSim<SecretV2, SecretV2DslBuilder>() {
+class SecretTest : SuccessBuildSim<Secret, SecretDslBuilder>() {
     @Test
     fun `type ref check`() {
         assert(SecretType.OPAQUE.toString() == "Opaque")
@@ -25,16 +25,16 @@ class SecretTest : SuccessBuildSim<SecretV2, SecretV2DslBuilder>() {
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<SecretV2, SecretV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Secret, SecretDslBuilder> {
             scenario {
                 id = "minimum"
-                given(SecretV2DslBuilder())
-                expected = SecretV2()
+                given(SecretDslBuilder())
+                expected = Secret()
             }
 
             scenario {
                 id = "full"
-                given(SecretV2DslBuilder()) {
+                given(SecretDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -44,7 +44,7 @@ class SecretTest : SuccessBuildSim<SecretV2, SecretV2DslBuilder>() {
                     immutable()
                     type = SecretType.OPAQUE
                 }
-                expected = SecretV2(
+                expected = Secret(
                     metadata = Common.OBJECT_META,
                     data = BinaryData(mutableMapOf(PLACEHOLDER to PLACEHOLDER)),
                     stringData = TextData(mutableMapOf(PLACEHOLDER to PLACEHOLDER)),

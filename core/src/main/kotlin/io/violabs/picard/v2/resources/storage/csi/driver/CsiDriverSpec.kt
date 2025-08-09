@@ -4,7 +4,7 @@ import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 import io.violabs.picard.domain.BaseSpec
 
 /**
- * The specification of a [CsiDriverV2].
+ * The specification of a [CsiDriver].
  */
 @GeneratedDsl
 data class CsiDriverSpec(

@@ -10,7 +10,7 @@ import io.violabs.picard.possibilities
 import io.violabs.picard.v2.common.LabelSelectorRequirement
 import org.junit.jupiter.api.BeforeAll
 
-class NetworkPolicyTest : SuccessBuildSim<NetworkPolicyV2, NetworkPolicyV2DslBuilder>() {
+class NetworkPolicyTest : SuccessBuildSim<NetworkPolicy, NetworkPolicyDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -20,7 +20,7 @@ class NetworkPolicyTest : SuccessBuildSim<NetworkPolicyV2, NetworkPolicyV2DslBui
         )
 
         private val NETWORK_POLICY_PEER = NetworkPolicyPeer(
-            ipBlock = IPBlock(
+            ipBlock = IpBlock(
                 cidr = PLACEHOLDER,
                 except = PLACEHOLDER_LIST
             ),
@@ -44,16 +44,16 @@ class NetworkPolicyTest : SuccessBuildSim<NetworkPolicyV2, NetworkPolicyV2DslBui
             ports = listOf(NETWORK_POLICY_PORT)
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<NetworkPolicyV2, NetworkPolicyV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<NetworkPolicy, NetworkPolicyDslBuilder> {
             scenario {
                 id = "minimum"
-                given(NetworkPolicyV2DslBuilder())
-                expected = NetworkPolicyV2()
+                given(NetworkPolicyDslBuilder())
+                expected = NetworkPolicy()
             }
 
             scenario {
                 id = "full"
-                given(NetworkPolicyV2DslBuilder()) {
+                given(NetworkPolicyDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -122,7 +122,7 @@ class NetworkPolicyTest : SuccessBuildSim<NetworkPolicyV2, NetworkPolicyV2DslBui
                         }
                     }
                 }
-                expected = NetworkPolicyV2(
+                expected = NetworkPolicy(
                     metadata = Common.OBJECT_META,
                     spec = NetworkPolicySpec(
                         podSelector = Common.LABEL_SELECTOR,

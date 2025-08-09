@@ -7,7 +7,7 @@ import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class TokenReviewTest : FullBuildSim<TokenReviewV2, TokenReviewV2DslBuilder>() {
+class TokenReviewTest : FullBuildSim<TokenReview, TokenReviewDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,20 +17,20 @@ class TokenReviewTest : FullBuildSim<TokenReviewV2, TokenReviewV2DslBuilder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<TokenReviewV2, TokenReviewV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<TokenReview, TokenReviewDslBuilder> {
             scenario {
                 id = "minimum"
-                given(TokenReviewV2DslBuilder()) {
+                given(TokenReviewDslBuilder()) {
                     spec {  }
                 }
-                expected = TokenReviewV2(
+                expected = TokenReview(
                     spec = TokenReviewSpec()
                 )
             }
 
             scenario {
                 id = "full"
-                given(TokenReviewV2DslBuilder()) {
+                given(TokenReviewDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -52,7 +52,7 @@ class TokenReviewTest : FullBuildSim<TokenReviewV2, TokenReviewV2DslBuilder>() {
                         }
                     }
                 }
-                expected = TokenReviewV2(
+                expected = TokenReview(
                     metadata = Common.OBJECT_META,
                     spec = TokenReviewSpec(
                         audiences = listOf(PLACEHOLDER),
@@ -73,9 +73,9 @@ class TokenReviewTest : FullBuildSim<TokenReviewV2, TokenReviewV2DslBuilder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<TokenReviewV2, TokenReviewV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<TokenReview, TokenReviewDslBuilder> {
             requireScenario("spec") {
-                given(TokenReviewV2DslBuilder())
+                given(TokenReviewDslBuilder())
             }
         }
     }

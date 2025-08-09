@@ -11,7 +11,7 @@ import io.violabs.picard.v2.resources.extend.resource.webhook.WebhookConversion
 import org.junit.jupiter.api.BeforeAll
 import java.time.ZoneOffset
 
-class CustomResourceDefinitionTest : SuccessBuildSim<CustomResourceDefinitionV2, CustomResourceDefinitionV2DslBuilder>() {
+class CustomResourceDefinitionTest : SuccessBuildSim<CustomResourceDefinition, CustomResourceDefinitionDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -96,10 +96,10 @@ class CustomResourceDefinitionTest : SuccessBuildSim<CustomResourceDefinitionV2,
             storedVersions = listOf(PLACEHOLDER)
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<CustomResourceDefinitionV2, CustomResourceDefinitionV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<CustomResourceDefinition, CustomResourceDefinitionDslBuilder> {
             scenario {
                 id = "minimum"
-                given(CustomResourceDefinitionV2DslBuilder()) {
+                given(CustomResourceDefinitionDslBuilder()) {
                     spec {
                         group = PLACEHOLDER
                         names {
@@ -116,7 +116,7 @@ class CustomResourceDefinitionTest : SuccessBuildSim<CustomResourceDefinitionV2,
                         }
                     }
                 }
-                expected = CustomResourceDefinitionV2(
+                expected = CustomResourceDefinition(
                     spec = CustomResourceDefinitionSpec(
                         group = PLACEHOLDER,
                         names = CustomResourceDefinitionNames(
@@ -137,7 +137,7 @@ class CustomResourceDefinitionTest : SuccessBuildSim<CustomResourceDefinitionV2,
 
             scenario {
                 id = "full"
-                given(CustomResourceDefinitionV2DslBuilder()) {
+                given(CustomResourceDefinitionDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -227,7 +227,7 @@ class CustomResourceDefinitionTest : SuccessBuildSim<CustomResourceDefinitionV2,
                         storedVersions(PLACEHOLDER)
                     }
                 }
-                expected = CustomResourceDefinitionV2(
+                expected = CustomResourceDefinition(
                     metadata = Common.OBJECT_META,
                     spec = SPEC,
                     status = STATUS

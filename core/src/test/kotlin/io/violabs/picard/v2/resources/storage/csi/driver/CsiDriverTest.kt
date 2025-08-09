@@ -7,7 +7,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class CsiDriverTest : SuccessBuildSim<CsiDriverV2, CsiDriverV2DslBuilder>() {
+class CsiDriverTest : SuccessBuildSim<CsiDriver, CsiDriverDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,16 +17,16 @@ class CsiDriverTest : SuccessBuildSim<CsiDriverV2, CsiDriverV2DslBuilder>() {
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<CsiDriverV2, CsiDriverV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<CsiDriver, CsiDriverDslBuilder> {
             scenario {
                 id = "minimum"
-                given(CsiDriverV2DslBuilder())
-                expected = CsiDriverV2()
+                given(CsiDriverDslBuilder())
+                expected = CsiDriver()
             }
 
             scenario {
                 id = "full"
-                given(CsiDriverV2DslBuilder()) {
+                given(CsiDriverDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -47,7 +47,7 @@ class CsiDriverTest : SuccessBuildSim<CsiDriverV2, CsiDriverV2DslBuilder>() {
                         volumeLifecycleModes(PLACEHOLDER)
                     }
                 }
-                expected = CsiDriverV2(
+                expected = CsiDriver(
                     metadata = Common.OBJECT_META,
                     spec = CsiDriverSpec(
                         attachRequired = true,

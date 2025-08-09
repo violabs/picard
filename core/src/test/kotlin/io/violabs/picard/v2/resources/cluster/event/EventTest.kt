@@ -9,7 +9,7 @@ import io.violabs.picard.possibilities
 import io.violabs.picard.v2.common.ObjectReference
 import org.junit.jupiter.api.BeforeAll
 
-class EventTest : SuccessBuildSim<EventV2, EventV2DslBuilder>() {
+class EventTest : SuccessBuildSim<Event, EventDslBuilder>() {
     companion object {
         private val OBJECT_REFERENCE = ObjectReference(
             apiVersion = KAPIVersion.V1,
@@ -28,18 +28,18 @@ class EventTest : SuccessBuildSim<EventV2, EventV2DslBuilder>() {
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<EventV2, EventV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Event, EventDslBuilder> {
             scenario {
                 id = "minimum"
-                given(EventV2DslBuilder()) {
+                given(EventDslBuilder()) {
                     eventTime = TIMESTAMP
                 }
-                expected = EventV2(eventTime = TIMESTAMP)
+                expected = Event(eventTime = TIMESTAMP)
             }
 
             scenario {
                 id = "full"
-                given(EventV2DslBuilder()) {
+                given(EventDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -66,9 +66,9 @@ class EventTest : SuccessBuildSim<EventV2, EventV2DslBuilder>() {
                         count = 1
                         lastObservedTime = TIMESTAMP
                     }
-                    type = EventV2.Type.Normal
+                    type = Event.Type.Normal
                 }
-                expected = EventV2(
+                expected = Event(
                     metadata = OBJECT_META,
                     eventTime = TIMESTAMP,
                     action = PLACEHOLDER,
@@ -89,7 +89,7 @@ class EventTest : SuccessBuildSim<EventV2, EventV2DslBuilder>() {
                         count = 1,
                         lastObservedTime = TIMESTAMP
                     ),
-                    type = EventV2.Type.Normal
+                    type = Event.Type.Normal
                 )
             }
         }

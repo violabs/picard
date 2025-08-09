@@ -7,7 +7,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class SelfSubjectReviewTest : SuccessBuildSim<SelfSubjectReviewV2, SelfSubjectReviewV2DslBuilder>() {
+class SelfSubjectReviewTest : SuccessBuildSim<SelfSubjectReview, SelfSubjectReviewDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,16 +17,16 @@ class SelfSubjectReviewTest : SuccessBuildSim<SelfSubjectReviewV2, SelfSubjectRe
         )
 
 
-        private val SUCCESS_POSSIBILITIES = possibilities<SelfSubjectReviewV2, SelfSubjectReviewV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<SelfSubjectReview, SelfSubjectReviewDslBuilder> {
             scenario {
                 id = "minimum"
-                given(SelfSubjectReviewV2DslBuilder())
-                expected = SelfSubjectReviewV2()
+                given(SelfSubjectReviewDslBuilder())
+                expected = SelfSubjectReview()
             }
 
             scenario {
                 id = "full"
-                given(SelfSubjectReviewV2DslBuilder()) {
+                given(SelfSubjectReviewDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -40,7 +40,7 @@ class SelfSubjectReviewTest : SuccessBuildSim<SelfSubjectReviewV2, SelfSubjectRe
                         }
                     }
                 }
-                expected = SelfSubjectReviewV2(
+                expected = SelfSubjectReview(
                     metadata = Common.OBJECT_META,
                     status = SelfSubjectReviewStatus(
                         userInfo = UserInfo(

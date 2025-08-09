@@ -1,13 +1,14 @@
 package io.violabs.picard.v2.resources.service.endpoints
 
+import io.violabs.picard.Common
 import io.violabs.picard.Common.OBJECT_META
 import io.violabs.picard.Common.sharedObjectMeta
+import io.violabs.picard.Common.sharedObjectReference
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
-import io.violabs.picard.domain.ObjectReference
 import org.junit.jupiter.api.BeforeAll
 
-class EndpointsTest : SuccessBuildSim<EndpointsV2, EndpointsV2DslBuilder>() {
+class EndpointsTest : SuccessBuildSim<Endpoints, EndpointsDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,16 +17,16 @@ class EndpointsTest : SuccessBuildSim<EndpointsV2, EndpointsV2DslBuilder>() {
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<EndpointsV2, EndpointsV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Endpoints, EndpointsDslBuilder> {
             scenario {
                 id = "minimum"
-                given(EndpointsV2DslBuilder())
-                expected = EndpointsV2()
+                given(EndpointsDslBuilder())
+                expected = Endpoints()
             }
 
             scenario {
                 id = "full"
-                given(EndpointsV2DslBuilder()) {
+                given(EndpointsDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -36,30 +37,20 @@ class EndpointsTest : SuccessBuildSim<EndpointsV2, EndpointsV2DslBuilder>() {
                                     ip = PLACEHOLDER
                                     hostname = PLACEHOLDER
                                     nodeName = PLACEHOLDER
-                                    targetRef = ObjectReference(
-                                        apiVersion = null,
-                                        kind = PLACEHOLDER,
-                                        name = PLACEHOLDER,
-                                        namespace = PLACEHOLDER,
-                                        resourceVersion = PLACEHOLDER,
-                                        uid = PLACEHOLDER
-                                    )
+                                    targetRef {
+                                        sharedObjectReference()
+                                    }
                                 }
                             }
-                            
+
                             notReadyAddresses {
                                 endpointAddress {
                                     ip = PLACEHOLDER
                                     hostname = PLACEHOLDER
                                     nodeName = PLACEHOLDER
-                                    targetRef = ObjectReference(
-                                        apiVersion = null,
-                                        kind = PLACEHOLDER,
-                                        name = PLACEHOLDER,
-                                        namespace = PLACEHOLDER,
-                                        resourceVersion = PLACEHOLDER,
-                                        uid = PLACEHOLDER
-                                    )
+                                    targetRef {
+                                        sharedObjectReference()
+                                    }
                                 }
                             }
 
@@ -74,7 +65,7 @@ class EndpointsTest : SuccessBuildSim<EndpointsV2, EndpointsV2DslBuilder>() {
                         }
                     }
                 }
-                expected = EndpointsV2(
+                expected = Endpoints(
                     metadata = OBJECT_META,
                     subsets = listOf(
                         EndpointSubset(
@@ -83,14 +74,7 @@ class EndpointsTest : SuccessBuildSim<EndpointsV2, EndpointsV2DslBuilder>() {
                                     ip = PLACEHOLDER,
                                     hostname = PLACEHOLDER,
                                     nodeName = PLACEHOLDER,
-                                    targetRef = ObjectReference(
-                                        apiVersion = null,
-                                        kind = PLACEHOLDER,
-                                        name = PLACEHOLDER,
-                                        namespace = PLACEHOLDER,
-                                        resourceVersion = PLACEHOLDER,
-                                        uid = PLACEHOLDER
-                                    )
+                                    targetRef = Common.OBJECT_REFERENCE
                                 )
                             ),
                             notReadyAddresses = listOf(
@@ -98,14 +82,7 @@ class EndpointsTest : SuccessBuildSim<EndpointsV2, EndpointsV2DslBuilder>() {
                                     ip = PLACEHOLDER,
                                     hostname = PLACEHOLDER,
                                     nodeName = PLACEHOLDER,
-                                    targetRef = ObjectReference(
-                                        apiVersion = null,
-                                        kind = PLACEHOLDER,
-                                        name = PLACEHOLDER,
-                                        namespace = PLACEHOLDER,
-                                        resourceVersion = PLACEHOLDER,
-                                        uid = PLACEHOLDER
-                                    )
+                                    targetRef = Common.OBJECT_REFERENCE
                                 )
                             ),
                             ports = listOf(

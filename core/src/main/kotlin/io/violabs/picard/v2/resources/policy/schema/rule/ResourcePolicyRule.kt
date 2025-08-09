@@ -20,7 +20,7 @@ data class ResourcePolicyRule(
      * apiGroups is a list of matching API groups and may not be empty. "*" matches
      * all API groups and, if present, must be the only entry. Required.
      */
-    val apiGroups: Set<String>,
+    val apiGroups: List<String>,
     /**
      * Set: unique values will be kept during a merge
      *
@@ -29,14 +29,14 @@ data class ResourcePolicyRule(
      * list may not be empty. "*" matches all resources and, if present, must be the
      * only entry. Required.
      */
-    val resources: Set<String>,
+    val resources: List<String>,
     /**
      * Set: unique values will be kept during a merge
      *
      * verbs is a list of matching verbs and may not be empty. "*" matches all verbs
      * and, if present, must be the only entry. Required.
      */
-    val verbs: Set<String>,
+    val verbs: List<String>,
     /**
      * rules.resourceRules.clusterScope (boolean)
      *
@@ -55,6 +55,6 @@ data class ResourcePolicyRule(
      * namespace but does not match a request that does not specify a namespace (see the
      * clusterScope field for that). This list may be empty, but only if clusterScope is true.
      */
-    val namespaces: Set<String> = emptySet()
+    val namespaces: List<String>? = null
 )
 

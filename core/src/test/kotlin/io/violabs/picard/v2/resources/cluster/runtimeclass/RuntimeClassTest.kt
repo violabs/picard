@@ -6,7 +6,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class RuntimeClassTest : SuccessBuildSim<RuntimeClassV2, RuntimeClassV2DslBuilder>() {
+class RuntimeClassTest : SuccessBuildSim<RuntimeClass, RuntimeClassDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,18 +15,18 @@ class RuntimeClassTest : SuccessBuildSim<RuntimeClassV2, RuntimeClassV2DslBuilde
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<RuntimeClassV2, RuntimeClassV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<RuntimeClass, RuntimeClassDslBuilder> {
             scenario {
                 id = "minimum"
-                given(RuntimeClassV2DslBuilder()) {
+                given(RuntimeClassDslBuilder()) {
                     handler = PLACEHOLDER
                 }
-                expected = RuntimeClassV2(handler = PLACEHOLDER)
+                expected = RuntimeClass(handler = PLACEHOLDER)
             }
 
             scenario {
                 id = "full"
-                given(RuntimeClassV2DslBuilder()) {
+                given(RuntimeClassDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -47,7 +47,7 @@ class RuntimeClassTest : SuccessBuildSim<RuntimeClassV2, RuntimeClassV2DslBuilde
                         }
                     }
                 }
-                expected = RuntimeClassV2(
+                expected = RuntimeClass(
                     metadata = OBJECT_META,
                     handler = PLACEHOLDER,
                     overhead = Overhead(

@@ -6,14 +6,22 @@ import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sAPIResource
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.K8sResource
-import io.violabs.picard.domain.k8sResources.extend.customResource.customResourceDefinition.CustomResourceDefinition
-import io.violabs.picard.domain.k8sResources.extend.customResource.customResourceDefinition.CustomResourceDefinitionList
-import io.violabs.picard.domain.k8sResources.extend.deviceClass.DeviceClass
-import io.violabs.picard.domain.k8sResources.extend.deviceClass.DeviceClassList
-import io.violabs.picard.domain.k8sResources.extend.webhook.mutatingWebhookConfig.MutatingWebhookConfiguration
-import io.violabs.picard.domain.k8sResources.extend.webhook.mutatingWebhookConfig.MutatingWebhookConfigurationList
-import io.violabs.picard.domain.k8sResources.extend.webhook.validatingWebhookConfig.ValidatingWebhookConfiguration
-import io.violabs.picard.domain.k8sResources.extend.webhook.validatingWebhookConfig.ValidatingWebhookConfigurationList
+import io.violabs.picard.v2.resources.extend.deviceclass.DeviceClassDslBuilder
+import io.violabs.picard.v2.resources.extend.deviceclass.DeviceClassDslBuilderScope
+import io.violabs.picard.v2.resources.extend.deviceclass.DeviceClassListDslBuilder
+import io.violabs.picard.v2.resources.extend.deviceclass.DeviceClassListDslBuilderScope
+import io.violabs.picard.v2.resources.extend.resource.custom.CustomResourceDefinitionDslBuilder
+import io.violabs.picard.v2.resources.extend.resource.custom.CustomResourceDefinitionDslBuilderScope
+import io.violabs.picard.v2.resources.extend.resource.custom.CustomResourceDefinitionListDslBuilder
+import io.violabs.picard.v2.resources.extend.resource.custom.CustomResourceDefinitionListDslBuilderScope
+import io.violabs.picard.v2.resources.extend.webhook.mutating.MutatingWebhookConfigurationDslBuilder
+import io.violabs.picard.v2.resources.extend.webhook.mutating.MutatingWebhookConfigurationDslBuilderScope
+import io.violabs.picard.v2.resources.extend.webhook.mutating.MutatingWebhookConfigurationListDslBuilder
+import io.violabs.picard.v2.resources.extend.webhook.mutating.MutatingWebhookConfigurationListDslBuilderScope
+import io.violabs.picard.v2.resources.extend.webhook.validating.ValidatingWebhookConfigurationDslBuilder
+import io.violabs.picard.v2.resources.extend.webhook.validating.ValidatingWebhookConfigurationDslBuilderScope
+import io.violabs.picard.v2.resources.extend.webhook.validating.ValidatingWebhookConfigurationListDslBuilder
+import io.violabs.picard.v2.resources.extend.webhook.validating.ValidatingWebhookConfigurationListDslBuilderScope
 
 interface ExtendResource<T : APIVersion, META> : K8sResource<T, META>
 interface ExtendListResource<T : APIVersion, E> : K8sListResource<T, E>
@@ -26,42 +34,43 @@ data class ExtendResourceSection(
         private val resources: MutableList<ExtendResource<*, *>> = mutableListOf(),
         private val lists: MutableList<ExtendListResource<*, *>> = mutableListOf()
     ) : DslBuilder<ExtendResourceSection> {
-        fun customResourceDefinition(block: CustomResourceDefinition.Builder.() -> Unit) {
-            resources += CustomResourceDefinition.Builder().apply(block).build()
+        fun customResourceDefinition(block: CustomResourceDefinitionDslBuilderScope) {
+            val crd = CustomResourceDefinitionDslBuilder().apply(block).build()
+            resources.add(crd)
         }
 
-        fun customResourceDefinitionList(block: CustomResourceDefinitionList.Builder.() -> Unit) {
-            val list = CustomResourceDefinitionList.Builder().apply(block).build()
+        fun customResourceDefinitionList(block: CustomResourceDefinitionListDslBuilderScope) {
+            val list = CustomResourceDefinitionListDslBuilder().apply(block).build()
             lists.add(list)
         }
 
-        fun deviceClass(block: DeviceClass.Builder.() -> Unit) {
-            val resource = DeviceClass.Builder().apply(block).build()
-            resources.add(resource)
+        fun deviceClass(block: DeviceClassDslBuilderScope) {
+            val deviceClass = DeviceClassDslBuilder().apply(block).build()
+            resources.add(deviceClass)
         }
 
-        fun deviceClassList(block: DeviceClassList.Builder.() -> Unit) {
-            val list = DeviceClassList.Builder().apply(block).build()
+        fun deviceClassList(block: DeviceClassListDslBuilderScope) {
+            val list = DeviceClassListDslBuilder().apply(block).build()
             lists.add(list)
         }
 
-        fun mutatingWebhook(block: MutatingWebhookConfiguration.Builder.() -> Unit) {
-            val resource = MutatingWebhookConfiguration.Builder().apply(block).build()
-            resources.add(resource)
+        fun mutatingWebhookConfiguration(block: MutatingWebhookConfigurationDslBuilderScope) {
+            val config = MutatingWebhookConfigurationDslBuilder().apply(block).build()
+            resources.add(config)
         }
 
-        fun mutatingWebhookList(block: MutatingWebhookConfigurationList.Builder.() -> Unit) {
-            val list = MutatingWebhookConfigurationList.Builder().apply(block).build()
+        fun mutatingWebhookConfigurationList(block: MutatingWebhookConfigurationListDslBuilderScope) {
+            val list = MutatingWebhookConfigurationListDslBuilder().apply(block).build()
             lists.add(list)
         }
 
-        fun validatingWebhook(block: ValidatingWebhookConfiguration.Builder.() -> Unit) {
-            val resource = ValidatingWebhookConfiguration.Builder().apply(block).build()
-            resources.add(resource)
+        fun validatingWebhookConfiguration(block: ValidatingWebhookConfigurationDslBuilderScope) {
+            val config = ValidatingWebhookConfigurationDslBuilder().apply(block).build()
+            resources.add(config)
         }
 
-        fun validatingWebhookList(block: ValidatingWebhookConfigurationList.Builder.() -> Unit) {
-            val list = ValidatingWebhookConfigurationList.Builder().apply(block).build()
+        fun validatingWebhookConfigurationList(block: ValidatingWebhookConfigurationListDslBuilderScope) {
+            val list = ValidatingWebhookConfigurationListDslBuilder().apply(block).build()
             lists.add(list)
         }
 

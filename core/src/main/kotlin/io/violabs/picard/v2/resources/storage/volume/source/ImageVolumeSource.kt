@@ -8,14 +8,15 @@ import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
 @GeneratedDsl
 data class ImageVolumeSource(
     /**
-     * Policy for pulling OCI objects. Possible values are: Always: the kubelet always attempts to
-     * pull the reference. Container creation will fail If the pull fails. Never: the kubelet
-     * never pulls the reference and only uses a local image or artifact. Container creation will
-     * fail if the reference isn't present. IfNotPresent: the kubelet pulls if the reference isn't
-     * already present on disk. Container creation will fail if the reference isn't present and the
-     * pull fails. Defaults to Always if :latest tag is specified, or IfNotPresent otherwise.
+     * Policy for pulling OCI objects. Possible values are:
+     * Always: the kubelet always attempts to pull the reference. Container creation will fail If the pull fails.
+     * Never: the kubelet never pulls the reference and only uses a local image or artifact. Container creation will
+     * fail if the reference isn't present.
+     * IfNotPresent: the kubelet pulls if the reference isn't already present on disk. Container creation will
+     * fail if the reference isn't present and the pull fails.
+     * Defaults to Always if :latest tag is specified, or IfNotPresent otherwise.
      */
-    val imagePullPolicy: String? = null,
+    val imagePullPolicy: ImagePullPolicy? = null,
     /**
      * Required: Image or artifact reference to be used. Behaves in the same way as
      * pod.spec.containers[*].image. Pull secrets will be assembled in the same way as for the
@@ -25,4 +26,10 @@ data class ImageVolumeSource(
      * workload controllers like Deployments and StatefulSets.
      */
     val reference: String? = null
-)
+) {
+    enum class ImagePullPolicy {
+        Always,
+        Never,
+        IfNotPresent
+    }
+}

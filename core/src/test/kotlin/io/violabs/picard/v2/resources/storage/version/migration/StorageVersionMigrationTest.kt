@@ -7,7 +7,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class StorageVersionMigrationTest : SuccessBuildSim<StorageVersionMigrationV2, StorageVersionMigrationV2DslBuilder>() {
+class StorageVersionMigrationTest : SuccessBuildSim<StorageVersionMigration, StorageVersionMigrationDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,16 +17,16 @@ class StorageVersionMigrationTest : SuccessBuildSim<StorageVersionMigrationV2, S
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<StorageVersionMigrationV2, StorageVersionMigrationV2DslBuilder> {
+            possibilities<StorageVersionMigration, StorageVersionMigrationDslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(StorageVersionMigrationV2DslBuilder())
-                    expected = StorageVersionMigrationV2()
+                    given(StorageVersionMigrationDslBuilder())
+                    expected = StorageVersionMigration()
                 }
 
                 scenario {
                     id = "full"
-                    given(StorageVersionMigrationV2DslBuilder()) {
+                    given(StorageVersionMigrationDslBuilder()) {
                         metadata {
                             sharedObjectMeta()
                         }
@@ -53,7 +53,7 @@ class StorageVersionMigrationTest : SuccessBuildSim<StorageVersionMigrationV2, S
                             resourceVersion = PLACEHOLDER
                         }
                     }
-                    expected = StorageVersionMigrationV2(
+                    expected = StorageVersionMigration(
                         metadata = Common.OBJECT_META,
                         spec = StorageVersionMigrationSpec(
                             resource = GroupVersionResource(

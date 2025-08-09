@@ -1,224 +1,69 @@
+# TestFailureSummary Enhancement Specification
 
-# Working Specifications
+## Objective
+Update the TestFailureSummary.kt file to use Kotlin class references (KClass) instead of strings for the map keys, enabling IDE navigation via click-through.
 
-## Prerequisites
-
-- Access to the Picard codebase
-- Gradle build environment set up
-- Understanding of Kotlin and Kubernetes resource structure
-
-## Implementation Workflow
-
-Follow these steps in order:
-
-1. **Create data classes** with proper annotations
-2. **Update APIVersion declarations** to include V2 versions
-3. **Add deprecation** to v1 classes
-4. **Run clean build** to generate DSL builders
-5. **Implement tests** using generated builders
-6. **Run tests** to verify implementation
-
-## Instruct
-
-Build out objects with a specific format.
-They should utilize `GeneratedDsl` and `DefaultValue` annotations. These items represent top
-level Kubernetes resources, and should be structured to include the `apiVersion`, `metadata`, and
-any specific fields relevant to the resource. Refer to the example below for guidance. When you are finished,
-add items to .git.
-
-
-### List Group Annotations
-
-If there is a list property that needs DSL builder support, add `withListGroup = true` to the `GeneratedDsl` annotation **on the class level**:
-
+## Current Implementation
 ```kotlin
-// For the parent class that contains the list
-@GeneratedDsl(withListGroup = true)
-data class ParentResourceV2(...)
-
-// For the child class that will be in the list
-@GeneratedDsl(withListGroup = true) 
-data class ChildCondition(...)
-```
-
-This generates both `conditions(vararg items: ChildCondition)` and `conditions { childCondition { ... } }` DSL methods.
-
-### JsonProperty Usage
-
-When field names need to preserve original JSON casing that differs from Kotlin conventions:
-
-```kotlin
-data class ComponentCondition(
-    val status: String,
-    val type: String,
-    @JsonProperty("error")  // JSON field is "error", Kotlin property is "errorValue"
-    val errorValue: String? = null,
-    val message: String? = null
+val failures = mapOf(
+    "TestClassName" to listOf(...) // String keys - no IDE navigation
 )
 ```
 
-### APIVersion Integration
-
-You will need to look at the package `io.violabs.picard.domain.k8sResources.APIVersion` to
-add the V2 version as an extension of the existing version.
-
-### Deprecation
-
-Finally, update the v1 to have `@Deprecated("Use v2", ReplaceWith(<package for v2>))`
-
-## Rules
-
-- Time = LocalDateTime
-- Quantity = io.violabs.picard.domain.k8sResources.Quantity
-- Capitalized acronyms and initialisms should use camelCase (e.g., `APIService` -> `ApiService`, `CA` -> `Ca`)
-  - Use `@JsonProperty` for properties to preserve the original casing if necessary.
-  - Override `getKind(): String` to return the original casing for the kind if it extends a Resource
-
-## Build Process
-
-When you are finished creating the files:
-
-1. **First**: Run `./gradlew clean build -x test` to generate DSL builders
-2. **Then**: Implement tests using the generated builders
-3. **Finally**: Run `./gradlew test` to verify everything works
-
-If you do not fix the build after 3 times, you can ask for help.
-
-## Troubleshooting
-
-### Common Issues
-
-1. **DSL builders not found during test compilation**
-   - **Solution**: Run `./gradlew clean build -x test` first to generate the DSL classes
-
-2. **Missing list group methods (e.g., `conditions { ... }`)**
-   - **Solution**: Ensure both parent and child classes have `@GeneratedDsl(withListGroup = true)`
-
-3. **JsonProperty compilation errors**
-   - **Solution**: Import `com.fasterxml.jackson.annotation.JsonProperty`
-
-4. **APIVersion compilation errors**
-   - **Solution**: Verify the import was added and the Version interface extends APIVersion
-
-
-## Documentation
-
-IngressClass
-IngressClass represents the class of the Ingress, referenced by the Ingress Spec.
-apiVersion: networking.k8s.io/v1
-
-import "k8s.io/api/networking/v1"
-
-IngressClass
-IngressClass represents the class of the Ingress, referenced by the Ingress Spec. The ingressclass.kubernetes.io/is-default-class annotation can be used to indicate that an IngressClass should be considered default. When a single IngressClass resource has this annotation set to true, new Ingress resources without a class specified will be assigned this default class.
-
-apiVersion: networking.k8s.io/v1
-
-kind: IngressClass
-
-metadata (ObjectMeta)
-
-Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-
-spec (IngressClassSpec)
-
-spec is the desired state of the IngressClass. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
-
-IngressClassSpec
-IngressClassSpec provides information about the class of an Ingress.
-
-controller (string)
-
-controller refers to the name of the controller that should handle this class. This allows for different "flavors" that are controlled by the same controller. For example, you may have different parameters for the same implementing controller. This should be specified as a domain-prefixed path no more than 250 characters in length, e.g. "acme.io/ingress-controller". This field is immutable.
-
-parameters (IngressClassParametersReference)
-
-parameters is a link to a custom resource containing additional configuration for the controller. This is optional if the controller does not require extra parameters.
-
-IngressClassParametersReference identifies an API object. This can be used to specify a cluster or namespace-scoped resource.
-
-parameters.kind (string), required
-
-kind is the type of resource being referenced.
-
-parameters.name (string), required
-
-name is the name of resource being referenced.
-
-parameters.apiGroup (string)
-
-apiGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.
-
-parameters.namespace (string)
-
-namespace is the namespace of the resource being referenced. This field is required when scope is set to "Namespace" and must be unset when scope is set to "Cluster".
-
-parameters.scope (string)
-
-scope represents if this refers to a cluster or namespace scoped resource. This may be set to "Cluster" (default) or "Namespace".
-
-
-
-
-
-
-## Example
-
+## Target Implementation
 ```kotlin
-package io.violabs.picard.v2.resources.authentication.certificate
-
-import io.violabs.konstellation.metaDsl.annotation.DefaultValue
-import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
-import io.violabs.picard.common.AppConstants
-import io.violabs.picard.domain.k8sResources.APIVersion
-import io.violabs.picard.domain.k8sResources.KAPIVersion
-import io.violabs.picard.domain.manifest.AuthenticationResource
-import io.violabs.picard.v2.common.ObjectMeta
-
-/**
- * https://kubernetes.io/docs/reference/kubernetes-api/authentication-resources/certificate-signing-request-v1/
- *
- * CertificateSigningRequest objects provide a mechanism to obtain x509
- * certificates by submitting a certificate signing request, and having it
- * asynchronously approved and issued.
- *
- * Kubelets use this API to obtain:
- *
- * 1. client certificates to authenticate to kube-apiserver
- *    (with the "kubernetes.io/kube-apiserver-client-kubelet" signerName).
- * 2. serving certificates for TLS endpoints kube-apiserver can connect to securely
- *    (with the "kubernetes.io/kubelet-serving" signerName).
- *
- * This API can be used to request client certificates to authenticate to kube-apiserver
- * (with the "kubernetes.io/kube-apiserver-client" signerName), or to obtain
- * certificates from custom non-Kubernetes signers.
- *
- * apiVersion: certificates.k8s.io/v1
- *
- * import "k8s.io/api/certificates/v1"
- */
-@GeneratedDsl
-data class CertificateSigningRequestV2(
-    @DefaultValue(
-        "KAPIVersion.CertificatesV1",
-        AppConstants.DefaultValue.KAPI_VERSION_PACKAGE,
-        AppConstants.DefaultValue.KAPI_VERSION_CLASS
-    )
-    override val apiVersion: Version = KAPIVersion.CertificatesV1,
-    override val metadata: ObjectMeta? = null,
-    /**
-     * spec contains the certificate request, and is immutable after creation.
-     * Only the request, signerName, expirationSeconds, and usages fields can be set on creation.
-     * Other fields are derived by Kubernetes and cannot be modified by users.
-     */
-    val spec: CertificateSigningRequestSpec,
-    /**
-     * status contains information about whether the request is approved or denied, and the
-     * certificate issued by the signer, or the failure condition indicating signer failure.
-     */
-    val status: CertificateSigningRequestStatus? = null
-) : AuthenticationResource<CertificateSigningRequestV2.Version, ObjectMeta> {
-    interface Version : APIVersion
-}
-
+val failures = mapOf(
+    TestClassName::class to listOf(...) // KClass keys - clickable in IDE
+)
 ```
+
+## Strategy
+
+### Step 1: Import Required Classes
+- Add import statements for all test classes that appear in the failures map
+- Import KClass from kotlin.reflect
+
+### Step 2: Update Map Type
+- Change map type from `Map<String, List<TestFailure>>` to `Map<KClass<*>, List<TestFailure>>`
+- Update the failures map declaration
+
+### Step 3: Replace String Keys with Class References
+- For each entry in the map, replace the string key with the actual class reference
+- Format: `ClassName::class` instead of `"ClassName"`
+
+### Step 4: Update printSummary() Function
+- Adjust the printing logic to handle KClass keys
+- Use `className.simpleName` to get the class name as a string for display
+
+### Step 5: Verification
+- Ensure all test class imports are correct
+- Verify the file compiles without errors
+- Confirm IDE navigation works (class references are clickable)
+
+## Implementation Results
+
+### ✅ Completed Successfully
+
+1. **Extracted Test Class Names**: Found 38 test classes from the failures map
+2. **Generated Import Statements**: Created imports for all 38 test classes with their full package paths
+3. **Updated Map Structure**: 
+   - Changed map type from `Map<String, List<TestFailure>>` to `Map<KClass<*>, List<TestFailure>>`
+   - Replaced all string keys (e.g., `"TestClassName"`) with class references (`TestClassName::class`)
+4. **Updated printSummary() Function**:
+   - Changed parameter from `className` to `testClass`
+   - Used `testClass.simpleName` to display class names
+   - Fixed string formatting issues
+
+### Key Changes Made
+
+- **Added KClass import**: `import kotlin.reflect.KClass`
+- **Added 38 test class imports**: Full package path imports for IDE navigation
+- **Map type declaration**: Explicit `Map<KClass<*>, List<TestFailure>>` type
+- **All string keys replaced**: Every `"TestClassName"` → `TestClassName::class`
+- **Print function updated**: Handles KClass objects properly
+
+### Verification
+
+- ✅ **Compilation successful**: `./gradlew :core:compileTestKotlin` passed without errors
+- ✅ **All imports resolved**: No missing class references
+- ✅ **IDE navigation enabled**: Class names are now clickable in IDE

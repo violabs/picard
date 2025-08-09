@@ -1,6 +1,5 @@
 package io.violabs.picard.domain
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import io.violabs.picard.common.YAMLMap
 
 data class K8sAnnotation(

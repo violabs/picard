@@ -1,0 +1,86 @@
+package io.violabs.picard.v2.resources.workload.controller.replication
+
+import io.violabs.picard.SuccessBuildSim
+import io.violabs.picard.possibilities
+import io.violabs.picard.v2.common.ObjectMeta
+import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateSpec
+import org.junit.jupiter.api.BeforeAll
+
+class ReplicationControllerTest : SuccessBuildSim<ReplicationController, ReplicationControllerDslBuilder>() {
+    companion object {
+        @JvmStatic
+        @BeforeAll
+        fun setup() = buildSetup(
+            ReplicationControllerTest::class,
+            SUCCESS_POSSIBILITIES
+        )
+
+        private val SUCCESS_POSSIBILITIES = possibilities<ReplicationController, ReplicationControllerDslBuilder> {
+            scenario {
+                id = "minimum"
+                given(ReplicationControllerDslBuilder())
+                expected = ReplicationController()
+            }
+
+            scenario {
+                id = "full"
+                given(ReplicationControllerDslBuilder()) {
+                    metadata {
+                        name = PLACEHOLDER
+                        namespace = PLACEHOLDER
+                    }
+                    spec {
+                        selector(PLACEHOLDER to PLACEHOLDER)
+                        template {}
+                        replicas = 1
+                        minReadySeconds = 1
+                    }
+                    status {
+                        replicas = 1
+                        availableReplicas = 1
+                        readyReplicas = 1
+                        fullyLabeledReplicas = 1
+                        conditions {
+                            replicationControllerCondition {
+                                status = PLACEHOLDER
+                                type = PLACEHOLDER
+                                lastTransitionTime = NOW
+                                message = PLACEHOLDER
+                                reason = PLACEHOLDER
+                            }
+                        }
+                        observedGeneration = 1
+                    }
+                }
+                expected = ReplicationController(
+                    metadata = ObjectMeta(
+                        name = PLACEHOLDER,
+                        namespace = PLACEHOLDER
+                    ),
+                    spec = ReplicationControllerSpec(
+                        selector = mapOf(PLACEHOLDER to PLACEHOLDER),
+                        template = PodTemplateSpec(),
+                        replicas = 1,
+                        minReadySeconds = 1
+                    ),
+                    status = ReplicationControllerStatus(
+                        replicas = 1,
+                        availableReplicas = 1,
+                        readyReplicas = 1,
+                        fullyLabeledReplicas = 1,
+                        conditions = listOf(
+                            ReplicationControllerCondition(
+                                status = PLACEHOLDER,
+                                type = PLACEHOLDER,
+                                lastTransitionTime = NOW,
+                                message = PLACEHOLDER,
+                                reason = PLACEHOLDER
+                            )
+                        ),
+                        observedGeneration = 1
+                    )
+                )
+            }
+        }
+    }
+}

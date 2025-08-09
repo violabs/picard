@@ -8,7 +8,7 @@ import io.violabs.picard.possibilities
 import io.violabs.picard.v2.common.LocalObjectReference
 import org.junit.jupiter.api.BeforeAll
 
-class ServiceAccountTest : SuccessBuildSim<ServiceAccountV2, ServiceAccountV2DslBuilder>() {
+class ServiceAccountTest : SuccessBuildSim<ServiceAccount, ServiceAccountDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,16 +17,16 @@ class ServiceAccountTest : SuccessBuildSim<ServiceAccountV2, ServiceAccountV2Dsl
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ServiceAccountV2, ServiceAccountV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ServiceAccount, ServiceAccountDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ServiceAccountV2DslBuilder())
-                expected = ServiceAccountV2()
+                given(ServiceAccountDslBuilder())
+                expected = ServiceAccount()
             }
 
             scenario {
                 id = "full"
-                given(ServiceAccountV2DslBuilder()) {
+                given(ServiceAccountDslBuilder()) {
                     automountServiceAccountToken()
                     imagePullSecrets {
                         localObjectReference {
@@ -40,7 +40,7 @@ class ServiceAccountTest : SuccessBuildSim<ServiceAccountV2, ServiceAccountV2Dsl
                         }
                     }
                 }
-                expected = ServiceAccountV2(
+                expected = ServiceAccount(
                     automountServiceAccountToken = true,
                     imagePullSecrets = listOf(LocalObjectReference(name = PLACEHOLDER)),
                     secrets = listOf(Common.OBJECT_REFERENCE)

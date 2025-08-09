@@ -4,9 +4,13 @@ import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
 import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
+import io.violabs.picard.v2.resources.extend.deviceclass.config.DeviceClassConfiguration
+import io.violabs.picard.v2.resources.extend.deviceclass.config.OpaqueDeviceConfiguration
+import io.violabs.picard.v2.resources.extend.deviceclass.selector.CelDeviceSelector
+import io.violabs.picard.v2.resources.extend.deviceclass.selector.DeviceSelector
 import org.junit.jupiter.api.BeforeAll
 
-class DeviceClassTest : FullBuildSim<DeviceClassV2, DeviceClassV2DslBuilder>() {
+class DeviceClassTest : FullBuildSim<DeviceClass, DeviceClassDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -16,20 +20,20 @@ class DeviceClassTest : FullBuildSim<DeviceClassV2, DeviceClassV2DslBuilder>() {
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<DeviceClassV2, DeviceClassV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<DeviceClass, DeviceClassDslBuilder> {
             scenario {
                 id = "minimum"
-                given(DeviceClassV2DslBuilder()) {
+                given(DeviceClassDslBuilder()) {
                     spec {}
                 }
-                expected = DeviceClassV2(
+                expected = DeviceClass(
                     spec = DeviceClassSpec()
                 )
             }
 
             scenario {
                 id = "full"
-                given(DeviceClassV2DslBuilder()) {
+                given(DeviceClassDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -51,7 +55,7 @@ class DeviceClassTest : FullBuildSim<DeviceClassV2, DeviceClassV2DslBuilder>() {
                         }
                     }
                 }
-                expected = DeviceClassV2(
+                expected = DeviceClass(
                     metadata = Common.OBJECT_META,
                     spec = DeviceClassSpec(
                         config = listOf(
@@ -74,9 +78,9 @@ class DeviceClassTest : FullBuildSim<DeviceClassV2, DeviceClassV2DslBuilder>() {
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<DeviceClassV2, DeviceClassV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<DeviceClass, DeviceClassDslBuilder> {
             requireScenario("spec") {
-                given(DeviceClassV2DslBuilder())
+                given(DeviceClassDslBuilder())
             }
         }
     }

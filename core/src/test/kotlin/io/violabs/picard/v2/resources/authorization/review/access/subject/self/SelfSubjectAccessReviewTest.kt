@@ -8,7 +8,7 @@ import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.authorization.review.access.subject.AccessReviewTestConfig
 import org.junit.jupiter.api.BeforeAll
 
-class SelfSubjectAccessReviewTest : FullBuildSim<SelfSubjectAccessReviewV2, SelfSubjectAccessReviewV2DslBuilder>() {
+class SelfSubjectAccessReviewTest : FullBuildSim<SelfSubjectAccessReview, SelfSubjectAccessReviewDslBuilder>() {
     companion object : AccessReviewTestConfig {
         @JvmStatic
         @BeforeAll
@@ -18,20 +18,20 @@ class SelfSubjectAccessReviewTest : FullBuildSim<SelfSubjectAccessReviewV2, Self
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<SelfSubjectAccessReviewV2, SelfSubjectAccessReviewV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<SelfSubjectAccessReview, SelfSubjectAccessReviewDslBuilder> {
             scenario {
                 id = "minimum"
-                given(SelfSubjectAccessReviewV2DslBuilder()) {
+                given(SelfSubjectAccessReviewDslBuilder()) {
                     spec { }
                 }
-                expected = SelfSubjectAccessReviewV2(
+                expected = SelfSubjectAccessReview(
                     spec = SelfSubjectAccessReviewSpec()
                 )
             }
 
             scenario {
                 id = "full"
-                given(SelfSubjectAccessReviewV2DslBuilder()) {
+                given(SelfSubjectAccessReviewDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -44,7 +44,7 @@ class SelfSubjectAccessReviewTest : FullBuildSim<SelfSubjectAccessReviewV2, Self
                     // this is same as already tests [SubjectAccessReviewTest]
                     status { sharedSubjectAccessReviewStatus() }
                 }
-                expected = SelfSubjectAccessReviewV2(
+                expected = SelfSubjectAccessReview(
                     spec = SelfSubjectAccessReviewSpec(
                         nonResourceAttributes = sharedNonResourceAttributes(),
                         resourceAttributes = sharedResourceAttributes()
@@ -55,9 +55,9 @@ class SelfSubjectAccessReviewTest : FullBuildSim<SelfSubjectAccessReviewV2, Self
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<SelfSubjectAccessReviewV2, SelfSubjectAccessReviewV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<SelfSubjectAccessReview, SelfSubjectAccessReviewDslBuilder> {
             requireScenario("spec") {
-                given(SelfSubjectAccessReviewV2DslBuilder())
+                given(SelfSubjectAccessReviewDslBuilder())
             }
         }
     }

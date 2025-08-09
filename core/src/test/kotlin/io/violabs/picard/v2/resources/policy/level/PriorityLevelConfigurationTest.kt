@@ -8,7 +8,7 @@ import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
 class PriorityLevelConfigurationTest :
-    SuccessBuildSim<PriorityLevelConfigurationV2, PriorityLevelConfigurationV2DslBuilder>() {
+    SuccessBuildSim<PriorityLevelConfiguration, PriorityLevelConfigurationDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -26,16 +26,16 @@ class PriorityLevelConfigurationTest :
         )
 
         private val SUCCESS_POSSIBILITIES =
-            possibilities<PriorityLevelConfigurationV2, PriorityLevelConfigurationV2DslBuilder> {
+            possibilities<PriorityLevelConfiguration, PriorityLevelConfigurationDslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(PriorityLevelConfigurationV2DslBuilder())
-                    expected = PriorityLevelConfigurationV2()
+                    given(PriorityLevelConfigurationDslBuilder())
+                    expected = PriorityLevelConfiguration()
                 }
 
                 scenario {
                     id = "full"
-                    given(PriorityLevelConfigurationV2DslBuilder()) {
+                    given(PriorityLevelConfigurationDslBuilder()) {
                         metadata {
                             sharedObjectMeta()
                         }
@@ -71,7 +71,7 @@ class PriorityLevelConfigurationTest :
                             }
                         }
                     }
-                    expected = PriorityLevelConfigurationV2(
+                    expected = PriorityLevelConfiguration(
                         metadata = Common.OBJECT_META,
                         spec = PriorityLevelConfigurationSpec(
                             type = PriorityLevelType.Exempt,

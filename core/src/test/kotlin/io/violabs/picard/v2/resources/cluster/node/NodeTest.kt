@@ -4,13 +4,16 @@ import io.violabs.picard.Common.OBJECT_META
 import io.violabs.picard.Common.sharedObjectMeta
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
+import io.violabs.picard.v2.resources.cluster.node.config.ConfigMapNodeConfigSource
+import io.violabs.picard.v2.resources.cluster.node.config.NodeConfigSource
+import io.violabs.picard.v2.resources.cluster.node.config.NodeConfigStatus
 import io.violabs.picard.v2.resources.cluster.node.daemon.DaemonEndpoint
 import io.violabs.picard.v2.resources.cluster.node.daemon.NodeDaemonEndpoints
 import io.violabs.picard.v2.resources.cluster.node.runtime.NodeRuntimeHandler
 import io.violabs.picard.v2.resources.cluster.node.runtime.NodeRuntimeHandlerFeatures
 import org.junit.jupiter.api.BeforeAll
 
-class NodeTest : SuccessBuildSim<NodeV2, NodeV2DslBuilder>() {
+class NodeTest : SuccessBuildSim<Node, NodeDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -101,16 +104,16 @@ class NodeTest : SuccessBuildSim<NodeV2, NodeV2DslBuilder>() {
             volumesInUse = listOf(PLACEHOLDER)
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<NodeV2, NodeV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Node, NodeDslBuilder> {
             scenario {
                 id = "minimum"
-                given(NodeV2DslBuilder())
-                expected = NodeV2()
+                given(NodeDslBuilder())
+                expected = Node()
             }
 
             scenario {
                 id = "full"
-                given(NodeV2DslBuilder()) {
+                given(NodeDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -229,7 +232,7 @@ class NodeTest : SuccessBuildSim<NodeV2, NodeV2DslBuilder>() {
                         volumesInUse(PLACEHOLDER)
                     }
                 }
-                expected = NodeV2(
+                expected = Node(
                     metadata = OBJECT_META,
                     spec = SPEC,
                     status = STATUS

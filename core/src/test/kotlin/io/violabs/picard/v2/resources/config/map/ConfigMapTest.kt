@@ -9,7 +9,7 @@ import io.violabs.picard.domain.TextData
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ConfigMapTest : SuccessBuildSim<ConfigMapV2, ConfigMapV2DslBuilder>() {
+class ConfigMapTest : SuccessBuildSim<ConfigMap, ConfigMapDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -18,16 +18,16 @@ class ConfigMapTest : SuccessBuildSim<ConfigMapV2, ConfigMapV2DslBuilder>() {
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<ConfigMapV2, ConfigMapV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<ConfigMap, ConfigMapDslBuilder> {
             scenario {
                 id = "minimum"
-                given(ConfigMapV2DslBuilder())
-                expected = ConfigMapV2()
+                given(ConfigMapDslBuilder())
+                expected = ConfigMap()
             }
 
             scenario {
                 id = "full"
-                given(ConfigMapV2DslBuilder()) {
+                given(ConfigMapDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -35,7 +35,7 @@ class ConfigMapTest : SuccessBuildSim<ConfigMapV2, ConfigMapV2DslBuilder>() {
                     data(PLACEHOLDER to PLACEHOLDER)
                     immutable()
                 }
-                expected = ConfigMapV2(
+                expected = ConfigMap(
                     metadata = Common.OBJECT_META,
                     binaryData = BinaryData(mutableMapOf(PLACEHOLDER to PLACEHOLDER)),
                     data = TextData(mutableMapOf(PLACEHOLDER to PLACEHOLDER)),

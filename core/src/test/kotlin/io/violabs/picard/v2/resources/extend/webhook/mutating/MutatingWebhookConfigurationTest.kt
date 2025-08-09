@@ -1,6 +1,7 @@
 package io.violabs.picard.v2.resources.extend.webhook.mutating
 
 import io.violabs.picard.Common
+import io.violabs.picard.Common.LABEL_SELECTOR
 import io.violabs.picard.Common.sharedObjectMeta
 import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
@@ -12,7 +13,7 @@ import io.violabs.picard.v2.resources.extend.webhook.WebhookClientConfig
 import org.junit.jupiter.api.BeforeAll
 
 class MutatingWebhookConfigurationTest :
-    SuccessBuildSim<MutatingWebhookConfigurationV2, MutatingWebhookConfigurationV2DslBuilder>() {
+    SuccessBuildSim<MutatingWebhookConfiguration, MutatingWebhookConfigurationDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -21,30 +22,63 @@ class MutatingWebhookConfigurationTest :
             SUCCESS_POSSIBILITIES
         )
 
+        private val MUTATING_WEBHOOK = MutatingWebhook(
+            admissionReviewVersions = PLACEHOLDER_LIST,
+            clientConfig = WebhookClientConfig(
+                caBundle = BYTES,
+                service = ServiceReference(
+                    name = PLACEHOLDER,
+                    namespace = PLACEHOLDER,
+                    port = PORT_NUMBER
+                ),
+                url = PLACEHOLDER
+            ),
+            name = PLACEHOLDER,
+            sideEffects = PLACEHOLDER,
+            failurePolicy = PLACEHOLDER,
+            matchConditions = listOf(
+                MatchCondition(
+                    expression = PLACEHOLDER,
+                    name = PLACEHOLDER
+                )
+            ),
+            matchPolicy = PLACEHOLDER,
+            namespaceSelector = LABEL_SELECTOR,
+            objectSelector = LABEL_SELECTOR,
+            reinvocationPolicy = PLACEHOLDER,
+            rules = listOf(
+                RuleWithOperations(
+                    apiGroups = PLACEHOLDER_LIST,
+                    apiVersions = PLACEHOLDER_LIST,
+                    operations = PLACEHOLDER_LIST,
+                    resources = PLACEHOLDER_LIST,
+                    scope = PLACEHOLDER
+                )
+            ),
+            timeoutSeconds = 1
+        )
+
         private val SUCCESS_POSSIBILITIES =
-            possibilities<MutatingWebhookConfigurationV2, MutatingWebhookConfigurationV2DslBuilder> {
+            possibilities<MutatingWebhookConfiguration, MutatingWebhookConfigurationDslBuilder> {
                 scenario {
                     id = "minimum"
-                    given(MutatingWebhookConfigurationV2DslBuilder())
-                    expected = MutatingWebhookConfigurationV2()
+                    given(MutatingWebhookConfigurationDslBuilder())
+                    expected = MutatingWebhookConfiguration()
                 }
 
                 scenario {
                     id = "full"
-                    given(MutatingWebhookConfigurationV2DslBuilder()) {
-                        metadata {
-                            sharedObjectMeta()
-                        }
+                    given(MutatingWebhookConfigurationDslBuilder()) {
+                        metadata { sharedObjectMeta() }
                         webhooks {
                             mutatingWebhook {
                                 admissionReviewVersions(PLACEHOLDER)
                                 clientConfig {
-                                    caBundle(1.toByte())
+                                    caBundle(BYTE_1, BYTE_2)
                                     service {
                                         name = PLACEHOLDER
                                         namespace = PLACEHOLDER
                                         port = PORT_NUMBER
-                                        path = PLACEHOLDER
                                     }
                                     url = PLACEHOLDER
                                 }
@@ -74,46 +108,9 @@ class MutatingWebhookConfigurationTest :
                             }
                         }
                     }
-                    expected = MutatingWebhookConfigurationV2(
+                    expected = MutatingWebhookConfiguration(
                         metadata = Common.OBJECT_META,
-                        webhooks = listOf(
-                            MutatingWebhook(
-                                admissionReviewVersions = listOf(PLACEHOLDER),
-                                clientConfig = WebhookClientConfig(
-                                    caBundle = listOf(1.toByte()),
-                                    service = ServiceReference(
-                                        name = PLACEHOLDER,
-                                        namespace = PLACEHOLDER,
-                                        port = PORT_NUMBER,
-                                        path = PLACEHOLDER
-                                    ),
-                                    url = PLACEHOLDER
-                                ),
-                                name = PLACEHOLDER,
-                                sideEffects = PLACEHOLDER,
-                                failurePolicy = PLACEHOLDER,
-                                matchConditions = listOf(
-                                    MatchCondition(
-                                        expression = PLACEHOLDER,
-                                        name = PLACEHOLDER
-                                    )
-                                ),
-                                matchPolicy = PLACEHOLDER,
-                                namespaceSelector = Common.LABEL_SELECTOR,
-                                objectSelector = Common.LABEL_SELECTOR,
-                                reinvocationPolicy = PLACEHOLDER,
-                                rules = listOf(
-                                    RuleWithOperations(
-                                        apiGroups = listOf(PLACEHOLDER),
-                                        apiVersions = listOf(PLACEHOLDER),
-                                        operations = listOf(PLACEHOLDER),
-                                        resources = listOf(PLACEHOLDER),
-                                        scope = PLACEHOLDER
-                                    )
-                                ),
-                                timeoutSeconds = 1
-                            )
-                        )
+                        webhooks = listOf(MUTATING_WEBHOOK)
                     )
                 }
             }

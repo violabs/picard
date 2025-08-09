@@ -2,6 +2,7 @@ package io.violabs.picard.v2.resources.cluster.node
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
+import io.violabs.picard.v2.resources.cluster.node.config.NodeConfigSource
 
 /**
  * NodeSpec describes the attributes that a node is created with.

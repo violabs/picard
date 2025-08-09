@@ -6,22 +6,40 @@ import io.violabs.picard.domain.k8sResources.APIVersion
 import io.violabs.picard.domain.k8sResources.K8sAPIResource
 import io.violabs.picard.domain.k8sResources.K8sListResource
 import io.violabs.picard.domain.k8sResources.K8sResource
-import io.violabs.picard.domain.k8sResources.policy.flowSchema.FlowSchema
-import io.violabs.picard.domain.k8sResources.policy.flowSchema.FlowSchemaList
-import io.violabs.picard.domain.k8sResources.policy.limitRange.LimitRange
-import io.violabs.picard.domain.k8sResources.policy.limitRange.LimitRangeList
-import io.violabs.picard.domain.k8sResources.policy.networkPolicy.NetworkPolicy
-import io.violabs.picard.domain.k8sResources.policy.networkPolicy.NetworkPolicyList
-import io.violabs.picard.domain.k8sResources.policy.podDisruptionBudget.PodDisruptionBudget
-import io.violabs.picard.domain.k8sResources.policy.podDisruptionBudget.PodDisruptionBudgetList
-import io.violabs.picard.domain.k8sResources.policy.priorityLevelConfig.PriorityLevelConfiguration
-import io.violabs.picard.domain.k8sResources.policy.priorityLevelConfig.PriorityLevelConfigurationList
-import io.violabs.picard.domain.k8sResources.policy.resourceQuota.ResourceQuota
-import io.violabs.picard.domain.k8sResources.policy.resourceQuota.ResourceQuotaList
-import io.violabs.picard.domain.k8sResources.policy.validatingAdmissionPolicy.ValidatingAdmissionPolicy
-import io.violabs.picard.domain.k8sResources.policy.validatingAdmissionPolicy.ValidatingAdmissionPolicyList
-import io.violabs.picard.domain.k8sResources.policy.validatingAdmissionPolicy.binding.ValidatingAdmissionPolicyBinding
-import io.violabs.picard.domain.k8sResources.policy.validatingAdmissionPolicy.binding.ValidatingAdmissionPolicyBindingList
+import io.violabs.picard.v2.resources.policy.admission.mutating.MutatingAdmissionPolicyDslBuilder
+import io.violabs.picard.v2.resources.policy.admission.mutating.MutatingAdmissionPolicyDslBuilderScope
+import io.violabs.picard.v2.resources.policy.admission.mutating.binding.MutatingAdmissionPolicyBindingDslBuilder
+import io.violabs.picard.v2.resources.policy.admission.mutating.binding.MutatingAdmissionPolicyBindingDslBuilderScope
+import io.violabs.picard.v2.resources.policy.admission.validating.ValidatingAdmissionPolicyDslBuilder
+import io.violabs.picard.v2.resources.policy.admission.validating.ValidatingAdmissionPolicyDslBuilderScope
+import io.violabs.picard.v2.resources.policy.admission.validating.ValidatingAdmissionPolicyListDslBuilder
+import io.violabs.picard.v2.resources.policy.admission.validating.ValidatingAdmissionPolicyListDslBuilderScope
+import io.violabs.picard.v2.resources.policy.admission.validating.binding.ValidatingAdmissionPolicyBindingDslBuilder
+import io.violabs.picard.v2.resources.policy.admission.validating.binding.ValidatingAdmissionPolicyBindingDslBuilderScope
+import io.violabs.picard.v2.resources.policy.disruption.PodDisruptionBudgetDslBuilder
+import io.violabs.picard.v2.resources.policy.disruption.PodDisruptionBudgetDslBuilderScope
+import io.violabs.picard.v2.resources.policy.disruption.PodDisruptionBudgetListDslBuilder
+import io.violabs.picard.v2.resources.policy.disruption.PodDisruptionBudgetListDslBuilderScope
+import io.violabs.picard.v2.resources.policy.level.PriorityLevelConfigurationDslBuilder
+import io.violabs.picard.v2.resources.policy.level.PriorityLevelConfigurationDslBuilderScope
+import io.violabs.picard.v2.resources.policy.level.PriorityLevelConfigurationListDslBuilder
+import io.violabs.picard.v2.resources.policy.level.PriorityLevelConfigurationListDslBuilderScope
+import io.violabs.picard.v2.resources.policy.limit.LimitRangeDslBuilder
+import io.violabs.picard.v2.resources.policy.limit.LimitRangeDslBuilderScope
+import io.violabs.picard.v2.resources.policy.limit.LimitRangeListDslBuilder
+import io.violabs.picard.v2.resources.policy.limit.LimitRangeListDslBuilderScope
+import io.violabs.picard.v2.resources.policy.network.NetworkPolicyDslBuilder
+import io.violabs.picard.v2.resources.policy.network.NetworkPolicyDslBuilderScope
+import io.violabs.picard.v2.resources.policy.network.NetworkPolicyListDslBuilder
+import io.violabs.picard.v2.resources.policy.network.NetworkPolicyListDslBuilderScope
+import io.violabs.picard.v2.resources.policy.resource.quota.ResourceQuotaDslBuilder
+import io.violabs.picard.v2.resources.policy.resource.quota.ResourceQuotaDslBuilderScope
+import io.violabs.picard.v2.resources.policy.resource.quota.ResourceQuotaListDslBuilder
+import io.violabs.picard.v2.resources.policy.resource.quota.ResourceQuotaListDslBuilderScope
+import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchemaDslBuilder
+import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchemaDslBuilderScope
+import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchemaListDslBuilder
+import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchemaListDslBuilderScope
 
 interface PolicyResource<T : APIVersion, META> : K8sResource<T, META>
 interface PolicyListResource<T : APIVersion, E> : K8sListResource<T, E>
@@ -30,72 +48,94 @@ data class PolicyResourceSection(
     override val resources: List<K8sAPIResource<*>>
 ) : ManifestResource {
 
-    class Builder : DslBuilder<PolicyResourceSection> {
-        private val resources: MutableList<PolicyResource<*, *>> = mutableListOf()
+    class Builder(
+        private val resources: MutableList<PolicyResource<*, *>> = mutableListOf(),
         private val lists: MutableList<PolicyListResource<*, *>> = mutableListOf()
+    ) : DslBuilder<PolicyResourceSection> {
 
-        fun flowSchema(init: FlowSchema.Builder.() -> Unit) {
-            resources += FlowSchema.Builder().apply(init).build()
+        fun flowSchema(block: FlowSchemaDslBuilderScope) {
+            val flowSchema = FlowSchemaDslBuilder().apply(block).build()
+            resources.add(flowSchema)
         }
 
-        fun flowSchemaList(init: FlowSchemaList.Builder.() -> Unit) {
-            lists += FlowSchemaList.Builder().apply(init).build()
+        fun flowSchemaList(block: FlowSchemaListDslBuilderScope) {
+            val flowSchemaList = FlowSchemaListDslBuilder().apply(block).build()
+            lists.add(flowSchemaList)
         }
 
-        fun limitRange(init: LimitRange.Builder.() -> Unit) {
-            resources += LimitRange.Builder().apply(init).build()
+        fun limitRange(block: LimitRangeDslBuilderScope) {
+            val limitRange = LimitRangeDslBuilder().apply(block).build()
+            resources.add(limitRange)
         }
 
-        fun limitRangeList(init: LimitRangeList.Builder.() -> Unit) {
-            lists += LimitRangeList.Builder().apply(init).build()
+        fun limitRangeList(block: LimitRangeListDslBuilderScope) {
+            val limitRangeList = LimitRangeListDslBuilder().apply(block).build()
+            lists.add(limitRangeList)
         }
 
-        fun networkPolicy(init: NetworkPolicy.Builder.() -> Unit) {
-            resources += NetworkPolicy.Builder().apply(init).build()
+        fun networkPolicy(block: NetworkPolicyDslBuilderScope) {
+            val networkPolicy = NetworkPolicyDslBuilder().apply(block).build()
+            resources.add(networkPolicy)
         }
 
-        fun networkPolicyList(init: NetworkPolicyList.Builder.() -> Unit) {
-            lists += NetworkPolicyList.Builder().apply(init).build()
+        fun networkPolicyList(block: NetworkPolicyListDslBuilderScope) {
+            val networkPolicyList = NetworkPolicyListDslBuilder().apply(block).build()
+            lists.add(networkPolicyList)
         }
 
-        fun podDisruptionBudget(init: PodDisruptionBudget.Builder.() -> Unit) {
-            resources += PodDisruptionBudget.Builder().apply(init).build()
+        fun podDisruptionBudget(block: PodDisruptionBudgetDslBuilderScope) {
+            val podDisruptionBudget = PodDisruptionBudgetDslBuilder().apply(block).build()
+            resources.add(podDisruptionBudget)
         }
 
-        fun podDisruptionBudgetList(init: PodDisruptionBudgetList.Builder.() -> Unit) {
-            lists += PodDisruptionBudgetList.Builder().apply(init).build()
+        fun podDisruptionBudgetList(block: PodDisruptionBudgetListDslBuilderScope) {
+            val podDisruptionBudgetList = PodDisruptionBudgetListDslBuilder().apply(block).build()
+            lists.add(podDisruptionBudgetList)
         }
 
-        fun priorityLevelConfiguration(init: PriorityLevelConfiguration.Builder.() -> Unit) {
-            resources += PriorityLevelConfiguration.Builder().apply(init).build()
+        fun priorityLevelConfiguration(block: PriorityLevelConfigurationDslBuilderScope) {
+            val priorityLevelConfiguration = PriorityLevelConfigurationDslBuilder().apply(block).build()
+            resources.add(priorityLevelConfiguration)
         }
 
-        fun priorityLevelConfigurationList(init: PriorityLevelConfigurationList.Builder.() -> Unit) {
-            lists += PriorityLevelConfigurationList.Builder().apply(init).build()
+        fun priorityLevelConfigurationList(block: PriorityLevelConfigurationListDslBuilderScope) {
+            val priorityLevelConfigurationList = PriorityLevelConfigurationListDslBuilder().apply(block).build()
+            lists.add(priorityLevelConfigurationList)
         }
 
-        fun resourceQuota(init: ResourceQuota.Builder.() -> Unit) {
-            resources += ResourceQuota.Builder().apply(init).build()
+        fun resourceQuota(block: ResourceQuotaDslBuilderScope) {
+            val resourceQuota = ResourceQuotaDslBuilder().apply(block).build()
+            resources.add(resourceQuota)
         }
 
-        fun resourceQuotaList(init: ResourceQuotaList.Builder.() -> Unit) {
-            lists += ResourceQuotaList.Builder().apply(init).build()
+        fun resourceQuotaList(block: ResourceQuotaListDslBuilderScope) {
+            val resourceQuotaList = ResourceQuotaListDslBuilder().apply(block).build()
+            lists.add(resourceQuotaList)
         }
 
-        fun validatingAdmissionPolicy(init: ValidatingAdmissionPolicy.Builder.() -> Unit) {
-            resources += ValidatingAdmissionPolicy.Builder().apply(init).build()
+        fun validatingAdmissionPolicy(block: ValidatingAdmissionPolicyDslBuilderScope) {
+            val validatingAdmissionPolicy = ValidatingAdmissionPolicyDslBuilder().apply(block).build()
+            resources.add(validatingAdmissionPolicy)
         }
 
-        fun validatingAdmissionPolicyList(init: ValidatingAdmissionPolicyList.Builder.() -> Unit) {
-            lists += ValidatingAdmissionPolicyList.Builder().apply(init).build()
+        fun validatingAdmissionPolicyList(block: ValidatingAdmissionPolicyListDslBuilderScope) {
+            val validatingAdmissionPolicyList = ValidatingAdmissionPolicyListDslBuilder().apply(block).build()
+            lists.add(validatingAdmissionPolicyList)
         }
 
-        fun validatingAdmissionPolicyBinding(init: ValidatingAdmissionPolicyBinding.Builder.() -> Unit) {
-            resources += ValidatingAdmissionPolicyBinding.Builder().apply(init).build()
+        fun validatingAdmissionPolicyBinding(block: ValidatingAdmissionPolicyBindingDslBuilderScope) {
+            val validatingAdmissionPolicyBinding = ValidatingAdmissionPolicyBindingDslBuilder().apply(block).build()
+            resources.add(validatingAdmissionPolicyBinding)
         }
 
-        fun validatingAdmissionPolicyBindingList(init: ValidatingAdmissionPolicyBindingList.Builder.() -> Unit) {
-            lists += ValidatingAdmissionPolicyBindingList.Builder().apply(init).build()
+        fun mutatingAdmissionPolicy(block: MutatingAdmissionPolicyDslBuilderScope) {
+            val mutatingAdmissionPolicy = MutatingAdmissionPolicyDslBuilder().apply(block).build()
+            resources.add(mutatingAdmissionPolicy)
+        }
+
+        fun mutatingAdmissionPolicyBinding(block: MutatingAdmissionPolicyBindingDslBuilderScope) {
+            val mutatingAdmissionPolicyBinding = MutatingAdmissionPolicyBindingDslBuilder().apply(block).build()
+            resources.add(mutatingAdmissionPolicyBinding)
         }
 
         override fun build(): PolicyResourceSection {

@@ -6,7 +6,7 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class LeaseTest : SuccessBuildSim<LeaseV2, LeaseV2DslBuilder>() {
+class LeaseTest : SuccessBuildSim<Lease, LeaseDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -15,16 +15,16 @@ class LeaseTest : SuccessBuildSim<LeaseV2, LeaseV2DslBuilder>() {
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<LeaseV2, LeaseV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<Lease, LeaseDslBuilder> {
             scenario {
                 id = "minimum"
-                given(LeaseV2DslBuilder())
-                expected = LeaseV2()
+                given(LeaseDslBuilder())
+                expected = Lease()
             }
 
             scenario {
                 id = "full"
-                given(LeaseV2DslBuilder()) {
+                given(LeaseDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }
@@ -38,7 +38,7 @@ class LeaseTest : SuccessBuildSim<LeaseV2, LeaseV2DslBuilder>() {
                         strategy = PLACEHOLDER
                     }
                 }
-                expected = LeaseV2(
+                expected = Lease(
                     metadata = OBJECT_META,
                     spec = LeaseSpec(
                         acquireTime = TIMESTAMP,

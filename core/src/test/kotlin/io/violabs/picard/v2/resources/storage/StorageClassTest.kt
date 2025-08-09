@@ -7,7 +7,7 @@ import io.violabs.picard.v2.resources.storage.selector.label.TopologySelectorLab
 import io.violabs.picard.v2.resources.storage.selector.label.TopologySelectorTerm
 import org.junit.jupiter.api.BeforeAll
 
-class StorageClassTest : FullBuildSim<StorageClassV2, StorageClassV2DslBuilder>() {
+class StorageClassTest : FullBuildSim<StorageClass, StorageClassDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
@@ -17,20 +17,20 @@ class StorageClassTest : FullBuildSim<StorageClassV2, StorageClassV2DslBuilder>(
             FAILURE_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<StorageClassV2, StorageClassV2DslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<StorageClass, StorageClassDslBuilder> {
             scenario {
                 id = "minimum"
-                given(StorageClassV2DslBuilder()) {
+                given(StorageClassDslBuilder()) {
                     provisioner = PLACEHOLDER
                 }
-                expected = StorageClassV2(
+                expected = StorageClass(
                     provisioner = PLACEHOLDER
                 )
             }
 
             scenario {
                 id = "full"
-                given(StorageClassV2DslBuilder()) {
+                given(StorageClassDslBuilder()) {
                     provisioner = PLACEHOLDER
                     allowVolumeExpansion()
                     allowedTopologies {
@@ -48,7 +48,7 @@ class StorageClassTest : FullBuildSim<StorageClassV2, StorageClassV2DslBuilder>(
                     reclaimPolicy = PLACEHOLDER
                     volumeBindingMode = PLACEHOLDER
                 }
-                expected = StorageClassV2(
+                expected = StorageClass(
                     provisioner = PLACEHOLDER,
                     allowVolumeExpansion = true,
                     allowedTopologies = listOf(
@@ -69,9 +69,9 @@ class StorageClassTest : FullBuildSim<StorageClassV2, StorageClassV2DslBuilder>(
             }
         }
 
-        private val FAILURE_POSSIBILITIES = possibilities<StorageClassV2, StorageClassV2DslBuilder> {
+        private val FAILURE_POSSIBILITIES = possibilities<StorageClass, StorageClassDslBuilder> {
             requireScenario("provisioner") {
-                given(StorageClassV2DslBuilder())
+                given(StorageClassDslBuilder())
             }
         }
     }

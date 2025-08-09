@@ -49,7 +49,7 @@ abstract class Data(open val content: MutableMap<String, String> = mutableMapOf(
     }
 
     protected fun checkKey(key: String) {
-        if (!key.contains("[a-z0-9.-_]".toRegex())) {
+        if (!key.matches(Regex("^[a-zA-Z0-9._-]+$"))) {
             throw IllegalArgumentException("Invalid key. Can only contain alphanumeric, '.', '-', '_' - key: $key")
         }
     }

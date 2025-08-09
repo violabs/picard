@@ -4,18 +4,18 @@ import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class ManifestTest : FailureBuildSim<Manifest, Manifest.Builder>() {
+class ServiceResourceSectionFailureTest : FailureBuildSim<ServiceResourceSection, ServiceResourceSection.Builder>() {
     companion object {
         @JvmStatic
         @BeforeAll
         fun setup() = buildSetup(
-            ManifestTest::class,
+            ServiceResourceSectionFailureTest::class,
             failureScenariosSet = FAILURE_POSSIBILITIES
         )
 
-        private val FAILURE_POSSIBILITIES = possibilities<Manifest, Manifest.Builder> {
+        private val FAILURE_POSSIBILITIES = possibilities<ServiceResourceSection, ServiceResourceSection.Builder> {
             requireNotEmptyScenario("resources") {
-                given(Manifest.Builder())
+                given(ServiceResourceSection.Builder())
             }
         }
     }

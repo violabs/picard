@@ -39,7 +39,8 @@ class EndpointSliceListTest : FullBuildSim<EndpointSliceList, EndpointSliceListD
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<EndpointSliceList, EndpointSliceListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(EndpointSliceListDslBuilder())
             }
         }

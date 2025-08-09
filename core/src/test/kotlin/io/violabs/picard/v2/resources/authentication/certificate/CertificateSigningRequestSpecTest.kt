@@ -16,7 +16,8 @@ class CertificateSigningRequestSpecTest :
 
         private val FAILURE_POSSIBILITIES =
             possibilities<CertificateSigningRequestSpec, CertificateSigningRequestSpecDslBuilder> {
-                requireNotEmptyScenario("request") {
+//                requireNotEmptyScenario("request") {
+                requireScenario("request") {
                     given(CertificateSigningRequestSpecDslBuilder())
                 }
 

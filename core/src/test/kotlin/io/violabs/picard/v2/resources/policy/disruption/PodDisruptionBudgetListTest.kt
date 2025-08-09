@@ -32,7 +32,8 @@ class PodDisruptionBudgetListTest : FullBuildSim<PodDisruptionBudgetList, PodDis
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<PodDisruptionBudgetList, PodDisruptionBudgetListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(PodDisruptionBudgetListDslBuilder())
             }
         }

@@ -29,7 +29,8 @@ class ClusterRoleListTest : FullBuildSim<ClusterRoleList, ClusterRoleListDslBuil
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<ClusterRoleList, ClusterRoleListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(ClusterRoleListDslBuilder())
             }
         }

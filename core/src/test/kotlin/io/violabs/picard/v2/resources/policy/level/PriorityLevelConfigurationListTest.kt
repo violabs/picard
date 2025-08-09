@@ -35,7 +35,8 @@ class PriorityLevelConfigurationListTest :
 
         private val FAILURE_POSSIBILITIES =
             possibilities<PriorityLevelConfigurationList, PriorityLevelConfigurationListDslBuilder> {
-                requireNotEmptyScenario("items") {
+//                requireNotEmptyScenario("items") {
+                requireScenario("items") {
                     given(PriorityLevelConfigurationListDslBuilder())
                 }
             }

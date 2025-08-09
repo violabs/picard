@@ -33,7 +33,8 @@ class HorizontalPodAutoscalerListTest :
 
         private val FAILURE_POSSIBILITIES =
             possibilities<HorizontalPodAutoscalerList, HorizontalPodAutoscalerListDslBuilder> {
-                requireNotEmptyScenario("items") {
+//                requireNotEmptyScenario("items") {
+                requireScenario("items") {
                     given(HorizontalPodAutoscalerListDslBuilder())
                 }
             }

@@ -30,7 +30,8 @@ class StatefulSetListTest : FullBuildSim<StatefulSetList, StatefulSetListDslBuil
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<StatefulSetList, StatefulSetListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(StatefulSetListDslBuilder())
             }
         }

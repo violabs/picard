@@ -70,7 +70,8 @@ class CsiDriverSpecTest : FailureBuildSim<CsiDriverSpec, CsiDriverSpecDslBuilder
                 }
             }
 
-            requireNotEmptyScenario("volumeLifecycleModes") {
+//            requireNotEmptyScenario("volumeLifecycleModes") {
+            requireScenario("volumeLifecycleModes") {
                 given(CsiDriverSpecDslBuilder()) {
                     attachRequired()
                     podInfoOnMount()

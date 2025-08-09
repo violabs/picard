@@ -50,7 +50,8 @@ class CsiNodeListTest : FullBuildSim<CsiNodeList, CsiNodeListDslBuilder>() {
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<CsiNodeList, CsiNodeListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(CsiNodeListDslBuilder())
             }
         }

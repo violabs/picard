@@ -32,7 +32,8 @@ class MutatingWebhookConfigurationListTest :
 
         private val FAILURE_POSSIBILITIES =
             possibilities<MutatingWebhookConfigurationList, MutatingWebhookConfigurationListDslBuilder> {
-                requireNotEmptyScenario("items") {
+//                requireNotEmptyScenario("items") {
+                requireScenario("items") {
                     given(MutatingWebhookConfigurationListDslBuilder())
                 }
             }

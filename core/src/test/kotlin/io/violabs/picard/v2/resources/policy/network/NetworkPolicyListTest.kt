@@ -29,7 +29,8 @@ class NetworkPolicyListTest : FullBuildSim<NetworkPolicyList, NetworkPolicyListD
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<NetworkPolicyList, NetworkPolicyListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(NetworkPolicyListDslBuilder())
             }
         }

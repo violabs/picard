@@ -29,7 +29,8 @@ class ComponentStatusListTest : FullBuildSim<ComponentStatusList, ComponentStatu
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<ComponentStatusList, ComponentStatusListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(ComponentStatusListDslBuilder())
             }
         }

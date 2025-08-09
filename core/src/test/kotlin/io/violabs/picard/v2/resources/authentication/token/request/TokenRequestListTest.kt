@@ -37,7 +37,8 @@ class TokenRequestListTest : FullBuildSim<TokenRequestList, TokenRequestListDslB
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<TokenRequestList, TokenRequestListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(TokenRequestListDslBuilder())
             }
         }

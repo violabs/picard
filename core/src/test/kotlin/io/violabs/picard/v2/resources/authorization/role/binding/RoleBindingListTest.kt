@@ -40,7 +40,8 @@ class RoleBindingListTest : FullBuildSim<RoleBindingList, RoleBindingListDslBuil
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<RoleBindingList, RoleBindingListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(RoleBindingListDslBuilder())
             }
         }

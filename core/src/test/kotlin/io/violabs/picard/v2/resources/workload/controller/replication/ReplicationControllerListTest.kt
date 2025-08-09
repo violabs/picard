@@ -32,7 +32,8 @@ class ReplicationControllerListTest : FullBuildSim<ReplicationControllerList, Re
 
         private val FAILURE_POSSIBILITIES =
             possibilities<ReplicationControllerList, ReplicationControllerListDslBuilder> {
-                requireNotEmptyScenario("items") {
+//                requireNotEmptyScenario("items") {
+                requireScenario("items") {
                     given(ReplicationControllerListDslBuilder())
                 }
             }

@@ -31,7 +31,8 @@ class CsiStorageCapacityListTest : FullBuildSim<CsiStorageCapacityList, CsiStora
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<CsiStorageCapacityList, CsiStorageCapacityListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(CsiStorageCapacityListDslBuilder())
             }
         }

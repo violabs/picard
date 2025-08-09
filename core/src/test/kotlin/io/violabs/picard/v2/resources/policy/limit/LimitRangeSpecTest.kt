@@ -15,7 +15,8 @@ class LimitRangeSpecTest : FailureBuildSim<LimitRangeSpec, LimitRangeSpecDslBuil
         )
 
         private val FAILURE_POSSIBILITIES = possibilities<LimitRangeSpec, LimitRangeSpecDslBuilder> {
-            requireNotEmptyScenario("limits") {
+//            requireNotEmptyScenario("limits") {
+            requireScenario("limits") {
                 given(LimitRangeSpecDslBuilder())
             }
         }

@@ -31,7 +31,8 @@ class ControllerRevisionListTest : FullBuildSim<ControllerRevisionList, Controll
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<ControllerRevisionList, ControllerRevisionListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(ControllerRevisionListDslBuilder())
             }
         }

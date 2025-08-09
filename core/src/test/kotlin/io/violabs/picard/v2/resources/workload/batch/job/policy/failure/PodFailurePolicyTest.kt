@@ -15,7 +15,8 @@ class PodFailurePolicyTest : FailureBuildSim<PodFailurePolicy, PodFailurePolicyD
         )
 
         private val FAILURE_POSSIBILITIES = possibilities<PodFailurePolicy, PodFailurePolicyDslBuilder> {
-            requireNotEmptyScenario("rules") {
+//            requireNotEmptyScenario("rules") {
+            requireScenario("rules") {
                 given(PodFailurePolicyDslBuilder())
             }
         }

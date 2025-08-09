@@ -33,7 +33,8 @@ class VolumeAttributeClassListTest : FullBuildSim<VolumeAttributesClassList, Vol
 
         private val FAILURE_POSSIBILITIES =
             possibilities<VolumeAttributesClassList, VolumeAttributesClassListDslBuilder> {
-                requireNotEmptyScenario("items") {
+//                requireNotEmptyScenario("items") {
+                requireScenario("items") {
                     given(VolumeAttributesClassListDslBuilder())
                 }
             }

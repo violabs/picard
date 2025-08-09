@@ -30,7 +30,8 @@ class ValidatingAdmissionPolicyListTest :
 
         private val FAILURE_POSSIBILITIES =
             possibilities<ValidatingAdmissionPolicyList, ValidatingAdmissionPolicyListDslBuilder> {
-                requireNotEmptyScenario("items") {
+//                requireNotEmptyScenario("items") {
+                requireScenario("items") {
                     given(ValidatingAdmissionPolicyListDslBuilder())
                 }
             }

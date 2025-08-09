@@ -29,7 +29,8 @@ class SecretListTest : FullBuildSim<SecretList, SecretListDslBuilder>() {
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<SecretList, SecretListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(SecretListDslBuilder())
             }
         }

@@ -29,7 +29,8 @@ class PersistentVolumeListTest : FullBuildSim<PersistentVolumeList, PersistentVo
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<PersistentVolumeList, PersistentVolumeListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(PersistentVolumeListDslBuilder())
             }
         }

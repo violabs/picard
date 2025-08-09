@@ -29,7 +29,8 @@ class PriorityClassListTest : FullBuildSim<PriorityClassList, PriorityClassListD
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<PriorityClassList, PriorityClassListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(PriorityClassListDslBuilder())
             }
         }

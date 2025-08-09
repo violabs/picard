@@ -29,7 +29,8 @@ class LeaseListTest : FullBuildSim<LeaseList, LeaseListDslBuilder>() {
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<LeaseList, LeaseListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(LeaseListDslBuilder())
             }
         }

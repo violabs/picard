@@ -32,7 +32,8 @@ class FlowSchemaListTest : FullBuildSim<FlowSchemaList, FlowSchemaListDslBuilder
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<FlowSchemaList, FlowSchemaListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(FlowSchemaListDslBuilder())
             }
         }

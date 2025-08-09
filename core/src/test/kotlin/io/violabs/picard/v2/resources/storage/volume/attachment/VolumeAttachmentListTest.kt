@@ -30,7 +30,8 @@ class VolumeAttachmentListTest : FullBuildSim<VolumeAttachmentList, VolumeAttach
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<VolumeAttachmentList, VolumeAttachmentListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(VolumeAttachmentListDslBuilder())
             }
         }

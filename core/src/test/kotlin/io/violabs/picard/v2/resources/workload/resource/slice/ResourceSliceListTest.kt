@@ -48,7 +48,8 @@ class ResourceSliceListTest : FullBuildSim<ResourceSliceList, ResourceSliceListD
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<ResourceSliceList, ResourceSliceListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(ResourceSliceListDslBuilder())
             }
         }

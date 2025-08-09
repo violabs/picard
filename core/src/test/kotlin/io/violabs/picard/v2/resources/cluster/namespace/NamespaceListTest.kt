@@ -31,7 +31,8 @@ class NamespaceListTest : FullBuildSim<NamespaceList, NamespaceListDslBuilder>()
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<NamespaceList, NamespaceListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(NamespaceListDslBuilder())
             }
         }

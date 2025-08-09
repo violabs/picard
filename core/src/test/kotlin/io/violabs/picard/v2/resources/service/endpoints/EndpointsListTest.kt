@@ -29,7 +29,8 @@ class EndpointsListTest : FullBuildSim<EndpointsList, EndpointsListDslBuilder>()
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<EndpointsList, EndpointsListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(EndpointsListDslBuilder())
             }
         }

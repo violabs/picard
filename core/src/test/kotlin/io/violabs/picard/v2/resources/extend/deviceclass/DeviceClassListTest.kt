@@ -35,7 +35,8 @@ class DeviceClassListTest : FullBuildSim<DeviceClassList, DeviceClassListDslBuil
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<DeviceClassList, DeviceClassListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(DeviceClassListDslBuilder())
             }
         }

@@ -17,7 +17,8 @@ class StorageVersionMigrationStatusTest :
 
         private val FAILURE_POSSIBILITIES =
             possibilities<StorageVersionMigrationStatus, StorageVersionMigrationStatusDslBuilder> {
-                requireNotEmptyScenario("conditions") {
+//                requireNotEmptyScenario("conditions") {
+                requireScenario("conditions") {
                     given(StorageVersionMigrationStatusDslBuilder())
                 }
             }

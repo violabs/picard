@@ -33,7 +33,8 @@ class RoleListTest : FullBuildSim<RoleList, RoleListDslBuilder>() {
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<RoleList, RoleListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(RoleListDslBuilder())
             }
         }

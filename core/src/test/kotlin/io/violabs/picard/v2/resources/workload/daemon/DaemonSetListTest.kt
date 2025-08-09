@@ -30,7 +30,8 @@ class DaemonSetListTest : FullBuildSim<DaemonSetList, DaemonSetListDslBuilder>()
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<DaemonSetList, DaemonSetListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(DaemonSetListDslBuilder())
             }
         }

@@ -14,7 +14,8 @@ class WebhookConversionTest : FailureBuildSim<WebhookConversion, WebhookConversi
         )
 
         private val FAILURE_POSSIBILITIES = possibilities<WebhookConversion, WebhookConversionDslBuilder> {
-            requireNotEmptyScenario("conversionReviewVersions") {
+//            requireNotEmptyScenario("conversionReviewVersions") {
+            requireScenario("conversionReviewVersions") {
                 given(WebhookConversionDslBuilder())
             }
         }

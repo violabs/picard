@@ -55,11 +55,13 @@ class PodListTest : FullBuildSim<PodList, PodListDslBuilder>() {
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<PodList, PodListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(PodListDslBuilder())
             }
 
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(PodListDslBuilder()) {
                     items {}
                 }

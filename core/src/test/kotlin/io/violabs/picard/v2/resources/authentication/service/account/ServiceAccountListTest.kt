@@ -45,7 +45,8 @@ class ServiceAccountListTest : FullBuildSim<ServiceAccountList, ServiceAccountLi
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<ServiceAccountList, ServiceAccountListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(ServiceAccountListDslBuilder())
             }
         }

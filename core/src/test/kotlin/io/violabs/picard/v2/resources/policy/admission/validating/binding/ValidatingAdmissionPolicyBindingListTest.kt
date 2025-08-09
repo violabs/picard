@@ -32,7 +32,8 @@ class ValidatingAdmissionPolicyBindingListTest :
 
         private val FAILURE_POSSIBILITIES =
             possibilities<ValidatingAdmissionPolicyBindingList, ValidatingAdmissionPolicyBindingListDslBuilder> {
-                requireNotEmptyScenario("items") {
+//                requireNotEmptyScenario("items") {
+                requireScenario("items") {
                     given(ValidatingAdmissionPolicyBindingListDslBuilder())
                 }
             }

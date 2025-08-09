@@ -67,7 +67,8 @@ class CustomResourceDefinitionListTest :
 
         private val FAILURE_POSSIBILITIES =
             possibilities<CustomResourceDefinitionList, CustomResourceDefinitionListDslBuilder> {
-                requireNotEmptyScenario("items") {
+//                requireNotEmptyScenario("items") {
+                requireScenario("items") {
                     given(CustomResourceDefinitionListDslBuilder())
                 }
             }

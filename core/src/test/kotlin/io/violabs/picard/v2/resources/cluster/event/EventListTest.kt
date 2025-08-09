@@ -32,7 +32,8 @@ class EventListTest : FullBuildSim<EventList, EventListDslBuilder>() {
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<EventList, EventListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(EventListDslBuilder())
             }
         }

@@ -19,7 +19,8 @@ class LeaseCandidateSpecTest : FailureBuildSim<LeaseCandidateSpec, LeaseCandidat
                 given(LeaseCandidateSpecDslBuilder())
             }
 
-            requireNotEmptyScenario("preferredStrategies") {
+//            requireNotEmptyScenario("preferredStrategies") {
+            requireScenario("preferredStrategies") {
                 given(LeaseCandidateSpecDslBuilder()) {
                     leaseName = PLACEHOLDER
                 }

@@ -31,7 +31,8 @@ class ServiceCidrListTest : FullBuildSim<ServiceCidrList, ServiceCidrListDslBuil
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<ServiceCidrList, ServiceCidrListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(ServiceCidrListDslBuilder())
             }
         }

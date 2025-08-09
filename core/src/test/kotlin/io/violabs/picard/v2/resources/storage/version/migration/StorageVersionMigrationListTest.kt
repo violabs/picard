@@ -33,7 +33,8 @@ class StorageVersionMigrationListTest :
 
         private val FAILURE_POSSIBILITIES =
             possibilities<StorageVersionMigrationList, StorageVersionMigrationListDslBuilder> {
-                requireNotEmptyScenario("items") {
+//                requireNotEmptyScenario("items") {
+                requireScenario("items") {
                     given(StorageVersionMigrationListDslBuilder())
                 }
             }

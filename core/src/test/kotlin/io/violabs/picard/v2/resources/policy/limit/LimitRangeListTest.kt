@@ -30,7 +30,8 @@ class LimitRangeListTest : FullBuildSim<LimitRangeList, LimitRangeListDslBuilder
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<LimitRangeList, LimitRangeListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(LimitRangeListDslBuilder())
             }
         }

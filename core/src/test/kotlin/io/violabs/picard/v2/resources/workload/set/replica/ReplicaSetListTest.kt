@@ -30,7 +30,8 @@ class ReplicaSetListTest : FullBuildSim<ReplicaSetList, ReplicaSetListDslBuilder
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<ReplicaSetList, ReplicaSetListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(ReplicaSetListDslBuilder())
             }
         }

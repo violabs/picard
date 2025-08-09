@@ -44,7 +44,8 @@ class LeaseCandidateListTest : FullBuildSim<LeaseCandidateList, LeaseCandidateLi
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<LeaseCandidateList, LeaseCandidateListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(LeaseCandidateListDslBuilder())
             }
         }

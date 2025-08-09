@@ -45,7 +45,8 @@ class ClusterTrustBundleListTest : FullBuildSim<ClusterTrustBundleList, ClusterT
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<ClusterTrustBundleList, ClusterTrustBundleListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(ClusterTrustBundleListDslBuilder())
             }
         }

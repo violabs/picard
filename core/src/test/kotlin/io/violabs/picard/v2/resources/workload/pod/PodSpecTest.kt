@@ -18,7 +18,8 @@ class PodSpecTest : FailureBuildSim<PodSpec, PodSpecDslBuilder>() {
         )
 
         private val FAILURE_POSSIBILITIES = possibilities<PodSpec, PodSpecDslBuilder> {
-            requireNotEmptyScenario("containers") {
+//            requireNotEmptyScenario("containers") {
+            requireScenario("containers") {
                 given(PodSpecDslBuilder())
             }
         }

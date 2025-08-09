@@ -20,7 +20,8 @@ class TopologySelectorLabelRequirementTest :
                     given(TopologySelectorLabelRequirementDslBuilder())
                 }
 
-                requireNotEmptyScenario("values") {
+//                requireNotEmptyScenario("values") {
+                requireScenario("values") {
                     given(TopologySelectorLabelRequirementDslBuilder()) {
                         key = PLACEHOLDER
                     }

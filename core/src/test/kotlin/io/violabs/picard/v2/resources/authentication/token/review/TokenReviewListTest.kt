@@ -35,7 +35,8 @@ class TokenReviewListTest : FullBuildSim<TokenReviewList, TokenReviewListDslBuil
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<TokenReviewList, TokenReviewListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(TokenReviewListDslBuilder())
             }
         }

@@ -29,7 +29,8 @@ class NodeListTest : FullBuildSim<NodeList, NodeListDslBuilder>() {
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<NodeList, NodeListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(NodeListDslBuilder())
             }
         }

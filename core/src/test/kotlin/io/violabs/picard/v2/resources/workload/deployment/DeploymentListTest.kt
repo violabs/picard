@@ -30,7 +30,8 @@ class DeploymentListTest : FullBuildSim<DeploymentList, DeploymentListDslBuilder
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<DeploymentList, DeploymentListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(DeploymentListDslBuilder())
             }
         }

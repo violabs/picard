@@ -15,7 +15,8 @@ class CsiNodeSpecTest : FailureBuildSim<CsiNodeSpec, CsiNodeSpecDslBuilder>() {
         )
 
         private val FAILURE_POSSIBILITIES = possibilities<CsiNodeSpec, CsiNodeSpecDslBuilder> {
-            requireNotEmptyScenario("drivers") {
+//            requireNotEmptyScenario("drivers") {
+            requireScenario("drivers") {
                 given(CsiNodeSpecDslBuilder())
             }
         }

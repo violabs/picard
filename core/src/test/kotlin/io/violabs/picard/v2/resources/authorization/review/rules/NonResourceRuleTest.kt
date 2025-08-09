@@ -14,7 +14,8 @@ class NonResourceRuleTest : FailureBuildSim<NonResourceRule, NonResourceRuleDslB
         )
 
         private val FAILURE_POSSIBILITIES = possibilities<NonResourceRule, NonResourceRuleDslBuilder> {
-            requireNotEmptyScenario("verbs") {
+//            requireNotEmptyScenario("verbs") {
+            requireScenario("verbs") {
                 given(NonResourceRuleDslBuilder())
             }
         }

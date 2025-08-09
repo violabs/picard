@@ -30,7 +30,8 @@ class CsiDriverListTest : FullBuildSim<CsiDriverList, CsiDriverListDslBuilder>()
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<CsiDriverList, CsiDriverListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(CsiDriverListDslBuilder())
             }
         }

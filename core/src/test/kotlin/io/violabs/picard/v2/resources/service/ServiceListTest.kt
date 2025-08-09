@@ -31,7 +31,8 @@ class ServiceListTest : FullBuildSim<ServiceList, ServiceListDslBuilder>() {
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<ServiceList, ServiceListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(ServiceListDslBuilder())
             }
         }

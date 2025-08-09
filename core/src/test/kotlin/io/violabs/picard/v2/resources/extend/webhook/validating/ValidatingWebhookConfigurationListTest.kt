@@ -35,7 +35,8 @@ class ValidatingWebhookConfigurationListTest :
 
         private val FAILURE_POSSIBILITIES =
             possibilities<ValidatingWebhookConfigurationList, ValidatingWebhookConfigurationListDslBuilder> {
-                requireNotEmptyScenario("items") {
+//                requireNotEmptyScenario("items") {
+                requireScenario("items") {
                     given(ValidatingWebhookConfigurationListDslBuilder())
                 }
             }

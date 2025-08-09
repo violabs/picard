@@ -35,7 +35,8 @@ class StorageClassListTest : FullBuildSim<StorageClassList, StorageClassListDslB
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<StorageClassList, StorageClassListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(StorageClassListDslBuilder())
             }
         }

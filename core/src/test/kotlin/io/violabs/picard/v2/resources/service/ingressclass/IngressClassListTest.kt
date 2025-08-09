@@ -30,7 +30,8 @@ class IngressClassListTest : FullBuildSim<IngressClassList, IngressClassListDslB
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<IngressClassList, IngressClassListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(IngressClassListDslBuilder())
             }
         }

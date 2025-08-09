@@ -15,7 +15,8 @@ class FlowSchemaStatusTest : FailureBuildSim<FlowSchemaStatus, FlowSchemaStatusD
         )
 
         private val FAILURE_POSSIBILITIES = possibilities<FlowSchemaStatus, FlowSchemaStatusDslBuilder> {
-            requireNotEmptyScenario("conditions") {
+//            requireNotEmptyScenario("conditions") {
+            requireScenario("conditions") {
                 given(FlowSchemaStatusDslBuilder())
             }
         }

@@ -29,7 +29,8 @@ class JobListTest : FullBuildSim<JobList, JobListDslBuilder>() {
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<JobList, JobListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(JobListDslBuilder())
             }
         }

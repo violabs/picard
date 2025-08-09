@@ -30,7 +30,8 @@ class IpAddressListTest : FullBuildSim<IpAddressList, IpAddressListDslBuilder>()
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<IpAddressList, IpAddressListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(IpAddressListDslBuilder())
             }
         }

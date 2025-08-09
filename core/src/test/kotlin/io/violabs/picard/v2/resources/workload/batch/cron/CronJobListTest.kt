@@ -30,7 +30,8 @@ class CronJobListTest : FullBuildSim<CronJobList, CronJobListDslBuilder>() {
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<CronJobList, CronJobListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(CronJobListDslBuilder())
             }
         }

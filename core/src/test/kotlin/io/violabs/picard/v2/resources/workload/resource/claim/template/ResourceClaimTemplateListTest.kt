@@ -43,7 +43,8 @@ class ResourceClaimTemplateListTest : FullBuildSim<ResourceClaimTemplateList, Re
 
         private val FAILURE_POSSIBILITIES =
             possibilities<ResourceClaimTemplateList, ResourceClaimTemplateListDslBuilder> {
-                requireNotEmptyScenario("items") {
+//                requireNotEmptyScenario("items") {
+                requireScenario("items") {
                     given(ResourceClaimTemplateListDslBuilder())
                 }
             }

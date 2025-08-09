@@ -31,7 +31,8 @@ class ConfigMapListTest : FullBuildSim<ConfigMapList, ConfigMapListDslBuilder>()
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<ConfigMapList, ConfigMapListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(ConfigMapListDslBuilder())
             }
         }

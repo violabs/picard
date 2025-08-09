@@ -30,7 +30,8 @@ class ApiServiceListTest : FullBuildSim<ApiServiceList, ApiServiceListDslBuilder
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<ApiServiceList, ApiServiceListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(ApiServiceListDslBuilder())
             }
         }

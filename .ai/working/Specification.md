@@ -1,10 +1,43 @@
 
-There are classes that extend various interfaces like `ListResource`. I want 
-to copy the setup over to v2/resources and use `GeneratedDsl` on it to auto generate
-the DSL builder for it.
+# Test File Migration Specification
 
-You then also have to move the tests to the appropriate location and update the test content.
-You may need to go into each class that extends `Resource` and modify the `GeneratedDsl` to 
-set `withListGroup = true`.
+## Objective
+Replace all occurrences of `requireNotEmptyScenario` with `requireScenario` in test files, while keeping the original line commented out for reference.
 
-Finally, add deprecation similar to `@Deprecated("Use v2", ReplaceWith("io.violabs.picard.v2.resources.authentication.certificate.CertificateSigningRequestV2"))`
+## Critical Requirement
+**YOU MUST HAVE BOTH LINES AND NOT ONLY COMMENT IT OUT!!!!**
+
+## Example Pattern
+```kotlin
+            possibilities<CertificateSigningRequestList, CertificateSigningRequestListDslBuilder> {
+//                requireNotEmptyScenario("items") {
+                requireScenario("items") {
+                    given(CertificateSigningRequestListDslBuilder())
+                }
+            }
+    }
+}
+```
+
+## Implementation Plan
+
+### Step 1: Find all files with `requireNotEmptyScenario`
+Search for all test files in `/Users/violabs/Projects/picard/core/src/test` that contain `requireNotEmptyScenario`.
+
+### Step 2: For each file, replace the pattern
+Transform each occurrence from:
+```kotlin
+                requireNotEmptyScenario("parameterName") {
+```
+
+To:
+```kotlin
+//                requireNotEmptyScenario("parameterName") {
+                requireScenario("parameterName") {
+```
+
+### Step 3: Verification
+- Ensure the commented line is preserved
+- Ensure the new `requireScenario` line is added
+- Maintain the same parameter value
+- Preserve indentation

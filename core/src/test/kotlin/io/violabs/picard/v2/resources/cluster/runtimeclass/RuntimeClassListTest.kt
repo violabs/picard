@@ -31,7 +31,8 @@ class RuntimeClassListTest : FullBuildSim<RuntimeClassList, RuntimeClassListDslB
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<RuntimeClassList, RuntimeClassListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(RuntimeClassListDslBuilder())
             }
         }

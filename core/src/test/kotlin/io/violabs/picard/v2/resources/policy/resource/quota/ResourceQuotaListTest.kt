@@ -29,7 +29,8 @@ class ResourceQuotaListTest : FullBuildSim<ResourceQuotaList, ResourceQuotaListD
         }
 
         private val FAILURE_POSSIBILITIES = possibilities<ResourceQuotaList, ResourceQuotaListDslBuilder> {
-            requireNotEmptyScenario("items") {
+//            requireNotEmptyScenario("items") {
+            requireScenario("items") {
                 given(ResourceQuotaListDslBuilder())
             }
         }

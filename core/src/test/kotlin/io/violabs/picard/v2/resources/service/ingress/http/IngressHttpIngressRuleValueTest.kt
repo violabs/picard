@@ -17,7 +17,8 @@ class IngressHttpIngressRuleValueTest :
 
         private val FAILURE_POSSIBILITIES =
             possibilities<HttpIngressRuleValue, HttpIngressRuleValueDslBuilder> {
-                requireNotEmptyScenario("paths") {
+//                requireNotEmptyScenario("paths") {
+                requireScenario("paths") {
                     given(HttpIngressRuleValueDslBuilder())
                 }
             }

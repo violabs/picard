@@ -20,13 +20,15 @@ class SelfSubjectRulesReviewStatusTest :
                     given(SelfSubjectRulesReviewStatusDslBuilder())
                 }
 
-                requireNotEmptyScenario("nonResourceRules") {
+//                requireNotEmptyScenario("nonResourceRules") {
+                requireScenario("nonResourceRules") {
                     given(SelfSubjectRulesReviewStatusDslBuilder()) {
                         incomplete()
                     }
                 }
 
-                requireNotEmptyScenario("resourceRules") {
+//                requireNotEmptyScenario("resourceRules") {
+                requireScenario("resourceRules") {
                     given(SelfSubjectRulesReviewStatusDslBuilder()) {
                         incomplete()
 

@@ -1,43 +1,56 @@
 
-# Test File Migration Specification
+# Test Failure Analysis Specification
 
 ## Objective
-Replace all occurrences of `requireNotEmptyScenario` with `requireScenario` in test files, while keeping the original line commented out for reference.
+Run the gradle test suite, identify all failing tests, and create a summary report as a Kotlin class.
 
-## Critical Requirement
-**YOU MUST HAVE BOTH LINES AND NOT ONLY COMMENT IT OUT!!!!**
+## Steps
 
-## Example Pattern
+### 1. Run Tests
+- Execute `./gradlew test` from the project root
+- Capture the test output and identify failures
+
+### 2. Parse Test Failures
+- Identify which test classes have failures
+- Extract the specific test methods that failed
+- Capture the failure details:
+  - For tests expecting `IllegalArgumentException` that didn't throw: record as "no exception thrown"
+  - For other failures: capture EXPECTED vs ACTUAL values
+
+### 3. Create Summary Class
+- Location: `/Users/violabs/Projects/picard/core/src/test/TestFailureSummary.kt`
+- Format: Kotlin class containing:
+  - List of all failed test classes
+  - For each class, list the failed test methods
+  - For each method, include the failure reason
+
+### 4. Summary Class Structure
 ```kotlin
-            possibilities<CertificateSigningRequestList, CertificateSigningRequestListDslBuilder> {
-//                requireNotEmptyScenario("items") {
-                requireScenario("items") {
-                    given(CertificateSigningRequestListDslBuilder())
-                }
-            }
-    }
+package io.violabs.picard
+
+/**
+ * Summary of test failures after requireNotEmptyScenario migration
+ * Generated: [date]
+ */
+object TestFailureSummary {
+    val failures = mapOf(
+        "TestClassName" to listOf(
+            TestFailure(
+                method = "testMethodName",
+                reason = "no exception thrown" // or "EXPECTED: X, ACTUAL: Y"
+            )
+        )
+    )
+    
+    data class TestFailure(
+        val method: String,
+        val reason: String
+    )
 }
 ```
 
-## Implementation Plan
-
-### Step 1: Find all files with `requireNotEmptyScenario`
-Search for all test files in `/Users/violabs/Projects/picard/core/src/test` that contain `requireNotEmptyScenario`.
-
-### Step 2: For each file, replace the pattern
-Transform each occurrence from:
-```kotlin
-                requireNotEmptyScenario("parameterName") {
-```
-
-To:
-```kotlin
-//                requireNotEmptyScenario("parameterName") {
-                requireScenario("parameterName") {
-```
-
-### Step 3: Verification
-- Ensure the commented line is preserved
-- Ensure the new `requireScenario` line is added
-- Maintain the same parameter value
-- Preserve indentation
+## Confirmation
+After creating the summary file, confirm:
+- Total number of failed test classes
+- Total number of failed test methods
+- File has been created at the specified location

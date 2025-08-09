@@ -15,20 +15,17 @@ class ResourcePolicyRuleTest : FailureBuildSim<ResourcePolicyRule, ResourcePolic
         )
 
         private val FAILURE_POSSIBILITIES = possibilities<ResourcePolicyRule, ResourcePolicyRuleDslBuilder> {
-//            requireNotEmptyScenario("apiGroups") {
-            requireScenario("apiGroups") {
+            requireNotEmptyScenario("apiGroups") {
                 given(ResourcePolicyRuleDslBuilder())
             }
 
-//            requireNotEmptyScenario("resources") {
-            requireScenario("resources") {
+            requireNotEmptyScenario("resources") {
                 given(ResourcePolicyRuleDslBuilder()) {
                     apiGroups(PLACEHOLDER)
                 }
             }
 
-//            requireNotEmptyScenario("verbs") {
-            requireScenario("verbs") {
+            requireNotEmptyScenario("verbs") {
                 given(ResourcePolicyRuleDslBuilder()) {
                     apiGroups(PLACEHOLDER)
                     resources(PLACEHOLDER)

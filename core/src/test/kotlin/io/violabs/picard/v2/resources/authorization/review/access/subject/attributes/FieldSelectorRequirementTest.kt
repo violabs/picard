@@ -19,7 +19,7 @@ class FieldSelectorRequirementTest : FailureBuildSim<FieldSelectorRequirement, F
                     given(FieldSelectorRequirementDslBuilder())
                 }
 
-                requireScenario("requirements") {
+                requireScenario("operator") {
                     given(FieldSelectorRequirementDslBuilder()) {
                         key = PLACEHOLDER
                     }

@@ -26,17 +26,6 @@ class PodsMetricStatusTest : FailureBuildSim<PodsMetricStatus, PodsMetricStatusD
                     }
                 }
             }
-
-            requireScenario("resource") {
-                given(PodsMetricStatusDslBuilder()) {
-                    current {
-
-                    }
-                    metric {
-                        name = PLACEHOLDER
-                    }
-                }
-            }
         }
     }
 }

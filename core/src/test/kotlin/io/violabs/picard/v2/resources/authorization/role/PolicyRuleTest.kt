@@ -14,8 +14,7 @@ class PolicyRuleTest : FailureBuildSim<PolicyRule, PolicyRuleDslBuilder>() {
         )
 
         private val FAILURE_POSSIBILITIES = possibilities<PolicyRule, PolicyRuleDslBuilder> {
-//            requireNotEmptyScenario("verbs") {
-            requireScenario("verbs") {
+            requireNotEmptyScenario("verbs") {
                 given(PolicyRuleDslBuilder())
             }
         }

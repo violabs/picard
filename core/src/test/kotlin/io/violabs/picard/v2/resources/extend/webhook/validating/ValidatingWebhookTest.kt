@@ -15,7 +15,7 @@ class ValidatingWebhookTest : FailureBuildSim<ValidatingWebhook, ValidatingWebho
         )
 
         private val FAILURE_POSSIBILITIES = possibilities<ValidatingWebhook, ValidatingWebhookDslBuilder> {
-            requireScenario("admissionReviewVersions") {
+            requireNotEmptyScenario("admissionReviewVersions") {
                 given(ValidatingWebhookDslBuilder())
             }
 

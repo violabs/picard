@@ -18,7 +18,7 @@ class NodeSystemInfoTest : FailureBuildSim<NodeSystemInfo, NodeSystemInfoDslBuil
                 given(NodeSystemInfoDslBuilder())
             }
 
-            requireScenario("bootID") {
+            requireScenario("bootId") {
                 given(NodeSystemInfoDslBuilder()) {
                     architecture = PLACEHOLDER
                 }
@@ -58,7 +58,7 @@ class NodeSystemInfoTest : FailureBuildSim<NodeSystemInfo, NodeSystemInfoDslBuil
                 }
             }
 
-            requireScenario("machineID") {
+            requireScenario("machineId") {
                 given(NodeSystemInfoDslBuilder()) {
                     architecture = PLACEHOLDER
                     bootId = PLACEHOLDER
@@ -94,7 +94,7 @@ class NodeSystemInfoTest : FailureBuildSim<NodeSystemInfo, NodeSystemInfoDslBuil
                 }
             }
 
-            requireScenario("systemUUID") {
+            requireScenario("systemUuid") {
                 given(NodeSystemInfoDslBuilder()) {
                     architecture = PLACEHOLDER
                     bootId = PLACEHOLDER

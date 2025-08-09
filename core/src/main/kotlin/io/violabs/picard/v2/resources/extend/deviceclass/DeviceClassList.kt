@@ -18,7 +18,7 @@ data class DeviceClassList(
         AppConstants.DefaultValue.KAPI_VERSION_PACKAGE,
         AppConstants.DefaultValue.KAPI_VERSION_CLASS
     )
-    override val apiVersion: Version = KAPIVersion.ResourceV1Beta1,
+    override val apiVersion: Version = KAPIVersion.ResourceV1Beta2,
     override val items: List<DeviceClass>,
     override val metadata: ListMeta? = null
 ) : ExtendListResource<DeviceClassList.Version, DeviceClass> {

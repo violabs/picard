@@ -33,14 +33,8 @@ class HorizontalPodAutoscalerStatusTest :
 
         private val FAILURE_POSSIBILITIES =
             possibilities<HorizontalPodAutoscalerStatus, HorizontalPodAutoscalerStatusDslBuilder> {
-                requireScenario("currentReplicas") {
-                    given(HorizontalPodAutoscalerStatusDslBuilder())
-                }
-
                 requireScenario("desiredReplicas") {
-                    given(HorizontalPodAutoscalerStatusDslBuilder()) {
-                        currentReplicas = 1
-                    }
+                    given(HorizontalPodAutoscalerStatusDslBuilder())
                 }
             }
     }

@@ -14,8 +14,7 @@ class ResourceRuleTest : FailureBuildSim<ResourceRule, ResourceRuleDslBuilder>()
         )
 
         private val FAILURE_POSSIBILITIES = possibilities<ResourceRule, ResourceRuleDslBuilder> {
-//            requireNotEmptyScenario("verbs") {
-            requireScenario("verbs") {
+            requireNotEmptyScenario("verbs") {
                 given(ResourceRuleDslBuilder())
             }
         }

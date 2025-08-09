@@ -15,13 +15,11 @@ class NonResourcePolicyRuleTest : FailureBuildSim<NonResourcePolicyRule, NonReso
         )
 
         private val FAILURE_POSSIBILITIES = possibilities<NonResourcePolicyRule, NonResourcePolicyRuleDslBuilder> {
-//            requireNotEmptyScenario("nonResourceUrls") {
-            requireScenario("nonResourceUrls") {
+            requireNotEmptyScenario("nonResourceUrls") {
                 given(NonResourcePolicyRuleDslBuilder())
             }
 
-//            requireNotEmptyScenario("verbs") {
-            requireScenario("verbs") {
+            requireNotEmptyScenario("verbs") {
                 given(NonResourcePolicyRuleDslBuilder()) {
                     nonResourceUrls(PLACEHOLDER)
                 }

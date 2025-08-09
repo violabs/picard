@@ -37,21 +37,6 @@ class ObjectMetricStatusTest : FailureBuildSim<ObjectMetricStatus, ObjectMetricS
                     }
                 }
             }
-
-            requireScenario("pods") {
-                given(ObjectMetricStatusDslBuilder()) {
-                    current {
-
-                    }
-                    describedObject {
-                        kind = PLACEHOLDER
-                        name = PLACEHOLDER
-                    }
-                    metric {
-                        name = PLACEHOLDER
-                    }
-                }
-            }
         }
     }
 }

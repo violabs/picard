@@ -17,12 +17,6 @@ class DeviceRequestTest : FailureBuildSim<DeviceRequest, DeviceRequestDslBuilder
             requireScenario("name") {
                 given(DeviceRequestDslBuilder())
             }
-
-            requireScenario("name") {
-                given(DeviceRequestDslBuilder()) {
-                    name = PLACEHOLDER
-                }
-            }
         }
     }
 }

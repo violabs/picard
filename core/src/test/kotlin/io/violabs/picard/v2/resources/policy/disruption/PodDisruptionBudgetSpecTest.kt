@@ -23,8 +23,8 @@ class PodDisruptionBudgetSpecTest : SuccessBuildSim<PodDisruptionBudgetSpec, Pod
                     minAvailable = INT_OR_STRING_1
                 }
                 expected = PodDisruptionBudgetSpec(
-                    maxUnavailable = INT_OR_STRING_2,
-                    minAvailable = INT_OR_STRING_2
+                    maxUnavailable = INT_OR_STRING_1,
+                    minAvailable = INT_OR_STRING_1
                 )
             }
         }

@@ -15,8 +15,7 @@ class TokenRequestSpecTest : FailureBuildSim<TokenRequestSpec, TokenRequestSpecD
         )
 
         private val FAILURE_POSSIBILITIES = possibilities<TokenRequestSpec, TokenRequestSpecDslBuilder> {
-//            requireNotEmptyScenario("audiences") {
-            requireScenario("audiences") {
+            requireNotEmptyScenario("audiences") {
                 given(TokenRequestSpecDslBuilder())
             }
         }

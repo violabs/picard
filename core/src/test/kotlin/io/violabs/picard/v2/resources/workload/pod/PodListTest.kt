@@ -59,13 +59,6 @@ class PodListTest : FullBuildSim<PodList, PodListDslBuilder>() {
             requireScenario("items") {
                 given(PodListDslBuilder())
             }
-
-//            requireNotEmptyScenario("items") {
-            requireScenario("items") {
-                given(PodListDslBuilder()) {
-                    items {}
-                }
-            }
         }
     }
 }

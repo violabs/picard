@@ -21,8 +21,7 @@ class PodFailurePolicyOnExitCodesRequirementTest :
                 given(PodFailurePolicyOnExitCodesRequirementDslBuilder())
             }
 
-//            requireNotEmptyScenario("values") {
-            requireScenario("values") {
+            requireNotEmptyScenario("values") {
                 given(PodFailurePolicyOnExitCodesRequirementDslBuilder()) {
                     operator = PodFailurePolicyOnExitCodesRequirement.Operator.In
                 }

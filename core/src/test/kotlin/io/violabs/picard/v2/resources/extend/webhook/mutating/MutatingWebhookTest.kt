@@ -14,7 +14,7 @@ class MutatingWebhookTest : FailureBuildSim<MutatingWebhook, MutatingWebhookDslB
         )
 
         private val FAILURE_POSSIBILITIES = possibilities<MutatingWebhook, MutatingWebhookDslBuilder> {
-            requireScenario("admissionReviewVersions") {
+            requireNotEmptyScenario("admissionReviewVersions") {
                 given(MutatingWebhookDslBuilder())
             }
 

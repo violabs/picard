@@ -1,6 +1,5 @@
 package io.violabs.picard.v2.resources.storage.csi.node
 
-
 import io.violabs.picard.FailureBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
@@ -19,7 +18,7 @@ class CsiNodeDriverTest : FailureBuildSim<CsiNodeDriver, CsiNodeDriverDslBuilder
                 given(CsiNodeDriverDslBuilder())
             }
 
-            requireScenario("nodeID") {
+            requireScenario("nodeId") {
                 given(CsiNodeDriverDslBuilder()) {
                     name = PLACEHOLDER
                 }

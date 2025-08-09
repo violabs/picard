@@ -15,14 +15,21 @@ class LeaseCandidateSpecTest : FailureBuildSim<LeaseCandidateSpec, LeaseCandidat
         )
 
         private val FAILURE_POSSIBILITIES = possibilities<LeaseCandidateSpec, LeaseCandidateSpecDslBuilder> {
-            requireScenario("leaseName") {
+            requireScenario("binaryVersion") {
                 given(LeaseCandidateSpecDslBuilder())
             }
 
-//            requireNotEmptyScenario("preferredStrategies") {
-            requireScenario("preferredStrategies") {
+            requireScenario("leaseName") {
+                given(LeaseCandidateSpecDslBuilder()) {
+                    binaryVersion = PLACEHOLDER
+                }
+            }
+
+//            requireNotEmptyScenario("strategy") {
+            requireScenario("strategy") {
                 given(LeaseCandidateSpecDslBuilder()) {
                     leaseName = PLACEHOLDER
+                    binaryVersion = PLACEHOLDER
                 }
             }
         }

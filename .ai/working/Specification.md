@@ -1,69 +1,121 @@
-# TestFailureSummary Enhancement Specification
+# Test Plan for Core Module - Missing Coverage
 
-## Objective
-Update the TestFailureSummary.kt file to use Kotlin class references (KClass) instead of strings for the map keys, enabling IDE navigation via click-through.
+Based on kover report analysis for the core module, the following areas need test coverage. Overall coverage is **89.5%** for classes and **85.6%** for lines, with several packages having 0% or very low coverage.
 
-## Current Implementation
+## Test Framework Summary
+
+The existing test framework uses:
+- **JUnit 5** with custom simulation framework
+- **Test Types**: `SuccessBuildSim`, `FailureBuildSim`, `FullBuildSim`
+- **Setup Pattern**: `buildSetup(TestClass::class, successScenarios, failureScenarios)`
+- **Scenarios**: Success scenarios test happy path, failure scenarios test validation failures
+
+## Priority Areas for FailureBuildSim Tests
+
+### 1. Core Package (0% Coverage) - `io.violabs.picard`
+
+**Classes:**
+- `CoreDslKt` (core/src/main/kotlin/io/violabs/picard/CoreDsl.kt)
+- `YamlBuilder` (core/src/main/kotlin/io/violabs/picard/YamlBuilder.kt)
+
+**Strategy:** 
+Create `FailureBuildSim` tests focusing on:
+- Invalid DSL configurations
+- Missing required parameters in CoreDsl functions
+- Invalid YAML generation scenarios in YamlBuilder
+
+### 2. Common Package (0% Coverage) - `io.violabs.picard.common`
+
+**Classes:**
+- `AppConstants` (core/src/main/kotlin/io/violabs/picard/common/AppConstants.kt)
+- `BuilderGroup` (core/src/main/kotlin/io/violabs/picard/common/BuilderGroup.kt) 
+- `UtilsKt` (core/src/main/kotlin/io/violabs/picard/common/Utils.kt)
+
+**Strategy:**
+- **AppConstants**: Basic instantiation tests (likely constants, may only need minimal tests)
+- **BuilderGroup**: Test validation failures for builder groups
+- **UtilsKt**: Test utility function edge cases and invalid inputs
+
+### 3. Serialization Package (14.3% Coverage) - `io.violabs.picard.serialization`
+
+**Classes needing FailureBuildSim:**
+- `DataClassSerializer` (0% coverage)
+- `IntOrStringSerializer` (0% coverage) 
+- `ListAsMapSerializer` (0% coverage)
+- `ListAsRetainedQuotesValueMapSerializer`
+- `RetainQuotesSerializer`
+- `RetainableStringSerializer`
+
+**Strategy:**
+Focus on serialization failure cases:
+- Invalid data types passed to serializers
+- Malformed JSON/serialization inputs
+- Null handling edge cases
+- Invalid field mappings
+
+### 4. Domain Manifest Package (2.6% Coverage) - `io.violabs.picard.domain.manifest`
+
+**High Priority Classes (0% coverage):**
+- `AuthenticationResourceSection`
+- `AuthorizationResourceSection` 
+- `ClusterResourceSection`
+- `ConfigResourceSection`
+- `ExtendResourceSection`
+- `PolicyResourceSection`
+- `ServiceResourceSection`
+- `StorageResourceSection`
+- `WorkloadResourceSection`
+- `Manifest` (currently commented out test exists)
+
+**Strategy:**
+Create comprehensive `FailureBuildSim` tests for each resource section:
+- Missing required resources
+- Invalid resource configurations
+- Empty resource lists validation
+- Resource type mismatches
+- Enable and complete the existing commented `ManifestTest`
+
+## Implementation Strategy
+
+### Phase 1: Enable Existing Tests
+1. **Uncomment and fix `ManifestTest`** - Located at `core/src/test/kotlin/io/violabs/picard/domain/manifest/ManifestTest.kt`
+2. Update imports and fix any compilation issues
+
+### Phase 2: Create New FailureBuildSim Tests
+For each uncovered class, create test files following the pattern:
 ```kotlin
-val failures = mapOf(
-    "TestClassName" to listOf(...) // String keys - no IDE navigation
-)
+class [ClassName]Test : FailureBuildSim<[Type], [Builder]>() {
+    companion object {
+        @JvmStatic
+        @BeforeAll
+        fun setup() = buildSetup(
+            [ClassName]Test::class,
+            failureScenariosSet = FAILURE_POSSIBILITIES
+        )
+        
+        private val FAILURE_POSSIBILITIES = possibilities<[Type], [Builder]> {
+            requireScenario("requiredField") {
+                given([Builder]()) // missing required field
+            }
+            requireNotEmptyScenario("listField") {
+                given([Builder]()) // empty required list
+            }
+        }
+    }
+}
 ```
 
-## Target Implementation
-```kotlin
-val failures = mapOf(
-    TestClassName::class to listOf(...) // KClass keys - clickable in IDE
-)
-```
+### Phase 3: Coverage Validation
+After implementing tests, run kover report to verify:
+- Overall class coverage target: **95%+**
+- Overall line coverage target: **90%+**
+- All critical DSL builder validation paths covered
 
-## Strategy
+## Expected Test Count
+- **Core Package**: 2 test classes
+- **Common Package**: 3 test classes  
+- **Serialization Package**: 6 test classes
+- **Domain Manifest Package**: 10 test classes
+- **Total**: ~21 new test classes + 1 existing test to enable
 
-### Step 1: Import Required Classes
-- Add import statements for all test classes that appear in the failures map
-- Import KClass from kotlin.reflect
-
-### Step 2: Update Map Type
-- Change map type from `Map<String, List<TestFailure>>` to `Map<KClass<*>, List<TestFailure>>`
-- Update the failures map declaration
-
-### Step 3: Replace String Keys with Class References
-- For each entry in the map, replace the string key with the actual class reference
-- Format: `ClassName::class` instead of `"ClassName"`
-
-### Step 4: Update printSummary() Function
-- Adjust the printing logic to handle KClass keys
-- Use `className.simpleName` to get the class name as a string for display
-
-### Step 5: Verification
-- Ensure all test class imports are correct
-- Verify the file compiles without errors
-- Confirm IDE navigation works (class references are clickable)
-
-## Implementation Results
-
-### ✅ Completed Successfully
-
-1. **Extracted Test Class Names**: Found 38 test classes from the failures map
-2. **Generated Import Statements**: Created imports for all 38 test classes with their full package paths
-3. **Updated Map Structure**: 
-   - Changed map type from `Map<String, List<TestFailure>>` to `Map<KClass<*>, List<TestFailure>>`
-   - Replaced all string keys (e.g., `"TestClassName"`) with class references (`TestClassName::class`)
-4. **Updated printSummary() Function**:
-   - Changed parameter from `className` to `testClass`
-   - Used `testClass.simpleName` to display class names
-   - Fixed string formatting issues
-
-### Key Changes Made
-
-- **Added KClass import**: `import kotlin.reflect.KClass`
-- **Added 38 test class imports**: Full package path imports for IDE navigation
-- **Map type declaration**: Explicit `Map<KClass<*>, List<TestFailure>>` type
-- **All string keys replaced**: Every `"TestClassName"` → `TestClassName::class`
-- **Print function updated**: Handles KClass objects properly
-
-### Verification
-
-- ✅ **Compilation successful**: `./gradlew :core:compileTestKotlin` passed without errors
-- ✅ **All imports resolved**: No missing class references
-- ✅ **IDE navigation enabled**: Class names are now clickable in IDE
+This plan focuses on failure/validation testing since successful happy path cases are already well covered based on the existing high coverage rates.

@@ -2,9 +2,9 @@ package io.violabs.picard.v2.resources.workload.batch.job
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
+import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.BooleanType
-import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.workload.batch.job.policy.failure.PodFailurePolicy
 import io.violabs.picard.v2.resources.workload.batch.job.policy.failure.PodFailurePolicyOnExitCodesRequirement
@@ -12,6 +12,7 @@ import io.violabs.picard.v2.resources.workload.batch.job.policy.failure.PodFailu
 import io.violabs.picard.v2.resources.workload.batch.job.policy.failure.PodFailurePolicyRule
 import io.violabs.picard.v2.resources.workload.batch.job.policy.success.SuccessPolicy
 import io.violabs.picard.v2.resources.workload.batch.job.policy.success.SuccessPolicyRule
+import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateSpec
 import org.junit.jupiter.api.BeforeAll
 
 class JobTest : SuccessBuildSim<Job, JobDslBuilder>() {
@@ -32,7 +33,7 @@ class JobTest : SuccessBuildSim<Job, JobDslBuilder>() {
             ),
             onPodConditions = listOf(
                 PodFailurePolicyOnPodConditionsPattern(
-                    status = PLACEHOLDER,
+                    status = BooleanType.True,
                     type = PLACEHOLDER
                 )
             )
@@ -57,7 +58,7 @@ class JobTest : SuccessBuildSim<Job, JobDslBuilder>() {
                 id = "minimum"
                 given(JobDslBuilder()) {
                     spec {
-                        template = PodTemplateSpec()
+                        template {}
                     }
                 }
                 expected = Job(
@@ -74,7 +75,7 @@ class JobTest : SuccessBuildSim<Job, JobDslBuilder>() {
                         sharedObjectMeta()
                     }
                     spec {
-                        template = PodTemplateSpec()
+                        template {}
                         parallelism = 1
                         completions = 1
                         completionMode = JobSpec.CompletionMode.NonIndexed
@@ -97,7 +98,7 @@ class JobTest : SuccessBuildSim<Job, JobDslBuilder>() {
                                     }
                                     onPodConditions {
                                         podFailurePolicyOnPodConditionsPattern {
-                                            status = PLACEHOLDER
+                                            status = BooleanType.True
                                             type = PLACEHOLDER
                                         }
                                     }

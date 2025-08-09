@@ -1,6 +1,9 @@
 package io.violabs.picard.v2.resources.extend.webhook.mutating
 
+import io.violabs.picard.Common
+import io.violabs.picard.Common.LABEL_SELECTOR
 import io.violabs.picard.Common.sharedObjectMeta
+import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.extend.webhook.MatchCondition
@@ -106,7 +109,7 @@ class MutatingWebhookConfigurationTest :
                         }
                     }
                     expected = MutatingWebhookConfiguration(
-                        metadata = METADATA,
+                        metadata = Common.OBJECT_META,
                         webhooks = listOf(MUTATING_WEBHOOK)
                     )
                 }

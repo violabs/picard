@@ -3,10 +3,11 @@ package io.violabs.picard.v2.resources.authorization.role.binding
 import io.violabs.picard.Common.sharedListMeta
 import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
+import io.violabs.picard.v2.resources.authorization.role.RoleTestConfig
 import org.junit.jupiter.api.BeforeAll
 
 class RoleBindingListTest : FullBuildSim<RoleBindingList, RoleBindingListDslBuilder>() {
-    companion object {
+    companion object : RoleTestConfig {
         @JvmStatic
         @BeforeAll
         fun setup() = buildSetup(
@@ -30,7 +31,7 @@ class RoleBindingListTest : FullBuildSim<RoleBindingList, RoleBindingListDslBuil
                 expected = RoleBindingList(
                     items = listOf(
                         RoleBinding(
-                            roleRef = ROLE_REF
+                            roleRef = roleRef
                         )
                     ),
                     metadata = LIST_METADATA

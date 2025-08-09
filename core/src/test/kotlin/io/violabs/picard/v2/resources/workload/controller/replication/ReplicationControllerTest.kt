@@ -1,9 +1,9 @@
 package io.violabs.picard.v2.resources.workload.controller.replication
 
 import io.violabs.picard.SuccessBuildSim
-import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.common.ObjectMeta
+import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateSpec
 import org.junit.jupiter.api.BeforeAll
 
 class ReplicationControllerTest : SuccessBuildSim<ReplicationController, ReplicationControllerDslBuilder>() {
@@ -31,7 +31,7 @@ class ReplicationControllerTest : SuccessBuildSim<ReplicationController, Replica
                     }
                     spec {
                         selector(PLACEHOLDER to PLACEHOLDER)
-                        template = PodTemplateSpec()
+                        template {}
                         replicas = 1
                         minReadySeconds = 1
                     }

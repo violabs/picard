@@ -3,6 +3,7 @@ package io.violabs.picard.v2.resources.authorization.role
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
+import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll

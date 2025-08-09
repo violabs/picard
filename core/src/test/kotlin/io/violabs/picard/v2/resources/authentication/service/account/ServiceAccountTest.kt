@@ -2,6 +2,7 @@ package io.violabs.picard.v2.resources.authentication.service.account
 
 
 import io.violabs.picard.Common
+import io.violabs.picard.Common.sharedObjectReference
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.common.LocalObjectReference

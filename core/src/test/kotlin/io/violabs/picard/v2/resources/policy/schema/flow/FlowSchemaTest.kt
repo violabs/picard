@@ -34,16 +34,16 @@ class FlowSchemaTest : SuccessBuildSim<FlowSchema, FlowSchemaDslBuilder>() {
         )
 
         private val NON_RESOURCE_RULE = NonResourcePolicyRule(
-            nonResourceUrls = setOf(PLACEHOLDER),
-            verbs = setOf(PLACEHOLDER)
+            nonResourceUrls = listOf(PLACEHOLDER),
+            verbs = listOf(PLACEHOLDER)
         )
 
         private val RESOURCE_RULE = ResourcePolicyRule(
-            apiGroups = setOf(PLACEHOLDER),
-            resources = setOf(PLACEHOLDER),
-            verbs = setOf(PLACEHOLDER),
+            apiGroups = listOf(PLACEHOLDER),
+            resources = listOf(PLACEHOLDER),
+            verbs = listOf(PLACEHOLDER),
             clusterScope = true,
-            namespaces = setOf(PLACEHOLDER)
+            namespaces = listOf(PLACEHOLDER)
         )
 
         private val POLICY_RULES_WITH_SUBJECTS = PolicyRulesWithSubjects(
@@ -86,18 +86,18 @@ class FlowSchemaTest : SuccessBuildSim<FlowSchema, FlowSchemaDslBuilder>() {
 
                                 nonResourceRules {
                                     nonResourcePolicyRule {
-                                        nonResourceUrls = setOf(PLACEHOLDER)
-                                        verbs = setOf(PLACEHOLDER)
+                                        nonResourceUrls(PLACEHOLDER)
+                                        verbs(PLACEHOLDER)
                                     }
                                 }
 
                                 resourceRules {
                                     resourcePolicyRule {
-                                        apiGroups = setOf(PLACEHOLDER)
-                                        resources = setOf(PLACEHOLDER)
-                                        verbs = setOf(PLACEHOLDER)
+                                        apiGroups(PLACEHOLDER)
+                                        resources(PLACEHOLDER)
+                                        verbs(PLACEHOLDER)
                                         clusterScope()
-                                        namespaces = setOf(PLACEHOLDER)
+                                        namespaces(PLACEHOLDER)
                                     }
                                 }
                             }

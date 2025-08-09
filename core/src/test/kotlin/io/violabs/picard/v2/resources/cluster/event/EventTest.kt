@@ -2,6 +2,7 @@ package io.violabs.picard.v2.resources.cluster.event
 
 import io.violabs.picard.Common.OBJECT_META
 import io.violabs.picard.Common.sharedObjectMeta
+import io.violabs.picard.Common.sharedObjectReference
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.k8sResources.KAPIVersion
 import io.violabs.picard.possibilities

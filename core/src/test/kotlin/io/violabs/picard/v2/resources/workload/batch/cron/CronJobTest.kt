@@ -2,10 +2,12 @@ package io.violabs.picard.v2.resources.workload.batch.cron
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
+import io.violabs.picard.Common.sharedObjectReference
 import io.violabs.picard.SuccessBuildSim
-import io.violabs.picard.domain.k8sResources.workload.job.Job
 import io.violabs.picard.possibilities
+import io.violabs.picard.v2.resources.workload.batch.job.JobSpec
 import io.violabs.picard.v2.resources.workload.batch.job.JobTemplateSpec
+import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateSpec
 import org.junit.jupiter.api.BeforeAll
 
 class CronJobTest : SuccessBuildSim<CronJob, CronJobDslBuilder>() {
@@ -23,7 +25,9 @@ class CronJobTest : SuccessBuildSim<CronJob, CronJobDslBuilder>() {
                 given(CronJobDslBuilder()) {
                     spec {
                         jobTemplate {
-                            spec = JobSpec()
+                            spec {
+                                template {}
+                            }
                         }
                         schedule = PLACEHOLDER
                     }
@@ -31,7 +35,9 @@ class CronJobTest : SuccessBuildSim<CronJob, CronJobDslBuilder>() {
                 expected = CronJob(
                     spec = CronJobSpec(
                         jobTemplate = JobTemplateSpec(
-                            spec = JobSpec()
+                            spec = JobSpec(
+                                template = PodTemplateSpec()
+                            )
                         ),
                         schedule = PLACEHOLDER
                     )
@@ -46,8 +52,10 @@ class CronJobTest : SuccessBuildSim<CronJob, CronJobDslBuilder>() {
                     }
                     spec {
                         jobTemplate {
-                            metadata = METADATA
-                            spec = JobSpec()
+                            metadata { sharedObjectMeta() }
+                            spec {
+                                template {  }
+                            }
                         }
                         schedule = PLACEHOLDER
                         timeZone = PLACEHOLDER
@@ -71,8 +79,10 @@ class CronJobTest : SuccessBuildSim<CronJob, CronJobDslBuilder>() {
                     metadata = Common.OBJECT_META,
                     spec = CronJobSpec(
                         jobTemplate = JobTemplateSpec(
-                            metadata = METADATA,
-                            spec = JobSpec()
+                            metadata = Common.OBJECT_META,
+                            spec = JobSpec(
+                                template = PodTemplateSpec()
+                            )
                         ),
                         schedule = PLACEHOLDER,
                         timeZone = PLACEHOLDER,

@@ -20,7 +20,7 @@ class IngressClassListTest : FullBuildSim<IngressClassList, IngressClassListDslB
                 id = "minimum"
                 given(IngressClassListDslBuilder()) {
                     items {
-                        ingressClassItem {  }
+                        ingressClass {  }
                     }
                 }
                 expected = IngressClassList(

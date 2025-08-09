@@ -20,7 +20,7 @@ class ValidatingAdmissionPolicyListTest :
                 scenario {
                     id = "minimum"
                     given(ValidatingAdmissionPolicyListDslBuilder()) {
-                        items { validatingAdmissionPolicyItem { } }
+                        items { validatingAdmissionPolicy { } }
                     }
                     expected = ValidatingAdmissionPolicyList(
                         items = listOf(ValidatingAdmissionPolicy()),

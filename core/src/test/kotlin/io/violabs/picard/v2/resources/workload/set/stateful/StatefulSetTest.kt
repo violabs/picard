@@ -2,11 +2,12 @@ package io.violabs.picard.v2.resources.workload.set.stateful
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
+import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.k8sResources.IntOrString
-import io.violabs.picard.domain.k8sResources.workload.podTemplate.PodTemplate
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.storage.persistent.volume.claim.PersistentVolumeClaim
+import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateSpec
 import org.junit.jupiter.api.BeforeAll
 
 class StatefulSetTest : SuccessBuildSim<StatefulSet, StatefulSetDslBuilder>() {
@@ -27,7 +28,7 @@ class StatefulSetTest : SuccessBuildSim<StatefulSet, StatefulSetDslBuilder>() {
                         selector {
                             sharedSelector()
                         }
-                        template = PodTemplateSpec()
+                        template {}
                     }
                 }
                 expected = StatefulSet(
@@ -50,7 +51,7 @@ class StatefulSetTest : SuccessBuildSim<StatefulSet, StatefulSetDslBuilder>() {
                         selector {
                             sharedSelector()
                         }
-                        template = PodTemplateSpec()
+                        template {}
                         replicas = 1
                         updateStrategy {
                             type = PLACEHOLDER

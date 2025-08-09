@@ -20,7 +20,7 @@ class CronJobListTest : FullBuildSim<CronJobList, CronJobListDslBuilder>() {
                 id = "minimum"
                 given(CronJobListDslBuilder()) {
                     items {
-                        cronJobItem { }
+                        cronJob { }
                     }
                 }
                 expected = CronJobList(

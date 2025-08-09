@@ -36,7 +36,11 @@ class ResourceSliceListTest : FullBuildSim<ResourceSliceList, ResourceSliceListD
                     items = listOf(ResourceSlice(
                         spec = ResourceSliceSpec(
                             driver = PLACEHOLDER,
-                            pool = RESOURCE_POOL
+                            pool = ResourcePool(
+                                generation = 1,
+                                name = PLACEHOLDER,
+                                resourceSliceCount = 1
+                            )
                         )
                     ))
                 )

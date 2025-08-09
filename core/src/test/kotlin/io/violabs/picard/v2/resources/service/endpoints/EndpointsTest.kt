@@ -1,10 +1,11 @@
 package io.violabs.picard.v2.resources.service.endpoints
 
+import io.violabs.picard.Common
 import io.violabs.picard.Common.OBJECT_META
 import io.violabs.picard.Common.sharedObjectMeta
+import io.violabs.picard.Common.sharedObjectReference
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
-import io.violabs.picard.domain.ObjectReference
 import org.junit.jupiter.api.BeforeAll
 
 class EndpointsTest : SuccessBuildSim<Endpoints, EndpointsDslBuilder>() {
@@ -36,30 +37,20 @@ class EndpointsTest : SuccessBuildSim<Endpoints, EndpointsDslBuilder>() {
                                     ip = PLACEHOLDER
                                     hostname = PLACEHOLDER
                                     nodeName = PLACEHOLDER
-                                    targetRef = ObjectReference(
-                                        apiVersion = null,
-                                        kind = PLACEHOLDER,
-                                        name = PLACEHOLDER,
-                                        namespace = PLACEHOLDER,
-                                        resourceVersion = PLACEHOLDER,
-                                        uid = PLACEHOLDER
-                                    )
+                                    targetRef {
+                                        sharedObjectReference()
+                                    }
                                 }
                             }
-                            
+
                             notReadyAddresses {
                                 endpointAddress {
                                     ip = PLACEHOLDER
                                     hostname = PLACEHOLDER
                                     nodeName = PLACEHOLDER
-                                    targetRef = ObjectReference(
-                                        apiVersion = null,
-                                        kind = PLACEHOLDER,
-                                        name = PLACEHOLDER,
-                                        namespace = PLACEHOLDER,
-                                        resourceVersion = PLACEHOLDER,
-                                        uid = PLACEHOLDER
-                                    )
+                                    targetRef {
+                                        sharedObjectReference()
+                                    }
                                 }
                             }
 
@@ -83,14 +74,7 @@ class EndpointsTest : SuccessBuildSim<Endpoints, EndpointsDslBuilder>() {
                                     ip = PLACEHOLDER,
                                     hostname = PLACEHOLDER,
                                     nodeName = PLACEHOLDER,
-                                    targetRef = ObjectReference(
-                                        apiVersion = null,
-                                        kind = PLACEHOLDER,
-                                        name = PLACEHOLDER,
-                                        namespace = PLACEHOLDER,
-                                        resourceVersion = PLACEHOLDER,
-                                        uid = PLACEHOLDER
-                                    )
+                                    targetRef = Common.OBJECT_REFERENCE
                                 )
                             ),
                             notReadyAddresses = listOf(
@@ -98,14 +82,7 @@ class EndpointsTest : SuccessBuildSim<Endpoints, EndpointsDslBuilder>() {
                                     ip = PLACEHOLDER,
                                     hostname = PLACEHOLDER,
                                     nodeName = PLACEHOLDER,
-                                    targetRef = ObjectReference(
-                                        apiVersion = null,
-                                        kind = PLACEHOLDER,
-                                        name = PLACEHOLDER,
-                                        namespace = PLACEHOLDER,
-                                        resourceVersion = PLACEHOLDER,
-                                        uid = PLACEHOLDER
-                                    )
+                                    targetRef = Common.OBJECT_REFERENCE
                                 )
                             ),
                             ports = listOf(

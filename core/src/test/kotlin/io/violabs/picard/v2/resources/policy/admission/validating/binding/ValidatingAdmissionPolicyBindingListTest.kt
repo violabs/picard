@@ -21,7 +21,7 @@ class ValidatingAdmissionPolicyBindingListTest :
                     id = "minimum"
                     given(ValidatingAdmissionPolicyBindingListDslBuilder()) {
                         items {
-                            validatingAdmissionPolicyBindingItem { }
+                            validatingAdmissionPolicyBinding { }
                         }
                     }
                     expected = ValidatingAdmissionPolicyBindingList(

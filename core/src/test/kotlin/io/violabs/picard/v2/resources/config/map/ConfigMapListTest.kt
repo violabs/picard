@@ -19,7 +19,7 @@ class ConfigMapListTest : FullBuildSim<ConfigMapList, ConfigMapListDslBuilder>()
                 id = "minimum"
                 given(ConfigMapListDslBuilder()) {
                     items {
-                        map { }
+                        configMap { }
                     }
                 }
                 expected = ConfigMapList(

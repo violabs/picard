@@ -1,6 +1,7 @@
 package io.violabs.picard.v2.resources.workload.set.replica
 
 import io.violabs.picard.Common
+import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.common.ObjectMeta

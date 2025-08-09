@@ -1,6 +1,7 @@
 package io.violabs.picard.v2.resources.workload.resource.claim.device
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
+import io.violabs.picard.domain.BooleanType
 import java.time.LocalDateTime
 
 @GeneratedDsl(withListGroup = true)
@@ -23,7 +24,7 @@ data class Condition(
     /**
      * status of the condition, one of True, False, Unknown.
      */
-    val status: Status,
+    val status: BooleanType,
 
     /**
      * type of condition in CamelCase or in foo.example.com/CamelCase.
@@ -34,10 +35,4 @@ data class Condition(
      * observedGeneration represents the .metadata.generation that the condition was set based upon.
      */
     val observedGeneration: Long? = null
-) {
-    enum class Status {
-        True,
-        False,
-        Unknown
-    }
-}
+)

@@ -5,6 +5,7 @@ import io.violabs.picard.Common.sharedObjectMeta
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.Workload
 import io.violabs.picard.Workload.Resource.sharedTerms
+import io.violabs.picard.domain.BooleanType
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.workload.resource.NodeSelector
 import io.violabs.picard.v2.resources.workload.resource.claim.device.AllocatedDeviceStatus
@@ -199,7 +200,7 @@ class ResourceClaimTest : SuccessBuildSim<ResourceClaim, ResourceClaimDslBuilder
                                 conditions {
                                     condition {
                                         type = PLACEHOLDER
-                                        status = ConditionStatus.True
+                                        status = BooleanType.True
                                         message = PLACEHOLDER
                                         reason = PLACEHOLDER
                                         lastTransitionTime = NOW
@@ -298,7 +299,7 @@ class ResourceClaimTest : SuccessBuildSim<ResourceClaim, ResourceClaimDslBuilder
                                 conditions = listOf(
                                     Condition(
                                         type = PLACEHOLDER,
-                                        status = ConditionStatus.True,
+                                        status = BooleanType.True,
                                         message = PLACEHOLDER,
                                         reason = PLACEHOLDER,
                                         lastTransitionTime = NOW

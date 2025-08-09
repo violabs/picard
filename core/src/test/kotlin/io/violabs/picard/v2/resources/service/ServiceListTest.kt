@@ -20,7 +20,7 @@ class ServiceListTest : FullBuildSim<ServiceList, ServiceListDslBuilder>() {
                 id = "minimum"
                 given(ServiceListDslBuilder()) {
                     items {
-                        serviceItem {
+                        service {
                         }
                     }
                 }

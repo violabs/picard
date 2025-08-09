@@ -3,6 +3,7 @@ package io.violabs.picard.v2.resources.policy.network
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
+import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.domain.k8sResources.IntOrString
 import io.violabs.picard.possibilities

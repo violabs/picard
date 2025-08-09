@@ -22,7 +22,7 @@ class ValidatingWebhookConfigurationListTest :
                     id = "minimum"
                     given(ValidatingWebhookConfigurationListDslBuilder()) {
                         items {
-                            config {}
+                            validatingWebhookConfiguration {}
                         }
                     }
                     expected = ValidatingWebhookConfigurationList(

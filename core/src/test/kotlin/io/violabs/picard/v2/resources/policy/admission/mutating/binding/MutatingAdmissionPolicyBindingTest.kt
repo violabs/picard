@@ -1,13 +1,12 @@
-package io.violabs.picard.v2.resources.policy.admission.mutating
+package io.violabs.picard.v2.resources.policy.admission.mutating.binding
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
+import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import io.violabs.picard.v2.resources.policy.admission.MatchResources
 import io.violabs.picard.v2.resources.policy.admission.ParamRef
-import io.violabs.picard.v2.resources.policy.admission.mutating.binding.MutatingAdmissionPolicyBinding
-import io.violabs.picard.v2.resources.policy.admission.mutating.binding.MutatingAdmissionPolicyBindingSpec
 import io.violabs.picard.v2.resources.policy.admission.validating.NamedRuleWithOperations
 import org.junit.jupiter.api.BeforeAll
 

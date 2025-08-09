@@ -3,6 +3,7 @@ package io.violabs.picard.v2.resources.authentication.certificate
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
 import io.violabs.picard.FullBuildSim
+import io.violabs.picard.domain.BooleanType
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
@@ -57,7 +58,7 @@ class CertificateSigningRequestTest :
                             certificate(0b1, 0b01)
                             conditions {
                                 certificateSigningRequestCondition {
-                                    status = CertificateSigningRequestConditionStatus.True
+                                    status = BooleanType.True
                                     type = CertificateSigningRequestCondition.Type.Approved
                                     lastTransitionTime = NOW
                                     lastUpdateTime = NOW
@@ -85,7 +86,7 @@ class CertificateSigningRequestTest :
                             certificate = BYTES,
                             conditions = listOf(
                                 CertificateSigningRequestCondition(
-                                    status = CertificateSigningRequestConditionStatus.True,
+                                    status = BooleanType.True,
                                     type = CertificateSigningRequestCondition.Type.Approved,
                                     lastTransitionTime = NOW,
                                     lastUpdateTime = NOW,

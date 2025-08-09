@@ -3,6 +3,7 @@ package io.violabs.picard.v2.resources.storage.persistent.volume.claim
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
+import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.Conditions
 import io.violabs.picard.Conditions.sharedPersistentVolumeClaimCondition
 import io.violabs.picard.SuccessBuildSim

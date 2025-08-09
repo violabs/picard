@@ -38,6 +38,8 @@ import io.violabs.picard.v2.resources.workload.deployment.DeploymentListDslBuild
 import io.violabs.picard.v2.resources.workload.deployment.DeploymentListDslBuilderScope
 import io.violabs.picard.v2.resources.workload.pod.PodDslBuilder
 import io.violabs.picard.v2.resources.workload.pod.PodDslBuilderScope
+import io.violabs.picard.v2.resources.workload.pod.PodListDslBuilder
+import io.violabs.picard.v2.resources.workload.pod.PodListDslBuilderScope
 import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateDslBuilder
 import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateDslBuilderScope
 import io.violabs.picard.v2.resources.workload.pod.template.PodTemplateListDslBuilder
@@ -150,6 +152,11 @@ data class WorkloadResourceSection(
         fun pod(block: PodDslBuilderScope) {
             val pod = PodDslBuilder().apply(block).build()
             resources.add(pod)
+        }
+
+        fun podList(block: PodListDslBuilderScope) {
+            val podList = PodListDslBuilder().apply(block).build()
+            lists.add(podList)
         }
 
         fun podTemplate(block: PodTemplateDslBuilderScope) {

@@ -6,25 +6,25 @@ import io.violabs.picard.SuccessBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll
 
-class IPAddressTest : SuccessBuildSim<IpAddress, IPAddressDslBuilder>() {
+class IpAddressTest : SuccessBuildSim<IpAddress, IpAddressDslBuilder>() {
     companion object {
         @JvmStatic
         @BeforeAll
         fun setup() = buildSetup(
-            IPAddressTest::class,
+            IpAddressTest::class,
             SUCCESS_POSSIBILITIES
         )
 
-        private val SUCCESS_POSSIBILITIES = possibilities<IpAddress, IPAddressDslBuilder> {
+        private val SUCCESS_POSSIBILITIES = possibilities<IpAddress, IpAddressDslBuilder> {
             scenario {
                 id = "minimum"
-                given(IPAddressDslBuilder())
+                given(IpAddressDslBuilder())
                 expected = IpAddress()
             }
 
             scenario {
                 id = "full"
-                given(IPAddressDslBuilder()) {
+                given(IpAddressDslBuilder()) {
                     metadata {
                         sharedObjectMeta()
                     }

@@ -1,6 +1,7 @@
 package io.violabs.picard.v2.resources.authentication.certificate
 
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
+import io.violabs.picard.domain.BooleanType
 import java.time.LocalDateTime
 
 /**
@@ -12,7 +13,7 @@ data class CertificateSigningRequestCondition(
      * status of the condition, one of True, False, Unknown. Approved, Denied, and
      * Failed conditions may not be "False" or "Unknown".
      */
-    val status: Status,
+    val status: BooleanType,
     /**
      * type of the condition. Known conditions are "Approved", "Denied", and "Failed".
      * An "Approved" condition is added via the /approval subresource, indicating the
@@ -55,10 +56,6 @@ data class CertificateSigningRequestCondition(
      */
     val reason: String? = null
 ) {
-    enum class Status {
-        True, False, Unknown
-    }
-
     enum class Type {
         Approved, Denied, Failed
     }

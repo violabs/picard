@@ -20,7 +20,7 @@ class ResourceClaimListTest : FullBuildSim<ResourceClaimList, ResourceClaimListD
                 id = "minimum"
                 given(ResourceClaimListDslBuilder()) {
                     items {
-                        resourceClaimItem {
+                        resourceClaim {
                             spec {}
                         }
                     }

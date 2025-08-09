@@ -23,17 +23,22 @@ class CertificateSigningRequestListTest :
                     description = "adding metadata for coverage"
                     given(CertificateSigningRequestListDslBuilder()) {
                         items {
-
+                            certificateSigningRequest {
+                                spec {
+                                    request(0b1)
+                                    signerName = PLACEHOLDER
+                                }
+                            }
                         }
 
-//                        metadata { }
+                        metadata { }
                     }
                     expected = CertificateSigningRequestList(
                         items = listOf(
                             CertificateSigningRequest(
                                 spec = CertificateSigningRequestSpec(
                                     request = listOf(0b1),
-                                    signerName = "test"
+                                    signerName = PLACEHOLDER
                                 )
                             )
                         ),
@@ -44,7 +49,8 @@ class CertificateSigningRequestListTest :
 
         private val FAILURE_POSSIBILITIES =
             possibilities<CertificateSigningRequestList, CertificateSigningRequestListDslBuilder> {
-                requireNotEmptyScenario("items") {
+//                requireNotEmptyScenario("items") {
+                requireScenario("items") {
                     given(CertificateSigningRequestListDslBuilder())
                 }
             }

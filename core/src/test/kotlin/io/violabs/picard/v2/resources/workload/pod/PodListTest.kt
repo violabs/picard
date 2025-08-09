@@ -1,4 +1,4 @@
-package io.violabs.picard.domain.k8sResources.workload.pod
+package io.violabs.picard.v2.resources.workload.pod
 
 
 import io.violabs.picard.FullBuildSim
@@ -22,7 +22,7 @@ class PodListTest : FullBuildSim<PodList, PodListDslBuilder>() {
                 id = "minimum"
                 given(PodListDslBuilder()) {
                     items {
-                        podItem { }
+                        pod { }
                     }
                 }
                 expected = PodList(
@@ -34,7 +34,7 @@ class PodListTest : FullBuildSim<PodList, PodListDslBuilder>() {
                 id = "metadata"
                 given(PodListDslBuilder()) {
                     items {
-                        podItem { }
+                        pod { }
                     }
 
                     metadata {

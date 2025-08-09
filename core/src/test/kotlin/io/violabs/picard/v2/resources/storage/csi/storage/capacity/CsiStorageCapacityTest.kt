@@ -3,6 +3,7 @@ package io.violabs.picard.v2.resources.storage.csi.storage.capacity
 
 import io.violabs.picard.Common
 import io.violabs.picard.Common.sharedObjectMeta
+import io.violabs.picard.Common.sharedSelector
 import io.violabs.picard.FullBuildSim
 import io.violabs.picard.possibilities
 import org.junit.jupiter.api.BeforeAll

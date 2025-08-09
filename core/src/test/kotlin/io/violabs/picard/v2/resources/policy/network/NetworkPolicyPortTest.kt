@@ -20,7 +20,7 @@ class NetworkPolicyPortTest : SuccessBuildSim<NetworkPolicyPort, NetworkPolicyPo
             scenario {
                 id = "minimum"
                 given(NetworkPolicyPortDslBuilder()) {
-                    port("8080")
+                    port = IntOrString(8080)
                 }
                 expected = NetworkPolicyPort(
                     port = IntOrString(str = "8080")

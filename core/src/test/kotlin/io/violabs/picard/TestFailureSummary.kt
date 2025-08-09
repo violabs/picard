@@ -1,10 +1,51 @@
 package io.violabs.picard
 
 import java.time.LocalDateTime
+import kotlin.reflect.KClass
+
+// Import all test classes for KClass references
+import io.violabs.picard.v2.resources.authentication.certificate.CertificateSigningRequestSpecTest
+import io.violabs.picard.v2.resources.storage.csi.driver.CsiDriverSpecTest
+import io.violabs.picard.v2.resources.storage.csi.node.CsiNodeDriverTest
+import io.violabs.picard.v2.resources.extend.resource.custom.CustomResourceColumnDefinitionTest
+import io.violabs.picard.v2.resources.extend.resource.custom.CustomResourceConversionTest
+import io.violabs.picard.v2.resources.extend.resource.custom.CustomResourceDefinitionNamesTest
+import io.violabs.picard.v2.resources.extend.resource.custom.CustomResourceDefinitionSpecTest
+import io.violabs.picard.v2.resources.extend.resource.custom.CustomResourceDefinitionVersionTest
+import io.violabs.picard.v2.resources.extend.resource.custom.CustomResourceSubresourceScaleTest
+import io.violabs.picard.v2.resources.workload.deployment.DeploymentStatusTest
+import io.violabs.picard.v2.resources.extend.deviceclass.DeviceClassListTest
+import io.violabs.picard.v2.resources.workload.resource.claim.device.request.DeviceRequestTest
+import io.violabs.picard.v2.resources.authorization.review.access.subject.attributes.FieldSelectorRequirementTest
+import io.violabs.picard.v2.resources.policy.schema.flow.FlowSchemaStatusTest
+import io.violabs.picard.v2.resources.workload.autoscaling.pod.HorizontalPodAutoscalerStatusTest
+import io.violabs.picard.v2.resources.cluster.lease.candidate.LeaseCandidateSpecTest
+import io.violabs.picard.v2.resources.extend.webhook.mutating.MutatingWebhookTest
+import io.violabs.picard.v2.resources.policy.network.NetworkPolicyPortTest
+import io.violabs.picard.v2.resources.cluster.node.NodeSystemInfoTest
+import io.violabs.picard.v2.resources.policy.schema.rule.NonResourcePolicyRuleTest
+import io.violabs.picard.v2.resources.authorization.review.rules.NonResourceRuleTest
+import io.violabs.picard.v2.resources.workload.autoscaling.metric.status.ObjectMetricStatusTest
+import io.violabs.picard.v2.resources.extend.deviceclass.config.OpaqueDeviceConfigurationTest
+import io.violabs.picard.v2.resources.policy.disruption.PodDisruptionBudgetSpecTest
+import io.violabs.picard.v2.resources.workload.batch.job.policy.failure.PodFailurePolicyOnExitCodesRequirementTest
+import io.violabs.picard.v2.resources.workload.pod.PodListTest
+import io.violabs.picard.v2.resources.workload.autoscaling.metric.status.PodsMetricStatusTest
+import io.violabs.picard.v2.resources.authorization.role.PolicyRuleTest
+import io.violabs.picard.v2.resources.policy.schema.rule.ResourcePolicyRuleTest
+import io.violabs.picard.v2.resources.authorization.review.rules.ResourceRuleTest
+import io.violabs.picard.v2.resources.extend.resource.custom.SelectableFieldTest
+import io.violabs.picard.v2.resources.authorization.review.rules.SelfSubjectRulesReviewSpecTest
+import io.violabs.picard.v2.resources.storage.version.migration.StorageVersionMigrationStatusTest
+import io.violabs.picard.v2.resources.authentication.token.request.TokenRequestSpecTest
+import io.violabs.picard.v2.resources.storage.selector.label.TopologySelectorLabelRequirementTest
+import io.violabs.picard.v2.resources.extend.webhook.validating.ValidatingWebhookTest
+import io.violabs.picard.v2.resources.extend.resource.json.schema.ValidationRuleTest
+import io.violabs.picard.v2.resources.extend.resource.webhook.WebhookConversionTest
 
 /**
  * Summary of test failures after requireNotEmptyScenario migration
- * Generated: 2025-08-08 23:03:15
+ * Generated: 2025-08-08 23:09:33
  * Total failed classes: 38
  * Total failed tests: 64
  */
@@ -14,8 +55,8 @@ object TestFailureSummary {
         val reason: String
     )
     
-    val failures = mapOf(
-        "CertificateSigningRequestSpecTest" to listOf(
+    val failures: Map<KClass<*>, List<TestFailure>> = mapOf(
+        CertificateSigningRequestSpecTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing request",
                 reason = "no exception thrown"
@@ -25,7 +66,7 @@ object TestFailureSummary {
                 reason = "no exception thrown"
             )
         ),
-        "CsiDriverSpecTest" to listOf(
+        CsiDriverSpecTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing attachRequired",
                 reason = "no exception thrown"
@@ -59,13 +100,13 @@ object TestFailureSummary {
                 reason = "no exception thrown"
             )
         ),
-        "CsiNodeDriverTest" to listOf(
+        CsiNodeDriverTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing nodeID",
                 reason = "no exception thrown"
             )
         ),
-        "CustomResourceColumnDefinitionTest" to listOf(
+        CustomResourceColumnDefinitionTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing jsonPath",
                 reason = "no exception thrown"
@@ -79,13 +120,13 @@ object TestFailureSummary {
                 reason = "no exception thrown"
             )
         ),
-        "CustomResourceConversionTest" to listOf(
+        CustomResourceConversionTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing strategy",
                 reason = "no exception thrown"
             )
         ),
-        "CustomResourceDefinitionNamesTest" to listOf(
+        CustomResourceDefinitionNamesTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing kind",
                 reason = "no exception thrown"
@@ -95,7 +136,7 @@ object TestFailureSummary {
                 reason = "no exception thrown"
             )
         ),
-        "CustomResourceDefinitionSpecTest" to listOf(
+        CustomResourceDefinitionSpecTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing group",
                 reason = "no exception thrown"
@@ -113,7 +154,7 @@ object TestFailureSummary {
                 reason = "no exception thrown"
             )
         ),
-        "CustomResourceDefinitionVersionTest" to listOf(
+        CustomResourceDefinitionVersionTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing name",
                 reason = "no exception thrown"
@@ -127,7 +168,7 @@ object TestFailureSummary {
                 reason = "no exception thrown"
             )
         ),
-        "CustomResourceSubresourceScaleTest" to listOf(
+        CustomResourceSubresourceScaleTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing specReplicasPath",
                 reason = "no exception thrown"
@@ -137,43 +178,43 @@ object TestFailureSummary {
                 reason = "no exception thrown"
             )
         ),
-        "DeploymentStatusTest" to listOf(
+        DeploymentStatusTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing replicas",
                 reason = "no exception thrown"
             )
         ),
-        "DeviceClassListTest" to listOf(
+        DeviceClassListTest::class to listOf(
             TestFailure(
                 method = "build happy path - minimum",
                 reason = "no exception thrown"
             )
         ),
-        "DeviceRequestTest" to listOf(
+        DeviceRequestTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing name",
                 reason = "no exception thrown"
             )
         ),
-        "FieldSelectorRequirementTest" to listOf(
+        FieldSelectorRequirementTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing requirements",
                 reason = "no exception thrown"
             )
         ),
-        "FlowSchemaStatusTest" to listOf(
+        FlowSchemaStatusTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing conditions",
                 reason = "no exception thrown"
             )
         ),
-        "HorizontalPodAutoscalerStatusTest" to listOf(
+        HorizontalPodAutoscalerStatusTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing currentReplicas",
                 reason = "no exception thrown"
             )
         ),
-        "LeaseCandidateSpecTest" to listOf(
+        LeaseCandidateSpecTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing leaseName",
                 reason = "no exception thrown"
@@ -183,19 +224,19 @@ object TestFailureSummary {
                 reason = "no exception thrown"
             )
         ),
-        "MutatingWebhookTest" to listOf(
+        MutatingWebhookTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing admissionReviewVersions",
                 reason = "no exception thrown"
             )
         ),
-        "NetworkPolicyPortTest" to listOf(
+        NetworkPolicyPortTest::class to listOf(
             TestFailure(
                 method = "build happy path - minimum",
                 reason = "no exception thrown"
             )
         ),
-        "NodeSystemInfoTest" to listOf(
+        NodeSystemInfoTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing bootID",
                 reason = "no exception thrown"
@@ -209,7 +250,7 @@ object TestFailureSummary {
                 reason = "no exception thrown"
             )
         ),
-        "NonResourcePolicyRuleTest" to listOf(
+        NonResourcePolicyRuleTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing nonResourceUrls",
                 reason = "no exception thrown"
@@ -219,19 +260,19 @@ object TestFailureSummary {
                 reason = "no exception thrown"
             )
         ),
-        "NonResourceRuleTest" to listOf(
+        NonResourceRuleTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing verbs",
                 reason = "no exception thrown"
             )
         ),
-        "ObjectMetricStatusTest" to listOf(
+        ObjectMetricStatusTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing pods",
                 reason = "no exception thrown"
             )
         ),
-        "OpaqueDeviceConfigurationTest" to listOf(
+        OpaqueDeviceConfigurationTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing driver",
                 reason = "no exception thrown"
@@ -249,37 +290,37 @@ object TestFailureSummary {
                 reason = "no exception thrown"
             )
         ),
-        "PodDisruptionBudgetSpecTest" to listOf(
+        PodDisruptionBudgetSpecTest::class to listOf(
             TestFailure(
                 method = "build happy path - int or string",
                 reason = "no exception thrown"
             )
         ),
-        "PodFailurePolicyOnExitCodesRequirementTest" to listOf(
+        PodFailurePolicyOnExitCodesRequirementTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing values",
                 reason = "no exception thrown"
             )
         ),
-        "PodListTest" to listOf(
+        PodListTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing items",
                 reason = "no exception thrown"
             )
         ),
-        "PodsMetricStatusTest" to listOf(
+        PodsMetricStatusTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing resource",
                 reason = "no exception thrown"
             )
         ),
-        "PolicyRuleTest" to listOf(
+        PolicyRuleTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing verbs",
                 reason = "no exception thrown"
             )
         ),
-        "ResourcePolicyRuleTest" to listOf(
+        ResourcePolicyRuleTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing apiGroups",
                 reason = "no exception thrown"
@@ -293,55 +334,55 @@ object TestFailureSummary {
                 reason = "no exception thrown"
             )
         ),
-        "ResourceRuleTest" to listOf(
+        ResourceRuleTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing verbs",
                 reason = "no exception thrown"
             )
         ),
-        "SelectableFieldTest" to listOf(
+        SelectableFieldTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing jsonPath",
                 reason = "no exception thrown"
             )
         ),
-        "SelfSubjectRulesReviewSpecTest" to listOf(
+        SelfSubjectRulesReviewSpecTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing namespace",
                 reason = "no exception thrown"
             )
         ),
-        "StorageVersionMigrationStatusTest" to listOf(
+        StorageVersionMigrationStatusTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing conditions",
                 reason = "no exception thrown"
             )
         ),
-        "TokenRequestSpecTest" to listOf(
+        TokenRequestSpecTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing audiences",
                 reason = "no exception thrown"
             )
         ),
-        "TopologySelectorLabelRequirementTest" to listOf(
+        TopologySelectorLabelRequirementTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing values",
                 reason = "no exception thrown"
             )
         ),
-        "ValidatingWebhookTest" to listOf(
+        ValidatingWebhookTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing admissionReviewVersions",
                 reason = "no exception thrown"
             )
         ),
-        "ValidationRuleTest" to listOf(
+        ValidationRuleTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing rule",
                 reason = "no exception thrown"
             )
         ),
-        "WebhookConversionTest" to listOf(
+        WebhookConversionTest::class to listOf(
             TestFailure(
                 method = "build failure path - missing conversionReviewVersions",
                 reason = "no exception thrown"
@@ -356,8 +397,8 @@ object TestFailureSummary {
         println("Total failed tests: ${failures.values.sumOf { it.size }}")
         println()
         
-        failures.forEach { (className, testFailures) ->
-            println("$className:")
+        failures.forEach { (testClass, testFailures) ->
+            println("${testClass.simpleName}:")
             testFailures.forEach { failure ->
                 println("  - ${failure.method}: ${failure.reason}")
             }

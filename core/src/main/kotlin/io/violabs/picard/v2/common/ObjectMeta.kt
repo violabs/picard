@@ -1,6 +1,8 @@
 package io.violabs.picard.v2.common
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import io.violabs.konstellation.metaDsl.annotation.GeneratedDsl
+import io.violabs.picard.serialization.RetainQuotesMapSerializer
 
 /**
  * "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -44,6 +46,7 @@ data class ObjectMeta(
      * (scope and select) objects. May match selectors of replication controllers and services.
      * More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels
      */
+    @JsonSerialize(using = RetainQuotesMapSerializer::class)
     val labels: Map<String, String>? = null,
     /**
      * Annotations is an unstructured key value map stored with a resource that may be set by
@@ -51,6 +54,7 @@ data class ObjectMeta(
      * be preserved when modifying objects. More info:
      * https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations
      */
+    @JsonSerialize(using = RetainQuotesMapSerializer::class)
     val annotations: Map<String, String>? = null,
 
     //region system

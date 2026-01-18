@@ -17,10 +17,10 @@ group = "io.violabs"
 version = "0.0.1"
 
 extra["kotlinVersion"] = kotlinVersion
-extra["coreVersion"] = "0.1.5"
-extra["cmdVersion"] = "0.1.5"
-extra["dslVersion"] = "0.0.7"
-extra["metaDslVersion"] = "0.0.7"
+extra["coreVersion"] = "1.0.2"
+extra["cmdVersion"] = "1.0.2"
+extra["dslVersion"] = "1.0.1"
+extra["metaDslVersion"] = "1.0.1"
 
 java {
     toolchain {

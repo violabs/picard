@@ -4,8 +4,10 @@ plugins {
     `maven-publish`
 }
 
+val commonVersion: String by rootProject.extra
+
 group = "io.violabs.picard"
-version = "0.0.1"
+version = commonVersion
 
 tasks.jar {
     archiveBaseName.set("picard-common")

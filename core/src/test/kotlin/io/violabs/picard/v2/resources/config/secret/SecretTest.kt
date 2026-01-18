@@ -16,6 +16,26 @@ class SecretTest : SuccessBuildSim<Secret, SecretDslBuilder>() {
         assert(SecretType.OPAQUE.toString() == "Opaque")
     }
 
+    @Test
+    fun `yaml serialization uses ref value for SecretType`() {
+        val secret = Secret(type = SecretType.OPAQUE)
+        val yaml = io.violabs.picard.YamlBuilder.singleBuild(secret)
+
+        assert(yaml.contains("type: Opaque")) {
+            "Expected 'type: Opaque' but got: $yaml"
+        }
+    }
+
+    @Test
+    fun `yaml serialization uses ref value for complex SecretType`() {
+        val secret = Secret(type = SecretType.SERVICE_ACCOUNT_TOKEN)
+        val yaml = io.violabs.picard.YamlBuilder.singleBuild(secret)
+
+        assert(yaml.contains("type: kubernetes.io/service-account-token")) {
+            "Expected 'type: kubernetes.io/service-account-token' but got: $yaml"
+        }
+    }
+
     companion object {
         @JvmStatic
         @BeforeAll

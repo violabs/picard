@@ -16,9 +16,12 @@ plugins {
 group = "io.violabs"
 version = "0.0.1"
 
+val sharedVersion = "1.0.3"
+
 extra["kotlinVersion"] = kotlinVersion
-extra["coreVersion"] = "1.0.2"
-extra["cmdVersion"] = "1.0.2"
+extra["coreVersion"] = sharedVersion
+extra["commonVersion"] = sharedVersion
+extra["cmdVersion"] = sharedVersion
 extra["dslVersion"] = "1.0.1"
 extra["metaDslVersion"] = "1.0.1"
 

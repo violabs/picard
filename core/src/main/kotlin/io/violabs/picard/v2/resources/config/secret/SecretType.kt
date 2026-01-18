@@ -1,6 +1,8 @@
 package io.violabs.picard.v2.resources.config.secret
 
-enum class SecretType(private val ref: String) {
+import com.fasterxml.jackson.annotation.JsonValue
+
+enum class SecretType(@get:JsonValue private val ref: String) {
     OPAQUE("Opaque"),
     SERVICE_ACCOUNT_TOKEN("kubernetes.io/service-account-token"),
     DOCKER_CONFIG("kubernetes.io/dockercfg"),

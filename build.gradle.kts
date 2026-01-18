@@ -17,8 +17,8 @@ group = "io.violabs"
 version = "0.0.1"
 
 extra["kotlinVersion"] = kotlinVersion
-extra["coreVersion"] = "0.1.3"
-extra["cmdVersion"] = "0.0.1"
+extra["coreVersion"] = "0.1.5"
+extra["cmdVersion"] = "0.1.5"
 extra["dslVersion"] = "0.0.7"
 extra["metaDslVersion"] = "0.0.7"
 

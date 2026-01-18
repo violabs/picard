@@ -35,8 +35,8 @@ class CsiStorageCapacityTest : FullBuildSim<CsiStorageCapacity, CsiStorageCapaci
                     }
 
                     storageClassName = PLACEHOLDER
-                    capacity = QUANTITY
-                    maximumVolumeSize = QUANTITY
+                    capacity(PLACEHOLDER)
+                    maximumVolumeSize(PLACEHOLDER)
                     nodeTopology {
                         sharedSelector()
                     }

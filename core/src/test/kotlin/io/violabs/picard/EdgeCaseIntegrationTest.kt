@@ -168,7 +168,7 @@ class EdgeCaseIntegrationTest {
         assert(result.contains("super-secret-password-123!@#"))
         assert(result.contains("BEGIN CERTIFICATE"))
         assert(result.contains("LoadBalancer"))
-        assert(result.contains("kubernetes.io/managed-by: picard"))
+        assert(result.contains("kubernetes.io/managed-by: \"picard\""))
         
         // Verify YAML structure
         assert(result.contains("kind: ConfigMap"))
